@@ -1,0 +1,62 @@
+<!--
+  Generated template for the SubscriptionPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+      <button ion-button menuToggle start>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+    <ion-title>Subscription</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+    <h3>Choose Subscription Packages</h3>
+    <!--<ion-list>
+        <ion-item>
+          <ion-thumbnail item-start>
+            <img src="img/thumbnail-totoro.png">
+          </ion-thumbnail>
+          <h2>My Neighbor Totoro</h2>
+          <p>Hayao Miyazaki • 1988</p>
+          <button ion-button clear item-end>View</button>
+        </ion-item>
+      </ion-list>-->
+     <ion-list *ngIf="!userSubscribed">
+     <ion-item>
+           <ion-label>Select Packages</ion-label>
+           <ion-select [(ngModel)]="selectedPackagesList" (ngModelChange)="onPackageSelection($event)" multiple="true">
+            <ion-option *ngFor="let package of allAvailablePackages" value= {{package.id}}>
+              {{package.name}}
+             </ion-option>
+           </ion-select>
+      </ion-item>
+      <ion-item>
+          <ion-label floating>Full Name</ion-label>
+          <ion-input type="text" [(ngModel)]="full_name" name="full_name"></ion-input>
+      </ion-item>
+      <ion-item>
+            <ion-label floating>Credit Card Number</ion-label>
+            <ion-input type="text" [(ngModel)]="cc_number" name="cc_number"></ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-label>Expiry Date</ion-label>
+          <ion-datetime displayFormat="MM/YYYY" pickerFormat="MM/YYYY" [(ngModel)]="expiryDate"></ion-datetime>
+      </ion-item>
+      <ion-item>
+          <ion-label floating>Credit Card CVC</ion-label>
+          <ion-input type="text" [(ngModel)]="cvc" name="cvc"></ion-input>
+      </ion-item>
+      <div padding>
+          <button ion-button color="primary" block (click)="saveSubscribeUser();">Subscribe</button>
+      </div>
+    </ion-list>
+      <ion-chip *ngIf="subscriptionMsg!=''">
+            <ion-label color="secondary">{{subscriptionMsg}}</ion-label>
+      </ion-chip>
+</ion-content>

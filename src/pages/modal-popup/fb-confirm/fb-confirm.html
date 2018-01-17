@@ -1,0 +1,32 @@
+<!--
+  Generated template for the FbConfirmPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <!--<ion-navbar>
+    <ion-title></ion-title>
+  </ion-navbar>-->
+  <ion-buttons end>
+    <button ion-button (click)="closeModal()">Close</button>
+    </ion-buttons>
+</ion-header>
+
+
+<ion-content padding>
+    <ion-chip *ngIf="!userCreated">
+        <ion-label>Please provide new password to complete registeration process.</ion-label>
+      </ion-chip>
+  <ion-item *ngIf="!userCreated">
+    <ion-label floating>Password:</ion-label>
+    <ion-input type="password"  [(ngModel)]="fbPassword" name="fbPassword" id="fbPassword"></ion-input>
+  </ion-item>
+  <div padding *ngIf="!userCreated">
+    <button ion-button color="primary" block  (click)="fbSignUpMethod();">Sign Up</button>
+</div>
+<ion-chip *ngIf="userFbSignUpMsg!=''">
+  <ion-label color="secondary">{{userFbSignUpMsg}}</ion-label>
+</ion-chip>
+</ion-content>

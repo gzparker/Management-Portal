@@ -1,0 +1,8 @@
+{
+  "name": "idxcompany",
+  "app_id": "bdce236f",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}
