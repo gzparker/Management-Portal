@@ -9,14 +9,14 @@
   <ion-navbar>
     <ion-title>Set Verification Info</ion-title>
   </ion-navbar>
-  <ion-buttons end>
+  <!--<ion-buttons end>
       <button ion-button (click)="closeModal()">Close</button>
-      </ion-buttons>
+      </ion-buttons>-->
 </ion-header>
 
 
 <ion-content padding>
-  <ion-list radio-group>
+  <!--<ion-list radio-group>
   <ion-item>
     <ion-label>Email</ion-label>
     <ion-radio checked="true" value="email" name="verifyOption" (click)="setVerifyByOption('email')"></ion-radio>
@@ -26,26 +26,27 @@
     <ion-label>Phone</ion-label>
     <ion-radio value="phone" name="verifyOption" (click)="setVerifyByOption('phone')"></ion-radio>
   </ion-item>
-</ion-list>
-<ion-list *ngIf="verify_by=='phone'">
-<ion-item>
-    
-    <ion-select [(ngModel)]="selectedCountryAbbv" (ngModelChange)="onCountryCodeSelection($event)">
-      <ion-option value="">--- Select Country Code ---</ion-option>
-      <ion-option *ngFor="let countryCode of allCountryCodes" value= {{countryCode.country_abbv}}>
+</ion-list>-->
+  <!--<ion-list *ngIf="verify_by=='phone'">-->
+  <ion-list>
+    <ion-item>
+      <ion-label>Select Country</ion-label>
+      <ion-select [(ngModel)]="selectedCountryAbbv" (ngModelChange)="onCountryCodeSelection($event)">
+        <ion-option value="">--- Select Country Code ---</ion-option>
+        <ion-option *ngFor="let countryCode of allCountryCodes" value={{countryCode.country_abbv}}>
           {{countryCode.name}}
-         </ion-option>
-    </ion-select>
-  </ion-item>
-  <ion-item>
-      <ion-label floating>Phone Number</ion-label>
+        </ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Cell Number</ion-label>
       <ion-input type="tel" [(ngModel)]="phone_number_verify" name="phone_number_verify"></ion-input>
     </ion-item>
-   
+
   </ion-list>
-  
+
   <div padding>
-      <button ion-button color="primary" block (click)="verifyUser();">Verify</button>
+    <button ion-button color="primary" block (click)="verifyUser();">Verify</button>
   </div>
   <ion-chip *ngIf="verificationMsg!=''">
     <ion-label color="secondary">{{verificationMsg}}</ion-label>

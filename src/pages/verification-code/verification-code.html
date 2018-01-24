@@ -1,0 +1,31 @@
+<!--
+  Generated template for the VerificationCodePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Enter Verification Code</ion-title>
+  </ion-navbar>
+  <!--<ion-buttons end>
+        <button ion-button (click)="closeModal()">Close</button>
+        </ion-buttons>-->
+</ion-header>
+
+
+<ion-content padding>
+  <ion-item *ngIf="!acctVerified">
+      <ion-label floating>Verification Code</ion-label>
+    <ion-input type="text" [(ngModel)]="verification_code" name="verification_code" id="verification_code"></ion-input>
+  </ion-item>
+
+
+  <div padding *ngIf="!acctVerified">
+    <button ion-button color="primary" block (click)="confirmVerification();">Confirm</button>
+  </div>
+  <ion-chip *ngIf="verificationMsg!=''">
+    <ion-label color="secondary">{{verificationMsg}}</ion-label>
+  </ion-chip>
+</ion-content>

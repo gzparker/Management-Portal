@@ -11,20 +11,20 @@
         {{p.title}}
       </button>-->
       <button menuClose ion-item (click)="openPage('1')" *ngIf="userLoggedIn==false">
-         Home
+        Home
       </button>
       <button menuClose ion-item (click)="openPage('2')" *ngIf="userLoggedIn==false">
-         Login
+        Login
       </button>
       <button menuClose ion-item (click)="openPage('3')" *ngIf="userLoggedIn==false">
-         Register
+        Register
       </button>
       <button menuClose ion-item (click)="openPage('4')" *ngIf="userLoggedIn==true">
-          Dashboard
-       </button>
+        Dashboard
+      </button>
       <button menuClose ion-item (click)="logOut()" *ngIf="userLoggedIn==true">
-          LogOut
-                </button>
+        LogOut
+      </button>
     </ion-list>
   </ion-content>
 

@@ -10,4 +10,4 @@ import { SubscriptionPage } from './subscription';
     IonicPageModule.forChild(SubscriptionPage),
   ],
 })
-export class SubscriptionPageModule {}
+export class SubscriptionPageModule { }

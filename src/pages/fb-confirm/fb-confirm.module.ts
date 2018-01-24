@@ -10,4 +10,4 @@ import { FbConfirmPage } from './fb-confirm';
     IonicPageModule.forChild(FbConfirmPage),
   ],
 })
-export class FbConfirmPageModule {}
+export class FbConfirmPageModule { }

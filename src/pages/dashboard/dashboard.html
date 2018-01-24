@@ -7,9 +7,9 @@
 <ion-header>
 
   <ion-navbar hideBackButton="true">
-      <button ion-button menuToggle start>
-          <ion-icon name="menu"></ion-icon>
-        </button>
+    <button ion-button menuToggle start>
+      <ion-icon name="menu"></ion-icon>
+    </button>
     <ion-title>Dashboard</ion-title>
   </ion-navbar>
 
@@ -17,5 +17,8 @@
 
 
 <ion-content padding>
-    <h3>Welcome To Dashboard</h3>
+    <ion-chip *ngIf="notificationMsg!=''">
+        <ion-label color="secondary">{{notificationMsg}}</ion-label>
+      </ion-chip>
+  <h3>Welcome To Dashboard</h3>
 </ion-content>

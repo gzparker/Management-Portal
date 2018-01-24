@@ -15,39 +15,42 @@
 
 
 <ion-content padding>
-    <ion-item>
-        <ion-label floating>Username</ion-label>
-        <ion-input type="text" [(ngModel)]="email" name="email"></ion-input>
-      </ion-item>
-    
-      <ion-item>
-        <ion-label floating>Password</ion-label>
-        <ion-input type="password" [(ngModel)]="password" name="password"></ion-input>
-      </ion-item>
-      <ion-item>
-          <ion-label floating>First Name</ion-label>
-          <ion-input type="text" [(ngModel)]="first_name" name="first_name"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label floating>Last Name</ion-label>
-            <ion-input type="text" [(ngModel)]="last_name" name="last_name"></ion-input>
-          </ion-item>
   <ion-item>
-    
+    <ion-label floating>Email Address</ion-label>
+    <ion-input type="text" [(ngModel)]="email" name="email"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label floating>Password</ion-label>
+    <ion-input type="password" [(ngModel)]="password" name="password"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label floating>First Name</ion-label>
+    <ion-input type="text" [(ngModel)]="first_name" name="first_name"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label floating>Last Name</ion-label>
+    <ion-input type="text" [(ngModel)]="last_name" name="last_name"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Select Country</ion-label>
     <ion-select [(ngModel)]="selectedCountryAbbv" (ngModelChange)="onCountryCodeSelection($event)">
       <ion-option value="">--- Select Country Code ---</ion-option>
-      <ion-option *ngFor="let countryCode of allCountryCodes" value= {{countryCode.country_abbv}}>
-          {{countryCode.name}}
-         </ion-option>
+      <ion-option *ngFor="let countryCode of allCountryCodes" value={{countryCode.country_abbv}}>
+        {{countryCode.name}}
+      </ion-option>
     </ion-select>
   </ion-item>
   <ion-item>
-      <ion-label floating>Phone Number</ion-label>
-      <ion-input type="tel" [(ngModel)]="phone_number" name="phone_number"></ion-input>
-    </ion-item>
+    <ion-label floating>Cell Number</ion-label>
+    <ion-input type="tel" [(ngModel)]="phone_number" name="phone_number"></ion-input>
+  </ion-item>
 
   <div padding>
-      <button ion-button color="primary" block (click)="userSignUp();">Sign Up</button>
-      <button ion-button color="primary" block (click)="onFacebookLoginClick();">Signup with Facebook</button>
-    </div>
+    <button ion-button color="primary" block (click)="userSignUp();">Sign Up</button>
+    <button ion-button color="primary" block (click)="onFacebookLoginClick();">Signup with Facebook</button>
+  </div>
+  <ion-chip *ngIf="userSignUpMsg!=''">
+      <ion-label color="secondary">{{userSignUpMsg}}</ion-label>
+    </ion-chip>
 </ion-content>
