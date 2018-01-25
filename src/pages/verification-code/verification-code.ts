@@ -30,20 +30,17 @@ export class VerificationCodePage {
       .subscribe((result) => this.confirmVerificationResp(result));
   }
   confirmVerificationResp(result: any) {
-    //debugger;
+    debugger;
     if (result.status == true) {
-      debugger;
-      //this.verificationMsg = result.message;
-      //this.acctVerified = true;
-          this.storage.set('loggedId', '1');
+   debugger;
+         this.storage.set('loggedId', '1');
           this.storage.set('userId', result.memberCredentials.id);
           this.storage.set('email', result.memberCredentials.email);
           this.storage.set('first_name', result.memberCredentials.first_name);
           this.storage.set('last_name', result.memberCredentials.last_name);
           this.storage.set('userType', "1");
           this.storage.set('loggedInUserInfo', result);
-          //debugger;
-         // this.userLoggedId = true;
+        
           this.sharedServiceObj.setLoginStatus(true);
           this.ngZone.run(() => {
           this.navCtrl.push(DashboardPage,{notificationMsg:result.message.toUpperCase()});

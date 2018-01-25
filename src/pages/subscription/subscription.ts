@@ -1,5 +1,5 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, Platform,MenuController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 import { DashboardPage } from '../dashboard/dashboard';
@@ -39,7 +39,7 @@ export class SubscriptionPage {
     public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,
     public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform, 
-    public ngZone: NgZone) {
+    public ngZone: NgZone,public menuCtrl: MenuController) {
   }
 
   ionViewDidLoad() {
@@ -61,6 +61,12 @@ export class SubscriptionPage {
       }
     }
 
+  }
+  openMenu() {
+    debugger;
+   // this.menuCtrl.open();
+    this.menuCtrl.enable(true);
+    this.menuCtrl.toggle();
   }
   onPackageSelection($event: any) {
     //debugger;

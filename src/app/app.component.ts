@@ -51,8 +51,12 @@ export class MyApp {
     {
       this.isApp=true;
     }
+   
   }
-
+  ionViewWillEnter() { 
+   
+   // this.menuController.enable(true); 
+  }
   initializeApp() {
     this.platform.ready().then(() => {
 
