@@ -45,6 +45,7 @@
     "rxjs": "5.5.2",
     "sw-toolbox": "3.6.0",
     "zone.js": "0.8.18",
+    "cordova-browser": "~5.0.3",
     "cordova-android": "~7.0.0"
   },
   "devDependencies": {
@@ -54,12 +55,6 @@
   "description": "An Ionic project",
   "cordova": {
     "plugins": {
-      "cordova-plugin-facebook4": {
-        "APP_ID": "701598080041539",
-        "APP_NAME": "idx_company",
-        "com.idxcompany.managementportal": "701598080041539",
-        "IDX-Company": "idx_company"
-      },
       "cordova-plugin-advanced-http": {},
       "cordova-sqlite-storage": {},
       "ionic-plugin-keyboard": {},
@@ -70,9 +65,14 @@
       "cordova-plugin-geolocation": {
         "GEOLOCATION_USAGE_DESCRIPTION": "To locate you"
       },
-      "cordova-plugin-nativegeocoder": {}
+      "cordova-plugin-nativegeocoder": {},
+      "cordova-plugin-facebook4": {
+        "APP_ID": "701598080041539",
+        "APP_NAME": "TheIDXCompany"
+      }
     },
     "platforms": [
+      "browser",
       "android"
     ]
   }

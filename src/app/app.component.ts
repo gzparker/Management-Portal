@@ -24,6 +24,7 @@ export class MyApp {
   rootPage: any = HomePage;
   public userLoggedIn: boolean = false;
   public allCountryCodes: any[] = [];
+  public isApp=false;
   pages: Array<{ title: string, component: any }>;
 
   constructor(public platform: Platform,
@@ -43,6 +44,13 @@ export class MyApp {
       //{ title: 'List', component: ListPage }
     ];
     this.setLoginInitialStatus();
+    if(this.platform.is('core') || this.platform.is('mobileweb')) {
+      this.isApp=false;
+    }
+    else
+    {
+      this.isApp=true;
+    }
   }
 
   initializeApp() {

@@ -8,6 +8,7 @@ import { Storage } from '@ionic/storage';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from "rxjs/Subject";
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { DashboardPage } from '../../pages/dashboard/dashboard';
 import { FbConfirmPage } from '../../pages/fb-confirm/fb-confirm';
 import 'rxjs/add/operator/map';
@@ -29,9 +30,19 @@ export class UserProvider {
   public fbLoginStatus: any;
   public facebookObject: any;
   public fbAuthResp: any;
-  constructor(private http: Http, public sharedServiceObj: SharedProvider,
-    private storage: Storage, public modalCtrl: ModalController) {
+  public isApp=false;
+  constructor(public platform: Platform,private http: Http, public sharedServiceObj: SharedProvider,
+    private storage: Storage, public modalCtrl: ModalController,private fb: Facebook) {
     this.fbLoginDecision = new EventEmitter();
+    if(this.platform.is('core') || this.platform.is('mobileweb')) {
+      this.isApp=false;
+    }
+    else
+    {
+      this.isApp=true;
+    }
+    if(!this.isApp)
+    {
     FB.init({
       appId: '701598080041539',
       cookie: false,
@@ -43,16 +54,34 @@ export class UserProvider {
     this.facebookObject = FB;
     this.facebookObject.getLoginStatus(response => {
 
-      //alert('yes');
-      // this.statusChangeCallback(response);
       this.fbLoginStatus = response;
 
     }, true);
   }
+  else
+  {
+this.fb.browserInit(701598080041539,'v2.9');
+    this.facebookObject = this.fb;
+    let status=this.facebookObject.getLoginStatus();
+    
+    status.then((resp)=>{
+     // alert('yes');
+      //alert(JSON.stringify(resp));
+      //alert(resp.status);
+      this.fbLoginStatus = resp;
+    }).catch((error) => {
+     
+      console.log('Error getting location', error);
+    });
+  }
+    //this.fb.browserInit(701598080041539,'v2.9');
+    
+  
+  }
   onFacebookLoginClick(): void {
-
+//alert('inside');
     if (this.fbLoginStatus != undefined) {
-
+//alert('here');
       this.statusChangeCallback(this.fbLoginStatus);
     }
 
@@ -61,35 +90,76 @@ export class UserProvider {
 
     if (resp != undefined) {
       if (resp.status === 'connected') {
-
+//alert('1');
+if(!this.isApp)
+        {
         this.facebookObject.api('/me', { locale: 'en_US', fields: 'name, email,picture' }, this.setFacebookAuthentication.bind(this));
-
+        }
+        else
+        {
+          this.fb.api('/me?fields=id,name,email,picture',['public_profile', 'user_friends', 'email'])
+          .then((res: any) =>{this.setFacebookAuthentication(res)})
+          .catch(e => {console.log('Error getting location', e);});
+        }
       } else if (resp.status === 'not_authorized') {
-
+        //alert('2');
       } else {
-
-        this.facebookObject.login(this.checkFacebookResp.bind(this));
+        //alert('3');
+        if(!this.isApp)
+        {
+          this.facebookObject.login(this.checkFacebookResp.bind(this));
+        }
+       else
+       {
+        
+        this.fb.login(['public_profile', 'user_friends', 'email'])
+        .then((res: FacebookLoginResponse) =>{this.checkFacebookResp(res)})
+        .catch(e => {console.log('Error getting location', e);});
+       } 
 
       }
     }
     else {
-      this.facebookObject.login(this.checkFacebookResp.bind(this));
+     // alert('4');
+     if(!this.isApp)
+     {
+       this.facebookObject.login(this.checkFacebookResp.bind(this));
+     }
+    else
+    {
+    
+    this.fb.login(['public_profile', 'user_friends', 'email'])
+    .then((res: FacebookLoginResponse) =>{this.checkFacebookResp(res)})
+    .catch(e => {console.log('Error getting location', e);});
+    } 
     }
   };
   checkFacebookResp(resp: any) {
-
+//alert('new');
+//alert(JSON.stringify(resp));
     if (resp.authResponse) {
+      if(!this.isApp)
+      {
       this.facebookObject.api('/me', { locale: 'en_US', fields: 'name, email,picture' }, this.setFacebookAuthentication.bind(this));
+      }
+      else
+      {
+        this.fb.api('/me?fields=id,name,email,picture',['public_profile', 'user_friends', 'email'])
+      .then((res: any) =>{this.setFacebookAuthentication(res)})
+      .catch(e => {console.log('Error getting location', e);});
+      }
     }
 
   }
   setFacebookAuthentication(response: any): void {
-
+    //alert('here');
+    //alert(JSON.stringify(response));
     if (response.email) {
 
       this.storage.set('fbAuthResp', response);
-
-      this.fbEmailCheck(response.email).subscribe(result => this.checkFbEmail(result));
+      //alert('5');
+      //alert(JSON.stringify(response));
+     this.fbEmailCheck(response.email).subscribe(result => this.checkFbEmail(result));
     } else {
 
     }
