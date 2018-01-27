@@ -1,0 +1,33 @@
+<!--
+  Generated template for the CreateWebsitePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Create Website</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="createWebsite()">Save Website</button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-item>
+    <ion-label floating>Website Domain</ion-label>
+    <ion-input type="text" [(ngModel)]="website_domain" 
+    name="website_domain" id="website_domain"></ion-input>
+  </ion-item>
+  
+  <ion-item>
+    <ion-label>Is Active</ion-label>
+    <ion-checkbox color="royal" checked="false" [(ngModel)]="isActive" name="isActive" id="isActive">Is Active</ion-checkbox>
+  </ion-item>
+  <div padding>
+      <button ion-button color="primary" block (click)="createWebsite();">Save Website</button>
+    </div>
+</ion-content>

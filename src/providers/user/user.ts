@@ -379,6 +379,230 @@ if(!this.isApp)
       .map(this.extractData)
     return contactUsResp;
   }
+  deleteLead(lead_id:string){
+
+    let data = new URLSearchParams();
+ data.append('lead_id',lead_id);
+  let deleteLeadResp=this.http
+    .post(this.sharedServiceObj.apiBaseUrl+'members/deleteLead', data, this.headerOptions)
+    .map(this.extractData)
+    return deleteLeadResp;
+}
+leadDetail(lead_id:string,member_id:string){
+
+    let data = new URLSearchParams();
+ data.append('lead_id',lead_id);
+data.append('member_id',member_id);
+  let searchedListing=this.http
+    .post(this.sharedServiceObj.apiBaseUrl+'members/viewLeadDetails', data, this.headerOptions)
+    .map(this.extractData)
+    return searchedListing;
+}
+createLead(member_id:string,website_id:string,email:string,password:string,first_name:string,last_name:string,phone_office:number,phone_mobile:number,phone_home:number){
+let phone_office_num="";
+let phone_mobile_num="";
+let phone_home_num="";
+
+if(phone_office!=null)
+{
+  phone_office_num=phone_office.toString();
+}
+if(phone_mobile!=null)
+{
+  phone_mobile_num=phone_mobile.toString();
+}
+if(phone_home!=null)
+{
+  phone_home_num=phone_home.toString();
+}
+
+    let data = new URLSearchParams();
+data.append('email',email);
+data.append('password',password);
+data.append('first_name',first_name);
+data.append('last_name',last_name);
+data.append('phone_office',phone_office_num);
+data.append('phone_mobile',phone_mobile_num);
+data.append('phone_home',phone_home_num);
+data.append('website_id',website_id);
+
+  let searchedListing=this.http
+    .post(this.sharedServiceObj.apiBaseUrl+'members/createLead', data, this.headerOptions)
+    .map(this.extractData)
+    return searchedListing;
+}
+updateLead(website_id:string,lead_id:string,email:string,password:string,first_name:string,last_name:string,phone_office:number,phone_mobile:number,phone_home:number){
+let phone_office_num="";
+let phone_mobile_num="";
+let phone_home_num="";
+
+if(phone_office!=null)
+{
+  phone_office_num=phone_office.toString();
+}
+if(phone_mobile!=null)
+{
+  phone_mobile_num=phone_mobile.toString();
+}
+if(phone_home!=null)
+{
+  phone_home_num=phone_home.toString();
+}
+
+    let data = new URLSearchParams();
+ data.append('lead_id',lead_id);
+data.append('email',email);
+data.append('password',password);
+data.append('first_name',first_name);
+data.append('last_name',last_name);
+data.append('phone_office',phone_office_num);
+data.append('phone_mobile',phone_mobile_num);
+data.append('phone_home',phone_home_num);
+data.append('website_id',website_id);
+
+  let searchedListing=this.http
+    .post(this.sharedServiceObj.apiBaseUrl+'members/updateLead', data, this.headerOptions)
+    .map(this.extractData)
+    return searchedListing;
+}
+
+allLeads(user_id:string){
+
+    let data = new URLSearchParams();
+ data.append('member_id',user_id);
+
+  let savedListing=this.http
+    .post(this.sharedServiceObj.apiBaseUrl+'members/viewAllLeads', data, this.headerOptions)
+    .map(this.extractData)
+    return savedListing;
+}
+allUserWebsites(user_id:string){
+
+    let data = new URLSearchParams();
+ data.append('member_id',user_id);
+
+  let websiteListing=this.http
+    .post(this.sharedServiceObj.apiBaseUrl+'members/viewAllWebsites', data, this.headerOptions)
+    .map(this.extractData)
+    return websiteListing;
+}
+createWebsite(user_id:string,isActive:string,website_domain:string){
+//debugger;
+    let data = new URLSearchParams();
+    data.append('website_domain',website_domain);
+ data.append('member_id',user_id);
+ data.append('active',isActive);
+ data.append('mls_server_id',this.sharedServiceObj.mlsServerId);
+//debugger;
+  let websiteListing=this.http
+    .post(this.sharedServiceObj.apiBaseUrl+'members/createWebsite', data, this.headerOptions)
+    .map(this.extractData)
+    return websiteListing;
+}
+editWebsite(user_id:string,website_id:string){
+
+    let data = new URLSearchParams();
+ data.append('member_id',user_id);
+ data.append('id',website_id);
+
+  let websiteListing=this.http
+    .post(this.sharedServiceObj.apiBaseUrl+'members/editWebsite', data, this.headerOptions)
+    .map(this.extractData)
+    return websiteListing;
+}
+updateWebsite(user_id:string,isActive:string,website_domain:string,website_id:string){
+
+    let data = new URLSearchParams();
+    data.append('website_domain',website_domain);
+ data.append('member_id',user_id);
+ data.append('active',isActive);
+ data.append('id',website_id);
+ data.append('mls_server_id',this.sharedServiceObj.mlsServerId);
+
+  let websiteListing=this.http
+    .post(this.sharedServiceObj.apiBaseUrl+'members/updateWebsite', data, this.headerOptions)
+    .map(this.extractData)
+    return websiteListing;
+}
+deleteWebsite(user_id:string,website_id:string){
+
+    let data = new URLSearchParams();
+ data.append('member_id',user_id);
+ data.append('id',website_id);
+
+  let websiteListing=this.http
+    .post(this.sharedServiceObj.apiBaseUrl+'members/deleteWebsite', data, this.headerOptions)
+    .map(this.extractData)
+    return websiteListing;
+}
+allUserHotSheets(user_id:string){
+    let data = new URLSearchParams();
+ data.append('member_id',user_id);
+
+  let websiteListing=this.http
+    .post(this.sharedServiceObj.apiBaseUrl+'members/viewAllSavedHotsheets', data, this.headerOptions)
+    .map(this.extractData)
+    return websiteListing;
+}
+createHotSheet(user_id:string,website_id:string,mlsServerId:string,name:string,slug:string,json_search:any){
+
+let data = new URLSearchParams();
+ data.append('name',name);
+ data.append('member_id',user_id);
+ data.append('slug',slug);
+ data.append('mls_server_id',mlsServerId);
+ data.append('website_id',website_id);
+ data.append('json_search',json_search);
+//debugger;
+  let hotSheetCreatingResp=this.http
+    .post(this.sharedServiceObj.apiBaseUrl+'members/createHotsheet', data, this.headerOptions)
+    .map(this.extractData)
+    return hotSheetCreatingResp;
+}
+checkHotSheetSlug(slug:string,user_id:string){
+  let data = new URLSearchParams();
+ data.append('slug',slug);
+ data.append('member_id',user_id);
+  let hotSheetCheckResp=this.http
+    .post(this.sharedServiceObj.apiBaseUrl+'members/checkHotsheetSlug', data, this.headerOptions)
+    .map(this.extractData)
+    return hotSheetCheckResp;
+}
+editHotSheet(user_id:string,id:string){
+  let data = new URLSearchParams();
+ data.append('id',id);
+ data.append('member_id',user_id);
+  let hotSheetCheckResp=this.http
+    .post(this.sharedServiceObj.apiBaseUrl+'members/editSavedHotsheet', data, this.headerOptions)
+    .map(this.extractData)
+    return hotSheetCheckResp;
+}
+updateHotSheet(id:string,user_id:string,website_id:string,mlsServerId:string,name:string,slug:string,json_search:any){
+ // debugger;
+let data = new URLSearchParams();
+ data.append('name',name);
+ data.append('member_id',user_id);
+ data.append('slug',slug);
+ data.append('mls_server_id',mlsServerId);
+ data.append('website_id',website_id);
+ data.append('json_search',json_search);
+ data.append('id',id);
+
+  let hotSheetUpdatingResp=this.http
+    .post(this.sharedServiceObj.apiBaseUrl+'members/updateSavedHotsheet', data, this.headerOptions)
+    .map(this.extractData)
+    return hotSheetUpdatingResp;
+}
+deleteHotsheet(user_id:string,id:string){
+  let data = new URLSearchParams();
+ data.append('member_id',user_id);
+ data.append('id',id);
+
+let hotSheetDeletingResp=this.http
+    .post(this.sharedServiceObj.apiBaseUrl+'members/deleteSavedHotsheet', data, this.headerOptions)
+    .map(this.extractData)
+    return hotSheetDeletingResp;
+}
   private extractData(res: Response) {
     //debugger;
     return res.json();

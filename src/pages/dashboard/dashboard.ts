@@ -43,7 +43,7 @@ public notificationMsg:string="";
     //debugger;
     let member_id = this.storage.get('userId');
     member_id.then((data) => {
-      // debugger;
+    // debugger;
       this.userServiceObj.getMemberInfo(data)
         .subscribe((result) => this.userDetailedInfoResp(result));
     });

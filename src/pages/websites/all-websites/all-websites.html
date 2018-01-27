@@ -1,0 +1,45 @@
+<!--
+  Generated template for the AllWebsitesPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+      <button ion-button menuToggle start>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+    <ion-title>ALL WEBSITES</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="createWebsite();">Create Website</button>
+    </ion-buttons>
+  </ion-navbar>
+  
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list>
+    <ion-item-sliding *ngFor="let website of allWebsiteList">
+    <ion-item>
+      <h2>{{website.website}}</h2>
+      <p>Private Key:{{website.key_private}}</p>
+      <p>Public Key:{{website.key_public}}</p>
+      <p>Status:<span *ngIf="website.status==1">Yes</span>
+        <span *ngIf="website.status==0">No</span></p>
+    </ion-item>
+    <ion-item-options side="right">
+      <button ion-button color="danger" (click)="deleteWebsite(website)">
+        <ion-icon name="trash"></ion-icon>
+      </button>
+      <button ion-button color="danger" (click)="editWebsite(website.id)">
+          <ion-icon name="create"></ion-icon>
+        </button>
+    </ion-item-options>
+  </ion-item-sliding>
+  </ion-list>
+  <ion-chip *ngIf='allWebsiteList.length<=0&&websiteFoundMessage!=""'>
+      <ion-label color="danger">{{websiteFoundMessage}}</ion-label>
+  </ion-chip>
+</ion-content>

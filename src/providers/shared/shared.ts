@@ -23,6 +23,7 @@ export class SharedProvider {
   private headers: Headers = new Headers();
   private headerOptions: RequestOptions = new RequestOptions();
   public service_id = "2";
+  public mlsServerId = "29";
   public apiBaseUrl = "http://api.idx.company/api/";
   // public FB:any;
 

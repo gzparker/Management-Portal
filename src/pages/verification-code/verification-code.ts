@@ -30,9 +30,9 @@ export class VerificationCodePage {
       .subscribe((result) => this.confirmVerificationResp(result));
   }
   confirmVerificationResp(result: any) {
-    debugger;
+    //debugger;
     if (result.status == true) {
-   debugger;
+  // debugger;
          this.storage.set('loggedId', '1');
           this.storage.set('userId', result.memberCredentials.id);
           this.storage.set('email', result.memberCredentials.email);

@@ -76,7 +76,7 @@ export class LoginPage {
       if (result.memberCredentials) {
 
         if (result.memberCredentials.verified == "1") {
-
+debugger;
           this.storage.set('loggedId', '1');
           this.storage.set('userId', result.memberCredentials.id);
           this.storage.set('email', result.memberCredentials.email);

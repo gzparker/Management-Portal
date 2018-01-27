@@ -14,6 +14,9 @@ import { SharedProvider } from '../providers/shared/shared';
 import { UserProvider } from '../providers/user/user';
 import { LoginComponent } from '../components/login/login';
 import { DashboardPage } from '../pages/dashboard/dashboard';
+import { AllWebsitesPage } from '../pages/websites/all-websites/all-websites';
+import { CreateWebsitePage } from '../pages/websites/create-website/create-website';
+import { EditWebsitePage } from '../pages/websites/edit-website/edit-website';
 
 @Component({
   templateUrl: 'app.html'
@@ -133,7 +136,6 @@ export class MyApp {
     }
   }
   getAllCountryCodesResp(result: any): void {
-    //debugger;
     let countryCodesDummy = [];
     if (result.status == true) {
       this.storage.set("availableCountryList", result.countryArray);
@@ -142,7 +144,6 @@ export class MyApp {
   }
   openPage(pageNumber) {
     if (pageNumber == "1") {
-      //debugger;
       this.nav.setRoot(HomePage);
     }
     else if (pageNumber == "2") {
@@ -154,10 +155,9 @@ export class MyApp {
     if (pageNumber == "4") {
       this.nav.setRoot(DashboardPage);
     }
-    //else if(page=="Login")
-    // {
-
-    //}
+    if (pageNumber == "5") {
+      this.nav.setRoot(AllWebsitesPage);
+    }
   }
   logOut() {
     this.storage.remove('userId');

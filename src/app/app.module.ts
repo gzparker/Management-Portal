@@ -20,6 +20,11 @@ import { FbConfirmPage } from '../pages/fb-confirm/fb-confirm';
 import { UserVerificationPage } from '../pages/user-verification/user-verification';
 import { VerificationCodePage } from '../pages/verification-code/verification-code';
 
+import { AllWebsitesPage } from '../pages/websites/all-websites/all-websites';
+import { CreateWebsitePage } from '../pages/websites/create-website/create-website';
+import { EditWebsitePage } from '../pages/websites/edit-website/edit-website';
+import { WebsiteDetailPage } from '../pages/websites/website-detail/website-detail';
+
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { UserProvider } from '../providers/user/user';
@@ -31,8 +36,8 @@ import { SubscriptionProvider } from '../providers/subscription/subscription';
     MyApp,
     HomePage,
     LoginPage,
-    RegisterPage, DashboardPage, FbConfirmPage, UserVerificationPage,
-    VerificationCodePage, SubscriptionPage
+    RegisterPage, DashboardPage, FbConfirmPage, UserVerificationPage,WebsiteDetailPage,
+    VerificationCodePage, SubscriptionPage,AllWebsitesPage,CreateWebsitePage,EditWebsitePage
     //ListPage
   ],
   imports: [
@@ -48,8 +53,8 @@ import { SubscriptionProvider } from '../providers/subscription/subscription';
     MyApp,
     HomePage,
     LoginPage,
-    RegisterPage, DashboardPage, FbConfirmPage, UserVerificationPage,
-    VerificationCodePage, SubscriptionPage
+    RegisterPage, DashboardPage, FbConfirmPage, UserVerificationPage,WebsiteDetailPage,
+    VerificationCodePage, SubscriptionPage,AllWebsitesPage,CreateWebsitePage,EditWebsitePage
     //ListPage
   ],
   providers: [

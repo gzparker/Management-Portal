@@ -63,7 +63,7 @@ export class SubscriptionPage {
 
   }
   openMenu() {
-    debugger;
+    //debugger;
    // this.menuCtrl.open();
     this.menuCtrl.enable(true);
     this.menuCtrl.toggle();
@@ -93,7 +93,7 @@ export class SubscriptionPage {
     //debugger;
     let member_id = this.storage.get('userId');
     member_id.then((memberResp) => {
-      // debugger;
+      //debugger;
       dataObj.member_id = memberResp;
 
       this.subscriptionObj.saveUserSubscription(dataObj).
@@ -106,14 +106,14 @@ export class SubscriptionPage {
     //debugger;
     if (data.status == true) {
       this.ngZone.run(() => {
-        //debugger;
+      //  debugger;
         //this.userSubscribed = true;
         //this.subscriptionMsg = data.message;
         this.navCtrl.push(DashboardPage,{notificationMsg:data.message.toUpperCase()});
       });
     }
     else {
-
+      this.subscriptionMsg=data.message.toUpperCase();
     }
   }
   setSelectedPackage(packageId: any) {
