@@ -11,6 +11,9 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Subscription</ion-title>
+    <ion-buttons end>
+        <button ion-button (click)="saveSubscribeUser();" [disabled]="!subscribeForm.valid">Subscribe</button>
+      </ion-buttons>
   </ion-navbar>
 
 </ion-header>
@@ -27,6 +30,10 @@
           <button ion-button clear item-end>View</button>
         </ion-item>
       </ion-list>-->
+      <ion-chip *ngIf="subscriptionMsg!=''">
+          <ion-label color="danger">{{subscriptionMsg}}</ion-label>
+        </ion-chip>
+      <form role="form" data-toggle="validator" #subscribeForm="ngForm"> 
   <ion-list *ngIf="!userSubscribed">
     <!--<ion-item>
            <ion-label>Select Packages</ion-label>
@@ -46,25 +53,26 @@
     </ion-list>
     <ion-item>
       <ion-label floating>Card Name</ion-label>
-      <ion-input type="text" [(ngModel)]="full_name" name="full_name"></ion-input>
+      <ion-input type="text" [(ngModel)]="full_name" name="full_name" required></ion-input>
     </ion-item>
     <ion-item>
       <ion-label floating>Credit Card Number</ion-label>
-      <ion-input type="text" [(ngModel)]="cc_number" name="cc_number"></ion-input>
+      <ion-input type="text" [(ngModel)]="cc_number" name="cc_number" required></ion-input>
     </ion-item>
     <ion-item>
       <ion-label>Expiry Date</ion-label>
-      <ion-datetime displayFormat="MM/YYYY" pickerFormat="MM/YYYY" [(ngModel)]="expiryDate"></ion-datetime>
+      <ion-datetime displayFormat="MM/YYYY" pickerFormat="MM/YYYY" [(ngModel)]="expiryDate" name="expiryDate" required></ion-datetime>
     </ion-item>
     <ion-item>
       <ion-label floating>Credit Card CVC</ion-label>
-      <ion-input type="text" [(ngModel)]="cvc" name="cvc"></ion-input>
+      <ion-input type="text" [(ngModel)]="cvc" name="cvc" required></ion-input>
     </ion-item>
     <div padding>
       <button ion-button color="primary" block (click)="saveSubscribeUser();">Subscribe</button>
     </div>
   </ion-list>
+      </form>
   <ion-chip *ngIf="subscriptionMsg!=''">
-    <ion-label color="secondary">{{subscriptionMsg}}</ion-label>
+    <ion-label color="danger">{{subscriptionMsg}}</ion-label>
   </ion-chip>
 </ion-content>

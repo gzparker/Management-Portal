@@ -72,43 +72,45 @@ export class SubscriptionPage {
     //debugger;
   }
   saveSubscribeUser() {
+if(this.selectedPackagesList.length>0)
+{
+  let dataObj = {
+    member_id: "",
+    full_name: "",
+    cc_number: "",
+    exp_month: "",
+    exp_year: "",
+    cvc: "",
+    service_plans_array: []
 
-    let dataObj = {
-      member_id: "",
-      full_name: "",
-      cc_number: "",
-      exp_month: "",
-      exp_year: "",
-      cvc: "",
-      service_plans_array: []
+  };
 
-    };
-
-    dataObj.full_name = this.full_name;
-    dataObj.cc_number = this.cc_number;
-    dataObj.exp_month = this.expiryDate.split("-")[1];
-    dataObj.exp_year = this.expiryDate.split("-")[0];
-    dataObj.cvc = this.cvc;
-    dataObj.service_plans_array = this.selectedPackagesList;
+  dataObj.full_name = this.full_name;
+  dataObj.cc_number = this.cc_number;
+  dataObj.exp_month = this.expiryDate.split("-")[1];
+  dataObj.exp_year = this.expiryDate.split("-")[0];
+  dataObj.cvc = this.cvc;
+  dataObj.service_plans_array = this.selectedPackagesList;
+  //debugger;
+  let member_id = this.storage.get('userId');
+  member_id.then((memberResp) => {
     //debugger;
-    let member_id = this.storage.get('userId');
-    member_id.then((memberResp) => {
-      //debugger;
-      dataObj.member_id = memberResp;
+    dataObj.member_id = memberResp;
 
-      this.subscriptionObj.saveUserSubscription(dataObj).
-        subscribe((result) => this.saveSubscribeUserResp(result));
-    });
-
-
+    this.subscriptionObj.saveUserSubscription(dataObj).
+      subscribe((result) => this.saveSubscribeUserResp(result));
+  });
+}
+else
+{
+  this.subscriptionMsg="Please select package list.";
+}
   }
   saveSubscribeUserResp(data: any) {
     //debugger;
     if (data.status == true) {
       this.ngZone.run(() => {
-      //  debugger;
-        //this.userSubscribed = true;
-        //this.subscriptionMsg = data.message;
+     
         this.navCtrl.push(DashboardPage,{notificationMsg:data.message.toUpperCase()});
       });
     }

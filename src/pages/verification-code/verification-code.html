@@ -8,23 +8,26 @@
 
   <ion-navbar>
     <ion-title>Enter Verification Code</ion-title>
+    <ion-buttons end>
+        <button ion-button (click)="confirmVerification();" [disabled]="!verificationCodeForm.valid">Confirm</button>
+    </ion-buttons>
   </ion-navbar>
-  <!--<ion-buttons end>
-        <button ion-button (click)="closeModal()">Close</button>
-        </ion-buttons>-->
+  
 </ion-header>
 
 
 <ion-content padding>
+  <form role="form" data-toggle="validator" #verificationCodeForm="ngForm">
   <ion-item *ngIf="!acctVerified">
-      <ion-label floating>Verification Code</ion-label>
-    <ion-input type="text" [(ngModel)]="verification_code" name="verification_code" id="verification_code"></ion-input>
+    <ion-label floating>Verification Code</ion-label>
+    <ion-input type="text" [(ngModel)]="verification_code" name="verification_code" id="verification_code" required></ion-input>
   </ion-item>
 
 
   <div padding *ngIf="!acctVerified">
-    <button ion-button color="primary" block (click)="confirmVerification();">Confirm</button>
+    <button ion-button color="primary" block (click)="confirmVerification();" [disabled]="!verificationCodeForm.valid">Confirm</button>
   </div>
+</form>
   <ion-chip *ngIf="verificationMsg!=''">
     <ion-label color="secondary">{{verificationMsg}}</ion-label>
   </ion-chip>

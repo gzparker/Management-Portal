@@ -8,6 +8,9 @@
 
   <ion-navbar>
     <ion-title>Set Verification Info</ion-title>
+    <ion-buttons end>
+        <button ion-button (click)="verifyUser();" [disabled]="!userVerificationForm.valid">Verify</button>
+    </ion-buttons>
   </ion-navbar>
   <!--<ion-buttons end>
       <button ion-button (click)="closeModal()">Close</button>
@@ -28,10 +31,11 @@
   </ion-item>
 </ion-list>-->
   <!--<ion-list *ngIf="verify_by=='phone'">-->
+  <form role="form" data-toggle="validator" #userVerificationForm="ngForm">
   <ion-list>
     <ion-item>
       <ion-label>Select Country</ion-label>
-      <ion-select [(ngModel)]="selectedCountryAbbv" (ngModelChange)="onCountryCodeSelection($event)">
+      <ion-select [(ngModel)]="selectedCountryAbbv" (ngModelChange)="onCountryCodeSelection($event)" required name="selectedCountryAbbv">
         <ion-option value="">--- Select Country Code ---</ion-option>
         <ion-option *ngFor="let countryCode of allCountryCodes" value={{countryCode.country_abbv}}>
           {{countryCode.name}}
@@ -40,14 +44,15 @@
     </ion-item>
     <ion-item>
       <ion-label floating>Cell Number</ion-label>
-      <ion-input type="tel" [(ngModel)]="phone_number_verify" name="phone_number_verify"></ion-input>
+      <ion-input type="tel" [(ngModel)]="phone_number_verify" name="phone_number_verify" required></ion-input>
     </ion-item>
 
   </ion-list>
 
   <div padding>
-    <button ion-button color="primary" block (click)="verifyUser();">Verify</button>
+    <button ion-button color="primary" block (click)="verifyUser();" [disabled]="!userVerificationForm.valid">Verify</button>
   </div>
+  </form>
   <ion-chip *ngIf="verificationMsg!=''">
     <ion-label color="secondary">{{verificationMsg}}</ion-label>
   </ion-chip>

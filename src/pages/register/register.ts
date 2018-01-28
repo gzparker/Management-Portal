@@ -148,7 +148,7 @@ export class RegisterPage {
       //  debugger;
       //this.modalType=3;
       this.userCreated = true;
-      this.userSignUpMsg = result.message;
+      this.userSignUpMsg = result.message.toUpperCase();
     }
 
   }

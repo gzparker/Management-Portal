@@ -60,7 +60,7 @@ export class UserProvider {
   }
   else
   {
-this.fb.browserInit(701598080041539,'v2.9');
+    this.fb.browserInit(701598080041539,'v2.9');
     this.facebookObject = this.fb;
     let status=this.facebookObject.getLoginStatus();
     
@@ -91,7 +91,7 @@ this.fb.browserInit(701598080041539,'v2.9');
     if (resp != undefined) {
       if (resp.status === 'connected') {
 //alert('1');
-if(!this.isApp)
+    if(!this.isApp)
         {
         this.facebookObject.api('/me', { locale: 'en_US', fields: 'name, email,picture' }, this.setFacebookAuthentication.bind(this));
         }
