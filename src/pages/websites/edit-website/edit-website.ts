@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams, ModalController, Platform,
   MenuController,LoadingController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
-import { DashboardPage } from '../../dashboard/dashboard';
+import { AllWebsitesPage } from '../../websites/all-websites/all-websites';
 import { FbConfirmPage } from '../../fb-confirm/fb-confirm';
 import { AlertController } from 'ionic-angular';
 
@@ -102,7 +102,7 @@ export class EditWebsitePage {
   updateWebsiteResp(result:any):void{
   this.websiteUpdateMsg="Website has been updated successfully.";
   this.ngZone.run(() => {
-    this.navCtrl.push(DashboardPage,{notificationMsg:this.websiteUpdateMsg.toUpperCase()});
+    this.navCtrl.push(AllWebsitesPage,{notificationMsg:this.websiteUpdateMsg.toUpperCase()});
     });
   }
 }

@@ -26,21 +26,21 @@ export class VerificationCodePage {
     public sharedServiceObj: SharedProvider, public ngZone: NgZone) {
   }
   confirmVerification() {
-    this.userServiceObj.confirmVerificationCode(this.master_id, this.verification_code)
-      .subscribe((result) => this.confirmVerificationResp(result));
+    //this.navCtrl.push(DashboardPage);
+ this.userServiceObj.confirmVerificationCode(this.master_id, this.verification_code)
+    .subscribe((result) => this.confirmVerificationResp(result));
   }
   confirmVerificationResp(result: any) {
-    //debugger;
+  
     if (result.status == true) {
-  // debugger;
-         this.storage.set('loggedId', '1');
+  
+          this.storage.set('loggedId', '1');
           this.storage.set('userId', result.memberCredentials.id);
           this.storage.set('email', result.memberCredentials.email);
           this.storage.set('first_name', result.memberCredentials.first_name);
           this.storage.set('last_name', result.memberCredentials.last_name);
           this.storage.set('userType', "1");
           this.storage.set('loggedInUserInfo', result);
-        
           this.sharedServiceObj.setLoginStatus(true);
           this.ngZone.run(() => {
           this.navCtrl.push(DashboardPage,{notificationMsg:result.message.toUpperCase()});

@@ -5,8 +5,11 @@ import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 import { DashboardPage } from '../../dashboard/dashboard';
 import { FbConfirmPage } from '../../fb-confirm/fb-confirm';
-import { CreateWebsitePage } from '../../websites/create-website/create-website';
-import { EditWebsitePage } from '../../websites/edit-website/edit-website';
+
+import { CreateLeadPage } from '../../leads/create-lead/create-lead';
+import { LeadDetailPage } from '../../leads/lead-detail/lead-detail';
+import { EditLeadPage } from '../../leads/edit-lead/edit-lead';
+
 import { AlertController } from 'ionic-angular';
 
 import { UserVerificationPage } from '../../user-verification/user-verification';
@@ -14,9 +17,8 @@ import { UserVerificationPage } from '../../user-verification/user-verification'
 import { SharedProvider } from '../../../providers/shared/shared';
 import { UserProvider } from '../../../providers/user/user';
 import { SubscriptionProvider } from '../../../providers/subscription/subscription';
-
 /**
- * Generated class for the AllWebsitesPage page.
+ * Generated class for the AllLeadsPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -24,15 +26,22 @@ import { SubscriptionProvider } from '../../../providers/subscription/subscripti
 
 @IonicPage()
 @Component({
-  selector: 'page-all-websites',
-  templateUrl: 'all-websites.html',
+  selector: 'page-all-leads',
+  templateUrl: 'all-leads.html',
 })
-export class AllWebsitesPage {
+export class AllLeadsPage {
   public notificationMsg:string="";
-  public websiteId:string="";
-  public allWebsiteList:any[]=[];
+  public leadId:string="";
+  public allLeadsList:any[]=[];
+  
+  public leadsFoundMessage="";
   public userId:string="";
-  public websiteFoundMessage="";
+  
+  public title: string = 'Delete Lead';
+  public message: string = 'Are you sure to delete this lead!';
+  public confirmClicked: boolean = false;
+  public cancelClicked: boolean = false;
+  public isOpen: boolean = false;
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,
     public sharedServiceObj: SharedProvider, private storage: Storage,
@@ -45,50 +54,51 @@ export class AllWebsitesPage {
   }
 
   ionViewDidLoad() {
-    //console.log('ionViewDidLoad AllWebsitesPage');
-    
     let member_id = this.storage.get('userId');
     //debugger;
     member_id.then((data) => {
       this.userId=data;
-      this.viewAllWebsite();
+      this.viewAllLeads();
     });
-   // this.viewAllWebsite();
- 
   }
-  viewAllWebsite():void{
-//debugger;
+  createLead()
+  {
+    this.navCtrl.push(CreateLeadPage);
+  }
+  viewAllLeads():void{
     if(this.userId!="")
     {
-      let loader = this.loadingCtrl.create({
-        content: "Please wait...",
-        duration: 700
-      });
-      loader.present();
-     this.userServiceObj.allUserWebsites(this.userId.toString())
-    .subscribe((result) => this.viewAllWebsiteResp(result));
+  this.userServiceObj.allLeads(this.userId.toString())
+    .subscribe((result) => this.viewAllLeadsResp(result));
     }
     
   }
-  viewAllWebsiteResp(result:any):void{
-  
+  viewAllLeadsResp(result:any):void{
+    //debugger;
     if(result.status==true)
     {
-      this.allWebsiteList=result.result;   
+      
+      this.allLeadsList=result.results;
+    //  debugger;
     }
     else
     {
-      this.allWebsiteList=[];
-      this.websiteFoundMessage="No website found.";
+      this.allLeadsList=[];
+      this.leadsFoundMessage="No leads found.";
     }
     
   }
-  
-  deleteWebsite(website:any):void{
+  editLead(leadId:string){
+this.navCtrl.push(EditLeadPage,{leadId:leadId});
+  }
+  leadDetail(leadId:string){
+    this.navCtrl.push(LeadDetailPage,{leadId:leadId});
+      }
+  deleteLead(lead:any):void{
 
     let confirm = this.alertCtrl.create({
-      title: 'Delete Website?',
-      message: 'Are you sure to delete this website?',
+      title: 'Delete Lead?',
+      message: 'Are you sure to delete this lead?',
       buttons: [
         {
           text: 'Cancel',
@@ -99,42 +109,29 @@ export class AllWebsitesPage {
         {
           text: 'Ok',
           handler: () => {
-            let selectedIndex = this.allWebsiteList.indexOf(website);
+            let selectedIndex = this.allLeadsList.indexOf(lead);
             if (selectedIndex >= 0) {
-            this.allWebsiteList.splice(selectedIndex, 1);
+            this.allLeadsList.splice(selectedIndex, 1);
             }
-            if(this.allWebsiteList.length<=0)
+            if(this.allLeadsList.length<=0)
             {
-              this.websiteFoundMessage="All websites have been deleted.Please add new website.";
+              this.leadsFoundMessage="All leads have been deleted.Please add new lead.";
               this.notificationMsg="";
             }
-           this.userServiceObj.deleteWebsite(this.userId.toString(),website.id)
-           .subscribe((result) => this.deleteWebsiteResp(result,website));
-         
+            this.userServiceObj.deleteLead(lead.lead_id)
+            .subscribe((result) => this.deleteLeadResp(result));
           }
         }
       ]
     });
     confirm.present();
-
-    
-    
+   
   }
-  deleteWebsiteResp(result:any,website:any):void{
+  deleteLeadResp(result:any):void{
     //debugger;
     if(result.status)
     {
-     
-      
-    // this.viewAllWebsite();
+     //this.viewAllLeads();
     }
-  }
-  createWebsite(){
-    this.navCtrl.push(CreateWebsitePage);
-  }
-  editWebsite(id:any){
-    this.navCtrl.push(EditWebsitePage, {
-      websiteId: id
-    });
   }
 }

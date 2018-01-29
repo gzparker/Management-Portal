@@ -25,6 +25,15 @@ import { CreateWebsitePage } from '../pages/websites/create-website/create-websi
 import { EditWebsitePage } from '../pages/websites/edit-website/edit-website';
 import { WebsiteDetailPage } from '../pages/websites/website-detail/website-detail';
 
+import { AllLeadsPage } from '../pages/leads/all-leads/all-leads';
+import { CreateLeadPage } from '../pages/leads/create-lead/create-lead';
+import { LeadDetailPage } from '../pages/leads/lead-detail/lead-detail';
+import { EditLeadPage } from '../pages/leads/edit-lead/edit-lead';
+
+import { AllHotSheetsPage } from '../pages/hotsheets/all-hot-sheets/all-hot-sheets';
+import { CreateHotSheetPage } from '../pages/hotsheets/create-hot-sheet/create-hot-sheet';
+import { EditHotSheetPage } from '../pages/hotsheets/edit-hot-sheet/edit-hot-sheet';
+
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { UserProvider } from '../providers/user/user';
@@ -34,10 +43,9 @@ import { SubscriptionProvider } from '../providers/subscription/subscription';
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
-    LoginPage,
-    RegisterPage, DashboardPage, FbConfirmPage, UserVerificationPage,WebsiteDetailPage,
-    VerificationCodePage, SubscriptionPage,AllWebsitesPage,CreateWebsitePage,EditWebsitePage
+    HomePage,LoginPage,RegisterPage, DashboardPage, FbConfirmPage, UserVerificationPage,
+    WebsiteDetailPage,LeadDetailPage,EditLeadPage,CreateLeadPage,AllLeadsPage,VerificationCodePage, 
+    SubscriptionPage,AllWebsitesPage,CreateWebsitePage,EditWebsitePage
     //ListPage
   ],
   imports: [
@@ -51,10 +59,9 @@ import { SubscriptionProvider } from '../providers/subscription/subscription';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage,
-    LoginPage,
-    RegisterPage, DashboardPage, FbConfirmPage, UserVerificationPage,WebsiteDetailPage,
-    VerificationCodePage, SubscriptionPage,AllWebsitesPage,CreateWebsitePage,EditWebsitePage
+    HomePage,LoginPage,RegisterPage, DashboardPage, FbConfirmPage, UserVerificationPage,WebsiteDetailPage,
+    LeadDetailPage,EditLeadPage,CreateLeadPage,AllLeadsPage,VerificationCodePage, SubscriptionPage,
+    AllWebsitesPage,CreateWebsitePage,EditWebsitePage
     //ListPage
   ],
   providers: [

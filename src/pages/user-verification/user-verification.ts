@@ -2,6 +2,7 @@ import { Component, ViewChild, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, ModalController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { SharedProvider } from '../../providers/shared/shared';
+import { DashboardPage } from '../dashboard/dashboard';
 import { UserProvider } from '../../providers/user/user';
 import { VerificationCodePage } from '../verification-code/verification-code';
 /**
@@ -68,8 +69,7 @@ export class UserVerificationPage {
       country_abbv: this.selectedCountryAbbv,
       verify_by: this.verify_by
     };
-
-    //debugger;
+   //debugger;
     this.userServiceObj.sendVerificationInfo(dataObj)
       .subscribe((result) => this.verifyUserResp(result));
   }
@@ -80,9 +80,9 @@ export class UserVerificationPage {
       // this.verificationModal.close();
       this.acctVerified = false;
       this.verification_code = "";
-      //this.modalType=4;
-      //this.openUserVerificationCodeModal();
+   
       this.ngZone.run(() => {
+     
       this.navCtrl.push(VerificationCodePage, { master_id: this.master_id });
       });
       //this.closeModal();
@@ -115,10 +115,9 @@ export class UserVerificationPage {
 
   }
   getAllCountryCodesResp(result: any): void {
-
+//debugger;
     let countryCodesDummy = [];
     if (result.status == true) {
-
       this.allCountryCodes = result.countryArray;
       this.setCountryInfo();
     }
@@ -127,24 +126,34 @@ export class UserVerificationPage {
   setCountryInfo() {
     //debugger;
     let countryGeoInfo = this.storage.get("userCountryInfo");
-    if (this.selectedCountryAbbv == "") {
+    //if (this.selectedCountryAbbv == "") {
+     // debugger;
       countryGeoInfo.then((data) => {
+        //debugger;
         if (data == null) {
-          //debugger;
+         
           this.selectedCountryAbbv = "US";
+          this.setCountryCode();
         }
         else {
+        
           this.selectedCountryAbbv = data.countryCode;
-
+          
+          this.setCountryCode();
         }
 
       });
-    }
+      //debugger;
+    //}
    // debugger;
+    
+  }
+  setCountryCode()
+  {
     let foundCountry = this.allCountryCodes.filter(
       country => country.country_abbv === this.selectedCountryAbbv);
+   
     this.selectedCountryCode = foundCountry[0].country_code;
-    //debugger;
   }
   onCountryCodeSelection($event: any): void {
     let selectedCountryCodeData: any;

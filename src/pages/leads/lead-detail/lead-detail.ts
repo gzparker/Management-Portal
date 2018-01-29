@@ -3,8 +3,12 @@ import { IonicPage, NavController, NavParams, ModalController, Platform,
   MenuController,LoadingController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
+import { DashboardPage } from '../../dashboard/dashboard';
 import { FbConfirmPage } from '../../fb-confirm/fb-confirm';
-import { AllWebsitesPage } from '../../websites/all-websites/all-websites';
+
+import { CreateLeadPage } from '../../leads/create-lead/create-lead';
+import { EditLeadPage } from '../../leads/edit-lead/edit-lead';
+
 import { AlertController } from 'ionic-angular';
 
 import { UserVerificationPage } from '../../user-verification/user-verification';
@@ -13,7 +17,7 @@ import { SharedProvider } from '../../../providers/shared/shared';
 import { UserProvider } from '../../../providers/user/user';
 import { SubscriptionProvider } from '../../../providers/subscription/subscription';
 /**
- * Generated class for the CreateWebsitePage page.
+ * Generated class for the LeadDetailPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -21,13 +25,11 @@ import { SubscriptionProvider } from '../../../providers/subscription/subscripti
 
 @IonicPage()
 @Component({
-  selector: 'page-create-website',
-  templateUrl: 'create-website.html',
+  selector: 'page-lead-detail',
+  templateUrl: 'lead-detail.html',
 })
-export class CreateWebsitePage {
-  public website_domain:string="";
-  public websiteCreateMsg:string="";
-  public isActive:boolean=true;
+export class LeadDetailPage {
+  public leadId:string="";
   public userId:string="";
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,
@@ -37,39 +39,16 @@ export class CreateWebsitePage {
   }
 
   ionViewDidLoad() {
-    let member_id = this.storage.get('userId');
-    //debugger;
-    member_id.then((data) => {
-      this.userId=data;
-    });
-  }
-  createWebsite():void{
-    if(this.userId!=""){
-    //this.domainAccess=this.localStorageService.get('domainAccess');
-    let isActiveFinal="1";
-  
-     //if(this.domainAccess)
-     //{
-       if(this.isActive==true)
-       {
-         isActiveFinal="1";
-       }
-       else
-       {
-         isActiveFinal="0";
-       }
-       
-  
-  this.userServiceObj.createWebsite(this.userId,isActiveFinal,this.website_domain)
-    .subscribe((result) => this.createWebsiteResp(result));
-    // }
+    if(this.navParams.get('leadId')!=undefined)
+      {
+        this.leadId=this.navParams.get('leadId');
       }
   }
-  createWebsiteResp(result:any):void{
-  
-  this.websiteCreateMsg="Website has been created successfully.";
-  this.ngZone.run(() => {
-  this.navCtrl.push(AllWebsitesPage,{notificationMsg:this.websiteCreateMsg.toUpperCase()});
-  });
-  }
+  editLead(){
+    if(this.leadId!="")
+    {
+      this.navCtrl.push(EditLeadPage,{leadId:this.leadId});
+    }
+    
+      }
 }

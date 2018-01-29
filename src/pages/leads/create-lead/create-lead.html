@@ -1,0 +1,64 @@
+<!--
+  Generated template for the CreateLeadPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <button ion-button menuToggle start>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+  <ion-title>Create Lead</ion-title>
+  <ion-buttons end>
+    <button ion-button (click)="createLead();" [disabled]="!leadForm.valid">Create Lead</button>
+  </ion-buttons>
+</ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <form role="form" data-toggle="validator" #leadForm="ngForm">
+        <ion-item>
+          <ion-label floating>First Name</ion-label>
+          <ion-input type="text" required [(ngModel)]="firstName" name="firstName" id="firstName"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>Last Name</ion-label>
+            <ion-input type="text" required [(ngModel)]="lastName" name="lastName" id="lastName"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>Email</ion-label>
+            <ion-input type="email" required [(ngModel)]="email" name="email" [email]="true"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>Password</ion-label>
+            <ion-input type="password" required [(ngModel)]="password" name="password" id="password"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Select Website</ion-label>
+            <ion-select [(ngModel)]="selectedWebsite" (ngModelChange)="onWebsiteSelection($event)" name="selectedWebsite" required>
+             <ion-option *ngFor="let website of allWebsiteList" value= {{website.id}}>
+                {{website.website}}
+              </ion-option>
+            </ion-select>
+       </ion-item>
+        <ion-item>
+            <ion-label floating>Mobile Number</ion-label>
+            <ion-input type="text" required [(ngModel)]="mobileNumber" name="mobileNumber" id="mobileNumber" pattern="^[0-9]*$"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>Office Number</ion-label>
+            <ion-input type="text" required [(ngModel)]="officeNumber" name="officeNumber" id="officeNumber" pattern="^[0-9]*$"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>Home Number</ion-label>
+            <ion-input type="text" required [(ngModel)]="homeNumber" name="homeNumber" id="homeNumber" pattern="^[0-9]*$"></ion-input>
+        </ion-item>
+        <div padding>
+            <button ion-button color="primary" block (click)="createLead();" [disabled]="!leadForm.valid">Create Lead</button>
+        </div>
+    </form>
+</ion-content>

@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild,AfterViewInit } from '@angular/core';
 import { Nav, Platform, MenuController, NavController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -18,6 +18,15 @@ import { AllWebsitesPage } from '../pages/websites/all-websites/all-websites';
 import { CreateWebsitePage } from '../pages/websites/create-website/create-website';
 import { EditWebsitePage } from '../pages/websites/edit-website/edit-website';
 
+import { AllLeadsPage } from '../pages/leads/all-leads/all-leads';
+import { CreateLeadPage } from '../pages/leads/create-lead/create-lead';
+import { LeadDetailPage } from '../pages/leads/lead-detail/lead-detail';
+import { EditLeadPage } from '../pages/leads/edit-lead/edit-lead';
+
+import { AllHotSheetsPage } from '../pages/hotsheets/all-hot-sheets/all-hot-sheets';
+import { CreateHotSheetPage } from '../pages/hotsheets/create-hot-sheet/create-hot-sheet';
+import { EditHotSheetPage } from '../pages/hotsheets/edit-hot-sheet/edit-hot-sheet';
+declare var google: any;
 @Component({
   templateUrl: 'app.html'
 })
@@ -29,7 +38,10 @@ export class MyApp {
   public allCountryCodes: any[] = [];
   public isApp=false;
   pages: Array<{ title: string, component: any }>;
-
+  public geoCoderData={
+    country:"",
+    countryCode:""
+  }
   constructor(public platform: Platform,
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
@@ -57,7 +69,7 @@ export class MyApp {
    
   }
   ionViewWillEnter() { 
-   
+   //debugger;
    // this.menuController.enable(true); 
   }
   initializeApp() {
@@ -66,9 +78,14 @@ export class MyApp {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       this.clearAllStorageElement();
+      
       this.loadAvailableCountries();
       this.setUserCurrentGeoLocation();
     });
+  }
+  ionViewDidLoad() {
+    //debugger;
+    
   }
   clearAllStorageElement() {
     this.storage.remove("userCurrentLocation");
@@ -76,11 +93,9 @@ export class MyApp {
     this.storage.remove("availableCountryList");
   }
   setUserCurrentGeoLocation() {
-    //debugger;
+  
     this.geolocation.getCurrentPosition().then((resp) => {
-      // debugger;
-      // resp.coords.latitude
-      // resp.coords.longitude
+  
       this.storage.set("userCurrentLatitude", resp.coords.latitude);
       this.storage.set("userCurrentLongitude", resp.coords.longitude);
       this.setUserCountry(resp.coords.latitude, resp.coords.longitude);
@@ -89,20 +104,56 @@ export class MyApp {
     });
 
   }
+  AfterViewInit(){
+   // debugger;
+  }
   setUserCountry(latitude: any, longitude: any) {
-    //debugger;
-    this.nativeGeocoder.reverseGeocode(latitude, longitude)
+ 
+    if(this.isApp)
+    {
+      this.nativeGeocoder.reverseGeocode(latitude, longitude)
       .then((result: NativeGeocoderReverseResult) => {
-        //console.log(JSON.stringify(result))
-        //debugger;
-        //alert(JSON.stringify(result));
+      
         this.storage.set("userCountryInfo", result);
       })
       .catch((error: any) => {
-        //debugger;
-        // alert(error);
-        //console.log(error)
+      
       });
+    }
+    else
+    {
+      var latlng = new google.maps.LatLng(latitude, longitude);
+      var geocoder = new google.maps.Geocoder;
+   
+   geocoder.geocode({'location': latlng}, (results, status)=> {
+        if (status === 'OK') {
+          if (results[0]) {
+         
+          results[0].address_components.forEach(element => {
+            if(element.types[0]=="country")
+            {
+            
+             this.setGeoCodeInfo(element.long_name,element.short_name);
+            }
+          });
+          } else {
+          
+          }
+        
+        } else {
+        
+        }
+      });
+   
+    }
+   
+  }
+  setGeoCodeInfo(countryName:any,countryCode:any)
+  {
+  //  debugger;
+this.geoCoderData.country=countryName;
+this.geoCoderData.countryCode=countryCode;
+this.storage.set("userCountryInfo", this.geoCoderData);
   }
   setLoginInitialStatus(): void {
     let userInfo = this.storage.get('loggedInUserInfo')
@@ -157,6 +208,12 @@ export class MyApp {
     }
     if (pageNumber == "5") {
       this.nav.setRoot(AllWebsitesPage);
+    }
+    if (pageNumber == "6") {
+      this.nav.setRoot(AllLeadsPage);
+    }
+    if (pageNumber == "7") {
+      this.nav.setRoot(AllHotSheetsPage);
     }
   }
   logOut() {

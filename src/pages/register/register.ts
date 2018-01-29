@@ -62,8 +62,10 @@ export class RegisterPage {
   }
   faceBookDecisionMethod(opt: string) {
     if (opt == "0") {
-      let modalPage = this.modalCtrl.create(FbConfirmPage);
-      modalPage.present();
+      //debugger;
+      //let modalPage = this.modalCtrl.create(FbConfirmPage);
+      //modalPage.present();
+      this.navCtrl.push(FbConfirmPage);
     }
     else if (opt == "1") {
       this.navCtrl.push(DashboardPage);
@@ -191,18 +193,24 @@ export class RegisterPage {
     this.selectedCountryAbbv = "US";
     let countryGeoInfo = this.storage.get("userCountryInfo");
     countryGeoInfo.then((data) => {
+     // debugger;
       if (data == null) {
 
         this.selectedCountryAbbv = "US";
+        this.setCountryCode();
       }
       else {
 
         this.selectedCountryAbbv = data.countryCode;
-
+        this.setCountryCode();
       }
 
     });
 
+    
+  }
+ setCountryCode()
+  {
     let foundCountry = this.allCountryCodes.filter(
       country => country.country_abbv === this.selectedCountryAbbv);
     this.selectedCountryCode = foundCountry[0].country_code;

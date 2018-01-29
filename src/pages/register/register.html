@@ -48,7 +48,7 @@
   </ion-item>
   <ion-item>
     <ion-label floating>Cell Number</ion-label>
-    <ion-input type="tel" [(ngModel)]="phone_number" name="phone_number" required></ion-input>
+    <ion-input type="tel" [(ngModel)]="phone_number" name="phone_number" required pattern="^[0-9]*$"></ion-input>
   </ion-item>
 
   <div padding>

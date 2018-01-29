@@ -121,7 +121,7 @@ export class FbConfirmPage {
        this.selectedCountryCode = result.memberCredentials.country_code;
        this.selectedCountryAbbv = result.memberCredentials.country_abbv;
        this.phone_number_verify = result.memberCredentials.phone_mobile;
-       //this.openUserVerificationModal(this.master_id);
+    //this.navCtrl.push(DashboardPage);
        this.navCtrl.push(UserVerificationPage, {
          master_id: this.master_id,
          selected_country_code: this.selectedCountryCode, selected_country_abbv: this.selectedCountryAbbv,

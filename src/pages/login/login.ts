@@ -76,7 +76,7 @@ export class LoginPage {
       if (result.memberCredentials) {
 
         if (result.memberCredentials.verified == "1") {
-debugger;
+//debugger;
           this.storage.set('loggedId', '1');
           this.storage.set('userId', result.memberCredentials.id);
           this.storage.set('email', result.memberCredentials.email);
@@ -195,13 +195,18 @@ debugger;
     countryGeoInfo.then((data) => {
       if (data == null) {
         this.selectedCountryAbbv = "US";
+        this.setCountryCode();
       }
       else {
         this.selectedCountryAbbv = data.countryCode;
-
+this.setCountryCode();
       }
 
     });
+  
+  }
+  setCountryCode()
+  {
     let foundCountry = this.allCountryCodes.filter(
       country => country.country_abbv === this.selectedCountryAbbv);
     this.selectedCountryCode = foundCountry[0].country_code;

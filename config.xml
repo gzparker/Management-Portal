@@ -17,7 +17,7 @@
     <preference name="SplashMaintainAspectRatio" value="true" />
     <preference name="FadeSplashScreenDuration" value="300" />
     <preference name="SplashShowOnlyFirstTime" value="false" />
-    <preference name="SplashScreen" value="screen" />
+    <preference name="SplashScreen" value="resources/splash.png" />
     <preference name="SplashScreenDelay" value="3000" />
     <platform name="android">
         <allow-intent href="market:*" />
@@ -96,6 +96,6 @@
         <variable name="APP_ID" value="701598080041539" />
         <variable name="APP_NAME" value="TheIDXCompany" />
     </plugin>
-    <engine name="browser" spec="~5.0.3" />
     <engine name="android" spec="~7.0.0" />
+    <engine name="browser" spec="~5.0.3" />
 </widget>

@@ -6,7 +6,7 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar hideBackButton="false">
     <ion-title>Enter Verification Code</ion-title>
     <ion-buttons end>
         <button ion-button (click)="confirmVerification();" [disabled]="!verificationCodeForm.valid">Confirm</button>
