@@ -4,6 +4,7 @@ import { SharedProvider } from '../../providers/shared/shared';
 import { UserProvider } from '../../providers/user/user';
 import { Storage } from '@ionic/storage';
 import { DashboardPage } from '../dashboard/dashboard';
+import { DashboardTabsPage } from '../tabs/dashboard-tabs/dashboard-tabs';
 /**
  * Generated class for the VerificationCodePage page.
  *
@@ -26,7 +27,7 @@ export class VerificationCodePage {
     public sharedServiceObj: SharedProvider, public ngZone: NgZone) {
   }
   confirmVerification() {
-    //this.navCtrl.push(DashboardPage);
+   
  this.userServiceObj.confirmVerificationCode(this.master_id, this.verification_code)
     .subscribe((result) => this.confirmVerificationResp(result));
   }
@@ -43,7 +44,8 @@ export class VerificationCodePage {
           this.storage.set('loggedInUserInfo', result);
           this.sharedServiceObj.setLoginStatus(true);
           this.ngZone.run(() => {
-          this.navCtrl.push(DashboardPage,{notificationMsg:result.message.toUpperCase()});
+          //this.navCtrl.push(DashboardPage,{notificationMsg:result.message.toUpperCase()});
+         this.navCtrl.setRoot(DashboardTabsPage,{notificationMsg:result.message.toUpperCase()});
           });
     }
     else {

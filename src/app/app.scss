@@ -14,3 +14,15 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+#sidenav {
+    ion-item-group[submenu] {
+      overflow: hidden;
+      display: block;
+      height: 0;
+      transition: height .3s linear;
+      &.visible {
+          height: inherit;
+          // this is just sample value, calculate how much space you need for your menu items
+      }
+    }
+  }

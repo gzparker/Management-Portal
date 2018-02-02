@@ -324,28 +324,46 @@ export class UserProvider {
     return searchedListing;
   }
   userInfo(user_id: string) {
-    //debugger;
+   // debugger;
     let data = new URLSearchParams();
     data.append('member_id', user_id);
 
 
-    let hotSheetUpdatingResp = this.http
-      .post(this.sharedServiceObj.registerationApiBaseUrl + 'members/viewAccountInfo', data,
+    let acountInfoResp = this.http
+      .post(this.sharedServiceObj.registerationApiBaseUrl + 'members/generalinfo', data,
       this.headerOptions)
       .map(this.extractData)
-    return hotSheetUpdatingResp;
+    return acountInfoResp;
   }
-  updateAccount(email: string, user_id: string, password: string, first_name: string, last_name: string,
-    phone_number: string) {
+  updateAccount(user_id: string, dataObj:any) {
     // debugger;
     let data = new URLSearchParams();
-    data.append('email', email);
+    if(dataObj.email!="")
+    {
+      data.append('email', dataObj.email);
+    }
+    if(dataObj.password!="")
+    {
+      data.append('password', dataObj.password);
+    }
+    if(dataObj.first_name!="")
+    {
+      data.append('first_name', dataObj.first_name);
+    }
+    if(dataObj.last_name!="")
+    {
+      data.append('last_name', dataObj.last_name);
+    }
+    if(dataObj.phone_number!="")
+    {
+      data.append('phone_mobile', dataObj.phone_number);
+    }
+    if(dataObj.timezone!="")
+    {
+      data.append('timezone', dataObj.timezone);
+    }
     data.append('member_id', user_id);
-    data.append('password', password);
-    data.append('first_name', first_name);
-    data.append('last_name', last_name);
-    data.append('phone_number', phone_number);
-
+//debugger;
     let accountUpdatingResp = this.http
       .post(this.sharedServiceObj.registerationApiBaseUrl + 'members/updateAccountInfo', data,
       this.headerOptions)
@@ -538,13 +556,14 @@ deleteWebsite(user_id:string,website_id:string){
 allUserHotSheets(user_id:string){
     let data = new URLSearchParams();
  data.append('member_id',user_id);
-
+//debugger;
   let websiteListing=this.http
     .post(this.sharedServiceObj.apiBaseUrl+'members/viewAllSavedHotsheets', data, this.headerOptions)
     .map(this.extractData)
     return websiteListing;
 }
-createHotSheet(user_id:string,website_id:string,mlsServerId:string,name:string,slug:string,json_search:any){
+createHotSheet(user_id:string,website_id:string,mlsServerId:string,name:string,slug:string,
+  json_search:any,brief_description:any,main_description:any,virtual_tour_url:any,video_url:any,sub_city:any){
 
 let data = new URLSearchParams();
  data.append('name',name);
@@ -552,7 +571,16 @@ let data = new URLSearchParams();
  data.append('slug',slug);
  data.append('mls_server_id',mlsServerId);
  data.append('website_id',website_id);
- data.append('json_search',json_search);
+ data.append('search_results_json',json_search);
+ data.append('polygon_search',"");
+ data.append('local',"");
+ data.append('administrative_area_level_1',"");
+ data.append('community',"");
+ data.append('main_description',main_description);
+ data.append('brief_description',brief_description);
+ data.append('sub_city',sub_city);
+ data.append('video_url',video_url);
+ data.append('virtual_tour_url',virtual_tour_url);
 //debugger;
   let hotSheetCreatingResp=this.http
     .post(this.sharedServiceObj.apiBaseUrl+'members/createHotsheet', data, this.headerOptions)
@@ -569,6 +597,7 @@ checkHotSheetSlug(slug:string,user_id:string){
     return hotSheetCheckResp;
 }
 editHotSheet(user_id:string,id:string){
+//  debugger;
   let data = new URLSearchParams();
  data.append('id',id);
  data.append('member_id',user_id);
@@ -604,7 +633,7 @@ let hotSheetDeletingResp=this.http
     return hotSheetDeletingResp;
 }
   private extractData(res: Response) {
-    //debugger;
+//  debugger;
     return res.json();
   }
   private handleErrorObservable(error: Response | any) {

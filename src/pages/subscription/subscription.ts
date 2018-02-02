@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, ModalController, Platform,MenuCont
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 import { DashboardPage } from '../dashboard/dashboard';
+import { DashboardTabsPage } from '../tabs/dashboard-tabs/dashboard-tabs';
 import { FbConfirmPage } from '../fb-confirm/fb-confirm';
 import { AlertController } from 'ionic-angular';
 
@@ -111,7 +112,8 @@ else
     if (data.status == true) {
       this.ngZone.run(() => {
      
-        this.navCtrl.push(DashboardPage,{notificationMsg:data.message.toUpperCase()});
+        //this.navCtrl.push(DashboardPage,{notificationMsg:data.message.toUpperCase()});
+        this.navCtrl.setRoot(DashboardTabsPage,{notificationMsg:data.message.toUpperCase()});
       });
     }
     else {

@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, ModalController, Platform } from '
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 import { DashboardPage } from '../dashboard/dashboard';
+import { DashboardTabsPage } from '../tabs/dashboard-tabs/dashboard-tabs';
 import { FbConfirmPage } from '../fb-confirm/fb-confirm';
 import { AlertController } from 'ionic-angular';
 
@@ -86,8 +87,8 @@ export class LoginPage {
           this.storage.set('loggedInUserInfo', result);
           this.userLoggedId = true;
           this.sharedServiceObj.setLoginStatus(true);
-          this.navCtrl.push(DashboardPage);
-
+          //this.navCtrl.push(DashboardPage);
+         this.navCtrl.setRoot(DashboardTabsPage);
         }
         else if (result.memberCredentials.verified == "0") {
 
@@ -142,38 +143,29 @@ export class LoginPage {
     }
     else if (opt == "1") {
       this.navCtrl.push(DashboardPage);
+      //this.navCtrl.setRoot(DashboardTabsPage);
     }
   }
   getAllCountryCodes(): void {
-    //debugger;
-    /*if(this.allCountryCodes==undefined)
-    {
-      this.userServiceObj.loadCountryCodes()
-      .subscribe((result) => this.getAllCountryCodesResp(result));
-    }
-    else if(this.allCountryCodes.length<=0)
-    {
-      this.userServiceObj.loadCountryCodes()
-      .subscribe((result) => this.getAllCountryCodesResp(result));
-    }*/
+    
 
     let avilableCountryList = this.storage.get('availableCountryList');
     avilableCountryList.then((data) => {
       if (data == null) {
-        //debugger;
+    
         this.userServiceObj.loadCountryCodes()
           .subscribe((result) => this.getAllCountryCodesResp(result));
       }
       else {
-        //debugger;
+      
         this.allCountryCodes = data;
         this.selectedCountryAbbv = "US";
         this.allCountryCodes.filter
-        //this.selectedCountryCode="1";
+      
         let foundCountry = this.allCountryCodes.filter(
           country => country.country_abbv === this.selectedCountryAbbv);
         this.selectedCountryCode = foundCountry[0].country_code;
-        //debugger;
+     
       }
 
     })

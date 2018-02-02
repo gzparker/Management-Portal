@@ -18,8 +18,11 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class SharedProvider {
   public isLoggedInEmitter: EventEmitter<Boolean>;
+  public navigationalPage: EventEmitter<String>;
   //public registerationApiBaseUrl="http://registration.menu/api/";
   public registerationApiBaseUrl = "http://api.registration.menu/api/";
+  public idxapikey:string="1761ea8f043c53e44e3ccd90c18b0404c20152f0";
+  public defaultNoImage="assets/imgs/noImage.png";
   private headers: Headers = new Headers();
   private headerOptions: RequestOptions = new RequestOptions();
   public service_id = "2";
@@ -29,12 +32,16 @@ export class SharedProvider {
 
   constructor(private http: Http) {
     this.isLoggedInEmitter = new EventEmitter();
-
+    this.navigationalPage=new EventEmitter();
     // debugger;
   }
   public setLoginStatus(loginStatus: boolean) {
 
     this.isLoggedInEmitter.emit(loginStatus);
+  }
+  public setNavigationalPage(option:string)
+  {
+    this.navigationalPage.emit(option);
   }
   // this could also be a private method of the component class
   private extractData(res: Response) {

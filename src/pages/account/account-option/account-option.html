@@ -1,0 +1,35 @@
+<!--
+  Generated template for the AccountOptionPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <button ion-button menuToggle start>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Account</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list>
+   
+    <ion-item menuClose ion-item (tap)="openPage('16')">
+      Billing
+    </ion-item>
+    <ion-item menuClose ion-item (tap)="openPage('19')">
+      Upgrade Center
+    </ion-item>
+    <ion-item menuClose ion-item (tap)="openPage('15')">
+      Account Info
+    </ion-item>
+    <ion-item menuClose ion-item (tap)="openPage('17')">
+      Change Password
+    </ion-item>
+    </ion-list>
+</ion-content>

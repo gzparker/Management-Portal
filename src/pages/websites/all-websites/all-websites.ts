@@ -7,6 +7,7 @@ import { DashboardPage } from '../../dashboard/dashboard';
 import { FbConfirmPage } from '../../fb-confirm/fb-confirm';
 import { CreateWebsitePage } from '../../websites/create-website/create-website';
 import { EditWebsitePage } from '../../websites/edit-website/edit-website';
+import { DashboardTabsPage } from '../../tabs/dashboard-tabs/dashboard-tabs';
 import { AlertController } from 'ionic-angular';
 
 import { UserVerificationPage } from '../../user-verification/user-verification';

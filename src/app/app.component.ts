@@ -9,11 +9,10 @@ import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
-import { HomeComponent } from '../components/home/home';
 import { SharedProvider } from '../providers/shared/shared';
 import { UserProvider } from '../providers/user/user';
-import { LoginComponent } from '../components/login/login';
 import { DashboardPage } from '../pages/dashboard/dashboard';
+import { DashboardTabsPage } from '../pages/tabs/dashboard-tabs/dashboard-tabs';
 import { AllWebsitesPage } from '../pages/websites/all-websites/all-websites';
 import { CreateWebsitePage } from '../pages/websites/create-website/create-website';
 import { EditWebsitePage } from '../pages/websites/edit-website/edit-website';
@@ -26,17 +25,22 @@ import { EditLeadPage } from '../pages/leads/edit-lead/edit-lead';
 import { AllHotSheetsPage } from '../pages/hotsheets/all-hot-sheets/all-hot-sheets';
 import { CreateHotSheetPage } from '../pages/hotsheets/create-hot-sheet/create-hot-sheet';
 import { EditHotSheetPage } from '../pages/hotsheets/edit-hot-sheet/edit-hot-sheet';
+import { DashboardTabsComponent } from '../components/dashboard-tabs/dashboard-tabs';
 declare var google: any;
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
-
+  tab1Root: any = DashboardPage;
+ 
   rootPage: any = HomePage;
   public userLoggedIn: boolean = false;
   public allCountryCodes: any[] = [];
   public isApp=false;
+  public showWebsiteSubmenu=false;
+  public showLeadsSubmenu=false;
+  public showHotsheetsSubmenu=false;
   pages: Array<{ title: string, component: any }>;
   public geoCoderData={
     country:"",
@@ -165,7 +169,8 @@ this.storage.set("userCountryInfo", this.geoCoderData);
       else {
         //debugger;
         this.userLoggedIn = true;
-        this.rootPage = DashboardPage;
+        this.rootPage = DashboardTabsPage;
+        //this.rootPage = DashboardPage;
         //this.nav.setRoot(DashboardPage);
       }
     });
@@ -203,18 +208,53 @@ this.storage.set("userCountryInfo", this.geoCoderData);
     if (pageNumber == "3") {
       this.nav.setRoot(RegisterPage);
     }
+    
     if (pageNumber == "4") {
-      this.nav.setRoot(DashboardPage);
+      this.sharedServiceObj.setNavigationalPage("4");
+     
     }
     if (pageNumber == "5") {
-      this.nav.setRoot(AllWebsitesPage);
+     
+      this.sharedServiceObj.setNavigationalPage("5");
     }
     if (pageNumber == "6") {
-      this.nav.setRoot(AllLeadsPage);
+      
+      this.sharedServiceObj.setNavigationalPage("6");
     }
     if (pageNumber == "7") {
-      this.nav.setRoot(AllHotSheetsPage);
+      
+      this.sharedServiceObj.setNavigationalPage("7");
     }
+    if (pageNumber == "8") {
+      
+      this.sharedServiceObj.setNavigationalPage("8");
+    }
+    if (pageNumber == "9") {
+      
+      this.sharedServiceObj.setNavigationalPage("9");
+    }
+  }
+  subMenueToggle(option:string)
+  {
+    if(option=='4')
+    {
+      this.showWebsiteSubmenu=!this.showWebsiteSubmenu;
+      this.showLeadsSubmenu=false;
+      this.showHotsheetsSubmenu=false;
+    }
+else if(option=='5')
+{
+  this.showLeadsSubmenu=!this.showLeadsSubmenu;
+  this.showHotsheetsSubmenu=false;
+  this.showWebsiteSubmenu=false;
+}
+else if(option=='6')
+{
+  this.showHotsheetsSubmenu=!this.showHotsheetsSubmenu;
+  this.showLeadsSubmenu=false;
+  this.showWebsiteSubmenu=false;
+}
+
   }
   logOut() {
     this.storage.remove('userId');

@@ -4,6 +4,7 @@ import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 import { AlertController } from 'ionic-angular';
 import { DashboardPage } from '../dashboard/dashboard';
+import { DashboardTabsPage } from '../tabs/dashboard-tabs/dashboard-tabs';
 import { SharedProvider } from '../../providers/shared/shared';
 import { UserProvider } from '../../providers/user/user';
 import { UserVerificationPage } from '../user-verification/user-verification';
@@ -144,7 +145,8 @@ export class FbConfirmPage {
 
         this.sharedServiceObj.setLoginStatus(true);
         this.ngZone.run(() => {
-        this.navCtrl.push(DashboardPage);
+       // this.navCtrl.push(DashboardPage);
+      this.navCtrl.push(DashboardTabsPage);
         });
       }
 

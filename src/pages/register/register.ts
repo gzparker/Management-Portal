@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angu
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 import { DashboardPage } from '../dashboard/dashboard';
+import { DashboardTabsPage } from '../tabs/dashboard-tabs/dashboard-tabs';
 import { FbConfirmPage } from '../fb-confirm/fb-confirm';
 import { UserVerificationPage } from '../user-verification/user-verification';
 import { SharedProvider } from '../../providers/shared/shared';
@@ -62,13 +63,12 @@ export class RegisterPage {
   }
   faceBookDecisionMethod(opt: string) {
     if (opt == "0") {
-      //debugger;
-      //let modalPage = this.modalCtrl.create(FbConfirmPage);
-      //modalPage.present();
+    
       this.navCtrl.push(FbConfirmPage);
     }
     else if (opt == "1") {
-      this.navCtrl.push(DashboardPage);
+   
+     this.navCtrl.setRoot(DashboardTabsPage);
     }
   }
   userSignUp(): void {

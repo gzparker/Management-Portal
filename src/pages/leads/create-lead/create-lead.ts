@@ -55,7 +55,6 @@ export class CreateLeadPage {
 
   ionViewDidLoad() {
   let member_id = this.storage.get('userId');
-    //debugger;
     member_id.then((data) => {
       this.userId=data;
       this.getAllWebsite();
@@ -82,7 +81,6 @@ export class CreateLeadPage {
   }
   onWebsiteSelection($event:any):void{
      this.selectedWebsite=$event;
-     //debugger;
   }
   createLead():void{
     //this.domainAccess=this.localStorageService.get('domainAccess');

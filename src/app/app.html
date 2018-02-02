@@ -1,3 +1,4 @@
+<ion-split-pane>
 <ion-menu [content]="content" persistent="true">
   <ion-header>
     <ion-toolbar>
@@ -6,38 +7,45 @@
   </ion-header>
 
   <ion-content>
-    <ion-list>
-      <!--<button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
-        {{p.title}}
-      </button>-->
-      <button menuClose ion-item (click)="openPage('1')" *ngIf="userLoggedIn==false">
+    <ion-list id="sidenav">
+   
+      <ion-item menuClose ion-item (tap)="openPage('1')" *ngIf="userLoggedIn==false">
         Home
-      </button>
-      <button menuClose ion-item (click)="openPage('2')" *ngIf="userLoggedIn==false">
+      </ion-item>
+      <ion-item menuClose ion-item (tap)="openPage('2')" *ngIf="userLoggedIn==false">
         Login
-      </button>
-      <button menuClose ion-item (click)="openPage('3')" *ngIf="userLoggedIn==false">
+      </ion-item>
+      <ion-item menuClose ion-item (tap)="openPage('3')" *ngIf="userLoggedIn==false">
         Register
-      </button>
-      <button menuClose ion-item (click)="openPage('4')" *ngIf="userLoggedIn==true">
+      </ion-item>
+      <ion-item menuClose ion-item (tap)="openPage('4')" *ngIf="userLoggedIn==true">      
         Dashboard
-      </button>
-      <button menuClose ion-item (click)="openPage('5')" *ngIf="userLoggedIn==true">
+      </ion-item>
+      <ion-item menuClose ion-item (tap)="openPage('5')" *ngIf="userLoggedIn==true">      
         Websites
-      </button>
-      <button menuClose ion-item (click)="openPage('6')" *ngIf="userLoggedIn==true">
+      </ion-item>
+      <ion-item menuClose ion-item (tap)="openPage('6')" *ngIf="userLoggedIn==true">      
         Leads
-      </button>
-      <button menuClose ion-item (click)="openPage('7')" *ngIf="userLoggedIn==true">
+      </ion-item>
+      <ion-item menuClose ion-item (tap)="openPage('7')" *ngIf="userLoggedIn==true">      
         HotSheets
-      </button>
-      <button menuClose ion-item (click)="logOut()" *ngIf="userLoggedIn==true">
+      </ion-item>
+      <ion-item menuClose ion-item (tap)="openPage('8')" *ngIf="userLoggedIn==true">      
+        Setup
+      </ion-item>
+      <ion-item menuClose ion-item (tap)="openPage('9')" *ngIf="userLoggedIn==true">      
+        Account
+      </ion-item>
+     
+      <ion-item menuClose ion-item (tap)="logOut()" *ngIf="userLoggedIn==true">
+      <!--<ion-icon item-left></ion-icon>-->
         LogOut
-      </button>
+      </ion-item>
+    
     </ion-list>
   </ion-content>
 
 </ion-menu>
 
-<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
-<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>
+  <ion-nav [root]="rootPage" main #content swipeBackEnabled="false"></ion-nav>
+</ion-split-pane>

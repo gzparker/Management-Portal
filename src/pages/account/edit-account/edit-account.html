@@ -1,0 +1,64 @@
+<!--
+  Generated template for the EditAccountPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+      <button ion-button menuToggle start>
+          <ion-icon name="menu"></ion-icon>
+      </button>
+    <ion-title>Edit Account</ion-title>
+    <ion-buttons end>
+        <button ion-button (click)="updateAccount();" [disabled]="!accountForm.valid||!updatedValue">Update Account</button>
+      </ion-buttons>
+  </ion-navbar>
+  
+</ion-header>
+
+
+<ion-content padding>
+    <ion-chip *ngIf="accountInfoUpdateMsg!=''">
+        <ion-label color="danger">{{accountInfoUpdateMsg}}</ion-label>
+      </ion-chip>
+  <form role="form" data-toggle="validator" #accountForm="ngForm">
+      <ion-item>
+          <ion-label floating>First Name</ion-label>
+          <ion-input type="text" required [(ngModel)]="first_name" name="first_name" (ngModelChange)="checkFormStatus();"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>Last Name</ion-label>
+          <ion-input type="text" required [(ngModel)]="last_name" name="last_name" (ngModelChange)="checkFormStatus();"></ion-input>
+        </ion-item>
+      <ion-item>
+          <ion-label floating>Email Address</ion-label>
+          <ion-input type="email" [(ngModel)]="email" name="email" [email]="true" (ngModelChange)="checkFormStatus();"></ion-input>
+        </ion-item>
+      
+        <ion-item>
+          <ion-label floating>Password</ion-label>
+          <ion-input type="password" required [(ngModel)]="password" name="password" (ngModelChange)="checkFormStatus();"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Select Country</ion-label>
+            <ion-select [(ngModel)]="selectedCountryAbbv" name="selectedCountryAbbv" (ngModelChange)="onCountryCodeSelection($event);checkFormStatus();" required>
+              <ion-option value="">--- Select Country Code ---</ion-option>
+              <ion-option *ngFor="let countryCode of allCountryCodes" value={{countryCode.country_abbv}}>
+                {{countryCode.name}}
+              </ion-option>
+            </ion-select>
+          </ion-item>
+        <ion-item>
+            <ion-label floating>Cell Number</ion-label>
+            <ion-input type="tel" [(ngModel)]="phone_number" name="phone_number" required pattern="^[0-9]*$" (ngModelChange)="checkFormStatus();"></ion-input>
+          </ion-item>
+      <div padding>
+          <button ion-button color="primary" block  (click)="updateAccount();" [disabled]="!accountForm.valid||!updatedValue">Update Account</button>
+      </div>
+  </form>
+  <ion-chip *ngIf="accountInfoUpdateMsg!=''">
+      <ion-label color="danger">{{accountInfoUpdateMsg}}</ion-label>
+    </ion-chip>
+</ion-content>

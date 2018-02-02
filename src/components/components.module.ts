@@ -1,11 +1,14 @@
 import { NgModule } from '@angular/core';
-import { HomeComponent } from './home/home';
-import { LoginComponent } from './login/login';
+
+import { DashboardPage } from '../pages/dashboard/dashboard';
+import { ContactusPage } from '../pages/contactus/contactus';
+import { DashboardTabsComponent } from './dashboard-tabs/dashboard-tabs';
 @NgModule({
-	declarations: [HomeComponent,
-    LoginComponent],
-	imports: [],
-	exports: [HomeComponent,
-    LoginComponent]
+	declarations: [
+    DashboardTabsComponent],
+    imports: [],
+    entryComponents: [DashboardPage,ContactusPage],
+	exports: [
+    DashboardTabsComponent]
 })
 export class ComponentsModule {}
