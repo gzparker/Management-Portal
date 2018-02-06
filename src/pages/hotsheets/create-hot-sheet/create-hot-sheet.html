@@ -17,11 +17,13 @@
   </ion-navbar>
 
 </ion-header>
-<ion-content padding>
+<ion-content>
+    
     <ion-chip *ngIf='hotsheetCreateMsg!=""'>
         <ion-label color="danger">{{hotsheetCreateMsg}}</ion-label>
     </ion-chip>
   <form role="form" data-toggle="validator" #hotSheetForm="ngForm">
+    
     <ion-item>
       <ion-label floating>Name</ion-label>
       <ion-input type="text" required [(ngModel)]="name" name="name" id="name"></ion-input>
@@ -227,9 +229,20 @@
 
   </ng4geo-autocomplete>
 </div>
+<div>
+    <div #map id="map" style="width:100%;" [style.height]="map_height+'px'"></div>
+</div>
+<ion-item>
+  <ion-label floating>Community</ion-label>
+  <ion-input type="text" [(ngModel)]="community" name="community"></ion-input>
+</ion-item>
+<ion-item>
+  <ion-label floating>Assigned Agent IDs</ion-label>
+  <ion-input type="text" [(ngModel)]="assigned_agent_id" name="assigned_agent_id" aria-placeholder="Enter comma ',' separated agent Ids."></ion-input>
+</ion-item>
 <ion-item>
   <ion-label floating>Sub City</ion-label>
-  <ion-textarea type="text" [(ngModel)]="sub_city" name="sub_city"></ion-textarea>
+  <ion-input type="text" [(ngModel)]="sub_city" name="sub_city"></ion-input>
 </ion-item>
 <ion-item>
   <ion-label floating>Brief Description</ion-label>
@@ -241,12 +254,28 @@
 </ion-item>
 <ion-item>
   <ion-label floating>Video Tour Url</ion-label>
-  <ion-input type="text" [(ngModel)]="virtual_tour_url" name="virtual_tour_url"></ion-input>
+  <ion-input type="text" [(ngModel)]="virtual_tour_url" name="virtual_tour_url" pattern="https?://.+"></ion-input>
 </ion-item>
 <ion-item>
   <ion-label floating>Video Url</ion-label>
-  <ion-input type="text" [(ngModel)]="video_url" name="video_url"></ion-input>
+  <ion-input type="text" [(ngModel)]="video_url" name="video_url" pattern="https?://.+"></ion-input>
 </ion-item>
+<ion-list *ngIf="isApp">
+
+<ion-item>
+  <button ion-button color="primary" block (click)="takeHeaderPicture();" >Select Header Image</button>
+</ion-item>
+<ion-item *ngIf="headerImage!=''">
+  <img [src]="headerImage"/>
+</ion-item>
+<ion-item>
+ 
+  <button ion-button color="primary" block (click)="takeCommunityPicture();">Select Community Image</button>
+</ion-item>
+<ion-item *ngIf="communityImage!=''">
+  <img [src]="communityImage"/>
+</ion-item>
+</ion-list>
     <div padding>
         <button ion-button color="primary" block (click)="createHotSheet();" [disabled]="!hotSheetForm.valid">Create HotSheet</button>
     </div>

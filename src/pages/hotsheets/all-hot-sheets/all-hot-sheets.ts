@@ -78,20 +78,44 @@ export class AllHotSheetsPage {
    // debugger;
     this.navCtrl.push(EditHotSheetPage,{id:id});
   }
-  deleteHotsheet(id:string):void{
-    if(this.userId!="")
-    {
-   
-  this.userServiceObj.deleteHotsheet(this.userId.toString(),id)
-    .subscribe((result) => this.deleteHotsheetResp(result));
-    }
+  deleteHotsheet(hotsheet:any):void{
+    
+    let confirm = this.alertCtrl.create({
+      title: 'Delete HotSheet?',
+      message: 'Are you sure to delete this hotsheet?',
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: () => {
+           // console.log('Disagree clicked');
+          }
+        },
+        {
+          text: 'Ok',
+          handler: () => {
+            let selectedIndex = this.allHotSheetList.indexOf(hotsheet);
+            if (selectedIndex >= 0) {
+            this.allHotSheetList.splice(selectedIndex, 1);
+            }
+            if(this.allHotSheetList.length<=0)
+            {
+              this.hotsheetFoundMessage="All hotsheets have been deleted.Please add new hotsheet.";
+              this.notificationMsg="";
+            }
+            this.userServiceObj.deleteHotsheet(this.userId.toString(),hotsheet.id)
+            .subscribe((result) => this.deleteHotsheetResp(result));
+          }
+        }
+      ]
+    });
+    confirm.present();
   }
   deleteHotsheetResp(result:any):void{
   //debugger;
   if(result.status==true)
   {
    // debugger;
-  this.viewAllHotSheets();
+ // this.viewAllHotSheets();
   }
   
   }

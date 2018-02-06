@@ -14,6 +14,10 @@ import { HomePage } from '../pages/home/home';
 import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 import { GooglePlacesAutocompleteComponentModule } from 'ionic2-google-places-autocomplete';
 import { Ng4GeoautocompleteModule } from 'ng4-geoautocomplete';
+import { ImagePicker } from '@ionic-native/image-picker';
+import { Crop } from '@ionic-native/crop';
+import { Camera } from '@ionic-native/camera';
+import { AgmCoreModule } from '@agm/core';
 //import { ListPage } from '../pages/list/list';
 import { LoginPage } from '../pages/login/login';
 import { ContactusPage } from '../pages/contactus/contactus';
@@ -78,6 +82,8 @@ import { ListingProvider } from '../providers/listing/listing';
     IonicStorageModule.forRoot({
       name: 'managementportal',
       driverOrder: ['indexeddb', 'sqlite', 'websql']
+    }),AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyA9aj3-17cojks6gicZZ_PY2t5ERVu25ac'
     })
   ],
   bootstrap: [IonicApp],
@@ -97,6 +103,9 @@ import { ListingProvider } from '../providers/listing/listing';
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     UserProvider,
     SharedProvider,
+    ImagePicker,
+		Crop,
+		Camera,
     SubscriptionProvider,
     ListingProvider
   ]

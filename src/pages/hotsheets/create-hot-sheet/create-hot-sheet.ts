@@ -1,8 +1,11 @@
-import { Component, ViewChild, NgZone } from '@angular/core';
+import { Component, ViewChild, NgZone, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, Platform, MenuController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 import { IMultiSelectOption,IMultiSelectSettings } from 'angular-2-dropdown-multiselect';
+import { Crop } from '@ionic-native/crop';
+import { Camera, CameraOptions } from '@ionic-native/camera';
+import { Geolocation } from '@ionic-native/geolocation';
 
 import { AllHotSheetsPage } from '../all-hot-sheets/all-hot-sheets';
 import { AlertController } from 'ionic-angular';
@@ -15,7 +18,8 @@ import { ListingProvider } from '../../../providers/listing/listing';
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-
+declare var google: any;
+declare var latitudeSimplifier;
 @IonicPage()
 @Component({
   selector: 'page-create-hot-sheet',
@@ -29,7 +33,7 @@ export class CreateHotSheetPage {
     dynamicTitleMaxItems: 3,
     displayAllSelectedText: true
 };
-  
+public isApp=false;
   public msl_id:string="";
   public name:string="";
    public hotsheetCreateMsg:string="";
@@ -92,11 +96,42 @@ export class CreateHotSheetPage {
   public virtual_tour_url:string="";
   public video_url:string="";
   public sub_city:string="";
-  constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
+  public polygon_search:any;
+  public headerImage:string="";
+  public communityImage:string="";
+  public agent_ids:any[]=[];
+  public assigned_agent_id:string="";
+  public local:string="";
+  public administrative_area_level_1:string="";
+  public community:string="";
+  public zoom: number = 8;
+  public drawingManager:any;
+  public mapHeight:string="400";
+  public isDrawing:boolean = false;
+  //public isMap:boolean=false;
+  // Google Map center
+  public latitude: number = 51.673858;
+  public longitude: number = 7.815982;
+  public polygons:any[] = [];
+  public toDrawing = false;
+  public move:any=null;
+  public mouseUp:any=null;
+  public poly:any;
+  public map_height:number;
+ 
+  @ViewChild('map') mapElement: ElementRef;
+  map: any;
+  constructor(private geolocation: Geolocation,public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform
-    ,public listinServiceObj:ListingProvider) {
-      
+    ,public listinServiceObj:ListingProvider,private crop: Crop,private camera: Camera) {
+      if(this.platform.is('core') || this.platform.is('mobileweb')) {
+        this.isApp=false;
+      }
+      else
+      {
+        this.isApp=true;
+      }
     }
 
   ionViewDidLoad() {
@@ -105,8 +140,205 @@ export class CreateHotSheetPage {
       this.userId=data;
       this.getAllWebsite();
     });
+    //this.loadMap();
     this.loadSearchedField();
   }
+  loadMap(lat:any,lng:any){
+ 
+   // this.geolocation.getCurrentPosition().then((position) => {
+ //debugger;
+      //let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+      let latLng = new google.maps.LatLng(lat, lng);
+      let mapOptions = {
+        center: latLng,
+        zoom: 18,
+        mapTypeId: google.maps.MapTypeId.MAP,
+        mapTypeControl: true,
+        mapTypeControlOptions: {
+          style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+          position: google.maps.ControlPosition.TOP_CENTER
+        },
+        //zoomControl: true,
+        zoomControl: true,
+        zoomControlOptions: {
+          style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+          position: google.maps.ControlPosition.LEFT_TOP
+        },
+        scaleControl: true,
+        streetViewControl: true,
+        streetViewControlOptions: {
+          position: google.maps.ControlPosition.LEFT_TOP
+        }
+      };
+ 
+      this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+     // debugger;
+      
+     this.drawingManager = new google.maps.drawing.DrawingManager({
+      drawingControl: true,
+      drawingControlOptions: {
+        position: google.maps.ControlPosition.TOP_CENTER,
+        drawingModes: [
+          google.maps.drawing.OverlayType.POLYGON
+        ]
+      }
+    });
+      //debugger;
+      this.drawingManager.setMap(null);
+      this.drawingManager.setDrawingMode(google.maps.drawing.OverlayType.POLYGON);
+      var centerControlDiv:any = document.createElement('div');
+      centerControlDiv.id = 'map-control-container';
+      //debugger;
+      //var centerControl = new this.CenterControl(centerControlDiv, this.map);
+     this.CenterControl(centerControlDiv, this.map);
+      //debugger;
+      centerControlDiv.index = 1;
+      this.map.controls[google.maps.ControlPosition.TOP_RIGHT].push(centerControlDiv);
+      google.maps.event.addDomListener(this.map, 'mousedown', this.mouseDownCallBack.bind(this));
+     
+    //}, (err) => {
+    //  console.log(err);
+    //});
+  }
+  mouseDownCallBack(e:any)
+  {
+  // debugger;
+   //do it with the right mouse-button only
+   if (!this.toDrawing) return;
+   this.map.setOptions({
+     draggable: false 
+   });
+   this.mouseUp=google.maps.event.addListener(this.map, 'mouseup',this.mouseUpCallBack.bind(this));
+   this.move = google.maps.event.addListener(this.map, 'mousemove',this.mouseMoveCallBack.bind(this));
+   
+   //debugger;
+  }
+  mouseUpCallBack(e:any)
+  {
+    //debugger;
+    google.maps.event.removeListener(this.mouseUp);
+    google.maps.event.removeListener(this.move);
+    var path = this.poly.getPath();
+    //debugger;
+    var ArrayforPolygontoUse= this.sharedServiceObj.simplyfierLatitude(path.b,12.5);
+    //ar ArrayforPolygontoUse= simplify(path.b, 100, false);
+  // debugger;
+    path.b=ArrayforPolygontoUse;
+  this.poly.setMap(null);
+  this.poly = new google.maps.Polygon({
+      map: this.map,
+      path: path
+    });
+    this.polygons.push(this.poly);
+   //debugger;
+    
+    this.map.setOptions({
+      draggable: true
+    });
+    this.toDrawing = false;
+    //debugger;
+  }
+  mouseMoveCallBack(e:any)
+  {
+    //debugger;
+    this.poly.getPath().push(e.latLng);
+  }
+ CenterControl(controlDiv, map) {
+  // debugger;
+    // Map Controls
+    // Zoom In DIV
+    //let _thisNew=this;
+    var controlUI = document.createElement('div');
+    controlUI.id = 'Map-Zoom-In';
+    controlUI.title = 'Zoom IN';
+    controlDiv.appendChild(controlUI);
+    //debugger;
+    // Draw Map DIV
+    var controlUI3 = document.createElement('div');
+    controlUI3.id = 'Map-Draw';
+    controlUI3.title = 'Draw';
+    controlDiv.appendChild(controlUI3);
+    // Draw Map Icon
+    var controlText3 = document.createElement('div');
+    controlText3.innerHTML = '<div id="map-draw-icon">Draw</div>';
+    controlUI3.appendChild(controlText3);
+    // Setup the click event listeners: simply set the map to
+    // Chicago
+    
+    google.maps.event.addDomListener(controlUI3, 'click', () => {
+      if (this.isDrawing) {
+        
+        this.stopDrawing();
+       
+      } else {
+      this.startDrawing();
+      this.poly = new google.maps.Polyline({
+        map: map,
+        clickable: false
+      });
+      this.isDrawing = true;
+      map.setOptions({
+        draggable: false
+      });
+    //  setTimeout(function () {
+        console.log('draw Start');
+        this.toDrawing = true;
+     // }, 100);
+      
+      }
+    });
+  }
+ startDrawing() {
+    // drawingManager.setMap(map);
+   //debugger;
+    this.drawingManager.setDrawingMode(google.maps.drawing.OverlayType.POLYGON);
+    this.map.setOptions({
+      draggable: false
+    });
+    this.poly = new google.maps.Polyline({
+      map: this.map,
+      clickable:false
+   });
+
+  this.isDrawing = true;
+
+ 
+  //debugger;
+  }
+  
+  stopDrawing() {
+   // debugger;
+   this.isDrawing = false;
+   if(this.drawingManager!=undefined)
+   {
+    this.drawingManager.setDrawingMode(null);
+   }
+   if(this.poly!=undefined)
+   { 
+    this.poly.setMap(null);
+   }
+   if(this.map!=undefined)
+   {
+   this.map.setOptions({
+   draggable: true
+   });
+   google.maps.event.removeListener(this.move);
+  google.maps.event.removeListener(this.mouseUp);
+  }
+  if(this.polygons.length>0)
+  {
+    for (let i = 0; i < this.polygons.length; i++) {
+      this.polygons[i].setMap(null);
+    }
+    this.polygons = [];
+  }
+    
+    
+  }
+  
+  ////////////////////////////////
+  
+  ////////////////////////////////
   loadSearchedField():void{
     //if(this.localStorageService.get("searchFieldsLocal")==undefined)
     //{
@@ -141,9 +373,32 @@ export class CreateHotSheetPage {
        this.selectedWebsite=$event;
     }
     getAddress(data) {
-     this.address=data.description;
-      this.selectedLat=data.geometry.location.lat;
-      this.selectedLong=data.geometry.location.lng;
+     
+     this.address=data.data.description;
+     //debugger;
+      this.selectedLat=data.data.geometry.location.lat;
+      this.selectedLong=data.data.geometry.location.lng;
+     
+      data.data.address_components.forEach(element => {
+        if(element.types[0]=="locality")
+        {
+          this.local=element.long_name;
+        }
+        if(element.types[0]=="administrative_area_level_1")
+        {
+          this.administrative_area_level_1=element.long_name;
+        }
+       });
+       if(this.selectedLong!="")
+       {
+         //this.isMap=true;
+         this.map_height=400;
+         this.stopDrawing();
+         this.loadMap(this.selectedLat,this.selectedLong);
+       }
+      
+      
+      //debugger;
     this.updateSearchObject();
        
       }  
@@ -446,15 +701,13 @@ export class CreateHotSheetPage {
     }
     createHotSheet():void{
       //this.domainAccess=this.localStorageService.get('domainAccess');
-     
+      
     if(this.userId!="")
       {
-       //if(this.domainAccess)
-      // {
+      
          
-         this.userServiceObj.checkHotSheetSlug(this.slug,this.userId.toString()).subscribe((result) => this.createHotSheetFinal(result));
-       
-      // }
+        this.userServiceObj.checkHotSheetSlug(this.slug,this.userId.toString()).subscribe((result) => this.createHotSheetFinal(result));
+      
         
       }
     }
@@ -467,9 +720,23 @@ export class CreateHotSheetPage {
        {
          if(data!=null)
          {
+          this.polygons[0].getPath().getArray();
+          if(this.polygons[0].getPath().getArray().length>0)
+          {
+            this.polygons[0].getPath().getArray().forEach(element => {
+            this.polygon_search+= element.lat() + " " + element.lng() + ",";
+            });
+          }
+         
+          this.polygon_search = this.polygon_search.substring(0, this.polygon_search.length - 1);
+
+           this.agent_ids=this.assigned_agent_id.split(',');
+           //debugger;
           this.userServiceObj.createHotSheet(this.userId.toString(),this.selectedWebsite,
           this.sharedServiceObj.mlsServerId,this.name,this.slug,data,this.brief_description,
-          this.main_description,this.virtual_tour_url,this.video_url,this.sub_city)
+          this.main_description,this.virtual_tour_url,this.video_url,this.sub_city,
+          this.communityImage,this.headerImage,this.local,this.administrative_area_level_1,
+          this.community,this.agent_ids,this.polygon_search)
           .subscribe((result) => this.createHotSheetResp(result));
          }
       
@@ -497,6 +764,49 @@ export class CreateHotSheetPage {
       this.navCtrl.push(AllHotSheetsPage,{notificationMsg:this.hotsheetCreateMsg.toString()});
     });
     
+    }
+    takeHeaderPicture(){
+    //  debugger;
+      let options =
+      {
+        quality: 100,
+        correctOrientation: true
+      };
+      this.camera.getPicture(options)
+      .then((data) => {
+       // this.photos = new Array<string>();
+        this.crop
+        .crop(data, {quality: 75,targetHeight:100,targetWidth:100})
+        .then((newImage) => {
+          alert(newImage);
+          this.headerImage=newImage;
+          //this.photos.push(newImage);
+        }, error => {alert(error)});
+      }, function(error) {
+      //  debugger;
+        console.log(error);
+      });
+    }
+    takeCommunityPicture(){
+      let options =
+      {
+        quality: 100,
+        correctOrientation: true
+      };
+      this.camera.getPicture(options)
+      .then((data) => {
+       // this.photos = new Array<string>();
+        this.crop
+        .crop(data, {quality: 75,targetHeight:100,targetWidth:100})
+        .then((newImage) => {
+          alert(newImage);
+          this.communityImage=newImage;
+          
+          //this.photos.push(newImage);
+        }, error => {alert(error)});
+      }, function(error) {
+        console.log(error);
+      });
     }
     /*searchListing():any{
       this.selectedSearch = !this.selectedSearch;
