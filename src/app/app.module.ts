@@ -8,6 +8,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { HTTP } from '@ionic-native/http';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Http, Response, URLSearchParams, Headers, RequestOptions, HttpModule } from '@angular/http';
+import {AccordionModule} from "ng2-accordion";
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -78,7 +79,7 @@ import { ListingProvider } from '../providers/listing/listing';
   imports: [
     BrowserModule, HttpModule,
     IonicModule.forRoot(MyApp), HttpClientModule,MultiselectDropdownModule,
-    Ng4GeoautocompleteModule.forRoot(),
+    Ng4GeoautocompleteModule.forRoot(),AccordionModule,
     IonicStorageModule.forRoot({
       name: 'managementportal',
       driverOrder: ['indexeddb', 'sqlite', 'websql']

@@ -638,7 +638,7 @@ let hotSheetDeletingResp=this.http
     return hotSheetDeletingResp;
 }
   private extractData(res: Response) {
-//  debugger;
+
     return res.json();
   }
   private handleErrorObservable(error: Response | any) {

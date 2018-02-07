@@ -25,25 +25,30 @@
       </ion-chip>
   <form role="form" data-toggle="validator" #accountForm="ngForm">
       <ion-item>
-          <ion-label floating>First Name</ion-label>
-          <ion-input type="text" required [(ngModel)]="first_name" name="first_name" (ngModelChange)="checkFormStatus();"></ion-input>
+          <ion-label floating>First Name<span [ngClass]="{'error': first_name==''}" *ngIf="first_name==''">*</span></ion-label>
+          <ion-input type="text" required [(ngModel)]="first_name" name="first_name" 
+          (ngModelChange)="checkFormStatus();"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label floating>Last Name</ion-label>
-          <ion-input type="text" required [(ngModel)]="last_name" name="last_name" (ngModelChange)="checkFormStatus();"></ion-input>
+          <ion-label floating>Last Name<span [ngClass]="{'error': last_name==''}" *ngIf="last_name==''">*</span></ion-label>
+          <ion-input type="text" required [(ngModel)]="last_name" name="last_name" 
+          (ngModelChange)="checkFormStatus();" ></ion-input>
         </ion-item>
       <ion-item>
-          <ion-label floating>Email Address</ion-label>
-          <ion-input type="email" [(ngModel)]="email" name="email" [email]="true" (ngModelChange)="checkFormStatus();"></ion-input>
+          <ion-label floating>Email Address<span [ngClass]="{'error': email==''}" *ngIf="email==''">*</span></ion-label>
+          <ion-input type="email" [(ngModel)]="email" name="email" [email]="true" 
+          (ngModelChange)="checkFormStatus();" required></ion-input>
         </ion-item>
       
         <ion-item>
-          <ion-label floating>Password</ion-label>
-          <ion-input type="password" required [(ngModel)]="password" name="password" (ngModelChange)="checkFormStatus();"></ion-input>
+          <ion-label floating>Password<span [ngClass]="{'error': password==''}" *ngIf="password==''">*</span></ion-label>
+          <ion-input type="password" required [(ngModel)]="password" name="password" 
+          (ngModelChange)="checkFormStatus();"></ion-input>
         </ion-item>
         <ion-item>
-            <ion-label>Select Country</ion-label>
-            <ion-select [(ngModel)]="selectedCountryAbbv" name="selectedCountryAbbv" (ngModelChange)="onCountryCodeSelection($event);checkFormStatus();" required>
+            <ion-label>Select Country<span [ngClass]="{'error': selectedCountryAbbv==''}" *ngIf="selectedCountryAbbv==''">*</span></ion-label>
+            <ion-select [(ngModel)]="selectedCountryAbbv" name="selectedCountryAbbv" 
+            (ngModelChange)="onCountryCodeSelection($event);checkFormStatus();" required >
               <ion-option value="">--- Select Country Code ---</ion-option>
               <ion-option *ngFor="let countryCode of allCountryCodes" value={{countryCode.country_abbv}}>
                 {{countryCode.name}}
@@ -51,11 +56,13 @@
             </ion-select>
           </ion-item>
         <ion-item>
-            <ion-label floating>Cell Number</ion-label>
-            <ion-input type="tel" [(ngModel)]="phone_number" name="phone_number" required pattern="^[0-9]*$" (ngModelChange)="checkFormStatus();"></ion-input>
+            <ion-label floating>Cell Number<span [ngClass]="{'error': phone_number==null}" *ngIf="phone_number==null">*</span></ion-label>
+            <ion-input type="tel" [(ngModel)]="phone_number" name="phone_number" 
+            required pattern="^[0-9]*$" (ngModelChange)="checkFormStatus();"></ion-input>
           </ion-item>
       <div padding>
-          <button ion-button color="primary" block  (click)="updateAccount();" [disabled]="!accountForm.valid||!updatedValue">Update Account</button>
+          <button ion-button color="primary" block  (click)="updateAccount();"
+           [disabled]="!accountForm.valid||!updatedValue">Update Account</button>
       </div>
   </form>
   <ion-chip *ngIf="accountInfoUpdateMsg!=''">

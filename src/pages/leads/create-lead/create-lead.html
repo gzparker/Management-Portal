@@ -22,39 +22,40 @@
 <ion-content padding>
     <form role="form" data-toggle="validator" #leadForm="ngForm">
         <ion-item>
-          <ion-label floating>First Name</ion-label>
+          <ion-label floating>First Name<span [ngClass]="{'error': firstName==''}" *ngIf="firstName==''">*</span></ion-label>
           <ion-input type="text" required [(ngModel)]="firstName" name="firstName" id="firstName"></ion-input>
         </ion-item>
         <ion-item>
-            <ion-label floating>Last Name</ion-label>
+            <ion-label floating>Last Name<span [ngClass]="{'error': lastName==''}" *ngIf="lastName==''">*</span></ion-label>
             <ion-input type="text" required [(ngModel)]="lastName" name="lastName" id="lastName"></ion-input>
         </ion-item>
         <ion-item>
-            <ion-label floating>Email</ion-label>
+            <ion-label floating>Email<span [ngClass]="{'error': email==''}" *ngIf="email==''">*</span></ion-label>
             <ion-input type="email" required [(ngModel)]="email" name="email" [email]="true"></ion-input>
         </ion-item>
         <ion-item>
-            <ion-label floating>Password</ion-label>
+            <ion-label floating>Password<span [ngClass]="{'error': password==''}" *ngIf="password==''">*</span></ion-label>
             <ion-input type="password" required [(ngModel)]="password" name="password" id="password"></ion-input>
         </ion-item>
         <ion-item>
-            <ion-label>Select Website</ion-label>
-            <ion-select [(ngModel)]="selectedWebsite" (ngModelChange)="onWebsiteSelection($event)" name="selectedWebsite" required>
+            <ion-label>Select Website<span [ngClass]="{'error': selectedWebsite==''}" *ngIf="selectedWebsite==''">*</span></ion-label>
+            <ion-select [(ngModel)]="selectedWebsite" (ngModelChange)="onWebsiteSelection($event)" 
+            name="selectedWebsite" required>
              <ion-option *ngFor="let website of allWebsiteList" value= {{website.id}}>
                 {{website.website}}
               </ion-option>
             </ion-select>
        </ion-item>
         <ion-item>
-            <ion-label floating>Mobile Number</ion-label>
+            <ion-label floating>Mobile Number<span [ngClass]="{'error': mobileNumber==null}" *ngIf="mobileNumber==null">*</span></ion-label>
             <ion-input type="text" required [(ngModel)]="mobileNumber" name="mobileNumber" id="mobileNumber" pattern="^[0-9]*$"></ion-input>
         </ion-item>
         <ion-item>
-            <ion-label floating>Office Number</ion-label>
+            <ion-label floating>Office Number<span [ngClass]="{'error': officeNumber==null}" *ngIf="officeNumber==null">*</span></ion-label>
             <ion-input type="text" required [(ngModel)]="officeNumber" name="officeNumber" id="officeNumber" pattern="^[0-9]*$"></ion-input>
         </ion-item>
         <ion-item>
-            <ion-label floating>Home Number</ion-label>
+            <ion-label floating>Home Number<span [ngClass]="{'error': homeNumber==null}" *ngIf="homeNumber==null">*</span></ion-label>
             <ion-input type="text" required [(ngModel)]="homeNumber" name="homeNumber" id="homeNumber" pattern="^[0-9]*$"></ion-input>
         </ion-item>
         <div padding>

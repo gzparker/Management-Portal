@@ -22,13 +22,15 @@
   <ion-chip *ngIf="!userCreated">
     <ion-label>Please provide new password to complete registeration process.</ion-label>
   </ion-chip>
+  <form role="form" data-toggle="validator" #fbForm="ngForm">
   <ion-item *ngIf="!userCreated">
-    <ion-label floating>Password:</ion-label>
+    <ion-label floating>Password:<span [ngClass]="{'error': fbPassword==''}" *ngIf="fbPassword==''">*</span></ion-label>
     <ion-input type="password" [(ngModel)]="fbPassword" name="fbPassword" id="fbPassword"></ion-input>
   </ion-item>
   <div padding *ngIf="!userCreated">
-    <button ion-button color="primary" block (click)="fbSignUpMethod();">Sign Up</button>
+    <button ion-button color="primary" block (click)="fbSignUpMethod();" [disabled]="!fbForm.valid">Sign Up</button>
   </div>
+</form>
   <ion-chip *ngIf="userFbSignUpMsg!=''">
     <ion-label color="secondary">{{userFbSignUpMsg}}</ion-label>
   </ion-chip>

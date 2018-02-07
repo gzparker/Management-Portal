@@ -12,37 +12,56 @@
         </button>
     <ion-title>Create Hot Sheet</ion-title>
     <ion-buttons end>
-        <button ion-button (click)="createHotSheet();" [disabled]="!hotSheetForm.valid">Create HotSheet</button>
+        <button ion-button (click)="createHotSheet();" [disabled]="!hotSheetForm.valid||polygon_search==''">Create HotSheet</button>
       </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 <ion-content>
-    
     <ion-chip *ngIf='hotsheetCreateMsg!=""'>
         <ion-label color="danger">{{hotsheetCreateMsg}}</ion-label>
     </ion-chip>
   <form role="form" data-toggle="validator" #hotSheetForm="ngForm">
     
     <ion-item>
-      <ion-label floating>Name</ion-label>
+      <ion-label floating>Name<span [ngClass]="{'error': name==''}" *ngIf="name==''">*</span></ion-label>
       <ion-input type="text" required [(ngModel)]="name" name="name" id="name"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label floating>Select Website</ion-label>
-      <ion-select [(ngModel)]="selectedWebsite" (ngModelChange)="onWebsiteSelection($event)" name="selectedWebsite" required>
+      <ion-label floating>Select Website<span [ngClass]="{'error': selectedWebsite==''}" *ngIf="selectedWebsite==''">*</span></ion-label>
+      <ion-select [(ngModel)]="selectedWebsite" (ngModelChange)="onWebsiteSelection($event)" name="selectedWebsite" 
+      required>
        <ion-option *ngFor="let website of allWebsiteList" value= {{website.id}}>
           {{website.website}}
         </ion-option>
       </ion-select>
  </ion-item>
  <ion-item>
-  <ion-label floating>Slug</ion-label>
+  <ion-label floating>Slug<span [ngClass]="{'error': slug==''}" *ngIf="slug==''">*</span></ion-label>
   <ion-input type="text" required [(ngModel)]="slug" name="slug" id="slug"></ion-input>
 </ion-item>
+<div>
+  <ion-label floating>Type an Address, City or Zipcode</ion-label>
+  <ng4geo-autocomplete (componentCallback)="getAddress($event)" (blur)="updateSearchObject()">
+
+  </ng4geo-autocomplete>
+</div>
+<div>
+    <ion-item *ngIf="map_height!=null">
+        <ion-label>Draw Search Area Border<span [ngClass]="{'error': polygon_search==''}" *ngIf="polygon_search==''">*</span></ion-label>
+    </ion-item>
+    <div #map id="map" style="width:100%;" [style.height]="map_height+'px'"></div>
+</div>
+<accordion>
+    <accordion-group>
+        <accordion-heading>
+            Advance Search
+        </accordion-heading>
+<ion-list>
 <ion-item *ngIf="status!=undefined">
   <ion-label floating>Status</ion-label>
-  <ion-select [(ngModel)]="status_modal" (ngModelChange)="selectedStatus($event)" name="status_modal" required multiple="true">
+  <ion-select [(ngModel)]="status_modal" (ngModelChange)="selectedStatus($event)" name="status_modal"
+   multiple="true">
     <ion-option *ngFor="let status of statusOptions" value= {{status.id}}>
        {{status.name}}
      </ion-option>
@@ -52,7 +71,7 @@
 <ion-item *ngIf="listing_type!=undefined">
   <ion-label floating>Listing Type</ion-label>
   <ion-select [(ngModel)]="listing_type_modal" (ngModelChange)="selectedListingType($event)" 
-  name="listing_type_modal" required multiple="true">
+  name="listing_type_modal" multiple="true">
     <ion-option *ngFor="let listingType of listingTypeOptions" value= {{listingType.id}}>
        {{listingType.name}}
      </ion-option>
@@ -66,7 +85,7 @@
 <ion-item *ngIf="bedrooms!=undefined">
   <ion-label floating>Beds</ion-label>
   <ion-select [(ngModel)]="bedrooms" name="bedrooms" id="bedrooms" 
-  (ngModelChange)="updateSearchObject()" required>
+  (ngModelChange)="updateSearchObject()">
    
      <!--<ion-option value="">0+</ion-option>-->
      <ion-option value="1">1+</ion-option>
@@ -85,7 +104,7 @@
 <ion-item *ngIf="bathrooms!=undefined">
   <ion-label floating>Baths</ion-label>
   <ion-select [(ngModel)]="bathrooms" name="bathrooms" id="bathrooms" 
-  (ngModelChange)="updateSearchObject()" required>
+  (ngModelChange)="updateSearchObject()">
    
      <!--<ion-option value="">0+</ion-option>-->
      <ion-option value="1">1+</ion-option>
@@ -104,7 +123,7 @@
 <ion-item *ngIf="listing_size!=undefined">
   <ion-label>Square Feet</ion-label>
   
-        <ion-input type="text" required [(ngModel)]="listing_size_min"
+        <ion-input type="text" [(ngModel)]="listing_size_min"
         name="listing_size_min" id="listing_size_min" placeholder="min" (blur)="updateSearchObject()"></ion-input>
     
         <ion-input type="text" [(ngModel)]="listing_size_max" 
@@ -114,7 +133,7 @@
 <ion-item *ngIf="lot_size!=undefined">
   <ion-label floating>Lot Size</ion-label>
   <ion-select [(ngModel)]="lot_size" name="lot_size" id="lot_size"
-  (ngModelChange)="updateSearchObject()" required>
+  (ngModelChange)="updateSearchObject()">
    
   <!--<ion-option value="">Any</ion-option>-->
   <ion-option value="2000">2,000+ sqft</ion-option>
@@ -134,7 +153,7 @@
 <ion-item *ngIf="days_on_market!=undefined">
   <ion-label floating>Days on the Market</ion-label>
   <ion-select [(ngModel)]="days_on_market" name="days_on_market" id="days_on_market"
-  (ngModelChange)="updateSearchObject()" required>
+  (ngModelChange)="updateSearchObject()">
    
   <!--<ion-option value="">Any</ion-option>-->
   <ion-option value="1">1 Day</ion-option>
@@ -157,7 +176,7 @@
 <ion-item *ngIf="garage_size!=undefined">
   <ion-label floating>Garage Size</ion-label>
   <ion-select [(ngModel)]="garage_size" name="garage_size" id="garage_size"
-  (ngModelChange)="updateSearchObject()" required>
+  (ngModelChange)="updateSearchObject()">
    
   <!--<ion-option value="">Any</ion-option>-->
   <ion-option value="1">1 car</ion-option>
@@ -223,15 +242,7 @@
      </ion-option>
    </ion-select>
 </ion-item>
-<div>
-  <ion-label floating>Type an Address, City or Zipcode</ion-label>
-  <ng4geo-autocomplete (componentCallback)="getAddress($event)" (blur)="updateSearchObject()">
 
-  </ng4geo-autocomplete>
-</div>
-<div>
-    <div #map id="map" style="width:100%;" [style.height]="map_height+'px'"></div>
-</div>
 <ion-item>
   <ion-label floating>Community</ion-label>
   <ion-input type="text" [(ngModel)]="community" name="community"></ion-input>
@@ -276,8 +287,12 @@
   <img [src]="communityImage"/>
 </ion-item>
 </ion-list>
+</ion-list>
+</accordion-group>
+</accordion>
     <div padding>
-        <button ion-button color="primary" block (click)="createHotSheet();" [disabled]="!hotSheetForm.valid">Create HotSheet</button>
+        <button ion-button color="primary" block (click)="createHotSheet();" 
+        [disabled]="!hotSheetForm.valid||polygon_search==''">Create HotSheet</button>
     </div>
 </form>
 <ion-chip *ngIf='hotsheetCreateMsg!=""'>

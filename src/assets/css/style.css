@@ -1,0 +1,8 @@
+.validationError{
+    border: 0.3px solid !important;
+    border-color:  red !important;
+}
+.error
+{
+color: red !important;
+}

@@ -96,17 +96,18 @@ public isApp=false;
   public virtual_tour_url:string="";
   public video_url:string="";
   public sub_city:string="";
-  public polygon_search:any;
+  public polygon_search:any="";
   public headerImage:string="";
   public communityImage:string="";
   public agent_ids:any[]=[];
   public assigned_agent_id:string="";
+  public listing_size_min:string="";
+  public listing_size_max:string="";
   public local:string="";
   public administrative_area_level_1:string="";
   public community:string="";
   public zoom: number = 8;
   public drawingManager:any;
-  public mapHeight:string="400";
   public isDrawing:boolean = false;
   //public isMap:boolean=false;
   // Google Map center
@@ -142,6 +143,14 @@ public isApp=false;
     });
     //this.loadMap();
     this.loadSearchedField();
+    this.geolocation.getCurrentPosition().then((position) => {
+      if(position.coords.latitude!=undefined&&position.coords.longitude!=undefined)
+      {
+        this.map_height=400;
+        this.loadMap(position.coords.latitude, position.coords.longitude);
+      }
+      
+    });
   }
   loadMap(lat:any,lng:any){
  
@@ -230,8 +239,15 @@ public isApp=false;
       path: path
     });
     this.polygons.push(this.poly);
-   //debugger;
-    
+    this.polygons[0].getPath().getArray();
+          if(this.polygons[0].getPath().getArray().length>0)
+          {
+            this.polygons[0].getPath().getArray().forEach(element => {
+            this.polygon_search+= element.lat() + " " + element.lng() + ",";
+            });
+          }
+         
+          this.polygon_search = this.polygon_search.substring(0, this.polygon_search.length - 1);
     this.map.setOptions({
       draggable: true
     });
@@ -307,7 +323,7 @@ public isApp=false;
   }
   
   stopDrawing() {
-   // debugger;
+   //debugger;
    this.isDrawing = false;
    if(this.drawingManager!=undefined)
    {
@@ -332,7 +348,7 @@ public isApp=false;
     }
     this.polygons = [];
   }
-    
+  this.polygon_search="";
     
   }
   
@@ -695,7 +711,8 @@ public isApp=false;
         parcel_num:this.parcel_num,school_district:this.school_district,school_elem:this.school_elem,school_high:this.school_high,
         status:this.status_modal,stories:this.stories,address_city:this.address_city_modal,address_subdivision:this.address_subdivision_modal,
         listing_type:this.listing_type_modal,address_zip_code:this.address_zip_code_modal,
-        neighborhood:this.neighbourhood_modal,selectedLat:this.selectedLat,selectedLong:this.selectedLong
+        neighborhood:this.neighbourhood_modal,selectedLat:this.selectedLat,selectedLong:this.selectedLong,
+        listing_size_max:this.listing_size_max,listing_size_min:this.listing_size_min
       }; 
     this.storage.set('searchFilterObj',JSON.stringify(this.searchListObject));
     }
@@ -720,15 +737,7 @@ public isApp=false;
        {
          if(data!=null)
          {
-          this.polygons[0].getPath().getArray();
-          if(this.polygons[0].getPath().getArray().length>0)
-          {
-            this.polygons[0].getPath().getArray().forEach(element => {
-            this.polygon_search+= element.lat() + " " + element.lng() + ",";
-            });
-          }
-         
-          this.polygon_search = this.polygon_search.substring(0, this.polygon_search.length - 1);
+          
 
            this.agent_ids=this.assigned_agent_id.split(',');
            //debugger;

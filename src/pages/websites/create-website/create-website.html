@@ -19,14 +19,15 @@
 <ion-content padding>
     <form role="form" data-toggle="validator" #websiteForm="ngForm">
   <ion-item>
-    <ion-label floating>Website Domain</ion-label>
+    <ion-label floating>Website Domain<span [ngClass]="{'error': website_domain==''}" *ngIf="website_domain==''">*</span></ion-label>
     <ion-input type="text" [(ngModel)]="website_domain" 
     name="website_domain" id="website_domain" required pattern="https?://.+" ></ion-input>
   </ion-item>
   
   <ion-item>
-    <ion-label>Is Active</ion-label>
-    <ion-checkbox color="royal" checked="false" [(ngModel)]="isActive" name="isActive" id="isActive" required>Is Active</ion-checkbox>
+    <ion-label>Is Active<span [ngClass]="{'error': isActive==false}" *ngIf="isActive==false">*</span></ion-label>
+    <ion-checkbox color="royal" checked="false" [(ngModel)]="isActive" name="isActive" id="isActive" 
+    required >Is Active</ion-checkbox>
   </ion-item>
   <div padding>
       <button ion-button color="primary" block (click)="createWebsite();" [disabled]="!websiteForm.valid">Save Website</button>

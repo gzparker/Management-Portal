@@ -75,6 +75,7 @@ export class AllWebsitesPage {
   
     if(result.status==true)
     {
+      debugger;
       this.allWebsiteList=result.result;   
     }
     else
