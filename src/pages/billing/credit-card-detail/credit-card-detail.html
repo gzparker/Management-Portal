@@ -1,0 +1,35 @@
+<!--
+  Generated template for the CreditCardDetailPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+    <ion-navbar>
+        <button ion-button menuToggle start>
+            <ion-icon name="menu"></ion-icon>
+          </button>
+      <ion-title>Credit Card Detail</ion-title>
+      <ion-buttons end>
+          <button ion-button (click)="editCreditCardDetail();">Edit</button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+    <ion-card *ngIf="cardDetail!=undefined">
+        <ion-card-title>
+            Credit Card Detail
+        </ion-card-title>
+        <h2>Name:{{cardDetail.name}}</h2>
+        <p>Brand:{{cardDetail.brand}}</p>
+        <p>Exp Year:{{cardDetail.exp_year}}</p>
+      <p>Exp Month:{{cardDetail.exp_month}}</p>
+      <p *ngIf="cardDetail.country!=undefined">Country:{{cardDetail.country}}</p>
+      <p *ngIf="cardDetail.address_line1!=undefined">Address Line1:{{cardDetail.address_line1}}</p>
+      <p *ngIf="cardDetail.address_line2!=undefined">Address Line2:{{cardDetail.address_line2}}</p>
+      <p *ngIf="cardDetail.address_state!=undefined">State:{{cardDetail.address_state}}</p>
+      </ion-card>
+</ion-content>

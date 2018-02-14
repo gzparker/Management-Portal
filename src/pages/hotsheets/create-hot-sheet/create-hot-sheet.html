@@ -58,6 +58,7 @@
             Advance Search
         </accordion-heading>
 <ion-list>
+   
 <ion-item *ngIf="status!=undefined">
   <ion-label floating>Status</ion-label>
   <ion-select [(ngModel)]="status_modal" (ngModelChange)="selectedStatus($event)" name="status_modal"
@@ -277,15 +278,44 @@
   <button ion-button color="primary" block (click)="takeHeaderPicture();" >Select Header Image</button>
 </ion-item>
 <ion-item *ngIf="headerImage!=''">
-  <img [src]="headerImage"/>
+  <img [src]="headerImage" />
 </ion-item>
 <ion-item>
- 
   <button ion-button color="primary" block (click)="takeCommunityPicture();">Select Community Image</button>
 </ion-item>
 <ion-item *ngIf="communityImage!=''">
-  <img [src]="communityImage"/>
+  <img [src]="communityImage" />
 </ion-item>
+</ion-list>
+<ion-list *ngIf="!isApp">
+    <ion-list-header>
+        Header Image
+      </ion-list-header>
+<img-cropper
+#headerCropper
+[image]="dataHeaderImage"
+[settings]="cropperSettings"
+(onCrop)="headerImageCropped($event)"></img-cropper>
+<div *ngIf="dataHeaderImage.image">
+ <img
+    [src]="dataHeaderImage.image"
+    [width]="croppedWidth"
+    [height]="croppedHeight">
+</div>
+    <ion-list-header>
+        Community Image
+      </ion-list-header>
+    <img-cropper
+#communityCropper
+[image]="dataCommunityImage"
+[settings]="cropperSettings"
+(onCrop)="communityImageCropped($event)"></img-cropper>
+<div *ngIf="dataCommunityImage.image">
+ <img
+    [src]="dataCommunityImage.image"
+    [width]="croppedWidth"
+    [height]="croppedHeight">
+</div>
 </ion-list>
 </ion-list>
 </accordion-group>

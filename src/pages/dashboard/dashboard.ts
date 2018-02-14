@@ -20,10 +20,15 @@ import { UserOptionPage } from '../setup/user-option/user-option';
 
 import { AccountInfoPage } from '../account/account-info/account-info';
 import { AccountOptionPage } from '../account/account-option/account-option';
-import { BillingInfoPage } from '../account/billing-info/billing-info';
+import { BillingHistoryPage } from '../../pages/account/billing-history/billing-history';
+import { UpcomingSubscriptionPage } from '../../pages/account/upcoming-subscription/upcoming-subscription';
+
 import { ChangePasswordPage } from '../account/change-password/change-password';
-import { EditBillingPage } from '../account/edit-billing/edit-billing';
 import { UpgradeCenterPage } from '../account/upgrade-center/upgrade-center';
+
+import { ViewCreditCardsPage } from '../billing/view-credit-cards/view-credit-cards';
+import { EditCreditCardPage } from '../billing/edit-credit-card/edit-credit-card';
+import { CreditCardDetailPage } from '../billing/credit-card-detail/credit-card-detail';
 
 import { SharedProvider } from '../../providers/shared/shared';
 import { UserProvider } from '../../providers/user/user';
@@ -55,8 +60,6 @@ public userId:string="";
   }
 
   ionViewDidLoad() {
-    //debugger;
-    //sharedServiceObj.isLoggedInEmitter.subscribe(item => this.setLoginStatus(item));
     this.getUserDetailedInfo();
   }
   getUserDetailedInfo(): void {
@@ -76,7 +79,7 @@ public userId:string="";
       if (status.result != undefined) {
         if (status.result.subscribed_services.length > 0) {
           if (status.result.subscribed_services[0].service_status == null) {
-          debugger;
+          //debugger;
             this.ngZone.run(() => {
               this.navCtrl.push(SubscriptionPage, { full_name: status.result.first_name + " " + status.result.last_name });
             });
@@ -124,16 +127,26 @@ public userId:string="";
       this.navCtrl.push(AccountInfoPage);
     }
     if (pageNumber == "16") {
-      this.navCtrl.push(BillingInfoPage);
+    //  debugger;
+      this.navCtrl.push(ViewCreditCardsPage);
     }
     if (pageNumber == "17") {
       this.navCtrl.push(ChangePasswordPage);
     }
     if (pageNumber == "18") {
-      this.navCtrl.push(EditBillingPage);
+      this.navCtrl.push(EditCreditCardPage);
     }
     if (pageNumber == "19") {
       this.navCtrl.push(UpgradeCenterPage);
+    }
+    if (pageNumber == "20") {
+      this.navCtrl.push(CreditCardDetailPage);
+    }
+    if (pageNumber == "21") {
+      this.navCtrl.push(BillingHistoryPage);
+    }
+    if (pageNumber == "22") {
+      this.navCtrl.push(UpcomingSubscriptionPage);
     }
   }
 }

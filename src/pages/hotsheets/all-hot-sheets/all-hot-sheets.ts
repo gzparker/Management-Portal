@@ -1,5 +1,5 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, Platform, MenuController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, Platform, MenuController,LoadingController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 
@@ -30,7 +30,8 @@ export class AllHotSheetsPage {
   public hotsheetFoundMessage="";
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
-    public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform) {
+    public modalCtrl: ModalController, public alertCtrl: AlertController,
+     public platform: Platform,public loadingCtrl: LoadingController) {
       if(this.navParams.get('notificationMsg')!=undefined)
       {
         this.notificationMsg=this.navParams.get('notificationMsg');
@@ -43,15 +44,23 @@ export class AllHotSheetsPage {
     //debugger;
     member_id.then((data) => {
       this.userId=data;
-      this.viewAllHotSheets();
+      this.viewAllHotSheets(null);
     });
   }
 
-  viewAllHotSheets():void{
+  viewAllHotSheets(refresher:any):void{
     if(this.userId!="")
     {
       this.allHotSheetList=[];
-     
+      let loader = this.loadingCtrl.create({
+        content: "Please wait...",
+        duration: 700
+      });
+      loader.present();
+      if(refresher!=null)
+    {
+      refresher.complete();
+    }
   this.userServiceObj.allUserHotSheets(this.userId.toString())
     .subscribe((result) => this.viewAllHotSheetResp(result));
     }

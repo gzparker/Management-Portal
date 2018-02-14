@@ -12,7 +12,7 @@
     </button>
     <ion-title>Manage Agents</ion-title>
     <ion-buttons end>
-      <button ion-button (click)="openPage('14');">Create Agent</button>
+      <button ion-button (click)="createAgent();">Create Agent</button>
     </ion-buttons>
   </ion-navbar>
 
@@ -20,5 +20,46 @@
 
 
 <ion-content padding>
-
+  <ion-refresher (ionRefresh)="loadAllAgents($event)">
+          <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+<ion-chip *ngIf="notificationMsg!=''">
+  <ion-label color="secondary">{{notificationMsg}}</ion-label>
+</ion-chip>
+<ion-list>
+   
+  
+      <!--<ion-card-title>
+        
+      </ion-card-title>-->
+     
+    <!--<ion-card *ngFor="let agent of allAgents">
+      
+      <ion-card-content>
+        <ion-card-title>
+          
+          </ion-card-title>-->
+          <ion-item *ngFor="let agent of allAgents">
+            <ion-item (click)="agentDetail(agent.id)">
+          <ion-avatar item-start><img [src]="agent.image_url" *ngIf="agent.image_url!=''"/>
+          <img src="././assets/imgs/noImage.png" *ngIf="agent.image_url==''"/></ion-avatar>
+          <h2>{{agent.first_name}} {{agent.last_name}}</h2>
+          <p>Email:{{agent.email}}</p>
+          <p>Description:{{agent.description}}</p>
+        </ion-item>
+          <button ion-button item-right color="secondary" (click)="editAgent(agent.id)">
+              <ion-icon name="create"></ion-icon>
+            </button>
+          <button ion-button item-right color="danger" (click)="deleteAgent(agent)">
+            <ion-icon name="trash"></ion-icon>
+          </button>
+        </ion-item>
+      <!--</ion-card-content>
+    </ion-card>--->
+   
+  
+  </ion-list>
+  <ion-chip *ngIf='allAgents.length<=0&&agentsFoundMessage!=""'>
+      <ion-label color="danger">{{agentsFoundMessage}}</ion-label>
+  </ion-chip>
 </ion-content>

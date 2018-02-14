@@ -60,6 +60,49 @@ export class SubscriptionProvider {
       .map(this.extractData)
     return subscriptionList;
   }
+  subscriptionBillingHistory(member_id:string)
+  {
+    let url = "";
+    let data = new URLSearchParams();
+    url = this.sharedServiceObj.registerationApiBaseUrl + 'subscriptions/getMyBillingHistory';
+    //debugger;
+    data.append('service_id', this.sharedServiceObj.service_id);
+    data.append('member_id', member_id);
+    //debugger;
+    let billingHistoryList = this.http
+      .post(url, data, this.headerOptions)
+      .map(this.extractData)
+    return billingHistoryList;
+  }
+  upcomingSubscriptionList(member_id:string)
+  {
+    let url = "";
+    let data = new URLSearchParams();
+    url = this.sharedServiceObj.registerationApiBaseUrl + 'subscriptions/mySubscriptions';
+    //debugger;
+    data.append('service_id', this.sharedServiceObj.service_id);
+    data.append('member_id', member_id);
+    //debugger;
+    let upcomingSubscriptionList = this.http
+      .post(url, data, this.headerOptions)
+      .map(this.extractData)
+    return upcomingSubscriptionList;
+  }
+  cancelSubscription(member_id:string,subscription_id:string)
+  {
+    let url = "";
+    let data = new URLSearchParams();
+    url = this.sharedServiceObj.registerationApiBaseUrl + 'subscriptions/cancelSubscription';
+    //debugger;
+    data.append('service_id', this.sharedServiceObj.service_id);
+    data.append('member_id', member_id);
+    data.append('subscription_id', subscription_id);
+    //debugger;
+    let cancelSubscriptionResp = this.http
+      .post(url, data, this.headerOptions)
+      .map(this.extractData)
+    return cancelSubscriptionResp;
+  }
   private extractData(res: Response) {
     //debugger;
     return res.json();

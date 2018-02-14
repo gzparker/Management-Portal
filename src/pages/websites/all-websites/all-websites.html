@@ -20,19 +20,31 @@
 
 
 <ion-content padding>
+    <ion-refresher (ionRefresh)="viewAllWebsite($event)">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
     <ion-chip *ngIf="notificationMsg!=''">
         <ion-label color="secondary">{{notificationMsg}}</ion-label>
       </ion-chip>
   <ion-list>
-    <ion-item-sliding *ngFor="let website of allWebsiteList">
-    <ion-item>
+    <!--<ion-item-sliding *ngFor="let website of allWebsiteList">-->
+    <ion-item *ngFor="let website of allWebsiteList" >
       <h2>{{website.website}}</h2>
       <p>Private Key:{{website.key_private}}</p>
       <p>Public Key:{{website.key_public}}</p>
       <p>Status:<span *ngIf="website.status==1">Yes</span>
         <span *ngIf="website.status==0">No</span></p>
+        <button ion-button item-right color="danger" (click)="deleteWebsite(website)">
+            <ion-icon name="trash"></ion-icon>
+          </button>
+          <button ion-button item-right color="secondary" (click)="editWebsite(website.id)">
+              <ion-icon name="create"></ion-icon>
+            </button>
+            <button ion-button item-right color="secondary" (click)="editLeadRouting(website.id)">
+              <ion-icon name="construct"></ion-icon>
+            </button>
     </ion-item>
-    <ion-item-options side="right">
+    <!--<ion-item-options side="right">
       <button ion-button color="danger" (click)="deleteWebsite(website)">
         <ion-icon name="trash"></ion-icon>
       </button>
@@ -40,7 +52,7 @@
           <ion-icon name="create"></ion-icon>
         </button>
     </ion-item-options>
-  </ion-item-sliding>
+  </ion-item-sliding>-->
   </ion-list>
   <ion-chip *ngIf='allWebsiteList.length<=0&&websiteFoundMessage!=""'>
       <ion-label color="danger">{{websiteFoundMessage}}</ion-label>

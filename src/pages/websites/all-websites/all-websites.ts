@@ -9,7 +9,7 @@ import { CreateWebsitePage } from '../../websites/create-website/create-website'
 import { EditWebsitePage } from '../../websites/edit-website/edit-website';
 import { DashboardTabsPage } from '../../tabs/dashboard-tabs/dashboard-tabs';
 import { AlertController } from 'ionic-angular';
-
+import { EditLeadRoutingPage } from '../../leads/edit-lead-routing/edit-lead-routing';
 import { UserVerificationPage } from '../../user-verification/user-verification';
 
 import { SharedProvider } from '../../../providers/shared/shared';
@@ -49,16 +49,14 @@ export class AllWebsitesPage {
     //console.log('ionViewDidLoad AllWebsitesPage');
     
     let member_id = this.storage.get('userId');
-    //debugger;
     member_id.then((data) => {
       this.userId=data;
-      this.viewAllWebsite();
+      this.viewAllWebsite(null);
     });
    // this.viewAllWebsite();
  
   }
-  viewAllWebsite():void{
-//debugger;
+  viewAllWebsite(refresher:any):void{
     if(this.userId!="")
     {
       let loader = this.loadingCtrl.create({
@@ -66,6 +64,10 @@ export class AllWebsitesPage {
         duration: 700
       });
       loader.present();
+      if(refresher!=null)
+    {
+      refresher.complete();
+    }
      this.userServiceObj.allUserWebsites(this.userId.toString())
     .subscribe((result) => this.viewAllWebsiteResp(result));
     }
@@ -75,7 +77,7 @@ export class AllWebsitesPage {
   
     if(result.status==true)
     {
-      debugger;
+      //debugger;
       this.allWebsiteList=result.result;   
     }
     else
@@ -117,10 +119,7 @@ export class AllWebsitesPage {
         }
       ]
     });
-    confirm.present();
-
-    
-    
+    confirm.present();  
   }
   deleteWebsiteResp(result:any,website:any):void{
     //debugger;
@@ -130,6 +129,10 @@ export class AllWebsitesPage {
       
     // this.viewAllWebsite();
     }
+  }
+  editLeadRouting(websiteId:string)
+  {
+    this.navCtrl.push(EditLeadRoutingPage,{websiteId:websiteId});
   }
   createWebsite(){
     this.navCtrl.push(CreateWebsitePage);

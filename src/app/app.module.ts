@@ -9,6 +9,7 @@ import { HTTP } from '@ionic-native/http';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Http, Response, URLSearchParams, Headers, RequestOptions, HttpModule } from '@angular/http';
 import {AccordionModule} from "ng2-accordion";
+import { ImageCropperModule } from "ng2-img-cropper/index";
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -40,6 +41,7 @@ import { AllLeadsPage } from '../pages/leads/all-leads/all-leads';
 import { CreateLeadPage } from '../pages/leads/create-lead/create-lead';
 import { LeadDetailPage } from '../pages/leads/lead-detail/lead-detail';
 import { EditLeadPage } from '../pages/leads/edit-lead/edit-lead';
+import { EditLeadRoutingPage } from '../pages/leads/edit-lead-routing/edit-lead-routing';
 
 import { AllHotSheetsPage } from '../pages/hotsheets/all-hot-sheets/all-hot-sheets';
 import { CreateHotSheetPage } from '../pages/hotsheets/create-hot-sheet/create-hot-sheet';
@@ -48,6 +50,8 @@ import { EditHotSheetPage } from '../pages/hotsheets/edit-hot-sheet/edit-hot-she
 import { CreateAgentPage } from '../pages/setup/create-agent/create-agent';
 import { GlobalPreferencesPage } from '../pages/setup/global-preferences/global-preferences';
 import { ManageAgentsPage } from '../pages/setup/manage-agents/manage-agents';
+import { AgentDetailPage } from '../pages/setup/agent-detail/agent-detail';
+import { EditAgentPage } from '../pages/setup/edit-agent/edit-agent';
 import { MlsSettingsPage } from '../pages/setup/mls-settings/mls-settings';
 import { SetupOptionPage } from '../pages/setup/setup-option/setup-option';
 import { UserOptionPage } from '../pages/setup/user-option/user-option';
@@ -55,10 +59,15 @@ import { UserOptionPage } from '../pages/setup/user-option/user-option';
 import { AccountInfoPage } from '../pages/account/account-info/account-info';
 import { EditAccountPage } from '../pages/account/edit-account/edit-account';
 import { AccountOptionPage } from '../pages/account/account-option/account-option';
-import { BillingInfoPage } from '../pages/account/billing-info/billing-info';
+
 import { ChangePasswordPage } from '../pages/account/change-password/change-password';
-import { EditBillingPage } from '../pages/account/edit-billing/edit-billing';
+
+import { ViewCreditCardsPage } from '../pages/billing/view-credit-cards/view-credit-cards';
+import { EditCreditCardPage } from '../pages/billing/edit-credit-card/edit-credit-card';
+import { CreditCardDetailPage } from '../pages/billing/credit-card-detail/credit-card-detail';
 import { UpgradeCenterPage } from '../pages/account/upgrade-center/upgrade-center';
+import { BillingHistoryPage } from '../pages/account/billing-history/billing-history';
+import { UpcomingSubscriptionPage } from '../pages/account/upcoming-subscription/upcoming-subscription';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -73,8 +82,9 @@ import { ListingProvider } from '../providers/listing/listing';
     WebsiteDetailPage,LeadDetailPage,EditLeadPage,CreateLeadPage,AllLeadsPage,VerificationCodePage, 
     SubscriptionPage,AllWebsitesPage,CreateWebsitePage,EditWebsitePage,DashboardTabsPage,
     AllHotSheetsPage,ContactusPage,CreateAgentPage,GlobalPreferencesPage,ManageAgentsPage,
-    MlsSettingsPage,SetupOptionPage,UserOptionPage,AccountInfoPage,AccountOptionPage,BillingInfoPage,
-    ChangePasswordPage,EditBillingPage,UpgradeCenterPage,EditAccountPage,CreateHotSheetPage,EditHotSheetPage
+    MlsSettingsPage,SetupOptionPage,UserOptionPage,AccountInfoPage,AccountOptionPage,ViewCreditCardsPage,
+    ChangePasswordPage,EditCreditCardPage,CreditCardDetailPage,UpgradeCenterPage,EditAccountPage,CreateHotSheetPage,EditHotSheetPage,
+    EditLeadRoutingPage,UpcomingSubscriptionPage,BillingHistoryPage,AgentDetailPage,EditAgentPage
   ],
   imports: [
     BrowserModule, HttpModule,
@@ -85,7 +95,7 @@ import { ListingProvider } from '../providers/listing/listing';
       driverOrder: ['indexeddb', 'sqlite', 'websql']
     }),AgmCoreModule.forRoot({
       apiKey: 'AIzaSyA9aj3-17cojks6gicZZ_PY2t5ERVu25ac'
-    })
+    }),ImageCropperModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -93,9 +103,9 @@ import { ListingProvider } from '../providers/listing/listing';
     LeadDetailPage,EditLeadPage,CreateLeadPage,AllLeadsPage,VerificationCodePage, SubscriptionPage,
     AllWebsitesPage,CreateWebsitePage,EditWebsitePage,DashboardTabsPage,AllHotSheetsPage,ContactusPage,
     CreateAgentPage,GlobalPreferencesPage,ManageAgentsPage,
-    MlsSettingsPage,SetupOptionPage,UserOptionPage,AccountInfoPage,AccountOptionPage,BillingInfoPage,
-    ChangePasswordPage,EditBillingPage,UpgradeCenterPage,EditAccountPage,CreateHotSheetPage,EditHotSheetPage
-    //ListPage
+    MlsSettingsPage,SetupOptionPage,UserOptionPage,AccountInfoPage,AccountOptionPage,ViewCreditCardsPage,
+    ChangePasswordPage,EditCreditCardPage,CreditCardDetailPage,UpgradeCenterPage,EditAccountPage,CreateHotSheetPage,EditHotSheetPage,
+    EditLeadRoutingPage,UpcomingSubscriptionPage,BillingHistoryPage,AgentDetailPage,EditAgentPage
   ],
   providers: [
     StatusBar,

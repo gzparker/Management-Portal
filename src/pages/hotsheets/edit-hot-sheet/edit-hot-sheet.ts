@@ -1,5 +1,5 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, Platform, MenuController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, Platform, MenuController,LoadingController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 import { IMultiSelectOption,IMultiSelectSettings } from 'angular-2-dropdown-multiselect';
@@ -87,7 +87,7 @@ export class EditHotSheetPage {
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform
-    ,public listinServiceObj:ListingProvider) {
+    ,public listinServiceObj:ListingProvider,public loadingCtrl: LoadingController) {
       
     }
 
@@ -110,6 +110,11 @@ export class EditHotSheetPage {
   loadSearchedField():void{
     //if(this.localStorageService.get("searchFieldsLocal")==undefined)
     //{
+      let loader = this.loadingCtrl.create({
+        content: "Please wait...",
+        duration: 700
+      });
+      loader.present();
      this.listinServiceObj.getAvailableSearchFields()
       .subscribe((result) => this.loadAvailableSearchFields(result));
     //}

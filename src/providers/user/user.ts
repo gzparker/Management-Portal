@@ -449,7 +449,7 @@ data.append('website_id',website_id);
     .map(this.extractData)
     return searchedListing;
 }
-updateLead(website_id:string,lead_id:string,email:string,password:string,first_name:string,last_name:string,phone_office:number,phone_mobile:number,phone_home:number){
+updateLead(member_id:string,website_id:string,lead_id:string,email:string,password:string,first_name:string,last_name:string,phone_office:number,phone_mobile:number,phone_home:number){
 let phone_office_num="";
 let phone_mobile_num="";
 let phone_home_num="";
@@ -494,6 +494,32 @@ allLeads(user_id:string){
     .map(this.extractData)
     return savedListing;
 }
+viewLeadRouting(website_id:string){
+
+  let data = new URLSearchParams();
+data.append('website_id',website_id);
+//debugger;
+let leadRouting=this.http
+  .post(this.sharedServiceObj.apiBaseUrl+'members/viewWebsiteLeadRouting', data, this.headerOptions)
+  .map(this.extractData)
+  return leadRouting;
+}
+updateLeadRouting(website_id:string,send_to_email_addresses:string,
+  send_to_zillow_crm:string,send_to_intagent_crm:string,send_to_zapier:string){
+//debugger;
+  let data = new URLSearchParams();
+  data.append('website_id',website_id);
+  //data.append('send_to_email',send_to_email);
+  data.append('send_to_email_addresses',send_to_email_addresses);
+  data.append('send_to_zillow_crm',send_to_zillow_crm);
+  data.append('send_to_intagent_crm',send_to_intagent_crm);
+  data.append('send_to_zapier',send_to_zapier);
+
+  let leadRouting=this.http
+  .post(this.sharedServiceObj.apiBaseUrl+'members/updateWebsiteLeadRouting', data, this.headerOptions)
+  .map(this.extractData)
+  return leadRouting;
+}
 allUserWebsites(user_id:string){
 
     let data = new URLSearchParams();
@@ -528,7 +554,10 @@ editWebsite(user_id:string,website_id:string){
     .map(this.extractData)
     return websiteListing;
 }
-updateWebsite(user_id:string,isActive:string,website_domain:string,website_id:string){
+updateWebsite(user_id:string,isActive:string,website_domain:string,website_id:string,contact_email:string,
+  header_wrapper:string,footer_wrapper:string,intagent_website:string,custom_css:string,
+  show_new_listings:string,show_open_houses:string,feature_agent_listings:string,
+  feature_broker_listings:string,feature_office_listings:string){
 
     let data = new URLSearchParams();
     data.append('website_domain',website_domain);
@@ -536,6 +565,16 @@ updateWebsite(user_id:string,isActive:string,website_domain:string,website_id:st
  data.append('active',isActive);
  data.append('id',website_id);
  data.append('mls_server_id',this.sharedServiceObj.mlsServerId);
+ data.append('contact_email',contact_email);
+ data.append('header_wrapper',header_wrapper);
+ data.append('footer_wrapper',footer_wrapper);
+ data.append('intagent_website',intagent_website);
+ data.append('custom_css',custom_css);
+ data.append('show_new_listings',show_new_listings);
+ data.append('show_open_houses',show_open_houses);
+ data.append('feature_agent_listings',feature_agent_listings);
+ data.append('feature_broker_listings',feature_broker_listings);
+ data.append('feature_office_listings',feature_office_listings);
 
   let websiteListing=this.http
     .post(this.sharedServiceObj.apiBaseUrl+'members/updateWebsite', data, this.headerOptions)
@@ -553,10 +592,56 @@ deleteWebsite(user_id:string,website_id:string){
     .map(this.extractData)
     return websiteListing;
 }
+allListCreditCards(user_id:string,service_id:string){
+  let data = new URLSearchParams();
+data.append('member_id',user_id);
+data.append('service_id',service_id);
+let creditCardListing=this.http
+  .post(this.sharedServiceObj.registerationApiBaseUrl+'PaymentMethods/getMyCardsOnFile', data, this.headerOptions)
+  .map(this.extractData)
+  return creditCardListing;
+}
+loadCreditCardDetail(user_id:string,service_id:string,unique_id:string){
+  let data = new URLSearchParams();
+  data.append('member_id',user_id);
+  data.append('service_id',service_id);
+  data.append('unique_id',unique_id);
+let creditCardDetail=this.http
+  .post(this.sharedServiceObj.registerationApiBaseUrl+'PaymentMethods/viewPaymentMethod', data, this.headerOptions)
+  .map(this.extractData)
+  return creditCardDetail;
+}
+updateCreditCardDetail(user_id:string,service_id:string,unique_id:string,name:string,exp_year:string,
+  exp_month:string,zipcode:string)
+{
+  let data = new URLSearchParams();
+  data.append('member_id',user_id);
+  data.append('service_id',service_id);
+  data.append('unique_id',unique_id);
+  data.append('name',name);
+  data.append('exp_year',exp_year);
+  data.append('exp_month',exp_month);
+  data.append('zipcode',zipcode);
+let creditCardDetail=this.http
+  .post(this.sharedServiceObj.registerationApiBaseUrl+'PaymentMethods/updatePaymentMethod', data, this.headerOptions)
+  .map(this.extractData)
+  return creditCardDetail;
+}
+deleteCreditCard(user_id:string,service_id:string,unique_id:string){
+  let data = new URLSearchParams();
+ data.append('member_id',user_id);
+ data.append('service_id',service_id);
+ data.append('unique_id',unique_id);
+//debugger;
+//return 0;
+let creditCardDeletingResp=this.http
+    .post(this.sharedServiceObj.registerationApiBaseUrl+'PaymentMethods/deletePaymentMethod', data, this.headerOptions)
+    .map(this.extractData)
+    return creditCardDeletingResp;
+}
 allUserHotSheets(user_id:string){
     let data = new URLSearchParams();
  data.append('member_id',user_id);
-//debugger;
   let websiteListing=this.http
     .post(this.sharedServiceObj.apiBaseUrl+'members/viewAllSavedHotsheets', data, this.headerOptions)
     .map(this.extractData)
@@ -565,8 +650,7 @@ allUserHotSheets(user_id:string){
 createHotSheet(user_id:string,website_id:string,mlsServerId:string,name:string,slug:string,
   json_search:any,brief_description:any,main_description:any,virtual_tour_url:any,video_url:any,
   sub_city:any,communityImage:any,headerImage:any,local:any,administrative_area_level_1:any,community:any,agent_ids:any,polygon_search:any){
-debugger;
-let data = new URLSearchParams();
+ let data = new URLSearchParams();
  data.append('name',name);
  data.append('member_id',user_id);
  data.append('slug',slug);
@@ -637,8 +721,74 @@ let hotSheetDeletingResp=this.http
     .map(this.extractData)
     return hotSheetDeletingResp;
 }
+viewMemberAgents(user_id:string)
+{
+  let data = new URLSearchParams();
+  data.append('member_id',user_id);
+ 
+ let agentListResp=this.http
+     .post(this.sharedServiceObj.apiBaseUrl+'members/viewAgents', data, this.headerOptions)
+     .map(this.extractData)
+     return agentListResp;
+}
+createAgent(user_id:string,first_name:string,last_name:string,email:string,phone_mobile:string,access_level:string,
+password:string,image:string,description:string)
+{
+  let data = new URLSearchParams();
+  data.append('member_id',user_id);
+  data.append('first_name',first_name);
+  data.append('last_name',last_name);
+  data.append('email',email);
+  data.append('phone_mobile',phone_mobile);
+  data.append('access_level',access_level);
+  data.append('password',password);
+  data.append('mls_id',this.sharedServiceObj.mlsServerId);
+  data.append('image',image);
+  data.append('description',description);
+ let createAgentResp=this.http
+     .post(this.sharedServiceObj.apiBaseUrl+'members/createAgent', data, this.headerOptions)
+     .map(this.extractData)
+     return createAgentResp;
+}
+updateAgent(agent_id:string,first_name:string,last_name:string,email:string,phone_mobile:string,access_level:string,
+  password:string,image:string,description:string)
+  {
+    let data = new URLSearchParams();
+    data.append('agent_id',agent_id);
+    data.append('first_name',first_name);
+    data.append('last_name',last_name);
+    data.append('email',email);
+    data.append('phone_mobile',phone_mobile);
+    data.append('access_level',access_level);
+    data.append('password',password);
+    data.append('mls_id',this.sharedServiceObj.mlsServerId);
+    data.append('image',image);
+    data.append('description',description);
+   let updateAgentResp=this.http
+       .post(this.sharedServiceObj.apiBaseUrl+'members/updateAgent', data, this.headerOptions)
+       .map(this.extractData)
+       return updateAgentResp;
+  }
+agentDetail(agent_id:string)
+{
+  let data = new URLSearchParams();
+  data.append('agent_id',agent_id);
+  let agentDetailResp=this.http
+     .post(this.sharedServiceObj.apiBaseUrl+'members/viewAgentDetails', data, this.headerOptions)
+     .map(this.extractData)
+     return agentDetailResp;
+}
+deleteAgent(agent_id:string)
+{
+  let data = new URLSearchParams();
+  data.append('agent_id',agent_id);
+ 
+ let agentResp=this.http
+     .post(this.sharedServiceObj.apiBaseUrl+'members/deleteAgent', data, this.headerOptions)
+     .map(this.extractData)
+     return agentResp;
+}
   private extractData(res: Response) {
-
     return res.json();
   }
   private handleErrorObservable(error: Response | any) {

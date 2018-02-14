@@ -23,7 +23,47 @@
         <ion-input type="text" [(ngModel)]="website_domain" 
         name="website_domain" id="website_domain" required pattern="https?://.+"></ion-input>
       </ion-item>
-      
+      <!--<ion-item>
+        <ion-label floating>Contact Email<span [ngClass]="{'error': contact_email==''}" *ngIf="contact_email==''">*</span></ion-label>
+        <ion-input type="email" [(ngModel)]="contact_email" 
+        name="contact_email" id="contact_email" required [email]="true"></ion-input>
+      </ion-item>-->
+      <ion-item>
+        <ion-label floating>Header Wrapper</ion-label>
+        <ion-textarea type="text" [(ngModel)]="header_wrapper" name="header_wrapper"></ion-textarea>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Footer Wrapper</ion-label>
+        <ion-textarea type="text" [(ngModel)]="footer_wrapper" name="footer_wrapper"></ion-textarea>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Intagent Website</ion-label>
+        <ion-input type="number" [(ngModel)]="intagent_website" name="intagent_website"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Custom CSS</ion-label>
+        <ion-textarea type="text" [(ngModel)]="custom_css" name="custom_css"></ion-textarea>
+      </ion-item>
+      <ion-item>
+        <ion-label>Show Open Houses</ion-label>
+        <ion-toggle [(ngModel)]="show_open_houses" name="show_open_houses"></ion-toggle>
+      </ion-item>
+      <ion-item>
+        <ion-label>Show New Houses</ion-label>
+        <ion-toggle [(ngModel)]="show_new_listings" name="show_new_listings"></ion-toggle>
+      </ion-item>
+      <ion-item>
+        <ion-label>Feature Agent Listing</ion-label>
+        <ion-toggle [(ngModel)]="feature_agent_listings" name="feature_agent_listings"></ion-toggle>
+      </ion-item>
+      <ion-item>
+        <ion-label>Feature Broker Listing</ion-label>
+        <ion-toggle [(ngModel)]="feature_broker_listings" name="feature_broker_listings"></ion-toggle>
+      </ion-item>
+      <ion-item>
+        <ion-label>Feature Office Listing</ion-label>
+        <ion-toggle [(ngModel)]="feature_office_listings" name="feature_office_listings"></ion-toggle>
+      </ion-item>
       <ion-item>
         <ion-label>Is Active<span [ngClass]="{'error': isActive==false}" *ngIf="isActive==false">*</span></ion-label>
         <ion-checkbox color="royal" checked="false" [(ngModel)]="isActive" name="isActive" id="isActive" 

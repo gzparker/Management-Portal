@@ -11,11 +11,81 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Create Agent</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="createAgent();" [disabled]="!createAgentForm.valid">Create Agent</button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+  <form role="form" data-toggle="validator" #createAgentForm="ngForm">
+    <ion-item>
+      <ion-label floating>First Name<span [ngClass]="{'error': firstName==''}" *ngIf="firstName==''">*</span>
+      </ion-label>
+      <ion-input type="text" required [(ngModel)]="firstName" name="firstName" id="firstName"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label floating>Last Name<span [ngClass]="{'error': lastName==''}" *ngIf="lastName==''">*</span>
+        </ion-label>
+        <ion-input type="text" required [(ngModel)]="lastName" name="lastName" id="lastName"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label floating>Email<span [ngClass]="{'error': email==''}" *ngIf="email==''">*</span>
+        </ion-label>
+        <ion-input type="email" required [(ngModel)]="email" name="email" [email]="true"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Password<span [ngClass]="{'error': password==''}" *ngIf="password==''">*</span></ion-label>
+      <ion-input type="password" [(ngModel)]="password" name="password" id="password"></ion-input>
+  </ion-item>
+    <ion-item>
+        <ion-label floating>Phone Mobile<span [ngClass]="{'error': phone_mobile==null}" *ngIf="phone_mobile==null">*</span>
+        </ion-label>
+        <ion-input type="text" required [(ngModel)]="phone_mobile" name="phone_mobile" id="phone_mobile" pattern="^[0-9]*$"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Access Level<span [ngClass]="{'error': access_level==''}" *ngIf="access_level==''">*</span>
+      </ion-label>
+      <ion-select [(ngModel)]="access_level" 
+  name="access_level" required>
+  <ion-option value="admin">Admin</ion-option>
+  <ion-option value="agent">Agent</ion-option>
+   </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label floating>Brief Description</ion-label>
+    <ion-textarea type="text" [(ngModel)]="description" name="description"></ion-textarea>
+  </ion-item>
+  <ion-list *ngIf="isApp">
 
+    <ion-item>
+      <button ion-button color="primary" block (click)="takePicture();" >Select Image</button>
+    </ion-item>
+    <ion-item *ngIf="agentImage!=''">
+      <img [src]="agentImage" />
+    </ion-item>
+    </ion-list>
+    <ion-list *ngIf="!isApp">
+        <ion-list-header>
+            Select Image
+          </ion-list-header>
+    <img-cropper
+    #agentImageCropper
+    [image]="dataAgentImage"
+    [settings]="cropperSettings"
+    (onCrop)="agentImageCropped($event)"></img-cropper>
+    <div *ngIf="dataAgentImage.image">
+     <img
+        [src]="dataAgentImage.image"
+        [width]="croppedWidth"
+        [height]="croppedHeight">
+    </div>
+    
+    </ion-list>
+    <div padding>
+        <button ion-button color="primary" block (click)="createAgent();" [disabled]="!createAgentForm.valid">Create Agent</button>
+    </div>
+</form>
 </ion-content>

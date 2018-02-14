@@ -6,10 +6,6 @@ import { Storage } from '@ionic/storage';
 import { DashboardPage } from '../../dashboard/dashboard';
 import { FbConfirmPage } from '../../fb-confirm/fb-confirm';
 
-import { CreateLeadPage } from '../../leads/create-lead/create-lead';
-import { LeadDetailPage } from '../../leads/lead-detail/lead-detail';
-import { EditLeadPage } from '../../leads/edit-lead/edit-lead';
-import { EditLeadRoutingPage } from '../../leads/edit-lead-routing/edit-lead-routing';
 
 import { AlertController } from 'ionic-angular';
 
@@ -19,7 +15,7 @@ import { SharedProvider } from '../../../providers/shared/shared';
 import { UserProvider } from '../../../providers/user/user';
 import { SubscriptionProvider } from '../../../providers/subscription/subscription';
 /**
- * Generated class for the AllLeadsPage page.
+ * Generated class for the BillingHistoryPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -27,19 +23,18 @@ import { SubscriptionProvider } from '../../../providers/subscription/subscripti
 
 @IonicPage()
 @Component({
-  selector: 'page-all-leads',
-  templateUrl: 'all-leads.html',
+  selector: 'page-billing-history',
+  templateUrl: 'billing-history.html',
 })
-export class AllLeadsPage {
+export class BillingHistoryPage {
   public notificationMsg:string="";
-  public leadId:string="";
-  public allLeadsList:any[]=[];
+  public allSubscriptionHistory:any[]=[];
   
-  public leadsFoundMessage="";
+  public historyFoundMessage="";
   public userId:string="";
   
-  public title: string = 'Delete Lead';
-  public message: string = 'Are you sure to delete this lead!';
+  public title: string = 'Delete Subscription';
+  public message: string = 'Are you sure to delete this subscription!';
   public confirmClicked: boolean = false;
   public cancelClicked: boolean = false;
   public isOpen: boolean = false;
@@ -59,14 +54,10 @@ export class AllLeadsPage {
     //debugger;
     member_id.then((data) => {
       this.userId=data;
-      this.viewAllLeads(null);
+      this.viewAllBillingHistory(null);
     });
   }
-  createLead()
-  {
-    this.navCtrl.push(CreateLeadPage);
-  }
-  viewAllLeads(refresher:any):void{
+  viewAllBillingHistory(refresher:any):void{
     if(this.userId!="")
     {
       let loader = this.loadingCtrl.create({
@@ -78,41 +69,29 @@ export class AllLeadsPage {
     {
       refresher.complete();
     }
-  this.userServiceObj.allLeads(this.userId.toString())
-    .subscribe((result) => this.viewAllLeadsResp(result));
+  this.subscriptionObj.subscriptionBillingHistory(this.userId.toString())
+    .subscribe((result) => this.viewAllBillingHistoryResp(result));
     }
     
   }
-  viewAllLeadsResp(result:any):void{
-    //debugger;
+  viewAllBillingHistoryResp(result:any):void{
+   
     if(result.status==true)
     {
-      
-      this.allLeadsList=result.results;
-    //  debugger;
+      this.allSubscriptionHistory=result.billing_history;
     }
     else
     {
-      this.allLeadsList=[];
-      this.leadsFoundMessage="No leads found.";
+      this.allSubscriptionHistory=[];
+      this.historyFoundMessage="No billing history found.";
     }
     
   }
-  editLead(leadId:string){
-this.navCtrl.push(EditLeadPage,{leadId:leadId});
-  }
-  leadDetail(leadId:string){
-    this.navCtrl.push(LeadDetailPage,{leadId:leadId});
-      }
-  editLeadRouting(websiteId:string)
+  deleteSubscription(subscription:any)
   {
-    this.navCtrl.push(EditLeadRoutingPage,{websiteId:websiteId});
-  }
-  deleteLead(lead:any):void{
-
     let confirm = this.alertCtrl.create({
-      title: 'Delete Lead?',
-      message: 'Are you sure to delete this lead?',
+      title: this.title,
+      message: this.message,
       buttons: [
         {
           text: 'Cancel',
@@ -123,29 +102,25 @@ this.navCtrl.push(EditLeadPage,{leadId:leadId});
         {
           text: 'Ok',
           handler: () => {
-            let selectedIndex = this.allLeadsList.indexOf(lead);
+            let selectedIndex = this.allSubscriptionHistory.indexOf(subscription);
             if (selectedIndex >= 0) {
-            this.allLeadsList.splice(selectedIndex, 1);
+            this.allSubscriptionHistory.splice(selectedIndex, 1);
             }
-            if(this.allLeadsList.length<=0)
+            if(this.allSubscriptionHistory.length<=0)
             {
-              this.leadsFoundMessage="All leads have been deleted.Please add new lead.";
+              this.historyFoundMessage="All subscriptions have been deleted.Please subscribe again.";
               this.notificationMsg="";
             }
-            this.userServiceObj.deleteLead(lead.lead_id)
-            .subscribe((result) => this.deleteLeadResp(result));
+            this.subscriptionObj.cancelSubscription(this.userId.toString(),subscription.subscription_id)
+            .subscribe((result) => this.deleteSubscriptionResp(result));
           }
         }
       ]
     });
     confirm.present();
-   
   }
-  deleteLeadResp(result:any):void{
-    //debugger;
-    if(result.status)
-    {
-     //this.viewAllLeads();
-    }
+  deleteSubscriptionResp(result:any)
+  {
+
   }
 }

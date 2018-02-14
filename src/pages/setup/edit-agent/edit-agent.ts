@@ -13,8 +13,9 @@ import { AlertController } from 'ionic-angular';
 import { SharedProvider } from '../../../providers/shared/shared';
 import { UserProvider } from '../../../providers/user/user';
 import { SubscriptionProvider } from '../../../providers/subscription/subscription';
+
 /**
- * Generated class for the CreateAgentPage page.
+ * Generated class for the EditAgentPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -22,29 +23,31 @@ import { SubscriptionProvider } from '../../../providers/subscription/subscripti
 
 @IonicPage()
 @Component({
-  selector: 'page-create-agent',
-  templateUrl: 'create-agent.html',
+  selector: 'page-edit-agent',
+  templateUrl: 'edit-agent.html',
 })
-export class CreateAgentPage {
+export class EditAgentPage {
   @ViewChild('agentImageCropper') agentImageCropper : ImageCropperComponent;
   public isApp=false;
   public userLoggedId:boolean=false;
-  public userType:string="1";
+  public mls_id:string="";
   public firstName:string="";
   public lastName:string="";
   public email:string="";
   public password:string="";
   public access_level:string="";
   public phone_mobile:number;
-  public agentCreateMsg:string="";
+  public agentUpdateMsg:string="";
   public description:string="";
   public cropperSettings;
   public croppedWidth:Number;
   public croppedHeight:Number;
   public dataAgentImage:any;
   public agentImage:string="";
+  public agentDetail:any;
 
   public userId:string="";
+  public agent_id:string="";
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,
     public sharedServiceObj: SharedProvider, private storage: Storage,
@@ -76,26 +79,68 @@ export class CreateAgentPage {
     let member_id = this.storage.get('userId');
     member_id.then((data) => {
       this.userId=data;
-      
+      if(this.navParams.get('agent_id')!=undefined)
+      {
+       this.agent_id = this.navParams.get('agent_id');
+       this.loadAgentDetails();
+       }
     });
   }
-  createAgent()
+  loadAgentDetails()
+{
+  if(this.userId.toString())
   {
-    if(this.userId!="")
+    let loader = this.loadingCtrl.create({
+      content: "Please wait...",
+      duration: 700
+    });
+    loader.present();
+  
+    this.userServiceObj.agentDetail(this.agent_id.toString())
+  .subscribe((result) => this.loadAgentDetailsResp(result));
+  }
+  
+}
+loadAgentDetailsResp(result:any)
+{
+  //debugger;
+  if(result.status==true)
+  {
+    if(result.result)
     {
-  // debugger;
-  this.userServiceObj.createAgent(this.userId,this.firstName,this.lastName,this.email,this.phone_mobile.toString(),this.access_level,
+      this.agentDetail=result.result;
+      this.firstName=this.agentDetail.first_name;
+      this.lastName=this.agentDetail.last_name;
+      this.email=this.agentDetail.email;
+      this.mls_id=this.agentDetail.mls_id;
+      this.phone_mobile=this.agentDetail.phone_mobile;
+      this.access_level=this.agentDetail.access_level;
+      this.password=this.agentDetail.password;
+      this.description=this.agentDetail.description;
+    }
+  }
+  else
+  {
+
+  }
+}
+  updateAgent()
+  {
+    if(this.agent_id!="")
+    {
+   //debugger;
+  this.userServiceObj.updateAgent(this.agent_id,this.firstName,this.lastName,this.email,this.phone_mobile.toString(),this.access_level,
     this.password,this.agentImage,this.description)
-    .subscribe((result) => this.createAgentResp(result));
+    .subscribe((result) => this.updateAgentResp(result));
  
     }
   }
-  createAgentResp(result:any)
+  updateAgentResp(result:any)
   {
-    this.agentCreateMsg="Agent has been created successfully.";
+    this.agentUpdateMsg="Agent has been updated successfully.";
 
     this.ngZone.run(() => {
-      this.navCtrl.push(ManageAgentsPage,{notificationMsg:this.agentCreateMsg.toUpperCase()});
+      this.navCtrl.push(ManageAgentsPage,{notificationMsg:this.agentUpdateMsg.toUpperCase()});
     });
   }
   agentImageCropped(bounds : Bounds)

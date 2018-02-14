@@ -100,5 +100,6 @@
         <variable name="APP_ID" value="701598080041539" />
         <variable name="APP_NAME" value="TheIDXCompany" />
     </plugin>
+    <allow-navigation href="http://192.168.8.104:8100" />
     <engine name="browser" spec="~5.0.3" />
 </widget>

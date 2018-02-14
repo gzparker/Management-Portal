@@ -1,0 +1,55 @@
+<!--
+  Generated template for the BillingHistoryPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+      <button ion-button menuToggle start>
+          <ion-icon name="menu"></ion-icon>
+      </button>
+    <ion-title>Billing History</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <ion-refresher (ionRefresh)="viewAllBillingHistory($event)">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
+    <ion-chip *ngIf="notificationMsg!=''">
+        <ion-label color="secondary">{{notificationMsg}}</ion-label>
+    </ion-chip>
+    <ion-list>
+      <accordion *ngFor="let subscription of allSubscriptionHistory">
+        <accordion-group>
+            <accordion-heading>
+              <ion-card>
+                <ion-item>
+                <h2>Amount Due:{{subscription.amount_due}}</h2>
+                <p>Date Charged:{{subscription.date_charged}}</p>
+                <p>Payment Status:<span *ngIf="subscription.payment_status==true">Paid</span><span *ngIf="subscription.payment_status!=true">Un-Paid</span></p>
+                <button ion-button item-right color="danger" (click)="deleteSubscription(subscription)">
+                    <ion-icon name="trash"></ion-icon>
+                  </button>
+              </ion-item>
+              </ion-card>
+            </accordion-heading>
+    <ion-card>
+        <ion-item *ngFor="let subscriptionItem of subscription.items">
+        <h2>Item Amount:{{subscriptionItem.item_amount}}</h2>
+        <p>Currency:{{subscriptionItem.item_currency}}</p>
+        <p>Description:{{subscriptionItem.item_description}}</p>
+      </ion-item>
+      </ion-card>
+    </accordion-group>
+  </accordion>
+    </ion-list>
+   
+    <ion-chip *ngIf='allSubscriptionHistory.length<=0&&historyFoundMessage!=""'>
+        <ion-label color="danger">{{historyFoundMessage}}</ion-label>
+    </ion-chip>
+</ion-content>

@@ -5,6 +5,7 @@ import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 import { FbConfirmPage } from '../../fb-confirm/fb-confirm';
 import { AllWebsitesPage } from '../../websites/all-websites/all-websites';
+import { EditLeadRoutingPage } from '../../leads/edit-lead-routing/edit-lead-routing';
 import { AlertController } from 'ionic-angular';
 
 import { UserVerificationPage } from '../../user-verification/user-verification';
@@ -58,18 +59,17 @@ export class CreateWebsitePage {
        {
          isActiveFinal="0";
        }
-       
-  
+
   this.userServiceObj.createWebsite(this.userId,isActiveFinal,this.website_domain)
     .subscribe((result) => this.createWebsiteResp(result));
     // }
       }
   }
   createWebsiteResp(result:any):void{
-  
+  //debugger;
   this.websiteCreateMsg="Website has been created successfully.";
   this.ngZone.run(() => {
-  this.navCtrl.push(AllWebsitesPage,{notificationMsg:this.websiteCreateMsg.toUpperCase()});
+  this.navCtrl.push(EditLeadRoutingPage,{websiteId:result.website_id});
   });
   }
 }

@@ -5,6 +5,9 @@ import { Storage } from '@ionic/storage';
 import { IMultiSelectOption,IMultiSelectSettings } from 'angular-2-dropdown-multiselect';
 import { Crop } from '@ionic-native/crop';
 import { Camera, CameraOptions } from '@ionic-native/camera';
+import { ImagePicker } from '@ionic-native/image-picker';
+import {ImageCropperComponent, CropperSettings, Bounds} from 'ng2-img-cropper';
+
 import { Geolocation } from '@ionic-native/geolocation';
 
 import { AllHotSheetsPage } from '../all-hot-sheets/all-hot-sheets';
@@ -23,9 +26,17 @@ declare var latitudeSimplifier;
 @IonicPage()
 @Component({
   selector: 'page-create-hot-sheet',
-  templateUrl: 'create-hot-sheet.html',
+  templateUrl: 'create-hot-sheet.html'
 })
 export class CreateHotSheetPage {
+  @ViewChild('headerCropper') headerImageCropper : ImageCropperComponent;
+  @ViewChild('communityCropper') communityImageCropper : ImageCropperComponent;
+  public cropperSettings;
+  public croppedWidth:Number;
+  public croppedHeight:Number;
+  public dataHeaderImage:any;
+  public dataCommunityImage:any;
+
   public multiSelect:IMultiSelectSettings = {
     enableSearch: true,
     checkedStyle: 'fontawesome',
@@ -125,7 +136,7 @@ public isApp=false;
   constructor(private geolocation: Geolocation,public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform
-    ,public listinServiceObj:ListingProvider,private crop: Crop,private camera: Camera) {
+    ,public listinServiceObj:ListingProvider,private crop: Crop,private camera: Camera,private imagePicker: ImagePicker) {
       if(this.platform.is('core') || this.platform.is('mobileweb')) {
         this.isApp=false;
       }
@@ -133,6 +144,19 @@ public isApp=false;
       {
         this.isApp=true;
       }
+      
+      this.cropperSettings= new CropperSettings();
+
+      this.cropperSettings.noFileInput=false;
+
+      this.cropperSettings.cropOnResize=true;
+
+      this.cropperSettings.fileType= 'image/jpeg';
+
+      this.cropperSettings.keepAspect= false;
+
+      this.dataHeaderImage= {};
+      this.dataCommunityImage={};
     }
 
   ionViewDidLoad() {
@@ -740,7 +764,7 @@ public isApp=false;
           
 
            this.agent_ids=this.assigned_agent_id.split(',');
-           //debugger;
+           debugger;
           this.userServiceObj.createHotSheet(this.userId.toString(),this.selectedWebsite,
           this.sharedServiceObj.mlsServerId,this.name,this.slug,data,this.brief_description,
           this.main_description,this.virtual_tour_url,this.video_url,this.sub_city,
@@ -774,8 +798,22 @@ public isApp=false;
     });
     
     }
+    headerImageCropped(bounds : Bounds)
+   {
+     this.headerImage=this.dataHeaderImage.image;
+     // this.croppedHeight=bounds.bottom-bounds.top;
+    //  this.croppedWidth=bounds.right-bounds.left;
+//debugger;
+   }
+   communityImageCropped(bounds : Bounds)
+   {
+     this.communityImage=this.dataCommunityImage.image;
+     // this.croppedHeight=bounds.bottom-bounds.top;
+    //  this.croppedWidth=bounds.right-bounds.left;
+//debugger;
+   }
     takeHeaderPicture(){
-    //  debugger;
+    //debugger;
       let options =
       {
         quality: 100,
@@ -783,18 +821,37 @@ public isApp=false;
       };
       this.camera.getPicture(options)
       .then((data) => {
-       // this.photos = new Array<string>();
-        this.crop
-        .crop(data, {quality: 75,targetHeight:100,targetWidth:100})
-        .then((newImage) => {
+        this.headerImage="data:image/jpeg;base64," +data;
+        let image : any= new Image();
+         image.src = this.headerImage;
+        this.headerImageCropper.setImage(image);
+        if(this.isApp)
+        {
+       this.crop
+       .crop(this.headerImage, {quality: 75,targetHeight:100,targetWidth:100})
+      .then((newImage) => {
+     
           alert(newImage);
           this.headerImage=newImage;
-          //this.photos.push(newImage);
-        }, error => {alert(error)});
+        }, error => {
+         
+          alert(error)});
+        }
       }, function(error) {
-      //  debugger;
+
         console.log(error);
       });
+    }
+    selectHeaderPicture()
+    {
+      let options= {
+        maximumImagesCount: 1
+      }
+    
+      this.imagePicker.getPictures(options)
+      .then((results) => {
+      // debugger;
+      }, (err) => { console.log(err) });
     }
     takeCommunityPicture(){
       let options =
@@ -804,15 +861,21 @@ public isApp=false;
       };
       this.camera.getPicture(options)
       .then((data) => {
-       // this.photos = new Array<string>();
-        this.crop
-        .crop(data, {quality: 75,targetHeight:100,targetWidth:100})
-        .then((newImage) => {
-          alert(newImage);
-          this.communityImage=newImage;
-          
-          //this.photos.push(newImage);
-        }, error => {alert(error)});
+        this.communityImage="data:image/jpeg;base64," +data;
+        let image : any= new Image();
+         image.src = this.communityImage;
+        this.communityImageCropper.setImage(image);
+        if(this.isApp)
+        {
+          this.crop
+          .crop(this.communityImage, {quality: 75,targetHeight:100,targetWidth:100})
+          .then((newImage) => {
+            alert(newImage);
+            this.communityImage=newImage;
+            
+          }, error => {alert(error)});
+        }
+        
       }, function(error) {
         console.log(error);
       });

@@ -70,7 +70,11 @@ public selectedWebsite:string="";
   editLead(leadId:string):void{
     if(this.userId!="")
     {
-    //debugger;
+      let loader = this.loadingCtrl.create({
+        content: "Please wait...",
+        duration: 700
+      });
+      loader.present();
   this.userServiceObj.leadDetail(leadId,this.userId.toString())
     .subscribe((result) => this.editLeadResp(result));
     }
@@ -126,7 +130,7 @@ public selectedWebsite:string="";
     {
       
    
-  this.userServiceObj.updateLead(this.selectedWebsite,this.leadId,this.email,this.password,this.firstName,this.lastName,this.officeNumber,this.mobileNumber,this.homeNumber)
+  this.userServiceObj.updateLead(this.userId,this.selectedWebsite,this.leadId,this.email,this.password,this.firstName,this.lastName,this.officeNumber,this.mobileNumber,this.homeNumber)
     .subscribe((result) => this.updateLeadResp(result));
     }
   }
