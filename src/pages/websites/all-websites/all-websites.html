@@ -11,7 +11,7 @@
           <ion-icon name="menu"></ion-icon>
         </button>
     <ion-title>ALL WEBSITES</ion-title>
-    <ion-buttons end>
+    <ion-buttons end *ngIf="allWebsiteList.length<=0">
       <button ion-button (click)="createWebsite();">Create Website</button>
     </ion-buttons>
   </ion-navbar>
@@ -42,6 +42,9 @@
             </button>
             <button ion-button item-right color="secondary" (click)="editLeadRouting(website.id)">
               <ion-icon name="construct"></ion-icon>
+            </button>
+            <button ion-button item-right color="secondary" (click)="viewPaperWorkStatus(website.id)">
+              <ion-icon name="settings"></ion-icon>
             </button>
     </ion-item>
     <!--<ion-item-options side="right">

@@ -69,19 +69,19 @@ public isApp=false;
   public stories:string="";
   public year_built:string="";
   public status:any[]=[];
-  public statusOptions: IMultiSelectOption[];
+  public statusOptions:any[]=[];
   public status_modal:string[]=[];
   public status_last_searched:any[]=[];
   public address_city:any[]=[];
-  public address_city_options: IMultiSelectOption[];
+  public address_city_options:any[]=[];
   public address_city_modal:any[]=[];
   public address_city_last_searched:any[]=[];
   public address_subdivision:any[]=[];
-  public address_subdivision_options: IMultiSelectOption[];
+  public address_subdivision_options:any[]=[];
   public address_subdivision_modal:any[]=[];
   public address_subdivision_last_searched:any[]=[];
   public listing_type:any[]=[];
-  public listingTypeOptions: IMultiSelectOption[];
+  public listingTypeOptions:any[]=[];
   public listing_type_modal:any[]=[];
   public listing_type_last_searched:any[]=[];
   public address_zip_code:any[]=[];
@@ -89,7 +89,7 @@ public isApp=false;
   public address_zip_code_modal:any[]=[];
   public address_zip_code_last_searched:any[]=[];
   public neighbourhood:any[]=[];
-  public neighbourhood_options: IMultiSelectOption[];
+  public neighbourhood_options:any[]=[];
   public neighbourhood_modal:any[]=[];
   public neighbourhood_last_searched:any[]=[];
   public google_address:string="";
@@ -136,7 +136,8 @@ public isApp=false;
   constructor(private geolocation: Geolocation,public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform
-    ,public listinServiceObj:ListingProvider,private crop: Crop,private camera: Camera,private imagePicker: ImagePicker) {
+    ,public listinServiceObj:ListingProvider,
+    private crop: Crop,private camera: Camera,private imagePicker: ImagePicker) {
       if(this.platform.is('core') || this.platform.is('mobileweb')) {
         this.isApp=false;
       }
@@ -375,9 +376,7 @@ public isApp=false;
   this.polygon_search="";
     
   }
-  
-  ////////////////////////////////
-  
+ 
   ////////////////////////////////
   loadSearchedField():void{
     //if(this.localStorageService.get("searchFieldsLocal")==undefined)
@@ -392,12 +391,10 @@ public isApp=false;
     }
     getAllWebsite():void{
       if(this.userId!="")
-      {
-        
+      { 
     this.userServiceObj.allUserWebsites(this.userId.toString())
       .subscribe((result) => this.getAllWebsiteResp(result));
       }
-      
     }
     getAllWebsiteResp(result:any):void{
       //debugger;
@@ -439,7 +436,7 @@ public isApp=false;
       
       
       //debugger;
-    this.updateSearchObject();
+  //  this.updateSearchObject();
        
       }  
     loadSavedSearchedFields():void{
@@ -737,7 +734,8 @@ public isApp=false;
         listing_type:this.listing_type_modal,address_zip_code:this.address_zip_code_modal,
         neighborhood:this.neighbourhood_modal,selectedLat:this.selectedLat,selectedLong:this.selectedLong,
         listing_size_max:this.listing_size_max,listing_size_min:this.listing_size_min
-      }; 
+      };
+      debugger;
     this.storage.set('searchFilterObj',JSON.stringify(this.searchListObject));
     }
     createHotSheet():void{
@@ -755,7 +753,7 @@ public isApp=false;
     createHotSheetFinal(result:any):void{
       if(result.status!=false)
       {
-    
+    this.updateSearchObject();
     let json_search=this.storage.get("searchFilterObj");
      json_search.then((data) => {
        {
@@ -891,33 +889,33 @@ public isApp=false;
     }
     selectedSubDivision($event:any):void{
     //this.address_subdivision_modal.push($event.id);
-    this.updateSearchObject();
+   // this.updateSearchObject();
     }
     removedSubDivision($event:any):void{
     this.address_subdivision_modal.splice(this.address_subdivision_modal.indexOf($event.id),1);
-    this.updateSearchObject();
+   // this.updateSearchObject();
     }
     refreshValueAddressCity($event:any):void{
     
     }
     selectedAddressCity($event:any):void{
     //this.address_city_modal.push($event.id);
-    this.updateSearchObject();
+  //  this.updateSearchObject();
     }
     removedAddressCity($event:any):void{
       this.address_city_modal.splice(this.address_city_modal.indexOf($event.id),1);
-      this.updateSearchObject();
+    //  this.updateSearchObject();
     }
     refreshValueListingType($event:any):void{
     
     }
     selectedListingType($event:any):void{
     //this.listing_type_modal.push($event.id);
-    this.updateSearchObject();
+  //  this.updateSearchObject();
     }
     removedListingType($event:any):void{
       this.listing_type_modal.splice(this.listing_type_modal.indexOf($event.id),1);
-      this.updateSearchObject();
+    //  this.updateSearchObject();
     }
     refreshStatus($event:any):void{
     
@@ -925,32 +923,32 @@ public isApp=false;
     selectedStatus($event:any):void{
      //debugger;
     //this.status_modal.push($event.id);
-    this.updateSearchObject();
+  //  this.updateSearchObject();
     }
     removedStatus($event:any):void{
       this.status_modal.splice(this.status_modal.indexOf($event.id),1);
-      this.updateSearchObject();
+    //  this.updateSearchObject();
     }
     refreshValueAddressZipCode($event:any):void{
     
     }
     selectedAddressZipCode($event:any):void{
     //this.address_zip_code_modal.push($event.id);
-    this.updateSearchObject();
+  //  this.updateSearchObject();
     }
     removedAddressZipCode($event:any):void{
       this.address_zip_code_modal.splice(this.address_zip_code_modal.indexOf($event.id),1);
-      this.updateSearchObject();
+    //  this.updateSearchObject();
     }
     refreshValueNeighbourHood($event:any):void{
     
     }
     selectedNeighbourHood($event:any):void{
     //this.neighbourhood_modal.push($event.id);
-    this.updateSearchObject();
+    //this.updateSearchObject();
     }
     removedNeighbourHood($event:any):void{
       this.neighbourhood_modal.splice(this.neighbourhood_modal.indexOf($event.id),1);
-      this.updateSearchObject();
+    //  this.updateSearchObject();
     }
 }

@@ -9,6 +9,7 @@ import { CreateWebsitePage } from '../../websites/create-website/create-website'
 import { EditWebsitePage } from '../../websites/edit-website/edit-website';
 import { DashboardTabsPage } from '../../tabs/dashboard-tabs/dashboard-tabs';
 import { AlertController } from 'ionic-angular';
+import { MlsSettingsPage } from '../../setup/mls-settings/mls-settings';
 import { EditLeadRoutingPage } from '../../leads/edit-lead-routing/edit-lead-routing';
 import { UserVerificationPage } from '../../user-verification/user-verification';
 
@@ -125,8 +126,6 @@ export class AllWebsitesPage {
     //debugger;
     if(result.status)
     {
-     
-      
     // this.viewAllWebsite();
     }
   }
@@ -136,6 +135,10 @@ export class AllWebsitesPage {
   }
   createWebsite(){
     this.navCtrl.push(CreateWebsitePage);
+  }
+  viewPaperWorkStatus(website_id:string)
+  {
+    this.navCtrl.push(MlsSettingsPage,{website_Id:website_id});
   }
   editWebsite(id:any){
     this.navCtrl.push(EditWebsitePage, {

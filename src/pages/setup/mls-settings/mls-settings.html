@@ -17,5 +17,18 @@
 
 
 <ion-content padding>
-
+  <ion-card *ngIf="paperWorkDetails!=undefined">
+    <!--<ion-avatar item-start><img [src]="agentDetail.image_url" *ngIf="agentDetail.image_url!=''"/>
+      <img src="././assets/imgs/noImage.png" *ngIf="agentDetail.image_url==''"/></ion-avatar>-->
+  <p>Paperwork Sent:<span *ngIf="paperWorkDetails.paperwork_sent=='0'">Sent</span>
+    <span *ngIf="paperWorkDetails.paperwork_sent=='1'">Not Sent</span></p>
+  <p>Paperwork Received:<span *ngIf="paperWorkDetails.paperwork_received=='0'">Received</span>
+      <span *ngIf="paperWorkDetails.paperwork_received=='1'">Not Received</span></p>
+  <p>Paperwork Approved:<span *ngIf="paperWorkDetails.paperwork_approved=='0'">Approved</span>
+        <span *ngIf="paperWorkDetails.paperwork_approved=='1'">Not Approved</span></p>
+ 
+</ion-card>
+<ion-chip *ngIf='paperWorkDetails==undefined'>
+  <ion-label color="danger">{{paperWorkFoundMsg}}</ion-label>
+</ion-chip>
 </ion-content>

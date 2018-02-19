@@ -649,7 +649,8 @@ allUserHotSheets(user_id:string){
 }
 createHotSheet(user_id:string,website_id:string,mlsServerId:string,name:string,slug:string,
   json_search:any,brief_description:any,main_description:any,virtual_tour_url:any,video_url:any,
-  sub_city:any,communityImage:any,headerImage:any,local:any,administrative_area_level_1:any,community:any,agent_ids:any,polygon_search:any){
+  sub_city:any,communityImage:any,headerImage:any,local:any,
+  administrative_area_level_1:any,community:any,agent_ids:any,polygon_search:any){
  let data = new URLSearchParams();
  data.append('name',name);
  data.append('member_id',user_id);
@@ -666,7 +667,6 @@ createHotSheet(user_id:string,website_id:string,mlsServerId:string,name:string,s
  data.append('sub_city',sub_city);
  data.append('video_url',video_url);
  data.append('virtual_tour_url',virtual_tour_url);
- data.append('video_url',video_url);
  data.append('header_image',headerImage);
  data.append('community_image',communityImage);
  data.append('assigned_agent_ids',agent_ids);
@@ -695,16 +695,32 @@ editHotSheet(user_id:string,id:string){
     .map(this.extractData)
     return hotSheetCheckResp;
 }
-updateHotSheet(id:string,user_id:string,website_id:string,mlsServerId:string,name:string,slug:string,json_search:any){
+updateHotSheet(id:string,user_id:string,website_id:string,mlsServerId:string,name:string,slug:string,
+  json_search:any,brief_description:any,main_description:any,virtual_tour_url:any,video_url:any,
+  sub_city:any,communityImage:any,headerImage:any,local:any,
+  administrative_area_level_1:any,community:any,agent_ids:any,polygon_search:any){
  // debugger;
 let data = new URLSearchParams();
+ data.append('id',id);
  data.append('name',name);
  data.append('member_id',user_id);
  data.append('slug',slug);
  data.append('mls_server_id',mlsServerId);
  data.append('website_id',website_id);
- data.append('json_search',json_search);
- data.append('id',id);
+ data.append('search_results_json',json_search);
+ data.append('polygon_search',polygon_search);
+ data.append('local',local);
+ data.append('administrative_area_level_1',administrative_area_level_1);
+ data.append('community',community);
+ data.append('main_description',main_description);
+ data.append('brief_description',brief_description);
+ data.append('sub_city',sub_city);
+ data.append('video_url',video_url);
+ data.append('virtual_tour_url',virtual_tour_url);
+ data.append('video_url',video_url);
+ data.append('header_image',headerImage);
+ data.append('community_image',communityImage);
+ data.append('assigned_agent_ids',agent_ids);
 
   let hotSheetUpdatingResp=this.http
     .post(this.sharedServiceObj.apiBaseUrl+'members/updateSavedHotsheet', data, this.headerOptions)
@@ -788,7 +804,18 @@ deleteAgent(agent_id:string)
      .map(this.extractData)
      return agentResp;
 }
+loadPaperWorkStatus(website_id:string)
+{
+  let data = new URLSearchParams();
+  data.append('website_id',website_id);
+ 
+ let paperWorkResp=this.http
+     .post(this.sharedServiceObj.apiBaseUrl+'members/viewPaperworkStatus', data, this.headerOptions)
+     .map(this.extractData)
+     return paperWorkResp;
+}
   private extractData(res: Response) {
+   //debugger;
     return res.json();
   }
   private handleErrorObservable(error: Response | any) {
