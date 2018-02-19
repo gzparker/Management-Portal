@@ -117,8 +117,8 @@ public isApp=false;
   public polygon_search:any="";
   public headerImage:string="";
   public communityImage:string="";
-  public agent_ids:any[]=[];
-  public assigned_agent_id:string="";
+  public allAgents:any[]=[];
+  public assigned_agent_id:any[]=[];
   public listing_size_min:string="";
   public listing_size_max:string="";
   public local:string="";
@@ -173,6 +173,7 @@ public isApp=false;
      // debugger;
       this.userId=data;
       this.getAllWebsite();
+      this.loadAllAgents();
       if(this.navParams.get('id')!=undefined)
       {
       //  debugger;
@@ -300,52 +301,44 @@ public isApp=false;
    }
    loadSavedPolygon(savedPath:any)
    {
+
+    ///////////Start Drawing//////////////////////
+    this.startDrawing();
+       this.poly = new google.maps.Polyline({
+         map: this.map,
+         clickable: false
+       });
+       this.isDrawing = true;
+       this.map.setOptions({
+         draggable: false
+       });
+
+         this.toDrawing = true;
+    /////////////////////////////////////////////
+
     google.maps.event.removeListener(this.mouseUp);
     google.maps.event.removeListener(this.move);
-    debugger;
-    /*var triangleCoords = [
-      {lat: 25.774, lng: -80.190},
-      {lat: 18.466, lng: -66.118},
-      {lat: 32.321, lng: -64.757},
-      {lat: 25.774, lng: -80.190}
-    ];
-
-  this.poly = new google.maps.Polygon({
-      path: triangleCoords
-    });
-    let latLng = new google.maps.LatLng(25.774,-80.190);
-    this.map.setCenter(latLng);*/
+    //debugger;
+  
     let polylineCoords = [];
    // debugger;
     savedPath=savedPath.substring(9);
     let pathLength=savedPath.length;
     savedPath=savedPath.substring(0,pathLength-2);
     let pathArray=savedPath.split(',');
-    //debugger;
-    /*pathArray.forEach(element => {
-      let locationObj=element.split(' ');
-      pathObj.lat=Number(locationObj[0]);
-      pathObj.lng=Number(locationObj[1]);
-      polylineCoords.push(pathObj);
-      
-      });*/
       for(let i=0;i<pathArray.length;i++)
       {
         let pathObj={lat:0,lng:0};
         let locationObj=pathArray[i].split(' ');
-        //debugger;
         pathObj.lat=Number(locationObj[0]);
         pathObj.lng=Number(locationObj[1]);
-        //debugger;
         polylineCoords.push(pathObj);
       }
-    //debugger;
     let latLng = new google.maps.LatLng(this.selectedLat,this.selectedLong);
     this.map.setCenter(latLng);
     this.poly = new google.maps.Polyline({
       path: polylineCoords
     });
-    //debugger;
     this.poly.setMap(this.map);
     this.polygons.push(this.poly);
     this.polygons[0].getPath().getArray();
@@ -363,10 +356,7 @@ public isApp=false;
     this.toDrawing = false;
    }
   CenterControl(controlDiv, map) {
-   // debugger;
-     // Map Controls
-     // Zoom In DIV
-     //let _thisNew=this;
+  
      var controlUI = document.createElement('div');
      controlUI.id = 'Map-Zoom-In';
      controlUI.title = 'Zoom IN';
@@ -399,17 +389,14 @@ public isApp=false;
        map.setOptions({
          draggable: false
        });
-     //  setTimeout(function () {
-         console.log('draw Start');
+
          this.toDrawing = true;
-      // }, 100);
+
        
        }
      });
    }
   startDrawing() {
-     // drawingManager.setMap(map);
-    //debugger;
      this.drawingManager.setDrawingMode(google.maps.drawing.OverlayType.POLYGON);
      this.map.setOptions({
        draggable: false
@@ -420,13 +407,9 @@ public isApp=false;
     });
  
    this.isDrawing = true;
- 
-  
-   //debugger;
    }
-   
    stopDrawing() {
-    //debugger;
+    
     this.isDrawing = false;
     if(this.drawingManager!=undefined)
     {
@@ -489,6 +472,30 @@ public isApp=false;
         
       }
       
+    }
+    loadAllAgents()
+    {
+      if(this.userId.toString())
+      {
+        this.userServiceObj.viewMemberAgents(this.userId.toString())
+      .subscribe((result) => this.loadAllAgentsResp(result));
+      }
+      
+    }
+    loadAllAgentsResp(result:any)
+    {
+      //debugger;
+      if(result.status==true)
+      {
+        //debugger;
+        this.allAgents=result.results;
+        
+      }
+      else
+      {
+       // debugger;
+        this.allAgents=[];
+      }
     }
     onWebsiteSelection($event:any):void{
        this.selectedWebsite=$event;
@@ -637,16 +644,14 @@ public isApp=false;
     loadLastSearchedValue():void{
       let lastSearchedObj=null;
       let lastSearchedString=null;
-      debugger;
-    this.storage.get('searchFilterObj').then((data) => {
-      debugger;
-      if(data!=null)
+      //debugger;
+    //this.storage.get('searchFilterObj').then((data) => {
+      
+      if(this.json_search!=null)
       {
-        lastSearchedString=data;
-     
+        lastSearchedString=this.json_search;
 
     lastSearchedObj=JSON.parse(lastSearchedString);
-    //debugger;
     if(lastSearchedObj!=null)
     {
       if(lastSearchedObj)
@@ -771,18 +776,17 @@ public isApp=false;
          {
            this.selectedLong=lastSearchedObj.selectedLong;
          }
-      debugger;
-         
           this.loadSavedPolygon(this.savedPolygonPath);
-        //  debugger;
       }
     }
   }
-     
-});
+/*   else
+   {
+     debugger;
+   }  
+});*/
     }
     updateSearchObject():void{
-    //debugger;
       this.searchListObject={msl_id:this.msl_id,bedrooms:this.bedrooms,bathrooms:this.bathrooms,address_township:this.address_township,days_on_market:this.days_on_market,
         date_listed:this.date_listed,garage_size:this.garage_size,listing_size:this.listing_size,lot_size:this.lot_size,
         parcel_num:this.parcel_num,school_district:this.school_district,school_elem:this.school_elem,school_high:this.school_high,
@@ -793,12 +797,10 @@ public isApp=false;
     this.storage.set('searchFilterObj',JSON.stringify(this.searchListObject));
     }
     editHotSheet():void{
-    //debugger
       this.userServiceObj.editHotSheet(this.userId.toString(),this.hotSheetId).subscribe((result) => 
       this.editHotSheetResp(result));
       }
       editHotSheetResp(result:any):void{
-     // debugger
         if(result.status==true)
         {
           this.name=result.result.name;
@@ -806,17 +808,18 @@ public isApp=false;
           this.slug=result.result.slug;
           this.mls_server_id=result.result.mls_server_id;
           this.selectedWebsite=result.result.website_id;
-          
+          //debugger;
+          this.assigned_agent_id=result.result.assigned_agent_ids.split(',');
+          this.main_description=result.result.main_description;
+          //debugger;
+          this.community=result.result.community;
           this.savedPolygonPath=result.result.polygon_search;
           let length=this.savedPolygonPath.length;
           
           this.json_search=result.result.search_results_json;
-          debugger;
           this.storage.set('searchFilterObj',this.json_search);
          this.loadLastSearchedValue();
-        
         }
-      //debugger;
       }
       updateHotSheet():void{
         //this.domainAccess=this.localStorageService.get('domainAccess');
@@ -839,6 +842,7 @@ public isApp=false;
         }
       }
       updateHotSheetFinal(result:any):void{
+        debugger;
         if(result!=null)
         {
         if(result.status!=false)
@@ -848,11 +852,12 @@ public isApp=false;
           json_search.then((data) => {
             if(data!=null)
             {
+              debugger;
       this.userServiceObj.updateHotSheet(this.hotSheetId,this.userId.toString(),this.selectedWebsite,
       this.sharedServiceObj.mlsServerId,this.name,this.slug,data,this.brief_description,
       this.main_description,this.virtual_tour_url,this.video_url,this.sub_city,
       this.communityImage,this.headerImage,this.local,this.administrative_area_level_1,
-      this.community,this.agent_ids,this.polygon_search)
+      this.community,this.assigned_agent_id,this.polygon_search)
         .subscribe((result) => this.updateHotSheetResp(result));
             }
           });
@@ -866,7 +871,7 @@ public isApp=false;
         }
         else
         {
-        
+        debugger;
           let json_search=this.storage.get("searchFilterObj");
           json_search.then((data) => {
        if(data!=null)
@@ -875,7 +880,7 @@ public isApp=false;
         this.sharedServiceObj.mlsServerId,this.name,this.slug,data,this.brief_description,
         this.main_description,this.virtual_tour_url,this.video_url,this.sub_city,
         this.communityImage,this.headerImage,this.local,this.administrative_area_level_1,
-        this.community,this.agent_ids,this.polygon_search)
+        this.community,this.assigned_agent_id,this.polygon_search)
         .subscribe((result) => this.updateHotSheetResp(result));
        }
 

@@ -699,7 +699,7 @@ updateHotSheet(id:string,user_id:string,website_id:string,mlsServerId:string,nam
   json_search:any,brief_description:any,main_description:any,virtual_tour_url:any,video_url:any,
   sub_city:any,communityImage:any,headerImage:any,local:any,
   administrative_area_level_1:any,community:any,agent_ids:any,polygon_search:any){
- // debugger;
+ debugger;
 let data = new URLSearchParams();
  data.append('id',id);
  data.append('name',name);
@@ -717,7 +717,6 @@ let data = new URLSearchParams();
  data.append('sub_city',sub_city);
  data.append('video_url',video_url);
  data.append('virtual_tour_url',virtual_tour_url);
- data.append('video_url',video_url);
  data.append('header_image',headerImage);
  data.append('community_image',communityImage);
  data.append('assigned_agent_ids',agent_ids);

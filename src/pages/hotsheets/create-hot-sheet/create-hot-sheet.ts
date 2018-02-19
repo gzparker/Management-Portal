@@ -110,8 +110,8 @@ public isApp=false;
   public polygon_search:any="";
   public headerImage:string="";
   public communityImage:string="";
-  public agent_ids:any[]=[];
-  public assigned_agent_id:string="";
+  public allAgents:any[]=[];
+  public assigned_agent_id:any[]=[];
   public listing_size_min:string="";
   public listing_size_max:string="";
   public local:string="";
@@ -165,6 +165,7 @@ public isApp=false;
     member_id.then((data) => {
       this.userId=data;
       this.getAllWebsite();
+      this.loadAllAgents();
     });
     //this.loadMap();
     this.loadSearchedField();
@@ -192,7 +193,6 @@ public isApp=false;
           style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
           position: google.maps.ControlPosition.TOP_CENTER
         },
-        //zoomControl: true,
         zoomControl: true,
         zoomControlOptions: {
           style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
@@ -206,8 +206,7 @@ public isApp=false;
       };
  
       this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-     // debugger;
-      
+  
      this.drawingManager = new google.maps.drawing.DrawingManager({
       drawingControl: true,
       drawingControlOptions: {
@@ -217,15 +216,11 @@ public isApp=false;
         ]
       }
     });
-      //debugger;
       this.drawingManager.setMap(null);
       this.drawingManager.setDrawingMode(google.maps.drawing.OverlayType.POLYGON);
       var centerControlDiv:any = document.createElement('div');
       centerControlDiv.id = 'map-control-container';
-      //debugger;
-      //var centerControl = new this.CenterControl(centerControlDiv, this.map);
      this.CenterControl(centerControlDiv, this.map);
-      //debugger;
       centerControlDiv.index = 1;
       this.map.controls[google.maps.ControlPosition.TOP_RIGHT].push(centerControlDiv);
       google.maps.event.addDomListener(this.map, 'mousedown', this.mouseDownCallBack.bind(this));
@@ -406,6 +401,30 @@ public isApp=false;
       }
       
     }
+    loadAllAgents()
+{
+  if(this.userId.toString())
+  {
+    this.userServiceObj.viewMemberAgents(this.userId.toString())
+  .subscribe((result) => this.loadAllAgentsResp(result));
+  }
+  
+}
+loadAllAgentsResp(result:any)
+{
+  //debugger;
+  if(result.status==true)
+  {
+   //debugger;
+    this.allAgents=result.results;
+    
+  }
+  else
+  {
+  // debugger;
+    this.allAgents=[];
+  }
+}
     onWebsiteSelection($event:any):void{
        this.selectedWebsite=$event;
     }
@@ -735,7 +754,7 @@ public isApp=false;
         neighborhood:this.neighbourhood_modal,selectedLat:this.selectedLat,selectedLong:this.selectedLong,
         listing_size_max:this.listing_size_max,listing_size_min:this.listing_size_min
       };
-      debugger;
+      //debugger;
     this.storage.set('searchFilterObj',JSON.stringify(this.searchListObject));
     }
     createHotSheet():void{
@@ -761,13 +780,13 @@ public isApp=false;
          {
           
 
-           this.agent_ids=this.assigned_agent_id.split(',');
-           debugger;
+           //this.agent_ids=this.assigned_agent_id.split(',');
+          // debugger;
           this.userServiceObj.createHotSheet(this.userId.toString(),this.selectedWebsite,
           this.sharedServiceObj.mlsServerId,this.name,this.slug,data,this.brief_description,
           this.main_description,this.virtual_tour_url,this.video_url,this.sub_city,
           this.communityImage,this.headerImage,this.local,this.administrative_area_level_1,
-          this.community,this.agent_ids,this.polygon_search)
+          this.community,this.assigned_agent_id,this.polygon_search)
           .subscribe((result) => this.createHotSheetResp(result));
          }
       

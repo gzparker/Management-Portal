@@ -244,16 +244,21 @@
 </ion-item>
 <ion-item>
   <ion-label floating>Assigned Agent IDs</ion-label>
-  <ion-input type="text" [(ngModel)]="assigned_agent_id" name="assigned_agent_id" aria-placeholder="Enter comma ',' separated agent Ids."></ion-input>
+  <ion-select [(ngModel)]="assigned_agent_id"  
+  name="assigned_agent_id" multiple="true">
+    <ion-option *ngFor="let agent of allAgents" value= {{agent.id}}>
+      {{agent.first_name}} {{agent.last_name}}
+     </ion-option>
+  </ion-select>
 </ion-item>
 <ion-item>
   <ion-label floating>Sub City</ion-label>
   <ion-input type="text" [(ngModel)]="sub_city" name="sub_city"></ion-input>
 </ion-item>
-<ion-item>
+<!--<ion-item>
   <ion-label floating>Brief Description</ion-label>
   <ion-textarea type="text" [(ngModel)]="brief_description" name="brief_description"></ion-textarea>
-</ion-item>
+</ion-item>-->
 <ion-item>
   <ion-label floating>Main Description</ion-label>
   <ion-textarea type="text" [(ngModel)]="main_description" name="main_description"></ion-textarea>
