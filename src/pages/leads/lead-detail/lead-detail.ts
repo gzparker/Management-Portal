@@ -31,11 +31,16 @@ import { SubscriptionProvider } from '../../../providers/subscription/subscripti
 export class LeadDetailPage {
   public leadId:string="";
   public userId:string="";
+  public loader:any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,
     public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform, 
     public ngZone: NgZone,public menuCtrl: MenuController,public loadingCtrl: LoadingController) {
+      this.loader = this.loadingCtrl.create({
+        content: "Please wait...",
+        duration: 5000
+      });
   }
 
   ionViewDidLoad() {
@@ -49,6 +54,5 @@ export class LeadDetailPage {
     {
       this.navCtrl.push(EditLeadPage,{leadId:this.leadId});
     }
-    
       }
 }

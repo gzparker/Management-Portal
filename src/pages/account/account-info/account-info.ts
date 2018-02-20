@@ -1,5 +1,5 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, Platform, MenuController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, Platform, MenuController,LoadingController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 
@@ -29,14 +29,20 @@ export class AccountInfoPage {
   public fb_pic_url:string="";
   public fbAuthResp:any;
   public userId:string="";
+  public loader:any;
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
-    public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform) {
+    public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform,
+    public loadingCtrl: LoadingController) {
       if(this.navParams.get('notificationMsg')!=undefined)
       {
        //debugger;
         this.notificationMsg=this.navParams.get('notificationMsg');
       }
+      this.loader = this.loadingCtrl.create({
+        content: "Please wait...",
+        duration: 5000
+      });
   }
 
   ionViewDidLoad() {
@@ -54,7 +60,7 @@ this.navCtrl.push(EditAccountPage,{userId:this.userId});
   viewAccount():void{
     if(this.userId!="")
     {
-     //debugger;
+      this.loader.present();
   this.userServiceObj.userInfo(this.userId.toString())
     .subscribe((result) => this.accountInfoResp(result));
     }
@@ -62,6 +68,7 @@ this.navCtrl.push(EditAccountPage,{userId:this.userId});
   }
  
   accountInfoResp(result:any):void{
+    this.loader.dismiss();
     if(result.status==true)
     {
      //debugger;

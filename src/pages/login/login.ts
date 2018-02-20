@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, Platform,LoadingController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 import { DashboardPage } from '../dashboard/dashboard';
@@ -51,13 +51,19 @@ export class LoginPage {
   public verify_by: string = "email";
   public master_id: string = "";
   public verification_code: string = "";
+  public loader:any;
 
   public fbLoginStatus: any;
   public appId: number = 701598080041539;
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
-    public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform) {
+    public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform
+    ,public loadingCtrl: LoadingController) {
     userServiceObj.fbLoginDecision.subscribe(item => this.faceBookDecisionMethod(item));
+    this.loader = this.loadingCtrl.create({
+      content: "Please wait...",
+      duration: 5000
+    });
   }
 
   ionViewDidLoad() {
@@ -67,17 +73,16 @@ export class LoginPage {
     //public back = (url) => this.navCtrl.pop();
   }
   userLogin(): void {
-    //debugger;
+   //this.loader.present();
     this.userServiceObj.userLogin(this.email, this.password)
       .subscribe((result) => this.userLoginResponse(result));
   }
   userLoginResponse(result: any): void {
-    // debugger;
+    //this.loader.dismiss();
     if (result.status == true) {
       if (result.memberCredentials) {
 
         if (result.memberCredentials.verified == "1") {
-//debugger;
           this.storage.set('loggedId', '1');
           this.storage.set('userId', result.memberCredentials.id);
           this.storage.set('email', result.memberCredentials.email);
@@ -87,7 +92,6 @@ export class LoginPage {
           this.storage.set('loggedInUserInfo', result);
           this.userLoggedId = true;
           this.sharedServiceObj.setLoginStatus(true);
-          //this.navCtrl.push(DashboardPage);
          this.navCtrl.setRoot(DashboardTabsPage);
         }
         else if (result.memberCredentials.verified == "0") {
@@ -97,8 +101,6 @@ export class LoginPage {
           this.phone_number_verify = result.memberCredentials.phone_mobile;
           this.master_id = result.memberCredentials.master_id;
           this.verify_by = "phone";
-          //debugger;
-          //this.openUserVerificationModal(this.master_id);
           this.navCtrl.push(UserVerificationPage, {
             master_id: this.master_id,
             selected_country_code: this.selectedCountryCode, selected_country_abbv: this.selectedCountryAbbv,

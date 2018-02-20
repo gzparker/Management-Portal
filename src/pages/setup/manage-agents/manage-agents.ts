@@ -27,6 +27,7 @@ export class ManageAgentsPage {
   public notificationMsg:string="";
   public userId:string="";
   public agentsFoundMessage="";
+  public loader:any;
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, 
@@ -35,6 +36,10 @@ export class ManageAgentsPage {
       {
         this.notificationMsg=this.navParams.get('notificationMsg');
       }
+      this.loader = this.loadingCtrl.create({
+        content: "Please wait...",
+        duration: 5000
+      });
   }
   //openPage(pageNumber:string) {
     //this.sharedServiceObj.setNavigationalPage(pageNumber);
@@ -54,14 +59,15 @@ loadAllAgents(refresher:any)
 {
   if(this.userId.toString())
   {
-    let loader = this.loadingCtrl.create({
-      content: "Please wait...",
-      duration: 700
-    });
-    loader.present();
+    
+    
     if(refresher!=null)
   {
     refresher.complete();
+  }
+  else
+  {
+    this.loader.present();
   }
     this.userServiceObj.viewMemberAgents(this.userId.toString())
   .subscribe((result) => this.loadAllAgentsResp(result));
@@ -71,6 +77,7 @@ loadAllAgents(refresher:any)
 loadAllAgentsResp(result:any)
 {
   //debugger;
+  this.loader.dismiss();
   if(result.status==true)
   {
     //debugger;

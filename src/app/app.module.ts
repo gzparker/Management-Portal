@@ -14,12 +14,11 @@ import { ImageCropperModule } from "ng2-img-cropper/index";
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
-import { GooglePlacesAutocompleteComponentModule } from 'ionic2-google-places-autocomplete';
-import { Ng4GeoautocompleteModule } from 'ng4-geoautocomplete';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { Crop } from '@ionic-native/crop';
 import { Camera } from '@ionic-native/camera';
 import { AgmCoreModule } from '@agm/core';
+
 //import { ListPage } from '../pages/list/list';
 import { LoginPage } from '../pages/login/login';
 import { ContactusPage } from '../pages/contactus/contactus';
@@ -88,8 +87,7 @@ import { ListingProvider } from '../providers/listing/listing';
   ],
   imports: [
     BrowserModule, HttpModule,
-    IonicModule.forRoot(MyApp), HttpClientModule,MultiselectDropdownModule,
-    Ng4GeoautocompleteModule.forRoot(),AccordionModule,
+    IonicModule.forRoot(MyApp), HttpClientModule,MultiselectDropdownModule,AccordionModule,
     IonicStorageModule.forRoot({
       name: 'managementportal',
       driverOrder: ['indexeddb', 'sqlite', 'websql']

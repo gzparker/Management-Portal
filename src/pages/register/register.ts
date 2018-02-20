@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController,LoadingController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 import { DashboardPage } from '../dashboard/dashboard';
@@ -56,9 +56,14 @@ export class RegisterPage {
   public modalType: number;
   public fbLoginStatus: any;
   public appId: number = 701598080041539;
+  public loader:any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider,
-    public modalCtrl: ModalController, private storage: Storage) {
+    public modalCtrl: ModalController, private storage: Storage,public loadingCtrl: LoadingController) {
+      this.loader = this.loadingCtrl.create({
+        content: "Please wait...",
+        duration: 5000
+      });
     userServiceObj.fbLoginDecision.subscribe(item => this.faceBookDecisionMethod(item));
   }
   faceBookDecisionMethod(opt: string) {
@@ -73,7 +78,7 @@ export class RegisterPage {
   }
   userSignUp(): void {
     //debugger;
-
+//this.loader.present();
     let dataObj = {
       first_name: "",
       last_name: "",
@@ -114,16 +119,14 @@ export class RegisterPage {
       dataObj.phone_number = this.phone_number;
       dataObj.verified = 0;
     }
-    //  debugger;
-    //dataObj.website_id=this.domainAccess.userCredentials.website_id;
+    
     dataObj.userType = this.userType;
-    //debugger;
     this.userServiceObj.userSignUp(dataObj)
       .subscribe((result) => this.userSignUpResponse(result));
   }
 
   userSignUpResponse(result: any): void {
-    //debugger;
+    //this.loader.dismiss();
     if (result.status == true) {
       //debugger;
       this.userCreated = true;
@@ -159,8 +162,6 @@ export class RegisterPage {
     modalPage.present();
   }
   getAllCountryCodes(): void {
-
-
     let avilableCountryList = this.storage.get('availableCountryList');
     avilableCountryList.then((data) => {
       if (data == null) {

@@ -5,12 +5,8 @@ import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 import { DashboardPage } from '../../dashboard/dashboard';
 import { FbConfirmPage } from '../../fb-confirm/fb-confirm';
-
-
 import { AlertController } from 'ionic-angular';
-
 import { UserVerificationPage } from '../../user-verification/user-verification';
-
 import { SharedProvider } from '../../../providers/shared/shared';
 import { UserProvider } from '../../../providers/user/user';
 import { SubscriptionProvider } from '../../../providers/subscription/subscription';
@@ -39,6 +35,7 @@ export class UpcomingSubscriptionPage {
   public confirmClicked: boolean = false;
   public cancelClicked: boolean = false;
   public isOpen: boolean = false;
+  public loader:any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,
     public sharedServiceObj: SharedProvider, private storage: Storage,
@@ -48,6 +45,10 @@ export class UpcomingSubscriptionPage {
       {
         this.notificationMsg=this.navParams.get('notificationMsg');
       }
+      this.loader = this.loadingCtrl.create({
+        content: "Please wait...",
+        duration: 5000
+      });
   }
 
   ionViewDidLoad() {
@@ -60,14 +61,14 @@ export class UpcomingSubscriptionPage {
   viewAllUpcomingSubscription(refresher:any):void{
     if(this.userId!="")
     {
-      let loader = this.loadingCtrl.create({
-        content: "Please wait...",
-        duration: 700
-      });
-      loader.present();
-      if(refresher!=null)
+      
+    if(refresher!=null)
     {
       refresher.complete();
+    }
+    else
+    {
+      this.loader.present();
     }
   this.subscriptionObj.upcomingSubscriptionList(this.userId.toString())
     .subscribe((result) => this.viewAllUpcomingSubscriptionResp(result));
@@ -75,7 +76,7 @@ export class UpcomingSubscriptionPage {
     
   }
   viewAllUpcomingSubscriptionResp(result:any):void{
-   
+    this.loader.dismiss();
     if(result.status==true)
     {
       this.allUpcomingSubscription=result.upcoming_subscription_preview;

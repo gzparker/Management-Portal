@@ -28,6 +28,7 @@ export class MlsSettingsPage {
   public userId:string="";
   public website_Id:string="";
   public paperWorkDetails:any;
+  public loader:any;
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform,
@@ -40,6 +41,10 @@ export class MlsSettingsPage {
       {
         this.website_Id=this.navParams.get('website_Id');
       }
+      this.loader = this.loadingCtrl.create({
+        content: "Please wait...",
+        duration: 5000
+      });
   }
 
   ionViewDidLoad() {
@@ -54,18 +59,15 @@ loadMlsSetup()
   //debugger;
   if(this.userId!="")
     {
-      let loader = this.loadingCtrl.create({
-        content: "Please wait...",
-        duration: 700
-      });
-      loader.present();
+      
+      this.loader.present();
      this.userServiceObj.loadPaperWorkStatus(this.website_Id)
     .subscribe((result) => this.loadPaperWorkStatusResp(result));
     }
     
 }
 loadPaperWorkStatusResp(result:any):void{
-  //debugger;
+  this.loader.dismiss();
   if(result.status==true)
   {
     //debugger;

@@ -43,18 +43,21 @@
     <ion-label floating>Slug<span [ngClass]="{'error': slug==''}" *ngIf="slug==''">*</span></ion-label>
     <ion-input type="text" required [(ngModel)]="slug" name="slug" id="slug"></ion-input>
   </ion-item>
-  <div>
+  <!--<div>
     <ion-label floating>Type an Address, City or Zipcode</ion-label>
     <ng4geo-autocomplete (componentCallback)="getAddress($event)" (blur)="updateSearchObject()">
   
     </ng4geo-autocomplete>
-  </div>
-  <div>
-      <ion-item *ngIf="map_height!=null">
-          <ion-label>Draw Search Area Border<span [ngClass]="{'error': polygon_search==''}" *ngIf="polygon_search==''">*</span></ion-label>
-      </ion-item>
-      <div #map id="map" style="width:100%;" [style.height]="map_height+'px'"></div>
-  </div>
+  </div>-->
+  <ion-item *ngIf="map_height!=null">
+    <ion-label>Draw Search Area Border<span [ngClass]="{'error': polygon_search==''}" *ngIf="polygon_search==''">*</span></ion-label>
+</ion-item>
+<ion-item>
+<ion-searchbar #searchbar placeholder="Search"></ion-searchbar>
+</ion-item>
+<div>
+<div #map id="map" style="width:100%;" [style.height]="map_height+'px'"></div>
+</div>
   <accordion>
       <accordion-group>
           <accordion-heading>

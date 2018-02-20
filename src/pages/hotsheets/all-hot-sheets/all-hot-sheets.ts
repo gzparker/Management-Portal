@@ -28,6 +28,7 @@ export class AllHotSheetsPage {
   public notificationMsg="";
   public userId:string="";
   public hotsheetFoundMessage="";
+  public loader:any;
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController,
@@ -36,6 +37,10 @@ export class AllHotSheetsPage {
       {
         this.notificationMsg=this.navParams.get('notificationMsg');
       }
+      this.loader = this.loadingCtrl.create({
+        content: "Please wait...",
+        duration: 5000
+      });
   }
 
   ionViewDidLoad() {
@@ -51,15 +56,20 @@ export class AllHotSheetsPage {
   viewAllHotSheets(refresher:any):void{
     if(this.userId!="")
     {
+      
       this.allHotSheetList=[];
-      let loader = this.loadingCtrl.create({
-        content: "Please wait...",
-        duration: 700
-      });
-      loader.present();
+      //let loader = this.loadingCtrl.create({
+      //  content: "Please wait...",
+      //  duration: 700
+      //});
+      //loader.present();
       if(refresher!=null)
     {
       refresher.complete();
+    }
+    else
+    {
+      this.loader.present();
     }
   this.userServiceObj.allUserHotSheets(this.userId.toString())
     .subscribe((result) => this.viewAllHotSheetResp(result));
@@ -67,7 +77,7 @@ export class AllHotSheetsPage {
     
   }
   viewAllHotSheetResp(result:any):void{
-   
+    this.loader.dismiss();
     if(result.status==true)
     {
       

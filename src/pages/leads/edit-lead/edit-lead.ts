@@ -45,11 +45,16 @@ public homeNumber:number;
 public leadUpdateMsg:string="";
 public allWebsiteList:any[]=[];
 public selectedWebsite:string="";
+public loader:any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,
     public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform, 
     public ngZone: NgZone,public menuCtrl: MenuController,public loadingCtrl: LoadingController) {
+      this.loader = this.loadingCtrl.create({
+        content: "Please wait...",
+        duration: 5000
+      });
   }
 
   ionViewDidLoad() {
@@ -70,11 +75,7 @@ public selectedWebsite:string="";
   editLead(leadId:string):void{
     if(this.userId!="")
     {
-      let loader = this.loadingCtrl.create({
-        content: "Please wait...",
-        duration: 700
-      });
-      loader.present();
+      this.loader.present();
   this.userServiceObj.leadDetail(leadId,this.userId.toString())
     .subscribe((result) => this.editLeadResp(result));
     }
@@ -104,7 +105,7 @@ public selectedWebsite:string="";
    
  }
   editLeadResp(result:any):void{
-  
+    this.loader.dismiss();
     if(result.status==true)
     {
    if(result.result)
@@ -128,14 +129,15 @@ public selectedWebsite:string="";
   updateLead():void{
   if(this.userId!="")
     {
-      
-   
+     
+      //this.loader.present();
+      //debugger;
   this.userServiceObj.updateLead(this.userId,this.selectedWebsite,this.leadId,this.email,this.password,this.firstName,this.lastName,this.officeNumber,this.mobileNumber,this.homeNumber)
     .subscribe((result) => this.updateLeadResp(result));
     }
   }
   updateLeadResp(result:any):void{
-  
+    //this.loader.dismiss();
   this.leadUpdateMsg="Lead has been updated successfully.";
 
   this.ngZone.run(() => {

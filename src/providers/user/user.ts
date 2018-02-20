@@ -699,7 +699,7 @@ updateHotSheet(id:string,user_id:string,website_id:string,mlsServerId:string,nam
   json_search:any,brief_description:any,main_description:any,virtual_tour_url:any,video_url:any,
   sub_city:any,communityImage:any,headerImage:any,local:any,
   administrative_area_level_1:any,community:any,agent_ids:any,polygon_search:any){
- debugger;
+ //debugger;
 let data = new URLSearchParams();
  data.append('id',id);
  data.append('name',name);

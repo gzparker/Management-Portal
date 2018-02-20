@@ -1,5 +1,5 @@
 import { Component, ViewChild, NgZone, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, Platform, MenuController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, Platform, MenuController,LoadingController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 import { IMultiSelectOption,IMultiSelectSettings } from 'angular-2-dropdown-multiselect';
@@ -7,6 +7,7 @@ import { Crop } from '@ionic-native/crop';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { ImagePicker } from '@ionic-native/image-picker';
 import {ImageCropperComponent, CropperSettings, Bounds} from 'ng2-img-cropper';
+import { Observable } from 'rxjs/Observable';
 
 import { Geolocation } from '@ionic-native/geolocation';
 
@@ -31,6 +32,10 @@ declare var latitudeSimplifier;
 export class CreateHotSheetPage {
   @ViewChild('headerCropper') headerImageCropper : ImageCropperComponent;
   @ViewChild('communityCropper') communityImageCropper : ImageCropperComponent;
+  @ViewChild('searchbar', { read: ElementRef }) searchbar: ElementRef;
+  addressElement: HTMLInputElement = null;
+
+  listSearch: string = '';
   public cropperSettings;
   public croppedWidth:Number;
   public croppedHeight:Number;
@@ -120,8 +125,6 @@ public isApp=false;
   public zoom: number = 8;
   public drawingManager:any;
   public isDrawing:boolean = false;
-  //public isMap:boolean=false;
-  // Google Map center
   public latitude: number = 51.673858;
   public longitude: number = 7.815982;
   public polygons:any[] = [];
@@ -130,6 +133,7 @@ public isApp=false;
   public mouseUp:any=null;
   public poly:any;
   public map_height:number;
+  public loader:any;
  
   @ViewChild('map') mapElement: ElementRef;
   map: any;
@@ -137,7 +141,7 @@ public isApp=false;
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform
     ,public listinServiceObj:ListingProvider,
-    private crop: Crop,private camera: Camera,private imagePicker: ImagePicker) {
+    private crop: Crop,private camera: Camera,private imagePicker: ImagePicker,public loadingCtrl: LoadingController) {
       if(this.platform.is('core') || this.platform.is('mobileweb')) {
         this.isApp=false;
       }
@@ -158,6 +162,10 @@ public isApp=false;
 
       this.dataHeaderImage= {};
       this.dataCommunityImage={};
+      this.loader = this.loadingCtrl.create({
+        content: "Please wait...",
+        duration: 5000
+      });
     }
 
   ionViewDidLoad() {
@@ -174,8 +182,65 @@ public isApp=false;
       {
         this.map_height=400;
         this.loadMap(position.coords.latitude, position.coords.longitude);
+        this.initAutocomplete();
       }
       
+    });
+  }
+  mapsSearchBar(ev: any) {
+    // set input to the value of the searchbar
+    //this.search = ev.target.value;
+    console.log(ev);
+    const autocomplete = new google.maps.places.Autocomplete(ev);
+    autocomplete.bindTo('bounds', this.map);
+    return new Observable((sub: any) => {
+      google.maps.event.addListener(autocomplete, 'place_changed', () => {
+        const place = autocomplete.getPlace();
+        if (!place.geometry) {
+          sub.error({
+            message: 'Autocomplete returned place with no geometry'
+          });
+        } else {
+          sub.next(place.geometry.location);
+          sub.complete();
+        }
+      });
+    });
+  }
+
+  initAutocomplete(): void {
+   
+    this.addressElement = this.searchbar.nativeElement.querySelector('.searchbar-input');
+    this.createAutocomplete(this.addressElement).subscribe((location) => {
+      console.log('Searchdata', location);
+
+      let options = {
+        center: location,
+        zoom: 10
+      };
+      this.map.setOptions(options);
+     // this.addMarker(location, "Mein gesuchter Standort");
+
+    });
+  }
+
+  createAutocomplete(addressEl: HTMLInputElement): Observable<any> {
+    const autocomplete = new google.maps.places.Autocomplete(addressEl);
+    autocomplete.bindTo('bounds', this.map);
+    return new Observable((sub: any) => {
+      google.maps.event.addListener(autocomplete, 'place_changed', () => {
+        const place = autocomplete.getPlace();
+        if (!place.geometry) {
+          sub.error({
+            message: 'Autocomplete returned place with no geometry'
+          });
+        } else {
+          
+          sub.next(place.geometry.location);
+          this.getAddress(place);
+          //sub.complete();
+        }
+      });
     });
   }
   loadMap(lat:any,lng:any){
@@ -387,6 +452,7 @@ public isApp=false;
     getAllWebsite():void{
       if(this.userId!="")
       { 
+        this.loader.present();
     this.userServiceObj.allUserWebsites(this.userId.toString())
       .subscribe((result) => this.getAllWebsiteResp(result));
       }
@@ -412,6 +478,7 @@ public isApp=false;
 }
 loadAllAgentsResp(result:any)
 {
+  this.loader.dismiss();
   //debugger;
   if(result.status==true)
   {
@@ -429,13 +496,12 @@ loadAllAgentsResp(result:any)
        this.selectedWebsite=$event;
     }
     getAddress(data) {
+    
+     this.address=data.formatted_address;
+      this.selectedLat=data.geometry.location.lat();
+      this.selectedLong=data.geometry.location.lng();
      
-     this.address=data.data.description;
-     //debugger;
-      this.selectedLat=data.data.geometry.location.lat;
-      this.selectedLong=data.data.geometry.location.lng;
-     
-      data.data.address_components.forEach(element => {
+      data.address_components.forEach(element => {
         if(element.types[0]=="locality")
         {
           this.local=element.long_name;
@@ -447,16 +513,12 @@ loadAllAgentsResp(result:any)
        });
        if(this.selectedLong!="")
        {
-         //this.isMap=true;
          this.map_height=400;
          this.stopDrawing();
          this.loadMap(this.selectedLat,this.selectedLong);
        }
-      
-      
-      //debugger;
-  //  this.updateSearchObject();
-       
+     // debugger;
+     
       }  
     loadSavedSearchedFields():void{
       this.storage.get("searchFieldsLocal").then((data)=>{
@@ -745,7 +807,6 @@ loadAllAgentsResp(result:any)
     
     }
     updateSearchObject():void{
-    //debugger;
       this.searchListObject={msl_id:this.msl_id,bedrooms:this.bedrooms,bathrooms:this.bathrooms,address_township:this.address_township,days_on_market:this.days_on_market,
         date_listed:this.date_listed,garage_size:this.garage_size,listing_size:this.listing_size,lot_size:this.lot_size,
         parcel_num:this.parcel_num,school_district:this.school_district,school_elem:this.school_elem,school_high:this.school_high,
@@ -754,7 +815,6 @@ loadAllAgentsResp(result:any)
         neighborhood:this.neighbourhood_modal,selectedLat:this.selectedLat,selectedLong:this.selectedLong,
         listing_size_max:this.listing_size_max,listing_size_min:this.listing_size_min
       };
-      //debugger;
     this.storage.set('searchFilterObj',JSON.stringify(this.searchListObject));
     }
     createHotSheet():void{
@@ -778,10 +838,7 @@ loadAllAgentsResp(result:any)
        {
          if(data!=null)
          {
-          
-
-           //this.agent_ids=this.assigned_agent_id.split(',');
-          // debugger;
+          //this.loader.present();
           this.userServiceObj.createHotSheet(this.userId.toString(),this.selectedWebsite,
           this.sharedServiceObj.mlsServerId,this.name,this.slug,data,this.brief_description,
           this.main_description,this.virtual_tour_url,this.video_url,this.sub_city,
@@ -800,15 +857,10 @@ loadAllAgentsResp(result:any)
       });
     }
      
-     //this.pService.start();
-    /*let json_search=this.localStorageService.get("searchFilterObj");
-         //debugger;
-    //this.pService.start();
-    this.userServiceObj.createHotSheet(this.localStorageService.get('userId').toString(),this.domainAccess.userCredentials.website_id,this.sharedServiceObj.mlsServerId,this.name,this.slug,json_search)
-      .subscribe((result) => this.createHotSheetResp(result));*/
     }
     createHotSheetResp(result:any):void{
     this.storage.remove('searchFilterObj');
+    //this.loader.dismiss();
     this.hotsheetCreateMsg="HotSheet has been created successfully.";
     this.ngZone.run(()=>{
       this.navCtrl.push(AllHotSheetsPage,{notificationMsg:this.hotsheetCreateMsg.toString()});

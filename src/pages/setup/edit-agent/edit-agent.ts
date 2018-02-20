@@ -45,6 +45,7 @@ export class EditAgentPage {
   public dataAgentImage:any;
   public agentImage:string="";
   public agentDetail:any;
+  public loader:any;
 
   public userId:string="";
   public agent_id:string="";
@@ -73,6 +74,10 @@ export class EditAgentPage {
       this.cropperSettings.keepAspect= false;
 
       this.dataAgentImage= {};
+      this.loader = this.loadingCtrl.create({
+        content: "Please wait...",
+        duration: 5000
+      });
   }
 
   ionViewDidLoad() {
@@ -90,11 +95,8 @@ export class EditAgentPage {
 {
   if(this.userId.toString())
   {
-    let loader = this.loadingCtrl.create({
-      content: "Please wait...",
-      duration: 700
-    });
-    loader.present();
+    
+    this.loader.present();
   
     this.userServiceObj.agentDetail(this.agent_id.toString())
   .subscribe((result) => this.loadAgentDetailsResp(result));
@@ -103,7 +105,7 @@ export class EditAgentPage {
 }
 loadAgentDetailsResp(result:any)
 {
-  //debugger;
+  this.loader.dismiss();
   if(result.status==true)
   {
     if(result.result)
@@ -128,7 +130,7 @@ loadAgentDetailsResp(result:any)
   {
     if(this.agent_id!="")
     {
-   //debugger;
+   //this.loader.present();
   this.userServiceObj.updateAgent(this.agent_id,this.firstName,this.lastName,this.email,this.phone_mobile.toString(),this.access_level,
     this.password,this.agentImage,this.description)
     .subscribe((result) => this.updateAgentResp(result));
@@ -137,6 +139,7 @@ loadAgentDetailsResp(result:any)
   }
   updateAgentResp(result:any)
   {
+    //this.loader.dismiss();
     this.agentUpdateMsg="Agent has been updated successfully.";
 
     this.ngZone.run(() => {

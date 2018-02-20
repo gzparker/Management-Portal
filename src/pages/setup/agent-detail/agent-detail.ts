@@ -32,12 +32,17 @@ export class AgentDetailPage {
   public agent_id:string="";
   public agentDetail:any;
   public agentFoundMessage:string="";
+  public loader:any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,
     public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform, 
     public ngZone: NgZone,public menuCtrl: MenuController,public loadingCtrl: LoadingController,
     private crop: Crop,private camera: Camera,private imagePicker: ImagePicker) {
+      this.loader = this.loadingCtrl.create({
+        content: "Please wait...",
+        duration: 5000
+      });
   }
 
   ionViewDidLoad() {
@@ -55,20 +60,15 @@ loadAgentDetails()
 {
   if(this.userId.toString())
   {
-    let loader = this.loadingCtrl.create({
-      content: "Please wait...",
-      duration: 700
-    });
-    loader.present();
-  
+    
     this.userServiceObj.agentDetail(this.agent_id.toString())
-  .subscribe((result) => this.loadAgentDetailsResp(result));
+    .subscribe((result) => this.loadAgentDetailsResp(result));
   }
   
 }
 loadAgentDetailsResp(result:any)
 {
-  //debugger;
+  this.loader.dismiss();
   if(result.status==true)
   {
     if(result.result)

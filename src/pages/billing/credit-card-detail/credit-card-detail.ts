@@ -30,7 +30,7 @@ export class CreditCardDetailPage {
   public cardDetail:any;
   public userId:string="";
   public uniquer_id:string="";
-
+  public loader:any;
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController,
@@ -39,6 +39,10 @@ export class CreditCardDetailPage {
       {
         this.uniquer_id=this.navParams.get('unique_id');
       }
+      this.loader = this.loadingCtrl.create({
+        content: "Please wait...",
+        duration: 5000
+      });
   }
 
   ionViewDidLoad() {
@@ -50,24 +54,18 @@ export class CreditCardDetailPage {
   }
   loadCreditCardDetail()
   {
-    let loader = this.loadingCtrl.create({
-      content: "Please wait...",
-      duration: 700
-    });
-    loader.present();
-   
+    this.loader.present();  
     this.userServiceObj.loadCreditCardDetail(this.userId.toString(),this.sharedServiceObj.service_id,
     this.uniquer_id)
     .subscribe((result) => this.loadCreditCardDetailResp(result));
   }
   loadCreditCardDetailResp(result:any)
   {
-
-if(result.status==true)
-{
-this.cardDetail=result.card;
-}
-//debugger;
+    this.loader.dismiss();
+    if(result.status==true)
+      {
+      this.cardDetail=result.card;
+      }
   }
   editCreditCardDetail()
   {

@@ -46,11 +46,16 @@ export class CreateLeadPage {
   public allWebsiteList:any[]=[];
   public selectedWebsite:string="";
   public userId:string="";
+  public loader:any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,
     public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform, 
     public ngZone: NgZone,public menuCtrl: MenuController,public loadingCtrl: LoadingController) {
+      this.loader = this.loadingCtrl.create({
+        content: "Please wait...",
+        duration: 5000
+      });
   }
 
   ionViewDidLoad() {
@@ -63,14 +68,14 @@ export class CreateLeadPage {
   getAllWebsite():void{
     if(this.userId!="")
     {
-      
+      this.loader.present();
   this.userServiceObj.allUserWebsites(this.userId.toString())
     .subscribe((result) => this.getAllWebsiteResp(result));
     }
     
   }
   getAllWebsiteResp(result:any):void{
-    //debugger;
+    this.loader.dismiss();
     if(result.status==true)
     {
      // debugger;
@@ -86,14 +91,14 @@ export class CreateLeadPage {
     //this.domainAccess=this.localStorageService.get('domainAccess');
     if(this.userId!="")
     {
-   
+      //this.loader.present();
   this.userServiceObj.createLead(this.userId.toString(),this.selectedWebsite,this.email,this.password,this.firstName,this.lastName,this.officeNumber,this.mobileNumber,this.homeNumber)
     .subscribe((result) => this.createLeadResp(result));
  
     }
   }
   createLeadResp(result:any):void{
-  
+    //this.loader.dismiss();
   this.leadCreateMsg="Lead has been created successfully.";
 
   this.ngZone.run(() => {

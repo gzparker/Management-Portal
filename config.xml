@@ -19,6 +19,7 @@
     <preference name="SplashShowOnlyFirstTime" value="false" />
     <preference name="SplashScreen" value="resources/splash.png" />
     <preference name="SplashScreenDelay" value="3000" />
+    <preference name="loadUrlTimeoutValue" value="700000" />
     <platform name="android">
         <allow-intent href="market:*" />
         <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
@@ -39,11 +40,6 @@
         <splash density="port-xhdpi" src="resources/android/splash/drawable-port-xhdpi-screen.png" />
         <splash density="port-xxhdpi" src="resources/android/splash/drawable-port-xxhdpi-screen.png" />
         <splash density="port-xxxhdpi" src="resources/android/splash/drawable-port-xxxhdpi-screen.png" />
-        <config-file parent="/resources" target="./res/values/strings.xml">
-            <string name="fb_app_id">701598080041539</string>
-            <string name="facebook_app_id">701598080041539</string>
-            <string name="fb_app_name">com.idxcompany.managementportal</string>
-        </config-file>
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />
@@ -98,8 +94,9 @@
     </plugin>
     <plugin name="cordova-plugin-facebook4" spec="^1.9.1">
         <variable name="APP_ID" value="701598080041539" />
-        <variable name="APP_NAME" value="TheIDXCompany" />
+        <variable name="APP_NAME" value="com.idxcompany.managementportal" />
     </plugin>
     <allow-navigation href="http://192.168.8.104:8100" />
     <engine name="browser" spec="~5.0.3" />
+    <engine name="android" spec="~6.4.0" />
 </widget>

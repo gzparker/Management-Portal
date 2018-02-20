@@ -1,5 +1,5 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, Platform, MenuController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, Platform, MenuController,LoadingController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 
@@ -37,10 +37,14 @@ export class EditAccountPage {
   public allCountryCodes: any[] = [];
   public accountInfoUpdateMsg: string = "";
   public updatedValue:boolean=false;
-  
+  public loader:any;
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
-    public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform) {
+    public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform,public loadingCtrl: LoadingController) {
+      this.loader = this.loadingCtrl.create({
+        content: "Please wait...",
+        duration: 5000
+      });
   }
 
   ionViewDidLoad() {
@@ -55,7 +59,7 @@ export class EditAccountPage {
   viewAccount():void{
     if(this.userId!="")
     {
-     //debugger;
+     this.loader.present();
   this.userServiceObj.userInfo(this.userId.toString())
     .subscribe((result) => this.accountInfoResp(result));
     }
@@ -87,7 +91,7 @@ export class EditAccountPage {
           .subscribe((result) => this.getAllCountryCodesResp(result));
       }
       else {
-
+        this.loader.dismiss();
         this.allCountryCodes = data;
         this.setCountryInfo();
 
@@ -97,7 +101,8 @@ export class EditAccountPage {
 
   }
   getAllCountryCodesResp(result: any): void {
-
+    this.loader.dismiss();
+      //debugger;
     let countryCodesDummy = [];
     if (result.status == true) {
 
@@ -203,60 +208,42 @@ if(this.accountInfo.phone_mobile!=this.phone_number)
     };
 if(this.accountInfo.email!=this.email)
 {
- // this.updatedValue=true;
   dataObj.email = this.email;
 }
 if(this.accountInfo.password!=this.password)
 {
-  //this.updatedValue=true;
       dataObj.password = this.password;
 } 
 if(this.accountInfo.first_name!=this.first_name)
 {
- // this.updatedValue=true;
       dataObj.first_name = this.first_name;
 } 
 if(this.accountInfo.last_name!=this.last_name)
 {
-  //this.updatedValue=true;
       dataObj.last_name = this.last_name;
 } 
 if(this.accountInfo.country_code!=this.selectedCountryCode)
 {
-  //this.updatedValue=true;
       dataObj.country_code = this.selectedCountryCode;
 }
 if(this.accountInfo.country_abbv!=this.selectedCountryAbbv)
 {
-  //this.updatedValue=true;
       dataObj.country_abbv = this.selectedCountryAbbv;
 }
 if(this.accountInfo.country_abbv!=this.selectedCountryAbbv)
 {
- // this.updatedValue=true;
       dataObj.country_abbv = this.selectedCountryAbbv;
 }
 if(this.accountInfo.phone_mobile!=this.phone_number)
 {
-  //this.updatedValue=true;
       dataObj.phone_number = this.phone_number.toString();
 }
-//debugger;
-    /*let phoneNumberString="";
-    if(this.phone_number==null)
-    {
-      phoneNumberString="";
-    }
-    else
-    {
-     phoneNumberString=this.phone_number.toString();
-    }*/
-    //debugger;
+//this.loader.present();
     this.userServiceObj.updateAccount(this.userId,dataObj)
     .subscribe((result) => this.updatAccountResp(result));
   }
   updatAccountResp(result:any):void{
-   // debugger;
+   //this.loader.dismiss();
     if(result.status==true)
     {
      // debugger;

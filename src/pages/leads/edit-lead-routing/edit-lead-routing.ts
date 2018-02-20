@@ -43,7 +43,7 @@ public send_to_zillow_crm:boolean=false;
 public send_to_intagent_crm:boolean=false;
 public send_to_zapier:boolean=false;
 public leadRoutingUpdateMsg:string="";
-
+public loader:any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,
     public sharedServiceObj: SharedProvider, private storage: Storage,
@@ -53,6 +53,10 @@ public leadRoutingUpdateMsg:string="";
       {
         this.websiteId=this.navParams.get('websiteId');
       }
+      this.loader = this.loadingCtrl.create({
+        content: "Please wait...",
+        duration: 5000
+      });
   }
 
   ionViewDidLoad() {
@@ -62,11 +66,7 @@ public leadRoutingUpdateMsg:string="";
   {
     if(this.websiteId!="")
     {
-      let loader = this.loadingCtrl.create({
-        content: "Please wait...",
-        duration: 700
-      });
-      loader.present();
+      this.loader.present();
       this.userServiceObj.viewLeadRouting(this.websiteId.toString())
       .subscribe((result) => this.leadRoutingResp(result));
     }
@@ -76,6 +76,7 @@ public leadRoutingUpdateMsg:string="";
   //debugger;
     if(result.status==true)
     {
+      this.loader.dismiss();
       this.leadRoutingDetail=result.result;
     //debugger;
       if(this.leadRoutingDetail!=undefined)
@@ -121,6 +122,7 @@ public leadRoutingUpdateMsg:string="";
     }
     else
     {
+      this.loader.dismiss();
       //debugger;
       this.leadRoutingDetail=null;
       this.leadRoutingFoundMessage="No Info found.";
@@ -129,6 +131,7 @@ public leadRoutingUpdateMsg:string="";
   }
   updateLeadRouting()
   {
+    //this.loader.present();
   let send_to_email_dummy="0";
   let send_to_zillow_crm_dummy="0";
   let send_to_intagent_crm_dummy="0";
@@ -161,6 +164,7 @@ public leadRoutingUpdateMsg:string="";
  //   debugger;
     if(result.status==true)
     {
+      //this.loader.dismiss();
       this.leadRoutingUpdateMsg="Lead Routing has been updated successfully.";
 
       this.ngZone.run(() => {

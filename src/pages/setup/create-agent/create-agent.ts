@@ -43,6 +43,7 @@ export class CreateAgentPage {
   public croppedHeight:Number;
   public dataAgentImage:any;
   public agentImage:string="";
+  public loader:any;
 
   public userId:string="";
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
@@ -70,6 +71,10 @@ export class CreateAgentPage {
       this.cropperSettings.keepAspect= false;
 
       this.dataAgentImage= {};
+      this.loader = this.loadingCtrl.create({
+        content: "Please wait...",
+        duration: 5000
+      });
   }
 
   ionViewDidLoad() {
@@ -83,7 +88,7 @@ export class CreateAgentPage {
   {
     if(this.userId!="")
     {
-  // debugger;
+  //this.loader.present();
   this.userServiceObj.createAgent(this.userId,this.firstName,this.lastName,this.email,this.phone_mobile.toString(),this.access_level,
     this.password,this.agentImage,this.description)
     .subscribe((result) => this.createAgentResp(result));
@@ -92,6 +97,7 @@ export class CreateAgentPage {
   }
   createAgentResp(result:any)
   {
+    //this.loader.dismiss();
     this.agentCreateMsg="Agent has been created successfully.";
 
     this.ngZone.run(() => {
@@ -101,9 +107,7 @@ export class CreateAgentPage {
   agentImageCropped(bounds : Bounds)
    {
      this.agentImage=this.dataAgentImage.image;
-     // this.croppedHeight=bounds.bottom-bounds.top;
-    //  this.croppedWidth=bounds.right-bounds.left;
-//debugger;
+   
    }
    takePicture(){
     //debugger;

@@ -8,6 +8,7 @@ import { Crop } from '@ionic-native/crop';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { ImagePicker } from '@ionic-native/image-picker';
 import {ImageCropperComponent, CropperSettings, Bounds} from 'ng2-img-cropper';
+import { Observable } from 'rxjs/Observable';
 
 import { Geolocation } from '@ionic-native/geolocation';
 
@@ -33,6 +34,8 @@ declare var latitudeSimplifier;
 export class EditHotSheetPage {
   @ViewChild('headerCropper') headerImageCropper : ImageCropperComponent;
   @ViewChild('communityCropper') communityImageCropper : ImageCropperComponent;
+  @ViewChild('searchbar', { read: ElementRef }) searchbar: ElementRef;
+  addressElement: HTMLInputElement = null;
   public cropperSettings;
   public croppedWidth:Number;
   public croppedHeight:Number;
@@ -127,8 +130,6 @@ public isApp=false;
   public zoom: number = 8;
   public drawingManager:any;
   public isDrawing:boolean = false;
-  //public isMap:boolean=false;
-  // Google Map center
   public latitude: number = 51.673858;
   public longitude: number = 7.815982;
   public polygons:any[] = [];
@@ -137,6 +138,7 @@ public isApp=false;
   public mouseUp:any=null;
   public poly:any;
   public map_height:number;
+  public loader:any;
  
   @ViewChild('map') mapElement: ElementRef;
   map: any;
@@ -165,6 +167,10 @@ public isApp=false;
 
       this.dataHeaderImage= {};
       this.dataCommunityImage={};
+      this.loader = this.loadingCtrl.create({
+        content: "Please wait...",
+        duration: 5000
+      });
     }
 
   ionViewDidLoad() {
@@ -187,11 +193,48 @@ public isApp=false;
       {
         this.map_height=400;
         this.loadMap(position.coords.latitude, position.coords.longitude);
+        this.initAutocomplete();
       }
       
     });
     });
    
+  }
+
+  initAutocomplete(): void {
+   
+    this.addressElement = this.searchbar.nativeElement.querySelector('.searchbar-input');
+    this.createAutocomplete(this.addressElement).subscribe((location) => {
+     
+      let options = {
+        center: location,
+        zoom: 10
+      };
+      this.map.setOptions(options);
+     // this.addMarker(location, "Mein gesuchter Standort");
+
+    });
+  }
+
+  createAutocomplete(addressEl: HTMLInputElement): Observable<any> {
+    const autocomplete = new google.maps.places.Autocomplete(addressEl);
+    autocomplete.bindTo('bounds', this.map);
+    return new Observable((sub: any) => {
+      google.maps.event.addListener(autocomplete, 'place_changed', () => {
+        const place = autocomplete.getPlace();
+        if (!place.geometry) {
+          sub.error({
+            message: 'Autocomplete returned place with no geometry'
+          });
+        } else {
+          console.log('Search Lat', place.geometry.location.lat());
+          console.log('Search Lng', place.geometry.location.lng());
+          sub.next(place.geometry.location);
+          this.getAddress(place);
+          //sub.complete();
+        }
+      });
+    });
   }
   loadMap(lat:any,lng:any){
  
@@ -321,7 +364,7 @@ public isApp=false;
     //debugger;
   
     let polylineCoords = [];
-   // debugger;
+   //debugger;
     savedPath=savedPath.substring(9);
     let pathLength=savedPath.length;
     savedPath=savedPath.substring(0,pathLength-2);
@@ -442,11 +485,8 @@ public isApp=false;
   loadSearchedField():void{
     //if(this.localStorageService.get("searchFieldsLocal")==undefined)
     //{
-      let loader = this.loadingCtrl.create({
-        content: "Please wait...",
-        duration: 700
-      });
-      loader.present();
+      
+      this.loader.present();
      this.listinServiceObj.getAvailableSearchFields()
       .subscribe((result) => this.loadAvailableSearchFields(result));
     //}
@@ -501,34 +541,27 @@ public isApp=false;
        this.selectedWebsite=$event;
     }
     getAddress(data) {
+      this.address=data.formatted_address;
+      this.selectedLat=data.geometry.location.lat();
+      this.selectedLong=data.geometry.location.lng();
      
-      this.address=data.data.description;
-      //debugger;
-       this.selectedLat=data.data.geometry.location.lat;
-       this.selectedLong=data.data.geometry.location.lng;
-      
-       data.data.address_components.forEach(element => {
-         if(element.types[0]=="locality")
-         {
-           this.local=element.long_name;
-         }
-         if(element.types[0]=="administrative_area_level_1")
-         {
-           this.administrative_area_level_1=element.long_name;
-         }
-        });
-        if(this.selectedLong!="")
+      data.address_components.forEach(element => {
+        if(element.types[0]=="locality")
         {
-          //this.isMap=true;
-          this.map_height=400;
-          this.stopDrawing();
-          this.loadMap(this.selectedLat,this.selectedLong);
+          this.local=element.long_name;
         }
+        if(element.types[0]=="administrative_area_level_1")
+        {
+          this.administrative_area_level_1=element.long_name;
+        }
+       });
+       if(this.selectedLong!="")
+       {
+         this.map_height=400;
+         this.stopDrawing();
+         this.loadMap(this.selectedLat,this.selectedLong);
+       }
        
-       
-       //debugger;
-    // this.updateSearchObject();
-        
        }
     loadAvailableSearchFields(result:any):void{
       this.setSearchedFields(result);
@@ -776,6 +809,7 @@ public isApp=false;
          {
            this.selectedLong=lastSearchedObj.selectedLong;
          }
+         //debugger;
           this.loadSavedPolygon(this.savedPolygonPath);
       }
     }
@@ -797,6 +831,7 @@ public isApp=false;
     this.storage.set('searchFilterObj',JSON.stringify(this.searchListObject));
     }
     editHotSheet():void{
+      
       this.userServiceObj.editHotSheet(this.userId.toString(),this.hotSheetId).subscribe((result) => 
       this.editHotSheetResp(result));
       }
@@ -820,6 +855,10 @@ public isApp=false;
           this.storage.set('searchFilterObj',this.json_search);
          this.loadLastSearchedValue();
         }
+        else
+        {
+          this.loader.dismiss();
+        }
       }
       updateHotSheet():void{
         //this.domainAccess=this.localStorageService.get('domainAccess');
@@ -842,7 +881,7 @@ public isApp=false;
         }
       }
       updateHotSheetFinal(result:any):void{
-        debugger;
+        //debugger;
         if(result!=null)
         {
         if(result.status!=false)
@@ -852,7 +891,7 @@ public isApp=false;
           json_search.then((data) => {
             if(data!=null)
             {
-              debugger;
+              //this.loader.present();
       this.userServiceObj.updateHotSheet(this.hotSheetId,this.userId.toString(),this.selectedWebsite,
       this.sharedServiceObj.mlsServerId,this.name,this.slug,data,this.brief_description,
       this.main_description,this.virtual_tour_url,this.video_url,this.sub_city,
@@ -871,7 +910,7 @@ public isApp=false;
         }
         else
         {
-        debugger;
+          //this.loader.present();
           let json_search=this.storage.get("searchFilterObj");
           json_search.then((data) => {
        if(data!=null)
@@ -890,7 +929,7 @@ public isApp=false;
       }
       updateHotSheetResp(result:any):void{
       this.storage.remove('searchFilterObj');
-     
+      //this.loader.dismiss();
       this.hotsheetUpdateMsg="HotSheet has been updated successfully.";
       this.ngZone.run(()=>{
         this.navCtrl.push(AllHotSheetsPage,{notificationMsg:this.hotsheetUpdateMsg.toString()});

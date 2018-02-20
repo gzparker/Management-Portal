@@ -37,6 +37,7 @@ export class EditCreditCardPage {
   public exp_month: string="";
   public exp_year: string="";
   public zipCode:string="";
+  public loader:any;
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, 
@@ -45,6 +46,10 @@ export class EditCreditCardPage {
       {
         this.uniquer_id=this.navParams.get('unique_id');
       }
+      this.loader = this.loadingCtrl.create({
+        content: "Please wait...",
+        duration: 5000
+      });
   }
 
   ionViewDidLoad() {
@@ -56,41 +61,35 @@ export class EditCreditCardPage {
   }
   loadCreditCardDetail()
   {
-    let loader = this.loadingCtrl.create({
-      content: "Please wait...",
-      duration: 700
-    });
-    loader.present();
+    this.loader.present();
     this.userServiceObj.loadCreditCardDetail(this.userId.toString(),this.sharedServiceObj.service_id,
     this.uniquer_id)
     .subscribe((result) => this.loadCreditCardDetailResp(result));
   }
   loadCreditCardDetailResp(result:any)
   {
-
+    this.loader.dismiss();
 if(result.status==true)
 {
 this.cardDetail=result.card;
-//debugger;
 this.full_name=this.cardDetail.name;
 this.zipCode=this.cardDetail.address_zip;
-//debugger;
 this.expiryDate=this.cardDetail.exp_year+"-"+this.cardDetail.exp_month;
 
 }
   }
   updateCreditCard()
   {
-    //debugger;
+    //this.loader.present();
     this.exp_month = this.expiryDate.split("-")[1];
     this.exp_year = this.expiryDate.split("-")[0];
     this.userServiceObj.updateCreditCardDetail(this.userId.toString(),this.sharedServiceObj.service_id,
     this.uniquer_id,this.full_name,this.exp_year,this.exp_month,this.zipCode)
     .subscribe((result) => this.updateCreditCardResp(result));
-    //debugger;
   }
  updateCreditCardResp(result:any)
  {
+  //this.loader.dismiss();
 if(result.status==true)
 {
   this.navCtrl.push(ViewCreditCardsPage,{notificationMsg:result.message.toUpperCase()})

@@ -38,6 +38,7 @@ export class BillingHistoryPage {
   public confirmClicked: boolean = false;
   public cancelClicked: boolean = false;
   public isOpen: boolean = false;
+  public loader:any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,
     public sharedServiceObj: SharedProvider, private storage: Storage,
@@ -47,6 +48,10 @@ export class BillingHistoryPage {
       {
         this.notificationMsg=this.navParams.get('notificationMsg');
       }
+      this.loader = this.loadingCtrl.create({
+        content: "Please wait...",
+        duration: 5000
+      });
   }
 
   ionViewDidLoad() {
@@ -60,14 +65,15 @@ export class BillingHistoryPage {
   viewAllBillingHistory(refresher:any):void{
     if(this.userId!="")
     {
-      let loader = this.loadingCtrl.create({
-        content: "Please wait...",
-        duration: 700
-      });
-      loader.present();
+      
+      
       if(refresher!=null)
     {
       refresher.complete();
+    }
+    else
+    {
+      this.loader.present();
     }
   this.subscriptionObj.subscriptionBillingHistory(this.userId.toString())
     .subscribe((result) => this.viewAllBillingHistoryResp(result));
@@ -75,7 +81,7 @@ export class BillingHistoryPage {
     
   }
   viewAllBillingHistoryResp(result:any):void{
-   
+    this.loader.dismiss();
     if(result.status==true)
     {
       this.allSubscriptionHistory=result.billing_history;
