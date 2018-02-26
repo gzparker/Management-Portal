@@ -3,6 +3,9 @@ import { IonicPage, NavController, NavParams, ModalController, Platform,
   MenuController,LoadingController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
+import { Crop } from '@ionic-native/crop';
+import { Camera, CameraOptions } from '@ionic-native/camera';
+import { ImagePicker } from '@ionic-native/image-picker';
 import { AllWebsitesPage } from '../../websites/all-websites/all-websites';
 import { FbConfirmPage } from '../../fb-confirm/fb-confirm';
 import { AlertController } from 'ionic-angular';
@@ -28,7 +31,10 @@ import { SubscriptionProvider } from '../../../providers/subscription/subscripti
 export class EditWebsitePage {
   public domainAccess:any;
   public website_domain:string="";
+  public isApp=false;
   public websiteUpdateMsg:string="";
+  public identity_name:string="";
+  public identity_logo:string="";
   public isActive:boolean=true;
   public websiteId:string="";
   public userId:string="";
@@ -42,13 +48,15 @@ export class EditWebsitePage {
   public feature_agent_listings:boolean=false;
   public feature_broker_listings:boolean=false;
   public feature_office_listings:boolean=false;
+  public imageChangedEvent: any = '';
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,
     public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform, 
-    public ngZone: NgZone,public menuCtrl: MenuController,public loadingCtrl: LoadingController) {
+    public ngZone: NgZone,public menuCtrl: MenuController,public loadingCtrl: LoadingController,
+    private crop: Crop,private camera: Camera,private imagePicker: ImagePicker) {
       
   }
 
@@ -65,6 +73,53 @@ export class EditWebsitePage {
       
     });
   }
+  fileChangeEvent(event: any): void {
+    this.imageChangedEvent = event;
+}
+imageLoaded()
+   {
+
+   }
+   loadImageFailed()
+   {
+
+   }
+imageCropped(image: string) {
+  this.identity_logo = image;
+}
+  websiteIdentityImageCropped(image:string)
+   {
+    this.identity_logo = image;
+   
+   }
+   
+   takePicture(){
+      let options =
+      {
+        quality: 100,
+        correctOrientation: true
+      };
+      this.camera.getPicture(options)
+      .then((data) => {
+        this.identity_logo="data:image/jpeg;base64," +data;
+        let image : any= new Image();
+         image.src = this.identity_logo;
+       // this.agentImageCropper.setImage(image);
+        if(this.isApp)
+        {
+       this.crop
+       .crop(this.identity_logo, {quality: 75,targetHeight:100,targetWidth:100})
+      .then((newImage) => {
+          this.identity_logo=newImage;
+        }, error => {
+         
+          alert(error)});
+        }
+      }, function(error) {
+
+        console.log(error);
+      });
+    }
   editWebsite():void{
     //this.websiteId
     if(this.userId!=""){
@@ -81,7 +136,7 @@ export class EditWebsitePage {
  
     if(result.result.status==true)
     {
-
+this.identity_name=result.result.identity_name;
    if(result.result.website.indexOf("http://www")<0)
 {
   //debugger;
@@ -153,7 +208,7 @@ this.footer_wrapper=result.result.footer_wrapper;
     let feature_broker_listings_dummy="0";
     let feature_office_listings_dummy="0";
     let intagent_website_dummy="";
-debugger;
+//debugger;
   if(this.userId!="")
     {
      //if(this.domainAccess)
@@ -194,7 +249,7 @@ debugger;
   this.userServiceObj.updateWebsite(this.userId,isActiveFinal,this.website_domain,this.websiteId,
     this.contact_email,this.header_wrapper,this.footer_wrapper,intagent_website_dummy,this.custom_css,
     show_new_listing_dummy,show_open_houses_dummy,feature_agent_listings_dummy,
-    feature_broker_listings_dummy,feature_office_listings_dummy)
+    feature_broker_listings_dummy,feature_office_listings_dummy,this.identity_name,this.identity_logo)
     .subscribe((result) => this.updateWebsiteResp(result));
      //}
       

@@ -201,7 +201,7 @@ export class UserProvider {
         this.storage.set('last_name', result.memberCredentials.last_name);
 
         this.storage.set('loggedInUserInfo', result);
-
+        this.storage.set('globalSettings',result.globalSettings);
         this.sharedServiceObj.setLoginStatus(true);
         this.fbLoginDecision.emit('1');
         //this.navCtrl.push(DashboardPage);
@@ -416,7 +416,11 @@ data.append('member_id',member_id);
     .map(this.extractData)
     return searchedListing;
 }
-createLead(member_id:string,website_id:string,email:string,password:string,first_name:string,last_name:string,phone_office:number,phone_mobile:number,phone_home:number){
+createLead(member_id:string,website_id:string,email:string,password:string,first_name:string,
+  last_name:string,phone_office:number,phone_mobile:number,phone_home:number,home_address_street:string,
+  home_address_city:string,home_address_state_or_province:string,home_address_zipcode:string,work_address_street:string,
+  work_address_city:string,work_address_state_or_province:string,work_zipcode:string,assigned_agent_id:string,
+  category:string,internal_notes:string){
 let phone_office_num="";
 let phone_mobile_num="";
 let phone_home_num="";
@@ -443,13 +447,31 @@ data.append('phone_office',phone_office_num);
 data.append('phone_mobile',phone_mobile_num);
 data.append('phone_home',phone_home_num);
 data.append('website_id',website_id);
+data.append('member_id',member_id);
+
+data.append('home_address_street',home_address_street);
+data.append('home_address_city',home_address_city);
+data.append('home_address_state_or_province',home_address_state_or_province);
+data.append('home_address_zipcode',home_address_zipcode);
+data.append('work_address_street',work_address_street);
+data.append('work_address_city',work_address_city);
+data.append('work_address_state_or_province',work_address_state_or_province);
+
+data.append('work_zipcode',work_zipcode);
+data.append('assigned_agent_id',assigned_agent_id);
+data.append('category',category);
+data.append('internal_notes',internal_notes);
 
   let searchedListing=this.http
     .post(this.sharedServiceObj.apiBaseUrl+'members/createLead', data, this.headerOptions)
     .map(this.extractData)
     return searchedListing;
 }
-updateLead(member_id:string,website_id:string,lead_id:string,email:string,password:string,first_name:string,last_name:string,phone_office:number,phone_mobile:number,phone_home:number){
+updateLead(member_id:string,website_id:string,lead_id:string,email:string,password:string,
+  first_name:string,last_name:string,phone_office:number,phone_mobile:number,phone_home:number,home_address_street:string,
+  home_address_city:string,home_address_state_or_province:string,home_address_zipcode:string,work_address_street:string,
+  work_address_city:string,work_address_state_or_province:string,work_zipcode:string,assigned_agent_id:string,
+  category:string,internal_notes:string){
 let phone_office_num="";
 let phone_mobile_num="";
 let phone_home_num="";
@@ -468,6 +490,7 @@ if(phone_home!=null)
 }
 
     let data = new URLSearchParams();
+data.append('member_id',member_id);   
  data.append('lead_id',lead_id);
 data.append('email',email);
 data.append('password',password);
@@ -477,6 +500,20 @@ data.append('phone_office',phone_office_num);
 data.append('phone_mobile',phone_mobile_num);
 data.append('phone_home',phone_home_num);
 data.append('website_id',website_id);
+data.append('member_id',member_id);
+
+data.append('home_address_street',home_address_street);
+data.append('home_address_city',home_address_city);
+data.append('home_address_state_or_province',home_address_state_or_province);
+data.append('home_address_zipcode',home_address_zipcode);
+data.append('work_address_street',work_address_street);
+data.append('work_address_city',work_address_city);
+data.append('work_address_state_or_province',work_address_state_or_province);
+
+data.append('work_zipcode',work_zipcode);
+data.append('assigned_agent_id',assigned_agent_id);
+data.append('category',category);
+data.append('internal_notes',internal_notes);
 
   let searchedListing=this.http
     .post(this.sharedServiceObj.apiBaseUrl+'members/updateLead', data, this.headerOptions)
@@ -530,14 +567,15 @@ allUserWebsites(user_id:string){
     .map(this.extractData)
     return websiteListing;
 }
-createWebsite(user_id:string,isActive:string,website_domain:string){
+createWebsite(user_id:string,isActive:string,website_domain:string,identity_name:string){
 //debugger;
     let data = new URLSearchParams();
     data.append('website_domain',website_domain);
+    data.append('identity_name',identity_name);
  data.append('member_id',user_id);
  data.append('active',isActive);
  data.append('mls_server_id',this.sharedServiceObj.mlsServerId);
-//debugger;
+debugger;
   let websiteListing=this.http
     .post(this.sharedServiceObj.apiBaseUrl+'members/createWebsite', data, this.headerOptions)
     .map(this.extractData)
@@ -557,15 +595,18 @@ editWebsite(user_id:string,website_id:string){
 updateWebsite(user_id:string,isActive:string,website_domain:string,website_id:string,contact_email:string,
   header_wrapper:string,footer_wrapper:string,intagent_website:string,custom_css:string,
   show_new_listings:string,show_open_houses:string,feature_agent_listings:string,
-  feature_broker_listings:string,feature_office_listings:string){
+  feature_broker_listings:string,feature_office_listings:string,identity_name:string,identity_logo:string){
 
     let data = new URLSearchParams();
     data.append('website_domain',website_domain);
  data.append('member_id',user_id);
  data.append('active',isActive);
  data.append('id',website_id);
+ 
  data.append('mls_server_id',this.sharedServiceObj.mlsServerId);
  data.append('contact_email',contact_email);
+ data.append('identity_name',identity_name);
+ data.append('identity_logo',identity_logo);
  data.append('header_wrapper',header_wrapper);
  data.append('footer_wrapper',footer_wrapper);
  data.append('intagent_website',intagent_website);
@@ -760,6 +801,7 @@ password:string,image:string,description:string)
   data.append('mls_id',this.sharedServiceObj.mlsServerId);
   data.append('image',image);
   data.append('description',description);
+  //debugger;
  let createAgentResp=this.http
      .post(this.sharedServiceObj.apiBaseUrl+'members/createAgent', data, this.headerOptions)
      .map(this.extractData)
@@ -803,6 +845,32 @@ deleteAgent(agent_id:string)
      .map(this.extractData)
      return agentResp;
 }
+viewGlobalSettings(member_id:string){
+  let data = new URLSearchParams();
+    data.append('master_id',member_id);
+   
+  // debugger;
+   let viewSettingsResp=this.http
+       .post(this.sharedServiceObj.registerationApiBaseUrl+'members/viewGlobalSettings', data, this.headerOptions)
+       .map(this.extractData)
+       return viewSettingsResp;
+}
+updateGlobalSettings(member_id:string,personalImage:string,companyImage:string,
+  timezone:string,colorBase:string,secondColor:string,thirdColor:string){
+    let data = new URLSearchParams();
+    data.append('master_id',member_id);
+    data.append('photo_company',companyImage);
+    data.append('photo_personal',personalImage);
+    data.append('timezone',timezone);
+    data.append('color_base',colorBase);
+    data.append('color_second',secondColor);
+    data.append('color_third',thirdColor);
+  // debugger;
+   let updateSettingsResp=this.http
+       .post(this.sharedServiceObj.registerationApiBaseUrl+'members/updateGlobalSettings', data, this.headerOptions)
+       .map(this.extractData)
+       return updateSettingsResp;
+}
 loadPaperWorkStatus(website_id:string)
 {
   let data = new URLSearchParams();
@@ -814,7 +882,7 @@ loadPaperWorkStatus(website_id:string)
      return paperWorkResp;
 }
   private extractData(res: Response) {
-   //debugger;
+  //debugger;
     return res.json();
   }
   private handleErrorObservable(error: Response | any) {

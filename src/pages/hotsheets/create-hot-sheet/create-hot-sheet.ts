@@ -52,6 +52,7 @@ export class CreateHotSheetPage {
 public isApp=false;
   public msl_id:string="";
   public name:string="";
+  public advanceSearchOption:boolean=false;
    public hotsheetCreateMsg:string="";
    public slug:string="";
    public allWebsiteList:any[]=[];
@@ -133,6 +134,8 @@ public isApp=false;
   public mouseUp:any=null;
   public poly:any;
   public map_height:number;
+  public headerImageChangedEvent:any='';
+  public communityImageChangedEvent:any='';
   public loader:any;
  
   @ViewChild('map') mapElement: ElementRef;
@@ -251,7 +254,7 @@ public isApp=false;
       let latLng = new google.maps.LatLng(lat, lng);
       let mapOptions = {
         center: latLng,
-        zoom: 18,
+        zoom: 14,
         mapTypeId: google.maps.MapTypeId.MAP,
         mapTypeControl: true,
         mapTypeControlOptions: {
@@ -289,7 +292,9 @@ public isApp=false;
       centerControlDiv.index = 1;
       this.map.controls[google.maps.ControlPosition.TOP_RIGHT].push(centerControlDiv);
       google.maps.event.addDomListener(this.map, 'mousedown', this.mouseDownCallBack.bind(this));
-     
+      /*google.maps.event.addDomListener(this.map, 'idle',(e=>{
+        this.polygon_search=this.polygon_search;
+      }));*/
     //}, (err) => {
     //  console.log(err);
     //});
@@ -313,10 +318,9 @@ public isApp=false;
     google.maps.event.removeListener(this.mouseUp);
     google.maps.event.removeListener(this.move);
     var path = this.poly.getPath();
-    //debugger;
+   
     var ArrayforPolygontoUse= this.sharedServiceObj.simplyfierLatitude(path.b,12.5);
-    //ar ArrayforPolygontoUse= simplify(path.b, 100, false);
-  // debugger;
+  
     path.b=ArrayforPolygontoUse;
   this.poly.setMap(null);
   this.poly = new google.maps.Polygon({
@@ -331,13 +335,14 @@ public isApp=false;
             this.polygon_search+= element.lat() + " " + element.lng() + ",";
             });
           }
-         
+          this.map.setOptions({
+            draggable: true
+          });
+          this.toDrawing = false;
+          this.ngZone.run(() => {
           this.polygon_search = this.polygon_search.substring(0, this.polygon_search.length - 1);
-    this.map.setOptions({
-      draggable: true
-    });
-    this.toDrawing = false;
-    //debugger;
+          });
+    
   }
   mouseMoveCallBack(e:any)
   {
@@ -433,11 +438,16 @@ public isApp=false;
     }
     this.polygons = [];
   }
+  this.ngZone.run(() => {
   this.polygon_search="";
+  });
     
   }
  
   ////////////////////////////////
+  toggleAdvanceSearch(){
+this.advanceSearchOption=!this.advanceSearchOption;
+  }
   loadSearchedField():void{
     //if(this.localStorageService.get("searchFieldsLocal")==undefined)
     //{
@@ -463,7 +473,10 @@ public isApp=false;
       {
        // debugger;
         this.allWebsiteList=result.result;
-        
+        if(this.allWebsiteList.length==1)
+        {
+          this.selectedWebsite=this.allWebsiteList[0].id;
+        }
       }
       
     }
@@ -500,26 +513,73 @@ loadAllAgentsResp(result:any)
      this.address=data.formatted_address;
       this.selectedLat=data.geometry.location.lat();
       this.selectedLong=data.geometry.location.lng();
+      this.slug="";
      
       data.address_components.forEach(element => {
+        //debugger;
         if(element.types[0]=="locality")
         {
           this.local=element.long_name;
+
+          if(this.slug!='')
+          {
+            this.slug=this.slug+"/"+element.long_name;
+          }
+          else
+          {
+            this.slug=element.long_name
+          }
         }
         if(element.types[0]=="administrative_area_level_1")
         {
           this.administrative_area_level_1=element.long_name;
         }
+        if(element.types[0]=="neighborhood")
+        {
+          if(this.slug!='')
+          {
+            this.slug=this.slug+"/"+element.long_name;
+          }
+          else
+          {
+            this.slug=element.long_name;
+          }
+          
+        }
+
        });
+     
        if(this.selectedLong!="")
        {
          this.map_height=400;
          this.stopDrawing();
          this.loadMap(this.selectedLat,this.selectedLong);
        }
-     // debugger;
+       
+       this.setSlugValue();
      
-      }  
+      }
+    setSlugValue(){
+      let slugParts=this.slug.split(' ');
+      this.slug='';
+      
+      for(let i=slugParts.length-1;i>=0;i--)
+      {
+        if(i==slugParts.length-1)
+        {
+          this.slug=this.slug+slugParts[i];
+        }
+        else
+        {
+          this.slug=this.slug+"-"+slugParts[i];
+        }
+      }
+      this.ngZone.run(() => {
+        this.polygon_search="";
+        this.slug=this.slug.toLocaleLowerCase();
+        });
+      
+    }  
     loadSavedSearchedFields():void{
       this.storage.get("searchFieldsLocal").then((data)=>{
         if(data != null)
@@ -815,7 +875,7 @@ loadAllAgentsResp(result:any)
         neighborhood:this.neighbourhood_modal,selectedLat:this.selectedLat,selectedLong:this.selectedLong,
         listing_size_max:this.listing_size_max,listing_size_min:this.listing_size_min
       };
-    this.storage.set('searchFilterObj',JSON.stringify(this.searchListObject));
+    //this.storage.set('searchFilterObj',JSON.stringify(this.searchListObject));
     }
     createHotSheet():void{
       //this.domainAccess=this.localStorageService.get('domainAccess');
@@ -833,22 +893,21 @@ loadAllAgentsResp(result:any)
       if(result.status!=false)
       {
     this.updateSearchObject();
-    let json_search=this.storage.get("searchFilterObj");
-     json_search.then((data) => {
-       {
-         if(data!=null)
-         {
-          //this.loader.present();
+    //let json_search=this.storage.get("searchFilterObj");
+     //json_search.then((data) => {
+
+         //if(data!=null)
+         //{
+          
           this.userServiceObj.createHotSheet(this.userId.toString(),this.selectedWebsite,
-          this.sharedServiceObj.mlsServerId,this.name,this.slug,data,this.brief_description,
+          this.sharedServiceObj.mlsServerId,this.name,this.slug,JSON.stringify(this.searchListObject),this.brief_description,
           this.main_description,this.virtual_tour_url,this.video_url,this.sub_city,
           this.communityImage,this.headerImage,this.local,this.administrative_area_level_1,
           this.community,this.assigned_agent_id,this.polygon_search)
           .subscribe((result) => this.createHotSheetResp(result));
-         }
-      
-       }
-      });
+        // }
+
+      //});
     }
     else
     {
@@ -867,20 +926,48 @@ loadAllAgentsResp(result:any)
     });
     
     }
-    headerImageCropped(bounds : Bounds)
+    fileHeaderChangeEvent(event: any): void {
+      this.headerImageChangedEvent = event;
+  }
+  headerImageLoaded()
+     {
+  
+     }
+     headerLoadImageFailed()
+     {
+  
+     }
+     headerImageCropped(image:string)
+    {
+      this.headerImage=image;
+     
+    }
+    fileCommuntiyChangeEvent(event: any): void {
+      this.communityImageChangedEvent = event;
+  }
+  communtiyImageLoaded()
+     {
+  
+     }
+     communtiyLoadImageFailed()
+     {
+  
+     }
+     communtiyImageCropped(image:string)
+    {
+      this.communityImage=image;
+     
+    }
+    /*headerImageCropped(bounds : Bounds)
    {
      this.headerImage=this.dataHeaderImage.image;
-     // this.croppedHeight=bounds.bottom-bounds.top;
-    //  this.croppedWidth=bounds.right-bounds.left;
-//debugger;
+    
    }
    communityImageCropped(bounds : Bounds)
    {
      this.communityImage=this.dataCommunityImage.image;
-     // this.croppedHeight=bounds.bottom-bounds.top;
-    //  this.croppedWidth=bounds.right-bounds.left;
-//debugger;
-   }
+    
+   }*/
     takeHeaderPicture(){
     //debugger;
       let options =
@@ -893,7 +980,7 @@ loadAllAgentsResp(result:any)
         this.headerImage="data:image/jpeg;base64," +data;
         let image : any= new Image();
          image.src = this.headerImage;
-        this.headerImageCropper.setImage(image);
+       
         if(this.isApp)
         {
        this.crop
@@ -933,7 +1020,7 @@ loadAllAgentsResp(result:any)
         this.communityImage="data:image/jpeg;base64," +data;
         let image : any= new Image();
          image.src = this.communityImage;
-        this.communityImageCropper.setImage(image);
+      
         if(this.isApp)
         {
           this.crop
@@ -949,18 +1036,12 @@ loadAllAgentsResp(result:any)
         console.log(error);
       });
     }
-    /*searchListing():any{
-      this.selectedSearch = !this.selectedSearch;
-      this.localStorageService.set("showSearch",this.selectedSearch);
-      this.sharedServiceObj.searchListing();
-    
-    }*/
+   
     refreshValueSubDivision($event:any):void{
     
     }
     selectedSubDivision($event:any):void{
-    //this.address_subdivision_modal.push($event.id);
-   // this.updateSearchObject();
+  
     }
     removedSubDivision($event:any):void{
     this.address_subdivision_modal.splice(this.address_subdivision_modal.indexOf($event.id),1);

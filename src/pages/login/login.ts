@@ -90,6 +90,7 @@ export class LoginPage {
           this.storage.set('last_name', result.memberCredentials.last_name);
           this.storage.set('userType', "1");
           this.storage.set('loggedInUserInfo', result);
+          this.storage.set('globalSettings',result.globalSettings);
           this.userLoggedId = true;
           this.sharedServiceObj.setLoginStatus(true);
          this.navCtrl.setRoot(DashboardTabsPage);

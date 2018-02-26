@@ -1,11 +1,12 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, Platform,MenuController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, Platform,MenuController,ActionSheetController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 import { DashboardPage } from '../dashboard/dashboard';
 import { DashboardTabsPage } from '../tabs/dashboard-tabs/dashboard-tabs';
 import { FbConfirmPage } from '../fb-confirm/fb-confirm';
 import { AlertController } from 'ionic-angular';
+import { GlobalPreferencesPage } from '../setup/global-preferences/global-preferences';
 
 import { UserVerificationPage } from '../user-verification/user-verification';
 
@@ -26,11 +27,12 @@ import { SubscriptionProvider } from '../../providers/subscription/subscription'
   templateUrl: 'subscription.html',
 })
 export class SubscriptionPage {
+  //@ViewChild('expiryDateCtrl') expiryDateCtrl;
   public allAvailablePackages: any[] = [];
   public selectedPackagesList: any[] = [];
   public full_name: string;
   public cc_number: string;
-  public expiryDate: string;
+  public expiryDate: string=new Date("2010-12").toISOString();
   public exp_month: string;
   public exp_year: string;
   public userSubscribed: boolean = false;
@@ -40,19 +42,21 @@ export class SubscriptionPage {
     public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,
     public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform, 
-    public ngZone: NgZone,public menuCtrl: MenuController) {
+    public ngZone: NgZone,public menuCtrl: MenuController,public actionSheetCtrl: ActionSheetController) {
+   //   this.expiryDate=new Date(this.expiryDate).toISOString();
   }
 
   ionViewDidLoad() {
     this.platform.ready().then(() => {
       this.full_name = this.navParams.get('full_name');
       this.listAllPackages();
+      debugger;
     });
     ///debugger;
   }
   listAllPackages() {
     this.subscriptionObj.getServicePackagesList()
-      .subscribe((result) => this.packagesResp(result));
+      .subscribe((result) => this.packagesResp(result)); 
   }
   packagesResp(resp: any) {
     if (resp.status == true) {
@@ -111,9 +115,33 @@ else
     //debugger;
     if (data.status == true) {
       this.ngZone.run(() => {
-     
-        //this.navCtrl.push(DashboardPage,{notificationMsg:data.message.toUpperCase()});
         this.navCtrl.setRoot(DashboardTabsPage,{notificationMsg:data.message.toUpperCase()});
+        /*let actionSheet = this.actionSheetCtrl.create({
+          title: 'Select any option',
+          buttons: [
+            {
+              text: 'Upload Company Picture',
+              handler: () => {
+                this.navCtrl.setRoot(GlobalPreferencesPage, { route: "subscribe" });
+              }
+            },
+            {
+              text: "No Thanks",
+              handler: () => {
+                this.storage.set('showGlobalPopUp','no');
+                this.navCtrl.setRoot(DashboardTabsPage,{notificationMsg:data.message.toUpperCase()});
+              }
+            },
+            {
+              text: 'Cancel',
+              handler: () => {
+                this.navCtrl.setRoot(DashboardTabsPage,{notificationMsg:data.message.toUpperCase()});
+              }
+            }
+          ]
+        });
+        actionSheet.present();*/
+      
       });
     }
     else {

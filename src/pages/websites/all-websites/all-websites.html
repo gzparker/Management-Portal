@@ -29,7 +29,8 @@
   <ion-list>
     <!--<ion-item-sliding *ngFor="let website of allWebsiteList">-->
     <ion-item *ngFor="let website of allWebsiteList" >
-      <h2>{{website.website}}</h2>
+      <h2>{{website.identity_name}}</h2>
+      <p>{{website.website}}</p>
       <p>Private Key:{{website.key_private}}</p>
       <p>Public Key:{{website.key_public}}</p>
       <p>Status:<span *ngIf="website.status==1">Yes</span>

@@ -59,6 +59,74 @@
                 <ion-input type="text" required  
                 [(ngModel)]="homeNumber" name="homeNumber" id="homeNumber" pattern="^[0-9]*$"></ion-input>
             </ion-item>
+            <ion-item>
+                <ion-label floating>Home Address Street</ion-label>
+                <ion-input type="text" [(ngModel)]="home_address_street" name="home_address_street" id="home_address_street"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>Home Address City</ion-label>
+                <ion-input type="text" [(ngModel)]="home_address_city" name="home_address_city" id="home_address_city"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>Home Address State/Province</ion-label>
+                <ion-input type="text" [(ngModel)]="home_address_state_or_province" 
+                name="home_address_state_or_province" id="home_address_state_or_province"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>Home Address ZipCode</ion-label>
+                <ion-input type="text" [(ngModel)]="home_address_zipcode" 
+                name="home_address_zipcode" id="home_address_zipcode"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>Work Address Street</ion-label>
+                <ion-input type="text" [(ngModel)]="work_address_street" 
+                name="work_address_street" id="work_address_street"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>Work Address City</ion-label>
+                <ion-input type="text" [(ngModel)]="work_address_city" 
+                name="work_address_city" id="work_address_city"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>Work Address State/Province</ion-label>
+                <ion-input type="text" [(ngModel)]="work_address_state_or_province" 
+                name="work_address_state_or_province" id="work_address_state_or_province"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>Work ZipCode</ion-label>
+                <ion-input type="text" [(ngModel)]="work_zipcode" 
+                name="work_zipcode" id="work_zipcode"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>Assigned Agent IDs</ion-label>
+                <ion-select [(ngModel)]="assigned_agent_id"  
+                name="assigned_agent_id">
+                  <ion-option *ngFor="let agent of allAgents" value= {{agent.id}}>
+                    {{agent.first_name}} {{agent.last_name}}
+                   </ion-option>
+                </ion-select>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>Category</ion-label>
+                <ion-select [(ngModel)]="category" name="category" id="category">
+                 
+                <ion-option value="buyer">Buyer</ion-option>
+                <ion-option value="seller">Seller</ion-option>
+                <ion-option value="prospect">Prospect</ion-option>
+                <ion-option value="friend">Friend</ion-option>
+                <ion-option value="client">Client</ion-option>
+                <ion-option value="active">Active</ion-option>
+                <ion-option value="pending">Pending</ion-option>
+                <ion-option value="closed">Closed</ion-option>
+                <ion-option value="old">Old</ion-option>
+                <ion-option value="new">New</ion-option>
+                <ion-option value="other">Other</ion-option>
+                 </ion-select>
+              </ion-item>
+              <ion-item>
+                <ion-label floating>Internal Notes</ion-label>
+                <ion-textarea type="text" [(ngModel)]="internal_notes" name="internal_notes"></ion-textarea>
+              </ion-item>
             <div padding>
                 <button ion-button color="primary" block (click)="updateLead();" [disabled]="!leadForm.valid">Update Lead</button>
             </div>

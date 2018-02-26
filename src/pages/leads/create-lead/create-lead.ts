@@ -41,9 +41,21 @@ export class CreateLeadPage {
   public mobileNumber:number;
   public officeNumber:number;
   public homeNumber:number;
+  public home_address_street:string='';
+  public home_address_city:string="";
+  public home_address_state_or_province:string="";
+  public home_address_zipcode:string="";
+  public work_address_street:string="";
+  public work_address_city:string="";
+  public work_address_state_or_province:string="";
+  public work_zipcode:string="";
+  public assigned_agent_id:string="";
+  public category:string="";
+  public internal_notes:string="";
   public leadCreateMsg:string="";
   public domainAccess:any;
   public allWebsiteList:any[]=[];
+  public allAgents:any[]=[];
   public selectedWebsite:string="";
   public userId:string="";
   public loader:any;
@@ -63,8 +75,33 @@ export class CreateLeadPage {
     member_id.then((data) => {
       this.userId=data;
       this.getAllWebsite();
+      this.loadAllAgents();
     });
   }
+  loadAllAgents()
+    {
+      if(this.userId.toString())
+      {
+        this.userServiceObj.viewMemberAgents(this.userId.toString())
+      .subscribe((result) => this.loadAllAgentsResp(result));
+      }
+      
+    }
+    loadAllAgentsResp(result:any)
+    {
+     
+      if(result.status==true)
+      {
+       
+        this.allAgents=result.results;
+        
+      }
+      else
+      {
+      
+        this.allAgents=[];
+      }
+    }
   getAllWebsite():void{
     if(this.userId!="")
     {
@@ -92,7 +129,12 @@ export class CreateLeadPage {
     if(this.userId!="")
     {
       //this.loader.present();
-  this.userServiceObj.createLead(this.userId.toString(),this.selectedWebsite,this.email,this.password,this.firstName,this.lastName,this.officeNumber,this.mobileNumber,this.homeNumber)
+  this.userServiceObj.createLead(this.userId.toString(),this.selectedWebsite,this.email,
+  this.password,this.firstName,this.lastName,
+  this.officeNumber,this.mobileNumber,this.homeNumber,this.home_address_street,this.home_address_city,
+  this.home_address_state_or_province,this.home_address_zipcode,
+  this.work_address_street,this.work_address_city,this.work_address_state_or_province,this.work_zipcode,
+this.assigned_agent_id,this.category,this.internal_notes)
     .subscribe((result) => this.createLeadResp(result));
  
     }

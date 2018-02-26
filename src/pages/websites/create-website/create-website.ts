@@ -27,6 +27,7 @@ import { SubscriptionProvider } from '../../../providers/subscription/subscripti
 })
 export class CreateWebsitePage {
   public website_domain:string="";
+  public identity_name:string="";
   public websiteCreateMsg:string="";
   public isActive:boolean=true;
   public userId:string="";
@@ -60,7 +61,7 @@ export class CreateWebsitePage {
          isActiveFinal="0";
        }
 
-  this.userServiceObj.createWebsite(this.userId,isActiveFinal,this.website_domain)
+  this.userServiceObj.createWebsite(this.userId,isActiveFinal,this.website_domain,this.identity_name)
     .subscribe((result) => this.createWebsiteResp(result));
     // }
       }

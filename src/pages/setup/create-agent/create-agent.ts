@@ -43,6 +43,8 @@ export class CreateAgentPage {
   public croppedHeight:Number;
   public dataAgentImage:any;
   public agentImage:string="";
+  public imageChangedEvent: any = '';
+  public croppedImage: any = '';
   public loader:any;
 
   public userId:string="";
@@ -97,6 +99,7 @@ export class CreateAgentPage {
   }
   createAgentResp(result:any)
   {
+    //debugger;
     //this.loader.dismiss();
     this.agentCreateMsg="Agent has been created successfully.";
 
@@ -104,13 +107,27 @@ export class CreateAgentPage {
       this.navCtrl.push(ManageAgentsPage,{notificationMsg:this.agentCreateMsg.toUpperCase()});
     });
   }
-  agentImageCropped(bounds : Bounds)
+  fileChangeEvent(event: any): void {
+    this.imageChangedEvent = event;
+}
+imageLoaded()
    {
-     this.agentImage=this.dataAgentImage.image;
+
+   }
+   loadImageFailed()
+   {
+
+   }
+imageCropped(image: string) {
+  this.agentImage = image;
+}
+  agentImageCropped(image:string)
+   {
+    this.agentImage = image;
    
    }
+   
    takePicture(){
-    //debugger;
       let options =
       {
         quality: 100,
@@ -121,14 +138,12 @@ export class CreateAgentPage {
         this.agentImage="data:image/jpeg;base64," +data;
         let image : any= new Image();
          image.src = this.agentImage;
-        this.agentImageCropper.setImage(image);
+       // this.agentImageCropper.setImage(image);
         if(this.isApp)
         {
        this.crop
        .crop(this.agentImage, {quality: 75,targetHeight:100,targetWidth:100})
       .then((newImage) => {
-     
-          //alert(newImage);
           this.agentImage=newImage;
         }, error => {
          

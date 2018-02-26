@@ -94,7 +94,7 @@ export class AllLeadsPage {
     {
       
       this.allLeadsList=result.results;
-    //  debugger;
+    //debugger;
     }
     else
     {

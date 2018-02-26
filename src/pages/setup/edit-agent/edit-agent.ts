@@ -44,6 +44,8 @@ export class EditAgentPage {
   public croppedHeight:Number;
   public dataAgentImage:any;
   public agentImage:string="";
+  public imageChangedEvent: any = '';
+  public croppedImage: any = '';
   public agentDetail:any;
   public loader:any;
 
@@ -130,31 +132,38 @@ loadAgentDetailsResp(result:any)
   {
     if(this.agent_id!="")
     {
-   //this.loader.present();
-  this.userServiceObj.updateAgent(this.agent_id,this.firstName,this.lastName,this.email,this.phone_mobile.toString(),this.access_level,
+    this.userServiceObj.updateAgent(this.agent_id,this.firstName,this.lastName,this.email,this.phone_mobile.toString(),this.access_level,
     this.password,this.agentImage,this.description)
     .subscribe((result) => this.updateAgentResp(result));
- 
     }
   }
   updateAgentResp(result:any)
   {
-    //this.loader.dismiss();
     this.agentUpdateMsg="Agent has been updated successfully.";
 
     this.ngZone.run(() => {
       this.navCtrl.push(ManageAgentsPage,{notificationMsg:this.agentUpdateMsg.toUpperCase()});
     });
   }
-  agentImageCropped(bounds : Bounds)
+  fileChangeEvent(event: any): void {
+    this.imageChangedEvent = event;
+}
+imageCropped(image: string) {
+  this.agentImage = image;
+}
+  agentImageCropped(image:string)
    {
-     this.agentImage=this.dataAgentImage.image;
-     // this.croppedHeight=bounds.bottom-bounds.top;
-    //  this.croppedWidth=bounds.right-bounds.left;
-//debugger;
+    this.agentImage = image;
+   }
+   imageLoaded()
+   {
+
+   }
+   loadImageFailed()
+   {
+
    }
    takePicture(){
-    //debugger;
       let options =
       {
         quality: 100,
@@ -165,14 +174,12 @@ loadAgentDetailsResp(result:any)
         this.agentImage="data:image/jpeg;base64," +data;
         let image : any= new Image();
          image.src = this.agentImage;
-        this.agentImageCropper.setImage(image);
+       // this.agentImageCropper.setImage(image);
         if(this.isApp)
         {
        this.crop
        .crop(this.agentImage, {quality: 75,targetHeight:100,targetWidth:100})
       .then((newImage) => {
-     
-          //alert(newImage);
           this.agentImage=newImage;
         }, error => {
          

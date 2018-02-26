@@ -20,14 +20,14 @@ export class SharedProvider {
   public isLoggedInEmitter: EventEmitter<Boolean>;
   public navigationalPage: EventEmitter<String>;
   //public registerationApiBaseUrl="http://registration.menu/api/";
-  public registerationApiBaseUrl = "http://api.registration.menu/api/";
+  public registerationApiBaseUrl = "https://api.registration.menu/api/";
   public idxapikey:string="1761ea8f043c53e44e3ccd90c18b0404c20152f0";
   public defaultNoImage="assets/imgs/noImage.png";
   private headers: Headers = new Headers();
   private headerOptions: RequestOptions = new RequestOptions();
   public service_id = "2";
   public mlsServerId = "29";
-  public apiBaseUrl = "http://api.idx.company/api/";
+  public apiBaseUrl = "https://api.idx.company/api/";
   // public FB:any;
 
   constructor(private http: Http) {

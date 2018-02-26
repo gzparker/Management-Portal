@@ -12,25 +12,12 @@
         <button ion-button (click)="verifyUser();" [disabled]="!userVerificationForm.valid">Verify</button>
     </ion-buttons>
   </ion-navbar>
-  <!--<ion-buttons end>
-      <button ion-button (click)="closeModal()">Close</button>
-      </ion-buttons>-->
+  
 </ion-header>
 
 
 <ion-content padding>
-  <!--<ion-list radio-group>
-  <ion-item>
-    <ion-label>Email</ion-label>
-    <ion-radio checked="true" value="email" name="verifyOption" (click)="setVerifyByOption('email')"></ion-radio>
-  </ion-item>
-
-  <ion-item>
-    <ion-label>Phone</ion-label>
-    <ion-radio value="phone" name="verifyOption" (click)="setVerifyByOption('phone')"></ion-radio>
-  </ion-item>
-</ion-list>-->
-  <!--<ion-list *ngIf="verify_by=='phone'">-->
+  
   <form role="form" data-toggle="validator" #userVerificationForm="ngForm">
   <ion-list>
     <ion-item>

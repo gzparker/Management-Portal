@@ -18,16 +18,45 @@
 
 <ion-content padding>
     <form role="form" data-toggle="validator" #websiteForm="ngForm">
-    <ion-item>
+        <ion-item>
+            <ion-label floating>Identity Name<span [ngClass]="{'error': identity_name==''}" *ngIf="identity_name==''">*</span></ion-label>
+            <ion-input type="text" [(ngModel)]="identity_name" 
+            name="identity_name" id="identity_name" required placeholder="Identity Name"></ion-input>
+        </ion-item>
+        <ion-item>
         <ion-label floating>Website Domain<span [ngClass]="{'error': website_domain==''}" *ngIf="website_domain==''">*</span></ion-label>
         <ion-input type="text" [(ngModel)]="website_domain" 
         name="website_domain" id="website_domain" required pattern="https?://.+"></ion-input>
       </ion-item>
-      <!--<ion-item>
-        <ion-label floating>Contact Email<span [ngClass]="{'error': contact_email==''}" *ngIf="contact_email==''">*</span></ion-label>
-        <ion-input type="email" [(ngModel)]="contact_email" 
-        name="contact_email" id="contact_email" required [email]="true"></ion-input>
-      </ion-item>-->
+      <ion-list *ngIf="isApp">
+
+          <ion-item>
+            <button ion-button color="primary" block (click)="takePicture();" >Select Image</button>
+          </ion-item>
+          <ion-item *ngIf="agentImage!=''">
+            <img [src]="agentImage" />
+          </ion-item>
+          </ion-list>
+          <ion-list *ngIf="!isApp">
+              <ion-list-header>
+                  Select Image
+                </ion-list-header>
+          
+      <input type="file" (change)="fileChangeEvent($event)" />
+      <image-cropper
+          [imageChangedEvent]="imageChangedEvent"
+          [maintainAspectRatio]="true"
+          [aspectRatio]="4 / 3"
+          [resizeToWidth]="128"
+          format="png"
+          (imageCropped)="websiteIdentityImageCropped($event)"
+          (imageLoaded)="imageLoaded()"
+          (loadImageFailed)="loadImageFailed()"
+      ></image-cropper>
+      <div *ngIf="identity_logo!=''">
+        <img [src]="identity_logo">
+       </div>
+          </ion-list>
       <ion-item>
         <ion-label floating>Header Wrapper</ion-label>
         <ion-textarea type="text" [(ngModel)]="header_wrapper" name="header_wrapper"></ion-textarea>

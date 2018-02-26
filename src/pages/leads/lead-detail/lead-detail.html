@@ -5,7 +5,6 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
     <ion-navbar>
         <button ion-button menuToggle start>
             <ion-icon name="menu"></ion-icon>
@@ -15,10 +14,66 @@
         <button ion-button (click)="editLead();">Edit Lead</button>
       </ion-buttons>
     </ion-navbar>
-
 </ion-header>
-
-
 <ion-content padding>
-
+  <ion-card *ngIf="leadDetail!=undefined">
+      <h2>{{leadDetail.first_name}} {{leadDetail.last_name}}</h2>
+      <p>Email:{{leadDetail.email}}</p>
+      <p>Website:{{leadDetail.website}}</p>
+      <p>Website:{{leadDetail.website}}</p>
+      <p>Internal Notes:{{leadDetail.internal_notes}}</p>
+    
+    </ion-card>
+    <ion-segment [(ngModel)]="leadsDetailSegment" color="primary" (ionChange)="segmentChanged($event)">
+        <ion-segment-button value="1">
+          Saved Searches
+        </ion-segment-button>
+        <ion-segment-button value="2">
+            Saved Listing
+        </ion-segment-button>
+        <ion-segment-button value="3">
+            Hotsheet Subscribed
+          </ion-segment-button>
+      </ion-segment>
+      <ion-list *ngIf="saved_searches!=undefined&&selectedSegment=='1'">
+      <ion-item *ngFor="let saved_search of saved_searches">
+          <!--<ion-item (click)="agentDetail(agent.id)">
+          <ion-avatar item-start><img [src]="agent.image_url" *ngIf="agent.image_url!=''"/>
+          <img src="././assets/imgs/noImage.png" *ngIf="agent.image_url==''"/></ion-avatar>
+          <h2>{{agent.first_name}} {{agent.last_name}}</h2>
+          <p>Email:{{agent.email}}</p>
+          <p>Description:{{agent.description}}</p>
+        </ion-item>-->
+          
+        </ion-item>
+      </ion-list>
+      <ion-list *ngIf="savedListings!=undefined&&selectedSegment=='2'">
+          <ion-item *ngFor="let saved_listing of savedListings">
+              <!--<ion-item (click)="agentDetail(agent.id)">
+              <ion-avatar item-start><img [src]="agent.image_url" *ngIf="agent.image_url!=''"/>
+              <img src="././assets/imgs/noImage.png" *ngIf="agent.image_url==''"/></ion-avatar>
+              <h2>{{agent.first_name}} {{agent.last_name}}</h2>
+              <p>Email:{{agent.email}}</p>
+              <p>Description:{{agent.description}}</p>
+            </ion-item>-->
+            <ion-avatar item-start><img [src]="saved_listing.url" *ngIf="saved_listing.url!=''"/>
+              <img src="././assets/imgs/noImage.png" *ngIf="saved_listing.url==''"/></ion-avatar>
+            </ion-item>
+            <h2 *ngIf="saved_listing.listing_type=='for_sale'">For Sale</h2>
+            <h2 *ngIf="saved_listing.listing_type=='for_rent'">For Rent</h2>
+              <p>Price:${{saved_listing.price}}</p>
+              <p>Description:{{saved_listing.description}}</p>
+      </ion-list>
+      <ion-list *ngIf="subscribed_hotsheets!=undefined&&selectedSegment=='3'">
+          <ion-item *ngFor="let subscribed_hotsheet of subscribed_hotsheets">
+              <!--<ion-item (click)="agentDetail(agent.id)">
+              <ion-avatar item-start><img [src]="agent.image_url" *ngIf="agent.image_url!=''"/>
+              <img src="././assets/imgs/noImage.png" *ngIf="agent.image_url==''"/></ion-avatar>
+              <h2>{{agent.first_name}} {{agent.last_name}}</h2>
+              <p>Email:{{agent.email}}</p>
+              <p>Description:{{agent.description}}</p>
+            </ion-item>-->
+              
+            </ion-item>
+      </ion-list>
 </ion-content>

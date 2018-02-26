@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { ErrorHandler, NgModule } from '@angular/core';
+import { ErrorHandler, NgModule,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { Facebook } from '@ionic-native/facebook';
 import { Geolocation } from '@ionic-native/geolocation';
@@ -9,7 +9,9 @@ import { HTTP } from '@ionic-native/http';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Http, Response, URLSearchParams, Headers, RequestOptions, HttpModule } from '@angular/http';
 import {AccordionModule} from "ng2-accordion";
-import { ImageCropperModule } from "ng2-img-cropper/index";
+//import { ImageCropperModule } from "ng2-img-cropper/index";
+import { ColorPickerModule } from 'ngx-color-picker';
+import { ImageCropperModule } from 'ngx-image-cropper';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -41,6 +43,9 @@ import { CreateLeadPage } from '../pages/leads/create-lead/create-lead';
 import { LeadDetailPage } from '../pages/leads/lead-detail/lead-detail';
 import { EditLeadPage } from '../pages/leads/edit-lead/edit-lead';
 import { EditLeadRoutingPage } from '../pages/leads/edit-lead-routing/edit-lead-routing';
+import { LeadHotsheetSubscribedPage } from '../pages/leads/lead-hotsheet-subscribed/lead-hotsheet-subscribed';
+import { LeadSavedListingPage } from '../pages/leads/lead-saved-listing/lead-saved-listing';
+import { LeadSavedSearchesPage } from '../pages/leads/lead-saved-searches/lead-saved-searches';
 
 import { AllHotSheetsPage } from '../pages/hotsheets/all-hot-sheets/all-hot-sheets';
 import { CreateHotSheetPage } from '../pages/hotsheets/create-hot-sheet/create-hot-sheet';
@@ -67,6 +72,7 @@ import { CreditCardDetailPage } from '../pages/billing/credit-card-detail/credit
 import { UpgradeCenterPage } from '../pages/account/upgrade-center/upgrade-center';
 import { BillingHistoryPage } from '../pages/account/billing-history/billing-history';
 import { UpcomingSubscriptionPage } from '../pages/account/upcoming-subscription/upcoming-subscription';
+import { GlobalSettingsPopupPage } from '../pages/modal-popup/global-settings-popup/global-settings-popup';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -78,12 +84,13 @@ import { ListingProvider } from '../providers/listing/listing';
 @NgModule({
   declarations: [
     MyApp,HomePage,LoginPage,RegisterPage, DashboardPage, FbConfirmPage, UserVerificationPage,
-    WebsiteDetailPage,LeadDetailPage,EditLeadPage,CreateLeadPage,AllLeadsPage,VerificationCodePage, 
+    WebsiteDetailPage,LeadDetailPage,EditLeadPage,CreateLeadPage,AllLeadsPage,LeadHotsheetSubscribedPage,
+    LeadSavedListingPage,LeadSavedSearchesPage,VerificationCodePage, 
     SubscriptionPage,AllWebsitesPage,CreateWebsitePage,EditWebsitePage,DashboardTabsPage,
     AllHotSheetsPage,ContactusPage,CreateAgentPage,GlobalPreferencesPage,ManageAgentsPage,
     MlsSettingsPage,SetupOptionPage,UserOptionPage,AccountInfoPage,AccountOptionPage,ViewCreditCardsPage,
     ChangePasswordPage,EditCreditCardPage,CreditCardDetailPage,UpgradeCenterPage,EditAccountPage,CreateHotSheetPage,EditHotSheetPage,
-    EditLeadRoutingPage,UpcomingSubscriptionPage,BillingHistoryPage,AgentDetailPage,EditAgentPage
+    EditLeadRoutingPage,UpcomingSubscriptionPage,BillingHistoryPage,AgentDetailPage,EditAgentPage,GlobalSettingsPopupPage
   ],
   imports: [
     BrowserModule, HttpModule,
@@ -93,17 +100,18 @@ import { ListingProvider } from '../providers/listing/listing';
       driverOrder: ['indexeddb', 'sqlite', 'websql']
     }),AgmCoreModule.forRoot({
       apiKey: 'AIzaSyA9aj3-17cojks6gicZZ_PY2t5ERVu25ac'
-    }),ImageCropperModule
+    }),ImageCropperModule,ColorPickerModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,HomePage,LoginPage,RegisterPage, DashboardPage, FbConfirmPage, UserVerificationPage,WebsiteDetailPage,
-    LeadDetailPage,EditLeadPage,CreateLeadPage,AllLeadsPage,VerificationCodePage, SubscriptionPage,
+    LeadDetailPage,EditLeadPage,CreateLeadPage,AllLeadsPage,LeadHotsheetSubscribedPage,
+    LeadSavedListingPage,LeadSavedSearchesPage,VerificationCodePage, SubscriptionPage,
     AllWebsitesPage,CreateWebsitePage,EditWebsitePage,DashboardTabsPage,AllHotSheetsPage,ContactusPage,
     CreateAgentPage,GlobalPreferencesPage,ManageAgentsPage,
     MlsSettingsPage,SetupOptionPage,UserOptionPage,AccountInfoPage,AccountOptionPage,ViewCreditCardsPage,
     ChangePasswordPage,EditCreditCardPage,CreditCardDetailPage,UpgradeCenterPage,EditAccountPage,CreateHotSheetPage,EditHotSheetPage,
-    EditLeadRoutingPage,UpcomingSubscriptionPage,BillingHistoryPage,AgentDetailPage,EditAgentPage
+    EditLeadRoutingPage,UpcomingSubscriptionPage,BillingHistoryPage,AgentDetailPage,EditAgentPage,GlobalSettingsPopupPage
   ],
   providers: [
     StatusBar,
@@ -117,6 +125,7 @@ import { ListingProvider } from '../providers/listing/listing';
 		Camera,
     SubscriptionProvider,
     ListingProvider
-  ]
+  ],
+  schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }

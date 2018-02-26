@@ -40,7 +40,7 @@
           
           </ion-card-title>-->
           <ion-item *ngFor="let agent of allAgents">
-            <ion-item (click)="agentDetail(agent.id)">
+          <ion-item (click)="agentDetail(agent.id)">
           <ion-avatar item-start><img [src]="agent.image_url" *ngIf="agent.image_url!=''"/>
           <img src="././assets/imgs/noImage.png" *ngIf="agent.image_url==''"/></ion-avatar>
           <h2>{{agent.first_name}} {{agent.last_name}}</h2>

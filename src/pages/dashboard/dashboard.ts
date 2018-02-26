@@ -1,5 +1,5 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, Platform, MenuController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, Platform, MenuController,ActionSheetController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 import { FbConfirmPage } from '../fb-confirm/fb-confirm';
@@ -50,7 +50,8 @@ public notificationMsg:string="";
 public userId:string="";
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
-    public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform) {
+    public modalCtrl: ModalController, public alertCtrl: AlertController, 
+    public platform: Platform,public actionSheetCtrl: ActionSheetController) {
       if(this.navParams.get('notificationMsg')!=undefined)
       {
        // debugger;
@@ -79,15 +80,74 @@ public userId:string="";
       if (status.result != undefined) {
         if (status.result.subscribed_services.length > 0) {
           if (status.result.subscribed_services[0].service_status == null) {
-          //debugger;
+         
             this.ngZone.run(() => {
               this.navCtrl.push(SubscriptionPage, { full_name: status.result.first_name + " " + status.result.last_name });
             });
+          }
+          else
+          {
+            let userGlobalSettingsResp = this.storage.get('globalSettings');
+            userGlobalSettingsResp.then((data) => {
+        if(data!=null)
+        {
+          //debugger;
+      if(data.photo_company==null&&data.photo_personal==null&&
+        data.timezone==null)
+      {
+        this.redirectToGlobalPreferences(true);
+      }
+      else
+      {
+        this.redirectToGlobalPreferences(false);
+      }
+    }
+    });
           }
         }
       }
     }
   }
+  redirectToGlobalPreferences(status:boolean)
+{
+if(status==true)
+{
+  let showGlobalPopUp = this.storage.get('showGlobalPopUp');
+  showGlobalPopUp.then((data) => {
+  if(data==null)
+    {
+  let actionSheet = this.actionSheetCtrl.create({
+    title: 'Select any option',
+    buttons: [
+      {
+        text: 'Upload Company Picture',
+        handler: () => {
+          //this.sharedServiceObj.setNavigationalPage('10');
+          this.navCtrl.setRoot(GlobalPreferencesPage, { route: "subscribe" });
+        }
+      },
+      {
+        text: "No Thanks",
+        handler: () => {
+          this.storage.set('showGlobalPopUp','no');
+          //this.navCtrl.setRoot(DashboardTabsPage);
+        }
+      },
+      {
+        text: 'Cancel',
+        handler: () => {
+          //this.navCtrl.setRoot(DashboardTabsPage);
+        }
+      }
+    ]
+  });
+  actionSheet.present();
+}
+
+});
+}
+
+}
   openPage(pageNumber) {
 //debugger;
     if (pageNumber == "4") {

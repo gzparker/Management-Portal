@@ -71,7 +71,7 @@
           <ion-list-header>
               Select Image
             </ion-list-header>
-      <img-cropper
+      <!--<img-cropper
       #agentImageCropper
       [image]="dataAgentImage"
       [settings]="cropperSettings"
@@ -81,8 +81,21 @@
           [src]="dataAgentImage.image"
           [width]="croppedWidth"
           [height]="croppedHeight">
-      </div>
-      
+      </div>-->
+      <input type="file" (change)="fileChangeEvent($event)" />
+<image-cropper
+    [imageChangedEvent]="imageChangedEvent"
+    [maintainAspectRatio]="true"
+    [aspectRatio]="4 / 3"
+    [resizeToWidth]="128"
+    format="png"
+    (imageCropped)="agentImageCropped($event)"
+    (imageLoaded)="imageLoaded()"
+    (loadImageFailed)="loadImageFailed()"
+></image-cropper>
+<div *ngIf="agentImage!=''">
+  <img [src]="agentImage">
+ </div>
       </ion-list>
       <div padding>
           <button ion-button color="primary" block (click)="updateAgent();" [disabled]="!editAgentForm.valid">Update Agent</button>

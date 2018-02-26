@@ -97,6 +97,6 @@
         <variable name="APP_NAME" value="com.idxcompany.managementportal" />
     </plugin>
     <allow-navigation href="http://192.168.8.104:8100" />
-    <engine name="browser" spec="~5.0.3" />
     <engine name="android" spec="~6.4.0" />
+    <engine name="browser" spec="~5.0.3" />
 </widget>

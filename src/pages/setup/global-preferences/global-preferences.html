@@ -11,11 +11,130 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Global Preferences</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="updateGlobalSettings();" [disabled]="!globalSettingsForm.valid">Save</button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+  <form role="form" data-toggle="validator" #globalSettingsForm="ngForm">
+      <ion-list *ngIf="isApp">
 
+          <ion-item>
+            <button ion-button color="primary" block (click)="takeCompanyLogoPicture();" >Select Company Logo</button>
+          </ion-item>
+          <ion-item *ngIf="companyLogoImage!=''">
+            <img [src]="companyLogoImage" />
+          </ion-item>
+          <ion-item>
+            <button ion-button color="primary" block (click)="takePersonalPicture();" >Select Personal Image</button>
+          </ion-item>
+          <ion-item *ngIf="personalImage!=''">
+            <img [src]="personalImage" />
+          </ion-item>
+          </ion-list>
+          <ion-list *ngIf="!isApp">
+              <ion-list-header>
+                  Select Company Logo
+                </ion-list-header>
+          <!--<img-cropper
+          #companyLogoCropper
+          [image]="dataCompanyLogoImage"
+          [settings]="cropperSettings"
+          (onCrop)="companyImageCropped($event)"></img-cropper>
+          <div *ngIf="dataCompanyLogoImage.image">
+           <img
+              [src]="dataCompanyLogoImage.image"
+              [width]="croppedWidth"
+              [height]="croppedHeight">
+          </div>-->
+          <input type="file" (change)="fileCompanyChangeEvent($event)" />
+<image-cropper
+    [imageChangedEvent]="companyImageChangedEvent"
+    [maintainAspectRatio]="true"
+    [aspectRatio]="4 / 3"
+    [resizeToWidth]="128"
+    format="png"
+    (imageCropped)="companyImageCropped($event)"
+    (imageLoaded)="companyImageLoaded()"
+    (loadImageFailed)="companyLoadImageFailed()"
+></image-cropper>
+<div *ngIf="companyLogoImage!=''">
+  <img [src]="companyLogoImage">
+ </div>
+          <ion-list-header>
+            Select Personal Logo
+          </ion-list-header>
+          <input type="file" (change)="filePersonalChangeEvent($event)" />
+<image-cropper
+    [imageChangedEvent]="personalImageChangedEvent"
+    [maintainAspectRatio]="true"
+    [aspectRatio]="4 / 3"
+    [resizeToWidth]="128"
+    format="png"
+    (imageCropped)="personalImageCropped($event)"
+    (imageLoaded)="personalImageLoaded()"
+    (loadImageFailed)="personalLoadImageFailed()"
+></image-cropper>
+<div *ngIf="personalImage!=''">
+  <img [src]="personalImage">
+ </div>
+      <!--<img-cropper
+      #personalImageCropper
+      [image]="dataPersonalImage"
+      [settings]="cropperSettings"
+      (onCrop)="personalImageCropped($event)"></img-cropper>
+      <div *ngIf="dataPersonalImage.image">
+      <img
+        [src]="dataPersonalImage.image"
+        [width]="croppedWidth"
+        [height]="croppedHeight">
+      </div>-->
+          </ion-list>
+          <ion-item>
+            <ion-label floating>TimeZone<span [ngClass]="{'error': timezone==''}" *ngIf="timezone==''">*</span>
+            </ion-label>
+            <ion-input type="text" required [(ngModel)]="timezone" name="timezone" id="timezone"></ion-input>
+            <!--<ion-select [(ngModel)]="access_level" 
+        name="access_level" required>
+        <ion-option value="admin">Admin</ion-option>
+        <ion-option value="agent">Agent</ion-option>
+         </ion-select>-->
+        </ion-item>
+    <ion-list *ngIf="selectedRoute==''">
+    <div>
+      <ion-label>Color Base
+      </ion-label>
+      <ion-input [colorPicker]="colorBase" 
+      (colorPickerChange)="colorBase=$event"
+        [style.background]="colorBase" [cpPosition]="'bottom'" 
+        [value]="colorBase"></ion-input>
+    </div>
+    <div>
+        <ion-label>Second Color
+        </ion-label>
+        <ion-input [colorPicker]="secondColor" 
+        (colorPickerChange)="secondColor=$event"
+          [style.background]="secondColor" [cpPosition]="'bottom'" [cpCancelButton]="true" 
+          [cpCancelButtonClass]="'btn btn-primary btn-xs'"
+          [value]="secondColor"></ion-input>
+    </div>
+    <div>
+          <ion-label>Third Color
+          </ion-label>
+          <ion-input [colorPicker]="thirdColor" 
+          (colorPickerChange)="thirdColor=$event"
+            [style.background]="thirdColor" [cpPosition]="'bottom'" [cpCancelButton]="true" [cpCancelButtonClass]="'btn btn-primary btn-xs'"
+            [value]="thirdColor"></ion-input>
+    </div>
+  </ion-list>
+  
+  
+    <div padding>
+        <button ion-button color="primary" block (click)="updateGlobalSettings();" [disabled]="!globalSettingsForm.valid">Save</button>
+    </div>
+</form>
 </ion-content>

@@ -19,6 +19,11 @@
 <ion-content padding>
     <form role="form" data-toggle="validator" #websiteForm="ngForm">
   <ion-item>
+            <ion-label floating>Identity Name<span [ngClass]="{'error': identity_name==''}" *ngIf="identity_name==''">*</span></ion-label>
+            <ion-input type="text" [(ngModel)]="identity_name" 
+            name="identity_name" id="identity_name" required placeholder="Identity Name"></ion-input>
+  </ion-item>
+  <ion-item>
     <ion-label floating>Website Domain<span [ngClass]="{'error': website_domain==''}" *ngIf="website_domain==''">*</span></ion-label>
     <ion-input type="text" [(ngModel)]="website_domain" 
     name="website_domain" id="website_domain" required pattern="https?://.+" ></ion-input>

@@ -28,21 +28,21 @@
     </ion-chip>
     <ion-list>
         <ion-item *ngFor="let lead of allLeadsList">
+            <ion-item (click)="leadDetail(lead.lead_id);">
           <h2>{{lead.first_name}}-{{lead.last_name}}</h2>
           <p>Email:{{lead.email}}</p>
           <p>Website:{{lead.website}}</p>
           <p>Mobile Number:{{lead.phone_mobile}}</p>
           <p>Office Number:{{lead.phone_office}}</p>
           <p>Home:{{lead.phone_home}}</p>
+          </ion-item>
           <button ion-button item-right color="danger" (click)="deleteLead(lead)">
             <ion-icon name="trash"></ion-icon>
           </button>
           <button ion-button item-right color="secondary" (click)="editLead(lead.lead_id)">
               <ion-icon name="create"></ion-icon>
             </button>
-            <!--<button ion-button item-right color="secondary" (click)="editLeadRouting(lead.website_id)">
-              <ion-icon name="construct"></ion-icon>
-            </button>-->
+            
         </ion-item>
        
     </ion-list>

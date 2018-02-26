@@ -45,7 +45,8 @@
     </ion-item>
     <ion-item>
       <ion-label>Expiry Date</ion-label>
-      <ion-datetime displayFormat="MM/YYYY" pickerFormat="MM/YYYY" [(ngModel)]="expiryDate" name="expiryDate" required></ion-datetime>
+      <ion-datetime displayFormat="MM/YYYY" pickerFormat="MM/YYYY" 
+      [(ngModel)]="expiryDate" name="expiryDate" required min="2010" ></ion-datetime>
     </ion-item>
     <ion-item>
       <ion-label floating>Credit Card CVC</ion-label>
