@@ -7,6 +7,7 @@ import { FbConfirmPage } from '../../fb-confirm/fb-confirm';
 import { AllWebsitesPage } from '../../websites/all-websites/all-websites';
 import { EditLeadRoutingPage } from '../../leads/edit-lead-routing/edit-lead-routing';
 import { AlertController } from 'ionic-angular';
+import { ImageCropperComponent, CropperSettings } from "ngx-img-cropper";
 
 import { UserVerificationPage } from '../../user-verification/user-verification';
 
@@ -36,6 +37,7 @@ export class CreateWebsitePage {
     public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform, 
     public ngZone: NgZone,public menuCtrl: MenuController,public loadingCtrl: LoadingController) {
+      
   }
 
   ionViewDidLoad() {

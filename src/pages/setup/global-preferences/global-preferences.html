@@ -36,74 +36,52 @@
             <img [src]="personalImage" />
           </ion-item>
           </ion-list>
+      
           <ion-list *ngIf="!isApp">
               <ion-list-header>
                   Select Company Logo
                 </ion-list-header>
-          <!--<img-cropper
-          #companyLogoCropper
-          [image]="dataCompanyLogoImage"
-          [settings]="cropperSettings"
-          (onCrop)="companyImageCropped($event)"></img-cropper>
-          <div *ngIf="dataCompanyLogoImage.image">
-           <img
-              [src]="dataCompanyLogoImage.image"
-              [width]="croppedWidth"
-              [height]="croppedHeight">
-          </div>-->
-          <input type="file" (change)="fileCompanyChangeEvent($event)" />
-<image-cropper
-    [imageChangedEvent]="companyImageChangedEvent"
-    [maintainAspectRatio]="true"
-    [aspectRatio]="4 / 3"
-    [resizeToWidth]="128"
-    format="png"
-    (imageCropped)="companyImageCropped($event)"
-    (imageLoaded)="companyImageLoaded()"
-    (loadImageFailed)="companyLoadImageFailed()"
-></image-cropper>
-<div *ngIf="companyLogoImage!=''">
-  <img [src]="companyLogoImage">
- </div>
+                <input id="custom-input" type="file" (change)="companyFileChangeListener($event)">
+       
+                <img-cropper #companyCropper [image]="dataCompanyLogoImage" [settings]="cropperSettings"
+                 (onCrop)="companyImageCropped($event)"></img-cropper>
+                <br>
+                <span *ngIf="dataCompanyLogoImage.image" >
+                    <img [src]="dataCompanyLogoImage.image" [width]="cropperSettings.croppedWidth"
+                     [height]="cropperSettings.croppedHeight">
+                </span>  
           <ion-list-header>
             Select Personal Logo
           </ion-list-header>
-          <input type="file" (change)="filePersonalChangeEvent($event)" />
-<image-cropper
-    [imageChangedEvent]="personalImageChangedEvent"
-    [maintainAspectRatio]="true"
-    [aspectRatio]="4 / 3"
-    [resizeToWidth]="128"
-    format="png"
-    (imageCropped)="personalImageCropped($event)"
-    (imageLoaded)="personalImageLoaded()"
-    (loadImageFailed)="personalLoadImageFailed()"
-></image-cropper>
-<div *ngIf="personalImage!=''">
-  <img [src]="personalImage">
- </div>
-      <!--<img-cropper
-      #personalImageCropper
-      [image]="dataPersonalImage"
-      [settings]="cropperSettings"
-      (onCrop)="personalImageCropped($event)"></img-cropper>
-      <div *ngIf="dataPersonalImage.image">
-      <img
-        [src]="dataPersonalImage.image"
-        [width]="croppedWidth"
-        [height]="croppedHeight">
-      </div>-->
+          <input id="custom-input" type="file" (change)="personalFileChangeListener($event)">
+       
+          <img-cropper #personalCropper [image]="dataPersonalImage" [settings]="cropperSettings"
+           (onCrop)="personalImageCropped($event)"></img-cropper>
+          <br>
+          <span *ngIf="dataPersonalImage.image" >
+              <img [src]="dataPersonalImage.image" [width]="cropperSettings.croppedWidth"
+               [height]="cropperSettings.croppedHeight">
+          </span>
+      
           </ion-list>
-          <ion-item>
+         <div>
             <ion-label floating>TimeZone<span [ngClass]="{'error': timezone==''}" *ngIf="timezone==''">*</span>
             </ion-label>
-            <ion-input type="text" required [(ngModel)]="timezone" name="timezone" id="timezone"></ion-input>
+            <ng2-timezone-picker
+    [timezone]="user.timezone"
+    (change)="changeTimezone($event)"
+    placeholder="Select timezone"
+    showOffset="true"
+    guess="true">
+</ng2-timezone-picker>
+</div>
+            <!--<ion-input type="text" required [(ngModel)]="timezone" name="timezone" id="timezone"></ion-input>-->
             <!--<ion-select [(ngModel)]="access_level" 
         name="access_level" required>
         <ion-option value="admin">Admin</ion-option>
         <ion-option value="agent">Agent</ion-option>
          </ion-select>-->
-        </ion-item>
+  
     <ion-list *ngIf="selectedRoute==''">
     <div>
       <ion-label>Color Base

@@ -107,6 +107,7 @@ export class UserProvider {
         //alert('3');
         if(!this.isApp)
         {
+         // alert('yes');
           this.facebookObject.login(this.checkFacebookResp.bind(this));
         }
        else
@@ -595,18 +596,19 @@ editWebsite(user_id:string,website_id:string){
 updateWebsite(user_id:string,isActive:string,website_domain:string,website_id:string,contact_email:string,
   header_wrapper:string,footer_wrapper:string,intagent_website:string,custom_css:string,
   show_new_listings:string,show_open_houses:string,feature_agent_listings:string,
-  feature_broker_listings:string,feature_office_listings:string,identity_name:string,identity_logo:string){
+  feature_broker_listings:string,
+  feature_office_listings:string,identity_name:string,identity_logo:string,identity_icon:string){
 
-    let data = new URLSearchParams();
-    data.append('website_domain',website_domain);
+let data = new URLSearchParams();
+ data.append('website_domain',website_domain);
  data.append('member_id',user_id);
  data.append('active',isActive);
  data.append('id',website_id);
- 
  data.append('mls_server_id',this.sharedServiceObj.mlsServerId);
  data.append('contact_email',contact_email);
  data.append('identity_name',identity_name);
  data.append('identity_logo',identity_logo);
+ data.append('identity_icon',identity_icon);
  data.append('header_wrapper',header_wrapper);
  data.append('footer_wrapper',footer_wrapper);
  data.append('intagent_website',intagent_website);
@@ -616,7 +618,7 @@ updateWebsite(user_id:string,isActive:string,website_domain:string,website_id:st
  data.append('feature_agent_listings',feature_agent_listings);
  data.append('feature_broker_listings',feature_broker_listings);
  data.append('feature_office_listings',feature_office_listings);
-
+//debugger;
   let websiteListing=this.http
     .post(this.sharedServiceObj.apiBaseUrl+'members/updateWebsite', data, this.headerOptions)
     .map(this.extractData)
@@ -740,8 +742,7 @@ updateHotSheet(id:string,user_id:string,website_id:string,mlsServerId:string,nam
   json_search:any,brief_description:any,main_description:any,virtual_tour_url:any,video_url:any,
   sub_city:any,communityImage:any,headerImage:any,local:any,
   administrative_area_level_1:any,community:any,agent_ids:any,polygon_search:any){
- //debugger;
-let data = new URLSearchParams();
+ let data = new URLSearchParams();
  data.append('id',id);
  data.append('name',name);
  data.append('member_id',user_id);
@@ -788,7 +789,7 @@ viewMemberAgents(user_id:string)
      return agentListResp;
 }
 createAgent(user_id:string,first_name:string,last_name:string,email:string,phone_mobile:string,access_level:string,
-password:string,image:string,description:string)
+password:string,image:string,description:string,mls_id:string)
 {
   let data = new URLSearchParams();
   data.append('member_id',user_id);
@@ -798,7 +799,7 @@ password:string,image:string,description:string)
   data.append('phone_mobile',phone_mobile);
   data.append('access_level',access_level);
   data.append('password',password);
-  data.append('mls_id',this.sharedServiceObj.mlsServerId);
+  data.append('mls_id',mls_id);
   data.append('image',image);
   data.append('description',description);
   //debugger;
@@ -808,7 +809,7 @@ password:string,image:string,description:string)
      return createAgentResp;
 }
 updateAgent(agent_id:string,first_name:string,last_name:string,email:string,phone_mobile:string,access_level:string,
-  password:string,image:string,description:string)
+  password:string,image:string,description:string,mls_id:string)
   {
     let data = new URLSearchParams();
     data.append('agent_id',agent_id);
@@ -818,7 +819,7 @@ updateAgent(agent_id:string,first_name:string,last_name:string,email:string,phon
     data.append('phone_mobile',phone_mobile);
     data.append('access_level',access_level);
     data.append('password',password);
-    data.append('mls_id',this.sharedServiceObj.mlsServerId);
+    data.append('mls_id',mls_id);
     data.append('image',image);
     data.append('description',description);
    let updateAgentResp=this.http

@@ -36,7 +36,7 @@
  
   <ion-item>
     <ion-label>Expiry Date</ion-label>
-    <ion-datetime displayFormat="MM/YYYY" pickerFormat="MM/YYYY" [(ngModel)]="expiryDate" 
+    <ion-datetime displayFormat="MM/YYYY" pickerFormat="MM/YYYY" min="{{calendarMinDate}}" max="{{calendarMaxDate}}" [(ngModel)]="expiryDate" 
     name="expiryDate" required></ion-datetime>
   </ion-item>
   <ion-item>

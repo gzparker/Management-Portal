@@ -84,6 +84,7 @@ export class LoginPage {
 
         if (result.memberCredentials.verified == "1") {
           this.storage.set('loggedId', '1');
+          this.storage.set('selectedService','2');
           this.storage.set('userId', result.memberCredentials.id);
           this.storage.set('email', result.memberCredentials.email);
           this.storage.set('first_name', result.memberCredentials.first_name);
@@ -92,11 +93,11 @@ export class LoginPage {
           this.storage.set('loggedInUserInfo', result);
           this.storage.set('globalSettings',result.globalSettings);
           this.userLoggedId = true;
+          //debugger;
           this.sharedServiceObj.setLoginStatus(true);
-         this.navCtrl.setRoot(DashboardTabsPage);
+          this.navCtrl.setRoot(DashboardTabsPage);
         }
         else if (result.memberCredentials.verified == "0") {
-
           this.selectedCountryCode = result.memberCredentials.country_code;
           this.selectedCountryAbbv = result.memberCredentials.country_abbv;
           this.phone_number_verify = result.memberCredentials.phone_mobile;
@@ -113,15 +114,12 @@ export class LoginPage {
 
     }
     else {
-      //debugger;
       this.email = "";
       this.password = "";
       this.userLogginMsg = result.message;
 
       this.storage.remove('userType');
       this.storage.remove('loggedInUserInfo');
-      //this.localStorageService.remove('userType');
-      //this.localStorageService.remove('loggedInUserInfo');
       this.userLoggedId = false;
       // this.loginModal.close();
 
@@ -135,23 +133,18 @@ export class LoginPage {
   }
 
   onFacebookLoginClick(): void {
-
+    //
     this.userServiceObj.onFacebookLoginClick();
   }
   faceBookDecisionMethod(opt: string) {
     if (opt == "0") {
-      //let modalPage = this.modalCtrl.create(FbConfirmPage);
-      //modalPage.present();
       this.navCtrl.push(UserVerificationPage);
     }
     else if (opt == "1") {
       this.navCtrl.push(DashboardPage);
-      //this.navCtrl.setRoot(DashboardTabsPage);
     }
   }
   getAllCountryCodes(): void {
-    
-
     let avilableCountryList = this.storage.get('availableCountryList');
     avilableCountryList.then((data) => {
       if (data == null) {
@@ -160,7 +153,6 @@ export class LoginPage {
           .subscribe((result) => this.getAllCountryCodesResp(result));
       }
       else {
-      
         this.allCountryCodes = data;
         this.selectedCountryAbbv = "US";
         this.allCountryCodes.filter
@@ -168,7 +160,6 @@ export class LoginPage {
         let foundCountry = this.allCountryCodes.filter(
           country => country.country_abbv === this.selectedCountryAbbv);
         this.selectedCountryCode = foundCountry[0].country_code;
-     
       }
 
     })

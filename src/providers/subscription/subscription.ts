@@ -93,15 +93,24 @@ export class SubscriptionProvider {
     let url = "";
     let data = new URLSearchParams();
     url = this.sharedServiceObj.registerationApiBaseUrl + 'subscriptions/cancelSubscription';
-    //debugger;
     data.append('service_id', this.sharedServiceObj.service_id);
     data.append('member_id', member_id);
     data.append('subscription_id', subscription_id);
-    //debugger;
     let cancelSubscriptionResp = this.http
       .post(url, data, this.headerOptions)
       .map(this.extractData)
     return cancelSubscriptionResp;
+  }
+  checkSubscription(master_id:string)
+  {
+    let url = "";
+    let data = new URLSearchParams();
+    url = this.sharedServiceObj.registerationApiBaseUrl + 'subscriptions/checkActiveSubscriptions';
+    data.append('master_id', master_id);
+    let checkSubscriptionResp = this.http
+      .post(url, data, this.headerOptions)
+      .map(this.extractData)
+    return checkSubscriptionResp;
   }
   private extractData(res: Response) {
     //debugger;

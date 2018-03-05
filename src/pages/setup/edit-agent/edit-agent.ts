@@ -6,7 +6,8 @@ import { Storage } from '@ionic/storage';
 import { Crop } from '@ionic-native/crop';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { ImagePicker } from '@ionic-native/image-picker';
-import {ImageCropperComponent, CropperSettings, Bounds} from 'ng2-img-cropper';
+import { ImageCropperComponent, CropperSettings } from "ngx-img-cropper";
+
 import { ManageAgentsPage } from '../manage-agents/manage-agents';
 
 import { AlertController } from 'ionic-angular';
@@ -27,7 +28,9 @@ import { SubscriptionProvider } from '../../../providers/subscription/subscripti
   templateUrl: 'edit-agent.html',
 })
 export class EditAgentPage {
-  @ViewChild('agentImageCropper') agentImageCropper : ImageCropperComponent;
+  @ViewChild('agentCropper', undefined)
+  agentCropper:ImageCropperComponent;
+
   public isApp=false;
   public userLoggedId:boolean=false;
   public mls_id:string="";
@@ -36,12 +39,11 @@ export class EditAgentPage {
   public email:string="";
   public password:string="";
   public access_level:string="";
-  public phone_mobile:number;
+  public phone_mobile:string="";
   public agentUpdateMsg:string="";
   public description:string="";
-  public cropperSettings;
-  public croppedWidth:Number;
-  public croppedHeight:Number;
+  public cropperSettings: CropperSettings;
+
   public dataAgentImage:any;
   public agentImage:string="";
   public imageChangedEvent: any = '';
@@ -64,22 +66,25 @@ export class EditAgentPage {
       {
         this.isApp=true;
       }
-      
-      this.cropperSettings= new CropperSettings();
-
-      this.cropperSettings.noFileInput=false;
-
-      this.cropperSettings.cropOnResize=true;
-
-      this.cropperSettings.fileType= 'image/jpeg';
-
-      this.cropperSettings.keepAspect= false;
-
-      this.dataAgentImage= {};
-      this.loader = this.loadingCtrl.create({
-        content: "Please wait...",
-        duration: 5000
-      });
+      this.cropperSettings = new CropperSettings();
+      this.cropperSettings.width = 100;
+      this.cropperSettings.height = 100;
+      this.cropperSettings.croppedWidth = 200;
+      this.cropperSettings.croppedHeight = 200;
+      this.cropperSettings.canvasWidth = 500;
+      this.cropperSettings.canvasHeight = 300;
+      this.cropperSettings.minWidth = 10;
+      this.cropperSettings.minHeight = 10;
+  
+      this.cropperSettings.rounded = false;
+      this.cropperSettings.keepAspect = false;
+  
+      this.cropperSettings.noFileInput = true;
+        this.dataAgentImage= {};
+        this.loader = this.loadingCtrl.create({
+          content: "Please wait...",
+          duration: 5000
+        });
   }
 
   ionViewDidLoad() {
@@ -121,6 +126,14 @@ loadAgentDetailsResp(result:any)
       this.access_level=this.agentDetail.access_level;
       this.password=this.agentDetail.password;
       this.description=this.agentDetail.description;
+      if(this.agentDetail.image_url!=undefined)
+      {
+        //let image : any= new Image();
+        //image.src = this.sharedServiceObj.imgBucketUrl+this.agentDetail.image_url;
+      // this.agentCropper.setImage(image);
+      this.loadImage(this.sharedServiceObj.imgBucketUrl,this.agentDetail.image_url);
+      }
+      
     }
   }
   else
@@ -128,41 +141,61 @@ loadAgentDetailsResp(result:any)
 
   }
 }
+loadImage(baseUrl:string,imageUrl:string) {
+  //debugger;
+  const self = this;
+  var image:any = new Image();
+  const xhr = new XMLHttpRequest()
+  xhr.open("GET", baseUrl+imageUrl);
+  xhr.responseType = "blob";
+  xhr.send();
+  xhr.addEventListener("load", function() {
+      var reader = new FileReader();
+      reader.readAsDataURL(xhr.response); 
+     
+      reader.onloadend = function (loadEvent:any) {
+        //debugger;
+        image.src = loadEvent.target.result;
+        self.agentCropper.setImage(image);
+
+    };
+  });
+}
   updateAgent()
   {
     if(this.agent_id!="")
     {
     this.userServiceObj.updateAgent(this.agent_id,this.firstName,this.lastName,this.email,this.phone_mobile.toString(),this.access_level,
-    this.password,this.agentImage,this.description)
+    this.password,this.agentImage,this.description,this.mls_id)
     .subscribe((result) => this.updateAgentResp(result));
     }
   }
   updateAgentResp(result:any)
   {
     this.agentUpdateMsg="Agent has been updated successfully.";
-
+//debugger;
     this.ngZone.run(() => {
       this.navCtrl.push(ManageAgentsPage,{notificationMsg:this.agentUpdateMsg.toUpperCase()});
     });
   }
-  fileChangeEvent(event: any): void {
-    this.imageChangedEvent = event;
-}
-imageCropped(image: string) {
-  this.agentImage = image;
+  fileChangeListener($event) {
+    var image:any = new Image();
+    var file:File = $event.target.files[0];
+    var myReader:FileReader = new FileReader();
+    var that = this;
+    myReader.onloadend = function (loadEvent:any) {
+        image.src = loadEvent.target.result;
+        that.agentCropper.setImage(image);
+
+    };
+
+    myReader.readAsDataURL(file);
 }
   agentImageCropped(image:string)
    {
-    this.agentImage = image;
+    this.agentImage = this.dataAgentImage.image;
    }
-   imageLoaded()
-   {
-
-   }
-   loadImageFailed()
-   {
-
-   }
+  
    takePicture(){
       let options =
       {

@@ -9,9 +9,11 @@ import { HTTP } from '@ionic-native/http';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Http, Response, URLSearchParams, Headers, RequestOptions, HttpModule } from '@angular/http';
 import {AccordionModule} from "ng2-accordion";
-//import { ImageCropperModule } from "ng2-img-cropper/index";
+
 import { ColorPickerModule } from 'ngx-color-picker';
-import { ImageCropperModule } from 'ngx-image-cropper';
+
+import { TimezonePickerModule } from 'ng2-timezone-selector';
+import { ImageCropperComponent, CropperSettings } from "ngx-img-cropper";
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -90,7 +92,8 @@ import { ListingProvider } from '../providers/listing/listing';
     AllHotSheetsPage,ContactusPage,CreateAgentPage,GlobalPreferencesPage,ManageAgentsPage,
     MlsSettingsPage,SetupOptionPage,UserOptionPage,AccountInfoPage,AccountOptionPage,ViewCreditCardsPage,
     ChangePasswordPage,EditCreditCardPage,CreditCardDetailPage,UpgradeCenterPage,EditAccountPage,CreateHotSheetPage,EditHotSheetPage,
-    EditLeadRoutingPage,UpcomingSubscriptionPage,BillingHistoryPage,AgentDetailPage,EditAgentPage,GlobalSettingsPopupPage
+    EditLeadRoutingPage,UpcomingSubscriptionPage,
+    BillingHistoryPage,AgentDetailPage,EditAgentPage,GlobalSettingsPopupPage,ImageCropperComponent
   ],
   imports: [
     BrowserModule, HttpModule,
@@ -100,7 +103,7 @@ import { ListingProvider } from '../providers/listing/listing';
       driverOrder: ['indexeddb', 'sqlite', 'websql']
     }),AgmCoreModule.forRoot({
       apiKey: 'AIzaSyA9aj3-17cojks6gicZZ_PY2t5ERVu25ac'
-    }),ImageCropperModule,ColorPickerModule
+    }),ColorPickerModule,TimezonePickerModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

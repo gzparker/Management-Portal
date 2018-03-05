@@ -23,30 +23,36 @@
     <ion-chip *ngIf="notificationMsg!=''">
         <ion-label color="secondary">{{notificationMsg}}</ion-label>
       </ion-chip>
-      <ion-list>
-          <ion-card *ngIf="defaultCreditCard!=null" (click)="cardDetail(defaultCreditCard.unique_id)">
-              <ion-card-title>
-                  Default Credit Card
-              </ion-card-title>
+          <ion-list *ngIf="defaultCreditCard!=null" (click)="cardDetail(defaultCreditCard.unique_id)">
+              <ion-list-header>
+                Default Credit Card
+              </ion-list-header>
+              <ion-item>
               <h2>Brand:{{defaultCreditCard.brand}}</h2>
+              <p>Card Number:xxx-{{defaultCreditCard.last4}}</p>
               <p>Exp Year:{{defaultCreditCard.exp_year}}</p>
-            <p>Exp Month:{{defaultCreditCard.exp_month}}</p>
-            </ion-card>
-        <ion-card>
-            <ion-card-title>
+              <p>Exp Month:{{defaultCreditCard.exp_month}}</p>
+              </ion-item>
+            </ion-list>
+        <ion-list>
+            <ion-list-header>
                 Credit Cards List
-            </ion-card-title>
-            <ion-item *ngFor="let creditCard of allCreditCards" (click)="cardDetail(creditCard.unique_id)">
+            </ion-list-header>
+            <ion-item no-lines *ngFor="let creditCard of allCreditCards">
+            <ion-item (click)="cardDetail(creditCard.unique_id)">
             <h2>Brand:{{creditCard.brand}}</h2>
+            <p>Card Number:xxx-{{creditCard.last4}}</p>
             <p>Exp Year:{{creditCard.exp_year}}</p>
             <p>Exp Month:{{creditCard.exp_month}}</p>
+            </ion-item>
             <button ion-button item-right color="danger" (click)="deleteCreditCard(credit)">
               <ion-icon name="trash"></ion-icon>
             </button>
+            <button ion-button item-right color="secondary" (click)="editCreditCardDetail(creditCard.unique_id)">
+                    <ion-icon name="construct"></ion-icon>
+            </button>
           </ion-item>
-          </ion-card>
-        
-        </ion-list>
+          </ion-list>
         <ion-chip *ngIf='allCreditCards.length<=0&&creditCardsFoundMessage!=""'>
             <ion-label color="danger">{{creditCardsFoundMessage}}</ion-label>
         </ion-chip>

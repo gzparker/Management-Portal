@@ -6,7 +6,6 @@ import { Storage } from '@ionic/storage';
 import { Crop } from '@ionic-native/crop';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { ImagePicker } from '@ionic-native/image-picker';
-import {ImageCropperComponent, CropperSettings, Bounds} from 'ng2-img-cropper';
 import { ManageAgentsPage } from '../manage-agents/manage-agents';
 import { EditAgentPage } from '../edit-agent/edit-agent';
 

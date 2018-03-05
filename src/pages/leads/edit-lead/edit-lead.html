@@ -32,8 +32,8 @@
                 <ion-input type="email" required [(ngModel)]="email" name="email" [email]="true"></ion-input>
             </ion-item>
             <ion-item>
-                <ion-label floating>Password<span [ngClass]="{'error': password==''}" *ngIf="password==''">*</span></ion-label>
-                <ion-input type="password" required [(ngModel)]="password" name="password" id="password"></ion-input>
+                <ion-label floating>Password(Leave blank to not change)</ion-label>
+                <ion-input type="password" [(ngModel)]="password" name="password" id="password"></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label>Select Website<span [ngClass]="{'error': selectedWebsite==''}" *ngIf="selectedWebsite==''">*</span></ion-label>
@@ -105,6 +105,9 @@
                     {{agent.first_name}} {{agent.last_name}}
                    </ion-option>
                 </ion-select>
+                <button ion-button item-right color="secondary" (click)="editAgents()">
+                    <ion-icon name="create"></ion-icon>
+                  </button>
             </ion-item>
             <ion-item>
                 <ion-label floating>Category</ion-label>

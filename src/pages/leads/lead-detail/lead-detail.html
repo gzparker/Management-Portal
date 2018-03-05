@@ -35,44 +35,27 @@
             Hotsheet Subscribed
           </ion-segment-button>
       </ion-segment>
-      <ion-list *ngIf="saved_searches!=undefined&&selectedSegment=='1'">
+      <ion-list *ngIf="selectedSegment=='1'">
       <ion-item *ngFor="let saved_search of saved_searches">
-          <!--<ion-item (click)="agentDetail(agent.id)">
-          <ion-avatar item-start><img [src]="agent.image_url" *ngIf="agent.image_url!=''"/>
-          <img src="././assets/imgs/noImage.png" *ngIf="agent.image_url==''"/></ion-avatar>
-          <h2>{{agent.first_name}} {{agent.last_name}}</h2>
-          <p>Email:{{agent.email}}</p>
-          <p>Description:{{agent.description}}</p>
-        </ion-item>-->
+        <h2>{{saved_search.search_name}}</h2>
           
         </ion-item>
       </ion-list>
-      <ion-list *ngIf="savedListings!=undefined&&selectedSegment=='2'">
+      <ion-list *ngIf="selectedSegment=='2'">
           <ion-item *ngFor="let saved_listing of savedListings">
-              <!--<ion-item (click)="agentDetail(agent.id)">
-              <ion-avatar item-start><img [src]="agent.image_url" *ngIf="agent.image_url!=''"/>
-              <img src="././assets/imgs/noImage.png" *ngIf="agent.image_url==''"/></ion-avatar>
-              <h2>{{agent.first_name}} {{agent.last_name}}</h2>
-              <p>Email:{{agent.email}}</p>
-              <p>Description:{{agent.description}}</p>
-            </ion-item>-->
+              
             <ion-avatar item-start><img [src]="saved_listing.url" *ngIf="saved_listing.url!=''"/>
               <img src="././assets/imgs/noImage.png" *ngIf="saved_listing.url==''"/></ion-avatar>
-            </ion-item>
-            <h2 *ngIf="saved_listing.listing_type=='for_sale'">For Sale</h2>
+              <h2 *ngIf="saved_listing.listing_type=='for_sale'">For Sale</h2>
             <h2 *ngIf="saved_listing.listing_type=='for_rent'">For Rent</h2>
               <p>Price:${{saved_listing.price}}</p>
               <p>Description:{{saved_listing.description}}</p>
+            </ion-item>
+            
       </ion-list>
-      <ion-list *ngIf="subscribed_hotsheets!=undefined&&selectedSegment=='3'">
+      <ion-list *ngIf="selectedSegment=='3'">
           <ion-item *ngFor="let subscribed_hotsheet of subscribed_hotsheets">
-              <!--<ion-item (click)="agentDetail(agent.id)">
-              <ion-avatar item-start><img [src]="agent.image_url" *ngIf="agent.image_url!=''"/>
-              <img src="././assets/imgs/noImage.png" *ngIf="agent.image_url==''"/></ion-avatar>
-              <h2>{{agent.first_name}} {{agent.last_name}}</h2>
-              <p>Email:{{agent.email}}</p>
-              <p>Description:{{agent.description}}</p>
-            </ion-item>-->
+            <h2>{{subscribed_hotsheet.name}}</h2>
               
             </ion-item>
       </ion-list>

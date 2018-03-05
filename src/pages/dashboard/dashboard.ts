@@ -2,9 +2,11 @@ import { Component, ViewChild, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, Platform, MenuController,ActionSheetController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
+import { ISubscription } from "rxjs/Subscription";
+import { AlertController } from 'ionic-angular';
 import { FbConfirmPage } from '../fb-confirm/fb-confirm';
 import { SubscriptionPage } from '../subscription/subscription';
-import { AlertController } from 'ionic-angular';
+
 import { DashboardTabsPage } from '../tabs/dashboard-tabs/dashboard-tabs';
 import { AllWebsitesPage } from '../websites/all-websites/all-websites';
 import { AllLeadsPage } from '../leads/all-leads/all-leads';
@@ -48,19 +50,27 @@ import { UserProvider } from '../../providers/user/user';
 export class DashboardPage {
 public notificationMsg:string="";
 public userId:string="";
+private subscription: ISubscription;
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, 
     public platform: Platform,public actionSheetCtrl: ActionSheetController) {
       if(this.navParams.get('notificationMsg')!=undefined)
       {
-       // debugger;
         this.notificationMsg=this.navParams.get('notificationMsg');
       }
+      if(this.navParams.get('selectedPage')!=undefined)
+      {
+        //debugger;
+     this.sharedServiceObj.setNavigationalPage('8');
+       //this.openPage(this.navParams.get('selectedPage').toString());
+      }
+      //debugger;
       sharedServiceObj.navigationalPage.subscribe(item => this.openPage(item));
   }
 
   ionViewDidLoad() {
+   // debugger;
     this.getUserDetailedInfo();
   }
   getUserDetailedInfo(): void {
@@ -149,7 +159,6 @@ if(status==true)
 
 }
   openPage(pageNumber) {
-//debugger;
     if (pageNumber == "4") {
       this.navCtrl.setRoot(DashboardPage);
     }
@@ -208,5 +217,10 @@ if(status==true)
     if (pageNumber == "22") {
       this.navCtrl.push(UpcomingSubscriptionPage);
     }
+    if(this.subscription!=undefined)
+    {
+      this.subscription.unsubscribe();
+    }
+    
   }
 }

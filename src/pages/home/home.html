@@ -3,13 +3,13 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Home</ion-title>
+    <ion-title>Welcome please login</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <h3>Welcome To IDX Company</h3>
-
-
-  <!--<button ion-button secondary menuToggle>Toggle Menu</button>-->
+  <div padding>
+    <button ion-button color="primary" block (click)="openPage('2');">Login</button>
+    <button ion-button color="primary" block (click)="openPage('3');">Sign Up</button>
+  </div>
 </ion-content>

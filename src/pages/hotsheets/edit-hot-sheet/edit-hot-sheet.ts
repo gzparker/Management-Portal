@@ -7,7 +7,8 @@ import { IMultiSelectOption,IMultiSelectSettings } from 'angular-2-dropdown-mult
 import { Crop } from '@ionic-native/crop';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { ImagePicker } from '@ionic-native/image-picker';
-import {ImageCropperComponent, CropperSettings, Bounds} from 'ng2-img-cropper';
+import { ImageCropperComponent, CropperSettings } from "ngx-img-cropper";
+
 import { Observable } from 'rxjs/Observable';
 
 import { Geolocation } from '@ionic-native/geolocation';
@@ -32,10 +33,13 @@ declare var latitudeSimplifier;
   templateUrl: 'edit-hot-sheet.html',
 })
 export class EditHotSheetPage {
-  @ViewChild('headerCropper') headerImageCropper : ImageCropperComponent;
-  @ViewChild('communityCropper') communityImageCropper : ImageCropperComponent;
+
   @ViewChild('searchbar', { read: ElementRef }) searchbar: ElementRef;
   addressElement: HTMLInputElement = null;
+  @ViewChild('headerImageCropper', undefined)
+  headerImageCropper:ImageCropperComponent;
+  @ViewChild('communityImageCropper', undefined)
+  communityImageCropper:ImageCropperComponent;
   public cropperSettings;
   public croppedWidth:Number;
   public croppedHeight:Number;
@@ -157,17 +161,20 @@ public isApp=false;
       {
         this.isApp=true;
       }
-      
-      this.cropperSettings= new CropperSettings();
-
-      this.cropperSettings.noFileInput=false;
-
-      this.cropperSettings.cropOnResize=true;
-
-      this.cropperSettings.fileType= 'image/jpeg';
-
-      this.cropperSettings.keepAspect= false;
-
+      this.cropperSettings = new CropperSettings();
+      this.cropperSettings.width = 100;
+      this.cropperSettings.height = 100;
+      this.cropperSettings.croppedWidth = 200;
+      this.cropperSettings.croppedHeight = 200;
+      this.cropperSettings.canvasWidth = 500;
+      this.cropperSettings.canvasHeight = 300;
+      this.cropperSettings.minWidth = 10;
+        this.cropperSettings.minHeight = 10;
+  
+        this.cropperSettings.rounded = false;
+        this.cropperSettings.keepAspect = false;
+  
+      this.cropperSettings.noFileInput = true;
       this.dataHeaderImage= {};
       this.dataCommunityImage={};
       this.loader = this.loadingCtrl.create({
@@ -738,7 +745,7 @@ public isApp=false;
     loadLastSearchedValue():void{
       let lastSearchedObj=null;
       let lastSearchedString=null;
-      debugger;
+      //debugger;
     //this.storage.get('searchFilterObj').then((data) => {
       
       if(this.json_search!=null)
@@ -911,12 +918,29 @@ public isApp=false;
           {
             this.assigned_agent_id=result.result.assigned_agent_ids.split(',');
           }
-          
-          this.main_description=result.result.main_description;
           //debugger;
+          if(result.result.community_image_url!=undefined)
+      {
+        this.advanceSearchOption=true;
+      this.loadCommunityImage(this.sharedServiceObj.imgBucketUrl,result.community_image_url);
+        //let image : any= new Image();
+        //image.src = this.sharedServiceObj.imgBucketUrl+result.result.community_image_url;
+        //this.communityImageCropper.setImage(image);
+
+      }
+      if(result.result.header_image_url!=undefined)
+      {
+      this.advanceSearchOption=true;
+       // let image : any= new Image();
+       // image.src = this.sharedServiceObj.imgBucketUrl+result.result.header_image_url;
+       // this.headerImageCropper.setImage(image);
+       this.loadHeaderImage(this.sharedServiceObj.imgBucketUrl,result.result.header_image_url);
+      }
+          this.main_description=result.result.main_description;
+          
           this.community=result.result.community;
           this.savedPolygonPath=result.result.polygon_search;
-          debugger;
+         
           let length=this.savedPolygonPath.length;
           
           this.json_search=result.result.search_results_json;
@@ -927,6 +951,46 @@ public isApp=false;
         {
           this.loader.dismiss();
         }
+      }
+      loadCommunityImage(baseUrl:string,imageUrl:string) {
+        debugger;
+        const self = this;
+        var image:any = new Image();
+        const xhr = new XMLHttpRequest()
+        xhr.open("GET", baseUrl+imageUrl);
+        xhr.responseType = "blob";
+        xhr.send();
+        xhr.addEventListener("load", function() {
+            var reader = new FileReader();
+            reader.readAsDataURL(xhr.response); 
+           
+            reader.onloadend = function (loadEvent:any) {
+             // debugger;
+              image.src = loadEvent.target.result;
+              self.communityImageCropper.setImage(image);
+      
+          };
+        });
+      }
+      loadHeaderImage(baseUrl:string,imageUrl:string) {
+        debugger;
+        const self = this;
+        var image:any = new Image();
+        const xhr = new XMLHttpRequest()
+        xhr.open("GET", baseUrl+imageUrl);
+        xhr.responseType = "blob";
+        xhr.send();
+        xhr.addEventListener("load", function() {
+            var reader = new FileReader();
+            reader.readAsDataURL(xhr.response); 
+           
+            reader.onloadend = function (loadEvent:any) {
+              //debugger;
+              image.src = loadEvent.target.result;
+              self.headerImageCropper.setImage(image);
+      
+          };
+        });
       }
       updateHotSheet():void{
         //this.domainAccess=this.localStorageService.get('domainAccess');
@@ -998,48 +1062,42 @@ public isApp=false;
         this.navCtrl.push(AllHotSheetsPage,{notificationMsg:this.hotsheetUpdateMsg.toString()});
       });
       }
-      fileHeaderChangeEvent(event: any): void {
-        this.headerImageChangedEvent = event;
+      headerFileChangeListener($event) {
+        var image:any = new Image();
+        var file:File = $event.target.files[0];
+        var myReader:FileReader = new FileReader();
+        var that = this;
+        myReader.onloadend = function (loadEvent:any) {
+            image.src = loadEvent.target.result;
+            that.headerImageCropper.setImage(image);
+    
+        };
+    
+        myReader.readAsDataURL(file);
     }
-    headerImageLoaded()
-       {
-    
-       }
-       headerLoadImageFailed()
-       {
-    
-       }
+   
        headerImageCropped(image:string)
       {
-        this.headerImage=image;
+        this.headerImage=this.dataHeaderImage.image;
        
       }
-      fileCommuntiyChangeEvent(event: any): void {
-        this.communityImageChangedEvent = event;
+      communityFileChangeListener($event) {
+        var image:any = new Image();
+        var file:File = $event.target.files[0];
+        var myReader:FileReader = new FileReader();
+        var that = this;
+        myReader.onloadend = function (loadEvent:any) {
+            image.src = loadEvent.target.result;
+            that.communityImageCropper.setImage(image);
+    
+        };
+    
+        myReader.readAsDataURL(file);
     }
-    communtiyImageLoaded()
-       {
-    
-       }
-       communtiyLoadImageFailed()
-       {
-    
-       }
        communtiyImageCropped(image:string)
       {
-        this.communityImage=image;
-       
+        this.communityImage=this.dataCommunityImage.image; 
       }
-     /* headerImageCropped(bounds : Bounds)
-      {
-        this.headerImage=this.dataHeaderImage.image;
-      
-      }
-      communityImageCropped(bounds : Bounds)
-      {
-        this.communityImage=this.dataCommunityImage.image;
-       
-      }*/
        takeHeaderPicture(){
        //debugger;
          let options =

@@ -32,9 +32,9 @@
                 <h2>Amount Due:{{subscription.amount_due}}</h2>
                 <p>Date Charged:{{subscription.date_charged}}</p>
                 <p>Payment Status:<span *ngIf="subscription.payment_status==true">Paid</span><span *ngIf="subscription.payment_status!=true">Un-Paid</span></p>
-                <button ion-button item-right color="danger" (click)="deleteSubscription(subscription)">
+                <!--<button ion-button item-right color="danger" (click)="deleteSubscription(subscription)">
                     <ion-icon name="trash"></ion-icon>
-                  </button>
+                  </button>-->
               </ion-item>
               </ion-card>
             </accordion-heading>

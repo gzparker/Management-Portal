@@ -21,8 +21,8 @@
 
 <ion-content padding>
   <ion-card *ngIf="agentDetail!=undefined">
-      <ion-avatar item-start><img [src]="agentDetail.image_url" *ngIf="agentDetail.image_url!=''"/>
-        <img src="././assets/imgs/noImage.png" *ngIf="agentDetail.image_url==''"/></ion-avatar>
+      <ion-avatar item-start><img src={{this.sharedServiceObj.imgBucketUrl}}{{agentDetail.image_url}} *ngIf="agentDetail.image_url!=''"/>
+        <img src={{this.sharedServiceObj.noImageUrl}} *ngIf="agentDetail.image_url==''"/></ion-avatar>
     <h2>{{agentDetail.first_name}} {{agentDetail.last_name}}</h2>
     <p>Email:{{agentDetail.email}}</p>
     <p>Description:{{agentDetail.description}}</p>

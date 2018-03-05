@@ -12,9 +12,8 @@
     <ion-title>Create a New Account</ion-title>
     <ion-buttons end>
         <button ion-button (click)="userSignUp();" [disabled]="!modalFormSignUp.valid">Sign Up</button>
-      </ion-buttons>
+    </ion-buttons>
   </ion-navbar>
- 
 </ion-header>
 
 
@@ -25,7 +24,6 @@
     <ion-input type="email" [(ngModel)]="email" name="email" [email]="true"
      ></ion-input>
   </ion-item>
-
   <ion-item>
     <ion-label floating>Password<span [ngClass]="{'error': password==''}" *ngIf="password==''">*</span></ion-label>
     <ion-input type="password" required [(ngModel)]="password" name="password"></ion-input>

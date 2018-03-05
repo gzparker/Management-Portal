@@ -37,19 +37,21 @@
         <ion-input type="email" required [(ngModel)]="email" name="email" [email]="true"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label floating>Password<span [ngClass]="{'error': password==''}" *ngIf="password==''">*</span></ion-label>
+      <ion-label floating>Password</ion-label>
       <ion-input type="password" [(ngModel)]="password" name="password" id="password"></ion-input>
   </ion-item>
+  <ion-item>
+    <ion-label floating>MLS ID</ion-label>
+    <ion-input type="text" [(ngModel)]="mls_id" name="mls_id" id="mls_id"></ion-input>
+</ion-item>
     <ion-item>
-        <ion-label floating>Phone Mobile<span [ngClass]="{'error': phone_mobile==null}" *ngIf="phone_mobile==null">*</span>
-        </ion-label>
-        <ion-input type="text" required [(ngModel)]="phone_mobile" name="phone_mobile" id="phone_mobile" pattern="^[0-9]*$"></ion-input>
+        <ion-label floating>Phone Mobile</ion-label>
+        <ion-input type="text" [(ngModel)]="phone_mobile" name="phone_mobile" id="phone_mobile" pattern="^[0-9]*$"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label floating>Access Level<span [ngClass]="{'error': access_level==''}" *ngIf="access_level==''">*</span>
-      </ion-label>
+      <ion-label floating>Access Level</ion-label>
       <ion-select [(ngModel)]="access_level" 
-  name="access_level" required>
+  name="access_level">
   <ion-option value="admin">Admin</ion-option>
   <ion-option value="agent">Agent</ion-option>
    </ion-select>
@@ -71,21 +73,17 @@
         <ion-list-header>
             Select Image
           </ion-list-header>
-    
-<input type="file" (change)="fileChangeEvent($event)" />
-<image-cropper
-    [imageChangedEvent]="imageChangedEvent"
-    [maintainAspectRatio]="true"
-    [aspectRatio]="4 / 3"
-    [resizeToWidth]="128"
-    format="png"
-    (imageCropped)="agentImageCropped($event)"
-    (imageLoaded)="imageLoaded()"
-    (loadImageFailed)="loadImageFailed()"
-></image-cropper>
-<div *ngIf="agentImage!=''">
-  <img [src]="agentImage">
- </div>
+
+            <input id="custom-input" type="file" (change)="fileChangeListener($event)">
+       
+        <img-cropper #agentCropper [image]="dataAgentImage" [settings]="cropperSettings"
+         (onCrop)="agentImageCropped($event)"></img-cropper>
+        <br>
+        <span *ngIf="dataAgentImage.image" >
+            <img [src]="dataAgentImage.image" [width]="cropperSettings.croppedWidth"
+             [height]="cropperSettings.croppedHeight">
+        </span>
+
     </ion-list>
     <div padding>
         <button ion-button color="primary" block (click)="createAgent();" [disabled]="!createAgentForm.valid">Create Agent</button>

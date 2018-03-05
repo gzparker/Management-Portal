@@ -293,49 +293,28 @@
     <ion-list-header>
         Header Image
       </ion-list-header>
-      <input type="file" (change)="fileHeaderChangeEvent($event)" />
-<image-cropper
-  [imageChangedEvent]="headerImageChangedEvent"
-  [maintainAspectRatio]="true"
-  [aspectRatio]="4 / 3"
-  [resizeToWidth]="128"
-  format="png"
-  (imageCropped)="headerImageCropped($event)"
-  (imageLoaded)="headerImageLoaded()"
-  (loadImageFailed)="headerLoadImageFailed()"
-></image-cropper>
-<div *ngIf="headerImage!=''">
-<img [src]="headerImage">
-</div>
-<!--<img-cropper
-#headerCropper
-[image]="dataHeaderImage"
-[settings]="cropperSettings"
-(onCrop)="headerImageCropped($event)"></img-cropper>
-<div *ngIf="dataHeaderImage.image">
- <img
-    [src]="dataHeaderImage.image"
-    [width]="croppedWidth"
-    [height]="croppedHeight">
-</div>-->
+      <input id="custom-input" type="file" (change)="headerFileChangeListener($event)">
+       
+        <img-cropper #headerImageCropper [image]="dataHeaderImage" [settings]="cropperSettings"
+         (onCrop)="headerImageCropped($event)"></img-cropper>
+        <br>
+        <span *ngIf="dataHeaderImage.image" >
+            <img [src]="dataHeaderImage.image" [width]="cropperSettings.croppedWidth"
+             [height]="cropperSettings.croppedHeight">
+        </span>
+
     <ion-list-header>
         Community Image
       </ion-list-header>
-      <input type="file" (change)="fileCommuntiyChangeEvent($event)" />
-<image-cropper
-  [imageChangedEvent]="communityImageChangedEvent"
-  [maintainAspectRatio]="true"
-  [aspectRatio]="4 / 3"
-  [resizeToWidth]="128"
-  format="png"
-  (imageCropped)="communtiyImageCropped($event)"
-  (imageLoaded)="communtiyImageLoaded()"
-  (loadImageFailed)="communtiyLoadImageFailed()"
-></image-cropper>
-   
-<div *ngIf="communityImage!=''">
-  <img [src]="communityImage">
- </div>
+      <input id="custom-input" type="file" (change)="communityFileChangeListener($event)">
+       
+        <img-cropper #communityImageCropper [image]="dataCommunityImage" [settings]="cropperSettings"
+         (onCrop)="communtiyImageCropped($event)"></img-cropper>
+        <br>
+        <span *ngIf="dataCommunityImage.image" >
+            <img [src]="dataCommunityImage.image" [width]="cropperSettings.croppedWidth"
+             [height]="cropperSettings.croppedHeight">
+        </span>
 </ion-list>
   </ion-list>
   <!--<accordion>

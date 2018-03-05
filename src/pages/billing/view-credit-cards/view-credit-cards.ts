@@ -76,7 +76,7 @@ export class ViewCreditCardsPage {
       //debugger;
       this.defaultCreditCard=result.default_card;
       this.allCreditCards=result.all_cards;
-      
+      //debugger;
     }
     else
     {
@@ -134,5 +134,9 @@ export class ViewCreditCardsPage {
        //debugger;
        this.navCtrl.push(CreditCardDetailPage,{unique_id:unique_id});
      }
+  }
+  editCreditCardDetail(unique_id:string)
+  {
+      this.navCtrl.push(EditCreditCardPage,{unique_id:unique_id});
   }
 }

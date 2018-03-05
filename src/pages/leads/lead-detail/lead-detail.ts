@@ -34,13 +34,14 @@ export class LeadDetailPage {
   public leadId:string="";
   public userId:string="";
  public leadDetail:any;
- public savedListings:any;
- public saved_searches:any;
- public subscribed_hotsheets:any;
+ public savedListings:any[]=[];
+ public saved_searches:any[]=[];
+ public subscribed_hotsheets:any[]=[];
  public savedListingPage:any;
  public savedSearchesPage:any;
  public subscribedHotsheetPage:any;
- public selectedSegment:any="";
+ public selectedSegment:any="1";
+ public leadsDetailSegment:string="1";
 
 public loader:any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
@@ -91,12 +92,22 @@ public loader:any;
     {
    if(result.result)
    {
-     debugger;
+    // debugger;
      this.leadDetail=result.result;
-     this.saved_searches=result.saved_searches;
-     this.savedListings=result.saved_listings;
-     this.subscribed_hotsheets=result.subscribed_hotsheets;
-     debugger;
+     if(result.saved_searches!=false)
+     {
+      this.saved_searches=result.saved_searches;
+     }
+     if(result.saved_listings!=false)
+     {
+      this.savedListings=result.saved_listings;
+     }
+     if(result.subscribed_hotsheets!=false)
+     {
+      this.subscribed_hotsheets=result.subscribed_hotsheets;
+     }
+     
+    // debugger;
   //this.editLeadModal.open();
    }
   

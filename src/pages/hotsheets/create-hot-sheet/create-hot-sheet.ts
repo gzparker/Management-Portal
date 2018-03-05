@@ -6,7 +6,8 @@ import { IMultiSelectOption,IMultiSelectSettings } from 'angular-2-dropdown-mult
 import { Crop } from '@ionic-native/crop';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { ImagePicker } from '@ionic-native/image-picker';
-import {ImageCropperComponent, CropperSettings, Bounds} from 'ng2-img-cropper';
+import { ImageCropperComponent, CropperSettings } from "ngx-img-cropper";
+
 import { Observable } from 'rxjs/Observable';
 
 import { Geolocation } from '@ionic-native/geolocation';
@@ -30,10 +31,13 @@ declare var latitudeSimplifier;
   templateUrl: 'create-hot-sheet.html'
 })
 export class CreateHotSheetPage {
-  @ViewChild('headerCropper') headerImageCropper : ImageCropperComponent;
-  @ViewChild('communityCropper') communityImageCropper : ImageCropperComponent;
+ 
   @ViewChild('searchbar', { read: ElementRef }) searchbar: ElementRef;
   addressElement: HTMLInputElement = null;
+  @ViewChild('headerImageCropper', undefined)
+  headerImageCropper:ImageCropperComponent;
+  @ViewChild('communityImageCropper', undefined)
+  communityImageCropper:ImageCropperComponent;
 
   listSearch: string = '';
   public cropperSettings;
@@ -152,17 +156,20 @@ public isApp=false;
       {
         this.isApp=true;
       }
-      
-      this.cropperSettings= new CropperSettings();
-
-      this.cropperSettings.noFileInput=false;
-
-      this.cropperSettings.cropOnResize=true;
-
-      this.cropperSettings.fileType= 'image/jpeg';
-
-      this.cropperSettings.keepAspect= false;
-
+      this.cropperSettings = new CropperSettings();
+      this.cropperSettings.width = 100;
+      this.cropperSettings.height = 100;
+      this.cropperSettings.croppedWidth = 200;
+      this.cropperSettings.croppedHeight = 200;
+      this.cropperSettings.canvasWidth = 500;
+      this.cropperSettings.canvasHeight = 300;
+      this.cropperSettings.minWidth = 10;
+        this.cropperSettings.minHeight = 10;
+  
+        this.cropperSettings.rounded = false;
+        this.cropperSettings.keepAspect = false;
+  
+      this.cropperSettings.noFileInput = true;
       this.dataHeaderImage= {};
       this.dataCommunityImage={};
       this.loader = this.loadingCtrl.create({
@@ -926,50 +933,44 @@ loadAllAgentsResp(result:any)
     });
     
     }
-    fileHeaderChangeEvent(event: any): void {
-      this.headerImageChangedEvent = event;
+    headerFileChangeListener($event) {
+      var image:any = new Image();
+      var file:File = $event.target.files[0];
+      var myReader:FileReader = new FileReader();
+      var that = this;
+      myReader.onloadend = function (loadEvent:any) {
+          image.src = loadEvent.target.result;
+          that.headerImageCropper.setImage(image);
+  
+      };
+  
+      myReader.readAsDataURL(file);
   }
-  headerImageLoaded()
-     {
-  
-     }
-     headerLoadImageFailed()
-     {
-  
-     }
+ 
      headerImageCropped(image:string)
     {
-      this.headerImage=image;
+      this.headerImage=this.dataHeaderImage.image;
      
     }
-    fileCommuntiyChangeEvent(event: any): void {
-      this.communityImageChangedEvent = event;
+    communityFileChangeListener($event) {
+      var image:any = new Image();
+      var file:File = $event.target.files[0];
+      var myReader:FileReader = new FileReader();
+      var that = this;
+      myReader.onloadend = function (loadEvent:any) {
+          image.src = loadEvent.target.result;
+          that.communityImageCropper.setImage(image);
+  
+      };
+  
+      myReader.readAsDataURL(file);
   }
-  communtiyImageLoaded()
-     {
-  
-     }
-     communtiyLoadImageFailed()
-     {
-  
-     }
      communtiyImageCropped(image:string)
     {
-      this.communityImage=image;
-     
+      this.communityImage=this.dataCommunityImage.image; 
     }
-    /*headerImageCropped(bounds : Bounds)
-   {
-     this.headerImage=this.dataHeaderImage.image;
-    
-   }
-   communityImageCropped(bounds : Bounds)
-   {
-     this.communityImage=this.dataCommunityImage.image;
-    
-   }*/
+   
     takeHeaderPicture(){
-    //debugger;
       let options =
       {
         quality: 100,
@@ -1006,7 +1007,6 @@ loadAllAgentsResp(result:any)
     
       this.imagePicker.getPictures(options)
       .then((results) => {
-      // debugger;
       }, (err) => { console.log(err) });
     }
     takeCommunityPicture(){

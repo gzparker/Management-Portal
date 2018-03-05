@@ -9,6 +9,8 @@ import { FbConfirmPage } from '../../fb-confirm/fb-confirm';
 import { CreateLeadPage } from '../../leads/create-lead/create-lead';
 import { AllLeadsPage } from '../../leads/all-leads/all-leads';
 
+import { ManageAgentsPage } from '../../setup/manage-agents/manage-agents';
+
 import { AlertController } from 'ionic-angular';
 
 import { UserVerificationPage } from '../../user-verification/user-verification';
@@ -197,6 +199,12 @@ public loader:any;
     this.navCtrl.push(AllLeadsPage,{notificationMsg:this.leadUpdateMsg.toUpperCase()});
   });
   
+  }
+  editAgents()
+  {
+    this.ngZone.run(() => {
+      this.navCtrl.push(ManageAgentsPage);
+    });
   }
   clearLeadForm():void{
     this.firstName="";

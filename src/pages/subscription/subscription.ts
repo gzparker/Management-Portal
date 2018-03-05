@@ -38,11 +38,19 @@ export class SubscriptionPage {
   public userSubscribed: boolean = false;
   public subscriptionMsg: string = "";
   public cvc: string;
+  public calendarMinDate:any;
+  public calendarMaxDate:any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,
     public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform, 
     public ngZone: NgZone,public menuCtrl: MenuController,public actionSheetCtrl: ActionSheetController) {
+      this.calendarMinDate=new Date();
+      this.calendarMinDate.setFullYear(this.calendarMinDate.getFullYear(),0);
+      this.calendarMinDate=this.calendarMinDate.toISOString();
+      this.calendarMaxDate=new Date();
+      this.calendarMaxDate.setFullYear(this.calendarMaxDate.getFullYear() + 50);
+      this.calendarMaxDate=this.calendarMaxDate.toISOString();
    //   this.expiryDate=new Date(this.expiryDate).toISOString();
   }
 

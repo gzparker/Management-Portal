@@ -6,7 +6,8 @@ import { Storage } from '@ionic/storage';
 import { Crop } from '@ionic-native/crop';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { ImagePicker } from '@ionic-native/image-picker';
-import {ImageCropperComponent, CropperSettings, Bounds} from 'ng2-img-cropper';
+import { ImageCropperComponent, CropperSettings } from "ngx-img-cropper";
+
 import { ManageAgentsPage } from '../manage-agents/manage-agents';
 
 import { AlertController } from 'ionic-angular';
@@ -23,10 +24,13 @@ import { SubscriptionProvider } from '../../../providers/subscription/subscripti
 @IonicPage()
 @Component({
   selector: 'page-create-agent',
-  templateUrl: 'create-agent.html',
+  templateUrl: 'create-agent.html'
 })
 export class CreateAgentPage {
-  @ViewChild('agentImageCropper') agentImageCropper : ImageCropperComponent;
+  @ViewChild('agentCropper', undefined)
+  agentCropper:ImageCropperComponent;
+
+  cropperSettings: CropperSettings;
   public isApp=false;
   public userLoggedId:boolean=false;
   public userType:string="1";
@@ -34,17 +38,14 @@ export class CreateAgentPage {
   public lastName:string="";
   public email:string="";
   public password:string="";
+  public mls_id:string="";
   public access_level:string="";
-  public phone_mobile:number;
+  public phone_mobile:string='';
   public agentCreateMsg:string="";
   public description:string="";
-  public cropperSettings;
-  public croppedWidth:Number;
-  public croppedHeight:Number;
+
   public dataAgentImage:any;
   public agentImage:string="";
-  public imageChangedEvent: any = '';
-  public croppedImage: any = '';
   public loader:any;
 
   public userId:string="";
@@ -61,24 +62,27 @@ export class CreateAgentPage {
       {
         this.isApp=true;
       }
-      
-      this.cropperSettings= new CropperSettings();
+      this.cropperSettings = new CropperSettings();
+    this.cropperSettings.width = 100;
+    this.cropperSettings.height = 100;
+    this.cropperSettings.croppedWidth = 200;
+    this.cropperSettings.croppedHeight = 200;
+    this.cropperSettings.canvasWidth = 500;
+    this.cropperSettings.canvasHeight = 300;
+    this.cropperSettings.minWidth = 10;
+      this.cropperSettings.minHeight = 10;
 
-      this.cropperSettings.noFileInput=false;
+      this.cropperSettings.rounded = false;
+      this.cropperSettings.keepAspect = false;
 
-      this.cropperSettings.cropOnResize=true;
-
-      this.cropperSettings.fileType= 'image/jpeg';
-
-      this.cropperSettings.keepAspect= false;
-
-      this.dataAgentImage= {};
-      this.loader = this.loadingCtrl.create({
+    this.cropperSettings.noFileInput = true;
+    this.dataAgentImage= {};
+    this.loader = this.loadingCtrl.create({
         content: "Please wait...",
         duration: 5000
       });
   }
-
+  
   ionViewDidLoad() {
     let member_id = this.storage.get('userId');
     member_id.then((data) => {
@@ -90,41 +94,37 @@ export class CreateAgentPage {
   {
     if(this.userId!="")
     {
-  //this.loader.present();
+      
   this.userServiceObj.createAgent(this.userId,this.firstName,this.lastName,this.email,this.phone_mobile.toString(),this.access_level,
-    this.password,this.agentImage,this.description)
+    this.password,this.agentImage,this.description,this.mls_id)
     .subscribe((result) => this.createAgentResp(result));
  
     }
   }
   createAgentResp(result:any)
   {
-    //debugger;
-    //this.loader.dismiss();
     this.agentCreateMsg="Agent has been created successfully.";
 
     this.ngZone.run(() => {
       this.navCtrl.push(ManageAgentsPage,{notificationMsg:this.agentCreateMsg.toUpperCase()});
     });
   }
-  fileChangeEvent(event: any): void {
-    this.imageChangedEvent = event;
-}
-imageLoaded()
-   {
+  fileChangeListener($event) {
+    var image:any = new Image();
+    var file:File = $event.target.files[0];
+    var myReader:FileReader = new FileReader();
+    var that = this;
+    myReader.onloadend = function (loadEvent:any) {
+        image.src = loadEvent.target.result;
+        that.agentCropper.setImage(image);
 
-   }
-   loadImageFailed()
-   {
+    };
 
-   }
-imageCropped(image: string) {
-  this.agentImage = image;
+    myReader.readAsDataURL(file);
 }
   agentImageCropped(image:string)
    {
-    this.agentImage = image;
-   
+    this.agentImage = this.dataAgentImage.image;
    }
    
    takePicture(){

@@ -65,6 +65,7 @@ export class CreditCardDetailPage {
     if(result.status==true)
       {
       this.cardDetail=result.card;
+      //debugger;
       }
   }
   editCreditCardDetail()

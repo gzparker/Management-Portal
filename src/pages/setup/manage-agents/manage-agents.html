@@ -40,9 +40,9 @@
           
           </ion-card-title>-->
           <ion-item *ngFor="let agent of allAgents">
-          <ion-item (click)="agentDetail(agent.id)">
-          <ion-avatar item-start><img [src]="agent.image_url" *ngIf="agent.image_url!=''"/>
-          <img src="././assets/imgs/noImage.png" *ngIf="agent.image_url==''"/></ion-avatar>
+          <ion-item no-lines (click)="agentDetail(agent.id)">
+          <ion-avatar item-start><img src={{this.sharedServiceObj.imgBucketUrl}}{{agent.image_url}} *ngIf="agent.image_url!=''"/>
+          <img src={{this.sharedServiceObj.noImageUrl}} *ngIf="agent.image_url==''"/></ion-avatar>
           <h2>{{agent.first_name}} {{agent.last_name}}</h2>
           <p>Email:{{agent.email}}</p>
           <p>Description:{{agent.description}}</p>

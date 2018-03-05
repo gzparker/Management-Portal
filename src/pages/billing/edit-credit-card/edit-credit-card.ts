@@ -38,10 +38,22 @@ export class EditCreditCardPage {
   public exp_year: string="";
   public zipCode:string="";
   public loader:any;
+  //public calendarMinDate=new Date().toISOString();
+  public calendarMinDate:any;
+  public calendarMaxDate:any;
+  
+
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, 
     public platform: Platform,public loadingCtrl: LoadingController) {
+      this.calendarMinDate=new Date();
+      this.calendarMinDate.setFullYear(this.calendarMinDate.getFullYear(),0);
+      this.calendarMinDate=this.calendarMinDate.toISOString();
+      this.calendarMaxDate=new Date();
+      this.calendarMaxDate.setFullYear(this.calendarMaxDate.getFullYear() + 50);
+      this.calendarMaxDate=this.calendarMaxDate.toISOString();
+      //debugger;
       if(this.navParams.get('unique_id')!=undefined)
       {
         this.uniquer_id=this.navParams.get('unique_id');

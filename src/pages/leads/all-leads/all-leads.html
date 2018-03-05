@@ -28,7 +28,7 @@
     </ion-chip>
     <ion-list>
         <ion-item *ngFor="let lead of allLeadsList">
-            <ion-item (click)="leadDetail(lead.lead_id);">
+            <ion-item no-lines (click)="leadDetail(lead.lead_id);">
           <h2>{{lead.first_name}}-{{lead.last_name}}</h2>
           <p>Email:{{lead.email}}</p>
           <p>Website:{{lead.website}}</p>

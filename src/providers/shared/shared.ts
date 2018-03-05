@@ -28,6 +28,9 @@ export class SharedProvider {
   public service_id = "2";
   public mlsServerId = "29";
   public apiBaseUrl = "https://api.idx.company/api/";
+  //public imgBucketUrl="https://cdn.published.website/";
+  public imgBucketUrl="https://s3-us-west-2.amazonaws.com/central-system/usr/";
+  public noImageUrl="././assets/imgs/noImage.png";
   // public FB:any;
 
   constructor(private http: Http) {
@@ -152,6 +155,7 @@ export class SharedProvider {
   }
   public setNavigationalPage(option:string)
   {
+      //debugger;
     this.navigationalPage.emit(option);
   }
   // this could also be a private method of the component class

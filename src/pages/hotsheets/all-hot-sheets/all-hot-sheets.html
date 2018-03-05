@@ -28,15 +28,17 @@
       </ion-chip>
       <ion-list>
           <!--<ion-item-sliding *ngFor="let hotsheet of allHotSheetList">-->
-          <ion-item *ngFor="let hotsheet of allHotSheetList">
+              <ion-item *ngFor="let hotsheet of allHotSheetList">
+          <ion-item no-lines (click)="editHotsheet(hotsheet.id)">
             <h2>{{hotsheet.name}}</h2>
             <p>Slug:{{hotsheet.slug}}</p>
+          </ion-item>
             <button ion-button item-right color="danger" (click)="deleteHotsheet(hotsheet)">
               <ion-icon name="trash"></ion-icon>
             </button>
-            <button ion-button item-right color="secondary" (click)="editHotsheet(hotsheet.id)">
+            <!--<button ion-button item-right color="secondary" (click)="editHotsheet(hotsheet.id)">
                 <ion-icon name="create"></ion-icon>
-              </button>
+              </button>-->
           </ion-item>
           <!--<ion-item-options side="right">
             <button ion-button color="danger" (click)="deleteHotsheet(hotsheet)">
