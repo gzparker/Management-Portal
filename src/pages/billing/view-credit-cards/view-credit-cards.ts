@@ -9,8 +9,9 @@ import { AccountOptionPage } from '../../account/account-option/account-option';
 import { ChangePasswordPage } from '../../account/change-password/change-password';
 import { UpgradeCenterPage } from '../../account/upgrade-center/upgrade-center';
 
-import { EditCreditCardPage } from '../../billing/edit-credit-card/edit-credit-card';
-import { CreditCardDetailPage } from '../../billing/credit-card-detail/credit-card-detail';
+import { EditCreditCardPage } from '../edit-credit-card/edit-credit-card';
+import { CreditCardDetailPage } from '../credit-card-detail/credit-card-detail';
+import { AddCreditCardPage } from '../add-credit-card/add-credit-card';
 
 import { SharedProvider } from '../../../providers/shared/shared';
 import { UserProvider } from '../../../providers/user/user';
@@ -138,5 +139,9 @@ export class ViewCreditCardsPage {
   editCreditCardDetail(unique_id:string)
   {
       this.navCtrl.push(EditCreditCardPage,{unique_id:unique_id});
+  }
+  addCreditCard()
+  {
+      this.navCtrl.push(AddCreditCardPage);
   }
 }

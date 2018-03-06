@@ -69,8 +69,10 @@ import { AccountOptionPage } from '../pages/account/account-option/account-optio
 import { ChangePasswordPage } from '../pages/account/change-password/change-password';
 
 import { ViewCreditCardsPage } from '../pages/billing/view-credit-cards/view-credit-cards';
+import { AddCreditCardPage } from '../pages/billing/add-credit-card/add-credit-card';
 import { EditCreditCardPage } from '../pages/billing/edit-credit-card/edit-credit-card';
 import { CreditCardDetailPage } from '../pages/billing/credit-card-detail/credit-card-detail';
+
 import { UpgradeCenterPage } from '../pages/account/upgrade-center/upgrade-center';
 import { BillingHistoryPage } from '../pages/account/billing-history/billing-history';
 import { UpcomingSubscriptionPage } from '../pages/account/upcoming-subscription/upcoming-subscription';
@@ -93,7 +95,7 @@ import { ListingProvider } from '../providers/listing/listing';
     MlsSettingsPage,SetupOptionPage,UserOptionPage,AccountInfoPage,AccountOptionPage,ViewCreditCardsPage,
     ChangePasswordPage,EditCreditCardPage,CreditCardDetailPage,UpgradeCenterPage,EditAccountPage,CreateHotSheetPage,EditHotSheetPage,
     EditLeadRoutingPage,UpcomingSubscriptionPage,
-    BillingHistoryPage,AgentDetailPage,EditAgentPage,GlobalSettingsPopupPage,ImageCropperComponent
+    BillingHistoryPage,AgentDetailPage,EditAgentPage,GlobalSettingsPopupPage,ImageCropperComponent,AddCreditCardPage
   ],
   imports: [
     BrowserModule, HttpModule,
@@ -114,7 +116,7 @@ import { ListingProvider } from '../providers/listing/listing';
     CreateAgentPage,GlobalPreferencesPage,ManageAgentsPage,
     MlsSettingsPage,SetupOptionPage,UserOptionPage,AccountInfoPage,AccountOptionPage,ViewCreditCardsPage,
     ChangePasswordPage,EditCreditCardPage,CreditCardDetailPage,UpgradeCenterPage,EditAccountPage,CreateHotSheetPage,EditHotSheetPage,
-    EditLeadRoutingPage,UpcomingSubscriptionPage,BillingHistoryPage,AgentDetailPage,EditAgentPage,GlobalSettingsPopupPage
+    EditLeadRoutingPage,UpcomingSubscriptionPage,BillingHistoryPage,AgentDetailPage,EditAgentPage,GlobalSettingsPopupPage,AddCreditCardPage
   ],
   providers: [
     StatusBar,

@@ -654,6 +654,25 @@ let creditCardDetail=this.http
   .map(this.extractData)
   return creditCardDetail;
 }
+addCreditCardDetail(creditCardData: any) {
+  //debugger;
+  let url = "";
+  let data = new URLSearchParams();
+  url = this.sharedServiceObj.registerationApiBaseUrl + 'PaymentMethods/savePaymentMethod';
+  
+  data.append('member_id', creditCardData.member_id);
+  data.append('service_id',this.sharedServiceObj.service_id);
+  data.append('full_name', creditCardData.full_name);
+  data.append('cc', creditCardData.cc_number);
+  data.append('exp_month', creditCardData.exp_month);
+  data.append('exp_year', creditCardData.exp_year);
+  data.append('cvc', creditCardData.cvc);
+ debugger;
+  let addCreditCardResp = this.http
+    .post(url, data, this.headerOptions)
+    .map(this.extractData)
+  return addCreditCardResp;
+}
 updateCreditCardDetail(user_id:string,service_id:string,unique_id:string,name:string,exp_year:string,
   exp_month:string,zipcode:string)
 {
@@ -883,7 +902,7 @@ loadPaperWorkStatus(website_id:string)
      return paperWorkResp;
 }
   private extractData(res: Response) {
-  //debugger;
+  debugger;
     return res.json();
   }
   private handleErrorObservable(error: Response | any) {
