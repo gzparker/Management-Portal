@@ -128,9 +128,7 @@ loadAgentDetailsResp(result:any)
       this.description=this.agentDetail.description;
       if(this.agentDetail.image_url!=undefined)
       {
-        //let image : any= new Image();
-        //image.src = this.sharedServiceObj.imgBucketUrl+this.agentDetail.image_url;
-      // this.agentCropper.setImage(image);
+       
       this.loadImage(this.sharedServiceObj.imgBucketUrl,this.agentDetail.image_url);
       }
       
@@ -142,7 +140,7 @@ loadAgentDetailsResp(result:any)
   }
 }
 loadImage(baseUrl:string,imageUrl:string) {
-  //debugger;
+  debugger;
   const self = this;
   var image:any = new Image();
   const xhr = new XMLHttpRequest()
@@ -154,14 +152,13 @@ loadImage(baseUrl:string,imageUrl:string) {
       reader.readAsDataURL(xhr.response); 
      
       reader.onloadend = function (loadEvent:any) {
-        //debugger;
         image.src = loadEvent.target.result;
         self.agentCropper.setImage(image);
 
     };
   });
 }
-  updateAgent()
+updateAgent()
   {
     if(this.agent_id!="")
     {

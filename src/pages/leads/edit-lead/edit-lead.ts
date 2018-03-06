@@ -94,7 +94,6 @@ public loader:any;
   this.userServiceObj.leadDetail(leadId,this.userId.toString())
     .subscribe((result) => this.editLeadResp(result));
     }
-  
   }
   onWebsiteSelection($event:any):void{
     this.selectedWebsite=$event;
@@ -168,8 +167,13 @@ public loader:any;
      this.work_address_state_or_province=result.result.work_address_state_or_province;
      this.work_zipcode=result.result.work_zipcode;
      this.category=result.result.category;
-     this.assigned_agent_id=result.result.assigned_agent_id;
+     if(result.result.assigned_agent_id!='')
+     {
+      this.assigned_agent_id=result.result.assigned_agent_id.split(',');
+     }
+     
      this.internal_notes=result.result.internal_notes;
+     debugger;
   //this.editLeadModal.open();
    }
   

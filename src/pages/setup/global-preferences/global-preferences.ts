@@ -265,7 +265,7 @@ export class GlobalPreferencesPage {
 }
   personalImageCropped(image:string)
   {
-    this.personalImage=image;
+    this.personalImage=this.dataPersonalImage.image;
    
   }
    takePersonalPicture(){

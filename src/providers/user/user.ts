@@ -515,7 +515,7 @@ data.append('work_zipcode',work_zipcode);
 data.append('assigned_agent_id',assigned_agent_id);
 data.append('category',category);
 data.append('internal_notes',internal_notes);
-
+debugger;
   let searchedListing=this.http
     .post(this.sharedServiceObj.apiBaseUrl+'members/updateLead', data, this.headerOptions)
     .map(this.extractData)
@@ -866,7 +866,7 @@ updateGlobalSettings(member_id:string,personalImage:string,companyImage:string,
     data.append('color_base',colorBase);
     data.append('color_second',secondColor);
     data.append('color_third',thirdColor);
-  // debugger;
+ // debugger;
    let updateSettingsResp=this.http
        .post(this.sharedServiceObj.registerationApiBaseUrl+'members/updateGlobalSettings', data, this.headerOptions)
        .map(this.extractData)

@@ -276,6 +276,7 @@ this.footer_wrapper=result.result.footer_wrapper;
     }
   }
   loadLogo(baseUrl:string,imageUrl:string) {
+    debugger;
     const self = this;
     var image:any = new Image();
     const xhr = new XMLHttpRequest()

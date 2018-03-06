@@ -97,9 +97,9 @@
             name="work_zipcode" id="work_zipcode"></ion-input>
         </ion-item>
         <ion-item>
-            <ion-label floating>Assigned Agent IDs</ion-label>
+            <ion-label floating>Assigned Agent/Broker</ion-label>
             <ion-select [(ngModel)]="assigned_agent_id"  
-            name="assigned_agent_id">
+            name="assigned_agent_id" multiple="true">
               <ion-option *ngFor="let agent of allAgents" value= {{agent.id}}>
                 {{agent.first_name}} {{agent.last_name}}
                </ion-option>
