@@ -34,7 +34,7 @@ export class UserProvider {
   constructor(public platform: Platform,private http: Http, public sharedServiceObj: SharedProvider,
     private storage: Storage, public modalCtrl: ModalController,private fb: Facebook) {
     this.fbLoginDecision = new EventEmitter();
-    if(this.platform.is('core') || this.platform.is('mobileweb')) {
+    if(this.platform.is('core') || this.platform.is('mobileweb') || this.platform.is('cordova') || this.platform.is('mobile')) {
       this.isApp=false;
     }
     else
@@ -43,6 +43,7 @@ export class UserProvider {
     }
     if(!this.isApp)
     {
+    //alert('1');
     FB.init({
       appId: '701598080041539',
       cookie: false,
@@ -53,17 +54,17 @@ export class UserProvider {
     });
     this.facebookObject = FB;
     this.facebookObject.getLoginStatus(response => {
-
+//alert('1');
       this.fbLoginStatus = response;
 
     }, true);
   }
   else
   {
+    //alert('app');
     this.fb.browserInit(701598080041539,'v2.9');
     this.facebookObject = this.fb;
-    let status=this.facebookObject.getLoginStatus();
-    
+    let status=this.facebookObject.getLoginStatus();  
     status.then((resp)=>{
      // alert('yes');
       //alert(JSON.stringify(resp));
@@ -79,9 +80,9 @@ export class UserProvider {
   
   }
   onFacebookLoginClick(): void {
-//alert('inside');
+    //alert('3');
     if (this.fbLoginStatus != undefined) {
-//alert('here');
+     // alert('4');
       this.statusChangeCallback(this.fbLoginStatus);
     }
 
@@ -90,29 +91,33 @@ export class UserProvider {
 
     if (resp != undefined) {
       if (resp.status === 'connected') {
-//alert('1');
+        //alert('5');
     if(!this.isApp)
         {
+          //alert('6');
         this.facebookObject.api('/me', { locale: 'en_US', fields: 'name, email,picture' }, this.setFacebookAuthentication.bind(this));
         }
         else
         {
+         // alert('7');
           this.fb.api('/me?fields=id,name,email,picture',['public_profile', 'user_friends', 'email'])
           .then((res: any) =>{this.setFacebookAuthentication(res)})
           .catch(e => {console.log('Error getting location', e);});
         }
       } else if (resp.status === 'not_authorized') {
-        //alert('2');
+        //alert('8');
+        
       } else {
-        //alert('3');
+       
         if(!this.isApp)
         {
+         // alert('9');
          // alert('yes');
           this.facebookObject.login(this.checkFacebookResp.bind(this));
         }
        else
        {
-        
+       // alert('10');
         this.fb.login(['public_profile', 'user_friends', 'email'])
         .then((res: FacebookLoginResponse) =>{this.checkFacebookResp(res)})
         .catch(e => {console.log('Error getting location', e);});
@@ -124,11 +129,12 @@ export class UserProvider {
      // alert('4');
      if(!this.isApp)
      {
+      //alert('11');
        this.facebookObject.login(this.checkFacebookResp.bind(this));
      }
     else
     {
-    
+      //alert('12');
     this.fb.login(['public_profile', 'user_friends', 'email'])
     .then((res: FacebookLoginResponse) =>{this.checkFacebookResp(res)})
     .catch(e => {console.log('Error getting location', e);});
@@ -136,15 +142,16 @@ export class UserProvider {
     }
   };
   checkFacebookResp(resp: any) {
-//alert('new');
-//alert(JSON.stringify(resp));
+
     if (resp.authResponse) {
       if(!this.isApp)
       {
+       // alert('14');
       this.facebookObject.api('/me', { locale: 'en_US', fields: 'name, email,picture' }, this.setFacebookAuthentication.bind(this));
       }
       else
       {
+       // alert('15');
         this.fb.api('/me?fields=id,name,email,picture',['public_profile', 'user_friends', 'email'])
       .then((res: any) =>{this.setFacebookAuthentication(res)})
       .catch(e => {console.log('Error getting location', e);});
@@ -515,7 +522,7 @@ data.append('work_zipcode',work_zipcode);
 data.append('assigned_agent_id',assigned_agent_id);
 data.append('category',category);
 data.append('internal_notes',internal_notes);
-debugger;
+
   let searchedListing=this.http
     .post(this.sharedServiceObj.apiBaseUrl+'members/updateLead', data, this.headerOptions)
     .map(this.extractData)
@@ -902,7 +909,7 @@ loadPaperWorkStatus(website_id:string)
      return paperWorkResp;
 }
   private extractData(res: Response) {
-  debugger;
+  //debugger;
     return res.json();
   }
   private handleErrorObservable(error: Response | any) {

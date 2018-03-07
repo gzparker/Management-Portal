@@ -18,6 +18,7 @@ import { UserVerificationPage } from '../../user-verification/user-verification'
 import { SharedProvider } from '../../../providers/shared/shared';
 import { UserProvider } from '../../../providers/user/user';
 import { SubscriptionProvider } from '../../../providers/subscription/subscription';
+import { AllWebsitesPage } from '../../websites/all-websites/all-websites';
 /**
  * Generated class for the AllLeadsPage page.
  *
@@ -34,6 +35,7 @@ export class AllLeadsPage {
   public notificationMsg:string="";
   public leadId:string="";
   public allLeadsList:any[]=[];
+  public userWebsites:any[]=[];
   
   public leadsFoundMessage="";
   public userId:string="";
@@ -64,7 +66,9 @@ export class AllLeadsPage {
     //debugger;
     member_id.then((data) => {
       this.userId=data;
+      this.viewAllWebsite();
       this.viewAllLeads(null);
+      
     });
   }
   createLead()
@@ -92,14 +96,33 @@ export class AllLeadsPage {
     this.loader.dismiss();
     if(result.status==true)
     {
-      
+      //debugger;
       this.allLeadsList=result.results;
-    //debugger;
     }
     else
     {
       this.allLeadsList=[];
       this.leadsFoundMessage="No leads found.";
+    }
+    
+  }
+  viewAllWebsite():void{
+    if(this.userId!="")
+    {
+     this.userServiceObj.allUserWebsites(this.userId.toString())
+    .subscribe((result) => this.viewAllWebsiteResp(result));
+    } 
+  }
+  viewAllWebsiteResp(result:any):void{
+  
+    if(result.status==true)
+    {
+     // debugger;
+      this.userWebsites=result.result;   
+    }
+    else
+    {
+      this.userWebsites=[];
     }
     
   }
@@ -152,5 +175,17 @@ this.navCtrl.push(EditLeadPage,{leadId:leadId});
     {
      //this.viewAllLeads();
     }
+  }
+  sendToPaperWork():void{
+    if(this.userWebsites.length==1)
+    {
+     // debugger;
+      this.navCtrl.push(EditLeadRoutingPage,{website_Id:this.userWebsites[0].id});
+    }
+    else
+    {
+      this.navCtrl.push(AllWebsitesPage,{notificationMsg:"which website would they like to edit the lead source".toUpperCase()});
+    }
+//debugger;
   }
 }

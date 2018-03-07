@@ -19,7 +19,9 @@
 
 
 <ion-content padding>
-  
+  <ion-chip *ngIf="isItCrmLead">
+    <ion-label color="secondary">Leads are being sent to Intagent CRM</ion-label>
+</ion-chip>
       <ion-list>
 
           <!--<ion-item>

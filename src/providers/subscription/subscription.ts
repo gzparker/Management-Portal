@@ -65,7 +65,6 @@ export class SubscriptionProvider {
     let url = "";
     let data = new URLSearchParams();
     url = this.sharedServiceObj.registerationApiBaseUrl + 'subscriptions/getMyBillingHistory';
-    //debugger;
     data.append('service_id', this.sharedServiceObj.service_id);
     data.append('member_id', member_id);
     //debugger;
@@ -101,16 +100,28 @@ export class SubscriptionProvider {
       .map(this.extractData)
     return cancelSubscriptionResp;
   }
-  checkSubscription(master_id:string)
+  checkSubscription()
   {
+    let member_id = this.storage.get('userId');
+    //debugger;
+    member_id.then((userId) => {
     let url = "";
     let data = new URLSearchParams();
     url = this.sharedServiceObj.registerationApiBaseUrl + 'subscriptions/checkActiveSubscriptions';
-    data.append('master_id', master_id);
+    data.append('master_id', userId);
     let checkSubscriptionResp = this.http
       .post(url, data, this.headerOptions)
-      .map(this.extractData)
-    return checkSubscriptionResp;
+      .map(this.extractData);
+
+   // return checkSubscriptionResp;
+    });
+  }
+  checkSubscriptionTimely()
+  {
+    //setInterval(() => {
+     // this.checkSubscription();
+  //}, 2 * 60 * 1000);
+   
   }
   private extractData(res: Response) {
     //debugger;

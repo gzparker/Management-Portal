@@ -43,6 +43,7 @@ public send_to_zillow_crm:boolean=false;
 public send_to_intagent_crm:boolean=false;
 public send_to_zapier:boolean=false;
 public leadRoutingUpdateMsg:string="";
+public isItCrmLead:boolean=false;
 public loader:any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,
@@ -87,6 +88,7 @@ public loader:any;
         }
         else
         {
+          this.isItCrmLead=true;
           this.send_to_email=true;
         }
         if(this.leadRoutingDetail.send_to_email_addresses!=undefined)
