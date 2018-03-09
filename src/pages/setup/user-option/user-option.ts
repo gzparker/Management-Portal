@@ -3,6 +3,9 @@ import { IonicPage, NavController, NavParams, ModalController, Platform, MenuCon
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 
+import { DashboardTabsPage } from '../../tabs/dashboard-tabs/dashboard-tabs';
+import { ManageAgentsPage } from '../manage-agents/manage-agents';
+
 import { AlertController } from 'ionic-angular';
 import { SharedProvider } from '../../../providers/shared/shared';
 import { UserProvider } from '../../../providers/user/user';
@@ -30,6 +33,7 @@ export class UserOptionPage {
     console.log('ionViewDidLoad UserOptionPage');
   }
   openPage(pageNumber:string) {
-    this.sharedServiceObj.setNavigationalPage(pageNumber);
+    this.navCtrl.push(ManageAgentsPage);
+    //this.navCtrl.setRoot(DashboardTabsPage,{selectedPage:pageNumber.toString()});
   }
 }

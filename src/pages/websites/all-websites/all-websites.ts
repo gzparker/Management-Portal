@@ -35,6 +35,7 @@ export class AllWebsitesPage {
   public allWebsiteList:any[]=[];
   public userId:string="";
   public websiteFoundMessage="";
+  
   public imgBaseUrl=this.sharedServiceObj.imgBucketUrl;
   public noImgUrl=this.sharedServiceObj.noImageUrl;
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,

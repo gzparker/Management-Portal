@@ -155,7 +155,7 @@ export class SharedProvider {
   }
   public setNavigationalPage(option:string)
   {
-      //debugger;
+   // debugger;
     this.navigationalPage.emit(option);
   }
   // this could also be a private method of the component class

@@ -16,6 +16,7 @@ import { SharedProvider } from '../../../providers/shared/shared';
 import { UserProvider } from '../../../providers/user/user';
 import { SubscriptionProvider } from '../../../providers/subscription/subscription';
 import { DashboardPage } from '../../dashboard/dashboard';
+import { DashboardTabsPage } from '../../tabs/dashboard-tabs/dashboard-tabs';
 
 /**
  * Generated class for the GlobalPreferencesPage page.
@@ -316,7 +317,7 @@ export class GlobalPreferencesPage {
       this.storage.set('globalSettings',result.globalSettings);
       this.storage.set('showGlobalPopUp','no');
       this.settingsCreateMsg="Settings has been updated successfully.";
-      this.navCtrl.push(DashboardPage,{notificationMsg:this.settingsCreateMsg.toUpperCase()});
+      this.navCtrl.setRoot(DashboardTabsPage,{notificationMsg:this.settingsCreateMsg.toUpperCase()});
     });
     }
  

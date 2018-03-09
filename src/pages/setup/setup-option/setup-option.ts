@@ -4,6 +4,9 @@ import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 
 import { AlertController } from 'ionic-angular';
+import { DashboardTabsPage } from '../../tabs/dashboard-tabs/dashboard-tabs';
+
+import { ManageAgentsPage } from '../manage-agents/manage-agents';
 import { SharedProvider } from '../../../providers/shared/shared';
 import { UserProvider } from '../../../providers/user/user';
 import { GlobalPreferencesPage } from '../../setup/global-preferences/global-preferences';
@@ -32,8 +35,16 @@ export class SetupOptionPage {
     console.log('ionViewDidLoad SetupOptionPage');
   }
   openPage(pageNumber:string) {
+    if(pageNumber=="10")
+    {
+      this.navCtrl.push(GlobalPreferencesPage);
+    }
+    else if(pageNumber=="12")
+    {
+      this.navCtrl.push(ManageAgentsPage);
+    }
     //debugger;
-    this.sharedServiceObj.setNavigationalPage(pageNumber);
-    
+    //this.sharedServiceObj.setNavigationalPage(pageNumber);
+    //this.navCtrl.setRoot(DashboardTabsPage,{selectedPage:pageNumber.toString()});
   }
 }

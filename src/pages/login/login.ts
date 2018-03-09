@@ -141,7 +141,7 @@ export class LoginPage {
       this.navCtrl.push(UserVerificationPage);
     }
     else if (opt == "1") {
-      this.navCtrl.push(DashboardPage);
+      this.navCtrl.push(DashboardTabsPage);
     }
   }
   getAllCountryCodes(): void {

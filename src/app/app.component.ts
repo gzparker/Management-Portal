@@ -22,6 +22,27 @@ import { CreateLeadPage } from '../pages/leads/create-lead/create-lead';
 import { LeadDetailPage } from '../pages/leads/lead-detail/lead-detail';
 import { EditLeadPage } from '../pages/leads/edit-lead/edit-lead';
 
+import { UserVerificationPage } from '../pages/user-verification/user-verification';
+
+import { CreateAgentPage } from '../pages/setup/create-agent/create-agent';
+import { GlobalPreferencesPage } from '../pages/setup/global-preferences/global-preferences';
+import { ManageAgentsPage } from '../pages/setup/manage-agents/manage-agents';
+import { MlsSettingsPage } from '../pages/setup/mls-settings/mls-settings';
+import { SetupOptionPage } from '../pages/setup/setup-option/setup-option';
+import { UserOptionPage } from '../pages/setup/user-option/user-option';
+
+import { AccountInfoPage } from '../pages/account/account-info/account-info';
+import { AccountOptionPage } from '../pages/account/account-option/account-option';
+import { BillingHistoryPage } from '../pages/account/billing-history/billing-history';
+import { UpcomingSubscriptionPage } from '../pages/account/upcoming-subscription/upcoming-subscription';
+
+import { ChangePasswordPage } from '../pages/account/change-password/change-password';
+import { UpgradeCenterPage } from '../pages/account/upgrade-center/upgrade-center';
+
+import { ViewCreditCardsPage } from '../pages/billing/view-credit-cards/view-credit-cards';
+import { EditCreditCardPage } from '../pages/billing/edit-credit-card/edit-credit-card';
+import { CreditCardDetailPage } from '../pages/billing/credit-card-detail/credit-card-detail';
+
 import { AllHotSheetsPage } from '../pages/hotsheets/all-hot-sheets/all-hot-sheets';
 import { CreateHotSheetPage } from '../pages/hotsheets/create-hot-sheet/create-hot-sheet';
 import { EditHotSheetPage } from '../pages/hotsheets/edit-hot-sheet/edit-hot-sheet';
@@ -60,7 +81,6 @@ export class MyApp {
       { title: 'Home', component: HomePage },
       { title: "Login", component: LoginPage },
       { title: "Register", component: RegisterPage }
-      //{ title: 'List', component: ListPage }
     ];
     this.setLoginInitialStatus();
     if(this.platform.is('core') || this.platform.is('mobileweb')) {
@@ -70,7 +90,9 @@ export class MyApp {
     {
       this.isApp=true;
     }
-   
+   // sharedServiceObj.navigationalPage.subscribe(item => {
+   //   this.openSubPage(item)
+ // });
   }
   ionViewWillEnter() { 
    //debugger;
@@ -199,6 +221,7 @@ this.storage.set("userCountryInfo", this.geoCoderData);
 
   }
   openPage(pageNumber) {
+    //debugger;
     if (pageNumber == "1") {
       this.nav.setRoot(HomePage);
     }
@@ -210,30 +233,32 @@ this.storage.set("userCountryInfo", this.geoCoderData);
     }
     
     if (pageNumber == "4") {
-      this.sharedServiceObj.setNavigationalPage("4");
-     
+      
+     this.nav.setRoot(DashboardTabsPage);
     }
     if (pageNumber == "5") {
-     
-      this.sharedServiceObj.setNavigationalPage("5");
+     //this.nav.push(AllWebsitesPage);
+      //this.sharedServiceObj.setNavigationalPage("5");
+      this.nav.setRoot(DashboardTabsPage,{selectedPage:"5"});
     }
     if (pageNumber == "6") {
-      
-      this.sharedServiceObj.setNavigationalPage("6");
+      this.nav.setRoot(DashboardTabsPage,{selectedPage:"6"});
+      //this.sharedServiceObj.setNavigationalPage("6");
     }
     if (pageNumber == "7") {
-      
-      this.sharedServiceObj.setNavigationalPage("7");
+      this.nav.setRoot(DashboardTabsPage,{selectedPage:"7"});
+      //this.sharedServiceObj.setNavigationalPage("7");
     }
     if (pageNumber == "8") {
-      
-      this.sharedServiceObj.setNavigationalPage("8");
+      this.nav.setRoot(DashboardTabsPage,{selectedPage:"8"});
+      //this.sharedServiceObj.setNavigationalPage("8");
     }
     if (pageNumber == "9") {
-      
-      this.sharedServiceObj.setNavigationalPage("9");
+      this.nav.setRoot(DashboardTabsPage,{selectedPage:"9"});
+      //this.sharedServiceObj.setNavigationalPage("9");
     }
   }
+
   subMenueToggle(option:string)
   {
     if(option=='4')

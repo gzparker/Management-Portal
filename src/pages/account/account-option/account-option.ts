@@ -3,6 +3,14 @@ import { IonicPage, NavController, NavParams, ModalController, Platform, MenuCon
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 
+import { DashboardTabsPage } from '../../tabs/dashboard-tabs/dashboard-tabs';
+import { ViewCreditCardsPage } from '../../billing/view-credit-cards/view-credit-cards';
+import { UpgradeCenterPage } from '../../account/upgrade-center/upgrade-center';
+import { ChangePasswordPage } from '../../account/change-password/change-password';
+import { BillingHistoryPage } from '../../account/billing-history/billing-history';
+import { UpcomingSubscriptionPage } from '../../account/upcoming-subscription/upcoming-subscription';
+import { AccountInfoPage } from '../../account/account-info/account-info';
+
 import { AlertController } from 'ionic-angular';
 import { SharedProvider } from '../../../providers/shared/shared';
 import { UserProvider } from '../../../providers/user/user';
@@ -30,7 +38,24 @@ export class AccountOptionPage {
     console.log('ionViewDidLoad AccountOptionPage');
   }
   openPage(pageNumber:string) {
-    //debugger;
-    this.sharedServiceObj.setNavigationalPage(pageNumber);
+    if (pageNumber == "15") {
+      this.navCtrl.push(AccountInfoPage);
+    }
+    if (pageNumber == "16") {
+      this.navCtrl.push(ViewCreditCardsPage);
+    }
+    if (pageNumber == "17") {
+      this.navCtrl.push(ChangePasswordPage);
+    }
+    if (pageNumber == "19") {
+      this.navCtrl.push(UpgradeCenterPage);
+    }
+    if (pageNumber == "21") {
+      this.navCtrl.push(BillingHistoryPage);
+    }
+    if (pageNumber == "22") {
+      this.navCtrl.push(UpcomingSubscriptionPage);
+    }
+    //this.navCtrl.setRoot(DashboardTabsPage,{selectedPage:pageNumber.toString()});
   }
 }
