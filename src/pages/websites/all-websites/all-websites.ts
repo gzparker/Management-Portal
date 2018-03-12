@@ -35,6 +35,7 @@ export class AllWebsitesPage {
   public allWebsiteList:any[]=[];
   public userId:string="";
   public websiteFoundMessage="";
+  public showCreateButton:boolean=false;
   
   public imgBaseUrl=this.sharedServiceObj.imgBucketUrl;
   public noImgUrl=this.sharedServiceObj.noImageUrl;
@@ -47,19 +48,14 @@ export class AllWebsitesPage {
       {
         this.notificationMsg=this.navParams.get('notificationMsg');
       }
-     // debugger;
   }
 
   ionViewDidLoad() {
-    //console.log('ionViewDidLoad AllWebsitesPage');
-    
     let member_id = this.storage.get('userId');
     member_id.then((data) => {
       this.userId=data;
       this.viewAllWebsite(null);
     });
-   // this.viewAllWebsite();
- 
   }
   viewAllWebsite(refresher:any):void{
     if(this.userId!="")
@@ -75,11 +71,10 @@ export class AllWebsitesPage {
     }
      this.userServiceObj.allUserWebsites(this.userId.toString())
     .subscribe((result) => this.viewAllWebsiteResp(result));
-    }
-    
+    } 
   }
   viewAllWebsiteResp(result:any):void{
-  
+  this.showCreateButton=true;
     if(result.status==true)
     {
      // debugger;
@@ -89,8 +84,7 @@ export class AllWebsitesPage {
     {
       this.allWebsiteList=[];
       this.websiteFoundMessage="No website found.";
-    }
-    
+    }    
   }
   
   deleteWebsite(website:any):void{

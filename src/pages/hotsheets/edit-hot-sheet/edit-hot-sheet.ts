@@ -62,6 +62,7 @@ public isApp=false;
   public name:string="";
   public hotsheetUpdateMsg:string="";
   public advanceSearchOption:boolean=false;
+  public additionalInfoOption:boolean=false;
   public slug:string="";
   public allWebsiteList:any[]=[];
   public selectedWebsite:string="";
@@ -499,7 +500,10 @@ public isApp=false;
    }
    toggleAdvanceSearch(){
     this.advanceSearchOption=!this.advanceSearchOption;
-    } 
+    }
+    toggleAdditionalInfo(){
+      this.additionalInfoOption=!this.additionalInfoOption;
+        }
    ////////////////////////////////
   loadSearchedField():void{
     //if(this.localStorageService.get("searchFieldsLocal")==undefined)
@@ -921,7 +925,7 @@ public isApp=false;
           //debugger;
           if(result.result.community_image_url!=undefined)
       {
-        this.advanceSearchOption=true;
+        this.additionalInfoOption=true;
       this.loadCommunityImage(this.sharedServiceObj.imgBucketUrl,result.community_image_url);
         //let image : any= new Image();
         //image.src = this.sharedServiceObj.imgBucketUrl+result.result.community_image_url;
@@ -930,7 +934,7 @@ public isApp=false;
       }
       if(result.result.header_image_url!=undefined)
       {
-      this.advanceSearchOption=true;
+      this.additionalInfoOption=true;
        // let image : any= new Image();
        // image.src = this.sharedServiceObj.imgBucketUrl+result.result.header_image_url;
        // this.headerImageCropper.setImage(image);

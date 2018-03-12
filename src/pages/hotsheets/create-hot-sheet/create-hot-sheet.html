@@ -55,6 +55,60 @@
 <ion-label floating>Slug<span [ngClass]="{'error': slug==''}" *ngIf="slug==''">*</span></ion-label>
 <ion-input type="text" required [(ngModel)]="slug" name="slug" id="slug"></ion-input>
 </ion-item>
+<ion-item>
+  <button ion-button style="text-transform:lowercase !important;" color="secondary" outline (click)="toggleAdditionalInfo()" full small>additional options</button>
+</ion-item>
+<ion-list *ngIf="additionalInfoOption">
+  <ion-item>
+    <ion-label floating>Video Tour Url</ion-label>
+    <ion-input type="text" [(ngModel)]="virtual_tour_url" name="virtual_tour_url" pattern="https?://.+"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label floating>Video Url</ion-label>
+    <ion-input type="text" [(ngModel)]="video_url" name="video_url" pattern="https?://.+"></ion-input>
+  </ion-item>
+  <ion-list *ngIf="isApp">
+  
+  <ion-item>
+    <button ion-button color="primary" block (click)="takeHeaderPicture();" >Select Header Image</button>
+  </ion-item>
+  <ion-item *ngIf="headerImage!=''">
+    <img [src]="headerImage" />
+  </ion-item>
+  <ion-item>
+    <button ion-button color="primary" block (click)="takeCommunityPicture();">Select Community Image</button>
+  </ion-item>
+  <ion-item *ngIf="communityImage!=''">
+    <img [src]="communityImage" />
+  </ion-item>
+  </ion-list>
+  <ion-list *ngIf="!isApp">
+      <ion-list-header>
+          Header Image
+        </ion-list-header>
+        <input id="custom-input" type="file" (change)="headerFileChangeListener($event)">
+       
+        <img-cropper #headerImageCropper [image]="dataHeaderImage" [settings]="cropperSettings"
+         (onCrop)="headerImageCropped($event)"></img-cropper>
+        <br>
+        <span *ngIf="dataHeaderImage.image" >
+            <img [src]="dataHeaderImage.image" [width]="cropperSettings.croppedWidth"
+             [height]="cropperSettings.croppedHeight">
+        </span>
+      <ion-list-header>
+          Community Image
+        </ion-list-header>
+        <input id="custom-input" type="file" (change)="communityFileChangeListener($event)">
+       
+        <img-cropper #communityImageCropper [image]="dataCommunityImage" [settings]="cropperSettings"
+         (onCrop)="communtiyImageCropped($event)"></img-cropper>
+        <br>
+        <span *ngIf="dataCommunityImage.image" >
+            <img [src]="dataCommunityImage.image" [width]="cropperSettings.croppedWidth"
+             [height]="cropperSettings.croppedHeight">
+        </span>
+  </ion-list>
+</ion-list>
 <ion-list *ngIf="advanceSearchOption">
    
   <ion-item *ngIf="status!=undefined">
@@ -253,55 +307,7 @@
     <ion-label floating>Main Description</ion-label>
     <ion-textarea type="text" [(ngModel)]="main_description" name="main_description"></ion-textarea>
   </ion-item>
-  <ion-item>
-    <ion-label floating>Video Tour Url</ion-label>
-    <ion-input type="text" [(ngModel)]="virtual_tour_url" name="virtual_tour_url" pattern="https?://.+"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label floating>Video Url</ion-label>
-    <ion-input type="text" [(ngModel)]="video_url" name="video_url" pattern="https?://.+"></ion-input>
-  </ion-item>
-  <ion-list *ngIf="isApp">
-  
-  <ion-item>
-    <button ion-button color="primary" block (click)="takeHeaderPicture();" >Select Header Image</button>
-  </ion-item>
-  <ion-item *ngIf="headerImage!=''">
-    <img [src]="headerImage" />
-  </ion-item>
-  <ion-item>
-    <button ion-button color="primary" block (click)="takeCommunityPicture();">Select Community Image</button>
-  </ion-item>
-  <ion-item *ngIf="communityImage!=''">
-    <img [src]="communityImage" />
-  </ion-item>
-  </ion-list>
-  <ion-list *ngIf="!isApp">
-      <ion-list-header>
-          Header Image
-        </ion-list-header>
-        <input id="custom-input" type="file" (change)="headerFileChangeListener($event)">
-       
-        <img-cropper #headerImageCropper [image]="dataHeaderImage" [settings]="cropperSettings"
-         (onCrop)="headerImageCropped($event)"></img-cropper>
-        <br>
-        <span *ngIf="dataHeaderImage.image" >
-            <img [src]="dataHeaderImage.image" [width]="cropperSettings.croppedWidth"
-             [height]="cropperSettings.croppedHeight">
-        </span>
-      <ion-list-header>
-          Community Image
-        </ion-list-header>
-        <input id="custom-input" type="file" (change)="communityFileChangeListener($event)">
-       
-        <img-cropper #communityImageCropper [image]="dataCommunityImage" [settings]="cropperSettings"
-         (onCrop)="communtiyImageCropped($event)"></img-cropper>
-        <br>
-        <span *ngIf="dataCommunityImage.image" >
-            <img [src]="dataCommunityImage.image" [width]="cropperSettings.croppedWidth"
-             [height]="cropperSettings.croppedHeight">
-        </span>
-  </ion-list>
+ 
   </ion-list>
 <!--<accordion>
     <accordion-group>

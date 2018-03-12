@@ -366,10 +366,19 @@ export class UserProvider {
     {
       data.append('phone_mobile', dataObj.phone_number);
     }
-    if(dataObj.timezone!="")
+    if(dataObj.country_code!="")
     {
-      data.append('timezone', dataObj.timezone);
+      data.append('country_code', dataObj.country_code);
     }
+    //if(dataObj.timezone!="")
+   // {
+   //   data.append('timezone', dataObj.timezone);
+    //}
+  if(dataObj.photo_personal!="")
+   {
+    data.append('photo_personal', dataObj.photo_personal);
+   }
+    
     data.append('member_id', user_id);
 //debugger;
     let accountUpdatingResp = this.http
@@ -809,7 +818,7 @@ viewMemberAgents(user_id:string)
   let data = new URLSearchParams();
   data.append('member_id',user_id);
  
- let agentListResp=this.http
+  let agentListResp=this.http
      .post(this.sharedServiceObj.apiBaseUrl+'members/viewAgents', data, this.headerOptions)
      .map(this.extractData)
      return agentListResp;
@@ -875,8 +884,6 @@ deleteAgent(agent_id:string)
 viewGlobalSettings(member_id:string){
   let data = new URLSearchParams();
     data.append('master_id',member_id);
-   
-  // debugger;
    let viewSettingsResp=this.http
        .post(this.sharedServiceObj.registerationApiBaseUrl+'members/viewGlobalSettings', data, this.headerOptions)
        .map(this.extractData)

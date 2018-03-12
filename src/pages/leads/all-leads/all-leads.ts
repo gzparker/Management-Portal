@@ -177,15 +177,14 @@ this.navCtrl.push(EditLeadPage,{leadId:leadId});
     }
   }
   sendToPaperWork():void{
+    debugger;
     if(this.userWebsites.length==1)
     {
-     // debugger;
       this.navCtrl.push(EditLeadRoutingPage,{website_Id:this.userWebsites[0].id});
     }
     else
     {
       this.navCtrl.push(AllWebsitesPage,{notificationMsg:"which website would they like to edit the lead source".toUpperCase()});
     }
-//debugger;
   }
 }

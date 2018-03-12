@@ -25,10 +25,10 @@
       </ion-chip>
   <ion-card>
 
-    <ion-item *ngIf="accountInfo!=null">
-      <!--<ion-avatar item-start>
-        <img src="img/marty-avatar.png">
-      </ion-avatar>-->
+    <ion-item *ngIf="accountInfo!=null" (click)="editAccount();">
+      <ion-avatar item-start *ngIf="globalSettings!=null">
+        <img src={{imgBaseUrl}}{{globalSettings.photo_personal}} *ngIf="globalSettings.photo_personal!=''"/>
+        <img src={{noImgUrl}} *ngIf="globalSettings.photo_personal==''"/></ion-avatar>
       <h2>{{accountInfo.first_name}} {{accountInfo.last_name}}</h2>
       <p>{{accountInfo.phone_number}}</p>
       <p>{{accountInfo.email}}</p>

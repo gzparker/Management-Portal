@@ -90,9 +90,9 @@ export class MyApp {
     {
       this.isApp=true;
     }
-   // sharedServiceObj.navigationalPage.subscribe(item => {
-   //   this.openSubPage(item)
- // });
+   sharedServiceObj.signOutEmitter.subscribe(item => {
+     this.logOut();
+ });
   }
   ionViewWillEnter() { 
    //debugger;
@@ -237,25 +237,24 @@ this.storage.set("userCountryInfo", this.geoCoderData);
      this.nav.setRoot(DashboardTabsPage);
     }
     if (pageNumber == "5") {
-     //this.nav.push(AllWebsitesPage);
-      //this.sharedServiceObj.setNavigationalPage("5");
+   
       this.nav.setRoot(DashboardTabsPage,{selectedPage:"5"});
     }
     if (pageNumber == "6") {
       this.nav.setRoot(DashboardTabsPage,{selectedPage:"6"});
-      //this.sharedServiceObj.setNavigationalPage("6");
+   
     }
     if (pageNumber == "7") {
       this.nav.setRoot(DashboardTabsPage,{selectedPage:"7"});
-      //this.sharedServiceObj.setNavigationalPage("7");
+   
     }
     if (pageNumber == "8") {
       this.nav.setRoot(DashboardTabsPage,{selectedPage:"8"});
-      //this.sharedServiceObj.setNavigationalPage("8");
+
     }
     if (pageNumber == "9") {
       this.nav.setRoot(DashboardTabsPage,{selectedPage:"9"});
-      //this.sharedServiceObj.setNavigationalPage("9");
+  
     }
   }
 
@@ -292,14 +291,13 @@ else if(option=='6')
     this.storage.remove("fbMembershipResp");
     if (this.userServiceObj.facebookObject != undefined) {
       if (this.userServiceObj.facebookObject.getAccessToken.length > 0) {
-        // debugger;
         this.userServiceObj.facebookObject.logout();
       }
 
     }
     this.userLoggedIn = false;
     this.nav.setRoot(HomePage);
-    //this.sharedServiceObj.setLoginStatus(false);
+   
   }
 
 }

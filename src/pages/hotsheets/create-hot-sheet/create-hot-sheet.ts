@@ -57,6 +57,7 @@ public isApp=false;
   public msl_id:string="";
   public name:string="";
   public advanceSearchOption:boolean=false;
+  public additionalInfoOption:boolean=false;
    public hotsheetCreateMsg:string="";
    public slug:string="";
    public allWebsiteList:any[]=[];
@@ -455,6 +456,9 @@ public isApp=false;
   toggleAdvanceSearch(){
 this.advanceSearchOption=!this.advanceSearchOption;
   }
+  toggleAdditionalInfo(){
+    this.additionalInfoOption=!this.additionalInfoOption;
+      }
   loadSearchedField():void{
     //if(this.localStorageService.get("searchFieldsLocal")==undefined)
     //{

@@ -148,11 +148,7 @@ export class GlobalPreferencesPage {
 
       }
       if(this.globalSettings.photo_personal!=undefined)
-      {
-      
-        //let image : any= new Image();
-        //image.src = this.sharedServiceObj.imgBucketUrl+this.globalSettings.photo_personal;
-        //this.personalCropper.setImage(image);
+      { 
         this.loadPersonalImage(this.sharedServiceObj.imgBucketUrl,this.globalSettings.photo_personal);
       }
         //debugger;

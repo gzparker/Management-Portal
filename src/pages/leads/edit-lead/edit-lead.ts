@@ -167,13 +167,14 @@ public loader:any;
      this.work_address_state_or_province=result.result.work_address_state_or_province;
      this.work_zipcode=result.result.work_zipcode;
      this.category=result.result.category;
-     if(result.result.assigned_agent_id!='')
+     //debugger;
+     if(result.result.assigned_agent_id!=undefined&&result.result.assigned_agent_id!='')
      {
       this.assigned_agent_id=result.result.assigned_agent_id.split(',');
      }
      
      this.internal_notes=result.result.internal_notes;
-     debugger;
+     //debugger;
   //this.editLeadModal.open();
    }
   

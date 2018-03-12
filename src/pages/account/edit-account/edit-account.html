@@ -41,10 +41,33 @@
         </ion-item>
       
         <ion-item>
-          <ion-label floating>Password<span [ngClass]="{'error': password==''}" *ngIf="password==''">*</span></ion-label>
-          <ion-input type="password" required [(ngModel)]="password" name="password" 
+          <ion-label floating>Password<span [ngClass]="{'error': passwordUpdated==''}" *ngIf="passwordUpdated==''">*</span></ion-label>
+          <ion-input type="password" required [(ngModel)]="passwordUpdated" name="passwordUpdated" 
           (ngModelChange)="checkFormStatus();"></ion-input>
         </ion-item>
+        <ion-list *ngIf="isApp">
+          <ion-item>
+            <button ion-button color="primary" block (click)="takePersonalPicture();" >Select Personal Image</button>
+          </ion-item>
+          <ion-item *ngIf="personalImage!=''">
+            <img [src]="personalImage" />
+          </ion-item>
+          </ion-list>
+      
+          <ion-list *ngIf="!isApp">
+          <ion-list-header>
+            Select Personal Logo
+          </ion-list-header>
+          <input id="custom-input" type="file" (change)="personalFileChangeListener($event)">
+       
+          <img-cropper #personalCropper [image]="dataPersonalImage" [settings]="cropperSettings"
+           (onCrop)="personalImageCropped($event)"></img-cropper>
+          <br>
+          <span *ngIf="dataPersonalImage.image" >
+              <img [src]="dataPersonalImage.image" [width]="cropperSettings.croppedWidth"
+               [height]="cropperSettings.croppedHeight">
+          </span>
+          </ion-list>
         <ion-item>
             <ion-label>Select Country<span [ngClass]="{'error': selectedCountryAbbv==''}" *ngIf="selectedCountryAbbv==''">*</span></ion-label>
             <ion-select [(ngModel)]="selectedCountryAbbv" name="selectedCountryAbbv" 

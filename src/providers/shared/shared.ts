@@ -19,6 +19,7 @@ import 'rxjs/add/operator/toPromise';
 export class SharedProvider {
   public isLoggedInEmitter: EventEmitter<Boolean>;
   public navigationalPage: EventEmitter<String>;
+  public signOutEmitter: EventEmitter<String>;
   //public registerationApiBaseUrl="http://registration.menu/api/";
   public registerationApiBaseUrl = "https://api.registration.menu/api/";
   public idxapikey:string="1761ea8f043c53e44e3ccd90c18b0404c20152f0";
@@ -36,6 +37,7 @@ export class SharedProvider {
   constructor(private http: Http) {
     this.isLoggedInEmitter = new EventEmitter();
     this.navigationalPage=new EventEmitter();
+    this.signOutEmitter=new EventEmitter();
     // debugger;
   }
   simplyfierLatitude (source, kink)
@@ -149,8 +151,10 @@ export class SharedProvider {
     return r;
     
 }
+public setLogOut(){
+this.signOutEmitter.emit();
+}
   public setLoginStatus(loginStatus: boolean) {
-
     this.isLoggedInEmitter.emit(loginStatus);
   }
   public setNavigationalPage(option:string)

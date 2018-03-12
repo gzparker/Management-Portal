@@ -2,6 +2,7 @@ import { Component, ViewChild, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, Platform, MenuController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
+import { HomePage } from '../../../pages/home/home';
 
 import { DashboardTabsPage } from '../../tabs/dashboard-tabs/dashboard-tabs';
 import { ViewCreditCardsPage } from '../../billing/view-credit-cards/view-credit-cards';
@@ -57,5 +58,9 @@ export class AccountOptionPage {
       this.navCtrl.push(UpcomingSubscriptionPage);
     }
     //this.navCtrl.setRoot(DashboardTabsPage,{selectedPage:pageNumber.toString()});
+  }
+  logOut() {
+    this.sharedServiceObj.setLogOut();
+   
   }
 }

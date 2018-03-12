@@ -26,10 +26,15 @@ export class AccountInfoPage {
   public userType:string="1";
   public accountId:string="";
   public accountInfo:any=null;
+  public globalSettings:any=null;
   public fb_pic_url:string="";
   public fbAuthResp:any;
   public userId:string="";
   public loader:any;
+
+  public imgBaseUrl=this.sharedServiceObj.imgBucketUrl;
+  public noImgUrl=this.sharedServiceObj.noImageUrl;
+
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform,
@@ -47,7 +52,6 @@ export class AccountInfoPage {
 
   ionViewDidLoad() {
     let member_id = this.storage.get('userId');
-   // debugger;
     member_id.then((data) => {
       this.userId=data;
       this.viewAccount();
@@ -69,10 +73,12 @@ this.navCtrl.push(EditAccountPage,{userId:this.userId});
  
   accountInfoResp(result:any):void{
     this.loader.dismiss();
+  
     if(result.status==true)
     {
-     //debugger;
+//debugger;
       this.accountInfo=result.result;
+      this.globalSettings=result.globalSettings;
       /*if(this.localStorageService.get('fbAuthResp'))
       {
   this.fbAuthResp=this.localStorageService.get('fbAuthResp');
