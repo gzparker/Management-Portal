@@ -916,7 +916,7 @@ loadPaperWorkStatus(website_id:string)
      return paperWorkResp;
 }
   private extractData(res: Response) {
-  //debugger;
+ // debugger;
     return res.json();
   }
   private handleErrorObservable(error: Response | any) {

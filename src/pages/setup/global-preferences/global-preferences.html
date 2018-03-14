@@ -89,7 +89,7 @@
       <ion-input [colorPicker]="colorBase" 
       (colorPickerChange)="colorBase=$event"
         [style.background]="colorBase" [cpPosition]="'bottom'" 
-        [value]="colorBase"></ion-input>
+        [value]="colorBase" [cpOutputFormat]="'rgba'" ></ion-input>
     </div>
     <div>
         <ion-label>Second Color
@@ -98,15 +98,15 @@
         (colorPickerChange)="secondColor=$event"
           [style.background]="secondColor" [cpPosition]="'bottom'" [cpCancelButton]="true" 
           [cpCancelButtonClass]="'btn btn-primary btn-xs'"
-          [value]="secondColor"></ion-input>
+          [value]="secondColor" [cpOutputFormat]="'rgba'"></ion-input>
     </div>
     <div>
           <ion-label>Third Color
           </ion-label>
           <ion-input [colorPicker]="thirdColor" 
           (colorPickerChange)="thirdColor=$event"
-            [style.background]="thirdColor" [cpPosition]="'bottom'" [cpCancelButton]="true" [cpCancelButtonClass]="'btn btn-primary btn-xs'"
-            [value]="thirdColor"></ion-input>
+          style.background-color="rgba(54,44,235,0)" [cpPosition]="'bottom'" [cpCancelButton]="true" [cpCancelButtonClass]="'btn btn-primary btn-xs'"
+            [value]="thirdColor" [cpOutputFormat]="'rgba'"></ion-input>
     </div>
   </ion-list>
   

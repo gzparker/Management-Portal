@@ -370,6 +370,7 @@ this.footer_wrapper=result.result.footer_wrapper;
   }
   updateWebsiteResp(result:any):void{
   this.websiteUpdateMsg="Website has been updated successfully.";
+  //debugger;
   this.ngZone.run(() => {
     this.navCtrl.push(AllWebsitesPage,{notificationMsg:this.websiteUpdateMsg.toUpperCase()});
     });

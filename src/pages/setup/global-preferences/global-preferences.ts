@@ -134,6 +134,7 @@ export class GlobalPreferencesPage {
       this.globalSettings=result.globalSettings;
       if(this.globalSettings)
       {
+        //debugger;
         this.user.timezone = this.globalSettings.timezone;
         this.colorBase=this.globalSettings.color_base;
         this.secondColor=this.globalSettings.color_second;
@@ -141,9 +142,7 @@ export class GlobalPreferencesPage {
         if(this.globalSettings.photo_company!=undefined)
       {
       
-        //let image : any= new Image();
-        //image.src = this.sharedServiceObj.imgBucketUrl+this.globalSettings.photo_company;
-        //this.companyCropper.setImage(image);
+      
         this.loadCompanyImage(this.sharedServiceObj.imgBucketUrl,this.globalSettings.photo_company);
 
       }
@@ -298,6 +297,7 @@ export class GlobalPreferencesPage {
     updateGlobalSettings(){
       if(this.userId!="")
     {
+     // debugger;
     this.userServiceObj.updateGlobalSettings(this.userId,this.personalImage,this.companyLogoImage,this.user.timezone,
       this.colorBase,this.secondColor,this.thirdColor)
     .subscribe((result) => this.updateGlobalSettingsResp(result));
@@ -306,7 +306,7 @@ export class GlobalPreferencesPage {
     }
     updateGlobalSettingsResp(result:any)
   {
-    debugger;
+    //debugger;
     if(result.status==true)
     {
       this.ngZone.run(() => {
