@@ -66,7 +66,7 @@ export class EditAccountPage {
         content: "Please wait...",
         duration: 5000
       });
-      if(this.platform.is('core') || this.platform.is('mobileweb')) {
+      if(this.platform.is('core') || this.platform.is('mobileweb') || this.platform.is('cordova') || this.platform.is('mobile')) {
         this.isApp=false;
       }
       else

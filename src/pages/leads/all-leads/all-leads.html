@@ -20,8 +20,6 @@
 </ion-navbar>
 
 </ion-header>
-
-
 <ion-content padding>
     <ion-refresher (ionRefresh)="viewAllLeads($event)">
         <ion-refresher-content></ion-refresher-content>
@@ -29,7 +27,7 @@
     <ion-chip *ngIf="notificationMsg!=''">
         <ion-label color="secondary">{{notificationMsg}}</ion-label>
     </ion-chip>
-    <ion-list>
+    <ion-list *ngIf="!isApp">
         <ion-item *ngFor="let lead of allLeadsList">
             <ion-item no-lines (click)="leadDetail(lead.lead_id);">
           <h2>{{lead.first_name}}-{{lead.last_name}}</h2>
@@ -46,8 +44,27 @@
               <ion-icon name="create"></ion-icon>
             </button>
             
-        </ion-item>
-       
+        </ion-item> 
+    </ion-list>
+    <ion-list *ngIf="isApp">
+      <ion-item-sliding *ngFor="let lead of allLeadsList">
+        <ion-item no-lines (click)="leadDetail(lead.lead_id);">
+          <h2>{{lead.first_name}}-{{lead.last_name}}</h2>
+          <p>Email:{{lead.email}}</p>
+          <p>Website:{{lead.website}}</p>
+          <p>Mobile Number:{{lead.phone_mobile}}</p>
+          <p>Office Number:{{lead.phone_office}}</p>
+          <p>Home:{{lead.phone_home}}</p>
+          </ion-item>
+        <ion-item-options side="right">
+          <button ion-button item-right color="danger" (click)="deleteLead(lead)">
+            <ion-icon name="trash"></ion-icon>
+          </button>
+            <button ion-button item-right color="secondary" (click)="editLead(lead.lead_id)">
+              <ion-icon name="construct"></ion-icon>
+            </button>
+        </ion-item-options>
+      </ion-item-sliding>
     </ion-list>
     <ion-chip *ngIf='allLeadsList.length<=0&&leadsFoundMessage!=""'>
         <ion-label color="danger">{{leadsFoundMessage}}</ion-label>

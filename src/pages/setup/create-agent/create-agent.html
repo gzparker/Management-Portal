@@ -74,7 +74,7 @@
             Select Image
           </ion-list-header>
 
-            <input id="custom-input" type="file" (change)="fileChangeListener($event)">
+            <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="fileChangeListener($event)">
        
         <img-cropper #agentCropper [image]="dataAgentImage" [settings]="cropperSettings"
          (onCrop)="agentImageCropped($event)"></img-cropper>

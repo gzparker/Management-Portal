@@ -11,6 +11,7 @@ import { ChangePasswordPage } from '../../account/change-password/change-passwor
 import { BillingHistoryPage } from '../../account/billing-history/billing-history';
 import { UpcomingSubscriptionPage } from '../../account/upcoming-subscription/upcoming-subscription';
 import { AccountInfoPage } from '../../account/account-info/account-info';
+import { SetupOptionPage } from '../../setup/setup-option/setup-option';
 
 import { AlertController } from 'ionic-angular';
 import { SharedProvider } from '../../../providers/shared/shared';
@@ -56,6 +57,9 @@ export class AccountOptionPage {
     }
     if (pageNumber == "22") {
       this.navCtrl.push(UpcomingSubscriptionPage);
+    }
+    if (pageNumber == "8") {
+      this.navCtrl.push(SetupOptionPage);
     }
     //this.navCtrl.setRoot(DashboardTabsPage,{selectedPage:pageNumber.toString()});
   }

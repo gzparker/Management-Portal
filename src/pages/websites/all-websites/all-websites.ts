@@ -36,7 +36,7 @@ export class AllWebsitesPage {
   public userId:string="";
   public websiteFoundMessage="";
   public showCreateButton:boolean=false;
-  
+  public isApp=false;
   public imgBaseUrl=this.sharedServiceObj.imgBucketUrl;
   public noImgUrl=this.sharedServiceObj.noImageUrl;
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
@@ -44,6 +44,13 @@ export class AllWebsitesPage {
     public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform, 
     public ngZone: NgZone,public menuCtrl: MenuController,public loadingCtrl: LoadingController) {
+      if(this.platform.is('core') || this.platform.is('mobileweb')) {
+        this.isApp=false;
+      }
+      else
+      {
+        this.isApp=true;
+      }
       if(this.navParams.get('notificationMsg')!=undefined)
       {
         this.notificationMsg=this.navParams.get('notificationMsg');
@@ -77,7 +84,7 @@ export class AllWebsitesPage {
   this.showCreateButton=true;
     if(result.status==true)
     {
-     // debugger;
+     //debugger;
       this.allWebsiteList=result.result;   
     }
     else
@@ -129,6 +136,7 @@ export class AllWebsitesPage {
   }
   editLeadRouting(websiteId:string)
   {
+    //debugger;
     this.navCtrl.push(EditLeadRoutingPage,{websiteId:websiteId});
   }
   createWebsite(){
@@ -136,6 +144,7 @@ export class AllWebsitesPage {
   }
   viewPaperWorkStatus(website_id:string)
   {
+    //debugger;
     this.navCtrl.push(MlsSettingsPage,{website_Id:website_id});
   }
   editWebsite(id:any){

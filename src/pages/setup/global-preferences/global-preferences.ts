@@ -82,13 +82,13 @@ export class GlobalPreferencesPage {
         this.selectedRoute=this.navParams.get('route');
       }
      // debugger;
-      if(this.platform.is('core') || this.platform.is('mobileweb')) {
-        this.isApp=false;
-      }
-      else
-      {
-        this.isApp=true;
-      }
+     if(this.platform.is('core') || this.platform.is('mobileweb') || this.platform.is('cordova') || this.platform.is('mobile')) {
+      this.isApp=false;
+    }
+    else
+    {
+      this.isApp=true;
+    }
       this.cropperSettings = new CropperSettings();
       this.cropperSettings.width = 100;
       this.cropperSettings.height = 100;

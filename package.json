@@ -25,7 +25,7 @@
     "@ionic-native/core": "4.4.0",
     "@ionic-native/crop": "^4.5.3",
     "@ionic-native/facebook": "^4.5.2",
-    "@ionic-native/geolocation": "^4.5.2",
+    "@ionic-native/geolocation": "^4.5.3",
     "@ionic-native/http": "^4.5.2",
     "@ionic-native/image-picker": "^4.5.3",
     "@ionic-native/native-geocoder": "^4.5.2",
@@ -82,9 +82,6 @@
       "cordova-plugin-device": {},
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-ionic-webview": {},
-      "cordova-plugin-geolocation": {
-        "GEOLOCATION_USAGE_DESCRIPTION": "To locate you"
-      },
       "cordova-plugin-nativegeocoder": {},
       "cordova-plugin-image-picker": {},
       "cordova-plugin-crop": {},
@@ -93,7 +90,8 @@
       "cordova-plugin-facebook4": {
         "APP_ID": "701598080041539",
         "APP_NAME": "TheIDXCompany"
-      }
+      },
+      "cordova-plugin-geolocation": {}
     },
     "platforms": [
       "android",

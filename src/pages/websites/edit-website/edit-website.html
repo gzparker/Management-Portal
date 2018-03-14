@@ -47,7 +47,7 @@
               <ion-list-header>
                 Upload Company/Agent logo or brand
                 </ion-list-header>
-                <input id="custom-input" type="file" (change)="websiteLogoFileChangeListener($event)">
+                <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="websiteLogoFileChangeListener($event)">
        
                 <img-cropper #companyLogoCropper [image]="dataWebsiteLogo" [settings]="cropperSettings"
                  (onCrop)="websiteIdentityImageCropped($event)"></img-cropper>
@@ -59,7 +59,7 @@
                 <ion-list-header>
                   Upload Website FavIcon
                   </ion-list-header>
-                  <input id="custom-input" type="file" (change)="websiteFavIconFileChangeListener($event)">
+                  <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="websiteFavIconFileChangeListener($event)">
          
                   <img-cropper #favIconLogoCropper [image]="dataWebsiteIcon" [settings]="cropperSettings"
                    (onCrop)="websiteFavIconImageCropped($event)"></img-cropper>
@@ -77,10 +77,10 @@
         <ion-label floating>Footer Wrapper</ion-label>
         <ion-textarea type="text" [(ngModel)]="footer_wrapper" name="footer_wrapper"></ion-textarea>
       </ion-item>
-      <!--<ion-item>
+      <ion-item>
         <ion-label floating>Intagent Website</ion-label>
         <ion-input type="number" [(ngModel)]="intagent_website" name="intagent_website"></ion-input>
-      </ion-item>-->
+      </ion-item>
       <ion-item>
         <ion-label floating>Custom CSS</ion-label>
         <ion-textarea type="text" [(ngModel)]="custom_css" name="custom_css"></ion-textarea>

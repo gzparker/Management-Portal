@@ -155,7 +155,7 @@ public isApp=false;
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform
     ,public listinServiceObj:ListingProvider,
     private crop: Crop,private camera: Camera,private imagePicker: ImagePicker,public loadingCtrl: LoadingController) {
-      if(this.platform.is('core') || this.platform.is('mobileweb')) {
+      if(this.platform.is('core') || this.platform.is('mobileweb') || this.platform.is('cordova') || this.platform.is('mobile')) {
         this.isApp=false;
       }
       else
@@ -199,15 +199,23 @@ public isApp=false;
         
       }
     
-    this.geolocation.getCurrentPosition().then((position) => {
+    //this.geolocation.getCurrentPosition().then((position) => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position)=> {
       if(position.coords.latitude!=undefined&&position.coords.longitude!=undefined)
       {
         this.map_height=400;
         this.loadMap(position.coords.latitude, position.coords.longitude);
         this.initAutocomplete();
       }
-      
+    }, function() {
+       
     });
+  } else {
+    // Browser doesn't support Geolocation
+   
+  }
+   // });
     });
    
   }

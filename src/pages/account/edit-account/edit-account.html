@@ -58,7 +58,7 @@
           <ion-list-header>
             Select Personal Logo
           </ion-list-header>
-          <input id="custom-input" type="file" (change)="personalFileChangeListener($event)">
+          <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="personalFileChangeListener($event)">
        
           <img-cropper #personalCropper [image]="dataPersonalImage" [settings]="cropperSettings"
            (onCrop)="personalImageCropped($event)"></img-cropper>

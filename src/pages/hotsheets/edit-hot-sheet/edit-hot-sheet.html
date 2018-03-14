@@ -93,7 +93,7 @@
         <ion-list-header>
             Header Image
           </ion-list-header>
-          <input id="custom-input" type="file" (change)="headerFileChangeListener($event)">
+          <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="headerFileChangeListener($event)">
            
             <img-cropper #headerImageCropper [image]="dataHeaderImage" [settings]="cropperSettings"
              (onCrop)="headerImageCropped($event)"></img-cropper>
@@ -106,7 +106,7 @@
         <ion-list-header>
             Community Image
           </ion-list-header>
-          <input id="custom-input" type="file" (change)="communityFileChangeListener($event)">
+          <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="communityFileChangeListener($event)">
            
             <img-cropper #communityImageCropper [image]="dataCommunityImage" [settings]="cropperSettings"
              (onCrop)="communtiyImageCropped($event)"></img-cropper>

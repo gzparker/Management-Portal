@@ -46,11 +46,19 @@ export class AllLeadsPage {
   public cancelClicked: boolean = false;
   public isOpen: boolean = false;
   public loader:any;
+  public isApp=false;
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,
     public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform, 
     public ngZone: NgZone,public menuCtrl: MenuController,public loadingCtrl: LoadingController) {
+      if(this.platform.is('core') || this.platform.is('mobileweb')) {
+        this.isApp=false;
+      }
+      else
+      {
+        this.isApp=true;
+      }
       if(this.navParams.get('notificationMsg')!=undefined)
       {
         this.notificationMsg=this.navParams.get('notificationMsg');
@@ -134,6 +142,7 @@ this.navCtrl.push(EditLeadPage,{leadId:leadId});
       }
   editLeadRouting(websiteId:string)
   {
+    //debugger;
     this.navCtrl.push(EditLeadRoutingPage,{websiteId:websiteId});
   }
   deleteLead(lead:any):void{
@@ -177,10 +186,10 @@ this.navCtrl.push(EditLeadPage,{leadId:leadId});
     }
   }
   sendToPaperWork():void{
-    debugger;
+    //debugger;
     if(this.userWebsites.length==1)
     {
-      this.navCtrl.push(EditLeadRoutingPage,{website_Id:this.userWebsites[0].id});
+      this.navCtrl.push(EditLeadRoutingPage,{websiteId:this.userWebsites[0].id});
     }
     else
     {

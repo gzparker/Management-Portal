@@ -119,15 +119,28 @@ export class MyApp {
     this.storage.remove("availableCountryList");
   }
   setUserCurrentGeoLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position)=> {
+        this.storage.set("userCurrentLatitude", position.coords.latitude);
+        this.storage.set("userCurrentLongitude", position.coords.longitude);
+        this.setUserCountry(position.coords.latitude, position.coords.longitude);
+//debugger;
+      }, function() {
+       
+      });
+    } else {
+      // Browser doesn't support Geolocation
+     
+    }
+
   
-    this.geolocation.getCurrentPosition().then((resp) => {
-  
+    /*this.geolocation.getCurrentPosition().then((resp) => {
       this.storage.set("userCurrentLatitude", resp.coords.latitude);
       this.storage.set("userCurrentLongitude", resp.coords.longitude);
       this.setUserCountry(resp.coords.latitude, resp.coords.longitude);
     }).catch((error) => {
       console.log('Error getting location', error);
-    });
+    });*/
 
   }
   AfterViewInit(){
@@ -137,6 +150,7 @@ export class MyApp {
  
     if(this.isApp)
     {
+    //  alert('app');
       this.nativeGeocoder.reverseGeocode(latitude, longitude)
       .then((result: NativeGeocoderReverseResult) => {
       
@@ -148,11 +162,13 @@ export class MyApp {
     }
     else
     {
+      //alert('no app');
       var latlng = new google.maps.LatLng(latitude, longitude);
       var geocoder = new google.maps.Geocoder;
    
    geocoder.geocode({'location': latlng}, (results, status)=> {
         if (status === 'OK') {
+          //alert('inside');
           if (results[0]) {
          
           results[0].address_components.forEach(element => {
@@ -167,7 +183,7 @@ export class MyApp {
           }
         
         } else {
-        
+        //  alert('not inside');
         }
       });
    
@@ -230,31 +246,24 @@ this.storage.set("userCountryInfo", this.geoCoderData);
     }
     if (pageNumber == "3") {
       this.nav.setRoot(RegisterPage);
-    }
-    
-    if (pageNumber == "4") {
-      
+    }    
+    if (pageNumber == "4") {     
      this.nav.setRoot(DashboardTabsPage);
     }
-    if (pageNumber == "5") {
-   
+    if (pageNumber == "5") {  
       this.nav.setRoot(DashboardTabsPage,{selectedPage:"5"});
     }
     if (pageNumber == "6") {
-      this.nav.setRoot(DashboardTabsPage,{selectedPage:"6"});
-   
+      this.nav.setRoot(DashboardTabsPage,{selectedPage:"6"});   
     }
     if (pageNumber == "7") {
-      this.nav.setRoot(DashboardTabsPage,{selectedPage:"7"});
-   
+      this.nav.setRoot(DashboardTabsPage,{selectedPage:"7"});   
     }
     if (pageNumber == "8") {
       this.nav.setRoot(DashboardTabsPage,{selectedPage:"8"});
-
     }
     if (pageNumber == "9") {
       this.nav.setRoot(DashboardTabsPage,{selectedPage:"9"});
-  
     }
   }
 
