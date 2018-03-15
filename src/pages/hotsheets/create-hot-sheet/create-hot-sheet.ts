@@ -58,9 +58,9 @@ public isApp=false;
   public name:string="";
   public advanceSearchOption:boolean=false;
   public additionalInfoOption:boolean=false;
-   public hotsheetCreateMsg:string="";
-   public slug:string="";
-   public allWebsiteList:any[]=[];
+  public hotsheetCreateMsg:string="";
+  public slug:string="";
+  public allWebsiteList:any[]=[];
   public selectedWebsite:string="";
   public bedrooms:string="";
   public bathrooms:string="";
@@ -91,6 +91,7 @@ public isApp=false;
   public address_subdivision_options:any[]=[];
   public address_subdivision_modal:any[]=[];
   public address_subdivision_last_searched:any[]=[];
+  public price:string="0";
   public listing_type:any[]=[];
   public listingTypeOptions:any[]=[];
   public listing_type_modal:any[]=[];
@@ -126,6 +127,7 @@ public isApp=false;
   public listing_size_min:string="";
   public listing_size_max:string="";
   public local:string="";
+  public neighbourhoodAddress:string="";
   public administrative_area_level_1:string="";
   public community:string="";
   public zoom: number = 8;
@@ -532,39 +534,46 @@ loadAllAgentsResp(result:any)
      this.address=data.formatted_address;
       this.selectedLat=data.geometry.location.lat();
       this.selectedLong=data.geometry.location.lng();
+      this.local='';
+      this.neighbourhoodAddress='';
       this.slug="";
-     
+    // debugger;
       data.address_components.forEach(element => {
         //debugger;
         if(element.types[0]=="locality")
         {
+      // debugger;
           this.local=element.long_name;
 
-          if(this.slug!='')
+          /*if(this.slug!='')
           {
             this.slug=this.slug+"/"+element.long_name;
           }
           else
           {
             this.slug=element.long_name
-          }
-        }
-        if(element.types[0]=="administrative_area_level_1")
-        {
-          this.administrative_area_level_1=element.long_name;
+          }*/
         }
         if(element.types[0]=="neighborhood")
         {
-          if(this.slug!='')
+          this.neighbourhoodAddress=element.long_name;
+          this.sub_city=element.long_name;
+         // debugger;
+          /*if(this.slug!='')
           {
             this.slug=this.slug+"/"+element.long_name;
           }
           else
           {
             this.slug=element.long_name;
-          }
+          }*/
           
         }
+        if(element.types[0]=="administrative_area_level_1")
+        {
+          this.administrative_area_level_1=element.long_name;
+        }
+        
 
        });
      
@@ -579,9 +588,34 @@ loadAllAgentsResp(result:any)
      
       }
     setSlugValue(){
-      let slugParts=this.slug.split(' ');
+     let localParts=this.local.split(' ');
+     this.local='';
+     for(let i=0;i<=localParts.length-1;i++)
+      {
+        if(this.local=='')
+        {
+          this.local=localParts[i];
+        }
+        else
+        {
+          this.local=this.local+"-"+localParts[i];
+        }
+      }
+    let neighbourhoodAddressParts=this.neighbourhoodAddress.split(' ');
+     this.neighbourhoodAddress='';
+     for(let i=0;i<=neighbourhoodAddressParts.length-1;i++)
+      {
+        if(this.neighbourhoodAddress=='')
+        {
+          this.neighbourhoodAddress=neighbourhoodAddressParts[i];
+        }
+        else
+        {
+          this.neighbourhoodAddress=this.neighbourhoodAddress+"-"+neighbourhoodAddressParts[i];
+        }
+      }
+      /*let slugParts=this.slug.split(' ');
       this.slug='';
-      
       for(let i=slugParts.length-1;i>=0;i--)
       {
         if(i==slugParts.length-1)
@@ -592,6 +626,14 @@ loadAllAgentsResp(result:any)
         {
           this.slug=this.slug+"-"+slugParts[i];
         }
+      }*/
+      if(this.neighbourhoodAddress!='')
+      {
+        this.slug=this.local+"/"+this.neighbourhoodAddress;
+      }
+      else
+      {
+        this.slug=this.local;
       }
       this.ngZone.run(() => {
         this.polygon_search="";
@@ -836,13 +878,13 @@ loadAllAgentsResp(result:any)
          {
            this.stories=lastSearchedObj.stories;
          }
-         if(lastSearchedObj.listing_type)
+         if(lastSearchedObj.home_type)
          {
-           this.listing_type_last_searched=lastSearchedObj.listing_type;
+           this.listing_type_last_searched=lastSearchedObj.home_type;
          }
-        if(lastSearchedObj.listing_type)
+        if(lastSearchedObj.home_type)
          {
-           this.listing_type_last_searched=lastSearchedObj.listing_type;
+           this.listing_type_last_searched=lastSearchedObj.home_type;
            this.listing_type_modal=this.listing_type_last_searched;
          }
          if(lastSearchedObj.status)
@@ -886,13 +928,14 @@ loadAllAgentsResp(result:any)
     
     }
     updateSearchObject():void{
+      
       this.searchListObject={msl_id:this.msl_id,bedrooms:this.bedrooms,bathrooms:this.bathrooms,address_township:this.address_township,days_on_market:this.days_on_market,
         date_listed:this.date_listed,garage_size:this.garage_size,listing_size:this.listing_size,lot_size:this.lot_size,
         parcel_num:this.parcel_num,school_district:this.school_district,school_elem:this.school_elem,school_high:this.school_high,
         status:this.status_modal,stories:this.stories,address_city:this.address_city_modal,address_subdivision:this.address_subdivision_modal,
-        listing_type:this.listing_type_modal,address_zip_code:this.address_zip_code_modal,
+        home_type:this.listing_type_modal,address_zip_code:this.address_zip_code_modal,
         neighborhood:this.neighbourhood_modal,selectedLat:this.selectedLat,selectedLong:this.selectedLong,
-        listing_size_max:this.listing_size_max,listing_size_min:this.listing_size_min
+        listing_size_max:this.listing_size_max,listing_size_min:this.listing_size_min,price:this.price
       };
     //this.storage.set('searchFilterObj',JSON.stringify(this.searchListObject));
     }

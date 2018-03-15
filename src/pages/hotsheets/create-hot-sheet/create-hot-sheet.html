@@ -41,7 +41,7 @@
     <ion-searchbar #searchbar placeholder="Search"></ion-searchbar>
   </ion-item>
   <ion-item>
-  <button ion-button style="text-transform:lowercase !important;" color="secondary" outline (click)="toggleAdvanceSearch()" full small>advance search</button>
+  <button ion-button style="text-transform:lowercase !important;" color="secondary" outline (click)="toggleAdvanceSearch()" full small>filter</button>
 </ion-item>
   <div>
     <div #map id="map" style="width:100%;" [style.height]="map_height+'px'"></div>
@@ -55,6 +55,29 @@
 <ion-label floating>Slug<span [ngClass]="{'error': slug==''}" *ngIf="slug==''">*</span></ion-label>
 <ion-input type="text" required [(ngModel)]="slug" name="slug" id="slug"></ion-input>
 </ion-item>
+<ion-item>
+    <ion-label floating>Community/Neighborhood</ion-label>
+    <ion-input type="text" [(ngModel)]="community" name="community"></ion-input>
+  </ion-item>
+ 
+  <ion-item>
+    <ion-label floating>Sub City</ion-label>
+    <ion-input type="text" [(ngModel)]="sub_city" name="sub_city"></ion-input>
+  </ion-item>
+  
+  <ion-item>
+    <ion-label floating>Main Description</ion-label>
+    <ion-textarea type="text" [(ngModel)]="main_description" name="main_description"></ion-textarea>
+  </ion-item>
+  <ion-item>
+      <ion-label floating>Assigned Agent IDs</ion-label>
+      <ion-select [(ngModel)]="assigned_agent_id"  
+      name="assigned_agent_id" multiple="true">
+        <ion-option *ngFor="let agent of allAgents" value= {{agent.id}}>
+          {{agent.first_name}} {{agent.last_name}}
+         </ion-option>
+      </ion-select>
+    </ion-item>
 <ion-item>
   <button ion-button style="text-transform:lowercase !important;" color="secondary" outline (click)="toggleAdditionalInfo()" full small>additional options</button>
 </ion-item>
@@ -131,9 +154,16 @@
      </ion-select>
     
   </ion-item>
-  <ion-item *ngIf="msl_id!=undefined">
+  <!--<ion-item *ngIf="msl_id!=undefined">
     <ion-label floating>MLS #</ion-label>
     <ion-input type="text" [(ngModel)]="msl_id" name="msl_id" id="msl_id"></ion-input>
+  </ion-item>-->
+  <ion-item>
+      <ion-label>Price({{price}})</ion-label>
+    <ion-range min="0" max="600000000" [(ngModel)]="price" color="secondary" name="price">
+      <ion-label range-left>0</ion-label>
+      <ion-label range-right>600000000</ion-label>
+    </ion-range>
   </ion-item>
   <ion-item *ngIf="bedrooms!=undefined">
     <ion-label floating>Beds</ion-label>
@@ -197,7 +227,7 @@
      </ion-select>
     
   </ion-item>
-  <ion-item *ngIf="days_on_market!=undefined">
+  <!--<ion-item *ngIf="days_on_market!=undefined">
     <ion-label floating>Days on the Market</ion-label>
     <ion-select [(ngModel)]="days_on_market" name="days_on_market" id="days_on_market">
      
@@ -212,7 +242,7 @@
     <ion-option value="1080">36 Months</ion-option>
      </ion-select>
     
-  </ion-item>
+  </ion-item>-->
   <ion-item *ngIf="address_township!=undefined">
     <ion-label floating>Address Township</ion-label>
     <ion-input type="text" [(ngModel)]="address_township" name="address_township" id="address_township"></ion-input>
@@ -228,10 +258,10 @@
     <ion-option value="5">5 car</ion-option>
      </ion-select>
   </ion-item>
-  <ion-item *ngIf="parcel_num!=undefined">
+  <!--<ion-item *ngIf="parcel_num!=undefined">
     <ion-label floating>Lot or Parcel #</ion-label>
     <ion-input type="text" [(ngModel)]="parcel_num" name="parcel_num" id="parcel_num"></ion-input>
-  </ion-item>
+  </ion-item>-->
   <ion-item *ngIf="school_district!=undefined">
     <ion-label floating>School District</ion-label>
     <ion-input type="text" [(ngModel)]="school_district" name="school_district" id="school_district"></ion-input>
@@ -240,15 +270,15 @@
     <ion-label floating>School Elem</ion-label>
     <ion-input type="text" [(ngModel)]="school_elem" name="school_elem" id="school_elem"></ion-input>
   </ion-item>
-  <ion-item *ngIf="school_high!=undefined">
+  <!--<ion-item *ngIf="school_high!=undefined">
     <ion-label floating>School High</ion-label>
     <ion-input type="text" [(ngModel)]="school_high" name="school_high" id="school_high"></ion-input>
-  </ion-item>
+  </ion-item>-->
   <ion-item *ngIf="stories!=undefined">
     <ion-label floating>Stories</ion-label>
     <ion-input type="text" [(ngModel)]="stories" name="stories" id="stories"></ion-input>
   </ion-item>
-  <ion-item *ngIf="address_city!=undefined">
+  <!--<ion-item *ngIf="address_city!=undefined">
     <ion-label floating>Specific Cities</ion-label>
     <ion-select [(ngModel)]="address_city_modal" (ngModelChange)="selectedAddressCity($event)" 
     name="address_city_modal" multiple="true">
@@ -283,10 +313,10 @@
          {{neighbourhood_option.name}}
        </ion-option>
      </ion-select>
-  </ion-item>
+  </ion-item>-->
   
-  <ion-item>
-    <ion-label floating>Community</ion-label>
+  <!--<ion-item>
+    <ion-label floating>Community/Neighborhood</ion-label>
     <ion-input type="text" [(ngModel)]="community" name="community"></ion-input>
   </ion-item>
   <ion-item>
@@ -306,268 +336,10 @@
   <ion-item>
     <ion-label floating>Main Description</ion-label>
     <ion-textarea type="text" [(ngModel)]="main_description" name="main_description"></ion-textarea>
-  </ion-item>
+  </ion-item>-->
  
   </ion-list>
-<!--<accordion>
-    <accordion-group>
-        <accordion-heading>
-            Advance Search
-        </accordion-heading>
-<ion-list>
-   
-<ion-item *ngIf="status!=undefined">
-  <ion-label floating>Status</ion-label>
-  <ion-select [(ngModel)]="status_modal" (ngModelChange)="selectedStatus($event)" name="status_modal"
-   multiple="true">
-    <ion-option *ngFor="let status of statusOptions" value= {{status.id}}>
-       {{status.name}}
-     </ion-option>
-   </ion-select>
-  
-</ion-item>
-<ion-item *ngIf="listing_type!=undefined">
-  <ion-label floating>Listing Type</ion-label>
-  <ion-select [(ngModel)]="listing_type_modal" (ngModelChange)="selectedListingType($event)" 
-  name="listing_type_modal" multiple="true">
-    <ion-option *ngFor="let listingType of listingTypeOptions" value= {{listingType.id}}>
-       {{listingType.name}}
-     </ion-option>
-   </ion-select>
-  
-</ion-item>
-<ion-item *ngIf="msl_id!=undefined">
-  <ion-label floating>MLS #</ion-label>
-  <ion-input type="text" [(ngModel)]="msl_id" name="msl_id" id="msl_id"></ion-input>
-</ion-item>
-<ion-item *ngIf="bedrooms!=undefined">
-  <ion-label floating>Beds</ion-label>
-  <ion-select [(ngModel)]="bedrooms" name="bedrooms" id="bedrooms">
-   
-     <ion-option value="1">1+</ion-option>
-     <ion-option value="2">2+</ion-option>
-     <ion-option value="3">3+</ion-option>
-     <ion-option value="4">4+</ion-option>
-     <ion-option value="5">5+</ion-option>
-     <ion-option value="6">6+</ion-option>
-     <ion-option value="7">7+</ion-option>
-     <ion-option value="8">8+</ion-option>
-     <ion-option value="9">9+</ion-option>
-     <ion-option value="10">10+</ion-option>
-   </ion-select>
-  
-</ion-item>
-<ion-item *ngIf="bathrooms!=undefined">
-  <ion-label floating>Baths</ion-label>
-  <ion-select [(ngModel)]="bathrooms" name="bathrooms" id="bathrooms" >
-   
-     <ion-option value="1">1+</ion-option>
-     <ion-option value="2">2+</ion-option>
-     <ion-option value="3">3+</ion-option>
-     <ion-option value="4">4+</ion-option>
-     <ion-option value="5">5+</ion-option>
-     <ion-option value="6">6+</ion-option>
-     <ion-option value="7">7+</ion-option>
-     <ion-option value="8">8+</ion-option>
-     <ion-option value="9">9+</ion-option>
-     <ion-option value="10">10+</ion-option>
-   </ion-select>
-  
-</ion-item>
-<ion-item *ngIf="listing_size!=undefined">
-  <ion-label>Square Feet</ion-label>
-  
-        <ion-input type="text" [(ngModel)]="listing_size_min"
-        name="listing_size_min" id="listing_size_min" placeholder="min"></ion-input>
-    
-        <ion-input type="text" [(ngModel)]="listing_size_max" 
-        name="listing_size_max" id="listing_size_max" placeholder="max"></ion-input>
-   
-</ion-item>
-<ion-item *ngIf="lot_size!=undefined">
-  <ion-label floating>Lot Size</ion-label>
-  <ion-select [(ngModel)]="lot_size" name="lot_size" id="lot_size">
-   
-  <ion-option value="2000">2,000+ sqft</ion-option>
-  <ion-option value="3000">3,000+ sqft</ion-option>
-  <ion-option value="4000">4,000+ sqft</ion-option>
-  <ion-option value="5000">5,000+ sqft</ion-option>
-  <ion-option value="7500">7,500+ sqft</ion-option>
-  <ion-option value="10890">.25+ acre (10,890+ sqft)</ion-option>
-  <ion-option value="21780">.5+ acre (21,780+ sqft)</ion-option>
-  <ion-option value="43560">1+ acre</ion-option>
-  <ion-option value="87120">2+ acres</ion-option>
-  <ion-option value="217800">5+ acres</ion-option>
-  <ion-option value="435600">10+ acres</ion-option>
-   </ion-select>
-  
-</ion-item>
-<ion-item *ngIf="days_on_market!=undefined">
-  <ion-label floating>Days on the Market</ion-label>
-  <ion-select [(ngModel)]="days_on_market" name="days_on_market" id="days_on_market">
-   
-  <ion-option value="1">1 Day</ion-option>
-  <ion-option value="7">7 Days</ion-option>
-  <ion-option value="14">14 Days</ion-option>
-  <ion-option value="30">30 Days</ion-option>
-  <ion-option value="90">3 Months</ion-option>
-  <ion-option value="180">6 Months</ion-option>
-  <ion-option value="360">12 Months</ion-option>
-  <ion-option value="720">24 Months</ion-option>
-  <ion-option value="1080">36 Months</ion-option>
-   </ion-select>
-  
-</ion-item>
-<ion-item *ngIf="address_township!=undefined">
-  <ion-label floating>Address Township</ion-label>
-  <ion-input type="text" [(ngModel)]="address_township" name="address_township" id="address_township"></ion-input>
-</ion-item>
-<ion-item *ngIf="garage_size!=undefined">
-  <ion-label floating>Garage Size</ion-label>
-  <ion-select [(ngModel)]="garage_size" name="garage_size" id="garage_size">
-   
-  <ion-option value="1">1 car</ion-option>
-  <ion-option value="2">2 car</ion-option>
-  <ion-option value="3">3 car</ion-option>
-  <ion-option value="4">4 car</ion-option>
-  <ion-option value="5">5 car</ion-option>
-   </ion-select>
-</ion-item>
-<ion-item *ngIf="parcel_num!=undefined">
-  <ion-label floating>Lot or Parcel #</ion-label>
-  <ion-input type="text" [(ngModel)]="parcel_num" name="parcel_num" id="parcel_num"></ion-input>
-</ion-item>
-<ion-item *ngIf="school_district!=undefined">
-  <ion-label floating>School District</ion-label>
-  <ion-input type="text" [(ngModel)]="school_district" name="school_district" id="school_district"></ion-input>
-</ion-item>
-<ion-item *ngIf="school_elem!=undefined">
-  <ion-label floating>School Elem</ion-label>
-  <ion-input type="text" [(ngModel)]="school_elem" name="school_elem" id="school_elem"></ion-input>
-</ion-item>
-<ion-item *ngIf="school_high!=undefined">
-  <ion-label floating>School High</ion-label>
-  <ion-input type="text" [(ngModel)]="school_high" name="school_high" id="school_high"></ion-input>
-</ion-item>
-<ion-item *ngIf="stories!=undefined">
-  <ion-label floating>Stories</ion-label>
-  <ion-input type="text" [(ngModel)]="stories" name="stories" id="stories"></ion-input>
-</ion-item>
-<ion-item *ngIf="address_city!=undefined">
-  <ion-label floating>Specific Cities</ion-label>
-  <ion-select [(ngModel)]="address_city_modal" (ngModelChange)="selectedAddressCity($event)" 
-  name="address_city_modal" multiple="true">
-    <ion-option *ngFor="let address_city_option of address_city_options" value= {{address_city_option.id}}>
-       {{address_city_option.name}}
-     </ion-option>
-   </ion-select>
-</ion-item>
-<ion-item *ngIf="address_subdivision!=undefined">
-  <ion-label floating>Select Subdivisions</ion-label>
-  <ion-select [(ngModel)]="address_subdivision_modal" (ngModelChange)="selectedSubDivision($event)" 
-  name="address_subdivision_modal" multiple="true">
-    <ion-option *ngFor="let address_subdivision_option of address_subdivision_options" value= {{address_subdivision_option.id}}>
-       {{address_subdivision_option.name}}
-     </ion-option>
-   </ion-select>
-</ion-item>
-<ion-item *ngIf="address_zip_code!=undefined">
-  <ion-label floating>Zipcodes</ion-label>
-  <ion-select [(ngModel)]="address_zip_code_modal" (ngModelChange)="selectedSubDivision($event)" 
-  name="address_zip_code_modal" multiple="true">
-    <ion-option *ngFor="let address_zip_code_option of address_zip_code_options" value= {{address_zip_code_option.id}}>
-       {{address_zip_code_option.name}}
-     </ion-option>
-   </ion-select>
-</ion-item>
-<ion-item *ngIf="neighbourhood!=undefined">
-  <ion-label floating>Select Neighborhoods</ion-label>
-  <ion-select [(ngModel)]="neighbourhood_modal" (ngModelChange)="selectedNeighbourHood($event)" 
-  name="neighbourhood_modal" multiple="true">
-    <ion-option *ngFor="let neighbourhood_option of neighbourhood_options" value= {{neighbourhood_option.id}}>
-       {{neighbourhood_option.name}}
-     </ion-option>
-   </ion-select>
-</ion-item>
 
-<ion-item>
-  <ion-label floating>Community</ion-label>
-  <ion-input type="text" [(ngModel)]="community" name="community"></ion-input>
-</ion-item>
-<ion-item>
-  <ion-label floating>Assigned Agent IDs</ion-label>
-  <ion-select [(ngModel)]="assigned_agent_id"  
-  name="assigned_agent_id" multiple="true">
-    <ion-option *ngFor="let agent of allAgents" value= {{agent.id}}>
-      {{agent.first_name}} {{agent.last_name}}
-     </ion-option>
-  </ion-select>
-</ion-item>
-<ion-item>
-  <ion-label floating>Sub City</ion-label>
-  <ion-input type="text" [(ngModel)]="sub_city" name="sub_city"></ion-input>
-</ion-item>
-
-<ion-item>
-  <ion-label floating>Main Description</ion-label>
-  <ion-textarea type="text" [(ngModel)]="main_description" name="main_description"></ion-textarea>
-</ion-item>
-<ion-item>
-  <ion-label floating>Video Tour Url</ion-label>
-  <ion-input type="text" [(ngModel)]="virtual_tour_url" name="virtual_tour_url" pattern="https?://.+"></ion-input>
-</ion-item>
-<ion-item>
-  <ion-label floating>Video Url</ion-label>
-  <ion-input type="text" [(ngModel)]="video_url" name="video_url" pattern="https?://.+"></ion-input>
-</ion-item>
-<ion-list *ngIf="isApp">
-
-<ion-item>
-  <button ion-button color="primary" block (click)="takeHeaderPicture();" >Select Header Image</button>
-</ion-item>
-<ion-item *ngIf="headerImage!=''">
-  <img [src]="headerImage" />
-</ion-item>
-<ion-item>
-  <button ion-button color="primary" block (click)="takeCommunityPicture();">Select Community Image</button>
-</ion-item>
-<ion-item *ngIf="communityImage!=''">
-  <img [src]="communityImage" />
-</ion-item>
-</ion-list>
-<ion-list *ngIf="!isApp">
-    <ion-list-header>
-        Header Image
-      </ion-list-header>
-<img-cropper
-#headerCropper
-[image]="dataHeaderImage"
-[settings]="cropperSettings"
-(onCrop)="headerImageCropped($event)"></img-cropper>
-<div *ngIf="dataHeaderImage.image">
- <img
-    [src]="dataHeaderImage.image"
-    [width]="croppedWidth"
-    [height]="croppedHeight">
-</div>
-    <ion-list-header>
-        Community Image
-      </ion-list-header>
-    <img-cropper
-#communityCropper
-[image]="dataCommunityImage"
-[settings]="cropperSettings"
-(onCrop)="communityImageCropped($event)"></img-cropper>
-<div *ngIf="dataCommunityImage.image">
- <img
-    [src]="dataCommunityImage.image"
-    [width]="croppedWidth"
-    [height]="croppedHeight">
-</div>
-</ion-list>
-</ion-list>
-</accordion-group>
-</accordion>-->
     <div padding>
         <button ion-button color="primary" block (click)="createHotSheet();" 
         [disabled]="!hotSheetForm.valid||polygon_search==''">Create HotSheet</button>
