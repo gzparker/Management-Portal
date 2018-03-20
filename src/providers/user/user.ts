@@ -517,7 +517,6 @@ data.append('phone_office',phone_office_num);
 data.append('phone_mobile',phone_mobile_num);
 data.append('phone_home',phone_home_num);
 data.append('website_id',website_id);
-data.append('member_id',member_id);
 
 data.append('home_address_street',home_address_street);
 data.append('home_address_city',home_address_city);
@@ -531,7 +530,7 @@ data.append('work_zipcode',work_zipcode);
 data.append('assigned_agent_id',assigned_agent_id);
 data.append('category',category);
 data.append('internal_notes',internal_notes);
-
+debugger;
   let searchedListing=this.http
     .post(this.sharedServiceObj.apiBaseUrl+'members/updateLead', data, this.headerOptions)
     .map(this.extractData)
@@ -875,7 +874,6 @@ deleteAgent(agent_id:string)
 {
   let data = new URLSearchParams();
   data.append('agent_id',agent_id);
- 
  let agentResp=this.http
      .post(this.sharedServiceObj.apiBaseUrl+'members/deleteAgent', data, this.headerOptions)
      .map(this.extractData)

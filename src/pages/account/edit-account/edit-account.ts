@@ -29,6 +29,7 @@ import { UserProvider } from '../../../providers/user/user';
 export class EditAccountPage {
   @ViewChild('personalCropper', undefined)
   personalCropper:ImageCropperComponent;
+  public hideImageCropper:boolean=true;
   public isApp=false;
   public cropperSettings;
   public croppedWidth:Number;
@@ -62,6 +63,8 @@ export class EditAccountPage {
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform,
     public loadingCtrl: LoadingController,private crop: Crop,private camera: Camera,private imagePicker: ImagePicker) {
+      //debugger;
+      this.hideImageCropper=false;
       this.loader = this.loadingCtrl.create({
         content: "Please wait...",
         duration: 5000
@@ -118,7 +121,7 @@ export class EditAccountPage {
      //debugger;
      if(this.globalSettings!=null)
      {
-       debugger;
+       //debugger;
       if(this.globalSettings.photo_personal!=undefined)
       { 
         this.loadPersonalImage(this.sharedServiceObj.imgBucketUrl,this.globalSettings.photo_personal);
@@ -148,7 +151,7 @@ export class EditAccountPage {
         reader.readAsDataURL(xhr.response); 
        
         reader.onloadend = function (loadEvent:any) {
-          //debugger;
+          self.hideImageCropper=true;
           image.src = loadEvent.target.result;
           self.personalCropper.setImage(image);
   
@@ -156,6 +159,7 @@ export class EditAccountPage {
     });
   }
   personalFileChangeListener($event) {
+    this.hideImageCropper=true;
     var image:any = new Image();
     var file:File = $event.target.files[0];
     var myReader:FileReader = new FileReader();

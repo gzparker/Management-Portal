@@ -136,15 +136,15 @@ export class GlobalPreferencesPage {
       {
         //debugger;
         this.user.timezone = this.globalSettings.timezone;
-        this.colorBase=this.globalSettings.color_base;
-        this.secondColor=this.globalSettings.color_second;
-        this.thirdColor=this.globalSettings.color_third;
+       // this.colorBase=this.sharedServiceObj.rgbaToHex(this.globalSettings.color_base);
+      //  this.secondColor=this.sharedServiceObj.rgbaToHex(this.globalSettings.color_second);
+      //  this.thirdColor=this.sharedServiceObj.rgbaToHex(this.globalSettings.color_third);
+     this.colorBase=this.globalSettings.color_base;
+    this.secondColor=this.globalSettings.color_second;
+     this.thirdColor=this.globalSettings.color_third;
         if(this.globalSettings.photo_company!=undefined)
       {
-      
-      
         this.loadCompanyImage(this.sharedServiceObj.imgBucketUrl,this.globalSettings.photo_company);
-
       }
       if(this.globalSettings.photo_personal!=undefined)
       { 

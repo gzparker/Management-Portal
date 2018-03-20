@@ -72,7 +72,11 @@ public isApp=false;
   public days_on_market:string="";
   public garage_size:string="";
   public listing_size:string="";
-  public lot_size:string="";
+  public lot_size_min:string="";
+  public lot_size_max:string="";
+  public year_built_min:string="";
+  public year_built_max:string="";
+  public dols:string="-1";
   public parcel_num:string="";
   public school_district:string="";
   public school_elem:string="";
@@ -80,9 +84,12 @@ public isApp=false;
   public stories:string="";
   public year_built:string="";
   public status:any[]=[];
-  public statusOptions:any[]=[];
-  public status_modal:string[]=[];
-  public status_last_searched:any[]=[];
+  public statusOptions:any[]=[{id:"all",name:"All"},{id:"for_sale",name:"For Sale"},{id:"for_rent",name:"For Rent"},
+  {id:"pending",name:"Pending"},{id:"recently_sold",name:"Recently Sold"},{id:"pre_selling",name:"Pre Selling"},{id:"buy_me_out",name:"Buy Me Out"}
+  ,{id:"rent_to_own",name:"Ren to own"}];
+
+  public status_modal:string="all";
+  public status_last_searched:string="";
   public address_city:any[]=[];
   public address_city_options:any[]=[];
   public address_city_modal:any[]=[];
@@ -91,10 +98,9 @@ public isApp=false;
   public address_subdivision_options:any[]=[];
   public address_subdivision_modal:any[]=[];
   public address_subdivision_last_searched:any[]=[];
-  public price:string="0";
+  public price:any={lower: 0, upper: 600000000};
   public listing_type:any[]=[];
-  public listingTypeOptions:any[]=[];
-  public listing_type_modal:any[]=[];
+  public listing_type_modal:any[]=["all"];
   public listing_type_last_searched:any[]=[];
   public address_zip_code:any[]=[];
   public address_zip_code_options:any[]=[];
@@ -118,6 +124,7 @@ public isApp=false;
   public main_description:string="";
   public virtual_tour_url:string="";
   public video_url:string="";
+  public city:string="";
   public sub_city:string="";
   public polygon_search:any="";
   public headerImage:string="";
@@ -143,6 +150,11 @@ public isApp=false;
   public map_height:number;
   public headerImageChangedEvent:any='';
   public communityImageChangedEvent:any='';
+  public allListingTypeChecked:boolean=false;
+  public listingTypeOptions:any[]=[{id:"all",name:"All"},{id:"house",name:"House"},{id:"cnd",name:"Condo"},
+        {id:"twnhs",name:"TownHouse"},{id:"land",name:"Land"},{id:"duplx",name:"Duplex"},
+        {id:"comm",name:"Commercial"}];
+  public mapLocation:any;
   public loader:any;
  
   @ViewChild('map') mapElement: ElementRef;
@@ -152,7 +164,8 @@ public isApp=false;
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform
     ,public listinServiceObj:ListingProvider,
     private crop: Crop,private camera: Camera,private imagePicker: ImagePicker,public loadingCtrl: LoadingController) {
-      if(this.platform.is('core') || this.platform.is('mobileweb') || this.platform.is('cordova') || this.platform.is('mobile')) {
+      if(this.platform.is('core') || this.platform.is('mobileweb') || this.platform.is('cordova') || 
+      this.platform.is('mobile')) {
         this.isApp=false;
       }
       else
@@ -190,9 +203,13 @@ public isApp=false;
     });
     //this.loadMap();
     this.loadSearchedField();
+   
+   
     //this.geolocation.getCurrentPosition().then((position) => {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((position)=> {
+      if (window.navigator.geolocation) {
+        //debugger;
+        window.navigator.geolocation.getCurrentPosition((position)=> {
+         // debugger;
       if(position.coords.latitude!=undefined&&position.coords.longitude!=undefined)
       {
         this.map_height=400;
@@ -201,12 +218,16 @@ public isApp=false;
       }
     }, function() {
        
-    });
+    }, {maximumAge:0, timeout:10000});
   } else {
     // Browser doesn't support Geolocation
    
   }
    // });
+  }
+  setCurrenttPosition(result:any)
+  {
+
   }
   mapsSearchBar(ev: any) {
     // set input to the value of the searchbar
@@ -265,7 +286,7 @@ public isApp=false;
     });
   }
   loadMap(lat:any,lng:any){
- 
+ //debugger;
    // this.geolocation.getCurrentPosition().then((position) => {
  //debugger;
       //let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
@@ -327,7 +348,7 @@ public isApp=false;
    });
    this.mouseUp=google.maps.event.addListener(this.map, 'mouseup',this.mouseUpCallBack.bind(this));
    this.move = google.maps.event.addListener(this.map, 'mousemove',this.mouseMoveCallBack.bind(this));
-   
+   google.maps.event.addDomListener(this.map, 'idle', this.setMapCoordinates.bind(this));
    //debugger;
   }
   mouseUpCallBack(e:any)
@@ -463,6 +484,10 @@ public isApp=false;
   }
  
   ////////////////////////////////
+  changePrice($event:any)
+  {
+//debugger;
+  }
   toggleAdvanceSearch(){
 this.advanceSearchOption=!this.advanceSearchOption;
   }
@@ -544,7 +569,7 @@ loadAllAgentsResp(result:any)
         {
       // debugger;
           this.local=element.long_name;
-
+this.city=element.long_name;
           /*if(this.slug!='')
           {
             this.slug=this.slug+"/"+element.long_name;
@@ -675,6 +700,18 @@ loadAllAgentsResp(result:any)
       });
      
     }
+    setMapCoordinates(e:any)
+   {
+
+    this.mapLocation=this.map.getBounds().getSouthWest().lat().toString()+","+this.map.getBounds().getSouthWest().lng().toString()
+    +","+this.map.getBounds().getNorthEast().lat().toString()+","+this.map.getBounds().getNorthEast().lng();
+  
+   }
+    allListingTypeSelected()
+    {
+     // debugger;
+this.allListingTypeChecked=true;
+    }
     setSearchedFields(result:any):void{
      //debugger;
       ///////////////////////Load Text Boxes///////////////////////////////////
@@ -686,16 +723,17 @@ loadAllAgentsResp(result:any)
       //debugger;
       this.address=result.searchFieldsJson.address;
       this.address_country=result.searchFieldsJson.address_country;
-      this.address_township=result.searchFieldsJson.address_township;
+     // this.address_township=result.searchFieldsJson.address_township;
       this.basement=result.searchFieldsJson.basement;
      
       this.days_on_market=result.searchFieldsJson.days_on_market;
       this.garage_size=result.searchFieldsJson.garage_size;
       this.listing_size=result.searchFieldsJson.listing_size;
-      this.lot_size=result.searchFieldsJson.lot_size;
+      this.lot_size_min=result.searchFieldsJson.lot_size_min;
+      this.lot_size_max=result.searchFieldsJson.lot_size_max;
       this.parcel_num=result.searchFieldsJson.parcel_num;
-      this.school_district=result.searchFieldsJson.school_district;
-      this.school_elem=result.searchFieldsJson.school_elem;
+      //this.school_district=result.searchFieldsJson.school_district;
+     // this.school_elem=result.searchFieldsJson.school_elem;
       this.school_high=result.searchFieldsJson.school_high;
       this.year_built=result.searchFieldsJson.year_built;
       this.stories=result.searchFieldsJson.stories;
@@ -716,16 +754,16 @@ loadAllAgentsResp(result:any)
       }
       if(result.searchFieldsJson.status!=undefined)
       {
-        let optionsArray:any[]=[];
+        /*let optionsArray:any[]=[];
       this.status=result.searchFieldsJson.status;
-    //  debugger;
       for(let i=0;i<this.status.length;i++){
      
         let obj={id:this.status[i],name:this.status[i]};
         optionsArray.push(obj);
       }
-      this.statusOptions=optionsArray;
-     //debugger;
+      this.statusOptions=optionsArray;*/
+      
+     // debugger;
       }
       if(result.searchFieldsJson.address_subdivision!=undefined)
       {
@@ -741,19 +779,22 @@ loadAllAgentsResp(result:any)
          this.address_subdivision_options=optionsArray;
       //debugger;
       }
-      if(result.searchFieldsJson.listing_type!=undefined)
+      /*if(result.searchFieldsJson.listing_type!=undefined)
       {
-        //debugger;
-        let optionsArray:any[]=[];
+        let optionsArray:any[]=[{id:"all",name:"All"},{id:"house",name:"House"},{id:"cnd",name:"Condo"},
+        {id:"twnhs",name:"TownHouse"},{id:"land",name:"Land"},{id:"duplx",name:"Duplex"},
+        {id:"comm",name:"Commercial"}];
+        this.listingTypeOptions=optionsArray;
+        /*let optionsArray:any[]=[];
       this.listing_type=result.searchFieldsJson.listing_type;
-     // debugger;
+   
       for(let i=0;i<this.listing_type.length;i++){
         
            let obj={id:this.listing_type[i],name:this.listing_type[i]};
            optionsArray.push(obj);
          }
          this.listingTypeOptions=optionsArray;
-      }
+      }*/
       if(result.searchFieldsJson.address_zip_code!=undefined)
       {
       //this.address_zip_code=result.searchFieldsJson.address_zip_code;
@@ -784,6 +825,7 @@ loadAllAgentsResp(result:any)
      // this.loadLastSearchedValue();
     }
     loadLastSearchedValue():void{
+      //debugger;
       let lastSearchedObj=null;
       let lastSearchedString=null;
     this.storage.get('searchFilterObj').then((data) => {
@@ -838,9 +880,13 @@ loadAllAgentsResp(result:any)
          {
            this.listing_size=lastSearchedObj.listing_size;
          }
-         if(lastSearchedObj.lot_size)
+         if(lastSearchedObj.lot_size_min)
          {
-           this.lot_size=lastSearchedObj.lot_size;
+           this.lot_size_min=lastSearchedObj.lot_size_min;
+         }
+         if(lastSearchedObj.lot_size_max)
+         {
+           this.lot_size_max=lastSearchedObj.lot_size_max;
          }
          if(lastSearchedObj.parcel_num)
          {
@@ -928,15 +974,45 @@ loadAllAgentsResp(result:any)
     
     }
     updateSearchObject():void{
-      
+      let isAllSelected:boolean=false;
+      let finalPrice=this.price.lower.toString()+"-"+this.price.upper.toString();
+    
+     //debugger;
+     for(let i=0;i<this.listing_type_modal.length;i++)
+     {
+       if(this.listing_type_modal[i]=="all")
+       {
+         isAllSelected=true;
+       }
+     }
+     //debugger;
+      if(isAllSelected)
+      {
       this.searchListObject={msl_id:this.msl_id,bedrooms:this.bedrooms,bathrooms:this.bathrooms,address_township:this.address_township,days_on_market:this.days_on_market,
-        date_listed:this.date_listed,garage_size:this.garage_size,listing_size:this.listing_size,lot_size:this.lot_size,
+        date_listed:this.date_listed,garage_size:this.garage_size,listing_size:this.listing_size,lot_size_min:this.lot_size_min,lot_size_max:this.lot_size_max,
         parcel_num:this.parcel_num,school_district:this.school_district,school_elem:this.school_elem,school_high:this.school_high,
-        status:this.status_modal,stories:this.stories,address_city:this.address_city_modal,address_subdivision:this.address_subdivision_modal,
+        listing_type:this.status_modal,stories:this.stories,address_city:this.address_city_modal,address_subdivision:this.address_subdivision_modal,
+        home_type:"all",address_zip_code:this.address_zip_code_modal,
+        neighborhood:this.neighbourhood_modal,selectedLat:this.selectedLat,selectedLong:this.selectedLong,
+        listing_size_max:this.listing_size_max,listing_size_min:this.listing_size_min,price:finalPrice,
+        destinct_for_sale_listing_types:"all",map_location:this.mapLocation,year_built_min:this.year_built_min,
+        year_built_max:this.year_built_max,dols:this.dols
+      };
+    }
+    else
+    {
+      this.searchListObject={msl_id:this.msl_id,bedrooms:this.bedrooms,bathrooms:this.bathrooms,address_township:this.address_township,days_on_market:this.days_on_market,
+        date_listed:this.date_listed,garage_size:this.garage_size,listing_size:this.listing_size,
+        lot_size_min:this.lot_size_min,lot_size_max:this.lot_size_max,
+        parcel_num:this.parcel_num,school_district:this.school_district,school_elem:this.school_elem,school_high:this.school_high,
+        listing_type:this.status_modal,stories:this.stories,address_city:this.address_city_modal,address_subdivision:this.address_subdivision_modal,
         home_type:this.listing_type_modal,address_zip_code:this.address_zip_code_modal,
         neighborhood:this.neighbourhood_modal,selectedLat:this.selectedLat,selectedLong:this.selectedLong,
-        listing_size_max:this.listing_size_max,listing_size_min:this.listing_size_min,price:this.price
+        listing_size_max:this.listing_size_max,listing_size_min:this.listing_size_min,price:finalPrice,
+        destinct_for_sale_listing_types:"all",map_location:this.mapLocation,year_built_min:this.year_built_min,
+        year_built_max:this.year_built_max,dols:this.dols
       };
+    }
     //this.storage.set('searchFilterObj',JSON.stringify(this.searchListObject));
     }
     createHotSheet():void{
@@ -964,7 +1040,7 @@ loadAllAgentsResp(result:any)
           this.userServiceObj.createHotSheet(this.userId.toString(),this.selectedWebsite,
           this.sharedServiceObj.mlsServerId,this.name,this.slug,JSON.stringify(this.searchListObject),this.brief_description,
           this.main_description,this.virtual_tour_url,this.video_url,this.sub_city,
-          this.communityImage,this.headerImage,this.local,this.administrative_area_level_1,
+          this.communityImage,this.headerImage,this.city,this.administrative_area_level_1,
           this.community,this.assigned_agent_id,this.polygon_search)
           .subscribe((result) => this.createHotSheetResp(result));
         // }
@@ -1116,7 +1192,19 @@ loadAllAgentsResp(result:any)
     refreshValueListingType($event:any):void{
     
     }
-    selectedListingType($event:any):void{
+    selectedListingType(value:any):void{
+      
+      if(value=="all")
+      {
+        //let selectedOptions:any[]=[];
+        //this.listingTypeOptions.forEach(function(element){
+          
+          //selectedOptions.push(element.id);
+          
+        //});
+       // debugger;
+        //this.listing_type_modal=selectedOptions;
+      }
     //this.listing_type_modal.push($event.id);
   //  this.updateSearchObject();
     }
@@ -1133,7 +1221,7 @@ loadAllAgentsResp(result:any)
   //  this.updateSearchObject();
     }
     removedStatus($event:any):void{
-      this.status_modal.splice(this.status_modal.indexOf($event.id),1);
+      //this.status_modal.splice(this.status_modal.indexOf($event.id),1);
     //  this.updateSearchObject();
     }
     refreshValueAddressZipCode($event:any):void{

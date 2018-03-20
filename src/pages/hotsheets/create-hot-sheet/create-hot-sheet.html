@@ -40,9 +40,7 @@
     <ion-item>
     <ion-searchbar #searchbar placeholder="Search"></ion-searchbar>
   </ion-item>
-  <ion-item>
-  <button ion-button style="text-transform:lowercase !important;" color="secondary" outline (click)="toggleAdvanceSearch()" full small>filter</button>
-</ion-item>
+ 
   <div>
     <div #map id="map" style="width:100%;" [style.height]="map_height+'px'"></div>
 </div>
@@ -59,7 +57,10 @@
     <ion-label floating>Community/Neighborhood</ion-label>
     <ion-input type="text" [(ngModel)]="community" name="community"></ion-input>
   </ion-item>
- 
+  <ion-item>
+    <ion-label floating>City</ion-label>
+    <ion-input type="text" [(ngModel)]="city" name="city"></ion-input>
+  </ion-item>
   <ion-item>
     <ion-label floating>Sub City</ion-label>
     <ion-input type="text" [(ngModel)]="sub_city" name="sub_city"></ion-input>
@@ -81,6 +82,7 @@
 <ion-item>
   <button ion-button style="text-transform:lowercase !important;" color="secondary" outline (click)="toggleAdditionalInfo()" full small>additional options</button>
 </ion-item>
+
 <ion-list *ngIf="additionalInfoOption">
   <ion-item>
     <ion-label floating>Video Tour Url</ion-label>
@@ -132,12 +134,15 @@
         </span>
   </ion-list>
 </ion-list>
+<ion-item>
+  <button ion-button style="text-transform:lowercase !important;" color="secondary" outline (click)="toggleAdvanceSearch()" full small>filter</button>
+</ion-item>
 <ion-list *ngIf="advanceSearchOption">
    
   <ion-item *ngIf="status!=undefined">
     <ion-label floating>Status</ion-label>
     <ion-select [(ngModel)]="status_modal" (ngModelChange)="selectedStatus($event)" name="status_modal"
-     multiple="true">
+     >
       <ion-option *ngFor="let status of statusOptions" value= {{status.id}}>
          {{status.name}}
        </ion-option>
@@ -146,8 +151,9 @@
   </ion-item>
   <ion-item *ngIf="listing_type!=undefined">
     <ion-label floating>Listing Type</ion-label>
-    <ion-select [(ngModel)]="listing_type_modal" (ngModelChange)="selectedListingType($event)" 
+    <ion-select [(ngModel)]="listing_type_modal" 
     name="listing_type_modal" multiple="true">
+  
       <ion-option *ngFor="let listingType of listingTypeOptions" value= {{listingType.id}}>
          {{listingType.name}}
        </ion-option>
@@ -159,11 +165,13 @@
     <ion-input type="text" [(ngModel)]="msl_id" name="msl_id" id="msl_id"></ion-input>
   </ion-item>-->
   <ion-item>
-      <ion-label>Price({{price}})</ion-label>
-    <ion-range min="0" max="600000000" [(ngModel)]="price" color="secondary" name="price">
+      <ion-label>Price({{price.lower}}-{{price.upper}})</ion-label>
+      <ion-range dualKnobs="true" [(ngModel)]="price" min="0" max="600000000" 
+       color="secondary" name="price" (ionChange)="changePrice($event)"></ion-range>
+    <!--<ion-range min="0" max="600000000" [(ngModel)]="price" color="secondary" name="price">
       <ion-label range-left>0</ion-label>
       <ion-label range-right>600000000</ion-label>
-    </ion-range>
+    </ion-range>-->
   </ion-item>
   <ion-item *ngIf="bedrooms!=undefined">
     <ion-label floating>Beds</ion-label>
@@ -209,9 +217,10 @@
           name="listing_size_max" id="listing_size_max" placeholder="max"></ion-input>
      
   </ion-item>
-  <ion-item *ngIf="lot_size!=undefined">
-    <ion-label floating>Lot Size</ion-label>
-    <ion-select [(ngModel)]="lot_size" name="lot_size" id="lot_size">
+  <ion-item>
+    <ion-label>Lot Size</ion-label>
+    <!--<ion-select [(ngModel)]="lot_size" name="lot_size" id="lot_size"
+    (ngModelChange)="updateSearchObject()">
      
     <ion-option value="2000">2,000+ sqft</ion-option>
     <ion-option value="3000">3,000+ sqft</ion-option>
@@ -224,6 +233,37 @@
     <ion-option value="87120">2+ acres</ion-option>
     <ion-option value="217800">5+ acres</ion-option>
     <ion-option value="435600">10+ acres</ion-option>
+     </ion-select>-->
+     <ion-input type="text" [(ngModel)]="lot_size_min"
+     name="lot_size_min" id="lot_size_min" placeholder="min" (blur)="updateSearchObject()"></ion-input>
+ 
+     <ion-input type="text" [(ngModel)]="lot_size_max" 
+     name="lot_size_max" id="lot_size_max" placeholder="max" (blur)="updateSearchObject()"></ion-input>
+    
+  </ion-item>
+  <ion-item>
+    <ion-label>Year Built</ion-label>
+    
+     <ion-input type="text" [(ngModel)]="year_built_min"
+     name="year_built_min" id="year_built_min" placeholder="min" (blur)="updateSearchObject()"></ion-input>
+ 
+     <ion-input type="text" [(ngModel)]="year_built_max" 
+     name="year_built_max" id="year_built_max" placeholder="max" (blur)="updateSearchObject()"></ion-input>
+    
+  </ion-item>
+  <ion-item>
+    <ion-label floating>Days on ListingSearch</ion-label>
+    <ion-select [(ngModel)]="dols" name="bedrooms" id="bedrooms">
+     
+       <ion-option value="">Any</ion-option>
+       <ion-option value="1"> < 1 Day</ion-option>
+       <ion-option value="7"> < 7 Days</ion-option>
+       <ion-option value="14"> < 14 Days</ion-option>
+       <ion-option value="30"> < 30 Days</ion-option>
+       <ion-option value="90"> < 90 Days</ion-option>
+       <ion-option value="180"> < 6 Months</ion-option>
+       <ion-option value="365"> < 1 Year</ion-option>
+     
      </ion-select>
     
   </ion-item>
@@ -243,7 +283,7 @@
      </ion-select>
     
   </ion-item>-->
-  <ion-item *ngIf="address_township!=undefined">
+  <!--<ion-item *ngIf="address_township!=undefined">
     <ion-label floating>Address Township</ion-label>
     <ion-input type="text" [(ngModel)]="address_township" name="address_township" id="address_township"></ion-input>
   </ion-item>
@@ -257,27 +297,27 @@
     <ion-option value="4">4 car</ion-option>
     <ion-option value="5">5 car</ion-option>
      </ion-select>
-  </ion-item>
+  </ion-item>-->
   <!--<ion-item *ngIf="parcel_num!=undefined">
     <ion-label floating>Lot or Parcel #</ion-label>
     <ion-input type="text" [(ngModel)]="parcel_num" name="parcel_num" id="parcel_num"></ion-input>
   </ion-item>-->
-  <ion-item *ngIf="school_district!=undefined">
+  <!--<ion-item *ngIf="school_district!=undefined">
     <ion-label floating>School District</ion-label>
     <ion-input type="text" [(ngModel)]="school_district" name="school_district" id="school_district"></ion-input>
   </ion-item>
   <ion-item *ngIf="school_elem!=undefined">
     <ion-label floating>School Elem</ion-label>
     <ion-input type="text" [(ngModel)]="school_elem" name="school_elem" id="school_elem"></ion-input>
-  </ion-item>
+  </ion-item>-->
   <!--<ion-item *ngIf="school_high!=undefined">
     <ion-label floating>School High</ion-label>
     <ion-input type="text" [(ngModel)]="school_high" name="school_high" id="school_high"></ion-input>
   </ion-item>-->
-  <ion-item *ngIf="stories!=undefined">
+  <!--<ion-item *ngIf="stories!=undefined">
     <ion-label floating>Stories</ion-label>
     <ion-input type="text" [(ngModel)]="stories" name="stories" id="stories"></ion-input>
-  </ion-item>
+  </ion-item>-->
   <!--<ion-item *ngIf="address_city!=undefined">
     <ion-label floating>Specific Cities</ion-label>
     <ion-select [(ngModel)]="address_city_modal" (ngModelChange)="selectedAddressCity($event)" 

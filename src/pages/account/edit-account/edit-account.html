@@ -12,7 +12,7 @@
       </button>
     <ion-title>Edit Account</ion-title>
     <ion-buttons end>
-        <button ion-button (click)="updateAccount();" [disabled]="!accountForm.valid||!updatedValue">Update Account</button>
+        <button ion-button (click)="updateAccount();" [disabled]="!accountForm.valid">Update Account</button>
       </ion-buttons>
   </ion-navbar>
   
@@ -26,24 +26,21 @@
   <form role="form" data-toggle="validator" #accountForm="ngForm">
       <ion-item>
           <ion-label floating>First Name<span [ngClass]="{'error': first_name==''}" *ngIf="first_name==''">*</span></ion-label>
-          <ion-input type="text" required [(ngModel)]="first_name" name="first_name" 
-          (ngModelChange)="checkFormStatus();"></ion-input>
+          <ion-input type="text" required [(ngModel)]="first_name" name="first_name"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label floating>Last Name<span [ngClass]="{'error': last_name==''}" *ngIf="last_name==''">*</span></ion-label>
-          <ion-input type="text" required [(ngModel)]="last_name" name="last_name" 
-          (ngModelChange)="checkFormStatus();" ></ion-input>
+          <ion-input type="text" required [(ngModel)]="last_name" name="last_name" ></ion-input>
         </ion-item>
       <ion-item>
           <ion-label floating>Email Address<span [ngClass]="{'error': email==''}" *ngIf="email==''">*</span></ion-label>
-          <ion-input type="email" [(ngModel)]="email" name="email" [email]="true" 
-          (ngModelChange)="checkFormStatus();" required></ion-input>
+          <ion-input type="email" [(ngModel)]="email" name="email" [email]="true" required></ion-input>
         </ion-item>
       
         <ion-item>
           <ion-label floating>Password<span [ngClass]="{'error': passwordUpdated==''}" *ngIf="passwordUpdated==''">*</span></ion-label>
           <ion-input type="password" required [(ngModel)]="passwordUpdated" name="passwordUpdated" 
-          (ngModelChange)="checkFormStatus();"></ion-input>
+          ></ion-input>
         </ion-item>
         <ion-list *ngIf="isApp">
           <ion-item>
@@ -61,7 +58,7 @@
           <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="personalFileChangeListener($event)">
        
           <img-cropper #personalCropper [image]="dataPersonalImage" [settings]="cropperSettings"
-           (onCrop)="personalImageCropped($event)"></img-cropper>
+           (onCrop)="personalImageCropped($event)" *ngIf="hideImageCropper"></img-cropper>
           <br>
           <span *ngIf="dataPersonalImage.image" >
               <img [src]="dataPersonalImage.image" [width]="cropperSettings.croppedWidth"
@@ -71,7 +68,7 @@
         <ion-item>
             <ion-label>Select Country<span [ngClass]="{'error': selectedCountryAbbv==''}" *ngIf="selectedCountryAbbv==''">*</span></ion-label>
             <ion-select [(ngModel)]="selectedCountryAbbv" name="selectedCountryAbbv" 
-            (ngModelChange)="onCountryCodeSelection($event);checkFormStatus();" required >
+            (ngModelChange)="onCountryCodeSelection($event);" required >
               <ion-option value="">--- Select Country Code ---</ion-option>
               <ion-option *ngFor="let countryCode of allCountryCodes" value={{countryCode.country_abbv}}>
                 {{countryCode.name}}
@@ -81,11 +78,11 @@
         <ion-item>
             <ion-label floating>Cell Number<span [ngClass]="{'error': phone_number==null}" *ngIf="phone_number==null">*</span></ion-label>
             <ion-input type="tel" [(ngModel)]="phone_number" name="phone_number" 
-            required pattern="^[0-9]*$" (ngModelChange)="checkFormStatus();"></ion-input>
+            required pattern="^[0-9]*$"></ion-input>
           </ion-item>
       <div padding>
           <button ion-button color="primary" block  (click)="updateAccount();"
-           [disabled]="!accountForm.valid||!updatedValue">Update Account</button>
+           [disabled]="!accountForm.valid">Update Account</button>
       </div>
   </form>
   <ion-chip *ngIf="accountInfoUpdateMsg!=''">

@@ -83,30 +83,44 @@
          </ion-select>-->
   
     <ion-list *ngIf="selectedRoute==''">
-    <div>
+    <div *ngIf="colorBase!=''">
       <ion-label>Color Base
       </ion-label>
-      <ion-input [colorPicker]="colorBase" 
+    
+        <button ion-button color="secondary" outline [colorPicker]="colorBase" 
+        (colorPickerChange)="colorBase=$event"
+        [ngStyle]="{'background-color': colorBase}" [cpPosition]="'bottom'" 
+           [cpOutputFormat]="'rgb'" full small>Select Color</button>
+           
+      <!--<div [colorPicker]="colorBase" 
       (colorPickerChange)="colorBase=$event"
         [style.background]="colorBase" [cpPosition]="'bottom'" 
-        [value]="colorBase" [cpOutputFormat]="'rgba'" ></ion-input>
+         [cpOutputFormat]="'rgba'" >Select Color</div>-->
     </div>
-    <div>
+    <div *ngIf="secondColor!=''">
         <ion-label>Second Color
         </ion-label>
-        <ion-input [colorPicker]="secondColor" 
+        <button ion-button color="secondary" outline [colorPicker]="secondColor" 
+        (colorPickerChange)="secondColor=$event"
+        [ngStyle]="{'background-color': secondColor}" [cpPosition]="'bottom'" [cpCancelButton]="true" 
+          [cpCancelButtonClass]="'btn btn-primary btn-xs'" [cpOutputFormat]="'rgb'" full small>Select Color</button>
+        <!--<ion-input [colorPicker]="secondColor" 
         (colorPickerChange)="secondColor=$event"
           [style.background]="secondColor" [cpPosition]="'bottom'" [cpCancelButton]="true" 
           [cpCancelButtonClass]="'btn btn-primary btn-xs'"
-          [value]="secondColor" [cpOutputFormat]="'rgba'"></ion-input>
+          [value]="secondColor" [cpOutputFormat]="'rgba'"></ion-input>-->
     </div>
-    <div>
+    <div *ngIf="thirdColor!=''">
           <ion-label>Third Color
           </ion-label>
-          <ion-input [colorPicker]="thirdColor" 
+          <button ion-button color="secondary" outline [colorPicker]="thirdColor" 
           (colorPickerChange)="thirdColor=$event"
-          style.background-color="rgba(54,44,235,0)" [cpPosition]="'bottom'" [cpCancelButton]="true" [cpCancelButtonClass]="'btn btn-primary btn-xs'"
-            [value]="thirdColor" [cpOutputFormat]="'rgba'"></ion-input>
+          [ngStyle]="{'background-color': thirdColor}" [cpPosition]="'bottom'" [cpCancelButton]="true" [cpCancelButtonClass]="'btn btn-primary btn-xs'"
+             [cpOutputFormat]="'rgb'" full small>Select Color</button>
+          <!--<ion-input [colorPicker]="thirdColor" 
+          (colorPickerChange)="thirdColor=$event"
+          [style.background]="thirdColor" [cpPosition]="'bottom'" [cpCancelButton]="true" [cpCancelButtonClass]="'btn btn-primary btn-xs'"
+            [value]="thirdColor" [cpOutputFormat]="'rgba'"></ion-input>-->
     </div>
   </ion-list>
   

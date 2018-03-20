@@ -27,7 +27,7 @@ export class SharedProvider {
   private headers: Headers = new Headers();
   private headerOptions: RequestOptions = new RequestOptions();
   public service_id = "2";
-  public mlsServerId = "29";
+  public mlsServerId = "23";
   public apiBaseUrl = "https://api.idx.company/api/";
   //public imgBucketUrl="https://cdn.published.website/";
   public imgBucketUrl="https://s3-us-west-2.amazonaws.com/central-system/usr/";
@@ -151,6 +151,7 @@ export class SharedProvider {
     return r;
     
 }
+
 public setLogOut(){
 this.signOutEmitter.emit();
 }
@@ -162,6 +163,19 @@ this.signOutEmitter.emit();
    // debugger;
     this.navigationalPage.emit(option);
   }
+  trim (str) {
+  return str.replace(/^\s+|\s+$/gm,'');
+}
+
+rgbaToHex (rgba) {
+    var parts = rgba.substring(rgba.indexOf("(")).split(","),
+        r:any = parseInt(this.trim(parts[0].substring(1)), 10),
+        g:any = parseInt(this.trim(parts[1]), 10),
+        b:any = parseInt(this.trim(parts[2]), 10),
+        a:any = parseFloat(this.trim(parts[3].substring(0, parts[3].length - 1))).toFixed(2);
+
+    return ('#' + r.toString(16) + g.toString(16) + b.toString(16) + (a * 255).toString(16).substring(0,2));
+}
   // this could also be a private method of the component class
   private extractData(res: Response) {
     //debugger;
