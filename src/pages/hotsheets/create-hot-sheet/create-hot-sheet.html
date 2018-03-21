@@ -149,16 +149,15 @@
      </ion-select>
     
   </ion-item>
-  <ion-item *ngIf="listing_type!=undefined">
-    <ion-label floating>Listing Type</ion-label>
-    <ion-select [(ngModel)]="listing_type_modal" 
-    name="listing_type_modal" multiple="true">
-  
-      <ion-option *ngFor="let listingType of listingTypeOptions" value= {{listingType.id}}>
-         {{listingType.name}}
-       </ion-option>
-     </ion-select>
+  <ion-item>
+    <ion-label>Unit Size(sqm)</ion-label>
     
+          <ion-input type="text" [(ngModel)]="unit_size_min"
+          name="unit_size_min" id="unit_size_min" placeholder="min" (blur)="updateSearchObject()"></ion-input>
+      
+          <ion-input type="text" [(ngModel)]="unit_size_max" 
+          name="unit_size_max" id="unit_size_max" placeholder="max" (blur)="updateSearchObject()"></ion-input>
+     
   </ion-item>
   <!--<ion-item *ngIf="msl_id!=undefined">
     <ion-label floating>MLS #</ion-label>
@@ -193,7 +192,7 @@
   <ion-item *ngIf="bathrooms!=undefined">
     <ion-label floating>Baths</ion-label>
     <ion-select [(ngModel)]="bathrooms" name="bathrooms" id="bathrooms" >
-     
+
        <ion-option value="1">1+</ion-option>
        <ion-option value="2">2+</ion-option>
        <ion-option value="3">3+</ion-option>
@@ -252,10 +251,10 @@
     
   </ion-item>
   <ion-item>
-    <ion-label floating>Days on ListingSearch</ion-label>
-    <ion-select [(ngModel)]="dols" name="bedrooms" id="bedrooms">
+    <ion-label floating>Days on the Market</ion-label>
+    <ion-select [(ngModel)]="dols" name="dols" id="dols">
      
-       <ion-option value="">Any</ion-option>
+       <ion-option value="-1">Any</ion-option>
        <ion-option value="1"> < 1 Day</ion-option>
        <ion-option value="7"> < 7 Days</ion-option>
        <ion-option value="14"> < 14 Days</ion-option>

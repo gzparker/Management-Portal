@@ -66,7 +66,7 @@
   </ion-item>
   <ion-item>
     <ion-label floating>City</ion-label>
-    <ion-input type="text" [(ngModel)]="local" name="local"></ion-input>
+    <ion-input type="text" [(ngModel)]="city" name="city"></ion-input>
   </ion-item>
   <ion-item>
     <ion-label floating>Sub City</ion-label>
@@ -213,18 +213,18 @@
      </ion-select>
     
   </ion-item>
-  <ion-item *ngIf="listing_size!=undefined">
-    <ion-label>Square Feet</ion-label>
+  <ion-item>
+    <ion-label>Unit Size(sqm)</ion-label>
     
-          <ion-input type="text" [(ngModel)]="listing_size_min"
-          name="listing_size_min" id="listing_size_min" placeholder="min" (blur)="updateSearchObject()"></ion-input>
+          <ion-input type="text" [(ngModel)]="unit_size_min"
+          name="unit_size_min" id="unit_size_min" placeholder="min" (blur)="updateSearchObject()"></ion-input>
       
-          <ion-input type="text" [(ngModel)]="listing_size_max" 
-          name="listing_size_max" id="listing_size_max" placeholder="max" (blur)="updateSearchObject()"></ion-input>
+          <ion-input type="text" [(ngModel)]="unit_size_max" 
+          name="unit_size_max" id="unit_size_max" placeholder="max" (blur)="updateSearchObject()"></ion-input>
      
   </ion-item>
   <ion-item>
-    <ion-label floating>Lot Size</ion-label>
+    <ion-label>Lot Size</ion-label>
     <!--<ion-select [(ngModel)]="lot_size" name="lot_size" id="lot_size"
     (ngModelChange)="updateSearchObject()">
      
@@ -240,6 +240,7 @@
     <ion-option value="217800">5+ acres</ion-option>
     <ion-option value="435600">10+ acres</ion-option>
      </ion-select>-->
+     
      <ion-input type="text" [(ngModel)]="lot_size_min"
      name="lot_size_min" id="lot_size_min" placeholder="min" (blur)="updateSearchObject()"></ion-input>
  
@@ -254,13 +255,13 @@
  
      <ion-input type="text" [(ngModel)]="year_built_max" 
      name="year_built_max" id="year_built_max" placeholder="max" (blur)="updateSearchObject()"></ion-input>
-    
+
   </ion-item>
   <ion-item>
-    <ion-label floating>Days on ListingSearch</ion-label>
-    <ion-select [(ngModel)]="dols" name="bedrooms" id="bedrooms">
+    <ion-label floating>Days on the Market</ion-label>
+    <ion-select [(ngModel)]="dols" name="dols" id="dols">
      
-       <ion-option value="">Any</ion-option>
+       <ion-option value="-1">Any</ion-option>
        <ion-option value="1"> < 1 Day</ion-option>
        <ion-option value="7"> < 7 Days</ion-option>
        <ion-option value="14"> < 14 Days</ion-option>

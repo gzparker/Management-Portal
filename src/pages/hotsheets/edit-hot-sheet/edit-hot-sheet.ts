@@ -138,8 +138,8 @@ public isApp=false;
   public communityImage:string="";
   public allAgents:any[]=[];
   public assigned_agent_id:any[]=[];
-  public listing_size_min:string="";
-  public listing_size_max:string="";
+  public unit_size_min:string="";
+  public unit_size_max:string="";
   public local:string="";
   public neighbourhoodAddress:string="";
   public administrative_area_level_1:string="";
@@ -207,8 +207,8 @@ public isApp=false;
       {
       //  debugger;
         this.hotSheetId=this.navParams.get('id');
-        this.loadSearchedField();
-        
+        //this.loadSearchedField();
+        this.editHotSheet();
       }
     
     //this.geolocation.getCurrentPosition().then((position) => {
@@ -703,6 +703,7 @@ public isApp=false;
        
      } 
     loadAvailableSearchFields(result:any):void{
+      debugger;
       this.setSearchedFields(result);
     }
     allListingTypeSelected()
@@ -725,10 +726,10 @@ public isApp=false;
       this.days_on_market=result.searchFieldsJson.days_on_market;
       this.garage_size=result.searchFieldsJson.garage_size;
       this.listing_size=result.searchFieldsJson.listing_size;
-      this.lot_size_min=result.searchFieldsJson.lot_size_min;
-      this.lot_size_max=result.searchFieldsJson.lot_size_max;
-      this.year_built_min=result.searchFieldsJson.year_built_min;
-      this.year_built_max=result.searchFieldsJson.year_built_max;
+      //this.lot_size_min=result.searchFieldsJson.lot_size_min;
+      //this.lot_size_max=result.searchFieldsJson.lot_size_max;
+      //this.year_built_min=result.searchFieldsJson.year_built_min;
+      //this.year_built_max=result.searchFieldsJson.year_built_max;
       this.parcel_num=result.searchFieldsJson.parcel_num;
       //this.school_district=result.searchFieldsJson.school_district;
       //this.school_elem=result.searchFieldsJson.school_elem;
@@ -824,24 +825,26 @@ public isApp=false;
     loadLastSearchedValue():void{
       let lastSearchedObj=null;
       let lastSearchedString=null;
-      //debugger;
+    //  debugger;
     //this.storage.get('searchFilterObj').then((data) => {
       
       if(this.json_search!=null)
       {
-       // debugger;
+      // debugger;
         lastSearchedString=this.json_search;
 
     lastSearchedObj=JSON.parse(lastSearchedString);
     if(lastSearchedObj!=null)
     {
+     // debugger;
       if(lastSearchedObj)
       {
-         if(lastSearchedObj.bedrooms)
+       // debugger;
+         if(lastSearchedObj.bedrooms!=undefined)
          {
            this.bedrooms=lastSearchedObj.bedrooms;
          }
-         if(lastSearchedObj.price)
+         if(lastSearchedObj.price!=undefined)
          {
           // debugger;
            let savedPrice=lastSearchedObj.price.split("-");
@@ -849,99 +852,106 @@ public isApp=false;
            this.price.lower=savedPrice[0].toString();
            this.price.upper=savedPrice[1].toString();
          }
-         if(lastSearchedObj.bathrooms)
+         if(lastSearchedObj.bathrooms!=undefined)
          {
            this.bathrooms=lastSearchedObj.bathrooms;
          }
-         if(lastSearchedObj.msl_id)
+         if(lastSearchedObj.msl_id!=undefined)
          {
            this.msl_id=lastSearchedObj.msl_id;
          }
-         if(lastSearchedObj.address)
+         if(lastSearchedObj.address!=undefined)
          {
            this.address=lastSearchedObj.address;
          }
-        if(lastSearchedObj.address_township)
+        if(lastSearchedObj.address_township!=undefined)
          {
            this.address_township=lastSearchedObj.address_township;
          }
-         if(lastSearchedObj.days_on_market)
+         if(lastSearchedObj.days_on_market!=undefined)
          {
            this.days_on_market=lastSearchedObj.days_on_market;
          }
-        if(lastSearchedObj.date_listed)
+        if(lastSearchedObj.date_listed!=undefined)
          {
            this.date_listed=new Date(lastSearchedObj.date_listed);
          }
-         if(lastSearchedObj.garage_size)
+         if(lastSearchedObj.garage_size!=undefined)
          {
            this.garage_size=lastSearchedObj.garage_size;
          }
-         if(lastSearchedObj.listing_size)
+         if(lastSearchedObj.listing_size!=undefined)
          {
            this.listing_size=lastSearchedObj.listing_size;
          }
-         if(lastSearchedObj.lot_size_min)
+         if(lastSearchedObj.lot_size_min!=undefined)
          {
            this.lot_size_min=lastSearchedObj.lot_size_min;
          }
-         if(lastSearchedObj.lot_size_max)
+         if(lastSearchedObj.lot_size_max!=undefined)
          {
            this.lot_size_max=lastSearchedObj.lot_size_max;
          }
-         if(lastSearchedObj.year_built_min)
+         if(lastSearchedObj.year_built_min!=undefined)
          {
            this.year_built_min=lastSearchedObj.year_built_min;
          }
-         if(lastSearchedObj.year_built_max)
+         if(lastSearchedObj.year_built_max!=undefined)
          {
-           this.year_built_max=lastSearchedObj.year_built__max;
+           this.year_built_max=lastSearchedObj.year_built_max;
          }
-         if(lastSearchedObj.dols)
+         if(lastSearchedObj.unit_size_min!=undefined)
          {
-           this.dols=lastSearchedObj.dols;
+           this.unit_size_min=lastSearchedObj.unit_size_min;
          }
-         if(lastSearchedObj.parcel_num)
+         if(lastSearchedObj.unit_size_max!=undefined)
+         {
+           this.unit_size_max=lastSearchedObj.unit_size_max;
+         }
+         //debugger;
+         if(lastSearchedObj.dols!=undefined)
+         {
+           if(lastSearchedObj.dols=="")
+           {
+            this.dols="-1";
+           }
+           else
+           {
+            this.dols=lastSearchedObj.dols;
+           }
+           //debugger;
+         }
+         if(lastSearchedObj.parcel_num!=undefined)
          {
            this.parcel_num=lastSearchedObj.parcel_num;
          }
-         if(lastSearchedObj.school_district)
+         if(lastSearchedObj.school_district!=undefined)
          {
            this.school_district=lastSearchedObj.school_district;
          }
-         if(lastSearchedObj.school_elem)
+         if(lastSearchedObj.school_elem!=undefined)
          {
            this.school_elem=lastSearchedObj.school_elem;
          }
-         if(lastSearchedObj.school_elem)
+         if(lastSearchedObj.school_elem!=undefined)
          {
            this.school_elem=lastSearchedObj.school_elem;
          }
-         if(lastSearchedObj.school_high)
+         if(lastSearchedObj.school_high!=undefined)
          {
            this.school_high=lastSearchedObj.school_high;
          }
-         if(lastSearchedObj.school_high)
+         if(lastSearchedObj.school_high!=undefined)
          {
            this.school_high=lastSearchedObj.school_high;
          }
-         if(lastSearchedObj.school_high)
-         {
-           this.school_high=lastSearchedObj.school_high;
-         }
-         if(lastSearchedObj.school_high)
-         {
-           this.school_high=lastSearchedObj.school_high;
-         }
-         if(lastSearchedObj.stories)
+        
+         if(lastSearchedObj.stories!=undefined)
          {
            this.stories=lastSearchedObj.stories;
          }
-         if(lastSearchedObj.home_type)
-         {
-           this.listing_type_last_searched=lastSearchedObj.home_type;
-         }
-        if(lastSearchedObj.home_type)
+       
+        if(lastSearchedObj.home_type!=undefined)
          {
            if(lastSearchedObj.home_type=="all")
            {
@@ -956,42 +966,42 @@ public isApp=false;
            
            //debugger;
          }
-         if(lastSearchedObj.listing_type)
+         if(lastSearchedObj.listing_type!=undefined)
          {
           
            this.status_last_searched=lastSearchedObj.listing_type;
            
            this.status_modal=this.status_last_searched;
          }
-         if(lastSearchedObj.address_city)
+         if(lastSearchedObj.address_city!=undefined)
          {
            this.address_city_last_searched=lastSearchedObj.address_city;
            this.address_city_modal=this.address_city_last_searched;
          }
-         if(lastSearchedObj.address_subdivision)
+         if(lastSearchedObj.address_subdivision!=undefined)
          {
            this.address_subdivision_last_searched=lastSearchedObj.address_subdivision;
            this.address_subdivision_modal=this.address_subdivision_last_searched;
          }
-         if(lastSearchedObj.address_zip_code)
+         if(lastSearchedObj.address_zip_code!=undefined)
          {
            this.address_zip_code_last_searched=lastSearchedObj.address_zip_code;
            this.address_zip_code_modal=this.address_zip_code_last_searched;
          }
-         if(lastSearchedObj.neighborhood)
+         if(lastSearchedObj.neighborhood!=undefined)
          {
            this.neighbourhood_last_searched=lastSearchedObj.neighborhood;
            this.neighbourhood_modal=this.neighbourhood_last_searched;
          }
-         if(lastSearchedObj.selectedLat)
+         if(lastSearchedObj.selectedLat!=undefined)
          {
            this.selectedLat=lastSearchedObj.selectedLat;
          }
-         if(lastSearchedObj.selectedLong)
+         if(lastSearchedObj.selectedLong!=undefined)
          {
            this.selectedLong=lastSearchedObj.selectedLong;
          }
-         //debugger;
+       //  debugger;
           this.loadSavedPolygon(this.savedPolygonPath);
       }
     }
@@ -1005,7 +1015,10 @@ public isApp=false;
     updateSearchObject():void{
       let isAllSelected:boolean=false;
       let finalPrice=this.price.lower.toString()+"-"+this.price.upper.toString();
-    
+      if(this.dols=="-1")
+      {
+        this.dols="";
+      }
      //debugger;
      for(let i=0;i<this.listing_type_modal.length;i++)
      {
@@ -1018,7 +1031,7 @@ public isApp=false;
       {
       this.searchListObject={msl_id:this.msl_id,bedrooms:this.bedrooms,bathrooms:this.bathrooms,
         address_township:this.address_township,days_on_market:this.days_on_market,
-        date_listed:this.date_listed,garage_size:this.garage_size,listing_size:this.listing_size,
+        date_listed:this.date_listed,garage_size:this.garage_size,
         lot_size_min:this.lot_size_min,lot_size_max:this.lot_size_max,
         parcel_num:this.parcel_num,school_district:this.school_district,school_elem:this.school_elem,
         school_high:this.school_high,
@@ -1028,14 +1041,14 @@ public isApp=false;
         neighborhood:this.neighbourhood_modal,selectedLat:this.selectedLat,
         selectedLong:this.selectedLong,price:finalPrice,
         destinct_for_sale_listing_types:"all",map_location:this.mapLocation,year_built_min:this.year_built_min,
-        year_built_max:this.year_built_max,dols:this.dols
+        year_built_max:this.year_built_max,dols:this.dols,unit_size_max:this.unit_size_max,unit_size_min:this.unit_size_min
       };
     }
     else
     {
       this.searchListObject={msl_id:this.msl_id,bedrooms:this.bedrooms,bathrooms:this.bathrooms,
         address_township:this.address_township,days_on_market:this.days_on_market,
-        date_listed:this.date_listed,garage_size:this.garage_size,listing_size:this.listing_size,
+        date_listed:this.date_listed,garage_size:this.garage_size,
         lot_size_min:this.lot_size_min,lot_size_max:this.lot_size_max,
         parcel_num:this.parcel_num,school_district:this.school_district,school_elem:this.school_elem,
         school_high:this.school_high,
@@ -1045,26 +1058,28 @@ public isApp=false;
         neighborhood:this.neighbourhood_modal,selectedLat:this.selectedLat,
         selectedLong:this.selectedLong,price:finalPrice,
         destinct_for_sale_listing_types:"all",map_location:this.mapLocation,year_built_min:this.year_built_min,
-        year_built_max:this.year_built_max,dols:this.dols
+        year_built_max:this.year_built_max,dols:this.dols,unit_size_max:this.unit_size_max,unit_size_min:this.unit_size_min
       };
     }
      // debugger;
    // this.storage.set('searchFilterObj',JSON.stringify(this.searchListObject));
     }
     editHotSheet():void{
-      
+      //debugger;
       this.userServiceObj.editHotSheet(this.userId.toString(),this.hotSheetId).subscribe((result) => 
       this.editHotSheetResp(result));
       }
       editHotSheetResp(result:any):void{
         if(result.status==true)
         {
-          //debugger;
+        //  debugger;
           this.name=result.result.name;
           this.oldSlug=result.result.slug;
           this.slug=result.result.slug;
           this.mls_server_id=result.result.mls_server_id;
           this.selectedWebsite=result.result.website_id;
+          this.city=result.result.city;
+          this.sub_city=result.result.sub_city;
           //debugger;
           if(result.result.assigned_agent_ids!=null)
           {
@@ -1080,8 +1095,9 @@ public isApp=false;
           this.savedPolygonPath=result.result.polygon_search;
          
           let length=this.savedPolygonPath.length;
-          
+        //  debugger;
           this.json_search=result.result.search_results_json;
+         // debugger;
           this.storage.set('searchFilterObj',this.json_search);
           if(result.result.community_image_url!=undefined)
       {
