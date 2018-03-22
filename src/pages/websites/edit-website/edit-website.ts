@@ -51,7 +51,7 @@ export class EditWebsitePage {
   public contact_email:string="";
   public header_wrapper:string="";
   public footer_wrapper:string="";
-  public intagent_website:number;
+  public intagent_website:boolean=false;
   public custom_css:string="";
   public show_open_houses:boolean=false;
   public show_new_listings:boolean=false;
@@ -203,6 +203,7 @@ export class EditWebsitePage {
  
     if(result.result.status==true)
     {
+     // debugger;
 this.identity_name=result.result.identity_name;
 if(result.result.identity_logo!=undefined)
       {
@@ -215,7 +216,7 @@ if(result.result.identity_logo!=undefined)
       // debugger;
       this.loadIcon(this.sharedServiceObj.imgBucketUrl,result.result.identity_icon);
       }
-   if(result.result.website.indexOf("http://www")<0)
+   if(result.result.website.indexOf("http://www")<0 && result.result.website.indexOf("https://www")<0)
 {
   //debugger;
   this.website_domain="http://www."+result.result.website;
@@ -263,6 +264,14 @@ if(result.result.feature_office_listings==null||result.result.feature_office_lis
 else
 {
   this.feature_office_listings=true;
+}
+if(result.result.intagent_website==null||result.result.intagent_website=="0")
+{
+ this.intagent_website=false;
+}
+else
+{
+  this.intagent_website=true;
 }
 this.header_wrapper=result.result.header_wrapper;
 this.footer_wrapper=result.result.footer_wrapper;
@@ -321,7 +330,7 @@ this.footer_wrapper=result.result.footer_wrapper;
     let feature_agent_listings_dummy="0";
     let feature_broker_listings_dummy="0";
     let feature_office_listings_dummy="0";
-    let intagent_website_dummy="";
+    let intagent_website_dummy="0";
   if(this.userId!="")
     {
      //if(this.domainAccess)
@@ -354,10 +363,20 @@ this.footer_wrapper=result.result.footer_wrapper;
        {
         feature_office_listings_dummy="1";
        }
-       if(this.intagent_website!=null)
+       if(this.intagent_website)
        {
         intagent_website_dummy="1";
        }
+       if(this.website_domain.indexOf("http://www")<0 && this.website_domain.indexOf("https://www")<0)
+{
+ // debugger;
+  this.website_domain="http://www."+this.website_domain;
+}
+else
+{
+ // debugger;
+  this.website_domain=this.website_domain;
+}
      //  debugger;
   this.userServiceObj.updateWebsite(this.userId,isActiveFinal,this.website_domain,this.websiteId,
     this.contact_email,this.header_wrapper,this.footer_wrapper,intagent_website_dummy,this.custom_css,

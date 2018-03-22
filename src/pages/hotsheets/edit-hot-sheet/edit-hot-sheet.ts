@@ -54,6 +54,7 @@ export class EditHotSheetPage {
     displayAllSelectedText: true
 };
 public isApp=false;
+public isWebBrowser=false;
   public msl_id:string="";
   public mls_server_id:string="";
   public json_search:string="";
@@ -174,6 +175,9 @@ public isApp=false;
       {
         this.isApp=true;
       }
+      if(this.platform.is('core')) {
+        this.isWebBrowser=true;
+      }
       this.cropperSettings = new CropperSettings();
       this.cropperSettings.width = 100;
       this.cropperSettings.height = 100;
@@ -208,10 +212,12 @@ public isApp=false;
       //  debugger;
         this.hotSheetId=this.navParams.get('id');
         //this.loadSearchedField();
-        this.editHotSheet();
+        
       }
     
     //this.geolocation.getCurrentPosition().then((position) => {
+      if(!this.isWebBrowser)
+      { 
       if (window.navigator.geolocation) {
         window.navigator.geolocation.getCurrentPosition((position)=> {
       if(position.coords.latitude!=undefined&&position.coords.longitude!=undefined)
@@ -219,6 +225,7 @@ public isApp=false;
         this.map_height=400;
         this.loadMap(position.coords.latitude, position.coords.longitude);
         this.initAutocomplete();
+        this.editHotSheet();
       }
     }, function() {
        
@@ -227,6 +234,22 @@ public isApp=false;
     // Browser doesn't support Geolocation
    
   }
+}
+else
+{
+  //debugger;
+  this.geolocation.getCurrentPosition().then((position) => {
+    //debugger;
+    if(position.coords.latitude!=undefined&&position.coords.longitude!=undefined)
+      {
+       // debugger;
+        this.map_height=400;
+        this.loadMap(position.coords.latitude, position.coords.longitude);
+        this.initAutocomplete();
+        this.editHotSheet();
+      }
+  });
+}
    // });
     });
    
@@ -308,6 +331,7 @@ public isApp=false;
        }
      });
        //debugger;
+      // debugger;
        this.drawingManager.setMap(null);
        this.drawingManager.setDrawingMode(google.maps.drawing.OverlayType.POLYGON);
        var centerControlDiv:any = document.createElement('div');
@@ -326,7 +350,10 @@ public isApp=false;
    }
    setMapCoordinates(e:any)
    {
-
+    this.selectedLat=this.map.center.lat();
+    this.selectedLong=this.map.center.lng();
+    //this.selectedLat=data.geometry.location.lat();
+    //this.selectedLong=data.geometry.location.lng();
     this.mapLocation=this.map.getBounds().getSouthWest().lat().toString()+","+this.map.getBounds().getSouthWest().lng().toString()
     +","+this.map.getBounds().getNorthEast().lat().toString()+","+this.map.getBounds().getNorthEast().lng();
   
@@ -381,9 +408,9 @@ public isApp=false;
      //debugger;
      this.poly.getPath().push(e.latLng);
    }
-   loadSavedPolygon(savedPath:any)
+   loadSavedPolygon()
    {
-
+let savedPath=this.savedPolygonPath;
     ///////////Start Drawing//////////////////////
     this.startDrawing();
        this.poly = new google.maps.Polyline({
@@ -466,15 +493,20 @@ public isApp=false;
          this.stopDrawing();
         
        } else {
+        //debugger;
        this.startDrawing();
        this.poly = new google.maps.Polyline({
          map: map,
          clickable: false
        });
        this.isDrawing = true;
-       map.setOptions({
-         draggable: false
-       });
+       if(map!=undefined)
+       {
+        map.setOptions({
+          draggable: false
+        });
+       }
+      
 
          this.toDrawing = true;
 
@@ -483,7 +515,10 @@ public isApp=false;
      });
    }
   startDrawing() {
+    if(this.drawingManager!=undefined)
+    {
      this.drawingManager.setDrawingMode(google.maps.drawing.OverlayType.POLYGON);
+    
      this.map.setOptions({
        draggable: false
      });
@@ -493,6 +528,7 @@ public isApp=false;
     });
  
    this.isDrawing = true;
+  }
    }
    stopDrawing() {
     
@@ -703,7 +739,7 @@ public isApp=false;
        
      } 
     loadAvailableSearchFields(result:any):void{
-      debugger;
+     // debugger;
       this.setSearchedFields(result);
     }
     allListingTypeSelected()
@@ -1002,7 +1038,7 @@ public isApp=false;
            this.selectedLong=lastSearchedObj.selectedLong;
          }
        //  debugger;
-          this.loadSavedPolygon(this.savedPolygonPath);
+          this.loadSavedPolygon();
       }
     }
   }
@@ -1086,6 +1122,7 @@ public isApp=false;
             this.assigned_agent_id=result.result.assigned_agent_ids.split(',');
           }
           this.main_description=result.result.main_description;
+          this.brief_description=result.result.brief_description;
           this.video_url=result.result.video_url;
           this.virtual_tour_url=result.result.virtual_tour_url;
           this.city=result.result.city;
@@ -1102,7 +1139,7 @@ public isApp=false;
           if(result.result.community_image_url!=undefined)
       {
         this.additionalInfoOption=true;
-      this.loadCommunityImage(this.sharedServiceObj.imgBucketUrl,result.community_image_url);
+      this.loadCommunityImage(this.sharedServiceObj.imgBucketUrl,result.result.community_image_url);
         //let image : any= new Image();
         //image.src = this.sharedServiceObj.imgBucketUrl+result.result.community_image_url;
         //this.communityImageCropper.setImage(image);

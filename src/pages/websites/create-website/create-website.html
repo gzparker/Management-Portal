@@ -26,7 +26,7 @@
   <ion-item>
     <ion-label floating>Website Domain<span [ngClass]="{'error': website_domain==''}" *ngIf="website_domain==''">*</span></ion-label>
     <ion-input type="text" [(ngModel)]="website_domain" 
-    name="website_domain" id="website_domain" required pattern="https?://.+" ></ion-input>
+    name="website_domain" id="website_domain" required ></ion-input>
   </ion-item>
   
   <ion-item>

@@ -62,7 +62,15 @@ export class CreateWebsitePage {
        {
          isActiveFinal="0";
        }
-
+       if(this.website_domain.indexOf("http://www")<0 && this.website_domain.indexOf("https://www")<0)
+       {
+         //debugger;
+         this.website_domain="http://www."+this.website_domain;
+       }
+       else
+       {
+         this.website_domain=this.website_domain;
+       }
   this.userServiceObj.createWebsite(this.userId,isActiveFinal,this.website_domain,this.identity_name)
     .subscribe((result) => this.createWebsiteResp(result));
     // }

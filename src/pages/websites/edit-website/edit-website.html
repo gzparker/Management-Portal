@@ -24,9 +24,9 @@
             name="identity_name" id="identity_name" required placeholder="Identity Name"></ion-input>
         </ion-item>
         <ion-item>
-        <ion-label floating>Website Domain<span [ngClass]="{'error': !websiteForm.valid}" *ngIf="!websiteForm.valid">*</span></ion-label>
+        <ion-label floating>Website Domain<span [ngClass]="{'error': website_domain==''}" *ngIf="website_domain==''">*</span></ion-label>
         <ion-input type="text" [(ngModel)]="website_domain" 
-        name="website_domain" id="website_domain" required pattern="https?://.+"></ion-input>
+        name="website_domain" id="website_domain" required ></ion-input>
       </ion-item>
       <ion-list *ngIf="isApp">
 
@@ -78,9 +78,14 @@
         <ion-textarea type="text" [(ngModel)]="footer_wrapper" name="footer_wrapper"></ion-textarea>
       </ion-item>
       <ion-item>
+        <ion-label>Intagent Website</ion-label>
+        <ion-checkbox color="royal" checked="false" [(ngModel)]="intagent_website" name="intagent_website" id="intagent_website" 
+        required >intagent_website</ion-checkbox>
+      </ion-item>
+      <!--<ion-item>
         <ion-label floating>Intagent Website</ion-label>
         <ion-input type="number" [(ngModel)]="intagent_website" name="intagent_website"></ion-input>
-      </ion-item>
+      </ion-item>-->
       <ion-item>
         <ion-label floating>Custom CSS</ion-label>
         <ion-textarea type="text" [(ngModel)]="custom_css" name="custom_css"></ion-textarea>

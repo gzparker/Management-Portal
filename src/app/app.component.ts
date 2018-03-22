@@ -54,11 +54,11 @@ declare var google: any;
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
   tab1Root: any = DashboardPage;
- 
+  public isApp=false;
+  public isWebBrowser=false;
   rootPage: any = HomePage;
   public userLoggedIn: boolean = false;
   public allCountryCodes: any[] = [];
-  public isApp=false;
   public showWebsiteSubmenu=false;
   public showLeadsSubmenu=false;
   public showHotsheetsSubmenu=false;
@@ -83,12 +83,16 @@ export class MyApp {
       { title: "Register", component: RegisterPage }
     ];
     this.setLoginInitialStatus();
-    if(this.platform.is('core') || this.platform.is('mobileweb')) {
+    if(this.platform.is('core') || this.platform.is('mobileweb') || this.platform.is('cordova') || 
+    this.platform.is('mobile')) {
       this.isApp=false;
     }
     else
     {
       this.isApp=true;
+    }
+    if(this.platform.is('core')) {
+      this.isWebBrowser=true;
     }
    sharedServiceObj.signOutEmitter.subscribe(item => {
      this.logOut();
@@ -119,28 +123,33 @@ export class MyApp {
     this.storage.remove("availableCountryList");
   }
   setUserCurrentGeoLocation() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position)=> {
-        this.storage.set("userCurrentLatitude", position.coords.latitude);
-        this.storage.set("userCurrentLongitude", position.coords.longitude);
-        this.setUserCountry(position.coords.latitude, position.coords.longitude);
-//debugger;
-      }, function() {
+    if(!this.isWebBrowser)
+    {
+      if (window.navigator.geolocation) {
+        window.navigator.geolocation.getCurrentPosition((position)=> {
+          this.storage.set("userCurrentLatitude", position.coords.latitude);
+          this.storage.set("userCurrentLongitude", position.coords.longitude);
+          this.setUserCountry(position.coords.latitude, position.coords.longitude);
+  //debugger;
+        }, function() {
+         
+        });
+      } else {
+        // Browser doesn't support Geolocation
        
-      });
-    } else {
-      // Browser doesn't support Geolocation
-     
+      }
     }
-
-  
-    /*this.geolocation.getCurrentPosition().then((resp) => {
+else
+{
+this.geolocation.getCurrentPosition().then((resp) => {
       this.storage.set("userCurrentLatitude", resp.coords.latitude);
       this.storage.set("userCurrentLongitude", resp.coords.longitude);
       this.setUserCountry(resp.coords.latitude, resp.coords.longitude);
     }).catch((error) => {
       console.log('Error getting location', error);
-    });*/
+    });
+}
+    
 
   }
   AfterViewInit(){
@@ -166,7 +175,7 @@ export class MyApp {
       var latlng = new google.maps.LatLng(latitude, longitude);
       var geocoder = new google.maps.Geocoder;
    
-   geocoder.geocode({'location': latlng}, (results, status)=> {
+       geocoder.geocode({'location': latlng}, (results, status)=> {
         if (status === 'OK') {
           //alert('inside');
           if (results[0]) {

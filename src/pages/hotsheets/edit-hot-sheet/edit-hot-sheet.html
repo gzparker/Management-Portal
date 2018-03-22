@@ -78,6 +78,10 @@
     <ion-textarea type="text" [(ngModel)]="main_description" name="main_description"></ion-textarea>
   </ion-item>
   <ion-item>
+    <ion-label floating>Brief Description</ion-label>
+    <ion-textarea type="text" [(ngModel)]="brief_description" name="brief_description"></ion-textarea>
+  </ion-item>
+  <ion-item>
       <ion-label floating>Assigned Agent IDs</ion-label>
       <ion-select [(ngModel)]="assigned_agent_id"  
     name="assigned_agent_id" multiple="true">
@@ -214,7 +218,7 @@
     
   </ion-item>
   <ion-item>
-    <ion-label>Unit Size(sqm)</ion-label>
+    <ion-label>Property Size</ion-label>
     
           <ion-input type="text" [(ngModel)]="unit_size_min"
           name="unit_size_min" id="unit_size_min" placeholder="min" (blur)="updateSearchObject()"></ion-input>

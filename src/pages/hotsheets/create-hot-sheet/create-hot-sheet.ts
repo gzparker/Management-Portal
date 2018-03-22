@@ -54,6 +54,7 @@ export class CreateHotSheetPage {
     displayAllSelectedText: true
 };
 public isApp=false;
+public isWebBrowser=false;
   public msl_id:string="";
   public name:string="";
   public advanceSearchOption:boolean=false;
@@ -173,6 +174,9 @@ public isApp=false;
       {
         this.isApp=true;
       }
+      if(this.platform.is('core')) {
+        this.isWebBrowser=true;
+      }
       this.cropperSettings = new CropperSettings();
       this.cropperSettings.width = 100;
       this.cropperSettings.height = 100;
@@ -207,10 +211,10 @@ public isApp=false;
    
    
     //this.geolocation.getCurrentPosition().then((position) => {
+      if(!this.isWebBrowser)
+    {
       if (window.navigator.geolocation) {
-        //debugger;
         window.navigator.geolocation.getCurrentPosition((position)=> {
-         // debugger;
       if(position.coords.latitude!=undefined&&position.coords.longitude!=undefined)
       {
         this.map_height=400;
@@ -222,8 +226,21 @@ public isApp=false;
     }, {maximumAge:0, timeout:10000});
   } else {
     // Browser doesn't support Geolocation
-   
   }
+}
+else
+{
+ 
+  this.geolocation.getCurrentPosition().then((position) => {
+    if(position.coords.latitude!=undefined&&position.coords.longitude!=undefined)
+      {
+     //   debugger;
+        this.map_height=400;
+        this.loadMap(position.coords.latitude, position.coords.longitude);
+        this.initAutocomplete();
+      }
+  });
+}
    // });
   }
   setCurrenttPosition(result:any)
@@ -704,7 +721,9 @@ this.city=element.long_name;
     }
     setMapCoordinates(e:any)
    {
-
+    //debugger;
+    this.selectedLat=this.map.center.lat();
+    this.selectedLong=this.map.center.lng();
     this.mapLocation=this.map.getBounds().getSouthWest().lat().toString()+","+this.map.getBounds().getSouthWest().lng().toString()
     +","+this.map.getBounds().getNorthEast().lat().toString()+","+this.map.getBounds().getNorthEast().lng();
   
@@ -812,7 +831,6 @@ this.allListingTypeChecked=true;
       }
       if(result.searchFieldsJson.neighborhood!=undefined)
       {
-      
       let optionsArray:any[]=[];
       this.neighbourhood=result.searchFieldsJson.neighborhood;
     //  debugger;

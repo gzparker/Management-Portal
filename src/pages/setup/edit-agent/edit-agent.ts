@@ -140,7 +140,7 @@ loadAgentDetailsResp(result:any)
   }
 }
 loadImage(baseUrl:string,imageUrl:string) {
-  debugger;
+  //debugger;
   const self = this;
   var image:any = new Image();
   const xhr = new XMLHttpRequest()
