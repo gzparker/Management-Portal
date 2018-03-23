@@ -37,6 +37,8 @@ export class GlobalPreferencesPage {
   public ngxCropperConfig: object;
  
   // config 
+  public hideCompanyCropper:boolean=true;
+  public hidePersonalCropper:boolean=true;
   public cropperJsConfig: object;
   public isApp=false;
   public userLoggedId:boolean=false;
@@ -90,6 +92,8 @@ export class GlobalPreferencesPage {
     {
       this.isApp=true;
     }
+    this.hideCompanyCropper=false;
+    this.hidePersonalCropper=false;
     //////////////Company Cropper Settings//////////////////
       this.companyCropperSettings = new CropperSettings();
       this.companyCropperSettings.width = 100;
@@ -177,6 +181,7 @@ export class GlobalPreferencesPage {
   loadCompanyImage(baseUrl:string,imageUrl:string) {
     //debugger;
     const self = this;
+    self.hideCompanyCropper=true;
     var image:any = new Image();
     const xhr = new XMLHttpRequest()
     xhr.open("GET", baseUrl+imageUrl);
@@ -192,6 +197,7 @@ export class GlobalPreferencesPage {
           image.onload = function () {
             //alert (this.width);
             //debugger;
+            
             self.companyCropperSettings.croppedWidth = this.width;
             self.companyCropperSettings.croppedHeight = this.height;
             
@@ -205,6 +211,7 @@ export class GlobalPreferencesPage {
   loadPersonalImage(baseUrl:string,imageUrl:string) {
     //debugger;
     const self = this;
+    self.hidePersonalCropper=true;
     var image:any = new Image();
     const xhr = new XMLHttpRequest()
     xhr.open("GET", baseUrl+imageUrl);
@@ -220,6 +227,7 @@ export class GlobalPreferencesPage {
           image.onload = function () {
             //alert (this.width);
             //debugger;
+            
             self.personalCropperSettings.croppedWidth = this.width;
             self.personalCropperSettings.croppedHeight = this.height;
             
@@ -231,6 +239,7 @@ export class GlobalPreferencesPage {
     });
   }
    companyFileChangeListener($event) {
+     this.hideCompanyCropper=true;
     var image:any = new Image();
     var file:File = $event.target.files[0];
     var myReader:FileReader = new FileReader();
@@ -293,6 +302,7 @@ export class GlobalPreferencesPage {
    }
   
    personalFileChangeListener($event) {
+     this.hidePersonalCropper=true;
     var image:any = new Image();
     var file:File = $event.target.files[0];
     var myReader:FileReader = new FileReader();

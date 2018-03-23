@@ -77,8 +77,10 @@
           </ion-item>
         <ion-item>
             <ion-label floating>Cell Number<span [ngClass]="{'error': phone_number==null}" *ngIf="phone_number==null">*</span></ion-label>
-            <ion-input type="tel" [(ngModel)]="phone_number" name="phone_number" 
-            required pattern="^[0-9]*$"></ion-input>
+            <ion-input type="text" name="phone_number" [(ngModel)]="phone_number" placeholder="Phone Number" 
+            [brmasker]="{phone: true}"></ion-input>
+            <!--<ion-input type="tel" [(ngModel)]="phone_number" name="phone_number" 
+            required pattern="^[0-9]*$"></ion-input>-->
           </ion-item>
       <div padding>
           <button ion-button color="primary" block  (click)="updateAccount();"

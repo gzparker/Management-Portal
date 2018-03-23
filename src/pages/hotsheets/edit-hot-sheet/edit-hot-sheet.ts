@@ -40,6 +40,8 @@ export class EditHotSheetPage {
   headerImageCropper:ImageCropperComponent;
   @ViewChild('communityImageCropper', undefined)
   communityImageCropper:ImageCropperComponent;
+  public hideHeaderCropper:boolean=true;
+  public hideCommunityCropper:boolean=true;
   public headerCropperSettings;
   public communityCropperSettings;
   public croppedWidth:Number;
@@ -179,6 +181,8 @@ public isWebBrowser=false;
       if(this.platform.is('core')) {
         this.isWebBrowser=true;
       }
+      this.hideCommunityCropper=false;
+      this.hideHeaderCropper=false;
       this.headerCropperSettings = new CropperSettings();
       this.headerCropperSettings.width = 100;
       this.headerCropperSettings.height = 100;
@@ -1180,6 +1184,8 @@ let savedPath=this.savedPolygonPath;
       loadCommunityImage(baseUrl:string,imageUrl:string) {
       //  debugger;
         const self = this;
+      this.hideCommunityCropper=true;
+        
         var image:any = new Image();
         const xhr = new XMLHttpRequest()
         xhr.open("GET", baseUrl+imageUrl);
@@ -1194,6 +1200,8 @@ let savedPath=this.savedPolygonPath;
               image.src = loadEvent.target.result;
               
               image.onload = function () {
+                
+                //debugger;
                 self.communityCropperSettings.croppedWidth=this.width;
                 self.communityCropperSettings.croppedHeight=this.height;
                 self.communityImageCropper.setImage(image);
@@ -1204,6 +1212,7 @@ let savedPath=this.savedPolygonPath;
       loadHeaderImage(baseUrl:string,imageUrl:string) {
        // debugger;
         const self = this;
+        this.hideHeaderCropper=true;
         var image:any = new Image();
         const xhr = new XMLHttpRequest()
         xhr.open("GET", baseUrl+imageUrl);
@@ -1217,11 +1226,12 @@ let savedPath=this.savedPolygonPath;
               //debugger;
               image.src = loadEvent.target.result;
               image.onload = function () {
+               
                 self.headerCropperSettings.croppedWidth=this.width;
                 self.headerCropperSettings.croppedHeight=this.height;
                 self.headerImageCropper.setImage(image);
               }
-              self.headerImageCropper.setImage(image);
+              //self.headerImageCropper.setImage(image);
       
           };
         });
@@ -1297,6 +1307,7 @@ let savedPath=this.savedPolygonPath;
       });
       }
       headerFileChangeListener($event) {
+        this.hideHeaderCropper=true;
         var image:any = new Image();
         var file:File = $event.target.files[0];
         var myReader:FileReader = new FileReader();
@@ -1322,6 +1333,7 @@ let savedPath=this.savedPolygonPath;
        
       }
       communityFileChangeListener($event) {
+        this.hideCommunityCropper=true;
         var image:any = new Image();
         var file:File = $event.target.files[0];
         var myReader:FileReader = new FileReader();

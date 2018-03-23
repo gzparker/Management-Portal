@@ -35,6 +35,8 @@ export class EditWebsitePage {
   companyLogoCropper:ImageCropperComponent;
   @ViewChild('favIconLogoCropper', undefined)
   favIconLogoCropper:ImageCropperComponent;
+  public hideLogoCropper:boolean=true;
+  public hideFavIconCropper:boolean=true;
   public logoCropperSettings;
   public favIconCropperSettings;
   public domainAccess:any;
@@ -76,6 +78,8 @@ export class EditWebsitePage {
       {
         this.isApp=true;
       }
+      this.hideFavIconCropper=false;
+      this.hideLogoCropper=false;
       this.logoCropperSettings = new CropperSettings();
       this.logoCropperSettings.width = 100;
       this.logoCropperSettings.height = 100;
@@ -125,6 +129,7 @@ export class EditWebsitePage {
     });
   }
   websiteLogoFileChangeListener($event) {
+    this.hideLogoCropper=true;
     var image:any = new Image();
     var file:File = $event.target.files[0];
     var myReader:FileReader = new FileReader();
@@ -172,6 +177,7 @@ export class EditWebsitePage {
       });
     }
     websiteFavIconFileChangeListener($event) {
+      this.hideFavIconCropper=true;
       var image:any = new Image();
       var file:File = $event.target.files[0];
       var myReader:FileReader = new FileReader();
@@ -323,6 +329,7 @@ this.footer_wrapper=result.result.footer_wrapper;
   }
   loadLogo(baseUrl:string,imageUrl:string) {
     //debugger;
+    this.hideLogoCropper=true;
     const self = this;
     var image:any = new Image();
     const xhr = new XMLHttpRequest()
@@ -348,6 +355,7 @@ this.footer_wrapper=result.result.footer_wrapper;
     });
   }
   loadIcon(baseUrl:string,imageUrl:string) {
+    this.hideFavIconCropper=true;
     const self = this;
     var image:any = new Image();
     //debugger;

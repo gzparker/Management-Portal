@@ -30,7 +30,7 @@ import { SubscriptionProvider } from '../../../providers/subscription/subscripti
 export class EditAgentPage {
   @ViewChild('agentCropper', undefined)
   agentCropper:ImageCropperComponent;
-
+  public hideAgentCropper:boolean=true;
   public isApp=false;
   public userLoggedId:boolean=false;
   public mls_id:string="";
@@ -66,6 +66,7 @@ export class EditAgentPage {
       {
         this.isApp=true;
       }
+      this.hideAgentCropper=false;
       this.cropperSettings = new CropperSettings();
       this.cropperSettings.width = 100;
       this.cropperSettings.height = 100;
@@ -141,6 +142,7 @@ loadAgentDetailsResp(result:any)
 }
 loadImage(baseUrl:string,imageUrl:string) {
   //debugger;
+  this.hideAgentCropper=true;
   const self = this;
   var image:any = new Image();
   const xhr = new XMLHttpRequest()
@@ -184,6 +186,7 @@ updateAgent()
     });
   }
   fileChangeListener($event) {
+    this.hideAgentCropper=true;
     var image:any = new Image();
     var file:File = $event.target.files[0];
     var myReader:FileReader = new FileReader();

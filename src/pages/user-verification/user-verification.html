@@ -31,7 +31,10 @@
     </ion-item>
     <ion-item>
       <ion-label floating>Cell Number<span [ngClass]="{'error': phone_number_verify==null}" *ngIf="phone_number_verify==null">*</span></ion-label>
-      <ion-input type="tel" [(ngModel)]="phone_number_verify" name="phone_number_verify" required pattern="^[0-9]*$"></ion-input>
+      <!--<ion-input type="tel" [(ngModel)]="phone_number_verify" name="phone_number_verify" 
+      required pattern="^[0-9]*$"></ion-input>-->
+      <ion-input type="text" name="phone_number_verify" [(ngModel)]="phone_number_verify" placeholder="Phone Number" 
+      [brmasker]="{phone: true}" required></ion-input>
     </ion-item>
 
   </ion-list>

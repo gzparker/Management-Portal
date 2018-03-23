@@ -29,7 +29,7 @@ import { SubscriptionProvider } from '../../../providers/subscription/subscripti
 export class CreateAgentPage {
   @ViewChild('agentCropper', undefined)
   agentCropper:ImageCropperComponent;
-
+  public hideAgentCropper:boolean=true;
   cropperSettings: CropperSettings;
   public isApp=false;
   public userLoggedId:boolean=false;
@@ -62,6 +62,7 @@ export class CreateAgentPage {
       {
         this.isApp=true;
       }
+      this.hideAgentCropper=false;
       this.cropperSettings = new CropperSettings();
     this.cropperSettings.width = 100;
     this.cropperSettings.height = 100;
@@ -110,6 +111,7 @@ export class CreateAgentPage {
     });
   }
   fileChangeListener($event) {
+    this.hideAgentCropper=true;
     var image:any = new Image();
     var file:File = $event.target.files[0];
     var myReader:FileReader = new FileReader();

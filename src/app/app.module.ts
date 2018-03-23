@@ -80,6 +80,7 @@ import { GlobalSettingsPopupPage } from '../pages/modal-popup/global-settings-po
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { BrMaskerModule } from 'brmasker-ionic-3';
 import { UserProvider } from '../providers/user/user';
 import { SharedProvider } from '../providers/shared/shared';
 import { SubscriptionProvider } from '../providers/subscription/subscription';
@@ -105,7 +106,7 @@ import { ListingProvider } from '../providers/listing/listing';
       driverOrder: ['indexeddb', 'sqlite', 'websql']
     }),AgmCoreModule.forRoot({
       apiKey: 'AIzaSyA9aj3-17cojks6gicZZ_PY2t5ERVu25ac'
-    }),ColorPickerModule,TimezonePickerModule
+    }),ColorPickerModule,TimezonePickerModule,BrMaskerModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

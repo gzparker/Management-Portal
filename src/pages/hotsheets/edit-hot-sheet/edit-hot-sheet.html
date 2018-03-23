@@ -125,7 +125,7 @@
           <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="headerFileChangeListener($event)">
            
             <img-cropper #headerImageCropper [image]="dataHeaderImage" [settings]="headerCropperSettings"
-             (onCrop)="headerImageCropped($event)"></img-cropper>
+             (onCrop)="headerImageCropped($event)" *ngIf="hideHeaderCropper"></img-cropper>
             <br>
             <span *ngIf="dataHeaderImage.image" >
                 <img [src]="dataHeaderImage.image" [width]="headerCropperSettings.croppedWidth"
@@ -138,7 +138,7 @@
           <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="communityFileChangeListener($event)">
            
             <img-cropper #communityImageCropper [image]="dataCommunityImage" [settings]="communityCropperSettings"
-             (onCrop)="communtiyImageCropped($event)"></img-cropper>
+             (onCrop)="communtiyImageCropped($event)" *ngIf="hideCommunityCropper"></img-cropper>
             <br>
             <span *ngIf="dataCommunityImage.image" >
                 <img [src]="dataCommunityImage.image" [width]="communityCropperSettings.croppedWidth"
@@ -153,19 +153,17 @@
      
   <ion-item *ngIf="status!=undefined">
     <ion-label floating>Status</ion-label>
-    <ion-select [(ngModel)]="status_modal" (ngModelChange)="selectedStatus($event)" name="status_modal"
-     >
+    <ion-select [(ngModel)]="status_modal" (ngModelChange)="selectedStatus($event)" name="status_modal">
       <ion-option *ngFor="let status of statusOptions" value= {{status.id}}>
          {{status.name}}
        </ion-option>
-     </ion-select>
-    
+     </ion-select>  
   </ion-item>
   <ion-item *ngIf="listing_type!=undefined">
     <ion-label floating>Listing Type</ion-label>
     <ion-select [(ngModel)]="listing_type_modal" (ngModelChange)="selectedListingType($event)" 
     name="listing_type_modal" multiple="true">
-    
+
       <ion-option *ngFor="let listingType of listingTypeOptions" value= {{listingType.id}}>
          {{listingType.name}}
        </ion-option>

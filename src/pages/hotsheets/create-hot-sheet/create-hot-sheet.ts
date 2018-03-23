@@ -40,6 +40,8 @@ export class CreateHotSheetPage {
   communityImageCropper:ImageCropperComponent;
 
   listSearch: string = '';
+  public hideHeaderCropper:boolean=true;
+  public hideCommunityCropper:boolean=true;
   public headerCropperSettings;
   public communityCropperSettings;
   public croppedWidth:Number;
@@ -175,6 +177,8 @@ public isWebBrowser=false;
       {
         this.isApp=true;
       }
+      this.hideCommunityCropper=false;
+      this.hideHeaderCropper=false;
       if(this.platform.is('core')) {
         this.isWebBrowser=true;
       }
@@ -1105,6 +1109,7 @@ this.allListingTypeChecked=true;
     
     }
     headerFileChangeListener($event) {
+      this.hideHeaderCropper=true;
       var image:any = new Image();
       var file:File = $event.target.files[0];
       var myReader:FileReader = new FileReader();
@@ -1130,6 +1135,7 @@ this.allListingTypeChecked=true;
      
     }
     communityFileChangeListener($event) {
+      this.hideCommunityCropper=true;
       var image:any = new Image();
       var file:File = $event.target.files[0];
       var myReader:FileReader = new FileReader();

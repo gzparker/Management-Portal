@@ -77,7 +77,7 @@
             <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="fileChangeListener($event)">
        
         <img-cropper #agentCropper [image]="dataAgentImage" [settings]="cropperSettings"
-         (onCrop)="agentImageCropped($event)"></img-cropper>
+         (onCrop)="agentImageCropped($event)" *ngIf="hideAgentCropper"></img-cropper>
         <br>
         <span *ngIf="dataAgentImage.image" >
             <img [src]="dataAgentImage.image" [width]="cropperSettings.croppedWidth"
