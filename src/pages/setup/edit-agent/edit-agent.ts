@@ -69,8 +69,8 @@ export class EditAgentPage {
       this.cropperSettings = new CropperSettings();
       this.cropperSettings.width = 100;
       this.cropperSettings.height = 100;
-      this.cropperSettings.croppedWidth = 200;
-      this.cropperSettings.croppedHeight = 200;
+      this.cropperSettings.croppedWidth = 1280;
+      this.cropperSettings.croppedHeight = 1000;
       this.cropperSettings.canvasWidth = 500;
       this.cropperSettings.canvasHeight = 300;
       this.cropperSettings.minWidth = 10;
@@ -153,7 +153,15 @@ loadImage(baseUrl:string,imageUrl:string) {
      
       reader.onloadend = function (loadEvent:any) {
         image.src = loadEvent.target.result;
-        self.agentCropper.setImage(image);
+        image.onload = function () {
+          //alert (this.width);
+          //debugger;
+          self.cropperSettings.croppedWidth = this.width;
+          self.cropperSettings.croppedHeight = this.height;
+          
+          self.agentCropper.setImage(image);  
+      };
+        //self.agentCropper.setImage(image);
 
     };
   });
@@ -182,14 +190,23 @@ updateAgent()
     var that = this;
     myReader.onloadend = function (loadEvent:any) {
         image.src = loadEvent.target.result;
-        that.agentCropper.setImage(image);
+        image.onload = function () {
+          //alert (this.width);
+          //debugger;
+          that.cropperSettings.croppedWidth = this.width;
+          that.cropperSettings.croppedHeight = this.height;
+          
+          that.agentCropper.setImage(image);  
+      };
 
     };
 
     myReader.readAsDataURL(file);
 }
-  agentImageCropped(image:string)
+  agentImageCropped(image:any)
    {
+    this.cropperSettings.croppedWidth = image.width;
+    this.cropperSettings.croppedHeight = image.height;
     this.agentImage = this.dataAgentImage.image;
    }
   

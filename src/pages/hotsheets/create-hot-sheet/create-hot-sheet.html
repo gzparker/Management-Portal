@@ -117,24 +117,24 @@
         </ion-list-header>
         <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="headerFileChangeListener($event)">
        
-        <img-cropper #headerImageCropper [image]="dataHeaderImage" [settings]="cropperSettings"
+        <img-cropper #headerImageCropper [image]="dataHeaderImage" [settings]="headerCropperSettings"
          (onCrop)="headerImageCropped($event)"></img-cropper>
         <br>
         <span *ngIf="dataHeaderImage.image" >
-            <img [src]="dataHeaderImage.image" [width]="cropperSettings.croppedWidth"
-             [height]="cropperSettings.croppedHeight">
+            <img [src]="dataHeaderImage.image" [width]="headerCropperSettings.croppedWidth"
+             [height]="headerCropperSettings.croppedHeight">
         </span>
       <ion-list-header>
           Community Image
         </ion-list-header>
         <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="communityFileChangeListener($event)">
        
-        <img-cropper #communityImageCropper [image]="dataCommunityImage" [settings]="cropperSettings"
+        <img-cropper #communityImageCropper [image]="dataCommunityImage" [settings]="communityCropperSettings"
          (onCrop)="communtiyImageCropped($event)"></img-cropper>
         <br>
         <span *ngIf="dataCommunityImage.image" >
-            <img [src]="dataCommunityImage.image" [width]="cropperSettings.croppedWidth"
-             [height]="cropperSettings.croppedHeight">
+            <img [src]="dataCommunityImage.image" [width]="communityCropperSettings.croppedWidth"
+             [height]="communityCropperSettings.croppedHeight">
         </span>
   </ion-list>
 </ion-list>

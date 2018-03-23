@@ -35,7 +35,8 @@ export class EditWebsitePage {
   companyLogoCropper:ImageCropperComponent;
   @ViewChild('favIconLogoCropper', undefined)
   favIconLogoCropper:ImageCropperComponent;
-  public cropperSettings;
+  public logoCropperSettings;
+  public favIconCropperSettings;
   public domainAccess:any;
   public website_domain:string="";
   public isApp=false;
@@ -75,20 +76,35 @@ export class EditWebsitePage {
       {
         this.isApp=true;
       }
-      this.cropperSettings = new CropperSettings();
-      this.cropperSettings.width = 100;
-      this.cropperSettings.height = 100;
-      this.cropperSettings.croppedWidth = 200;
-      this.cropperSettings.croppedHeight = 200;
-      this.cropperSettings.canvasWidth = 500;
-      this.cropperSettings.canvasHeight = 300;
-      this.cropperSettings.minWidth = 10;
-        this.cropperSettings.minHeight = 10;
+      this.logoCropperSettings = new CropperSettings();
+      this.logoCropperSettings.width = 100;
+      this.logoCropperSettings.height = 100;
+      this.logoCropperSettings.croppedWidth = 1280;
+      this.logoCropperSettings.croppedHeight = 1000;
+      this.logoCropperSettings.canvasWidth = 500;
+      this.logoCropperSettings.canvasHeight = 300;
+      this.logoCropperSettings.minWidth = 10;
+      this.logoCropperSettings.minHeight = 10;
   
-        this.cropperSettings.rounded = false;
-        this.cropperSettings.keepAspect = false;
+      this.logoCropperSettings.rounded = false;
+      this.logoCropperSettings.keepAspect = false;
   
-      this.cropperSettings.noFileInput = true;
+      this.logoCropperSettings.noFileInput = true;
+
+      this.favIconCropperSettings = new CropperSettings();
+      this.favIconCropperSettings.width = 100;
+      this.favIconCropperSettings.height = 100;
+      this.favIconCropperSettings.croppedWidth = 1280;
+      this.favIconCropperSettings.croppedHeight = 1000;
+      this.favIconCropperSettings.canvasWidth = 500;
+      this.favIconCropperSettings.canvasHeight = 300;
+      this.favIconCropperSettings.minWidth = 10;
+      this.favIconCropperSettings.minHeight = 10;
+  
+      this.favIconCropperSettings.rounded = false;
+      this.favIconCropperSettings.keepAspect = false;
+  
+      this.favIconCropperSettings.noFileInput = true;
         this.dataWebsiteLogo={};
         this.dataWebsiteIcon={};
         this.loader = this.loadingCtrl.create({
@@ -115,12 +131,22 @@ export class EditWebsitePage {
     var that = this;
     myReader.onloadend = function (loadEvent:any) {
         image.src = loadEvent.target.result;
-        that.companyLogoCropper.setImage(image);
+        image.onload = function () {
+          //alert (this.width);
+          //debugger;
+          that.logoCropperSettings.croppedWidth = this.width;
+          that.logoCropperSettings.croppedHeight = this.height;
+          
+          that.companyLogoCropper.setImage(image);
+      };
+        //that.companyLogoCropper.setImage(image);
     };
     myReader.readAsDataURL(file);
 }
-  websiteIdentityImageCropped(image:string)
+  websiteIdentityImageCropped(image:any)
    {
+    this.logoCropperSettings.croppedWidth = image.width;
+    this.logoCropperSettings.croppedHeight = image.height;
     this.identity_logo = this.dataWebsiteLogo.image;
    }
    takePicture(){
@@ -152,14 +178,24 @@ export class EditWebsitePage {
       var that = this;
       myReader.onloadend = function (loadEvent:any) {
           image.src = loadEvent.target.result;
-          that.favIconLogoCropper.setImage(image);
+          image.onload = function () {
+            //alert (this.width);
+            //debugger;
+            that.favIconCropperSettings.croppedWidth = this.width;
+            that.favIconCropperSettings.croppedHeight = this.height;
+            
+            that.favIconLogoCropper.setImage(image);
+        };
+          //that.favIconLogoCropper.setImage(image);
   
       };
   
       myReader.readAsDataURL(file);
   }
-    websiteFavIconImageCropped(image:string)
+    websiteFavIconImageCropped(image:any)
      {
+      this.favIconCropperSettings.croppedWidth = image.width;
+      this.favIconCropperSettings.croppedHeight = image.height;
       this.identity_icon = this.dataWebsiteIcon.image;
      
      }
@@ -299,8 +335,15 @@ this.footer_wrapper=result.result.footer_wrapper;
        
         reader.onloadend = function (loadEvent:any) {
           image.src = loadEvent.target.result;
-          self.companyLogoCropper.setImage(image);
-  
+          //self.companyLogoCropper.setImage(image);
+          image.onload = function () {
+            //alert (this.width);
+            //debugger;
+            self.logoCropperSettings.croppedWidth = this.width;
+            self.logoCropperSettings.croppedHeight = this.height;
+            
+            self.companyLogoCropper.setImage(image);
+        };
       };
     });
   }
@@ -318,8 +361,15 @@ this.footer_wrapper=result.result.footer_wrapper;
        
         reader.onloadend = function (loadEvent:any) {
           image.src = loadEvent.target.result;
-          self.favIconLogoCropper.setImage(image);
-  
+          //self.favIconLogoCropper.setImage(image);
+          image.onload = function () {
+            //alert (this.width);
+            //debugger;
+            self.favIconCropperSettings.croppedWidth = this.width;
+            self.favIconCropperSettings.croppedHeight = this.height;
+            
+            self.favIconLogoCropper.setImage(image);
+        };
       };
     });
   } 

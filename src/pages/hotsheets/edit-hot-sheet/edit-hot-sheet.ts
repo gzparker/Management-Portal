@@ -40,7 +40,8 @@ export class EditHotSheetPage {
   headerImageCropper:ImageCropperComponent;
   @ViewChild('communityImageCropper', undefined)
   communityImageCropper:ImageCropperComponent;
-  public cropperSettings;
+  public headerCropperSettings;
+  public communityCropperSettings;
   public croppedWidth:Number;
   public croppedHeight:Number;
   public dataHeaderImage:any;
@@ -178,20 +179,35 @@ public isWebBrowser=false;
       if(this.platform.is('core')) {
         this.isWebBrowser=true;
       }
-      this.cropperSettings = new CropperSettings();
-      this.cropperSettings.width = 100;
-      this.cropperSettings.height = 100;
-      this.cropperSettings.croppedWidth = 200;
-      this.cropperSettings.croppedHeight = 200;
-      this.cropperSettings.canvasWidth = 500;
-      this.cropperSettings.canvasHeight = 300;
-      this.cropperSettings.minWidth = 10;
-        this.cropperSettings.minHeight = 10;
+      this.headerCropperSettings = new CropperSettings();
+      this.headerCropperSettings.width = 100;
+      this.headerCropperSettings.height = 100;
+      this.headerCropperSettings.croppedWidth = 1280;
+      this.headerCropperSettings.croppedHeight = 1000;
+      this.headerCropperSettings.canvasWidth = 500;
+      this.headerCropperSettings.canvasHeight = 300;
+      this.headerCropperSettings.minWidth = 10;
+      this.headerCropperSettings.minHeight = 10;
   
-        this.cropperSettings.rounded = false;
-        this.cropperSettings.keepAspect = false;
+      this.headerCropperSettings.rounded = false;
+      this.headerCropperSettings.keepAspect = false;
   
-      this.cropperSettings.noFileInput = true;
+      this.headerCropperSettings.noFileInput = true;
+
+      this.communityCropperSettings = new CropperSettings();
+      this.communityCropperSettings.width = 100;
+      this.communityCropperSettings.height = 100;
+      this.communityCropperSettings.croppedWidth = 1280;
+      this.communityCropperSettings.croppedHeight = 1000;
+      this.communityCropperSettings.canvasWidth = 500;
+      this.communityCropperSettings.canvasHeight = 300;
+      this.communityCropperSettings.minWidth = 10;
+      this.communityCropperSettings.minHeight = 10;
+  
+      this.communityCropperSettings.rounded = false;
+      this.communityCropperSettings.keepAspect = false;
+  
+      this.communityCropperSettings.noFileInput = true;
       this.dataHeaderImage= {};
       this.dataCommunityImage={};
       this.loader = this.loadingCtrl.create({
@@ -1176,8 +1192,12 @@ let savedPath=this.savedPolygonPath;
             reader.onloadend = function (loadEvent:any) {
              // debugger;
               image.src = loadEvent.target.result;
-              self.communityImageCropper.setImage(image);
-      
+              
+              image.onload = function () {
+                self.communityCropperSettings.croppedWidth=this.width;
+                self.communityCropperSettings.croppedHeight=this.height;
+                self.communityImageCropper.setImage(image);
+              }
           };
         });
       }
@@ -1196,6 +1216,11 @@ let savedPath=this.savedPolygonPath;
             reader.onloadend = function (loadEvent:any) {
               //debugger;
               image.src = loadEvent.target.result;
+              image.onload = function () {
+                self.headerCropperSettings.croppedWidth=this.width;
+                self.headerCropperSettings.croppedHeight=this.height;
+                self.headerImageCropper.setImage(image);
+              }
               self.headerImageCropper.setImage(image);
       
           };
@@ -1278,15 +1303,21 @@ let savedPath=this.savedPolygonPath;
         var that = this;
         myReader.onloadend = function (loadEvent:any) {
             image.src = loadEvent.target.result;
-            that.headerImageCropper.setImage(image);
+            image.onload = function () {
+              that.headerCropperSettings.croppedWidth=this.width;
+              that.headerCropperSettings.croppedHeight=this.height;
+              that.headerImageCropper.setImage(image);
+            }
     
         };
     
         myReader.readAsDataURL(file);
     }
    
-       headerImageCropped(image:string)
+       headerImageCropped(image:any)
       {
+        this.headerCropperSettings.croppedWidth=image.width;
+        this.headerCropperSettings.croppedHeight=image.height;
         this.headerImage=this.dataHeaderImage.image;
        
       }
@@ -1297,14 +1328,20 @@ let savedPath=this.savedPolygonPath;
         var that = this;
         myReader.onloadend = function (loadEvent:any) {
             image.src = loadEvent.target.result;
+            image.onload = function () {
+              that.communityCropperSettings.croppedWidth=this.width;
+              that.communityCropperSettings.croppedHeight=this.height;
             that.communityImageCropper.setImage(image);
+            }
     
         };
     
         myReader.readAsDataURL(file);
     }
-       communtiyImageCropped(image:string)
+       communtiyImageCropped(image:any)
       {
+        this.communityCropperSettings.croppedWidth=image.width;
+this.communityCropperSettings.croppedHeight=image.height;
         this.communityImage=this.dataCommunityImage.image; 
       }
        takeHeaderPicture(){

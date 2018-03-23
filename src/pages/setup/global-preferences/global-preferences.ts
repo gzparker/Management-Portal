@@ -47,7 +47,8 @@ export class GlobalPreferencesPage {
 
   public settingsCreateMsg:string="";
   public description:string="";
-  public cropperSettings;
+  public companyCropperSettings;
+  public personalCropperSettings;
   public croppedWidth:Number;
   public croppedHeight:Number;
   public companyImageChangedEvent: any = '';
@@ -89,20 +90,37 @@ export class GlobalPreferencesPage {
     {
       this.isApp=true;
     }
-      this.cropperSettings = new CropperSettings();
-      this.cropperSettings.width = 100;
-      this.cropperSettings.height = 100;
-      this.cropperSettings.croppedWidth = 200;
-      this.cropperSettings.croppedHeight = 200;
-      this.cropperSettings.canvasWidth = 500;
-      this.cropperSettings.canvasHeight = 300;
-      this.cropperSettings.minWidth = 10;
-        this.cropperSettings.minHeight = 10;
+    //////////////Company Cropper Settings//////////////////
+      this.companyCropperSettings = new CropperSettings();
+      this.companyCropperSettings.width = 100;
+      this.companyCropperSettings.height = 100;
+      this.companyCropperSettings.croppedWidth = 1280;
+      this.companyCropperSettings.croppedHeight = 1000;
+      this.companyCropperSettings.canvasWidth = 500;
+      this.companyCropperSettings.canvasHeight = 300;
+      this.companyCropperSettings.minWidth = 10;
+        this.companyCropperSettings.minHeight = 10;
   
-        this.cropperSettings.rounded = false;
-        this.cropperSettings.keepAspect = false;
+        this.companyCropperSettings.rounded = false;
+        this.companyCropperSettings.keepAspect = false;
   
-      this.cropperSettings.noFileInput = true;
+      this.companyCropperSettings.noFileInput = true;
+    //////////////Personal Cropper Settings//////////////////
+    this.personalCropperSettings = new CropperSettings();
+      this.personalCropperSettings.width = 100;
+      this.personalCropperSettings.height = 100;
+      this.personalCropperSettings.croppedWidth = 1280;
+      this.personalCropperSettings.croppedHeight = 1000;
+      this.personalCropperSettings.canvasWidth = 500;
+      this.personalCropperSettings.canvasHeight = 300;
+      this.personalCropperSettings.minWidth = 10;
+        this.personalCropperSettings.minHeight = 10;
+  
+        this.personalCropperSettings.rounded = false;
+        this.personalCropperSettings.keepAspect = false;
+  
+      this.personalCropperSettings.noFileInput = true;
+    ////////////////////////////////////////////////////////
         this.dataCompanyLogoImage= {};
         this.dataPersonalImage={};
         this.loader = this.loadingCtrl.create({
@@ -171,7 +189,15 @@ export class GlobalPreferencesPage {
         reader.onloadend = function (loadEvent:any) {
           //debugger;
           image.src = loadEvent.target.result;
-          self.companyCropper.setImage(image);
+          image.onload = function () {
+            //alert (this.width);
+            //debugger;
+            self.companyCropperSettings.croppedWidth = this.width;
+            self.companyCropperSettings.croppedHeight = this.height;
+            
+            self.companyCropper.setImage(image);    
+        };
+          
   
       };
     });
@@ -191,7 +217,15 @@ export class GlobalPreferencesPage {
         reader.onloadend = function (loadEvent:any) {
           //debugger;
           image.src = loadEvent.target.result;
-          self.personalCropper.setImage(image);
+          image.onload = function () {
+            //alert (this.width);
+            //debugger;
+            self.personalCropperSettings.croppedWidth = this.width;
+            self.personalCropperSettings.croppedHeight = this.height;
+            
+            self.personalCropper.setImage(image);    
+        };
+          
   
       };
     });
@@ -202,15 +236,27 @@ export class GlobalPreferencesPage {
     var myReader:FileReader = new FileReader();
     var that = this;
     myReader.onloadend = function (loadEvent:any) {
-        image.src = loadEvent.target.result;
-        that.companyCropper.setImage(image);
+      image.src = loadEvent.target.result;
+      image.onload = function () {
+        //alert (this.width);
+        //debugger;
+        that.companyCropperSettings.croppedWidth = this.width;
+        that.companyCropperSettings.croppedHeight = this.height;
+        
+        that.companyCropper.setImage(image);     
+    };
+
+        
 
     };
 
     myReader.readAsDataURL(file);
 }
-  companyImageCropped(image:string)
+  companyImageCropped(image:any)
   {
+    //debugger;
+    this.companyCropperSettings.croppedWidth = image.width;
+    this.companyCropperSettings.croppedHeight = image.height;
     this.companyLogoImage=this.dataCompanyLogoImage.image;
    
   }
@@ -253,14 +299,24 @@ export class GlobalPreferencesPage {
     var that = this;
     myReader.onloadend = function (loadEvent:any) {
         image.src = loadEvent.target.result;
-        that.personalCropper.setImage(image);
-
+        //that.personalCropper.setImage(image);
+        image.onload = function () {
+          //alert (this.width);
+          //debugger;
+          that.personalCropperSettings.croppedWidth = this.width;
+          that.personalCropperSettings.croppedHeight = this.height;
+          
+          that.personalCropper.setImage(image);   
+      };
     };
 
     myReader.readAsDataURL(file);
 }
-  personalImageCropped(image:string)
+  personalImageCropped(image:any)
   {
+   // debugger;
+    this.personalCropperSettings.croppedWidth = image.width;
+    this.personalCropperSettings.croppedHeight = image.height;
     this.personalImage=this.dataPersonalImage.image;
    
   }

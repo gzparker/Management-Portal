@@ -49,24 +49,24 @@
                 </ion-list-header>
                 <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="websiteLogoFileChangeListener($event)">
        
-                <img-cropper #companyLogoCropper [image]="dataWebsiteLogo" [settings]="cropperSettings"
+                <img-cropper #companyLogoCropper [image]="dataWebsiteLogo" [settings]="logoCropperSettings"
                  (onCrop)="websiteIdentityImageCropped($event)"></img-cropper>
                 <br>
                 <span *ngIf="dataWebsiteLogo.image" >
-                    <img [src]="dataWebsiteLogo.image" [width]="cropperSettings.croppedWidth"
-                     [height]="cropperSettings.croppedHeight">
+                    <img [src]="dataWebsiteLogo.image" [width]="logoCropperSettings.croppedWidth"
+                     [height]="logoCropperSettings.croppedHeight">
                 </span>
                 <ion-list-header>
                   Upload Website FavIcon
                   </ion-list-header>
                   <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="websiteFavIconFileChangeListener($event)">
          
-                  <img-cropper #favIconLogoCropper [image]="dataWebsiteIcon" [settings]="cropperSettings"
+                  <img-cropper #favIconLogoCropper [image]="dataWebsiteIcon" [settings]="favIconCropperSettings"
                    (onCrop)="websiteFavIconImageCropped($event)"></img-cropper>
                   <br>
                   <span *ngIf="dataWebsiteIcon.image" >
-                      <img [src]="dataWebsiteIcon.image" [width]="cropperSettings.croppedWidth"
-                       [height]="cropperSettings.croppedHeight">
+                      <img [src]="dataWebsiteIcon.image" [width]="favIconCropperSettings.croppedWidth"
+                       [height]="favIconCropperSettings.croppedHeight">
                   </span>
           </ion-list>
       <ion-item>

@@ -79,8 +79,8 @@ export class EditAccountPage {
       this.cropperSettings = new CropperSettings();
       this.cropperSettings.width = 100;
       this.cropperSettings.height = 100;
-      this.cropperSettings.croppedWidth = 200;
-      this.cropperSettings.croppedHeight = 200;
+      this.cropperSettings.croppedWidth = 1280;
+      this.cropperSettings.croppedHeight = 1000;
       this.cropperSettings.canvasWidth = 500;
       this.cropperSettings.canvasHeight = 300;
       this.cropperSettings.minWidth = 10;
@@ -153,7 +153,15 @@ export class EditAccountPage {
         reader.onloadend = function (loadEvent:any) {
           self.hideImageCropper=true;
           image.src = loadEvent.target.result;
-          self.personalCropper.setImage(image);
+          image.onload = function () {
+            //alert (this.width);
+            //debugger;
+            self.cropperSettings.croppedWidth = this.width;
+            self.cropperSettings.croppedHeight = this.height;
+            
+            self.personalCropper.setImage(image);
+        };
+          // 
   
       };
     });
@@ -166,14 +174,24 @@ export class EditAccountPage {
     var that = this;
     myReader.onloadend = function (loadEvent:any) {
         image.src = loadEvent.target.result;
-        that.personalCropper.setImage(image);
+        image.onload = function () {
+          //alert (this.width);
+          //debugger;
+          that.cropperSettings.croppedWidth = this.width;
+          that.cropperSettings.croppedHeight = this.height;
+          
+          that.personalCropper.setImage(image);  
+      };
+        
 
     };
 
     myReader.readAsDataURL(file);
 }
-  personalImageCropped(image:string)
+  personalImageCropped(image:any)
   {
+    this.cropperSettings.croppedWidth = image.width;
+      this.cropperSettings.croppedHeight = image.height;
     this.personalImage=this.dataPersonalImage.image;
    
   }
