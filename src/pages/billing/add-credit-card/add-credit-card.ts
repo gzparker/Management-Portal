@@ -31,6 +31,8 @@ export class AddCreditCardPage {
   public exp_year: string;
   public creditCardMsg: string = "";
   public cvc: string;
+  public primary_source:boolean=false;
+  public primary_source_data:string="";
   public calendarMinDate:any;
   public calendarMaxDate:any;
   public loader:any;
@@ -62,15 +64,24 @@ export class AddCreditCardPage {
         cc_number: "",
         exp_month: "",
         exp_year: "",
-        cvc: ""
+        cvc: "",
+        primary_source:""
       };
-    
+    if(this.primary_source)
+    {
+      this.primary_source_data="1";
+    }
+    else
+    {
+      this.primary_source_data="0";
+    }
       dataObj.full_name = this.full_name;
       dataObj.cc_number = this.cc_number;
       dataObj.exp_month = this.expiryDate.split("-")[1];
       dataObj.exp_year = this.expiryDate.split("-")[0];
       dataObj.cvc = this.cvc;
-debugger;
+      dataObj.primary_source=this.primary_source_data;
+//debugger;
       let member_id = this.storage.get('userId');
       member_id.then((memberResp) => {
         //debugger;

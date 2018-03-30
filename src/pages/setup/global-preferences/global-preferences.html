@@ -43,12 +43,14 @@
                 </ion-list-header>
                 <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="companyFileChangeListener($event)">
        
-                <img-cropper #companyCropper [image]="dataCompanyLogoImage" [settings]="companyCropperSettings"
+                <img-cropper #companyCropper [image]="dataCompanyLogoImage" 
+                [settings]="companyCropperSettings"
                  (onCrop)="companyImageCropped($event)" *ngIf="hideCompanyCropper"></img-cropper>
                 <br>
-                <span *ngIf="dataCompanyLogoImage.image" >
-                    <img [src]="dataCompanyLogoImage.image" [width]="companyCropperSettings.croppedWidth"
-                     [height]="companyCropperSettings.croppedHeight">
+                <span *ngIf="dataCompanyLogoImage.image">
+                    <img [src]="dataCompanyLogoImage.image" [width]="companyWidth"
+                     [height]="companyHeight">
+                     <!--<img-loader [src]="dataCompanyLogoImage.image" useImg></img-loader>-->
                 </span>  
           <ion-list-header>
             Select Personal Logo
@@ -59,8 +61,9 @@
            (onCrop)="personalImageCropped($event)" *ngIf="hidePersonalCropper"></img-cropper>
           <br>
           <span *ngIf="dataPersonalImage.image" >
-              <img [src]="dataPersonalImage.image" [width]="personalCropperSettings.croppedWidth"
-               [height]="personalCropperSettings.croppedHeight">
+              <img [src]="dataPersonalImage.image" [width]="personalWidth"
+               [height]="personalHeight">
+              
           </span>
       
           </ion-list>

@@ -33,7 +33,10 @@
     <ion-label floating>Card Name</ion-label>
     <ion-input type="text" [(ngModel)]="full_name" name="full_name" required></ion-input>
   </ion-item>
- 
+  <ion-item>
+    <ion-label>Credit Card Number</ion-label>
+    <ion-input type="text" [(ngModel)]="cc_number" name="cc_number"  [readonly]="true"></ion-input>
+  </ion-item>
   <ion-item>
     <ion-label>Expiry Date</ion-label>
     <ion-datetime displayFormat="MM/YYYY" pickerFormat="MM/YYYY" min="{{calendarMinDate}}" max="{{calendarMaxDate}}" [(ngModel)]="expiryDate" 
@@ -42,6 +45,10 @@
   <ion-item>
       <ion-label floating>ZipCode</ion-label>
       <ion-input type="text" [(ngModel)]="zipCode" name="zipCode" required></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Make Default</ion-label>
+    <ion-checkbox color="royal" [(ngModel)]="primary_source" name="primary_source" id="primary_source">Make Default</ion-checkbox>
   </ion-item>
   <div padding>
     <button ion-button color="primary" block (click)="updateCreditCard();">Update</button>

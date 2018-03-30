@@ -9,6 +9,7 @@ import { HTTP } from '@ionic-native/http';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Http, Response, URLSearchParams, Headers, RequestOptions, HttpModule } from '@angular/http';
 import {AccordionModule} from "ng2-accordion";
+import { IonicImageLoader } from 'ionic-image-loader';
 
 import { ColorPickerModule } from 'ngx-color-picker';
 
@@ -106,7 +107,7 @@ import { ListingProvider } from '../providers/listing/listing';
       driverOrder: ['indexeddb', 'sqlite', 'websql']
     }),AgmCoreModule.forRoot({
       apiKey: 'AIzaSyA9aj3-17cojks6gicZZ_PY2t5ERVu25ac'
-    }),ColorPickerModule,TimezonePickerModule,BrMaskerModule
+    }),ColorPickerModule,TimezonePickerModule,BrMaskerModule,IonicImageLoader.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [

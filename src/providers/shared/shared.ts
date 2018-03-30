@@ -176,6 +176,8 @@ rgbaToHex (rgba) {
 
     return ('#' + r.toString(16) + g.toString(16) + b.toString(16) + (a * 255).toString(16).substring(0,2));
 }
+
+  
   // this could also be a private method of the component class
   private extractData(res: Response) {
     //debugger;

@@ -651,6 +651,7 @@ deleteWebsite(user_id:string,website_id:string){
     return websiteListing;
 }
 allListCreditCards(user_id:string,service_id:string){
+  debugger;
   let data = new URLSearchParams();
 data.append('member_id',user_id);
 data.append('service_id',service_id);
@@ -682,6 +683,7 @@ addCreditCardDetail(creditCardData: any) {
   data.append('exp_month', creditCardData.exp_month);
   data.append('exp_year', creditCardData.exp_year);
   data.append('cvc', creditCardData.cvc);
+  data.append('primary_source',creditCardData.primary_source);
  debugger;
   let addCreditCardResp = this.http
     .post(url, data, this.headerOptions)
@@ -889,6 +891,7 @@ viewGlobalSettings(member_id:string){
 }
 updateGlobalSettings(member_id:string,personalImage:string,companyImage:string,
   timezone:string,colorBase:string,secondColor:string,thirdColor:string){
+  //  debugger;
     let data = new URLSearchParams();
     data.append('master_id',member_id);
     data.append('photo_company',companyImage);
@@ -897,7 +900,8 @@ updateGlobalSettings(member_id:string,personalImage:string,companyImage:string,
     data.append('color_base',colorBase);
     data.append('color_second',secondColor);
     data.append('color_third',thirdColor);
- // debugger;
+
+ debugger;
    let updateSettingsResp=this.http
        .post(this.sharedServiceObj.registerationApiBaseUrl+'members/updateGlobalSettings', data, this.headerOptions)
        .map(this.extractData)
@@ -914,7 +918,7 @@ loadPaperWorkStatus(website_id:string)
      return paperWorkResp;
 }
   private extractData(res: Response) {
- // debugger;
+ //debugger;
     return res.json();
   }
   private handleErrorObservable(error: Response | any) {

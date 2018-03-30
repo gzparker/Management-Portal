@@ -88,13 +88,13 @@
     <plugin name="cordova-plugin-camera" spec="^4.0.2" />
     <plugin name="cordova-plugin-crop" spec="^0.4.0" />
     <plugin name="cordova-plugin-device" spec="^1.1.7" />
-    <plugin name="cordova-plugin-file" spec="^6.0.1" />
     <plugin name="cordova-plugin-facebook4" spec="^1.9.1">
         <variable name="APP_ID" value="701598080041539" />
         <variable name="APP_NAME" value="com.idxcompany.managementportal" />
     </plugin>
     <allow-navigation href="http://192.168.8.104:8100" />
     <plugin name="cordova-plugin-geolocation" spec="^4.0.1" />
+    <plugin name="cordova-plugin-file" spec="^6.0.1" />
     <engine name="android" spec="~6.4.0" />
     <engine name="browser" spec="~5.0.3" />
 </widget>

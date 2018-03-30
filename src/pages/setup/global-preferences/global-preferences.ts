@@ -62,6 +62,10 @@ export class GlobalPreferencesPage {
   public loader:any;
   public selectedRoute:string="";
   public globalSettings:any;
+  public personalWidth:string="";
+  public personalHeight:string="";
+  public companyWidth:string="";
+  public companyHeight:string="";
 
   public user = {timezone:''};
   public placeholderString = 'Select timezone';
@@ -104,6 +108,7 @@ export class GlobalPreferencesPage {
       this.companyCropperSettings.canvasHeight = 300;
       this.companyCropperSettings.minWidth = 10;
         this.companyCropperSettings.minHeight = 10;
+        //this.companyCropperSettings.dynamicSizing=true;
   
         this.companyCropperSettings.rounded = false;
         this.companyCropperSettings.keepAspect = false;
@@ -111,12 +116,14 @@ export class GlobalPreferencesPage {
       this.companyCropperSettings.noFileInput = true;
     //////////////Personal Cropper Settings//////////////////
     this.personalCropperSettings = new CropperSettings();
-      this.personalCropperSettings.width = 100;
-      this.personalCropperSettings.height = 100;
-      this.personalCropperSettings.croppedWidth = 1280;
-      this.personalCropperSettings.croppedHeight = 1000;
+      
+    this.personalCropperSettings.width = 100;
+    this.personalCropperSettings.height = 100;
+    this.personalCropperSettings.croppedWidth = 1280;
+    this.personalCropperSettings.croppedHeight = 1000;
       this.personalCropperSettings.canvasWidth = 500;
       this.personalCropperSettings.canvasHeight = 300;
+      //this.companyCropperSettings.dynamicSizing=true;
       this.personalCropperSettings.minWidth = 10;
         this.personalCropperSettings.minHeight = 10;
   
@@ -179,7 +186,7 @@ export class GlobalPreferencesPage {
     }
   }
   loadCompanyImage(baseUrl:string,imageUrl:string) {
-    //debugger;
+   // debugger;
     const self = this;
     self.hideCompanyCropper=true;
     var image:any = new Image();
@@ -195,12 +202,10 @@ export class GlobalPreferencesPage {
           //debugger;
           image.src = loadEvent.target.result;
           image.onload = function () {
-            //alert (this.width);
-            //debugger;
-            
             self.companyCropperSettings.croppedWidth = this.width;
             self.companyCropperSettings.croppedHeight = this.height;
-            
+          //  debugger;
+            //self.createCompanyThumbnail(image.src);
             self.companyCropper.setImage(image);    
         };
           
@@ -230,7 +235,7 @@ export class GlobalPreferencesPage {
             
             self.personalCropperSettings.croppedWidth = this.width;
             self.personalCropperSettings.croppedHeight = this.height;
-            
+            //self.createPersonalThumbnail(image.src);
             self.personalCropper.setImage(image);    
         };
           
@@ -247,11 +252,11 @@ export class GlobalPreferencesPage {
     myReader.onloadend = function (loadEvent:any) {
       image.src = loadEvent.target.result;
       image.onload = function () {
-        //alert (this.width);
-        //debugger;
+      //  alert (this.width);
+       // debugger;
         that.companyCropperSettings.croppedWidth = this.width;
         that.companyCropperSettings.croppedHeight = this.height;
-        
+        //that.createCompanyThumbnail(image.src);
         that.companyCropper.setImage(image);     
     };
 
@@ -266,7 +271,14 @@ export class GlobalPreferencesPage {
     //debugger;
     this.companyCropperSettings.croppedWidth = image.width;
     this.companyCropperSettings.croppedHeight = image.height;
-    this.companyLogoImage=this.dataCompanyLogoImage.image;
+  let that=this;
+    //this.companyLogoImage=this.dataCompanyLogoImage.image;
+    //this.resizeCompanyImage(this.dataCompanyLogoImage.image);
+    this.resizeCompanyImage(this.dataCompanyLogoImage.image, data => {
+    
+    that.companyLogoImage=data;
+    this.createCompanyThumbnail(that.companyLogoImage);
+      });
    
   }
   takeCompanyLogoPicture(){
@@ -305,6 +317,7 @@ export class GlobalPreferencesPage {
      this.hidePersonalCropper=true;
     var image:any = new Image();
     var file:File = $event.target.files[0];
+    //debugger;
     var myReader:FileReader = new FileReader();
     var that = this;
     myReader.onloadend = function (loadEvent:any) {
@@ -315,7 +328,7 @@ export class GlobalPreferencesPage {
           //debugger;
           that.personalCropperSettings.croppedWidth = this.width;
           that.personalCropperSettings.croppedHeight = this.height;
-          
+          //that.createPersonalThumbnail(image.src);
           that.personalCropper.setImage(image);   
       };
     };
@@ -324,11 +337,18 @@ export class GlobalPreferencesPage {
 }
   personalImageCropped(image:any)
   {
-   // debugger;
-    this.personalCropperSettings.croppedWidth = image.width;
-    this.personalCropperSettings.croppedHeight = image.height;
-    this.personalImage=this.dataPersonalImage.image;
-   
+   //debugger;
+   let that=this;
+   //this.createThumbnail(image);
+   this.personalCropperSettings.croppedWidth = image.width;
+  this.personalCropperSettings.croppedHeight = image.height;
+  this.resizePersonalImage(this.dataPersonalImage.image, data => {
+    
+    that.personalImage=data;
+    this.createPersonalThumbnail(that.personalImage);
+      });
+   //this.personalImage=this.dataPersonalImage.image;
+   //this.createPersonalThumbnail(this.dataPersonalImage.image);
   }
    takePersonalPicture(){
       let options =
@@ -356,6 +376,170 @@ export class GlobalPreferencesPage {
         console.log(error);
       });
     }
+    /////////////////////Generate Thumbnail//////////////////////
+    createPersonalThumbnail(bigMatch:any) {
+      let that=this;
+      this.generatePersonalFromImage(bigMatch, 500, 500, 0.5, data => {
+        that.dataPersonalImage.image=data;
+    
+      });
+    }
+    generatePersonalFromImage(img, MAX_WIDTH: number = 700, MAX_HEIGHT: number = 700, quality: number = 1, callback) {
+      var canvas: any = document.createElement("canvas");
+      var image:any = new Image();
+      var self=this;
+   //debugger;
+      image.src = img;
+      image.onload = function () {
+          
+      //var width = image.width;
+        
+      // var height = image.height;
+       //debugger;
+       var width=self.personalCropperSettings.croppedWidth;
+       var height=self.personalCropperSettings.croppedHeight;
+     // debugger;
+        if (width > height) {
+          if (width > MAX_WIDTH) {
+            height *= MAX_WIDTH / width;
+            width = MAX_WIDTH;
+          }
+        } else {
+          if (height > MAX_HEIGHT) {
+            width *= MAX_HEIGHT / height;
+            height = MAX_HEIGHT;
+          }
+        }
+        canvas.width = width;
+        canvas.height = height;
+        self.personalWidth = width;
+        self.personalHeight = height;
+      // debugger;
+        var ctx = canvas.getContext("2d");
+   
+        ctx.drawImage(image, 0, 0, width, height);
+   
+        // IMPORTANT: 'jpeg' NOT 'jpg'
+        var dataUrl = canvas.toDataURL('image/jpeg', quality);
+   
+        callback(dataUrl)
+      }
+      
+    }
+    createCompanyThumbnail(bigMatch:any) {
+    let that=this;
+    //debugger;
+      this.generateCompanyFromImage(bigMatch, 500, 500, 0.5, data => {
+        
+      //image.onload = function () {
+        //var abc="334";
+        //debugger;
+      //}
+      //debugger;
+    //this.companyLogoImage=data;
+    that.dataCompanyLogoImage.image=data;
+      });
+    }
+    generateCompanyFromImage(img, MAX_WIDTH: number = 700, MAX_HEIGHT: number = 700, quality: number = 1, callback) {
+      var canvas: any = document.createElement("canvas");
+      var image:any = new Image();
+      //image.width=this.companyCropperSettings.croppedWidth;
+      //image.height=this.companyCropperSettings.croppedHeight;
+      var that=this;
+   //debugger;
+      image.src = img;
+      image.onload = function () {
+       
+        var width=that.companyCropperSettings.croppedWidth;
+        var height=that.companyCropperSettings.croppedHeight;
+       //debugger;
+        if (width > height) {
+          if (width > MAX_WIDTH) {
+            height *= MAX_WIDTH / width;
+            width = MAX_WIDTH;
+          }
+        } else {
+          if (height > MAX_HEIGHT) {
+            width *= MAX_HEIGHT / height;
+            height = MAX_HEIGHT;
+          }
+        }
+        //debugger;
+        canvas.width = width;
+        canvas.height = height;
+        that.companyWidth = width;
+        that.companyHeight = height;
+        //debugger;
+        var ctx = canvas.getContext("2d");
+   
+        ctx.drawImage(image, 0, 0, width, height);
+   
+        // IMPORTANT: 'jpeg' NOT 'jpg'
+        var dataUrl = canvas.toDataURL('image/jpeg', quality);
+   
+        callback(dataUrl)
+      }
+      
+    }
+    resizeCompanyImage(img:any,callback)
+    {
+      var canvas: any = document.createElement("canvas");
+      var image:any = new Image();
+      //image.width=this.companyCropperSettings.croppedWidth;
+      //image.height=this.companyCropperSettings.croppedHeight;
+      var that=this;
+   //debugger;
+      image.src = img;
+      image.onload = function () {
+       
+        var width=that.companyCropperSettings.croppedWidth;
+        var height=that.companyCropperSettings.croppedHeight;
+      
+        canvas.width = width;
+        canvas.height = height;
+    
+        //debugger;
+        var ctx = canvas.getContext("2d");
+   
+        ctx.drawImage(image, 0, 0, width, height);
+   
+        // IMPORTANT: 'jpeg' NOT 'jpg'
+        var dataUrl = canvas.toDataURL('image/jpeg', 1);
+        //this.companyLogoImage=dataUrl;
+   //debugger;
+       callback(dataUrl)
+      }
+    }
+    resizePersonalImage(img:any,callback)
+    {
+      var canvas: any = document.createElement("canvas");
+      var image:any = new Image();
+      //image.width=this.companyCropperSettings.croppedWidth;
+      //image.height=this.companyCropperSettings.croppedHeight;
+      var that=this;
+   //debugger;
+      image.src = img;
+      image.onload = function () {
+       
+        var width=that.personalCropperSettings.croppedWidth;
+        var height=that.personalCropperSettings.croppedHeight;
+      
+        canvas.width = width;
+        canvas.height = height;
+    
+        //debugger;
+        var ctx = canvas.getContext("2d");
+   
+        ctx.drawImage(image, 0, 0, width, height);
+   
+        // IMPORTANT: 'jpeg' NOT 'jpg'
+        var dataUrl = canvas.toDataURL('image/jpeg', 1);
+   //debugger;
+       callback(dataUrl)
+      }
+    }
+   ////////////////////////////////////////////////////////////////////////
+    
     changeTimezone(timezone) {
      // debugger;
       this.user.timezone = timezone;
@@ -363,7 +547,12 @@ export class GlobalPreferencesPage {
     updateGlobalSettings(){
       if(this.userId!="")
     {
-     // debugger;
+    //debugger;
+     /*var image:any = new Image();
+     image.src = this.companyLogoImage;
+      image.onload = function () {
+        debugger;
+      }*/
     this.userServiceObj.updateGlobalSettings(this.userId,this.personalImage,this.companyLogoImage,this.user.timezone,
       this.colorBase,this.secondColor,this.thirdColor)
     .subscribe((result) => this.updateGlobalSettingsResp(result));
@@ -376,8 +565,8 @@ export class GlobalPreferencesPage {
     if(result.status==true)
     {
       this.ngZone.run(() => {
-      this.storage.set('globalSettings',result.globalSettings);
-      this.storage.set('showGlobalPopUp','no');
+     this.storage.set('globalSettings',result.globalSettings);
+     this.storage.set('showGlobalPopUp','no');
       this.settingsCreateMsg="Settings has been updated successfully.";
       this.navCtrl.setRoot(DashboardTabsPage,{notificationMsg:this.settingsCreateMsg.toUpperCase()});
     });

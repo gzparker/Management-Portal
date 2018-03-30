@@ -31,12 +31,14 @@ export class EditCreditCardPage {
   public cardDetail:any;
   public updateCardMsg:string="";
   public userId:string="";
+  public cc_number: string;
   public uniquer_id:string="";
   public full_name: string="";
-  public expiryDate: string="";
+  public expiryDate: any;
   public exp_month: string="";
   public exp_year: string="";
   public zipCode:string="";
+  public primary_source:boolean=false;
   public loader:any;
   //public calendarMinDate=new Date().toISOString();
   public calendarMinDate:any;
@@ -86,8 +88,19 @@ if(result.status==true)
 this.cardDetail=result.card;
 this.full_name=this.cardDetail.name;
 this.zipCode=this.cardDetail.address_zip;
-this.expiryDate=this.cardDetail.exp_year+"-"+this.cardDetail.exp_month;
-
+this.cc_number="xxx-"+this.cardDetail.last4;
+if(this.cardDetail.primary_source==null||this.cardDetail.primary_source=="0")
+{
+this.primary_source=false;
+}
+else
+{
+  this.primary_source=true;
+}
+this.expiryDate=this.cardDetail.exp_year+"-"+(parseInt(this.cardDetail.exp_month)+1).toString();
+//debugger;
+this.expiryDate=new Date(this.expiryDate).toISOString();
+//debugger;
 }
   }
   updateCreditCard()
