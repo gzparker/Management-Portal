@@ -121,8 +121,8 @@
          (onCrop)="headerImageCropped($event)" *ngIf="hideHeaderCropper"></img-cropper>
         <br>
         <span *ngIf="dataHeaderImage.image" >
-            <img [src]="dataHeaderImage.image" [width]="headerCropperSettings.croppedWidth"
-             [height]="headerCropperSettings.croppedHeight">
+            <img [src]="dataHeaderImage.image" [width]="headerWidth"
+             [height]="headerHeight">
         </span>
       <ion-list-header>
           Community Image
@@ -133,8 +133,8 @@
          (onCrop)="communtiyImageCropped($event)" *ngIf="hideCommunityCropper"></img-cropper>
         <br>
         <span *ngIf="dataCommunityImage.image" >
-            <img [src]="dataCommunityImage.image" [width]="communityCropperSettings.croppedWidth"
-             [height]="communityCropperSettings.croppedHeight">
+            <img [src]="dataCommunityImage.image" [width]="communityWidth"
+             [height]="communityHeight">
         </span>
   </ion-list>
 </ion-list>

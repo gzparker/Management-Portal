@@ -48,6 +48,10 @@ export class EditHotSheetPage {
   public croppedHeight:Number;
   public dataHeaderImage:any;
   public dataCommunityImage:any;
+  public headerWidth:string="";
+  public headerHeight:string="";
+  public communityWidth:string="";
+  public communityHeight:string="";
 
   public multiSelect:IMultiSelectSettings = {
     enableSearch: true,
@@ -1329,8 +1333,13 @@ let savedPath=this.savedPolygonPath;
       {
         this.headerCropperSettings.croppedWidth=image.width;
         this.headerCropperSettings.croppedHeight=image.height;
-        this.headerImage=this.dataHeaderImage.image;
-       
+        //this.headerImage=this.dataHeaderImage.image;
+      let that=this;
+      this.resizeHeaderImage(this.dataHeaderImage.image, data => {
+      
+        that.headerImage=data;
+        this.createHeaderImageThumbnail(that.headerImage);
+          });
       }
       communityFileChangeListener($event) {
         this.hideCommunityCropper=true;
@@ -1354,7 +1363,13 @@ let savedPath=this.savedPolygonPath;
       {
         this.communityCropperSettings.croppedWidth=image.width;
 this.communityCropperSettings.croppedHeight=image.height;
-        this.communityImage=this.dataCommunityImage.image; 
+      // this.communityImage=this.dataCommunityImage.image; 
+     let that=this;
+     this.resizeCommunityImage(this.dataCommunityImage.image, data => {
+     
+       that.communityImage=data;
+       this.createCommunityImageThumbnail(that.communityImage);
+         });
       }
        takeHeaderPicture(){
        //debugger;
@@ -1423,6 +1438,157 @@ this.communityCropperSettings.croppedHeight=image.height;
            console.log(error);
          });
        }
+       /////////////////////Generate Thumbnail//////////////////////
+
+  createCommunityImageThumbnail(bigMatch:any) {
+    let that=this;
+    //debugger;
+      this.generateCommunityImageFromImage(bigMatch, 500, 500, 0.5, data => {
+        
+    that.dataCommunityImage.image=data;
+      });
+    }
+    generateCommunityImageFromImage(img, MAX_WIDTH: number = 700, MAX_HEIGHT: number = 700, quality: number = 1, callback) {
+      var canvas: any = document.createElement("canvas");
+      var image:any = new Image();
+      //image.width=this.companyCropperSettings.croppedWidth;
+      //image.height=this.companyCropperSettings.croppedHeight;
+      var that=this;
+   //debugger;
+      image.src = img;
+      image.onload = function () {
+       
+        var width=that.communityCropperSettings.croppedWidth;
+        var height=that.communityCropperSettings.croppedHeight;
+       //debugger;
+        if (width > height) {
+          if (width > MAX_WIDTH) {
+            height *= MAX_WIDTH / width;
+            width = MAX_WIDTH;
+          }
+        } else {
+          if (height > MAX_HEIGHT) {
+            width *= MAX_HEIGHT / height;
+            height = MAX_HEIGHT;
+          }
+        }
+        //debugger;
+        canvas.width = width;
+        canvas.height = height;
+        that.communityWidth = width;
+        that.communityHeight = height;
+        //debugger;
+        var ctx = canvas.getContext("2d");
+   
+        ctx.drawImage(image, 0, 0, width, height);
+   
+        // IMPORTANT: 'jpeg' NOT 'jpg'
+        var dataUrl = canvas.toDataURL('image/jpeg', quality);
+   
+        callback(dataUrl)
+      }
+      
+    }
+    resizeCommunityImage(img:any,callback)
+    {
+      var canvas: any = document.createElement("canvas");
+      var image:any = new Image();
+     
+      var that=this;
+  
+      image.src = img;
+      image.onload = function () {
+       
+        var width=that.communityCropperSettings.croppedWidth;
+        var height=that.communityCropperSettings.croppedHeight;
+      
+        canvas.width = width;
+        canvas.height = height;
+  
+        var ctx = canvas.getContext("2d");
+   
+        ctx.drawImage(image, 0, 0, width, height);
+  
+        var dataUrl = canvas.toDataURL('image/jpeg', 1);
+  
+       callback(dataUrl)
+      }
+    }
+    createHeaderImageThumbnail(bigMatch:any) {
+      let that=this;
+      //debugger;
+        this.generateHeaderImageFromImage(bigMatch, 500, 500, 0.5, data => {
+          
+      that.dataHeaderImage.image=data;
+        });
+      }
+      generateHeaderImageFromImage(img, MAX_WIDTH: number = 700, MAX_HEIGHT: number = 700, quality: number = 1, callback) {
+        var canvas: any = document.createElement("canvas");
+        var image:any = new Image();
+        //image.width=this.companyCropperSettings.croppedWidth;
+        //image.height=this.companyCropperSettings.croppedHeight;
+        var that=this;
+     //debugger;
+        image.src = img;
+        image.onload = function () {
+         
+          var width=that.headerCropperSettings.croppedWidth;
+          var height=that.headerCropperSettings.croppedHeight;
+         //debugger;
+          if (width > height) {
+            if (width > MAX_WIDTH) {
+              height *= MAX_WIDTH / width;
+              width = MAX_WIDTH;
+            }
+          } else {
+            if (height > MAX_HEIGHT) {
+              width *= MAX_HEIGHT / height;
+              height = MAX_HEIGHT;
+            }
+          }
+          //debugger;
+          canvas.width = width;
+          canvas.height = height;
+          that.headerWidth = width;
+          that.headerHeight = height;
+          //debugger;
+          var ctx = canvas.getContext("2d");
+     
+          ctx.drawImage(image, 0, 0, width, height);
+     
+          // IMPORTANT: 'jpeg' NOT 'jpg'
+          var dataUrl = canvas.toDataURL('image/jpeg', quality);
+     
+          callback(dataUrl)
+        }
+        
+      }
+      resizeHeaderImage(img:any,callback)
+      {
+        var canvas: any = document.createElement("canvas");
+        var image:any = new Image();
+       
+        var that=this;
+    
+        image.src = img;
+        image.onload = function () {
+         
+          var width=that.headerCropperSettings.croppedWidth;
+          var height=that.headerCropperSettings.croppedHeight;
+        
+          canvas.width = width;
+          canvas.height = height;
+    
+          var ctx = canvas.getContext("2d");
+     
+          ctx.drawImage(image, 0, 0, width, height);
+    
+          var dataUrl = canvas.toDataURL('image/jpeg', 1);
+    
+         callback(dataUrl)
+        }
+      }
+   ////////////////////////////////////////////////////////////////////////
     refreshValueSubDivision($event:any):void{
     
     }

@@ -48,10 +48,10 @@
       <ion-label floating>Credit Card CVC</ion-label>
       <ion-input type="text" [(ngModel)]="cvc" name="cvc" required></ion-input>
     </ion-item>
-    <ion-item>
+    <!--<ion-item>
       <ion-label>Make Default</ion-label>
       <ion-checkbox color="royal" checked="false" [(ngModel)]="primary_source" name="primary_source" id="primary_source">Make Default</ion-checkbox>
-    </ion-item>
+    </ion-item>-->
     <div padding>
       <button ion-button color="primary" block (click)="saveCreditCard();" [disabled]="!creditCardForm.valid">Save</button>
     </div>

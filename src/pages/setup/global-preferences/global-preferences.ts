@@ -204,9 +204,11 @@ export class GlobalPreferencesPage {
           image.onload = function () {
             self.companyCropperSettings.croppedWidth = this.width;
             self.companyCropperSettings.croppedHeight = this.height;
-          //  debugger;
-            //self.createCompanyThumbnail(image.src);
-            self.companyCropper.setImage(image);    
+       //self.dataCompanyLogoImage.image=image.src;
+      //self.companyLogoImage=image.src;
+      //debugger;
+            self.companyCropper.setImage(image); 
+
         };
           
   
@@ -235,7 +237,7 @@ export class GlobalPreferencesPage {
             
             self.personalCropperSettings.croppedWidth = this.width;
             self.personalCropperSettings.croppedHeight = this.height;
-            //self.createPersonalThumbnail(image.src);
+          
             self.personalCropper.setImage(image);    
         };
           
@@ -485,10 +487,9 @@ export class GlobalPreferencesPage {
     {
       var canvas: any = document.createElement("canvas");
       var image:any = new Image();
-      //image.width=this.companyCropperSettings.croppedWidth;
-      //image.height=this.companyCropperSettings.croppedHeight;
+     
       var that=this;
-   //debugger;
+ 
       image.src = img;
       image.onload = function () {
        
@@ -497,16 +498,13 @@ export class GlobalPreferencesPage {
       
         canvas.width = width;
         canvas.height = height;
-    
-        //debugger;
+
         var ctx = canvas.getContext("2d");
    
         ctx.drawImage(image, 0, 0, width, height);
-   
-        // IMPORTANT: 'jpeg' NOT 'jpg'
+
         var dataUrl = canvas.toDataURL('image/jpeg', 1);
-        //this.companyLogoImage=dataUrl;
-   //debugger;
+
        callback(dataUrl)
       }
     }

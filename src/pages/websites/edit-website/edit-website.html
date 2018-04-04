@@ -53,8 +53,8 @@
                  (onCrop)="websiteIdentityImageCropped($event)" *ngIf="hideLogoCropper"></img-cropper>
                 <br>
                 <span *ngIf="dataWebsiteLogo.image" >
-                    <img [src]="dataWebsiteLogo.image" [width]="logoCropperSettings.croppedWidth"
-                     [height]="logoCropperSettings.croppedHeight">
+                    <img [src]="dataWebsiteLogo.image" [width]="logoWidth"
+                     [height]="logoHeight">
                 </span>
                 <ion-list-header>
                   Upload Website FavIcon
@@ -65,8 +65,8 @@
                    (onCrop)="websiteFavIconImageCropped($event)" *ngIf="hideFavIconCropper"></img-cropper>
                   <br>
                   <span *ngIf="dataWebsiteIcon.image" >
-                      <img [src]="dataWebsiteIcon.image" [width]="favIconCropperSettings.croppedWidth"
-                       [height]="favIconCropperSettings.croppedHeight">
+                      <img [src]="dataWebsiteIcon.image" [width]="favIconWidth"
+                       [height]="favIconHeight">
                   </span>
           </ion-list>
       <ion-item>

@@ -91,11 +91,13 @@ private subscription: ISubscription;
           if (status.result.subscribed_services[0].service_status == null) {
          
             this.ngZone.run(() => {
+              this.sharedServiceObj.setPaidStatus(false);
               this.navCtrl.push(SubscriptionPage, { full_name: status.result.first_name + " " + status.result.last_name });
             });
           }
           else
           {
+            this.sharedServiceObj.setPaidStatus(true);
             let userGlobalSettingsResp = this.storage.get('globalSettings');
             userGlobalSettingsResp.then((data) => {
         if(data!=null)

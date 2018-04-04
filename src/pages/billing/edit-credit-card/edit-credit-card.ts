@@ -38,7 +38,9 @@ export class EditCreditCardPage {
   public exp_month: string="";
   public exp_year: string="";
   public zipCode:string="";
+  public cvc:string="";
   public primary_source:boolean=false;
+  public primary_source_data:string="";
   public loader:any;
   //public calendarMinDate=new Date().toISOString();
   public calendarMinDate:any;
@@ -89,6 +91,7 @@ this.cardDetail=result.card;
 this.full_name=this.cardDetail.name;
 this.zipCode=this.cardDetail.address_zip;
 this.cc_number="xxx-"+this.cardDetail.last4;
+this.cvc=this.cardDetail.cvc;
 if(this.cardDetail.primary_source==null||this.cardDetail.primary_source=="0")
 {
 this.primary_source=false;
@@ -106,10 +109,18 @@ this.expiryDate=new Date(this.expiryDate).toISOString();
   updateCreditCard()
   {
     //this.loader.present();
+    if(this.primary_source)
+    {
+      this.primary_source_data="1";
+    }
+    else
+    {
+      this.primary_source_data="0";
+    }
     this.exp_month = this.expiryDate.split("-")[1];
     this.exp_year = this.expiryDate.split("-")[0];
     this.userServiceObj.updateCreditCardDetail(this.userId.toString(),this.sharedServiceObj.service_id,
-    this.uniquer_id,this.full_name,this.exp_year,this.exp_month,this.zipCode)
+    this.uniquer_id,this.full_name,this.exp_year,this.exp_month,this.zipCode,this.primary_source_data,this.cvc)
     .subscribe((result) => this.updateCreditCardResp(result));
   }
  updateCreditCardResp(result:any)

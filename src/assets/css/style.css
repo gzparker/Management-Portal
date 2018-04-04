@@ -6,3 +6,16 @@
 {
 color: red !important;
 }
+.conditions{
+    padding: 12px;
+  }
+  
+  .conditions ion-checkbox{
+     float: left;
+     margin-right: 8px;
+  }
+  
+  .conditions ion-label{
+    float: left;
+    width: 70%;
+  }

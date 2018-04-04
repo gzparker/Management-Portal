@@ -51,6 +51,8 @@ export class EditAccountPage {
   public allCountryCodes: any[] = [];
   public accountInfoUpdateMsg: string = "";
   public updatedValue:boolean=false;
+  public personalWidth:string="";
+  public personalHeight:string="";
   public loader:any;
 
   public dataPersonalImage:any;
@@ -192,8 +194,13 @@ export class EditAccountPage {
   {
     this.cropperSettings.croppedWidth = image.width;
       this.cropperSettings.croppedHeight = image.height;
-    this.personalImage=this.dataPersonalImage.image;
-   
+    //this.personalImage=this.dataPersonalImage.image;
+    let that=this;
+      this.resizePersonalImage(this.dataPersonalImage.image, data => {
+      
+        that.personalImage=data;
+        this.createPersonalImageThumbnail(that.personalImage);
+          });
   }
    takePersonalPicture(){
       let options =
@@ -334,6 +341,84 @@ if(this.accountInfo.phone_mobile!=this.phone_number)
 }
    }
   }
+  /////////////////////Generate Thumbnail//////////////////////
+
+  createPersonalImageThumbnail(bigMatch:any) {
+  let that=this;
+  //debugger;
+    this.generatePersonalImageFromImage(bigMatch, 500, 500, 0.5, data => {
+      
+  that.dataPersonalImage.image=data;
+    });
+  }
+  generatePersonalImageFromImage(img, MAX_WIDTH: number = 700, MAX_HEIGHT: number = 700, quality: number = 1, callback) {
+    var canvas: any = document.createElement("canvas");
+    var image:any = new Image();
+    //image.width=this.companyCropperSettings.croppedWidth;
+    //image.height=this.companyCropperSettings.croppedHeight;
+    var that=this;
+ //debugger;
+    image.src = img;
+    image.onload = function () {
+     
+      var width=that.cropperSettings.croppedWidth;
+      var height=that.cropperSettings.croppedHeight;
+     //debugger;
+      if (width > height) {
+        if (width > MAX_WIDTH) {
+          height *= MAX_WIDTH / width;
+          width = MAX_WIDTH;
+        }
+      } else {
+        if (height > MAX_HEIGHT) {
+          width *= MAX_HEIGHT / height;
+          height = MAX_HEIGHT;
+        }
+      }
+      //debugger;
+      canvas.width = width;
+      canvas.height = height;
+      that.personalWidth = width;
+      that.personalHeight = height;
+      //debugger;
+      var ctx = canvas.getContext("2d");
+ 
+      ctx.drawImage(image, 0, 0, width, height);
+ 
+      // IMPORTANT: 'jpeg' NOT 'jpg'
+      var dataUrl = canvas.toDataURL('image/jpeg', quality);
+ 
+      callback(dataUrl)
+    }
+    
+  }
+  resizePersonalImage(img:any,callback)
+  {
+    var canvas: any = document.createElement("canvas");
+    var image:any = new Image();
+   
+    var that=this;
+
+    image.src = img;
+    image.onload = function () {
+     
+      var width=that.cropperSettings.croppedWidth;
+      var height=that.cropperSettings.croppedHeight;
+    
+      canvas.width = width;
+      canvas.height = height;
+
+      var ctx = canvas.getContext("2d");
+ 
+      ctx.drawImage(image, 0, 0, width, height);
+
+      var dataUrl = canvas.toDataURL('image/jpeg', 1);
+
+     callback(dataUrl)
+    }
+  }
+  
+ ////////////////////////////////////////////////////////////////////////
   updateAccount():void{
     let dataObj = {
       first_name: "",
@@ -387,7 +472,7 @@ if(this.accountInfo.phone_mobile!=this.phone_number)
    //this.loader.dismiss();
     if(result.status==true)
     {
-  //   debugger;
+//debugger;
      this.ngZone.run(() => {
   this.navCtrl.push(AccountInfoPage,{notificationMsg:"Account has been updated successfully."})
     });

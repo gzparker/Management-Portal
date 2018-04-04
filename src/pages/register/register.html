@@ -51,8 +51,8 @@
     <ion-label floating>Cell Number
       <span [ngClass]="{'error': phone_number==null}" *ngIf="phone_number==null">*</span></ion-label>
     <!--<ion-input type="tel" [(ngModel)]="phone_number" name="phone_number" required pattern="^[0-9]*$"></ion-input>-->
-    <ion-input type="text" name="phone_number" [(ngModel)]="phone_number" placeholder="Phone Number" 
-            [brmasker]="{phone: true}" required></ion-input>
+    <ion-input type="text" name="phone_number" [(ngModel)]="phone_number" 
+            [brmasker]="{mask:'(000) 000-0000', len:14, type:'num'}" required></ion-input>
   </ion-item>
 
   <div padding>

@@ -61,8 +61,8 @@
            (onCrop)="personalImageCropped($event)" *ngIf="hideImageCropper"></img-cropper>
           <br>
           <span *ngIf="dataPersonalImage.image" >
-              <img [src]="dataPersonalImage.image" [width]="cropperSettings.croppedWidth"
-               [height]="cropperSettings.croppedHeight">
+              <img [src]="dataPersonalImage.image" [width]="personalWidth"
+               [height]="personalHeight">
           </span>
           </ion-list>
         <ion-item>

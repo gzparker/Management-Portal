@@ -35,6 +35,7 @@ export class ViewCreditCardsPage {
   public notificationMsg:string="";
   public userId:string="";
   public creditCardsFoundMessage="";
+  public totalCreditCards:number=0;
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, 
@@ -72,17 +73,20 @@ export class ViewCreditCardsPage {
   }
   loadAllCreditCardsResp(result:any)
   {
+    //debugger;
     if(result.status==true)
     {
       //debugger;
       this.defaultCreditCard=result.default_card;
       this.allCreditCards=result.all_cards;
+      this.totalCreditCards=result.all_cards.length;
       //debugger;
     }
     else
     {
-     // debugger;
+    // debugger;
       this.allCreditCards=[];
+      this.totalCreditCards=0;
       this.creditCardsFoundMessage="No billing info found.";
     }
   }

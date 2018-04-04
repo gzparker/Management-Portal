@@ -67,20 +67,20 @@ export class AddCreditCardPage {
         cvc: "",
         primary_source:""
       };
-    if(this.primary_source)
+    /*if(this.primary_source)
     {
       this.primary_source_data="1";
     }
     else
     {
       this.primary_source_data="0";
-    }
+    }*/
       dataObj.full_name = this.full_name;
       dataObj.cc_number = this.cc_number;
       dataObj.exp_month = this.expiryDate.split("-")[1];
       dataObj.exp_year = this.expiryDate.split("-")[0];
       dataObj.cvc = this.cvc;
-      dataObj.primary_source=this.primary_source_data;
+      //dataObj.primary_source=this.primary_source_data;
 //debugger;
       let member_id = this.storage.get('userId');
       member_id.then((memberResp) => {

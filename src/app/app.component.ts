@@ -58,6 +58,7 @@ export class MyApp {
   public isWebBrowser=false;
   rootPage: any = HomePage;
   public userLoggedIn: boolean = false;
+  public paidStatus:boolean=true;
   public allCountryCodes: any[] = [];
   public showWebsiteSubmenu=false;
   public showLeadsSubmenu=false;
@@ -76,6 +77,7 @@ export class MyApp {
     private geolocation: Geolocation, private nativeGeocoder: NativeGeocoder) {
     this.initializeApp();
     sharedServiceObj.isLoggedInEmitter.subscribe(item => this.setLoginStatus(item));
+    sharedServiceObj.isPaidEmitter.subscribe(item => this.setPaidStatus(item));
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Home', component: HomePage },
@@ -227,6 +229,9 @@ this.storage.set("userCountryInfo", this.geoCoderData);
 
     this.userLoggedIn = item;
     // debugger;
+  }
+  setPaidStatus(item: any):void{
+    this.paidStatus=item;
   }
   loadAvailableCountries() {
     if (this.allCountryCodes == undefined) {

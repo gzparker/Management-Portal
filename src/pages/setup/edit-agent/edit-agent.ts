@@ -50,6 +50,8 @@ export class EditAgentPage {
   public croppedImage: any = '';
   public agentDetail:any;
   public loader:any;
+  public cropperWidth:string="";
+  public cropperHeight:string="";
 
   public userId:string="";
   public agent_id:string="";
@@ -129,7 +131,6 @@ loadAgentDetailsResp(result:any)
       this.description=this.agentDetail.description;
       if(this.agentDetail.image_url!=undefined)
       {
-       
       this.loadImage(this.sharedServiceObj.imgBucketUrl,this.agentDetail.image_url);
       }
       
@@ -206,13 +207,96 @@ updateAgent()
 
     myReader.readAsDataURL(file);
 }
-  agentImageCropped(image:any)
-   {
-    this.cropperSettings.croppedWidth = image.width;
-    this.cropperSettings.croppedHeight = image.height;
-    this.agentImage = this.dataAgentImage.image;
-   }
+agentImageCropped(image:any)
+{
+ this.cropperSettings.croppedWidth = image.width;
+ this.cropperSettings.croppedHeight = image.height;
+ //this.agentImage = this.dataAgentImage.image;
+ let that=this;
+   this.resizePersonalImage(this.dataAgentImage.image, data => {
+   
+     that.agentImage=data;
+     this.createPersonalImageThumbnail(that.agentImage);
+       });
+}
+/////////////////////Generate Thumbnail//////////////////////
+
+createPersonalImageThumbnail(bigMatch:any) {
+  let that=this;
+  //debugger;
+    this.generatePersonalImageFromImage(bigMatch, 500, 500, 0.5, data => {
+      
+  that.dataAgentImage.image=data;
+    });
+  }
+  generatePersonalImageFromImage(img, MAX_WIDTH: number = 700, MAX_HEIGHT: number = 700, quality: number = 1, callback) {
+    var canvas: any = document.createElement("canvas");
+    var image:any = new Image();
+    //image.width=this.companyCropperSettings.croppedWidth;
+    //image.height=this.companyCropperSettings.croppedHeight;
+    var that=this;
+ //debugger;
+    image.src = img;
+    image.onload = function () {
+     
+      var width=that.cropperSettings.croppedWidth;
+      var height=that.cropperSettings.croppedHeight;
+     //debugger;
+      if (width > height) {
+        if (width > MAX_WIDTH) {
+          height *= MAX_WIDTH / width;
+          width = MAX_WIDTH;
+        }
+      } else {
+        if (height > MAX_HEIGHT) {
+          width *= MAX_HEIGHT / height;
+          height = MAX_HEIGHT;
+        }
+      }
+      //debugger;
+      canvas.width = width;
+      canvas.height = height;
+      that.cropperWidth = width.toString();
+      that.cropperHeight = height.toString();
+      //debugger;
+      var ctx = canvas.getContext("2d");
+ 
+      ctx.drawImage(image, 0, 0, width, height);
+ 
+      // IMPORTANT: 'jpeg' NOT 'jpg'
+      var dataUrl = canvas.toDataURL('image/jpeg', quality);
+ 
+      callback(dataUrl)
+    }
+    
+  }
+  resizePersonalImage(img:any,callback)
+  {
+    var canvas: any = document.createElement("canvas");
+    var image:any = new Image();
+   
+    var that=this;
+
+    image.src = img;
+    image.onload = function () {
+     
+      var width=that.cropperSettings.croppedWidth;
+      var height=that.cropperSettings.croppedHeight;
+    
+      canvas.width = width;
+      canvas.height = height;
+
+      var ctx = canvas.getContext("2d");
+ 
+      ctx.drawImage(image, 0, 0, width, height);
+
+      var dataUrl = canvas.toDataURL('image/jpeg', 1);
+
+     callback(dataUrl)
+    }
+  }
   
+ ////////////////////////////////////////////////////////////////////////  
    takePicture(){
       let options =
       {

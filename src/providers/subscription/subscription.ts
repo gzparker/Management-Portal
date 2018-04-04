@@ -28,12 +28,13 @@ export class SubscriptionProvider {
     private storage: Storage, public modalCtrl: ModalController) {
     console.log('Hello SubscriptionProvider Provider');
   }
-  getServicePackagesList() {
+  getServicePackagesList(interval:string) {
     let url = "";
     let data = new URLSearchParams();
     url = this.sharedServiceObj.registerationApiBaseUrl + 'subscriptions/list';
     //debugger;
     data.append('service_id', this.sharedServiceObj.service_id);
+    data.append('interval', interval);
     //debugger;
     let subscriptionList = this.http
       .post(url, data, this.headerOptions)
@@ -54,6 +55,7 @@ export class SubscriptionProvider {
     data.append('exp_year', subscriptionData.exp_year);
     data.append('cvc', subscriptionData.cvc);
     data.append('service_plans_array', subscriptionData.service_plans_array.toString());
+    data.append('mls_service_id',subscriptionData.mls_service_id);
     //debugger;
     let subscriptionList = this.http
       .post(url, data, this.headerOptions)
@@ -103,7 +105,6 @@ export class SubscriptionProvider {
   checkSubscription()
   {
     let member_id = this.storage.get('userId');
-    //debugger;
     member_id.then((userId) => {
     let url = "";
     let data = new URLSearchParams();
@@ -122,6 +123,21 @@ export class SubscriptionProvider {
      // this.checkSubscription();
   //}, 2 * 60 * 1000);
    
+  }
+  loadAllAvailableMLS()
+  {
+    //let member_id = this.storage.get('userId');
+    //member_id.then((userId) => {
+    let url = "";
+    let data = new URLSearchParams();
+    url = this.sharedServiceObj.apiBaseUrl + 'members/getAvailableMLS';
+
+    let allAvailableMLS = this.http
+      .post(url, data, this.headerOptions)
+      .map(this.extractData);
+return allAvailableMLS;
+   // return checkSubscriptionResp;
+   // });
   }
   private extractData(res: Response) {
     //debugger;

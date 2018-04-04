@@ -18,6 +18,7 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class SharedProvider {
   public isLoggedInEmitter: EventEmitter<Boolean>;
+  public isPaidEmitter: EventEmitter<Boolean>;
   public navigationalPage: EventEmitter<String>;
   public signOutEmitter: EventEmitter<String>;
   //public registerationApiBaseUrl="http://registration.menu/api/";
@@ -36,6 +37,7 @@ export class SharedProvider {
 
   constructor(private http: Http) {
     this.isLoggedInEmitter = new EventEmitter();
+    this.isPaidEmitter=new EventEmitter();
     this.navigationalPage=new EventEmitter();
     this.signOutEmitter=new EventEmitter();
     // debugger;
@@ -157,6 +159,10 @@ this.signOutEmitter.emit();
 }
   public setLoginStatus(loginStatus: boolean) {
     this.isLoggedInEmitter.emit(loginStatus);
+  }
+  public setPaidStatus(paidStatus: boolean)
+  {
+this.isPaidEmitter.emit(paidStatus);
   }
   public setNavigationalPage(option:string)
   {

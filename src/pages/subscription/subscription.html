@@ -12,7 +12,7 @@
     </button>
     <ion-title>Subscription</ion-title>
     <ion-buttons end>
-        <button ion-button (click)="saveSubscribeUser();" [disabled]="!subscribeForm.valid">Subscribe</button>
+        <button ion-button (click)="saveSubscribeUser();" [disabled]="!subscribeForm.valid||!agree_terms">Subscribe</button>
       </ion-buttons>
   </ion-navbar>
 
@@ -27,13 +27,24 @@
       <form role="form" data-toggle="validator" #subscribeForm="ngForm"> 
   <ion-list *ngIf="!userSubscribed">
     
-    <ion-list>
-      <ion-item *ngFor="let package of allAvailablePackages">
-        <ion-label>{{package.name}}</ion-label>
-        <ion-checkbox color="royal" checked="false" item-right (click)="setSelectedPackage(package.id)"></ion-checkbox>
-
+      <ion-list>
+      <ion-item>
+          <ion-label>Pay Yearly</ion-label>
+          <ion-toggle [(ngModel)]="pay_yearly" name="pay_yearly" (ngModelChange)="listAllPackages()"></ion-toggle>
       </ion-item>
-
+      <ion-item *ngFor="let package of allAvailablePackages">
+     
+        <ion-label>{{package.name}}</ion-label>
+        <ion-label>${{package.amount}}</ion-label>
+        <ion-label>{{package.description}}</ion-label>
+        <!--<ion-toggle [(ngModel)]="pepperoni"></ion-toggle>-->
+ 
+     <ion-checkbox color="royal" checked="false" item-right 
+        (click)="setSelectedPackage(package.id,package.amount)"></ion-checkbox>
+      </ion-item>
+      <ion-item>
+        <ion-label>Total Price:${{totalAmount}}</ion-label>
+      </ion-item>
     </ion-list>
     <ion-item>
       <ion-label floating>Card Name</ion-label>
@@ -52,8 +63,28 @@
       <ion-label floating>Credit Card CVC</ion-label>
       <ion-input type="text" [(ngModel)]="cvc" name="cvc" required></ion-input>
     </ion-item>
+    <ion-list *ngIf="service_id=='2'">
+        <ion-item>
+            <ion-label floating>Multiple Listing Service</ion-label>
+            <ion-select [(ngModel)]="mls_server_id"  
+            name="mls_server_id" multiple="true" required>
+              <ion-option *ngFor="let mls of allMls" value= {{mls.mls_server_id}}>{{mls.name}}
+               </ion-option>
+            </ion-select>
+          </ion-item>
+    <!--<ion-item>
+      <ion-label><a (click)="openInAppBrowser()">Agrees to our terms of service</a></ion-label>
+      <ion-checkbox color="royal" checked="false" [(ngModel)]="agree_terms" name="agree_terms" id="agree_terms" 
+      required ></ion-checkbox>
+    </ion-item>-->
+    <div class="conditions">
+      <ion-checkbox name="agree_terms" [(ngModel)]="agree_terms" id="agree_terms">
+      </ion-checkbox>
+      <a (click)="openInAppBrowser()">Agrees to our terms of service</a>
+  </div>
+  </ion-list>
     <div padding>
-      <button ion-button color="primary" block (click)="saveSubscribeUser();" [disabled]="!subscribeForm.valid">Subscribe</button>
+      <button ion-button color="primary" block (click)="saveSubscribeUser();" [disabled]="!subscribeForm.valid||!agree_terms">Subscribe</button>
     </div>
   </ion-list>
       </form>

@@ -137,7 +137,13 @@ export class CreateAgentPage {
    {
     this.cropperSettings.croppedWidth = image.width;
     this.cropperSettings.croppedHeight = image.height;
-    this.agentImage = this.dataAgentImage.image;
+    //this.agentImage = this.dataAgentImage.image;
+    let that=this;
+      this.resizePersonalImage(this.dataAgentImage.image, data => {
+      
+        that.agentImage=data;
+        this.createPersonalImageThumbnail(that.agentImage);
+          });
    }
    
    takePicture(){
@@ -168,55 +174,81 @@ export class CreateAgentPage {
       });
     }
 /////////////////////Generate Thumbnail//////////////////////
-createThumbnail(bigMatch:any) {
+
+createPersonalImageThumbnail(bigMatch:any) {
   let that=this;
-  this.generateFromImage(bigMatch, 500, 500, 0.5, data => {
-    that.dataAgentImage.image=data;
-
-  });
-}
-generateFromImage(img, MAX_WIDTH: number = 700, MAX_HEIGHT: number = 700, quality: number = 1, callback) {
-  var canvas: any = document.createElement("canvas");
-  var image:any = new Image();
-  var self=this;
-//debugger;
-  image.src = img;
-  image.onload = function () {
+  //debugger;
+    this.generatePersonalImageFromImage(bigMatch, 500, 500, 0.5, data => {
       
-  //var width = image.width;
-    
-  // var height = image.height;
-   //debugger;
-   var width=self.cropperSettings.croppedWidth;
-   var height=self.cropperSettings.croppedHeight;
- // debugger;
-    if (width > height) {
-      if (width > MAX_WIDTH) {
-        height *= MAX_WIDTH / width;
-        width = MAX_WIDTH;
+  that.dataAgentImage.image=data;
+    });
+  }
+  generatePersonalImageFromImage(img, MAX_WIDTH: number = 700, MAX_HEIGHT: number = 700, quality: number = 1, callback) {
+    var canvas: any = document.createElement("canvas");
+    var image:any = new Image();
+    //image.width=this.companyCropperSettings.croppedWidth;
+    //image.height=this.companyCropperSettings.croppedHeight;
+    var that=this;
+ //debugger;
+    image.src = img;
+    image.onload = function () {
+     
+      var width=that.cropperSettings.croppedWidth;
+      var height=that.cropperSettings.croppedHeight;
+     //debugger;
+      if (width > height) {
+        if (width > MAX_WIDTH) {
+          height *= MAX_WIDTH / width;
+          width = MAX_WIDTH;
+        }
+      } else {
+        if (height > MAX_HEIGHT) {
+          width *= MAX_HEIGHT / height;
+          height = MAX_HEIGHT;
+        }
       }
-    } else {
-      if (height > MAX_HEIGHT) {
-        width *= MAX_HEIGHT / height;
-        height = MAX_HEIGHT;
-      }
+      //debugger;
+      canvas.width = width;
+      canvas.height = height;
+      that.cropperWidth = width.toString();
+      that.cropperHeight = height.toString();
+      //debugger;
+      var ctx = canvas.getContext("2d");
+ 
+      ctx.drawImage(image, 0, 0, width, height);
+ 
+      // IMPORTANT: 'jpeg' NOT 'jpg'
+      var dataUrl = canvas.toDataURL('image/jpeg', quality);
+ 
+      callback(dataUrl)
     }
-    canvas.width = width;
-    canvas.height = height;
-    self.cropperWidth = width.toString();
-    self.cropperHeight = height.toString();
-  // debugger;
-    var ctx = canvas.getContext("2d");
+    
+  }
+  resizePersonalImage(img:any,callback)
+  {
+    var canvas: any = document.createElement("canvas");
+    var image:any = new Image();
+   
+    var that=this;
 
-    ctx.drawImage(image, 0, 0, width, height);
+    image.src = img;
+    image.onload = function () {
+     
+      var width=that.cropperSettings.croppedWidth;
+      var height=that.cropperSettings.croppedHeight;
+    
+      canvas.width = width;
+      canvas.height = height;
 
-    // IMPORTANT: 'jpeg' NOT 'jpg'
-    var dataUrl = canvas.toDataURL('image/jpeg', quality);
+      var ctx = canvas.getContext("2d");
+ 
+      ctx.drawImage(image, 0, 0, width, height);
 
-    callback(dataUrl)
+      var dataUrl = canvas.toDataURL('image/jpeg', 1);
+
+     callback(dataUrl)
+    }
   }
   
-}
-
-////////////////////////////////////////////////////////////////////////
+ ////////////////////////////////////////////////////////////////////////
 }

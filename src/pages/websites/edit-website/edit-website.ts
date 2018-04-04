@@ -63,6 +63,10 @@ export class EditWebsitePage {
   public feature_office_listings:boolean=false;
   public imageChangedEvent: any = '';
   public loader:any;
+  public favIconWidth:string="";
+  public favIconHeight:string="";
+  public logoWidth:string="";
+  public logoHeight:string="";
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
@@ -137,8 +141,7 @@ export class EditWebsitePage {
     myReader.onloadend = function (loadEvent:any) {
         image.src = loadEvent.target.result;
         image.onload = function () {
-          //alert (this.width);
-          //debugger;
+          
           that.logoCropperSettings.croppedWidth = this.width;
           that.logoCropperSettings.croppedHeight = this.height;
           
@@ -152,7 +155,13 @@ export class EditWebsitePage {
    {
     this.logoCropperSettings.croppedWidth = image.width;
     this.logoCropperSettings.croppedHeight = image.height;
-    this.identity_logo = this.dataWebsiteLogo.image;
+    let that=this;
+    this.resizeLogoImage(this.dataWebsiteLogo.image, data => {
+    
+      that.identity_logo=data;
+      this.createLogoThumbnail(that.identity_logo);
+        });
+    //this.identity_logo = this.dataWebsiteLogo.image;
    }
    takePicture(){
       let options =
@@ -185,14 +194,13 @@ export class EditWebsitePage {
       myReader.onloadend = function (loadEvent:any) {
           image.src = loadEvent.target.result;
           image.onload = function () {
-            //alert (this.width);
-            //debugger;
+           
             that.favIconCropperSettings.croppedWidth = this.width;
             that.favIconCropperSettings.croppedHeight = this.height;
             
             that.favIconLogoCropper.setImage(image);
         };
-          //that.favIconLogoCropper.setImage(image);
+        
   
       };
   
@@ -202,8 +210,13 @@ export class EditWebsitePage {
      {
       this.favIconCropperSettings.croppedWidth = image.width;
       this.favIconCropperSettings.croppedHeight = image.height;
-      this.identity_icon = this.dataWebsiteIcon.image;
-     
+      //this.identity_icon = this.dataWebsiteIcon.image;
+      let that=this;
+      this.resizeFavIconImage(this.dataWebsiteIcon.image, data => {
+      
+        that.identity_icon=data;
+        this.createFavIconThumbnail(that.identity_icon);
+          });
      }
     takeFavIconPicture(){
       let options =
@@ -328,7 +341,7 @@ this.footer_wrapper=result.result.footer_wrapper;
     }
   }
   loadLogo(baseUrl:string,imageUrl:string) {
-    //debugger;
+   
     this.hideLogoCropper=true;
     const self = this;
     var image:any = new Image();
@@ -342,14 +355,13 @@ this.footer_wrapper=result.result.footer_wrapper;
        
         reader.onloadend = function (loadEvent:any) {
           image.src = loadEvent.target.result;
-          //self.companyLogoCropper.setImage(image);
+
           image.onload = function () {
-            //alert (this.width);
-            //debugger;
+         
             self.logoCropperSettings.croppedWidth = this.width;
             self.logoCropperSettings.croppedHeight = this.height;
-            
-            self.companyLogoCropper.setImage(image);
+            self.identity_logo=image;
+            //self.companyLogoCropper.setImage(image);
         };
       };
     });
@@ -358,7 +370,7 @@ this.footer_wrapper=result.result.footer_wrapper;
     this.hideFavIconCropper=true;
     const self = this;
     var image:any = new Image();
-    //debugger;
+
     const xhr = new XMLHttpRequest()
     xhr.open("GET", baseUrl+imageUrl);
     xhr.responseType = "blob";
@@ -369,18 +381,176 @@ this.footer_wrapper=result.result.footer_wrapper;
        
         reader.onloadend = function (loadEvent:any) {
           image.src = loadEvent.target.result;
-          //self.favIconLogoCropper.setImage(image);
+         
           image.onload = function () {
-            //alert (this.width);
-            //debugger;
+          // debugger;
             self.favIconCropperSettings.croppedWidth = this.width;
             self.favIconCropperSettings.croppedHeight = this.height;
-            
+            //self.identity_icon=image.src;
             self.favIconLogoCropper.setImage(image);
         };
       };
     });
-  } 
+  }
+  /////////////////////Generate Thumbnail//////////////////////
+  createLogoThumbnail(bigMatch:any) {
+    let that=this;
+    this.generateLogoFromImage(bigMatch, 500, 500, 0.5, data => {
+      that.dataWebsiteLogo.image=data;
+  
+    });
+  }
+  generateLogoFromImage(img, MAX_WIDTH: number = 700, MAX_HEIGHT: number = 700, quality: number = 1, callback) {
+    var canvas: any = document.createElement("canvas");
+    var image:any = new Image();
+    var self=this;
+ //debugger;
+    image.src = img;
+    image.onload = function () {
+        
+    //var width = image.width;
+      
+    // var height = image.height;
+     //debugger;
+     var width=self.logoCropperSettings.croppedWidth;
+     var height=self.logoCropperSettings.croppedHeight;
+   // debugger;
+      if (width > height) {
+        if (width > MAX_WIDTH) {
+          height *= MAX_WIDTH / width;
+          width = MAX_WIDTH;
+        }
+      } else {
+        if (height > MAX_HEIGHT) {
+          width *= MAX_HEIGHT / height;
+          height = MAX_HEIGHT;
+        }
+      }
+      canvas.width = width;
+      canvas.height = height;
+      self.logoWidth = width;
+      self.logoHeight = height;
+    // debugger;
+      var ctx = canvas.getContext("2d");
+ 
+      ctx.drawImage(image, 0, 0, width, height);
+ 
+      // IMPORTANT: 'jpeg' NOT 'jpg'
+      var dataUrl = canvas.toDataURL('image/jpeg', quality);
+ 
+      callback(dataUrl)
+    }
+    
+  }
+  createFavIconThumbnail(bigMatch:any) {
+  let that=this;
+  //debugger;
+    this.generateFavIconFromImage(bigMatch, 500, 500, 0.5, data => {
+      
+    //image.onload = function () {
+      //var abc="334";
+      //debugger;
+    //}
+   // debugger;
+  //this.companyLogoImage=data;
+  that.dataWebsiteIcon.image=data;
+    });
+  }
+  generateFavIconFromImage(img, MAX_WIDTH: number = 700, MAX_HEIGHT: number = 700, quality: number = 1, callback) {
+    var canvas: any = document.createElement("canvas");
+    var image:any = new Image();
+    //image.width=this.companyCropperSettings.croppedWidth;
+    //image.height=this.companyCropperSettings.croppedHeight;
+    var that=this;
+ //debugger;
+    image.src = img;
+    image.onload = function () {
+     
+      var width=that.favIconCropperSettings.croppedWidth;
+      var height=that.favIconCropperSettings.croppedHeight;
+     //debugger;
+      if (width > height) {
+        if (width > MAX_WIDTH) {
+          height *= MAX_WIDTH / width;
+          width = MAX_WIDTH;
+        }
+      } else {
+        if (height > MAX_HEIGHT) {
+          width *= MAX_HEIGHT / height;
+          height = MAX_HEIGHT;
+        }
+      }
+      //debugger;
+      canvas.width = width;
+      canvas.height = height;
+      that.favIconWidth = width;
+      that.favIconHeight = height;
+      //debugger;
+      var ctx = canvas.getContext("2d");
+ 
+      ctx.drawImage(image, 0, 0, width, height);
+ 
+      // IMPORTANT: 'jpeg' NOT 'jpg'
+      var dataUrl = canvas.toDataURL('image/jpeg', quality);
+ 
+      callback(dataUrl)
+    }
+    
+  }
+  resizeLogoImage(img:any,callback)
+  {
+    var canvas: any = document.createElement("canvas");
+    var image:any = new Image();
+   
+    var that=this;
+
+    image.src = img;
+    image.onload = function () {
+     
+      var width=that.logoCropperSettings.croppedWidth;
+      var height=that.logoCropperSettings.croppedHeight;
+    
+      canvas.width = width;
+      canvas.height = height;
+
+      var ctx = canvas.getContext("2d");
+ 
+      ctx.drawImage(image, 0, 0, width, height);
+
+      var dataUrl = canvas.toDataURL('image/jpeg', 1);
+
+     callback(dataUrl)
+    }
+  }
+  resizeFavIconImage(img:any,callback)
+  {
+    var canvas: any = document.createElement("canvas");
+    var image:any = new Image();
+    //image.width=this.companyCropperSettings.croppedWidth;
+    //image.height=this.companyCropperSettings.croppedHeight;
+    var that=this;
+ //debugger;
+    image.src = img;
+    image.onload = function () {
+     
+      var width=that.favIconCropperSettings.croppedWidth;
+      var height=that.favIconCropperSettings.croppedHeight;
+    
+      canvas.width = width;
+      canvas.height = height;
+  
+      //debugger;
+      var ctx = canvas.getContext("2d");
+ 
+      ctx.drawImage(image, 0, 0, width, height);
+ 
+      // IMPORTANT: 'jpeg' NOT 'jpg'
+      var dataUrl = canvas.toDataURL('image/jpeg', 1);
+ //debugger;
+     callback(dataUrl)
+    }
+  }
+ ////////////////////////////////////////////////////////////////////////
   updateWebsite():void{
     let isActiveFinal="1";
     let show_new_listing_dummy="0";

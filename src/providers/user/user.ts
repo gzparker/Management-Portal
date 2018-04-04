@@ -591,7 +591,7 @@ createWebsite(user_id:string,isActive:string,website_domain:string,identity_name
  data.append('member_id',user_id);
  data.append('active',isActive);
  data.append('mls_server_id',this.sharedServiceObj.mlsServerId);
-debugger;
+//debugger;
   let websiteListing=this.http
     .post(this.sharedServiceObj.apiBaseUrl+'members/createWebsite', data, this.headerOptions)
     .map(this.extractData)
@@ -651,7 +651,7 @@ deleteWebsite(user_id:string,website_id:string){
     return websiteListing;
 }
 allListCreditCards(user_id:string,service_id:string){
-  debugger;
+  //debugger;
   let data = new URLSearchParams();
 data.append('member_id',user_id);
 data.append('service_id',service_id);
@@ -683,15 +683,15 @@ addCreditCardDetail(creditCardData: any) {
   data.append('exp_month', creditCardData.exp_month);
   data.append('exp_year', creditCardData.exp_year);
   data.append('cvc', creditCardData.cvc);
-  data.append('primary_source',creditCardData.primary_source);
- debugger;
+  //data.append('primary_source',creditCardData.primary_source);
+ //debugger;
   let addCreditCardResp = this.http
     .post(url, data, this.headerOptions)
     .map(this.extractData)
   return addCreditCardResp;
 }
 updateCreditCardDetail(user_id:string,service_id:string,unique_id:string,name:string,exp_year:string,
-  exp_month:string,zipcode:string)
+  exp_month:string,zipcode:string,primary_source:string,cvc:string)
 {
   let data = new URLSearchParams();
   data.append('member_id',user_id);
@@ -701,6 +701,9 @@ updateCreditCardDetail(user_id:string,service_id:string,unique_id:string,name:st
   data.append('exp_year',exp_year);
   data.append('exp_month',exp_month);
   data.append('zipcode',zipcode);
+  data.append('cvc',cvc);
+  data.append('primary_source',primary_source);
+  debugger;
 let creditCardDetail=this.http
   .post(this.sharedServiceObj.registerationApiBaseUrl+'PaymentMethods/updatePaymentMethod', data, this.headerOptions)
   .map(this.extractData)
@@ -901,7 +904,7 @@ updateGlobalSettings(member_id:string,personalImage:string,companyImage:string,
     data.append('color_second',secondColor);
     data.append('color_third',thirdColor);
 
- debugger;
+ //debugger;
    let updateSettingsResp=this.http
        .post(this.sharedServiceObj.registerationApiBaseUrl+'members/updateGlobalSettings', data, this.headerOptions)
        .map(this.extractData)
@@ -918,7 +921,7 @@ loadPaperWorkStatus(website_id:string)
      return paperWorkResp;
 }
   private extractData(res: Response) {
- //debugger;
+//debugger;
     return res.json();
   }
   private handleErrorObservable(error: Response | any) {

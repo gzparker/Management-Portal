@@ -1,10 +1,11 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, Platform,MenuController,ActionSheetController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, Platform,MenuController,ActionSheetController,LoadingController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 import { DashboardPage } from '../dashboard/dashboard';
 import { DashboardTabsPage } from '../tabs/dashboard-tabs/dashboard-tabs';
 import { FbConfirmPage } from '../fb-confirm/fb-confirm';
+import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser';
 import { AlertController } from 'ionic-angular';
 import { GlobalPreferencesPage } from '../setup/global-preferences/global-preferences';
 
@@ -36,21 +37,33 @@ export class SubscriptionPage {
   public exp_month: string;
   public exp_year: string;
   public userSubscribed: boolean = false;
+  public select_interval:boolean=true;
+  public pay_yearly:boolean=false;
   public subscriptionMsg: string = "";
   public cvc: string;
   public calendarMinDate:any;
   public calendarMaxDate:any;
+  public agree_terms:boolean=false;
+  public totalAmount:number=0;
+  public service_id:string="";
+  public mls_server_id:any[]=[];
+  public allMls:any[]=[];
+  public tos_url:string="http://www.idxcompany.com/terms-of-service/";
+  public loader:any;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,
-    public sharedServiceObj: SharedProvider, private storage: Storage,
+    public sharedServiceObj: SharedProvider, private storage: Storage,public iab: InAppBrowser,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform, 
-    public ngZone: NgZone,public menuCtrl: MenuController,public actionSheetCtrl: ActionSheetController) {
+    public ngZone: NgZone,public menuCtrl: MenuController,public actionSheetCtrl: ActionSheetController,
+    public loadingCtrl: LoadingController) {
       this.calendarMinDate=new Date();
       this.calendarMinDate.setFullYear(this.calendarMinDate.getFullYear(),0);
       this.calendarMinDate=this.calendarMinDate.toISOString();
       this.calendarMaxDate=new Date();
       this.calendarMaxDate.setFullYear(this.calendarMaxDate.getFullYear() + 50);
       this.calendarMaxDate=this.calendarMaxDate.toISOString();
+      this.service_id=this.sharedServiceObj.service_id;
    //   this.expiryDate=new Date(this.expiryDate).toISOString();
   }
 
@@ -58,22 +71,69 @@ export class SubscriptionPage {
     this.platform.ready().then(() => {
       this.full_name = this.navParams.get('full_name');
       this.listAllPackages();
-      debugger;
+      this.loadAllAvailableMLS();
+      //debugger;
     });
     ///debugger;
   }
   listAllPackages() {
-    this.subscriptionObj.getServicePackagesList()
+    //debugger;
+    this.selectedPackagesList=[];
+    this.loader = this.loadingCtrl.create({
+      content: "Please wait...",
+      duration: 1000
+    });
+    this.totalAmount=0;
+    let pay_yearly_dummy="";
+  if(this.pay_yearly)
+  {
+    pay_yearly_dummy="YEAR";
+  }
+  else
+  {
+    pay_yearly_dummy="MONTH";
+  }
+    this.subscriptionObj.getServicePackagesList(pay_yearly_dummy)
       .subscribe((result) => this.packagesResp(result)); 
   }
   packagesResp(resp: any) {
+    this.loader.present();
     if (resp.status == true) {
+      //debugger;
+      this.tos_url=resp.tos_url;
       if (resp.plans != undefined) {
+      // debugger;
         this.allAvailablePackages = resp.plans;
-        // debugger;
+       //debugger;
       }
     }
+  }
+  loadAllAvailableMLS()
+  {
+    this.subscriptionObj.loadAllAvailableMLS()
+    .subscribe((result) => this.allAvailableMLSResp(result)); 
+  }
+  allAvailableMLSResp(resp: any)
+  {
+//debugger;
+if(resp.status==true)
+{
+  this.allMls=resp.available_mls;
+}
+else
+{
+  this.allMls=[];
+}
+  }
+  openInAppBrowser()
+  {
+   // debugger;
+    const options: InAppBrowserOptions = {
+      zoom: 'no'
+    }
 
+    // Opening a URL and returning an InAppBrowserObject
+    const browser = this.iab.create(this.tos_url, '_blank',options);
   }
   openMenu() {
     //debugger;
@@ -87,6 +147,7 @@ export class SubscriptionPage {
   saveSubscribeUser() {
 if(this.selectedPackagesList.length>0)
 {
+  
   let dataObj = {
     member_id: "",
     full_name: "",
@@ -94,8 +155,8 @@ if(this.selectedPackagesList.length>0)
     exp_month: "",
     exp_year: "",
     cvc: "",
-    service_plans_array: []
-
+    service_plans_array: [],
+    mls_service_id:[]
   };
 
   dataObj.full_name = this.full_name;
@@ -104,6 +165,7 @@ if(this.selectedPackagesList.length>0)
   dataObj.exp_year = this.expiryDate.split("-")[0];
   dataObj.cvc = this.cvc;
   dataObj.service_plans_array = this.selectedPackagesList;
+  dataObj.mls_service_id=this.mls_server_id;
   //debugger;
   let member_id = this.storage.get('userId');
   member_id.then((memberResp) => {
@@ -122,6 +184,7 @@ else
   saveSubscribeUserResp(data: any) {
     //debugger;
     if (data.status == true) {
+      this.sharedServiceObj.setPaidStatus(true);
       this.ngZone.run(() => {
         this.navCtrl.setRoot(DashboardTabsPage,{notificationMsg:data.message.toUpperCase()});
         /*let actionSheet = this.actionSheetCtrl.create({
@@ -153,31 +216,24 @@ else
       });
     }
     else {
+      this.sharedServiceObj.setPaidStatus(false);
       this.subscriptionMsg=data.message.toUpperCase();
     }
   }
-  setSelectedPackage(packageId: any) {
+  setSelectedPackage(packageId: any,price:any) {
     //debugger;
     let selectedIndex = this.selectedPackagesList.indexOf(packageId);
     //debugger;
+    
     if (selectedIndex >= 0) {
+      this.totalAmount=this.totalAmount-parseFloat(price);
       this.selectedPackagesList.splice(selectedIndex, 1);
     }
     else {
+      this.totalAmount=this.totalAmount+parseFloat(price);
       this.selectedPackagesList.push(packageId);
     }
-    //debugger;
-    /*let selectedPackage=this.selectedPackagesList.filter(
-      packageObj => packageObj.id === packageId);
-      if(selectedPackage.length>0)
-      {
-    
-      }
-      else
-      {
-        this.selectedPackagesList.push(packageId);
-      }*/
-
+   //debugger;
 
   }
 }

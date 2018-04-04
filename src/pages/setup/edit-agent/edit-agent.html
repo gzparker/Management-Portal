@@ -80,8 +80,8 @@
          (onCrop)="agentImageCropped($event)"></img-cropper>
         <br>
         <span *ngIf="dataAgentImage.image" >
-            <img [src]="dataAgentImage.image" [width]="cropperSettings.croppedWidth"
-             [height]="cropperSettings.croppedHeight">
+            <img [src]="dataAgentImage.image" [width]="cropperWidth"
+             [height]="cropperHeight">
         </span>
 
     </ion-list>

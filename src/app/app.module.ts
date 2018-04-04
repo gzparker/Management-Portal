@@ -22,6 +22,7 @@ import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { Crop } from '@ionic-native/crop';
 import { Camera } from '@ionic-native/camera';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { AgmCoreModule } from '@agm/core';
 
 //import { ListPage } from '../pages/list/list';
@@ -129,7 +130,8 @@ import { ListingProvider } from '../providers/listing/listing';
     SharedProvider,
     ImagePicker,
 		Crop,
-		Camera,
+    Camera,
+    InAppBrowser,
     SubscriptionProvider,
     ListingProvider
   ],
