@@ -29,10 +29,11 @@
     
       <ion-list>
       <ion-item>
-          <ion-label>Pay Yearly</ion-label>
-          <ion-toggle [(ngModel)]="pay_yearly" name="pay_yearly" (ngModelChange)="listAllPackages()"></ion-toggle>
+          <ion-label *ngIf="pay_yearly==false">Pay Monthly</ion-label>
+          <ion-label *ngIf="pay_yearly==true">Pay Yearly</ion-label>
+          <ion-toggle [(ngModel)]="pay_yearly" name="pay_yearly" (ngModelChange)="listIntervalBasedPackages()"></ion-toggle>
       </ion-item>
-      <ion-item *ngFor="let package of allAvailablePackages">
+      <ion-item *ngFor="let package of intervalBasedPackages">
      
         <ion-label>{{package.name}}</ion-label>
         <ion-label>${{package.amount}}</ion-label>
@@ -41,6 +42,11 @@
  
      <ion-checkbox color="royal" checked="false" item-right 
         (click)="setSelectedPackage(package.id,package.amount)"></ion-checkbox>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Promo Code</ion-label>
+        <ion-input type="text" [(ngModel)]="promo_code" name="promo_code" id="promo_code" 
+        (keyup.enter)="checkPromoCode()"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label>Total Price:${{totalAmount}}</ion-label>
@@ -57,7 +63,8 @@
     <ion-item>
       <ion-label>Expiry Date</ion-label>
       <ion-datetime displayFormat="MM/YYYY" pickerFormat="MM/YYYY" 
-      [(ngModel)]="expiryDate" name="expiryDate" required  min="{{calendarMinDate}}" max="{{calendarMaxDate}}" ></ion-datetime>
+      [(ngModel)]="expiryDate" name="expiryDate" required  min="{{calendarMinDate}}" 
+      max="{{calendarMaxDate}}" ></ion-datetime>
     </ion-item>
     <ion-item>
       <ion-label floating>Credit Card CVC</ion-label>
@@ -65,7 +72,7 @@
     </ion-item>
     <ion-list *ngIf="service_id=='2'">
         <ion-item>
-            <ion-label floating>Multiple Listing Service</ion-label>
+            <ion-label floating>Select your MLS</ion-label>
             <ion-select [(ngModel)]="mls_server_id"  
             name="mls_server_id" multiple="true" required>
               <ion-option *ngFor="let mls of allMls" value= {{mls.mls_server_id}}>{{mls.name}}
@@ -80,7 +87,7 @@
     <div class="conditions">
       <ion-checkbox name="agree_terms" [(ngModel)]="agree_terms" id="agree_terms">
       </ion-checkbox>
-      <a (click)="openInAppBrowser()">Agrees to our terms of service</a>
+      I agree to The IDX Company's <a (click)="openInAppBrowser()">Terms of Service.</a>
   </div>
   </ion-list>
     <div padding>

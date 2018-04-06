@@ -54,7 +54,7 @@ export class UserProvider {
     });
     this.facebookObject = FB;
     this.facebookObject.getLoginStatus(response => {
-//alert('1');
+//alert('1..');
       this.fbLoginStatus = response;
 
     }, true);
@@ -80,9 +80,9 @@ export class UserProvider {
   
   }
   onFacebookLoginClick(): void {
-    //alert('3');
+   // alert('3');
     if (this.fbLoginStatus != undefined) {
-     // alert('4');
+     //alert('4');
       this.statusChangeCallback(this.fbLoginStatus);
     }
 
@@ -111,7 +111,7 @@ export class UserProvider {
        
         if(!this.isApp)
         {
-         // alert('9');
+         //alert('9');
          // alert('yes');
           this.facebookObject.login(this.checkFacebookResp.bind(this));
         }
@@ -129,7 +129,7 @@ export class UserProvider {
      // alert('4');
      if(!this.isApp)
      {
-      //alert('11');
+     // alert('11');
        this.facebookObject.login(this.checkFacebookResp.bind(this));
      }
     else
@@ -146,7 +146,7 @@ export class UserProvider {
     if (resp.authResponse) {
       if(!this.isApp)
       {
-       // alert('14');
+      //alert('14');
       this.facebookObject.api('/me', { locale: 'en_US', fields: 'name, email,picture' }, this.setFacebookAuthentication.bind(this));
       }
       else

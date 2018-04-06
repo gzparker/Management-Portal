@@ -69,11 +69,14 @@ private subscription: ISubscription;
   }
 
   ionViewDidLoad() {
-    this.getUserDetailedInfo();
+    
+    
   }
   ionViewWillUnload(){
   }
   ionViewWillEnter(){
+    //debugger;
+    this.getUserDetailedInfo();
   }
   getUserDetailedInfo(): void {
     let member_id = this.storage.get('userId');

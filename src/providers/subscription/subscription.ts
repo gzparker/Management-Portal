@@ -28,18 +28,32 @@ export class SubscriptionProvider {
     private storage: Storage, public modalCtrl: ModalController) {
     console.log('Hello SubscriptionProvider Provider');
   }
-  getServicePackagesList(interval:string) {
+  getServicePackagesList() {
     let url = "";
     let data = new URLSearchParams();
-    url = this.sharedServiceObj.registerationApiBaseUrl + 'subscriptions/list';
+    url = this.sharedServiceObj.registerationApiBaseUrl + 'subscriptions/listAll';
     //debugger;
     data.append('service_id', this.sharedServiceObj.service_id);
-    data.append('interval', interval);
+    //data.append('interval', interval);
     //debugger;
     let subscriptionList = this.http
       .post(url, data, this.headerOptions)
       .map(this.extractData)
     return subscriptionList;
+  }
+  checkPromoCode(promo_code:any) {
+    let url = "";
+    let data = new URLSearchParams();
+    url = this.sharedServiceObj.registerationApiBaseUrl + 'subscriptions/checkPromoCode';
+    //debugger;
+    data.append('service_id', this.sharedServiceObj.service_id);
+    data.append('promo_code', promo_code);
+    //data.append('interval', interval);
+    //debugger;
+    let checkPromoCodeResp = this.http
+      .post(url, data, this.headerOptions)
+      .map(this.extractData)
+    return checkPromoCodeResp;
   }
   saveUserSubscription(subscriptionData: any) {
     //debugger;

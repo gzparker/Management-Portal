@@ -5,7 +5,7 @@ import { Storage } from '@ionic/storage';
 import { DashboardPage } from '../dashboard/dashboard';
 import { DashboardTabsPage } from '../tabs/dashboard-tabs/dashboard-tabs';
 import { FbConfirmPage } from '../fb-confirm/fb-confirm';
-import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser';
+//import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser';
 import { AlertController } from 'ionic-angular';
 import { GlobalPreferencesPage } from '../setup/global-preferences/global-preferences';
 
@@ -30,10 +30,11 @@ import { SubscriptionProvider } from '../../providers/subscription/subscription'
 export class SubscriptionPage {
   //@ViewChild('expiryDateCtrl') expiryDateCtrl;
   public allAvailablePackages: any[] = [];
+  public intervalBasedPackages: any[] = [];
   public selectedPackagesList: any[] = [];
   public full_name: string;
   public cc_number: string;
-  public expiryDate: string=new Date("2010-12").toISOString();
+  public expiryDate: string=new Date(new Date().getFullYear().toString()+"-"+(parseInt("1")).toString()).toISOString();
   public exp_month: string;
   public exp_year: string;
   public userSubscribed: boolean = false;
@@ -44,16 +45,18 @@ export class SubscriptionPage {
   public calendarMinDate:any;
   public calendarMaxDate:any;
   public agree_terms:boolean=false;
+  public promo_code:string="";
   public totalAmount:number=0;
   public service_id:string="";
   public mls_server_id:any[]=[];
   public allMls:any[]=[];
+  public selectedPromoCode:any;
   public tos_url:string="http://www.idxcompany.com/terms-of-service/";
   public loader:any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,
-    public sharedServiceObj: SharedProvider, private storage: Storage,public iab: InAppBrowser,
+    public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform, 
     public ngZone: NgZone,public menuCtrl: MenuController,public actionSheetCtrl: ActionSheetController,
     public loadingCtrl: LoadingController) {
@@ -78,35 +81,45 @@ export class SubscriptionPage {
   }
   listAllPackages() {
     //debugger;
-    this.selectedPackagesList=[];
-    this.loader = this.loadingCtrl.create({
-      content: "Please wait...",
-      duration: 1000
-    });
-    this.totalAmount=0;
-    let pay_yearly_dummy="";
-  if(this.pay_yearly)
-  {
-    pay_yearly_dummy="YEAR";
-  }
-  else
-  {
-    pay_yearly_dummy="MONTH";
-  }
-    this.subscriptionObj.getServicePackagesList(pay_yearly_dummy)
+    
+    this.subscriptionObj.getServicePackagesList()
       .subscribe((result) => this.packagesResp(result)); 
   }
   packagesResp(resp: any) {
-    this.loader.present();
+    //this.loader.present();
     if (resp.status == true) {
-      //debugger;
+     // debugger;
       this.tos_url=resp.tos_url;
       if (resp.plans != undefined) {
       // debugger;
         this.allAvailablePackages = resp.plans;
+        this.listIntervalBasedPackages();
        //debugger;
       }
     }
+  }
+  listIntervalBasedPackages()
+  {
+    this.selectedPackagesList=[];
+    //this.loader = this.loadingCtrl.create({
+      //content: "Please wait...",
+      //duration: 1000
+    //});
+    debugger;
+    this.totalAmount=0;
+    let pay_yearly_dummy="";
+  if(this.pay_yearly)
+  {
+    pay_yearly_dummy="year";
+  }
+  else
+  {
+    pay_yearly_dummy="month";
+  }
+  //this.allAvailablePackages.filter()
+  this.intervalBasedPackages=this.allAvailablePackages.filter(
+    packageList => packageList.interval === pay_yearly_dummy);
+//debugger;
   }
   loadAllAvailableMLS()
   {
@@ -115,7 +128,7 @@ export class SubscriptionPage {
   }
   allAvailableMLSResp(resp: any)
   {
-//debugger;
+
 if(resp.status==true)
 {
   this.allMls=resp.available_mls;
@@ -127,13 +140,8 @@ else
   }
   openInAppBrowser()
   {
-   // debugger;
-    const options: InAppBrowserOptions = {
-      zoom: 'no'
-    }
-
-    // Opening a URL and returning an InAppBrowserObject
-    const browser = this.iab.create(this.tos_url, '_blank',options);
+    window.open(this.tos_url, '_black');
+    
   }
   openMenu() {
     //debugger;
@@ -181,6 +189,7 @@ else
   this.subscriptionMsg="Please select package list.";
 }
   }
+  
   saveSubscribeUserResp(data: any) {
     //debugger;
     if (data.status == true) {
@@ -219,6 +228,25 @@ else
       this.sharedServiceObj.setPaidStatus(false);
       this.subscriptionMsg=data.message.toUpperCase();
     }
+  }
+  checkPromoCode()
+  {
+    debugger;
+    if(this.promo_code!="")
+    {
+      this.subscriptionObj.checkPromoCode(this.promo_code).
+      subscribe((result) => this.checkPromoCodeResp(result));
+
+    }
+    
+  }
+  checkPromoCodeResp(resp:any)
+  {
+    if(resp.status==true)
+    {
+      this.selectedPromoCode=resp;
+    }
+
   }
   setSelectedPackage(packageId: any,price:any) {
     //debugger;

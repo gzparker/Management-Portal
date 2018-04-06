@@ -26,7 +26,7 @@ export class AddCreditCardPage {
   public userId:string="";
   public full_name: string;
   public cc_number: string;
-  public expiryDate: string;
+  public expiryDate: string=new Date(new Date().getFullYear().toString()+"-"+(parseInt("1")).toString()).toISOString();
   public exp_month: string;
   public exp_year: string;
   public creditCardMsg: string = "";
