@@ -40,6 +40,7 @@ export class GlobalPreferencesPage {
   public hideCompanyCropper:boolean=true;
   public hidePersonalCropper:boolean=true;
   public edit_company_image:boolean=false;
+  public edit_personal_image:boolean=false;
   public companyCropperLoaded:boolean=false;
   public cropperJsConfig: object;
   public isApp=false;
@@ -204,7 +205,7 @@ export class GlobalPreferencesPage {
           image.onload = function () {
             self.companyCropperSettings.croppedWidth = this.width;
             self.companyCropperSettings.croppedHeight = this.height;
-      
+            self.companyLogoImage=image.src;
             //self.companyCropper.setImage(image); 
             self.createCompanyThumbnail(image.src);
         };
@@ -235,7 +236,7 @@ export class GlobalPreferencesPage {
             
             self.personalCropperSettings.croppedWidth = this.width;
             self.personalCropperSettings.croppedHeight = this.height;
-            
+            self.personalImage=image.src;
            //self.personalCropper.setImage(image);
            self.createPersonalThumbnail(image.src);
         };
@@ -249,20 +250,41 @@ export class GlobalPreferencesPage {
 if(this.edit_company_image)
 {
   this.hideCompanyCropper=true;
-  //if(!this.companyCropperLoaded)
- // {
+  if(this.companyLogoImage!="")
+  {
    // this.companyCropperLoaded=true;
     var image:any = new Image();
-    image.src = this.dataCompanyLogoImage.image;
+    image.src = this.companyLogoImage;
             image.onload = function () {
               self.companyCropper.setImage(image); 
             }
-  //}
+ }
   
 }
 else
 {
   this.hideCompanyCropper=false;
+}
+  }
+  showHidePersonalCropper(){
+    const self = this;
+if(this.edit_personal_image)
+{
+  this.hidePersonalCropper=true;
+  if(this.personalImage!="")
+  {
+   // this.companyCropperLoaded=true;
+    var image:any = new Image();
+    image.src = this.personalImage;
+            image.onload = function () {
+              self.personalCropper.setImage(image); 
+            }
+ }
+  
+}
+else
+{
+  this.hidePersonalCropper=false;
 }
   }
    companyFileChangeListener($event) {
