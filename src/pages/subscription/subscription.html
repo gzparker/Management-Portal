@@ -36,20 +36,24 @@
       <ion-item *ngFor="let package of intervalBasedPackages">
      
         <ion-label>{{package.name}}</ion-label>
-        <ion-label>${{package.amount}}</ion-label>
+        <ion-label *ngIf="pay_yearly==true">${{package.amount/12}}/month</ion-label>
+        <ion-label *ngIf="pay_yearly==false">${{package.amount}}</ion-label>
         <ion-label>{{package.description}}</ion-label>
         <!--<ion-toggle [(ngModel)]="pepperoni"></ion-toggle>-->
  
      <ion-checkbox color="royal" checked="false" item-right 
-        (click)="setSelectedPackage(package.id,package.amount)"></ion-checkbox>
+        (click)="setSelectedPackage(package)"></ion-checkbox>
       </ion-item>
       <ion-item>
         <ion-label floating>Promo Code</ion-label>
-        <ion-input type="text" [(ngModel)]="promo_code" name="promo_code" id="promo_code" 
-        (keyup.enter)="checkPromoCode()"></ion-input>
+        <ion-input type="text" [(ngModel)]="promo_code" name="promo_code" id="promo_code"></ion-input>
+        <button ion-button large clear (click)="checkPromoCode()" item-end>
+          <ion-icon name="add"></ion-icon>
+        </button>
       </ion-item>
       <ion-item>
-        <ion-label>Total Price:${{totalAmount}}</ion-label>
+        <ion-label *ngIf="pay_yearly==true">Total Price:${{totalAmount}}/year</ion-label>
+        <ion-label *ngIf="pay_yearly==false">Total Price:${{totalAmount}}/month</ion-label>
       </ion-item>
     </ion-list>
     <ion-item>

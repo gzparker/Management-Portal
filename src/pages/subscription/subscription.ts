@@ -32,6 +32,7 @@ export class SubscriptionPage {
   public allAvailablePackages: any[] = [];
   public intervalBasedPackages: any[] = [];
   public selectedPackagesList: any[] = [];
+  public selectedCoupon:string="";
   public full_name: string;
   public cc_number: string;
   public expiryDate: string=new Date(new Date().getFullYear().toString()+"-"+(parseInt("1")).toString()).toISOString();
@@ -105,7 +106,7 @@ export class SubscriptionPage {
       //content: "Please wait...",
       //duration: 1000
     //});
-    debugger;
+    //debugger;
     this.totalAmount=0;
     let pay_yearly_dummy="";
   if(this.pay_yearly)
@@ -164,9 +165,16 @@ if(this.selectedPackagesList.length>0)
     exp_year: "",
     cvc: "",
     service_plans_array: [],
-    mls_service_id:[]
+    mls_service_id:[],
+    stripe_coupon_code:""
   };
-
+ // this.selectedPackagesList.forEach(element => {
+   // dataObj.service_plans_array.push(element.id);
+//});
+for(let i=0;i<this.selectedPackagesList.length;i++)
+{
+  dataObj.service_plans_array.push(this.selectedPackagesList[i].id);
+}
   dataObj.full_name = this.full_name;
   dataObj.cc_number = this.cc_number;
   dataObj.exp_month = this.expiryDate.split("-")[1];
@@ -174,14 +182,15 @@ if(this.selectedPackagesList.length>0)
   dataObj.cvc = this.cvc;
   dataObj.service_plans_array = this.selectedPackagesList;
   dataObj.mls_service_id=this.mls_server_id;
+  dataObj.stripe_coupon_code=this.selectedCoupon;
   //debugger;
   let member_id = this.storage.get('userId');
   member_id.then((memberResp) => {
     //debugger;
     dataObj.member_id = memberResp;
 
-    this.subscriptionObj.saveUserSubscription(dataObj).
-      subscribe((result) => this.saveSubscribeUserResp(result));
+   this.subscriptionObj.saveUserSubscription(dataObj).
+     subscribe((result) => this.saveSubscribeUserResp(result));
   });
 }
 else
@@ -196,31 +205,7 @@ else
       this.sharedServiceObj.setPaidStatus(true);
       this.ngZone.run(() => {
         this.navCtrl.setRoot(DashboardTabsPage,{notificationMsg:data.message.toUpperCase()});
-        /*let actionSheet = this.actionSheetCtrl.create({
-          title: 'Select any option',
-          buttons: [
-            {
-              text: 'Upload Company Picture',
-              handler: () => {
-                this.navCtrl.setRoot(GlobalPreferencesPage, { route: "subscribe" });
-              }
-            },
-            {
-              text: "No Thanks",
-              handler: () => {
-                this.storage.set('showGlobalPopUp','no');
-                this.navCtrl.setRoot(DashboardTabsPage,{notificationMsg:data.message.toUpperCase()});
-              }
-            },
-            {
-              text: 'Cancel',
-              handler: () => {
-                this.navCtrl.setRoot(DashboardTabsPage,{notificationMsg:data.message.toUpperCase()});
-              }
-            }
-          ]
-        });
-        actionSheet.present();*/
+       
       
       });
     }
@@ -231,7 +216,7 @@ else
   }
   checkPromoCode()
   {
-    debugger;
+    //debugger;
     if(this.promo_code!="")
     {
       this.subscriptionObj.checkPromoCode(this.promo_code).
@@ -244,24 +229,66 @@ else
   {
     if(resp.status==true)
     {
+      
       this.selectedPromoCode=resp;
+      this.calculateTotalPrice();
+      //debugger;
     }
-
+//debugger;
   }
-  setSelectedPackage(packageId: any,price:any) {
-    //debugger;
-    let selectedIndex = this.selectedPackagesList.indexOf(packageId);
-    //debugger;
+  setSelectedPackage(packageItem:any) {
+  
+    let selectedIndex = this.selectedPackagesList.indexOf(packageItem);
+    
     
     if (selectedIndex >= 0) {
-      this.totalAmount=this.totalAmount-parseFloat(price);
+      //this.totalAmount=this.totalAmount-parseFloat(price);
+
       this.selectedPackagesList.splice(selectedIndex, 1);
     }
     else {
-      this.totalAmount=this.totalAmount+parseFloat(price);
-      this.selectedPackagesList.push(packageId);
+      //this.totalAmount=this.totalAmount+parseFloat(price);
+      this.selectedPackagesList.push(packageItem);
     }
-   //debugger;
+    this.calculateTotalPrice();
+ //debugger;
+
+  }
+  calculateTotalPrice()
+  {
+    this.totalAmount=0;
+    this.selectedCoupon="";
+//debugger;
+//this.selectedPackagesList.forEach((item)=>{
+//debugger;
+//})
+if(this.selectedPackagesList!=undefined)
+{
+  if(this.selectedPackagesList.length>0)
+{
+  for(let i=0;i<this.selectedPackagesList.length;i++)
+  {
+    if(this.selectedPromoCode!=undefined)
+    {
+      if(this.selectedPromoCode.id==this.selectedPackagesList[i].id)
+      {
+       // debugger;
+        this.selectedCoupon=this.selectedPromoCode.coupon;
+        this.totalAmount=this.totalAmount+parseFloat(this.selectedPromoCode.subtract_amount);
+      }
+      else
+      {
+        this.totalAmount=this.totalAmount+parseFloat(this.selectedPackagesList[i].amount);
+      }
+    }
+    else
+    {
+      this.totalAmount=this.totalAmount+parseFloat(this.selectedPackagesList[i].amount);
+    }
+  //debugger;
+  }
+}
+}
 
   }
 }

@@ -227,21 +227,18 @@ public isWebBrowser=false;
   ionViewDidLoad() {
     let member_id = this.storage.get('userId');
     member_id.then((data) => {
-     // debugger;
+     
       this.userId=data;
       this.getAllWebsite();
       this.loadAllAgents();
       if(this.navParams.get('id')!=undefined)
       {
-      //  debugger;
         this.hotSheetId=this.navParams.get('id');
-        //this.loadSearchedField();
-        
-      }
-    
-    //this.geolocation.getCurrentPosition().then((position) => {
-      if(!this.isWebBrowser)
-      { 
+        this.editHotSheet();
+
+      /*if(!this.isWebBrowser)
+      {
+       
       if (window.navigator.geolocation) {
         window.navigator.geolocation.getCurrentPosition((position)=> {
       if(position.coords.latitude!=undefined&&position.coords.longitude!=undefined)
@@ -249,32 +246,32 @@ public isWebBrowser=false;
         this.map_height=400;
         this.loadMap(position.coords.latitude, position.coords.longitude);
         this.initAutocomplete();
-        this.editHotSheet();
+        //this.editHotSheet();
       }
     }, function() {
        
     },{maximumAge:0, timeout:10000});
   } else {
-    // Browser doesn't support Geolocation
+    
    
   }
 }
 else
 {
-  //debugger;
+  
   this.geolocation.getCurrentPosition().then((position) => {
-    //debugger;
+    
     if(position.coords.latitude!=undefined&&position.coords.longitude!=undefined)
       {
        // debugger;
         this.map_height=400;
         this.loadMap(position.coords.latitude, position.coords.longitude);
         this.initAutocomplete();
-        this.editHotSheet();
+        //this.editHotSheet();
       }
   });
+}*/
 }
-   // });
     });
    
   }
@@ -665,7 +662,7 @@ let savedPath=this.savedPolygonPath;
          {
        //    debugger;
            this.local=element.long_name;
- this.city=element.long_name;
+           this.city=element.long_name;
            /*if(this.slug!='')
            {
              this.slug=this.slug+"/"+element.long_name;
@@ -829,14 +826,12 @@ let savedPath=this.savedPolygonPath;
       
       let optionsArray:any[]=[];
       this.address_subdivision=result.searchFieldsJson.address_subdivision;
-    //  debugger
       for(let i=0;i<this.address_subdivision.length;i++){
         
            let obj={id:this.address_subdivision[i],name:this.address_subdivision[i]};
            optionsArray.push(obj);
          }
          this.address_subdivision_options=optionsArray;
-      //debugger;
       }
       if(result.searchFieldsJson.listing_type!=undefined)
       {
@@ -856,7 +851,6 @@ let savedPath=this.savedPolygonPath;
       //this.address_zip_code=result.searchFieldsJson.address_zip_code;
       let optionsArray:any[]=[];
       this.address_zip_code=result.searchFieldsJson.address_zip_code;
-     // debugger
       for(let i=0;i<this.address_zip_code.length;i++){
         
            let obj={id:this.address_zip_code[i],name:this.address_zip_code[i]};
@@ -869,7 +863,6 @@ let savedPath=this.savedPolygonPath;
       
       let optionsArray:any[]=[];
       this.neighbourhood=result.searchFieldsJson.neighborhood;
-    //  debugger;
       for(let i=0;i<this.neighbourhood.length;i++){
         
            let obj={id:this.neighbourhood[i],name:this.neighbourhood[i]};
@@ -878,8 +871,6 @@ let savedPath=this.savedPolygonPath;
          this.neighbourhood_options=optionsArray;
       }
       /////////////////////////////////////////////////////////////////////////
-      //this.loadLastSearchedValue();
-      //debugger;
       this.editHotSheet();
     }
     loadLastSearchedValue():void{
@@ -1062,7 +1053,42 @@ let savedPath=this.savedPolygonPath;
            this.selectedLong=lastSearchedObj.selectedLong;
          }
        //  debugger;
-          this.loadSavedPolygon();
+          //this.loadSavedPolygon();
+          if(!this.isWebBrowser)
+      {
+       //debugger;
+      if (window.navigator.geolocation) {
+        window.navigator.geolocation.getCurrentPosition((position)=> {
+      if(position.coords.latitude!=undefined&&position.coords.longitude!=undefined)
+      {
+        this.map_height=400;
+        this.loadMap(position.coords.latitude, position.coords.longitude);
+        this.initAutocomplete();
+        this.loadSavedPolygon();
+      }
+    }, function() {
+       
+    },{maximumAge:0, timeout:10000});
+  } else {
+    
+   
+  }
+}
+else
+{
+  //debugger;
+  this.geolocation.getCurrentPosition().then((position) => {
+    
+    if(position.coords.latitude!=undefined&&position.coords.longitude!=undefined)
+      {
+       // debugger;
+        this.map_height=400;
+        this.loadMap(position.coords.latitude, position.coords.longitude);
+        this.initAutocomplete();
+        this.loadSavedPolygon();
+      }
+  });
+}
       }
     }
   }
@@ -1164,17 +1190,12 @@ let savedPath=this.savedPolygonPath;
       {
         this.additionalInfoOption=true;
       this.loadCommunityImage(this.sharedServiceObj.imgBucketUrl,result.result.community_image_url);
-        //let image : any= new Image();
-        //image.src = this.sharedServiceObj.imgBucketUrl+result.result.community_image_url;
-        //this.communityImageCropper.setImage(image);
-
+        
       }
       if(result.result.header_image_url!=undefined)
       {
       this.additionalInfoOption=true;
-       // let image : any= new Image();
-       // image.src = this.sharedServiceObj.imgBucketUrl+result.result.header_image_url;
-       // this.headerImageCropper.setImage(image);
+      
        this.loadHeaderImage(this.sharedServiceObj.imgBucketUrl,result.result.header_image_url);
       }
          
@@ -1188,7 +1209,7 @@ let savedPath=this.savedPolygonPath;
       loadCommunityImage(baseUrl:string,imageUrl:string) {
       //  debugger;
         const self = this;
-      this.hideCommunityCropper=true;
+      //this.hideCommunityCropper=true;
         
         var image:any = new Image();
         const xhr = new XMLHttpRequest()
@@ -1208,7 +1229,8 @@ let savedPath=this.savedPolygonPath;
                 //debugger;
                 self.communityCropperSettings.croppedWidth=this.width;
                 self.communityCropperSettings.croppedHeight=this.height;
-                self.communityImageCropper.setImage(image);
+                self.createCommunityImageThumbnail(image.src);
+                //self.communityImageCropper.setImage(image);
               }
           };
         });
@@ -1216,7 +1238,7 @@ let savedPath=this.savedPolygonPath;
       loadHeaderImage(baseUrl:string,imageUrl:string) {
        // debugger;
         const self = this;
-        this.hideHeaderCropper=true;
+        //this.hideHeaderCropper=true;
         var image:any = new Image();
         const xhr = new XMLHttpRequest()
         xhr.open("GET", baseUrl+imageUrl);
@@ -1233,7 +1255,8 @@ let savedPath=this.savedPolygonPath;
                
                 self.headerCropperSettings.croppedWidth=this.width;
                 self.headerCropperSettings.croppedHeight=this.height;
-                self.headerImageCropper.setImage(image);
+                self.createHeaderImageThumbnail(image.src);
+                //self.headerImageCropper.setImage(image);
               }
               //self.headerImageCropper.setImage(image);
       

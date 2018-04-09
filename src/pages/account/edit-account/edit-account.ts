@@ -153,7 +153,7 @@ export class EditAccountPage {
         reader.readAsDataURL(xhr.response); 
        
         reader.onloadend = function (loadEvent:any) {
-          self.hideImageCropper=true;
+         // self.hideImageCropper=true;
           image.src = loadEvent.target.result;
           image.onload = function () {
             //alert (this.width);
@@ -161,7 +161,8 @@ export class EditAccountPage {
             self.cropperSettings.croppedWidth = this.width;
             self.cropperSettings.croppedHeight = this.height;
             
-            self.personalCropper.setImage(image);
+            //self.personalCropper.setImage(image);
+            self.createPersonalImageThumbnail(image.src);
         };
           // 
   

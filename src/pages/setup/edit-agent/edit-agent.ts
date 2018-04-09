@@ -143,7 +143,7 @@ loadAgentDetailsResp(result:any)
 }
 loadImage(baseUrl:string,imageUrl:string) {
   //debugger;
-  this.hideAgentCropper=true;
+  //this.hideAgentCropper=true;
   const self = this;
   var image:any = new Image();
   const xhr = new XMLHttpRequest()
@@ -161,8 +161,8 @@ loadImage(baseUrl:string,imageUrl:string) {
           //debugger;
           self.cropperSettings.croppedWidth = this.width;
           self.cropperSettings.croppedHeight = this.height;
-          
-          self.agentCropper.setImage(image);  
+          self.createPersonalImageThumbnail(image.src);
+          //self.agentCropper.setImage(image);  
       };
         //self.agentCropper.setImage(image);
 

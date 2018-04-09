@@ -342,7 +342,7 @@ this.footer_wrapper=result.result.footer_wrapper;
   }
   loadLogo(baseUrl:string,imageUrl:string) {
    
-    this.hideLogoCropper=true;
+    //this.hideLogoCropper=true;
     const self = this;
     var image:any = new Image();
     const xhr = new XMLHttpRequest()
@@ -360,8 +360,9 @@ this.footer_wrapper=result.result.footer_wrapper;
          
             self.logoCropperSettings.croppedWidth = this.width;
             self.logoCropperSettings.croppedHeight = this.height;
-            self.identity_logo=image;
+           // self.identity_logo=image;
             //self.companyLogoCropper.setImage(image);
+            self.createLogoThumbnail(image.src);
         };
       };
     });
@@ -387,7 +388,8 @@ this.footer_wrapper=result.result.footer_wrapper;
             self.favIconCropperSettings.croppedWidth = this.width;
             self.favIconCropperSettings.croppedHeight = this.height;
             //self.identity_icon=image.src;
-            self.favIconLogoCropper.setImage(image);
+            //self.favIconLogoCropper.setImage(image);
+            self.createLogoThumbnail(image.src);
         };
       };
     });

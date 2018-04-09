@@ -39,8 +39,12 @@
       
           <ion-list *ngIf="!isApp">
               <ion-list-header>
-                  Select Company Logo
+                  <h2>Select Company Logo</h2>
                 </ion-list-header>
+                <ion-item>
+                  <ion-label>Edit Image</ion-label>
+                  <ion-toggle *ngIf="dataCompanyLogoImage.image" [(ngModel)]="edit_company_image" name="edit_company_image" (click)="showHideCompanyCropper()"></ion-toggle>
+                </ion-item>
                 <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="companyFileChangeListener($event)">
        
                 <img-cropper #companyCropper [image]="dataCompanyLogoImage" 
@@ -53,7 +57,7 @@
                      <!--<img-loader [src]="dataCompanyLogoImage.image" useImg></img-loader>-->
                 </span>  
           <ion-list-header>
-            Select Personal Logo
+            <h2>Select Personal Logo</h2>
           </ion-list-header>
           <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="personalFileChangeListener($event)">
        
