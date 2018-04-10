@@ -41,6 +41,8 @@ export class GlobalPreferencesPage {
   public hidePersonalCropper:boolean=true;
   public edit_company_image:boolean=false;
   public edit_personal_image:boolean=false;
+  public crop_company_image:boolean=false;
+  public crop_personal_image:boolean=false;
   public companyCropperLoaded:boolean=false;
   public cropperJsConfig: object;
   public isApp=false;
@@ -246,6 +248,7 @@ export class GlobalPreferencesPage {
     });
   }
   showHideCompanyCropper(){
+    this.crop_company_image=false;
     const self = this;
 if(this.edit_company_image)
 {
@@ -267,6 +270,7 @@ else
 }
   }
   showHidePersonalCropper(){
+    this.crop_personal_image=false;
     const self = this;
 if(this.edit_personal_image)
 {
@@ -288,6 +292,8 @@ else
 }
   }
    companyFileChangeListener($event) {
+     this.crop_company_image=true;
+     this.edit_company_image=true;
      this.hideCompanyCropper=true;
     var image:any = new Image();
     var file:File = $event.target.files[0];
@@ -312,16 +318,22 @@ else
 }
   companyImageCropped(image:any)
   {
-    //debugger;
-    this.companyCropperSettings.croppedWidth = image.width;
-    this.companyCropperSettings.croppedHeight = image.height;
-  let that=this;
-    
-    this.resizeCompanyImage(this.dataCompanyLogoImage.image, data => {
-    
-    that.companyLogoImage=data;
-    this.createCompanyThumbnail(that.companyLogoImage);
-      });
+    if(this.crop_company_image)
+    {
+      this.companyCropperSettings.croppedWidth = image.width;
+      this.companyCropperSettings.croppedHeight = image.height;
+    let that=this;
+      
+      this.resizeCompanyImage(this.dataCompanyLogoImage.image, data => {
+      
+      that.companyLogoImage=data;
+      this.createCompanyThumbnail(that.companyLogoImage);
+        });
+    }
+   else
+   {
+     this.crop_company_image=true;
+   } 
    
   }
 
@@ -358,6 +370,8 @@ else
    }
   
    personalFileChangeListener($event) {
+     this.crop_personal_image=true;
+     this.edit_personal_image=true;
      this.hidePersonalCropper=true;
     var image:any = new Image();
     var file:File = $event.target.files[0];
@@ -381,15 +395,21 @@ else
 }
   personalImageCropped(image:any)
   {
-   //debugger;
-   let that=this;
-   this.personalCropperSettings.croppedWidth = image.width;
-  this.personalCropperSettings.croppedHeight = image.height;
-  this.resizePersonalImage(this.dataPersonalImage.image, data => {
-    
-    that.personalImage=data;
-    this.createPersonalThumbnail(that.personalImage);
-      });
+   if(this.crop_personal_image)
+   {
+    let that=this;
+    this.personalCropperSettings.croppedWidth = image.width;
+   this.personalCropperSettings.croppedHeight = image.height;
+   this.resizePersonalImage(this.dataPersonalImage.image, data => {
+     
+     that.personalImage=data;
+     this.createPersonalThumbnail(that.personalImage);
+       });
+   }
+   else
+   {
+     this.crop_personal_image=true;
+   }
   
   }
    takePersonalPicture(){

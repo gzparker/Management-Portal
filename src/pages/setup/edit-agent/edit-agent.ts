@@ -32,6 +32,8 @@ export class EditAgentPage {
   agentCropper:ImageCropperComponent;
   public hideAgentCropper:boolean=true;
   public isApp=false;
+  public edit_agent_image:boolean=false;
+  public crop_agent_image:boolean=false;
   public userLoggedId:boolean=false;
   public mls_id:string="";
   public firstName:string="";
@@ -161,6 +163,7 @@ loadImage(baseUrl:string,imageUrl:string) {
           //debugger;
           self.cropperSettings.croppedWidth = this.width;
           self.cropperSettings.croppedHeight = this.height;
+          this.agentImage=image.src;
           self.createPersonalImageThumbnail(image.src);
           //self.agentCropper.setImage(image);  
       };
@@ -168,6 +171,28 @@ loadImage(baseUrl:string,imageUrl:string) {
 
     };
   });
+}
+showHideAgentCropper(){
+  this.crop_agent_image=false;
+  const self = this;
+if(this.edit_agent_image)
+{
+this.hideAgentCropper=true;
+if(this.agentImage!="")
+{
+ // this.companyCropperLoaded=true;
+  var image:any = new Image();
+  image.src = this.agentImage;
+          image.onload = function () {
+            self.agentCropper.setImage(image); 
+          }
+}
+
+}
+else
+{
+this.hideAgentCropper=false;
+}
 }
 updateAgent()
   {
@@ -187,7 +212,9 @@ updateAgent()
     });
   }
   fileChangeListener($event) {
+    this.crop_agent_image=true;
     this.hideAgentCropper=true;
+    this.edit_agent_image=true;
     var image:any = new Image();
     var file:File = $event.target.files[0];
     var myReader:FileReader = new FileReader();
@@ -209,15 +236,22 @@ updateAgent()
 }
 agentImageCropped(image:any)
 {
- this.cropperSettings.croppedWidth = image.width;
- this.cropperSettings.croppedHeight = image.height;
- //this.agentImage = this.dataAgentImage.image;
- let that=this;
-   this.resizePersonalImage(this.dataAgentImage.image, data => {
+  if(this.crop_agent_image)
+  {
+    this.cropperSettings.croppedWidth = image.width;
+    this.cropperSettings.croppedHeight = image.height;
    
-     that.agentImage=data;
-     this.createPersonalImageThumbnail(that.agentImage);
-       });
+    let that=this;
+      this.resizePersonalImage(this.dataAgentImage.image, data => {
+      
+        that.agentImage=data;
+        this.createPersonalImageThumbnail(that.agentImage);
+          });
+  }
+else
+{
+  this.crop_agent_image=true;
+} 
 }
 /////////////////////Generate Thumbnail//////////////////////
 

@@ -41,9 +41,9 @@
               <ion-list-header>
                   <h2>Select Company Logo</h2>
                 </ion-list-header>
-                <ion-item>
+                <ion-item *ngIf="dataCompanyLogoImage.image">
                   <ion-label>Edit Image</ion-label>
-                  <ion-toggle *ngIf="dataCompanyLogoImage.image" [(ngModel)]="edit_company_image" name="edit_company_image" (click)="showHideCompanyCropper()"></ion-toggle>
+                  <ion-toggle [(ngModel)]="edit_company_image" name="edit_company_image" (click)="showHideCompanyCropper()"></ion-toggle>
                 </ion-item>
                 <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="companyFileChangeListener($event)">
        
@@ -59,9 +59,9 @@
           <ion-list-header>
             <h2>Select Personal Logo</h2>
           </ion-list-header>
-          <ion-item>
+          <ion-item *ngIf="dataPersonalImage.image">
             <ion-label>Edit Image</ion-label>
-            <ion-toggle *ngIf="dataPersonalImage.image" [(ngModel)]="edit_personal_image" name="edit_personal_image" (click)="showHidePersonalCropper()"></ion-toggle>
+            <ion-toggle [(ngModel)]="edit_personal_image" name="edit_personal_image" (click)="showHidePersonalCropper()"></ion-toggle>
           </ion-item>
           <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="personalFileChangeListener($event)">
        

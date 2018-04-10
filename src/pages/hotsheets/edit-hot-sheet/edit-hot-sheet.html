@@ -122,6 +122,11 @@
         <ion-list-header>
             Header Image
           </ion-list-header>
+          <ion-item *ngIf="dataHeaderImage.image">
+            <ion-label>Edit Image</ion-label>
+            <ion-toggle [(ngModel)]="edit_header_image" 
+            name="edit_header_image" (click)="showHideHeaderCropper()"></ion-toggle>
+          </ion-item>
           <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="headerFileChangeListener($event)">
            
             <img-cropper #headerImageCropper [image]="dataHeaderImage" [settings]="headerCropperSettings"
@@ -135,6 +140,11 @@
         <ion-list-header>
             Community Image
           </ion-list-header>
+          <ion-item *ngIf="dataCommunityImage.image">
+            <ion-label>Edit Image</ion-label>
+            <ion-toggle [(ngModel)]="edit_community_image" 
+            name="edit_community_image" (click)="showHideCommunityCropper()"></ion-toggle>
+          </ion-item>
           <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="communityFileChangeListener($event)">
            
             <img-cropper #communityImageCropper [image]="dataCommunityImage" [settings]="communityCropperSettings"

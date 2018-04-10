@@ -33,6 +33,8 @@ export class CreateAgentPage {
   cropperSettings: CropperSettings;
   public isApp=false;
   public userLoggedId:boolean=false;
+  public edit_agent_image:boolean=false;
+  public crop_agent_image:boolean=false;
   public userType:string="1";
   public firstName:string="";
   public lastName:string="";
@@ -113,6 +115,8 @@ export class CreateAgentPage {
     });
   }
   fileChangeListener($event) {
+    this.crop_agent_image=true;
+    this.edit_agent_image=true;
     this.hideAgentCropper=true;
     var image:any = new Image();
     var file:File = $event.target.files[0];
@@ -135,15 +139,21 @@ export class CreateAgentPage {
 }
   agentImageCropped(image:any)
    {
-    this.cropperSettings.croppedWidth = image.width;
-    this.cropperSettings.croppedHeight = image.height;
-    //this.agentImage = this.dataAgentImage.image;
-    let that=this;
-      this.resizePersonalImage(this.dataAgentImage.image, data => {
-      
-        that.agentImage=data;
-        this.createPersonalImageThumbnail(that.agentImage);
-          });
+     if(this.crop_agent_image)
+     {
+      this.cropperSettings.croppedWidth = image.width;
+      this.cropperSettings.croppedHeight = image.height;
+      let that=this;
+        this.resizePersonalImage(this.dataAgentImage.image, data => {
+        
+          that.agentImage=data;
+          this.createPersonalImageThumbnail(that.agentImage);
+            });
+     }
+    else
+    {
+      this.crop_agent_image=true;
+    }
    }
    
    takePicture(){
@@ -172,6 +182,28 @@ export class CreateAgentPage {
 
         console.log(error);
       });
+    }
+    showHideAgentCropper(){
+      this.crop_agent_image=false;
+      const self = this;
+  if(this.edit_agent_image)
+  {
+    this.hideAgentCropper=true;
+    if(this.agentImage!="")
+    {
+     // this.companyCropperLoaded=true;
+      var image:any = new Image();
+      image.src = this.agentImage;
+              image.onload = function () {
+                self.agentCropper.setImage(image); 
+              }
+   }
+    
+  }
+  else
+  {
+    this.hideAgentCropper=false;
+  }
     }
 /////////////////////Generate Thumbnail//////////////////////
 

@@ -37,6 +37,10 @@ export class EditWebsitePage {
   favIconLogoCropper:ImageCropperComponent;
   public hideLogoCropper:boolean=true;
   public hideFavIconCropper:boolean=true;
+  public edit_identity_logo:boolean=false;
+  public edit_favivon_image:boolean=false;
+  public crop_identity_logo:boolean=false;
+  public crop_favivon_image:boolean=false;
   public logoCropperSettings;
   public favIconCropperSettings;
   public domainAccess:any;
@@ -133,7 +137,9 @@ export class EditWebsitePage {
     });
   }
   websiteLogoFileChangeListener($event) {
+    this.crop_identity_logo=true;
     this.hideLogoCropper=true;
+    this.edit_identity_logo=true;
     var image:any = new Image();
     var file:File = $event.target.files[0];
     var myReader:FileReader = new FileReader();
@@ -153,15 +159,22 @@ export class EditWebsitePage {
 }
   websiteIdentityImageCropped(image:any)
    {
-    this.logoCropperSettings.croppedWidth = image.width;
-    this.logoCropperSettings.croppedHeight = image.height;
-    let that=this;
-    this.resizeLogoImage(this.dataWebsiteLogo.image, data => {
-    
-      that.identity_logo=data;
-      this.createLogoThumbnail(that.identity_logo);
-        });
-    //this.identity_logo = this.dataWebsiteLogo.image;
+    if(this.crop_identity_logo)
+    {
+      this.logoCropperSettings.croppedWidth = image.width;
+      this.logoCropperSettings.croppedHeight = image.height;
+      let that=this;
+      this.resizeLogoImage(this.dataWebsiteLogo.image, data => {
+      
+        that.identity_logo=data;
+        this.createLogoThumbnail(that.identity_logo);
+          });
+    }
+    else
+    {
+      this.crop_identity_logo=true;
+    }
+ 
    }
    takePicture(){
       let options =
@@ -186,7 +199,9 @@ export class EditWebsitePage {
       });
     }
     websiteFavIconFileChangeListener($event) {
+      this.crop_favivon_image=true;
       this.hideFavIconCropper=true;
+      this.edit_favivon_image=true;
       var image:any = new Image();
       var file:File = $event.target.files[0];
       var myReader:FileReader = new FileReader();
@@ -208,15 +223,22 @@ export class EditWebsitePage {
   }
     websiteFavIconImageCropped(image:any)
      {
-      this.favIconCropperSettings.croppedWidth = image.width;
-      this.favIconCropperSettings.croppedHeight = image.height;
-      //this.identity_icon = this.dataWebsiteIcon.image;
-      let that=this;
-      this.resizeFavIconImage(this.dataWebsiteIcon.image, data => {
-      
-        that.identity_icon=data;
-        this.createFavIconThumbnail(that.identity_icon);
-          });
+       if(this.crop_favivon_image)
+       {
+        this.favIconCropperSettings.croppedWidth = image.width;
+        this.favIconCropperSettings.croppedHeight = image.height;
+        
+        let that=this;
+        this.resizeFavIconImage(this.dataWebsiteIcon.image, data => {
+        
+          that.identity_icon=data;
+          this.createFavIconThumbnail(that.identity_icon);
+            });
+       }
+      else
+      {
+        this.crop_favivon_image=true;
+      }
      }
     takeFavIconPicture(){
       let options =
@@ -360,7 +382,7 @@ this.footer_wrapper=result.result.footer_wrapper;
          
             self.logoCropperSettings.croppedWidth = this.width;
             self.logoCropperSettings.croppedHeight = this.height;
-           // self.identity_logo=image;
+            self.identity_logo=image.src;
             //self.companyLogoCropper.setImage(image);
             self.createLogoThumbnail(image.src);
         };
@@ -368,7 +390,7 @@ this.footer_wrapper=result.result.footer_wrapper;
     });
   }
   loadIcon(baseUrl:string,imageUrl:string) {
-    this.hideFavIconCropper=true;
+    //this.hideFavIconCropper=true;
     const self = this;
     var image:any = new Image();
 
@@ -387,12 +409,56 @@ this.footer_wrapper=result.result.footer_wrapper;
           // debugger;
             self.favIconCropperSettings.croppedWidth = this.width;
             self.favIconCropperSettings.croppedHeight = this.height;
-            //self.identity_icon=image.src;
+            self.identity_icon=image.src;
             //self.favIconLogoCropper.setImage(image);
-            self.createLogoThumbnail(image.src);
+            self.createFavIconThumbnail(image.src);
         };
       };
     });
+  }
+  showHideLogoCropper(){
+    const self = this;
+    this.crop_identity_logo=false;
+if(this.edit_identity_logo)
+{
+  this.hideLogoCropper=true;
+  if(this.identity_logo!="")
+  {
+   // this.companyCropperLoaded=true;
+    var image:any = new Image();
+    image.src = this.identity_logo;
+            image.onload = function () {
+              self.companyLogoCropper.setImage(image); 
+            }
+ }
+  
+}
+else
+{
+  this.hideLogoCropper=false;
+}
+  }
+  showHideFavIconCropper(){
+    this.crop_favivon_image=false;
+    const self = this;
+if(this.edit_favivon_image)
+{
+  this.hideFavIconCropper=true;
+  if(this.identity_icon!="")
+  {
+   // this.companyCropperLoaded=true;
+    var image:any = new Image();
+    image.src = this.identity_icon;
+            image.onload = function () {
+              self.favIconLogoCropper.setImage(image); 
+            }
+ }
+  
+}
+else
+{
+  this.hideFavIconCropper=false;
+}
   }
   /////////////////////Generate Thumbnail//////////////////////
   createLogoThumbnail(bigMatch:any) {

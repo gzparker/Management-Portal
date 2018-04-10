@@ -42,6 +42,10 @@ export class EditHotSheetPage {
   communityImageCropper:ImageCropperComponent;
   public hideHeaderCropper:boolean=true;
   public hideCommunityCropper:boolean=true;
+  public edit_header_image:boolean=false;
+  public edit_community_image:boolean=false;
+  public crop_header_image:boolean=false;
+  public crop_community_image:boolean=false;
   public headerCropperSettings;
   public communityCropperSettings;
   public croppedWidth:Number;
@@ -1229,6 +1233,7 @@ else
                 //debugger;
                 self.communityCropperSettings.croppedWidth=this.width;
                 self.communityCropperSettings.croppedHeight=this.height;
+                self.communityImage=image.src;
                 self.createCommunityImageThumbnail(image.src);
                 //self.communityImageCropper.setImage(image);
               }
@@ -1255,6 +1260,7 @@ else
                
                 self.headerCropperSettings.croppedWidth=this.width;
                 self.headerCropperSettings.croppedHeight=this.height;
+                self.headerImage=image.src;
                 self.createHeaderImageThumbnail(image.src);
                 //self.headerImageCropper.setImage(image);
               }
@@ -1262,6 +1268,50 @@ else
       
           };
         });
+      }
+      showHideHeaderCropper(){
+        this.crop_header_image=false;
+        const self = this;
+    if(this.edit_header_image)
+    {
+      this.hideHeaderCropper=true;
+      if(this.headerImage!="")
+      {
+       // this.companyCropperLoaded=true;
+        var image:any = new Image();
+        image.src = this.headerImage;
+                image.onload = function () {
+                  self.headerImageCropper.setImage(image); 
+                }
+     }
+      
+    }
+    else
+    {
+      this.hideHeaderCropper=false;
+    }
+      }
+      showHideCommunityCropper(){
+        this.crop_community_image=false;
+        const self = this;
+    if(this.edit_community_image)
+    {
+      this.hideCommunityCropper=true;
+      if(this.communityImage!="")
+      {
+       // this.companyCropperLoaded=true;
+        var image:any = new Image();
+        image.src = this.communityImage;
+                image.onload = function () {
+                  self.communityImageCropper.setImage(image); 
+                }
+     }
+      
+    }
+    else
+    {
+      this.hideCommunityCropper=false;
+    }
       }
       updateHotSheet():void{
         //this.domainAccess=this.localStorageService.get('domainAccess');
@@ -1334,6 +1384,8 @@ else
       });
       }
       headerFileChangeListener($event) {
+        this.crop_header_image=true;
+        this.edit_header_image=true;
         this.hideHeaderCropper=true;
         var image:any = new Image();
         var file:File = $event.target.files[0];
@@ -1354,18 +1406,27 @@ else
    
        headerImageCropped(image:any)
       {
-        this.headerCropperSettings.croppedWidth=image.width;
-        this.headerCropperSettings.croppedHeight=image.height;
-        //this.headerImage=this.dataHeaderImage.image;
-      let that=this;
-      this.resizeHeaderImage(this.dataHeaderImage.image, data => {
-      
-        that.headerImage=data;
-        this.createHeaderImageThumbnail(that.headerImage);
-          });
+        if(this.crop_header_image)
+        {
+          this.headerCropperSettings.croppedWidth=image.width;
+          this.headerCropperSettings.croppedHeight=image.height;
+          
+        let that=this;
+        this.resizeHeaderImage(this.dataHeaderImage.image, data => {
+        
+          that.headerImage=data;
+          this.createHeaderImageThumbnail(that.headerImage);
+            });
+        }
+       else
+       {
+         this.crop_header_image=true;
+       } 
       }
       communityFileChangeListener($event) {
+        this.edit_community_image=true;
         this.hideCommunityCropper=true;
+        this.crop_community_image=true;
         var image:any = new Image();
         var file:File = $event.target.files[0];
         var myReader:FileReader = new FileReader();
@@ -1384,15 +1445,22 @@ else
     }
        communtiyImageCropped(image:any)
       {
-        this.communityCropperSettings.croppedWidth=image.width;
-this.communityCropperSettings.croppedHeight=image.height;
-      // this.communityImage=this.dataCommunityImage.image; 
-     let that=this;
-     this.resizeCommunityImage(this.dataCommunityImage.image, data => {
-     
-       that.communityImage=data;
-       this.createCommunityImageThumbnail(that.communityImage);
-         });
+        if(this.crop_community_image)
+        {
+          this.communityCropperSettings.croppedWidth=image.width;
+          this.communityCropperSettings.croppedHeight=image.height;
+               
+               let that=this;
+               this.resizeCommunityImage(this.dataCommunityImage.image, data => {
+               
+                 that.communityImage=data;
+                 this.createCommunityImageThumbnail(that.communityImage);
+                   });
+        }
+       else
+       {
+         this.crop_community_image=true;
+       } 
       }
        takeHeaderPicture(){
        //debugger;

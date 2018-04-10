@@ -47,6 +47,11 @@
               <ion-list-header>
                 Upload Company/Agent logo or brand
                 </ion-list-header>
+                <ion-item *ngIf="dataWebsiteLogo.image">
+                  <ion-label>Edit Image</ion-label>
+                  <ion-toggle [(ngModel)]="edit_identity_logo" 
+                  name="edit_identity_logo" (click)="showHideLogoCropper()"></ion-toggle>
+                </ion-item>
                 <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="websiteLogoFileChangeListener($event)">
        
                 <img-cropper #companyLogoCropper [image]="dataWebsiteLogo" [settings]="logoCropperSettings"
@@ -59,6 +64,11 @@
                 <ion-list-header>
                   Upload Website FavIcon
                   </ion-list-header>
+                  <ion-item *ngIf="dataWebsiteIcon.image">
+                    <ion-label>Edit Image</ion-label>
+                    <ion-toggle [(ngModel)]="edit_favivon_image" 
+                    name="edit_favivon_image" (click)="showHideFavIconCropper()"></ion-toggle>
+                  </ion-item>
                   <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="websiteFavIconFileChangeListener($event)">
          
                   <img-cropper #favIconLogoCropper [image]="dataWebsiteIcon" [settings]="favIconCropperSettings"

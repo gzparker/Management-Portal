@@ -55,6 +55,11 @@
           <ion-list-header>
             Select Personal Logo
           </ion-list-header>
+          <ion-item *ngIf="dataPersonalImage.image">
+            <ion-label>Edit Image</ion-label>
+            <ion-toggle [(ngModel)]="edit_personal_logo" 
+            name="edit_personal_logo" (click)="showHidePersonLogoCropper()"></ion-toggle>
+          </ion-item>
           <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="personalFileChangeListener($event)">
        
           <img-cropper #personalCropper [image]="dataPersonalImage" [settings]="cropperSettings"

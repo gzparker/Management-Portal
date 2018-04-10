@@ -30,6 +30,8 @@ export class EditAccountPage {
   @ViewChild('personalCropper', undefined)
   personalCropper:ImageCropperComponent;
   public hideImageCropper:boolean=true;
+  public edit_personal_logo:boolean=false;
+  public crop_personal_image:boolean=false;
   public isApp=false;
   public cropperSettings;
   public croppedWidth:Number;
@@ -160,7 +162,8 @@ export class EditAccountPage {
             //debugger;
             self.cropperSettings.croppedWidth = this.width;
             self.cropperSettings.croppedHeight = this.height;
-            
+            self.personalImage=image.src;
+            //debugger;
             //self.personalCropper.setImage(image);
             self.createPersonalImageThumbnail(image.src);
         };
@@ -170,6 +173,8 @@ export class EditAccountPage {
     });
   }
   personalFileChangeListener($event) {
+    this.crop_personal_image=true;
+    this.edit_personal_logo=true;
     this.hideImageCropper=true;
     var image:any = new Image();
     var file:File = $event.target.files[0];
@@ -178,30 +183,33 @@ export class EditAccountPage {
     myReader.onloadend = function (loadEvent:any) {
         image.src = loadEvent.target.result;
         image.onload = function () {
-          //alert (this.width);
-          //debugger;
+
           that.cropperSettings.croppedWidth = this.width;
           that.cropperSettings.croppedHeight = this.height;
           
           that.personalCropper.setImage(image);  
       };
-        
-
     };
-
     myReader.readAsDataURL(file);
 }
   personalImageCropped(image:any)
   {
-    this.cropperSettings.croppedWidth = image.width;
+    if(this.crop_personal_image)
+    {
+      this.cropperSettings.croppedWidth = image.width;
       this.cropperSettings.croppedHeight = image.height;
-    //this.personalImage=this.dataPersonalImage.image;
+   
     let that=this;
       this.resizePersonalImage(this.dataPersonalImage.image, data => {
-      
         that.personalImage=data;
         this.createPersonalImageThumbnail(that.personalImage);
           });
+    }
+    else
+    {
+      this.crop_personal_image=true;
+    }
+    
   }
    takePersonalPicture(){
       let options =
@@ -342,6 +350,29 @@ if(this.accountInfo.phone_mobile!=this.phone_number)
 }
    }
   }
+  showHidePersonLogoCropper(){
+    const self = this;
+    this.crop_personal_image=false;
+if(this.edit_personal_logo)
+{
+  this.hideImageCropper=true;
+  if(this.personalImage!="")
+  {
+   // this.companyCropperLoaded=true;
+    var image:any = new Image();
+    image.src = this.personalImage;
+            image.onload = function () {
+              self.personalCropper.setImage(image); 
+            }
+ }
+  //this.crop_personal_image=false;
+}
+else
+{
+  //this.crop_personal_image=false;
+  this.hideImageCropper=false;
+}
+  }
   /////////////////////Generate Thumbnail//////////////////////
 
   createPersonalImageThumbnail(bigMatch:any) {
@@ -465,6 +496,7 @@ if(this.accountInfo.phone_mobile!=this.phone_number)
 {
       dataObj.phone_number = this.phone_number.toString();
 }
+//debugger;
 //this.loader.present();
     this.userServiceObj.updateAccount(this.userId,dataObj)
     .subscribe((result) => this.updatAccountResp(result));
@@ -480,6 +512,7 @@ if(this.accountInfo.phone_mobile!=this.phone_number)
     }
   else
   {
+    debugger;
     this.accountInfoUpdateMsg=result.message;
   }
   }

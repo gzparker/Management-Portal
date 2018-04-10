@@ -380,7 +380,7 @@ export class UserProvider {
    }
     
     data.append('member_id', user_id);
-//debugger;
+debugger;
     let accountUpdatingResp = this.http
       .post(this.sharedServiceObj.registerationApiBaseUrl + 'members/updateAccountInfo', data,
       this.headerOptions)

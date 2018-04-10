@@ -73,11 +73,15 @@
         <ion-list-header>
             Select Image
           </ion-list-header>
-
+          <ion-item *ngIf="dataAgentImage.image">
+            <ion-label>Edit Image</ion-label>
+            <ion-toggle [(ngModel)]="edit_agent_image" 
+            name="edit_agent_image" (click)="showHideAgentCropper()"></ion-toggle>
+          </ion-item>
             <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="fileChangeListener($event)">
        
         <img-cropper #agentCropper [image]="dataAgentImage" [settings]="cropperSettings"
-         (onCrop)="agentImageCropped($event)"></img-cropper>
+         (onCrop)="agentImageCropped($event)" *ngIf="hideAgentCropper"></img-cropper>
         <br>
         <span *ngIf="dataAgentImage.image" >
             <img [src]="dataAgentImage.image" [width]="cropperWidth"
