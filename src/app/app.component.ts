@@ -5,6 +5,9 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Geolocation } from '@ionic-native/geolocation';
 import { NativeGeocoder, NativeGeocoderReverseResult, NativeGeocoderForwardResult } from '@ionic-native/native-geocoder';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { LoginPage } from '../pages/login/login';
@@ -47,7 +50,9 @@ import { AllHotSheetsPage } from '../pages/hotsheets/all-hot-sheets/all-hot-shee
 import { CreateHotSheetPage } from '../pages/hotsheets/create-hot-sheet/create-hot-sheet';
 import { EditHotSheetPage } from '../pages/hotsheets/edit-hot-sheet/edit-hot-sheet';
 import { DashboardTabsComponent } from '../components/dashboard-tabs/dashboard-tabs';
+
 declare var google: any;
+declare var firebase:any;
 @Component({
   templateUrl: 'app.html'
 })
@@ -74,7 +79,7 @@ export class MyApp {
     public menuController: MenuController,
     private storage: Storage,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider,
-    private geolocation: Geolocation, private nativeGeocoder: NativeGeocoder) {
+    private geolocation: Geolocation, private nativeGeocoder: NativeGeocoder,private afs: AngularFirestore) {
     this.initializeApp();
     sharedServiceObj.isLoggedInEmitter.subscribe(item => this.setLoginStatus(item));
     sharedServiceObj.isPaidEmitter.subscribe(item => this.setPaidStatus(item));
@@ -106,7 +111,7 @@ export class MyApp {
   }
   initializeApp() {
     this.platform.ready().then(() => {
-
+this.setDeviceToken();
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       this.clearAllStorageElement();
@@ -118,6 +123,49 @@ export class MyApp {
   ionViewDidLoad() {
     //debugger;
     
+  }
+  setDeviceToken(){
+    //debugger;
+    const messaging = firebase.messaging();
+    messaging.usePublicVapidKey("BFLnyRGk5TlJYMkX6X-H7xZWikEdVZL9tE5t3x_q2mh4P3OM-kHkOmhlmYUGSxSV6BYdCbuSpwcBCQ3Oc0Gb3t4");
+//debugger;
+messaging.requestPermission()
+.then(function() {
+  //debugger;
+  //console.log('Notification permission granted.');
+  //return messaging.getToken();
+})
+.then(function(token) {
+//debugger;
+//send this token to server
+  console.log(token); // Display user token
+})
+.catch(function(err) { // Happen if user deney permission
+//debugger;
+  console.log('Unable to get permission to notify.', err);
+});
+messaging.getToken().then(function(currentToken) {
+  if (currentToken) {
+    //debugger;
+    //sendTokenToServer(currentToken);
+    //updateUIForPushEnabled(currentToken);
+  } else {
+   // debugger;
+    // Show permission request.
+    console.log('No Instance ID token available. Request permission to generate one.');
+    // Show permission UI.
+    //updateUIForPushPermissionRequired();
+    //setTokenSentToServer(false);
+  }
+}).catch(function(err) {
+ // debugger;
+  console.log('An error occurred while retrieving token. ', err);
+  //showToken('Error retrieving Instance ID token. ', err);
+  //setTokenSentToServer(false);
+});
+messaging.onMessage(function(payload){
+    console.log('onMessage',payload);
+})
   }
   clearAllStorageElement() {
     this.storage.remove("userCurrentLocation");

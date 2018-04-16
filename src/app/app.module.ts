@@ -24,6 +24,8 @@ import { Crop } from '@ionic-native/crop';
 import { Camera } from '@ionic-native/camera';
 //import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { AgmCoreModule } from '@agm/core';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
 
 //import { ListPage } from '../pages/list/list';
 import { LoginPage } from '../pages/login/login';
@@ -87,7 +89,14 @@ import { UserProvider } from '../providers/user/user';
 import { SharedProvider } from '../providers/shared/shared';
 import { SubscriptionProvider } from '../providers/subscription/subscription';
 import { ListingProvider } from '../providers/listing/listing';
-
+var firebaseConfig = {
+  apiKey: "AIzaSyCVqAS3m173SeNpNMCxFX6k8vvls50lH00",
+    authDomain: "idx-company.firebaseapp.com",
+    databaseURL: "https://idx-company.firebaseio.com",
+    projectId: "idx-company",
+    storageBucket: "idx-company.appspot.com",
+    messagingSenderId: "244299399814"
+};
 @NgModule({
   declarations: [
     MyApp,HomePage,LoginPage,RegisterPage, DashboardPage, FbConfirmPage, UserVerificationPage,
@@ -108,7 +117,9 @@ import { ListingProvider } from '../providers/listing/listing';
       driverOrder: ['indexeddb', 'sqlite', 'websql']
     }),AgmCoreModule.forRoot({
       apiKey: 'AIzaSyA9aj3-17cojks6gicZZ_PY2t5ERVu25ac'
-    }),ColorPickerModule,TimezonePickerModule,BrMaskerModule,IonicImageLoader.forRoot()
+    }),ColorPickerModule,TimezonePickerModule,BrMaskerModule,IonicImageLoader.forRoot(),
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFirestoreModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

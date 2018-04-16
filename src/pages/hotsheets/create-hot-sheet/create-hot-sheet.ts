@@ -177,7 +177,8 @@ public isWebBrowser=false;
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform
     ,public listinServiceObj:ListingProvider,
-    private crop: Crop,private camera: Camera,private imagePicker: ImagePicker,public loadingCtrl: LoadingController) {
+    private crop: Crop,private camera: Camera,private imagePicker: ImagePicker,
+    public loadingCtrl: LoadingController) {
       if(this.platform.is('core') || this.platform.is('mobileweb') || this.platform.is('cordova') || 
       this.platform.is('mobile')) {
         this.isApp=false;
