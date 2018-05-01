@@ -63,13 +63,14 @@ export class EditAgentPage {
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform, 
     public ngZone: NgZone,public menuCtrl: MenuController,public loadingCtrl: LoadingController,
     private crop: Crop,private camera: Camera,private imagePicker: ImagePicker) {
-      if(this.platform.is('core') || this.platform.is('mobileweb') || this.platform.is('cordova') || this.platform.is('mobile')) {
+      /*if(this.platform.is('core') || this.platform.is('mobileweb') || this.platform.is('cordova') || this.platform.is('mobile')) {
         this.isApp=false;
       }
       else
       {
         this.isApp=true;
-      }
+      }*/
+      this.isApp = (!document.URL.startsWith("http"));
       this.hideAgentCropper=false;
       this.cropperSettings = new CropperSettings();
       this.cropperSettings.width = 100;

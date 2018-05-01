@@ -33,15 +33,17 @@
           <ion-item>
             <button ion-button color="primary" block (click)="takePicture();" >Upload Company/Agent logo or brand</button>
           </ion-item>
-          <ion-item *ngIf="identity_logo!=''">
-            <img [src]="identity_logo" />
+          <ion-item *ngIf="dataWebsiteLogo.image" >
+            <img [src]="dataWebsiteLogo.image" [width]="logoWidth"
+            [height]="logoHeight">
           </ion-item>
           <ion-item>
             <button ion-button color="primary" block (click)="takeFavIconPicture();" >Upload Website FavIcon</button>
           </ion-item>
-          <ion-item *ngIf="identity_icon!=''">
-            <img [src]="identity_icon" />
-          </ion-item>
+          <ion-item *ngIf="dataWebsiteIcon.image" >
+            <img [src]="dataWebsiteIcon.image" [width]="favIconWidth"
+             [height]="favIconHeight">
+             </ion-item>
           </ion-list>
           <ion-list *ngIf="!isApp">
               <ion-list-header>

@@ -72,6 +72,7 @@ public isWebBrowser=false;
   public oldSlug:string="";
   public hotSheetId:string="";
   public name:string="";
+  public hotsheet_Title:string="";
   public hotsheetUpdateMsg:string="";
   public advanceSearchOption:boolean=false;
   public additionalInfoOption:boolean=false;
@@ -118,6 +119,12 @@ public isWebBrowser=false;
   public listingTypeOptions:any[]=[{id:"all",name:"All"},{id:"house",name:"House"},{id:"cnd",name:"Condo"},
         {id:"twnhs",name:"TownHouse"},{id:"land",name:"Land"},{id:"duplx",name:"Duplex"},
         {id:"comm",name:"Commercial"}];
+  private CkeditorConfig = {uiColor: '#99000',removeButtons:'Underline,Subscript,Superscript,SpecialChar'
+        ,toolbar: [
+          { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source'] },
+          { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', '-', 'RemoveFormat' ] },
+          { name: 'styles', items: [ 'Styles', 'Format', 'FontSize' ] }
+        ]};
   public listing_type_modal:any[]=["all"];
   public listing_type_last_searched:any[]=[];
   public address_zip_code:any[]=[];
@@ -140,7 +147,7 @@ public isWebBrowser=false;
   public selectedLong:string="";
   public userId:string="";
   public brief_description:string="";
-  public main_description:string="";
+  public main_description:string="test data";
   public virtual_tour_url:string="";
   public video_url:string="";
   public city:string="";
@@ -155,6 +162,8 @@ public isWebBrowser=false;
   public local:string="";
   public neighbourhoodAddress:string="";
   public administrative_area_level_1:string="";
+  public meta_title:string="";
+  public meta_description:string="";
   public community:string="";
   public zoom: number = 8;
   public drawingManager:any;
@@ -167,8 +176,10 @@ public isWebBrowser=false;
   public mouseUp:any=null;
   public poly:any;
   public map_height:number;
+  public parent_id:string="";
   public headerImageChangedEvent:any='';
   public communityImageChangedEvent:any='';
+  public allHotSheetList:any[]=[];
   public mapLocation:any;
   public loader:any;
  
@@ -179,7 +190,7 @@ public isWebBrowser=false;
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform
     ,public listinServiceObj:ListingProvider,
     private crop: Crop,private camera: Camera,private imagePicker: ImagePicker,public loadingCtrl: LoadingController) {
-      if(this.platform.is('core') || this.platform.is('mobileweb') || this.platform.is('cordova') || this.platform.is('mobile')) {
+      /*if(this.platform.is('core') || this.platform.is('mobileweb') || this.platform.is('cordova') || this.platform.is('mobile')) {
         this.isApp=false;
       }
       else
@@ -188,7 +199,8 @@ public isWebBrowser=false;
       }
       if(this.platform.is('core')) {
         this.isWebBrowser=true;
-      }
+      }*/
+      this.isApp = (!document.URL.startsWith("http"));
       this.hideCommunityCropper=false;
       this.hideHeaderCropper=false;
       this.headerCropperSettings = new CropperSettings();
@@ -233,6 +245,7 @@ public isWebBrowser=false;
     member_id.then((data) => {
      
       this.userId=data;
+      this.viewAllHotSheets();
       this.getAllWebsite();
       this.loadAllAgents();
       if(this.navParams.get('id')!=undefined)
@@ -294,7 +307,46 @@ else
 
     });
   }
-
+  setHotSheetDefaultTitle()
+  {
+   // debugger;
+   if(this.hotsheet_Title=="")
+   {
+    this.hotsheet_Title=this.name;
+   }
+  else if(this.hotsheet_Title==this.name.substring(0,this.name.length-1))
+    {
+      this.hotsheet_Title=this.name;
+    }
+  }
+  viewAllHotSheets():void{
+    if(this.userId!="")
+    {
+      
+      this.allHotSheetList=[];
+    
+  this.userServiceObj.allUserHotSheets(this.userId.toString())
+    .subscribe((result) => this.viewAllHotSheetResp(result));
+    }
+    
+  }
+  viewAllHotSheetResp(result:any):void{
+    
+    if(result.status==true)
+    {
+      
+     //debugger;
+      this.allHotSheetList=result.result;
+      
+    }
+    else
+    {
+      //debugger;
+      this.allHotSheetList=[];
+  
+    }
+    
+  }
   createAutocomplete(addressEl: HTMLInputElement): Observable<any> {
     const autocomplete = new google.maps.places.Autocomplete(addressEl);
     autocomplete.bindTo('bounds', this.map);
@@ -586,6 +638,61 @@ let savedPath=this.savedPolygonPath;
    this.polygon_search="";
    });
    }
+   onHotSheetBreifDescBlured(quill) {
+    //console.log('editor blur!', quill);
+  }
+ 
+  onHotSheetBreifDescFocused(quill) {
+    //console.log('editor focus!', quill);
+  }
+ 
+  onHotSheetBreifDescCreated(quill) {
+   // this.editor = quill;
+    //console.log('quill is ready! this is current quill instance object', quill);
+  }
+ 
+  onHotSheetBreifDescChanged(html) {
+//debugger;
+this.brief_description=html;
+ 
+  }
+  onHotSheetDescBlured(quill) {
+    //console.log('editor blur!', quill);
+  }
+ 
+  onHotSheetDescFocused(quill) {
+    //console.log('editor focus!', quill);
+  }
+ 
+  onHotSheetDescCreated(quill) {
+   // this.editor = quill;
+    //console.log('quill is ready! this is current quill instance object', quill);
+  }
+ 
+  onHotSheetDescChanged(html) {
+//debugger;
+this.main_description=html;
+ 
+  }
+
+  onHotSheetMetaDescBlured(quill) {
+    //console.log('editor blur!', quill);
+  }
+ 
+  onHotSheetMetaDescFocused(quill) {
+    //console.log('editor focus!', quill);
+  }
+ 
+  onHotSheetMetaDescCreated(quill) {
+   // this.editor = quill;
+    //console.log('quill is ready! this is current quill instance object', quill);
+  }
+ 
+  onHotSheetMetaDescChanged(html) {
+//debugger;
+this.meta_description=html;
+ 
+  }
    toggleAdvanceSearch(){
     this.advanceSearchOption=!this.advanceSearchOption;
     }
@@ -1058,11 +1165,13 @@ let savedPath=this.savedPolygonPath;
          }
        //  debugger;
           //this.loadSavedPolygon();
-          if(!this.isWebBrowser)
+          if(!this.isApp)
       {
        //debugger;
       if (window.navigator.geolocation) {
+        //debugger;
         window.navigator.geolocation.getCurrentPosition((position)=> {
+         // debugger;
       if(position.coords.latitude!=undefined&&position.coords.longitude!=undefined)
       {
         this.map_height=400;
@@ -1162,21 +1271,27 @@ else
       editHotSheetResp(result:any):void{
         if(result.status==true)
         {
-        //  debugger;
+        //debugger;
           this.name=result.result.name;
+          this.hotsheet_Title=result.result.page_title;
           this.oldSlug=result.result.slug;
           this.slug=result.result.slug;
           this.mls_server_id=result.result.mls_server_id;
           this.selectedWebsite=result.result.website_id;
           this.city=result.result.city;
           this.sub_city=result.result.sub_city;
+          this.parent_id=result.result.parent_id;
           //debugger;
           if(result.result.assigned_agent_ids!=null)
           {
             this.assigned_agent_id=result.result.assigned_agent_ids.split(',');
           }
+          //debugger;
           this.main_description=result.result.main_description;
           this.brief_description=result.result.brief_description;
+          this.meta_description=result.result.meta_description;
+          this.meta_title=result.result.meta_title;
+          //debugger;
           this.video_url=result.result.video_url;
           this.virtual_tour_url=result.result.virtual_tour_url;
           this.city=result.result.city;
@@ -1184,13 +1299,16 @@ else
           //debugger;
           this.community=result.result.community;
           this.savedPolygonPath=result.result.polygon_search;
-         
-          let length=this.savedPolygonPath.length;
+         //debugger;
+         // let length=this.savedPolygonPath.length;
         //  debugger;
           this.json_search=result.result.search_results_json;
          // debugger;
           this.storage.set('searchFilterObj',this.json_search);
-          if(result.result.community_image_url!=undefined)
+          
+         
+         this.loadLastSearchedValue();
+         if(result.result.community_image_url!=undefined)
       {
         this.additionalInfoOption=true;
       this.loadCommunityImage(this.sharedServiceObj.imgBucketUrl,result.result.community_image_url);
@@ -1202,8 +1320,6 @@ else
       
        this.loadHeaderImage(this.sharedServiceObj.imgBucketUrl,result.result.header_image_url);
       }
-         
-         this.loadLastSearchedValue();
         }
         else
         {
@@ -1340,16 +1456,16 @@ else
         {
         if(result.status!=false)
         {
-      
+      //debugger;
           //let json_search=this.storage.get("searchFilterObj");
           //json_search.then((data) => {
             //if(data!=null)
             //{
       this.userServiceObj.updateHotSheet(this.hotSheetId,this.userId.toString(),this.selectedWebsite,
-      this.sharedServiceObj.mlsServerId,this.name,this.slug,JSON.stringify(this.searchListObject),this.brief_description,
+      this.sharedServiceObj.mlsServerId,this.name,this.hotsheet_Title,this.slug,JSON.stringify(this.searchListObject),this.brief_description,
       this.main_description,this.virtual_tour_url,this.video_url,this.sub_city,
       this.communityImage,this.headerImage,this.city,this.administrative_area_level_1,
-      this.community,this.assigned_agent_id,this.polygon_search)
+      this.community,this.assigned_agent_id,this.polygon_search,this.meta_description,this.meta_title,this.parent_id)
         .subscribe((result) => this.updateHotSheetResp(result));
             //}
           //});
@@ -1364,12 +1480,12 @@ else
         else
         {
          
-      
+      //debugger;
         this.userServiceObj.updateHotSheet(this.hotSheetId,this.userId.toString(),this.selectedWebsite,
-        this.sharedServiceObj.mlsServerId,this.name,this.slug,JSON.stringify(this.searchListObject),this.brief_description,
+        this.sharedServiceObj.mlsServerId,this.name,this.hotsheet_Title,this.slug,JSON.stringify(this.searchListObject),this.brief_description,
         this.main_description,this.virtual_tour_url,this.video_url,this.sub_city,
         this.communityImage,this.headerImage,this.city,this.administrative_area_level_1,
-        this.community,this.assigned_agent_id,this.polygon_search)
+        this.community,this.assigned_agent_id,this.polygon_search,this.meta_description,this.meta_title,this.parent_id)
         .subscribe((result) => this.updateHotSheetResp(result));
    
         }
@@ -1377,6 +1493,7 @@ else
       }
       updateHotSheetResp(result:any):void{
       this.storage.remove('searchFilterObj');
+      //debugger;
       //this.loader.dismiss();
       this.hotsheetUpdateMsg="HotSheet has been updated successfully.";
       this.ngZone.run(()=>{

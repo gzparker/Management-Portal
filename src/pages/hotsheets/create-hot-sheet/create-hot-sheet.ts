@@ -56,6 +56,8 @@ export class CreateHotSheetPage {
   public headerHeight:string="";
   public communityWidth:string="";
   public communityHeight:string="";
+  public meta_title:string="";
+  public meta_description:string="";
 
 
   public multiSelect:IMultiSelectSettings = {
@@ -69,6 +71,7 @@ public isApp=false;
 public isWebBrowser=false;
   public msl_id:string="";
   public name:string="";
+  public hotsheet_Title:string="";
   public advanceSearchOption:boolean=false;
   public additionalInfoOption:boolean=false;
   public hotsheetCreateMsg:string="";
@@ -101,7 +104,12 @@ public isWebBrowser=false;
   public statusOptions:any[]=[{id:"all",name:"All"},{id:"for_sale",name:"For Sale"},{id:"for_rent",name:"For Rent"},
   {id:"pending",name:"Pending"},{id:"recently_sold",name:"Recently Sold"},{id:"pre_selling",name:"Pre Selling"},{id:"buy_me_out",name:"Buy Me Out"}
   ,{id:"rent_to_own",name:"Ren to own"}];
-
+  private CkeditorConfig = {uiColor: '#99000',removeButtons:'Underline,Subscript,Superscript,SpecialChar'
+  ,toolbar: [
+    { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source'] },
+    { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', '-', 'RemoveFormat' ] },
+    { name: 'styles', items: [ 'Styles', 'Format', 'FontSize' ] }
+  ]};
   public status_modal:string="all";
   public status_last_searched:string="";
   public address_city:any[]=[];
@@ -162,9 +170,11 @@ public isWebBrowser=false;
   public mouseUp:any=null;
   public poly:any;
   public map_height:number;
+  public parent_id:string="";
   public headerImageChangedEvent:any='';
   public communityImageChangedEvent:any='';
   public allListingTypeChecked:boolean=false;
+  public allHotSheetList:any[]=[];
   public listingTypeOptions:any[]=[{id:"all",name:"All"},{id:"house",name:"House"},{id:"cnd",name:"Condo"},
         {id:"twnhs",name:"TownHouse"},{id:"land",name:"Land"},{id:"duplx",name:"Duplex"},
         {id:"comm",name:"Commercial"}];
@@ -179,14 +189,15 @@ public isWebBrowser=false;
     ,public listinServiceObj:ListingProvider,
     private crop: Crop,private camera: Camera,private imagePicker: ImagePicker,
     public loadingCtrl: LoadingController) {
-      if(this.platform.is('core') || this.platform.is('mobileweb') || this.platform.is('cordova') || 
+      /*if(this.platform.is('core') || this.platform.is('mobileweb') || this.platform.is('cordova') || 
       this.platform.is('mobile')) {
         this.isApp=false;
       }
       else
       {
         this.isApp=true;
-      }
+      }*/
+      this.isApp = (!document.URL.startsWith("http"));
       this.hideCommunityCropper=false;
       this.hideHeaderCropper=false;
       if(this.platform.is('core')) {
@@ -235,6 +246,7 @@ public isWebBrowser=false;
       this.userId=data;
       this.getAllWebsite();
       this.loadAllAgents();
+      this.viewAllHotSheets();
     });
     //this.loadMap();
     //this.loadSearchedField();
@@ -276,6 +288,46 @@ else
   setCurrenttPosition(result:any)
   {
 
+  }
+  setHotSheetDefaultTitle()
+  {
+   // debugger;
+   if(this.hotsheet_Title=="")
+   {
+    this.hotsheet_Title=this.name;
+   }
+  else if(this.hotsheet_Title==this.name.substring(0,this.name.length-1))
+    {
+      this.hotsheet_Title=this.name;
+    }
+  }
+  viewAllHotSheets():void{
+    if(this.userId!="")
+    {
+      
+      this.allHotSheetList=[];
+    
+  this.userServiceObj.allUserHotSheets(this.userId.toString())
+    .subscribe((result) => this.viewAllHotSheetResp(result));
+    }
+    
+  }
+  viewAllHotSheetResp(result:any):void{
+    
+    if(result.status==true)
+    {
+      
+     //debugger;
+      this.allHotSheetList=result.result;
+      
+    }
+    else
+    {
+      //debugger;
+      this.allHotSheetList=[];
+  
+    }
+    
   }
   mapsSearchBar(ev: any) {
     // set input to the value of the searchbar
@@ -536,6 +588,61 @@ else
   changePrice($event:any)
   {
 //debugger;
+  }
+  onHotSheetBreifDescBlured(quill) {
+    //console.log('editor blur!', quill);
+  }
+ 
+  onHotSheetBreifDescFocused(quill) {
+    //console.log('editor focus!', quill);
+  }
+ 
+  onHotSheetBreifDescCreated(quill) {
+   // this.editor = quill;
+    //console.log('quill is ready! this is current quill instance object', quill);
+  }
+ 
+  onHotSheetBreifDescChanged(html) {
+//debugger;
+this.brief_description=html;
+ 
+  }
+  onHotSheetDescBlured(quill) {
+    //console.log('editor blur!', quill);
+  }
+ 
+  onHotSheetDescFocused(quill) {
+    //console.log('editor focus!', quill);
+  }
+ 
+  onHotSheetDescCreated(quill) {
+   // this.editor = quill;
+    //console.log('quill is ready! this is current quill instance object', quill);
+  }
+ 
+  onHotSheetDescChanged(html) {
+//debugger;
+this.main_description=html;
+ 
+  }
+
+  onHotSheetMetaDescBlured(quill) {
+    //console.log('editor blur!', quill);
+  }
+ 
+  onHotSheetMetaDescFocused(quill) {
+    //console.log('editor focus!', quill);
+  }
+ 
+  onHotSheetMetaDescCreated(quill) {
+   // this.editor = quill;
+    //console.log('quill is ready! this is current quill instance object', quill);
+  }
+ 
+  onHotSheetMetaDescChanged(html) {
+//debugger;
+this.meta_description=html;
+ 
   }
   toggleAdvanceSearch(){
 this.advanceSearchOption=!this.advanceSearchOption;
@@ -1092,10 +1199,10 @@ this.allListingTypeChecked=true;
          //{
           
           this.userServiceObj.createHotSheet(this.userId.toString(),this.selectedWebsite,
-          this.sharedServiceObj.mlsServerId,this.name,this.slug,JSON.stringify(this.searchListObject),this.brief_description,
+          this.sharedServiceObj.mlsServerId,this.name,this.hotsheet_Title,this.slug,JSON.stringify(this.searchListObject),this.brief_description,
           this.main_description,this.virtual_tour_url,this.video_url,this.sub_city,
           this.communityImage,this.headerImage,this.city,this.administrative_area_level_1,
-          this.community,this.assigned_agent_id,this.polygon_search)
+          this.community,this.assigned_agent_id,this.polygon_search,this.meta_description,this.meta_title,this.parent_id)
           .subscribe((result) => this.createHotSheetResp(result));
         // }
 

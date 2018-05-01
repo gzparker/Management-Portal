@@ -24,6 +24,7 @@ export class SharedProvider {
   //public registerationApiBaseUrl="http://registration.menu/api/";
   public registerationApiBaseUrl = "https://api.registration.menu/api/";
   public idxapikey:string="1761ea8f043c53e44e3ccd90c18b0404c20152f0";
+  public idxFirebasePublicKey="BFLnyRGk5TlJYMkX6X-H7xZWikEdVZL9tE5t3x_q2mh4P3OM-kHkOmhlmYUGSxSV6BYdCbuSpwcBCQ3Oc0Gb3t4";
   public defaultNoImage="assets/imgs/noImage.png";
   private headers: Headers = new Headers();
   private headerOptions: RequestOptions = new RequestOptions();

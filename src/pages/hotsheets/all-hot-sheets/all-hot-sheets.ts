@@ -34,13 +34,14 @@ export class AllHotSheetsPage {
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController,
      public platform: Platform,public loadingCtrl: LoadingController) {
-      if(this.platform.is('core') || this.platform.is('mobileweb')) {
+      /*if(this.platform.is('core') || this.platform.is('mobileweb')) {
         this.isApp=false;
       }
       else
       {
         this.isApp=true;
-      }
+      }*/
+      this.isApp = (!document.URL.startsWith("http"));
       if(this.navParams.get('notificationMsg')!=undefined)
       {
         this.notificationMsg=this.navParams.get('notificationMsg');
@@ -54,7 +55,6 @@ export class AllHotSheetsPage {
   ionViewDidLoad() {
     
     let member_id = this.storage.get('userId');
-    //debugger;
     member_id.then((data) => {
       this.userId=data;
       this.viewAllHotSheets(null);
@@ -66,11 +66,7 @@ export class AllHotSheetsPage {
     {
       
       this.allHotSheetList=[];
-      //let loader = this.loadingCtrl.create({
-      //  content: "Please wait...",
-      //  duration: 700
-      //});
-      //loader.present();
+    
       if(refresher!=null)
     {
       refresher.complete();

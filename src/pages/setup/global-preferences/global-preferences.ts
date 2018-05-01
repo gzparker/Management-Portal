@@ -94,13 +94,14 @@ export class GlobalPreferencesPage {
         this.selectedRoute=this.navParams.get('route');
       }
      // debugger;
-     if(this.platform.is('core') || this.platform.is('mobileweb') || this.platform.is('cordova') || this.platform.is('mobile')) {
+     /*if(this.platform.is('core') || this.platform.is('mobileweb') || this.platform.is('cordova') || this.platform.is('mobile')) {
       this.isApp=false;
     }
     else
     {
       this.isApp=true;
-    }
+    }*/
+    this.isApp = (!document.URL.startsWith("http"));
     this.hideCompanyCropper=false;
     this.hidePersonalCropper=false;
     //////////////Company Cropper Settings//////////////////

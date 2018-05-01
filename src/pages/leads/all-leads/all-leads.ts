@@ -52,13 +52,14 @@ export class AllLeadsPage {
     public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform, 
     public ngZone: NgZone,public menuCtrl: MenuController,public loadingCtrl: LoadingController) {
-      if(this.platform.is('core') || this.platform.is('mobileweb')) {
+      /*if(this.platform.is('core') || this.platform.is('mobileweb')) {
         this.isApp=false;
       }
       else
       {
         this.isApp=true;
-      }
+      }*/
+      this.isApp = (!document.URL.startsWith("http"));
       if(this.navParams.get('notificationMsg')!=undefined)
       {
         this.notificationMsg=this.navParams.get('notificationMsg');

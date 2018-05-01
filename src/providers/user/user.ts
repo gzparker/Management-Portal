@@ -31,16 +31,42 @@ export class UserProvider {
   public facebookObject: any;
   public fbAuthResp: any;
   public isApp=false;
+  private firbase_token_data="";
+  private device_name="Browser";
   constructor(public platform: Platform,private http: Http, public sharedServiceObj: SharedProvider,
     private storage: Storage, public modalCtrl: ModalController,private fb: Facebook) {
+      
+   
     this.fbLoginDecision = new EventEmitter();
-    if(this.platform.is('core') || this.platform.is('mobileweb') || this.platform.is('cordova') || this.platform.is('mobile')) {
+    /*if(this.platform.is('core') || this.platform.is('mobileweb') || this.platform.is('cordova') || this.platform.is('mobile')) {
       this.isApp=false;
     }
     else
     {
       this.isApp=true;
+    }*/
+    if(this.platform.is('ios')) {
+      this.device_name="IOS";
     }
+    else if(this.platform.is('ipad')) {
+      this.device_name="iPad";
+    }
+    else if(this.platform.is('iphone')) {
+      this.device_name="iPhone";
+    }
+    else if(this.platform.is('android')) {
+      this.device_name="Android";
+    }
+    else if(this.platform.is('phablet')) {
+      this.device_name="Phable";
+    }
+    else if(this.platform.is('tablet')) {
+      this.device_name="Tablet";
+    }
+    else if(this.platform.is('windows')) {
+      this.device_name="Windows";
+    }
+    this.isApp = (!document.URL.startsWith("http"));
     if(!this.isApp)
     {
     //alert('1');
@@ -76,7 +102,13 @@ export class UserProvider {
     });
   }
     //this.fb.browserInit(701598080041539,'v2.9');
-    
+    let firbase_token = this.storage.get('firebase_token');
+    firbase_token.then((data) => {
+    //debugger;
+      //this.firebase_token_data=data;
+      this.firbase_token_data=data;
+    });
+
   
   }
   onFacebookLoginClick(): void {
@@ -223,20 +255,25 @@ export class UserProvider {
   userLogin(email: string, password: string) {
     let url = "";
     url = this.sharedServiceObj.registerationApiBaseUrl + 'members/memberLogin';
-
-
+    
     let data = new URLSearchParams();
-
+    //debugger;
     data.append('email', email);
     data.append('password', password);
-
+    data.append('firebase_token', this.firbase_token_data);
+    data.append('device_name', this.device_name);
     let loggedInStatus = this.http
       .post(url, data, this.headerOptions)
       .map(this.extractData)
     return loggedInStatus;
   }
   userSignUp(dataObj: any) {
-
+    let firbase_token = this.storage.get('firebase_token');
+    firbase_token.then((data) => {
+      debugger;
+      //this.firebase_token_data=data;
+      this.firbase_token_data=data;
+    });
     let url = "";
     let data = new URLSearchParams();
     url = this.sharedServiceObj.registerationApiBaseUrl + 'members/memberSignup';
@@ -251,7 +288,11 @@ export class UserProvider {
     data.append('country_code', dataObj.country_code);
     data.append('country_abbv', dataObj.country_abbv);
     data.append('verified', dataObj.verified);
+    data.append('firebase_token', this.firbase_token_data);
+    data.append('device_name', this.device_name);
+    data.append('location', dataObj.location);
     data.append('service_id', this.sharedServiceObj.service_id);
+
     let signUpStatus = this.http
       .post(url, data, this.headerOptions)
       .map(this.extractData)
@@ -366,6 +407,18 @@ export class UserProvider {
     {
       data.append('phone_mobile', dataObj.phone_number);
     }
+    if(dataObj.agent_id!="")
+    {
+      data.append('agent_id', dataObj.agent_id);
+    }
+    if(dataObj.office_id!="")
+    {
+      data.append('office_id', dataObj.office_id);
+    }
+    if(dataObj.broker_id!="")
+    {
+      data.append('broker_id', dataObj.broker_id);
+    }
     if(dataObj.country_code!="")
     {
       data.append('country_code', dataObj.country_code);
@@ -380,7 +433,7 @@ export class UserProvider {
    }
     
     data.append('member_id', user_id);
-debugger;
+//debugger;
     let accountUpdatingResp = this.http
       .post(this.sharedServiceObj.registerationApiBaseUrl + 'members/updateAccountInfo', data,
       this.headerOptions)
@@ -530,7 +583,7 @@ data.append('work_zipcode',work_zipcode);
 data.append('assigned_agent_id',assigned_agent_id);
 data.append('category',category);
 data.append('internal_notes',internal_notes);
-debugger;
+//debugger;
   let searchedListing=this.http
     .post(this.sharedServiceObj.apiBaseUrl+'members/updateLead', data, this.headerOptions)
     .map(this.extractData)
@@ -703,7 +756,7 @@ updateCreditCardDetail(user_id:string,service_id:string,unique_id:string,name:st
   data.append('zipcode',zipcode);
   data.append('cvc',cvc);
   data.append('primary_source',primary_source);
-  debugger;
+  //debugger;
 let creditCardDetail=this.http
   .post(this.sharedServiceObj.registerationApiBaseUrl+'PaymentMethods/updatePaymentMethod', data, this.headerOptions)
   .map(this.extractData)
@@ -729,12 +782,13 @@ allUserHotSheets(user_id:string){
     .map(this.extractData)
     return websiteListing;
 }
-createHotSheet(user_id:string,website_id:string,mlsServerId:string,name:string,slug:string,
+createHotSheet(user_id:string,website_id:string,mlsServerId:string,name:string,hotsheet_Title:string,slug:string,
   json_search:any,brief_description:any,main_description:any,virtual_tour_url:any,video_url:any,
   sub_city:any,communityImage:any,headerImage:any,local:any,
-  administrative_area_level_1:any,community:any,agent_ids:any,polygon_search:any){
+  administrative_area_level_1:any,community:any,agent_ids:any,polygon_search:any,meta_description:any,meta_title:any,parent_id:any){
  let data = new URLSearchParams();
  data.append('name',name);
+ data.append('title',hotsheet_Title);
  data.append('member_id',user_id);
  data.append('slug',slug);
  data.append('mls_server_id',mlsServerId);
@@ -746,6 +800,9 @@ createHotSheet(user_id:string,website_id:string,mlsServerId:string,name:string,s
  data.append('community',community);
  data.append('main_description',main_description);
  data.append('brief_description',brief_description);
+ data.append('meta_title',meta_title);
+ data.append('meta_description',meta_description);
+ data.append('parent_id',parent_id);
  data.append('sub_city',sub_city);
  data.append('video_url',video_url);
  data.append('virtual_tour_url',virtual_tour_url);
@@ -777,13 +834,14 @@ editHotSheet(user_id:string,id:string){
     .map(this.extractData)
     return hotSheetCheckResp;
 }
-updateHotSheet(id:string,user_id:string,website_id:string,mlsServerId:string,name:string,slug:string,
+updateHotSheet(id:string,user_id:string,website_id:string,mlsServerId:string,name:string,hotsheet_Title:string,slug:string,
   json_search:any,brief_description:any,main_description:any,virtual_tour_url:any,video_url:any,
   sub_city:any,communityImage:any,headerImage:any,local:any,
-  administrative_area_level_1:any,community:any,agent_ids:any,polygon_search:any){
+  administrative_area_level_1:any,community:any,agent_ids:any,polygon_search:any,meta_description:any,meta_title:any,parent_id:any){
  let data = new URLSearchParams();
  data.append('id',id);
  data.append('name',name);
+ data.append('title',hotsheet_Title);
  data.append('member_id',user_id);
  data.append('slug',slug);
  data.append('mls_server_id',mlsServerId);
@@ -795,13 +853,16 @@ updateHotSheet(id:string,user_id:string,website_id:string,mlsServerId:string,nam
  data.append('community',community);
  data.append('main_description',main_description);
  data.append('brief_description',brief_description);
+ data.append('meta_title',meta_title);
+ data.append('meta_description',meta_description);
+ data.append('parent_id',parent_id);
  data.append('sub_city',sub_city);
  data.append('video_url',video_url);
  data.append('virtual_tour_url',virtual_tour_url);
  data.append('header_image',headerImage);
  data.append('community_image',communityImage);
  data.append('assigned_agent_ids',agent_ids);
-
+//debugger;
   let hotSheetUpdatingResp=this.http
     .post(this.sharedServiceObj.apiBaseUrl+'members/updateSavedHotsheet', data, this.headerOptions)
     .map(this.extractData)

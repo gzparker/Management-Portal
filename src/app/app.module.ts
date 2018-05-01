@@ -10,6 +10,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Http, Response, URLSearchParams, Headers, RequestOptions, HttpModule } from '@angular/http';
 import {AccordionModule} from "ng2-accordion";
 import { IonicImageLoader } from 'ionic-image-loader';
+import { CKEditorModule } from 'ng2-ckeditor';
 
 import { ColorPickerModule } from 'ngx-color-picker';
 
@@ -110,7 +111,7 @@ var firebaseConfig = {
     BillingHistoryPage,AgentDetailPage,EditAgentPage,GlobalSettingsPopupPage,ImageCropperComponent,AddCreditCardPage
   ],
   imports: [
-    BrowserModule, HttpModule,
+    BrowserModule, HttpModule,CKEditorModule,
     IonicModule.forRoot(MyApp), HttpClientModule,MultiselectDropdownModule,AccordionModule,
     IonicStorageModule.forRoot({
       name: 'managementportal',

@@ -79,13 +79,14 @@ export class EditWebsitePage {
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform, 
     public ngZone: NgZone,public menuCtrl: MenuController,public loadingCtrl: LoadingController,
     private crop: Crop,private camera: Camera,private imagePicker: ImagePicker) {
-      if(this.platform.is('core') || this.platform.is('mobileweb') || this.platform.is('cordova') || this.platform.is('mobile')) {
+      /*if(this.platform.is('core') || this.platform.is('mobileweb') || this.platform.is('cordova') || this.platform.is('mobile')) {
         this.isApp=false;
       }
       else
       {
         this.isApp=true;
-      }
+      }*/
+      this.isApp = (!document.URL.startsWith("http"));
       this.hideFavIconCropper=false;
       this.hideLogoCropper=false;
       this.logoCropperSettings = new CropperSettings();
@@ -180,12 +181,17 @@ export class EditWebsitePage {
       let options =
       {
         quality: 100,
-        correctOrientation: true
+        correctOrientation: true,
+        encodingType: this.camera.EncodingType.JPEG,
+        mediaType: this.camera.MediaType.PICTURE,
+        targetHeight:100,targetWidth:100,allowEdit:true
       };
       this.camera.getPicture(options)
       .then((data) => {
         this.identity_logo="data:image/jpeg;base64," +data;
-        if(this.isApp)
+        //alert(this.identity_logo);
+        this.createLogoThumbnail(this.identity_logo);
+        /*if(this.isApp)
         {
        this.crop
        .crop(this.identity_logo, {quality: 75,targetHeight:100,targetWidth:100})
@@ -193,7 +199,7 @@ export class EditWebsitePage {
           this.identity_logo=newImage;
         }, error => {
           alert(error)});
-        }
+        }*/
       }, function(error) {
         console.log(error);
       });
@@ -244,13 +250,16 @@ export class EditWebsitePage {
       let options =
       {
         quality: 100,
-        correctOrientation: true
+        correctOrientation: true,
+        encodingType: this.camera.EncodingType.JPEG,
+        mediaType: this.camera.MediaType.PICTURE,
+        targetHeight:100,targetWidth:100,allowEdit:true
       };
       this.camera.getPicture(options)
       .then((data) => {
         this.identity_icon="data:image/jpeg;base64," +data;
-        
-        if(this.isApp)
+        this.createFavIconThumbnail(this.identity_icon);
+        /*if(this.isApp)
         {
        this.crop
        .crop(this.identity_icon, {quality: 75,targetHeight:100,targetWidth:100})
@@ -259,7 +268,7 @@ export class EditWebsitePage {
         }, error => {
          
           alert(error)});
-        }
+        }*/
       }, function(error) {
 
         console.log(error);
@@ -464,8 +473,10 @@ else
   createLogoThumbnail(bigMatch:any) {
     let that=this;
     this.generateLogoFromImage(bigMatch, 500, 500, 0.5, data => {
+      this.ngZone.run(() => {
       that.dataWebsiteLogo.image=data;
-  
+ // alert(that.dataWebsiteLogo.image);
+      });
     });
   }
   generateLogoFromImage(img, MAX_WIDTH: number = 700, MAX_HEIGHT: number = 700, quality: number = 1, callback) {
@@ -521,9 +532,12 @@ else
     //}
    // debugger;
   //this.companyLogoImage=data;
+  this.ngZone.run(() => {
   that.dataWebsiteIcon.image=data;
-    });
   }
+);
+  });
+}
   generateFavIconFromImage(img, MAX_WIDTH: number = 700, MAX_HEIGHT: number = 700, quality: number = 1, callback) {
     var canvas: any = document.createElement("canvas");
     var image:any = new Image();

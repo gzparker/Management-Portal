@@ -80,6 +80,7 @@ export class MyApp {
     private storage: Storage,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider,
     private geolocation: Geolocation, private nativeGeocoder: NativeGeocoder,private afs: AngularFirestore) {
+      //debugger;
     this.initializeApp();
     sharedServiceObj.isLoggedInEmitter.subscribe(item => this.setLoginStatus(item));
     sharedServiceObj.isPaidEmitter.subscribe(item => this.setPaidStatus(item));
@@ -90,17 +91,9 @@ export class MyApp {
       { title: "Register", component: RegisterPage }
     ];
     this.setLoginInitialStatus();
-    if(this.platform.is('core') || this.platform.is('mobileweb') || this.platform.is('cordova') || 
-    this.platform.is('mobile')) {
-      this.isApp=false;
-    }
-    else
-    {
-      this.isApp=true;
-    }
-    if(this.platform.is('core')) {
-      this.isWebBrowser=true;
-    }
+   
+
+    this.isApp = (!document.URL.startsWith("http"));
    sharedServiceObj.signOutEmitter.subscribe(item => {
      this.logOut();
  });
@@ -131,9 +124,7 @@ this.setDeviceToken();
 //debugger;
 messaging.requestPermission()
 .then(function() {
-  //debugger;
-  //console.log('Notification permission granted.');
-  //return messaging.getToken();
+ 
 })
 .then(function(token) {
 //debugger;
@@ -144,18 +135,16 @@ messaging.requestPermission()
 //debugger;
   console.log('Unable to get permission to notify.', err);
 });
-messaging.getToken().then(function(currentToken) {
+messaging.getToken().then((currentToken)=> {
   if (currentToken) {
-    //debugger;
-    //sendTokenToServer(currentToken);
-    //updateUIForPushEnabled(currentToken);
+  //debugger;
+  //alert(currentToken);
+    this.storage.set("firebase_token",currentToken);
+    
   } else {
-   // debugger;
-    // Show permission request.
+ 
     console.log('No Instance ID token available. Request permission to generate one.');
-    // Show permission UI.
-    //updateUIForPushPermissionRequired();
-    //setTokenSentToServer(false);
+    
   }
 }).catch(function(err) {
  // debugger;
@@ -173,8 +162,9 @@ messaging.onMessage(function(payload){
     this.storage.remove("availableCountryList");
   }
   setUserCurrentGeoLocation() {
-    if(!this.isWebBrowser)
+    if(!this.isApp)
     {
+     // alert("webbrowser");
       if (window.navigator.geolocation) {
         window.navigator.geolocation.getCurrentPosition((position)=> {
           this.storage.set("userCurrentLatitude", position.coords.latitude);
@@ -191,11 +181,14 @@ messaging.onMessage(function(payload){
     }
 else
 {
+
 this.geolocation.getCurrentPosition().then((resp) => {
+
       this.storage.set("userCurrentLatitude", resp.coords.latitude);
       this.storage.set("userCurrentLongitude", resp.coords.longitude);
       this.setUserCountry(resp.coords.latitude, resp.coords.longitude);
     }).catch((error) => {
+      alert("error"+error);
       console.log('Error getting location', error);
     });
 }
@@ -209,11 +202,13 @@ this.geolocation.getCurrentPosition().then((resp) => {
  
     if(this.isApp)
     {
-    //  alert('app');
+   //alert('app');
       this.nativeGeocoder.reverseGeocode(latitude, longitude)
       .then((result: NativeGeocoderReverseResult) => {
-      
+      //debugger;
+//alert(JSON.stringify(result));
         this.storage.set("userCountryInfo", result);
+        //this.setGeoCodeInfo(result.countryName,result.countryCode);
       })
       .catch((error: any) => {
       
@@ -221,13 +216,12 @@ this.geolocation.getCurrentPosition().then((resp) => {
     }
     else
     {
-      //alert('no app');
+     //alert('no app');
       var latlng = new google.maps.LatLng(latitude, longitude);
       var geocoder = new google.maps.Geocoder;
    
        geocoder.geocode({'location': latlng}, (results, status)=> {
         if (status === 'OK') {
-          //alert('inside');
           if (results[0]) {
          
           results[0].address_components.forEach(element => {

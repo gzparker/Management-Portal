@@ -55,6 +55,10 @@ export class EditAccountPage {
   public updatedValue:boolean=false;
   public personalWidth:string="";
   public personalHeight:string="";
+  public office_id:string="";
+  public broker_id:string="";
+  public agent_id:string="";
+
   public loader:any;
 
   public dataPersonalImage:any;
@@ -73,13 +77,14 @@ export class EditAccountPage {
         content: "Please wait...",
         duration: 5000
       });
-      if(this.platform.is('core') || this.platform.is('mobileweb') || this.platform.is('cordova') || this.platform.is('mobile')) {
+      /*if(this.platform.is('core') || this.platform.is('mobileweb') || this.platform.is('cordova') || this.platform.is('mobile')) {
         this.isApp=false;
       }
       else
       {
         this.isApp=true;
-      }
+      }*/
+      this.isApp = (!document.URL.startsWith("http"));
       this.cropperSettings = new CropperSettings();
       this.cropperSettings.width = 100;
       this.cropperSettings.height = 100;
@@ -135,6 +140,9 @@ export class EditAccountPage {
      this.first_name=this.accountInfo.first_name;
      this.last_name=this.accountInfo.last_name;
      this.email=this.accountInfo.email;
+     this.broker_id=this.accountInfo.broker_id;
+     this.agent_id=this.accountInfo.agent_id;
+     this.office_id=this.accountInfo.office_id;
     // debugger;
      this.passwordUpdated=this.accountInfo.password;
      this.phone_number=this.accountInfo.phone_mobile;
@@ -348,6 +356,18 @@ if(this.accountInfo.phone_mobile!=this.phone_number)
   this.updatedValue=true;
    
 }
+if(this.accountInfo.agent_id!=this.agent_id)
+{
+this.updatedValue=true;
+}
+if(this.accountInfo.office_id!=this.office_id)
+{
+this.updatedValue=true;
+}
+if(this.accountInfo.broker_id!=this.broker_id)
+{
+this.updatedValue=true;
+}
    }
   }
   showHidePersonLogoCropper(){
@@ -456,6 +476,9 @@ else
       first_name: "",
       photo_personal:"",
       last_name: "",
+      office_id:"",
+      agent_id:"",
+      broker_id:"",
       country_code: "",
       country_abbv: "",
       phone_number: "",
@@ -491,7 +514,18 @@ if(this.accountInfo.country_abbv!=this.selectedCountryAbbv)
 {
       dataObj.country_abbv = this.selectedCountryAbbv;
 }
-
+if(this.accountInfo.agent_id!=this.agent_id)
+{
+  dataObj.agent_id = this.agent_id;
+}
+if(this.accountInfo.office_id!=this.office_id)
+{
+  dataObj.office_id = this.office_id;
+}
+if(this.accountInfo.broker_id!=this.broker_id)
+{
+  dataObj.broker_id = this.broker_id;
+}
 if(this.accountInfo.phone_mobile!=this.phone_number)
 {
       dataObj.phone_number = this.phone_number.toString();
