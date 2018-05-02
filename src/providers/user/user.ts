@@ -131,7 +131,7 @@ export class UserProvider {
         }
         else
         {
-         // alert('7');
+         //alert('7');
           this.fb.api('/me?fields=id,name,email,picture',['public_profile', 'user_friends', 'email'])
           .then((res: any) =>{this.setFacebookAuthentication(res)})
           .catch(e => {console.log('Error getting location', e);});
@@ -149,7 +149,7 @@ export class UserProvider {
         }
        else
        {
-       // alert('10');
+      // alert('10');
         this.fb.login(['public_profile', 'user_friends', 'email'])
         .then((res: FacebookLoginResponse) =>{this.checkFacebookResp(res)})
         .catch(e => {console.log('Error getting location', e);});
@@ -174,16 +174,16 @@ export class UserProvider {
     }
   };
   checkFacebookResp(resp: any) {
-
+//alert('first');
     if (resp.authResponse) {
       if(!this.isApp)
       {
-      //alert('14');
+     // alert('14');
       this.facebookObject.api('/me', { locale: 'en_US', fields: 'name, email,picture' }, this.setFacebookAuthentication.bind(this));
       }
       else
       {
-       // alert('15');
+      //alert('15');
         this.fb.api('/me?fields=id,name,email,picture',['public_profile', 'user_friends', 'email'])
       .then((res: any) =>{this.setFacebookAuthentication(res)})
       .catch(e => {console.log('Error getting location', e);});
@@ -206,7 +206,7 @@ export class UserProvider {
 
   }
   checkFbEmail(resp: any): void {
-
+//alert('now');
     this.storage.get('fbAuthResp').then((data) => {
       if (data != null) {
         this.fbAuthResp = data;
@@ -590,11 +590,11 @@ data.append('internal_notes',internal_notes);
     return searchedListing;
 }
 
-allLeads(user_id:string){
+allLeads(user_id:string,category:string){
 
     let data = new URLSearchParams();
  data.append('member_id',user_id);
-
+data.append('category',category);
   let savedListing=this.http
     .post(this.sharedServiceObj.apiBaseUrl+'members/viewAllLeads', data, this.headerOptions)
     .map(this.extractData)

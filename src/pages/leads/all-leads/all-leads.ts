@@ -35,10 +35,13 @@ export class AllLeadsPage {
   public notificationMsg:string="";
   public leadId:string="";
   public allLeadsList:any[]=[];
+  public searchedLeadsList:any[]=[];
   public userWebsites:any[]=[];
   
+  public searchLeadTerm:string="";
   public leadsFoundMessage="";
   public userId:string="";
+  public category:string="";
   
   public title: string = 'Delete Lead';
   public message: string = 'Are you sure to delete this lead!';
@@ -77,13 +80,27 @@ export class AllLeadsPage {
       this.userId=data;
       this.viewAllWebsite();
       this.viewAllLeads(null);
-      
     });
   }
   createLead()
   {
     this.navCtrl.push(CreateLeadPage);
   }
+  setLeadFilteredItems()
+  {
+this.searchedLeadsList=this.filterItems(this.searchLeadTerm);
+  }
+  filterItems(searchTerm){
+    return this.allLeadsList.filter((item) => {
+        return (item.first_name.toLowerCase()+" "+item.first_name.toLowerCase()).indexOf(searchTerm.toLowerCase()) > -1;
+    });
+}
+filterItemsByCategory()
+{
+ // debugger;
+  this.viewAllLeads(null);
+  
+}
   viewAllLeads(refresher:any):void{
     if(this.userId!="")
     {
@@ -92,11 +109,11 @@ export class AllLeadsPage {
     {
       refresher.complete();
     }
-    else
-    {
-      this.loader.present();
-    }
-  this.userServiceObj.allLeads(this.userId.toString())
+    //else
+   // {
+     // this.loader.present();
+    //}
+  this.userServiceObj.allLeads(this.userId.toString(),this.category.toString())
     .subscribe((result) => this.viewAllLeadsResp(result));
     }
     
@@ -107,10 +124,17 @@ export class AllLeadsPage {
     {
       //debugger;
       this.allLeadsList=result.results;
+      this.searchedLeadsList=result.results;
+      if(this.category!="")
+      {
+        this.setLeadFilteredItems();
+      }
+      //debugger;
     }
     else
     {
       this.allLeadsList=[];
+      this.searchedLeadsList=[];
       this.leadsFoundMessage="No leads found.";
     }
     

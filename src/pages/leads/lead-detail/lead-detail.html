@@ -16,14 +16,29 @@
     </ion-navbar>
 </ion-header>
 <ion-content padding>
-  <ion-card *ngIf="leadDetail!=undefined">
-      <h2>{{leadDetail.first_name}} {{leadDetail.last_name}}</h2>
-      <p>Email:{{leadDetail.email}}</p>
-      <p>Website:{{leadDetail.website}}</p>
-      <p>Website:{{leadDetail.website}}</p>
-      <p>Internal Notes:{{leadDetail.internal_notes}}</p>
-    
-    </ion-card>
+  <ion-list>
+      <ion-item><ion-avatar item-start *ngIf="leadDetail!=undefined">
+          <img src={{leadDetail.image_url}} *ngIf="leadDetail.image_url!=null"/>
+          <img src={{noImgUrl}} *ngIf="leadDetail.image_url==null"/></ion-avatar></ion-item>
+          <ion-item *ngIf="leadDetail!=undefined"><h2>{{leadDetail.first_name}} {{leadDetail.last_name}}</h2></ion-item>
+          <ion-item *ngIf="leadDetail!=undefined"><p>Email:{{leadDetail.email}}</p></ion-item>
+          <ion-item *ngIf="leadDetail!=undefined"><p>Website:{{leadDetail.website}}</p></ion-item>
+          <ion-item *ngIf="leadDetail!=undefined"><p>Phone Mobile:{{leadDetail.phone_mobile}}</p></ion-item>
+      <ion-item *ngIf="leadDetail!=undefined"><p>Phone Office:{{leadDetail.phone_office}}</p></ion-item>
+      <ion-item *ngIf="leadDetail!=undefined"><p>Phone Home:{{leadDetail.phone_home}}</p></ion-item>
+      <ion-item *ngIf="leadDetail!=undefined"><p>Home Address:{{leadDetail.home_address}}</p></ion-item>
+      <div>
+        <div #mapHome id="mapHome" style="width:100%;height:400px"></div>
+    </div>
+      <ion-item *ngIf="leadDetail!=undefined"><p>Work Address:{{leadDetail.work_address}}</p></ion-item>
+      <div>
+        <div #mapWork id="mapWork" style="width:100%;height:400px"></div>
+    </div>
+      <ion-item *ngIf="leadDetail!=undefined"><p>Internal Notes:{{leadDetail.internal_notes}}</p></ion-item>
+
+    </ion-list>
+   
+  
     <ion-segment [(ngModel)]="leadsDetailSegment" color="primary" (ionChange)="segmentChanged($event)">
         <ion-segment-button value="1">
           Saved Searches

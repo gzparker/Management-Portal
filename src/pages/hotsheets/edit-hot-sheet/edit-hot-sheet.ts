@@ -123,7 +123,9 @@ public isWebBrowser=false;
         ,toolbar: [
           { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source'] },
           { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', '-', 'RemoveFormat' ] },
-          { name: 'styles', items: [ 'Styles', 'Format', 'FontSize' ] }
+          { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
+          { name: 'links', items: [ 'Link', 'Unlink'] },
+          { name: 'styles', items: ['Format', 'FontSize' ] }
         ]};
   public listing_type_modal:any[]=["all"];
   public listing_type_last_searched:any[]=[];
@@ -147,7 +149,7 @@ public isWebBrowser=false;
   public selectedLong:string="";
   public userId:string="";
   public brief_description:string="";
-  public main_description:string="test data";
+  public main_description:string="";
   public virtual_tour_url:string="";
   public video_url:string="";
   public city:string="";

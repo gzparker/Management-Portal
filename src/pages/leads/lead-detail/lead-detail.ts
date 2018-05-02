@@ -1,4 +1,4 @@
-import { Component, ViewChild, NgZone } from '@angular/core';
+import { Component, ViewChild, NgZone, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, Platform,
   MenuController,LoadingController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
@@ -24,7 +24,7 @@ import { SubscriptionProvider } from '../../../providers/subscription/subscripti
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-
+declare var google: any;
 @IonicPage()
 @Component({
   selector: 'page-lead-detail',
@@ -42,8 +42,13 @@ export class LeadDetailPage {
  public subscribedHotsheetPage:any;
  public selectedSegment:any="1";
  public leadsDetailSegment:string="1";
+ public noImgUrl=this.sharedServiceObj.noImageUrl;
 
 public loader:any;
+@ViewChild('mapHome') mapHomeElement: ElementRef;
+mapHome: any;
+@ViewChild('mapWork') mapWorkElement: ElementRef;
+mapWork: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,
     public sharedServiceObj: SharedProvider, private storage: Storage,
@@ -71,6 +76,97 @@ public loader:any;
       }
     });
   }
+  loadHomeMap(placeId:any){
+    //debugger;
+      // this.geolocation.getCurrentPosition().then((position) => {
+    //debugger;
+         //let latLng = new google.maps.LatLng(37.4419, -122.1419);
+         let mapOptions = {
+         // center: latLng,
+           zoom: 14,
+           mapTypeId: google.maps.MapTypeId.MAP,
+           mapTypeControl: true,
+           mapTypeControlOptions: {
+             style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+             position: google.maps.ControlPosition.TOP_CENTER
+           },
+           zoomControl: true,
+           zoomControlOptions: {
+             style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+             position: google.maps.ControlPosition.LEFT_TOP
+           },
+           scaleControl: true,
+           streetViewControl: true,
+           streetViewControlOptions: {
+             position: google.maps.ControlPosition.LEFT_TOP
+           }
+         };
+    //debugger;
+         this.mapHome = new google.maps.Map(this.mapHomeElement.nativeElement, mapOptions);
+         var request = {
+          placeId: placeId
+        };
+      //debugger;
+        var infowindow = new google.maps.InfoWindow();
+        var service = new google.maps.places.PlacesService(this.mapHome);
+      var that=this;
+     // debugger;
+        service.getDetails(request, (place, status)=> {
+          if (status == google.maps.places.PlacesServiceStatus.OK) {
+            //debugger;
+            var marker = new google.maps.Marker({
+              map: that.mapHome,
+              position: place.geometry.location
+            });
+            that.mapHome.fitBounds(place.geometry.viewport);
+          }
+        });
+      
+      
+     }
+  loadWorkMap(placeId:any){
+    let mapOptions = {
+      // center: latLng,
+        zoom: 14,
+        mapTypeId: google.maps.MapTypeId.MAP,
+        mapTypeControl: true,
+        mapTypeControlOptions: {
+          style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+          position: google.maps.ControlPosition.TOP_CENTER
+        },
+        zoomControl: true,
+        zoomControlOptions: {
+          style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+          position: google.maps.ControlPosition.LEFT_TOP
+        },
+        scaleControl: true,
+        streetViewControl: true,
+        streetViewControlOptions: {
+          position: google.maps.ControlPosition.LEFT_TOP
+        }
+      };
+ //debugger;
+      this.mapWork = new google.maps.Map(this.mapWorkElement.nativeElement, mapOptions);
+      var request = {
+       placeId: placeId
+     };
+   //debugger;
+     var infowindow = new google.maps.InfoWindow();
+     var service = new google.maps.places.PlacesService(this.mapWork);
+   var that=this;
+  // debugger;
+     service.getDetails(request, (place, status)=> {
+       if (status == google.maps.places.PlacesServiceStatus.OK) {
+         //debugger;
+         var marker = new google.maps.Marker({
+           map: that.mapWork,
+           position: place.geometry.location
+         });
+         that.mapWork.fitBounds(place.geometry.viewport);
+       }
+     });
+   
+  }
   editLead(){
     if(this.leadId!="")
     {
@@ -88,12 +184,15 @@ public loader:any;
   }
   editLeadResp(result:any):void{
     this.loader.dismiss();
+    //debugger;
     if(result.status==true)
     {
    if(result.result)
    {
     // debugger;
      this.leadDetail=result.result;
+     this.loadHomeMap(result.result.home_google_place_id);
+     this.loadWorkMap(result.result.work_google_place_id);
      if(result.saved_searches!=false)
      {
       this.saved_searches=result.saved_searches;

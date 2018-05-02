@@ -27,15 +27,35 @@
     <ion-chip *ngIf="notificationMsg!=''">
         <ion-label color="secondary">{{notificationMsg}}</ion-label>
     </ion-chip>
+    <ion-item>
+    <ion-searchbar [(ngModel)]="searchLeadTerm" (ionInput)="setLeadFilteredItems()"></ion-searchbar>
+  </ion-item>
+    <ion-item>
+      <ion-label floating>Category</ion-label>
+      <ion-select [(ngModel)]="category" name="category" id="category" (ngModelChange)="filterItemsByCategory()">
+       
+      <ion-option value="buyer">Buyer</ion-option>
+      <ion-option value="seller">Seller</ion-option>
+      <ion-option value="prospect">Prospect</ion-option>
+      <ion-option value="friend">Friend</ion-option>
+      <ion-option value="client">Client</ion-option>
+      <ion-option value="active">Active</ion-option>
+      <ion-option value="pending">Pending</ion-option>
+      <ion-option value="closed">Closed</ion-option>
+      <ion-option value="old">Old</ion-option>
+      <ion-option value="new">New</ion-option>
+      <ion-option value="other">Other</ion-option>
+       </ion-select>
+    </ion-item>
     <ion-list *ngIf="!isApp">
-        <ion-item *ngFor="let lead of allLeadsList">
+        <ion-item *ngFor="let lead of searchedLeadsList">
             <ion-item no-lines (click)="leadDetail(lead.lead_id);">
-          <h2>{{lead.first_name}}-{{lead.last_name}}</h2>
-          <p>Email:{{lead.email}}</p>
+          <p>{{lead.first_name}}-<b>{{lead.last_name}}</b></p>
+         <!-- <p>Email:{{lead.email}}</p>
           <p>Website:{{lead.website}}</p>
           <p>Mobile Number:{{lead.phone_mobile}}</p>
           <p>Office Number:{{lead.phone_office}}</p>
-          <p>Home:{{lead.phone_home}}</p>
+          <p>Home:{{lead.phone_home}}</p>-->
           </ion-item>
           <button ion-button item-right color="danger" (click)="deleteLead(lead)">
             <ion-icon name="trash"></ion-icon>
@@ -47,7 +67,7 @@
         </ion-item> 
     </ion-list>
     <ion-list *ngIf="isApp">
-      <ion-item-sliding *ngFor="let lead of allLeadsList">
+      <ion-item-sliding *ngFor="let lead of searchedLeadsList">
         <ion-item no-lines (click)="leadDetail(lead.lead_id);">
           <h2>{{lead.first_name}}-{{lead.last_name}}</h2>
           <p>Email:{{lead.email}}</p>
@@ -66,7 +86,7 @@
         </ion-item-options>
       </ion-item-sliding>
     </ion-list>
-    <ion-chip *ngIf='allLeadsList.length<=0&&leadsFoundMessage!=""'>
+    <ion-chip *ngIf='searchedLeadsList.length<=0&&leadsFoundMessage!=""'>
         <ion-label color="danger">{{leadsFoundMessage}}</ion-label>
     </ion-chip>
 </ion-content>

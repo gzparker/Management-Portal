@@ -48,10 +48,7 @@
   <ion-label floating>Name<span [ngClass]="{'error': name==''}" *ngIf="name==''">*</span></ion-label>
   <ion-input type="text" required [(ngModel)]="name" name="name" id="name" (input)="setHotSheetDefaultTitle()"></ion-input>
 </ion-item>
-<ion-item>
-  <ion-label floating>Title<span [ngClass]="{'error': hotsheet_Title==''}" *ngIf="hotsheet_Title==''">*</span></ion-label>
-  <ion-input type="text" required [(ngModel)]="hotsheet_Title" name="hotsheet_Title" id="hotsheet_Title"></ion-input>
-</ion-item>
+
 <ion-item>
 <ion-label floating>Slug<span [ngClass]="{'error': slug==''}" *ngIf="slug==''">*</span></ion-label>
 <ion-input type="text" required [(ngModel)]="slug" name="slug" id="slug"></ion-input>
@@ -78,7 +75,22 @@
     <ion-label floating>Sub City</ion-label>
     <ion-input type="text" [(ngModel)]="sub_city" name="sub_city"></ion-input>
   </ion-item>
-  
+  <ion-item>
+    <ion-label floating>Title<span [ngClass]="{'error': hotsheet_Title==''}" *ngIf="hotsheet_Title==''">*</span></ion-label>
+    <ion-input type="text" required [(ngModel)]="hotsheet_Title" name="hotsheet_Title" id="hotsheet_Title"></ion-input>
+  </ion-item>
+  <div>
+    <ion-label>Brief Description</ion-label>
+    <ckeditor
+    [config]="CkeditorConfig"
+    [readonly]="false" [(ngModel)]="brief_description"
+    (change)="onHotSheetBreifDescChanged($event)"
+    (blur)="onHotSheetBreifDescBlured($event)"
+    (focus)="onHotSheetBreifDescFocused($event)"
+    (ready)="onHotSheetBreifDescCreated($event)"
+    debounce="500" name="editorMainDescription" id="editorMainDescription">
+  </ckeditor>
+</div>
   <div>
     <ion-label>Main Description</ion-label>
     <ckeditor [(ngModel)]="main_description"
@@ -99,23 +111,12 @@
     <ion-label floating>Brief Description</ion-label>
     <ion-textarea type="text" [(ngModel)]="brief_description" name="brief_description"></ion-textarea>
   </ion-item>-->
-  <div>
-      <ion-label>Brief Description</ion-label>
-      <ckeditor
-      [config]="CkeditorConfig"
-      [readonly]="false" [(ngModel)]="brief_description"
-      (change)="onHotSheetBreifDescChanged($event)"
-      (blur)="onHotSheetBreifDescBlured($event)"
-      (focus)="onHotSheetBreifDescFocused($event)"
-      (ready)="onHotSheetBreifDescCreated($event)"
-      debounce="500" name="editorMainDescription" id="editorMainDescription">
-    </ckeditor>
-  </div>
+ 
   <ion-item>
     <ion-label floating>Meta Title</ion-label>
     <ion-input type="text" [(ngModel)]="meta_title" name="meta_title"></ion-input>
   </ion-item>
-  <div>
+  <!--<div>
       <ion-label>Meta Description</ion-label>
       <ckeditor  [(ngModel)]="meta_description"
       [config]="CkeditorConfig"
@@ -126,11 +127,11 @@
       (ready)="onHotSheetMetaDescCreated($event)"
       debounce="500" name="editorMainDescription" id="editorMainDescription">
     </ckeditor>
-  </div>
-  <!--<ion-item>
+  </div>-->
+  <ion-item>
     <ion-label floating>Meta Description</ion-label>
     <ion-textarea type="text" [(ngModel)]="meta_description" name="meta_description"></ion-textarea>
-  </ion-item>-->
+  </ion-item>
   <ion-item>
       <ion-label floating>Assigned Agent IDs</ion-label>
       <ion-select [(ngModel)]="assigned_agent_id"  
