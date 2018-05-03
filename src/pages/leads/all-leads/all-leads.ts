@@ -91,8 +91,9 @@ export class AllLeadsPage {
 this.searchedLeadsList=this.filterItems(this.searchLeadTerm);
   }
   filterItems(searchTerm){
+    debugger;
     return this.allLeadsList.filter((item) => {
-        return (item.first_name.toLowerCase()+" "+item.first_name.toLowerCase()).indexOf(searchTerm.toLowerCase()) > -1;
+        return (item.first_name.toLowerCase()+" "+item.last_name.toLowerCase()).indexOf(searchTerm.toLowerCase()) > -1;
     });
 }
 filterItemsByCategory()

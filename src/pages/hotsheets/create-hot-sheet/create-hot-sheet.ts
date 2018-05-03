@@ -356,7 +356,7 @@ else
    
     this.addressElement = this.searchbar.nativeElement.querySelector('.searchbar-input');
     this.createAutocomplete(this.addressElement).subscribe((location) => {
-      console.log('Searchdata', location);
+      //console.log('Searchdata', location);
 
       let options = {
         center: location,

@@ -58,7 +58,14 @@
             <ion-label floating>Home Number</ion-label>
             <ion-input type="text" [(ngModel)]="homeNumber" name="homeNumber" id="homeNumber" pattern="^[0-9]*$"></ion-input>
         </ion-item>
-         <ion-item>
+        <ion-item>
+            <ion-searchbar #searchHomeBar placeholder="Search Home Address"></ion-searchbar>
+          </ion-item>
+          <ion-item>
+                
+                <ion-searchbar #searchWorkBar placeholder="Search Work Address"></ion-searchbar>
+        </ion-item>
+        <!-- <ion-item>
             <ion-label floating>Home Address Street</ion-label>
             <ion-input type="text" [(ngModel)]="home_address_street" name="home_address_street" id="home_address_street"></ion-input>
         </ion-item>
@@ -95,7 +102,7 @@
             <ion-label floating>Work ZipCode</ion-label>
             <ion-input type="text" [(ngModel)]="work_zipcode" 
             name="work_zipcode" id="work_zipcode"></ion-input>
-        </ion-item>
+        </ion-item>-->
         <ion-item>
             <ion-label floating>Assigned Agent/Broker</ion-label>
             <ion-select [(ngModel)]="assigned_agent_id"  
