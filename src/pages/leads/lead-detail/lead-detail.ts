@@ -40,6 +40,8 @@ export class LeadDetailPage {
  public savedListingPage:any;
  public savedSearchesPage:any;
  public subscribedHotsheetPage:any;
+ public map_work_height:number;
+ public map_home_height:number;
  public selectedSegment:any="1";
  public leadsDetailSegment:string="1";
  public noImgUrl=this.sharedServiceObj.noImageUrl;
@@ -77,6 +79,7 @@ mapWork: any;
     });
   }
   loadHomeMap(placeId:any){
+    this.map_home_height=400;
     //debugger;
       // this.geolocation.getCurrentPosition().then((position) => {
     //debugger;
@@ -125,6 +128,7 @@ mapWork: any;
       
      }
   loadWorkMap(placeId:any){
+    this.map_work_height=400;
     let mapOptions = {
       // center: latLng,
         zoom: 14,
@@ -191,8 +195,39 @@ mapWork: any;
    {
     // debugger;
      this.leadDetail=result.result;
-     this.loadHomeMap(result.result.home_google_place_id);
-     this.loadWorkMap(result.result.work_google_place_id);
+     if(result.result.home_google_place_id!=undefined||result.result.home_google_place_id!=null)
+     {
+       if(result.result.home_google_place_id!="")
+       {
+        this.map_home_height=400;
+        this.loadHomeMap(result.result.home_google_place_id);
+       }
+     else{
+      this.map_home_height=0;
+     }
+     }
+     else
+     {
+      this.map_home_height=0;
+     }
+     if(result.result.work_google_place_id!=undefined||result.result.work_google_place_id!=null)
+     {
+       if(result.result.work_google_place_id!="")
+       {
+        this.map_work_height=400;
+        this.loadWorkMap(result.result.work_google_place_id);
+       }
+     else{
+      this.map_work_height=0;
+     }
+     }
+     else
+     {
+      this.map_work_height=0;
+     }
+     //this.map_work_height=400;
+     
+     //this.loadWorkMap(result.result.work_google_place_id);
      if(result.saved_searches!=false)
      {
       this.saved_searches=result.saved_searches;

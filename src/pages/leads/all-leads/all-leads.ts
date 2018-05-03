@@ -194,7 +194,7 @@ this.navCtrl.push(EditLeadPage,{leadId:leadId});
               this.leadsFoundMessage="All leads have been deleted.Please add new lead.";
               this.notificationMsg="";
             }
-            this.userServiceObj.deleteLead(lead.lead_id)
+            this.userServiceObj.deleteLead(lead.lead_id,this.userId)
             .subscribe((result) => this.deleteLeadResp(result));
           }
         }

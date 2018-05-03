@@ -467,10 +467,11 @@ export class UserProvider {
       .map(this.extractData)
     return contactUsResp;
   }
-  deleteLead(lead_id:string){
+  deleteLead(lead_id:string,user_id:string){
 
     let data = new URLSearchParams();
  data.append('lead_id',lead_id);
+ data.append('member_id',user_id);
   let deleteLeadResp=this.http
     .post(this.sharedServiceObj.apiBaseUrl+'members/deleteLead', data, this.headerOptions)
     .map(this.extractData)
