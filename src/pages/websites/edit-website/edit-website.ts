@@ -188,9 +188,21 @@ export class EditWebsitePage {
       };
       this.camera.getPicture(options)
       .then((data) => {
+        var image:any = new Image();
         this.identity_logo="data:image/jpeg;base64," +data;
-        //alert(this.identity_logo);
-        this.createLogoThumbnail(this.identity_logo);
+        var that = this;
+        alert(this.identity_logo);
+        image.src = this.identity_logo;
+          image.onload = function () {
+           alert(this.width);
+            that.logoCropperSettings.croppedWidth = this.width;
+            that.logoCropperSettings.croppedHeight = this.height;
+            
+            that.createLogoThumbnail(this.identity_logo);
+        };
+        //this.logoCropperSettings.croppedWidth = this.identity_logo.width;
+          //this.logoCropperSettings.croppedHeight = this.identity_logo.height;
+      
         /*if(this.isApp)
         {
        this.crop
@@ -372,7 +384,8 @@ this.footer_wrapper=result.result.footer_wrapper;
     }
   }
   loadLogo(baseUrl:string,imageUrl:string) {
-   
+  //alert('here');
+   //alert(imageUrl);
     //this.hideLogoCropper=true;
     const self = this;
     var image:any = new Image();
@@ -383,12 +396,13 @@ this.footer_wrapper=result.result.footer_wrapper;
     xhr.addEventListener("load", function() {
         var reader = new FileReader();
         reader.readAsDataURL(xhr.response); 
-       
+      // alert('1');
         reader.onloadend = function (loadEvent:any) {
           image.src = loadEvent.target.result;
-
+//alert('2');
+//alert(loadEvent.target.result);
           image.onload = function () {
-         
+         //alert('yes');
             self.logoCropperSettings.croppedWidth = this.width;
             self.logoCropperSettings.croppedHeight = this.height;
             self.identity_logo=image.src;
@@ -471,11 +485,12 @@ else
   }
   /////////////////////Generate Thumbnail//////////////////////
   createLogoThumbnail(bigMatch:any) {
+    alert('in create thumbnail');
     let that=this;
     this.generateLogoFromImage(bigMatch, 500, 500, 0.5, data => {
       this.ngZone.run(() => {
       that.dataWebsiteLogo.image=data;
- // alert(that.dataWebsiteLogo.image);
+alert(that.dataWebsiteLogo.image);
       });
     });
   }

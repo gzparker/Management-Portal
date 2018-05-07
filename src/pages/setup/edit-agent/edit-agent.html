@@ -37,7 +37,7 @@
           <ion-input type="email" required [(ngModel)]="email" name="email" [email]="true"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label floating>Password<span [ngClass]="{'error': password==''}" *ngIf="password==''">*</span></ion-label>
+        <ion-label floating>Password</ion-label>
         <ion-input type="password" [(ngModel)]="password" name="password" id="password"></ion-input>
     </ion-item>
     <ion-item>
@@ -56,10 +56,22 @@
     <ion-option value="agent">Agent</ion-option>
      </ion-select>
     </ion-item>
-    <ion-item>
+    <div>
+      <ion-label>Brief Description</ion-label>
+      <ckeditor
+      [config]="CkeditorConfig"
+      [readonly]="false" [(ngModel)]="description"
+      (change)="onAgentBreifDescChanged($event)"
+      (blur)="onAgentBreifDescBlured($event)"
+      (focus)="onAgentBreifDescFocused($event)"
+      (ready)="onAgentBreifDescCreated($event)"
+      debounce="500" name="editorMainDescription">
+    </ckeditor>
+  </div>
+    <!--<ion-item>
       <ion-label floating>Brief Description</ion-label>
       <ion-textarea type="text" [(ngModel)]="description" name="description"></ion-textarea>
-    </ion-item>
+    </ion-item>-->
     <ion-list *ngIf="isApp">
   
       <ion-item>

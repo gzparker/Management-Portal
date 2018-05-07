@@ -64,6 +64,7 @@ private subscription: ISubscription;
       }
       if(this.navParams.get('selectedPage')!=undefined&&this.navParams.get('selectedPage')!='')
       {
+       // debugger;
         this.openPage(this.navParams.get('selectedPage'));
       }
   }
@@ -159,7 +160,7 @@ if(status==true)
 
 }
   openPage(pageNumber) {
-    //debugger;
+   // debugger;
     if (pageNumber == "4") {
       //this.navCtrl.setRoot(DashboardPage);
     }

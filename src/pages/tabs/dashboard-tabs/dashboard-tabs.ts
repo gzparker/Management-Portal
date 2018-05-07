@@ -33,7 +33,7 @@ export class DashboardTabsPage {
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform) {
-    //  debugger;
+    //debugger;
     this.dashBoardParams={ notificationMsg: "",selectedPage:"" };
       if(this.navParams.get('notificationMsg')!=undefined&&this.navParams.get('notificationMsg')!='')
       {
@@ -47,7 +47,7 @@ export class DashboardTabsPage {
   }
 
   ionViewDidLoad() {
-  
+ // debugger;
   }
 setRootPages(option:any)
 {

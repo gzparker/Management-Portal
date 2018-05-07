@@ -39,7 +39,7 @@ export class MlsSettingsPage {
       }
       if(this.navParams.get('website_Id')!=undefined)
       {
-        debugger;
+        //debugger;
         this.website_Id=this.navParams.get('website_Id');
       }
       this.loader = this.loadingCtrl.create({

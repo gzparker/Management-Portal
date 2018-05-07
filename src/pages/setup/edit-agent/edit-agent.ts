@@ -54,7 +54,14 @@ export class EditAgentPage {
   public loader:any;
   public cropperWidth:string="";
   public cropperHeight:string="";
-
+  private CkeditorConfig = {uiColor: '#99000',removeButtons:'Underline,Subscript,Superscript,SpecialChar'
+  ,toolbar: [
+    { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source'] },
+    { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', '-', 'RemoveFormat' ] },
+    { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
+    { name: 'links', items: [ 'Link', 'Unlink'] },
+    { name: 'styles', items: ['Format', 'FontSize' ] }
+  ]};
   public userId:string="";
   public agent_id:string="";
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
@@ -103,6 +110,24 @@ export class EditAgentPage {
        this.loadAgentDetails();
        }
     });
+  }
+  onAgentBreifDescBlured(quill) {
+    //console.log('editor blur!', quill);
+  }
+ 
+  onAgentBreifDescFocused(quill) {
+    //console.log('editor focus!', quill);
+  }
+ 
+  onAgentBreifDescCreated(quill) {
+   // this.editor = quill;
+    //console.log('quill is ready! this is current quill instance object', quill);
+  }
+ 
+  onAgentBreifDescChanged(html) {
+//debugger;
+this.description=html;
+ 
   }
   loadAgentDetails()
 {

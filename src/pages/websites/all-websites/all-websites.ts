@@ -59,8 +59,10 @@ export class AllWebsitesPage {
   }
 
   ionViewDidLoad() {
+    //alert('welcome');
     let member_id = this.storage.get('userId');
     member_id.then((data) => {
+      //alert('welcome too');
       this.userId=data;
       this.viewAllWebsite(null);
     });
@@ -71,8 +73,10 @@ export class AllWebsitesPage {
     
   }
   viewAllWebsite(refresher:any):void{
+    //alert(this.userId);
     if(this.userId!="")
     {
+      //alert(this.userId.toString());
       let loader = this.loadingCtrl.create({
         content: "Please wait...",
         duration: 700
@@ -82,19 +86,24 @@ export class AllWebsitesPage {
     {
       refresher.complete();
     }
+    //alert('yes');
      this.userServiceObj.allUserWebsites(this.userId.toString())
     .subscribe((result) => this.viewAllWebsiteResp(result));
     } 
   }
   viewAllWebsiteResp(result:any):void{
+    //alert(result.status);
   this.showCreateButton=true;
     if(result.status==true)
     {
      //debugger;
+    //alert('all webs');
+    // alert(this.isApp);
       this.allWebsiteList=result.result;   
     }
     else
     {
+      //alert('dont');
       this.allWebsiteList=[];
       this.websiteFoundMessage="No website found.";
     }    

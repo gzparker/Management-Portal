@@ -56,10 +56,22 @@
   <ion-option value="agent">Agent</ion-option>
    </ion-select>
   </ion-item>
-  <ion-item>
+  <div>
+    <ion-label>Brief Description</ion-label>
+    <ckeditor
+    [config]="CkeditorConfig"
+    [readonly]="false" [(ngModel)]="description"
+    (change)="onAgentBreifDescChanged($event)"
+    (blur)="onAgentBreifDescBlured($event)"
+    (focus)="onAgentBreifDescFocused($event)"
+    (ready)="onAgentBreifDescCreated($event)"
+    debounce="500" name="editorMainDescription">
+  </ckeditor>
+</div>
+  <!--<ion-item>
     <ion-label floating>Brief Description</ion-label>
     <ion-textarea type="text" [(ngModel)]="description" name="description"></ion-textarea>
-  </ion-item>
+  </ion-item>-->
   <ion-list *ngIf="isApp">
 
     <ion-item>

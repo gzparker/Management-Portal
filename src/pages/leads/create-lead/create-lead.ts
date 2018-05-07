@@ -166,7 +166,6 @@ export class CreateLeadPage {
     });
   }
   getHomeAddress(data) {
-    //debugger;
     this.home_address=data.formatted_address;
     this.home_lat_lng=data.geometry.location.lat().toString()+","+data.geometry.location.lng().toString();
     this.home_google_place_id=data.place_id;
@@ -178,7 +177,6 @@ export class CreateLeadPage {
         
       });
     }
-  
     createWorkAutocomplete(addressEl: HTMLInputElement): Observable<any> {
       const autocomplete = new google.maps.places.Autocomplete(addressEl);
       
