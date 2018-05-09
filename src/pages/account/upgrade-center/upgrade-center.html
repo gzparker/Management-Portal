@@ -17,5 +17,43 @@
 
 
 <ion-content padding>
-
+    <ion-item>
+        <ion-label floating>Interval</ion-label>
+        <ion-select [(ngModel)]="interval" 
+    name="interval" (ngModelChange)="loadUpgradeList()">
+    <ion-option value="month">MONTH</ion-option>
+    <ion-option value="year">YEAR</ion-option>
+     </ion-select>
+    </ion-item>
+  <ion-segment [(ngModel)]="upgradeCenterSegment" color="primary" (ionChange)="segmentChanged($event)">
+    <ion-segment-button value="1">
+      Plans
+    </ion-segment-button>
+    <ion-segment-button value="2">
+      Current Upgrade
+    </ion-segment-button>
+  </ion-segment>
+  <ion-list *ngIf="selectedSegment=='1'">
+  <ion-item *ngFor="let plan of upgradePlans">
+    <ion-card>
+      <ion-item>
+      <h2>Name:{{plan.name}}</h2>
+      <p>Amount Due:{{plan.amount}}</p>
+      <p>Interval:{{plan.interval}}</p>
+      <p>Description:{{plan.description}}</p>
+      <!--<button ion-button item-right color="danger" (click)="deleteSubscription(subscription)">
+          <ion-icon name="trash"></ion-icon>
+        </button>-->
+    </ion-item>
+    </ion-card>
+    </ion-item>
+  </ion-list>
+  <ion-list *ngIf="selectedSegment=='2'">
+      <ion-item *ngFor="let current_plan of current_upgrade">
+        <h2>Name:{{current_plan.name}}</h2>
+      <p>Amount Due:{{current_plan.amount}}</p>
+      <p>Interval:{{current_plan.interval}}</p>
+      <p>Description:{{current_plan.description}}</p>
+        </ion-item>    
+  </ion-list>
 </ion-content>

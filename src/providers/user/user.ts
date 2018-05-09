@@ -745,6 +745,17 @@ let creditCardDetail=this.http
   .map(this.extractData)
   return creditCardDetail;
 }
+loadUpgradeList(user_id:string,service_id:string,interval:string)
+{
+  let data = new URLSearchParams();
+  data.append('member_id',user_id);
+  data.append('service_id',service_id);
+  data.append('interval',interval);
+let upgradeCenterList=this.http
+  .post(this.sharedServiceObj.registerationApiBaseUrl+'subscriptions/listUpgrades', data, this.headerOptions)
+  .map(this.extractData)
+  return upgradeCenterList;
+}
 addCreditCardDetail(creditCardData: any) {
   //debugger;
   let url = "";
