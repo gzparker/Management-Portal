@@ -8,6 +8,7 @@ import { Crop } from '@ionic-native/crop';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { AllWebsitesPage } from '../../websites/all-websites/all-websites';
+import { WebsitesWebsiteLinksPage } from '../../websites/websites-website-links/websites-website-links';
 import { FbConfirmPage } from '../../fb-confirm/fb-confirm';
 import { AlertController } from 'ionic-angular';
 import { ImageCropperComponent, CropperSettings } from "ngx-img-cropper";
@@ -132,7 +133,9 @@ export class EditWebsitePage {
       this.userId=data;
       if(this.navParams.get('websiteId')!=undefined)
       {
+        
        this.websiteId = this.navParams.get('websiteId');
+       //debugger;
        this.editWebsite();
        } 
     });
@@ -293,6 +296,7 @@ export class EditWebsitePage {
         duration: 700
       });
       loader.present();
+      //debugger;
   this.userServiceObj.editWebsite(this.userId.toString(),this.websiteId)
     .subscribe((result) => this.editWebsiteResp(result));
     }
@@ -712,6 +716,7 @@ else
       
     }
   }
+  
   updateWebsiteResp(result:any):void{
   this.websiteUpdateMsg="Website has been updated successfully.";
   //debugger;

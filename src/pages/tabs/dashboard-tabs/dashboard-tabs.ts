@@ -30,6 +30,10 @@ export class DashboardTabsPage {
   public notificationMsg:string="";
   public dashBoardParams: any;
   public setUpPage: any;
+  public userId:string="";
+  public globalSettings:any;
+  public showSetupTab:boolean;
+  public enableSetup:boolean=true;
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform) {
@@ -47,14 +51,76 @@ export class DashboardTabsPage {
   }
 
   ionViewDidLoad() {
- // debugger;
+    
+    let member_id = this.storage.get('userId');
+    member_id.then((data) => {
+      this.userId=data;
+      //debugger;
+      this.loadGlobalSettings();
+    });
+  }
+  enableDisableSetup(option:string)
+  {
+    if(option=='1')
+    {
+      this.enableSetup=true;
+    }
+   else if(option=='2')
+   {
+    this.enableSetup=false;
+   } 
+  }
+  loadGlobalSettings()
+  {
+    //this.showSetupTab=true;
+    //debugger;
+    this.userServiceObj.viewGlobalSettings(this.userId)
+    .subscribe((result) => this.loadGlobalSettingsResp(result));
+  }
+  loadGlobalSettingsResp(result:any)
+  {
+   // debugger;
+    if(result.status==true)
+    {
+      this.globalSettings=result.globalSettings;
+      if(this.globalSettings)
+      {
+       if(this.globalSettings.color_base!=undefined&&this.globalSettings.color_base!=null&&this.globalSettings.color_base!="")
+       {
+        this.ngZone.run(() => {
+this.showSetupTab=false;
+        });
+       }
+       if(this.globalSettings.color_second!=undefined&&this.globalSettings.color_second!=null&&this.globalSettings.color_second!="")
+       {
+        this.ngZone.run(() => {
+this.showSetupTab=false;
+        });
+       }
+       if(this.globalSettings.color_third!=undefined&&this.globalSettings.color_third!=null&&this.globalSettings.color_third!="")
+       {
+        this.ngZone.run(() => {
+this.showSetupTab=false;
+        });
+       }
+       if(this.showSetupTab==undefined||this.showSetupTab==null)
+       {
+         this.showSetupTab=true;
+       }
+      
+      }
+    else
+    {
+      this.showSetupTab=true;
+    }
+    }
   }
 setRootPages(option:any)
 {
   //debugger;
   //this.idxpaymentTabs.select(1);
   //this.sharedServiceObj.setNavigationalPage('8');
- /*if(option=='1')
+ if(option=='1')
  {
   this.sharedServiceObj.setNavigationalPage('4');
  
@@ -64,7 +130,7 @@ setRootPages(option:any)
  
    this.sharedServiceObj.setNavigationalPage('8');
   
- }*/
+ }
 }
 
 

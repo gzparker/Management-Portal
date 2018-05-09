@@ -11,7 +11,7 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Manage Agents</ion-title>
-    <ion-buttons end>
+    <ion-buttons end *ngIf="max_agents_added==false">
       <button ion-button (click)="createAgent();">Create Agent</button>
     </ion-buttons>
   </ion-navbar>
@@ -41,8 +41,8 @@
           </ion-card-title>-->
           <ion-item *ngFor="let agent of allAgents">
           <ion-item no-lines (click)="agentDetail(agent.id)">
-          <ion-avatar item-start><img src={{this.sharedServiceObj.imgBucketUrl}}{{agent.image_url}} *ngIf="agent.image_url!=''"/>
-          <img src={{this.sharedServiceObj.noImageUrl}} *ngIf="agent.image_url==''"/></ion-avatar>
+          <ion-avatar item-start><img src={{this.sharedServiceObj.imgBucketUrl}}{{agent.image_url}} *ngIf="agent.image_url!=null&&agent.image_url!=undefined&&agent.image_url!=''"/>
+          <img src={{no_image_found}} *ngIf="agent.image_url==null||agent.image_url==''"/></ion-avatar>
           <h2>{{agent.first_name}} {{agent.last_name}}</h2>
           <p>Email:{{agent.email}}</p>
           <p>Description:{{agent.description}}</p>

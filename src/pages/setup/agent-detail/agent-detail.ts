@@ -31,6 +31,7 @@ export class AgentDetailPage {
   public agent_id:string="";
   public agentDetail:any;
   public agentFoundMessage:string="";
+  public no_image_found:string="https://s3.us-west-2.amazonaws.com/central-system/img/default/profile_icon.png";
   public loader:any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,

@@ -46,6 +46,7 @@ export class EditAccountPage {
   public first_name: string = "";
   
   public last_name: string = "";
+  public company:string="";
   
   public phone_number: number;
   public selectedCountryCode: string = "";
@@ -139,11 +140,12 @@ export class EditAccountPage {
      
      this.first_name=this.accountInfo.first_name;
      this.last_name=this.accountInfo.last_name;
+     this.company=this.accountInfo.company;
      this.email=this.accountInfo.email;
      this.broker_id=this.accountInfo.broker_id;
      this.agent_id=this.accountInfo.agent_id;
      this.office_id=this.accountInfo.office_id;
-    // debugger;
+   // debugger;
      this.passwordUpdated=this.accountInfo.password;
      this.phone_number=this.accountInfo.phone_mobile;
      this.selectedCountryAbbv=this.accountInfo.country_abbv;
@@ -336,6 +338,11 @@ if(this.accountInfo.last_name!=this.last_name)
   this.updatedValue=true;
    
 } 
+if(this.accountInfo.company!=this.company)
+{
+  this.updatedValue=true;
+   
+} 
 if(this.accountInfo.country_code!=this.selectedCountryCode)
 {
   this.updatedValue=true;
@@ -476,6 +483,7 @@ else
       first_name: "",
       photo_personal:"",
       last_name: "",
+      company:"",
       office_id:"",
       agent_id:"",
       broker_id:"",
@@ -505,6 +513,10 @@ if(this.accountInfo.first_name!=this.first_name)
 if(this.accountInfo.last_name!=this.last_name)
 {
       dataObj.last_name = this.last_name;
+}
+if(this.accountInfo.company!=this.company)
+{
+      dataObj.company = this.company;
 }
 if(this.accountInfo.country_code!=this.selectedCountryCode)
 {
@@ -546,7 +558,7 @@ if(this.accountInfo.phone_mobile!=this.phone_number)
     }
   else
   {
-    debugger;
+   // debugger;
     this.accountInfoUpdateMsg=result.message;
   }
   }

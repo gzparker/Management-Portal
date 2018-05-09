@@ -32,6 +32,10 @@
           <ion-label floating>Last Name<span [ngClass]="{'error': last_name==''}" *ngIf="last_name==''">*</span></ion-label>
           <ion-input type="text" required [(ngModel)]="last_name" name="last_name" ></ion-input>
         </ion-item>
+        <ion-item>
+          <ion-label floating>Company</ion-label>
+          <ion-input type="text" [(ngModel)]="company" name="company" ></ion-input>
+        </ion-item>
       <ion-item>
           <ion-label floating>Email Address<span [ngClass]="{'error': email==''}" *ngIf="email==''">*</span></ion-label>
           <ion-input type="email" [(ngModel)]="email" name="email" [email]="true" required></ion-input>
@@ -53,7 +57,7 @@
       
           <ion-list *ngIf="!isApp">
           <ion-list-header>
-            Select Personal Logo
+            Upload personal Photo
           </ion-list-header>
           <ion-item *ngIf="dataPersonalImage.image">
             <ion-label>Edit Image</ion-label>

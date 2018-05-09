@@ -44,6 +44,7 @@ import { AllWebsitesPage } from '../pages/websites/all-websites/all-websites';
 import { CreateWebsitePage } from '../pages/websites/create-website/create-website';
 import { EditWebsitePage } from '../pages/websites/edit-website/edit-website';
 import { WebsiteDetailPage } from '../pages/websites/website-detail/website-detail';
+import { WebsitesWebsiteLinksPage } from '../pages/websites/websites-website-links/websites-website-links';
 
 import { AllLeadsPage } from '../pages/leads/all-leads/all-leads';
 import { CreateLeadPage } from '../pages/leads/create-lead/create-lead';
@@ -103,7 +104,7 @@ var firebaseConfig = {
     MyApp,HomePage,LoginPage,RegisterPage, DashboardPage, FbConfirmPage, UserVerificationPage,
     WebsiteDetailPage,LeadDetailPage,EditLeadPage,CreateLeadPage,AllLeadsPage,LeadHotsheetSubscribedPage,
     LeadSavedListingPage,LeadSavedSearchesPage,VerificationCodePage, 
-    SubscriptionPage,AllWebsitesPage,CreateWebsitePage,EditWebsitePage,DashboardTabsPage,
+    SubscriptionPage,AllWebsitesPage,CreateWebsitePage,EditWebsitePage,WebsitesWebsiteLinksPage,DashboardTabsPage,
     AllHotSheetsPage,ContactusPage,CreateAgentPage,GlobalPreferencesPage,ManageAgentsPage,
     MlsSettingsPage,SetupOptionPage,UserOptionPage,AccountInfoPage,AccountOptionPage,ViewCreditCardsPage,
     ChangePasswordPage,EditCreditCardPage,CreditCardDetailPage,UpgradeCenterPage,EditAccountPage,CreateHotSheetPage,EditHotSheetPage,
@@ -127,7 +128,7 @@ var firebaseConfig = {
     MyApp,HomePage,LoginPage,RegisterPage, DashboardPage, FbConfirmPage, UserVerificationPage,WebsiteDetailPage,
     LeadDetailPage,EditLeadPage,CreateLeadPage,AllLeadsPage,LeadHotsheetSubscribedPage,
     LeadSavedListingPage,LeadSavedSearchesPage,VerificationCodePage, SubscriptionPage,
-    AllWebsitesPage,CreateWebsitePage,EditWebsitePage,DashboardTabsPage,AllHotSheetsPage,ContactusPage,
+    AllWebsitesPage,CreateWebsitePage,WebsitesWebsiteLinksPage,EditWebsitePage,DashboardTabsPage,AllHotSheetsPage,ContactusPage,
     CreateAgentPage,GlobalPreferencesPage,ManageAgentsPage,
     MlsSettingsPage,SetupOptionPage,UserOptionPage,AccountInfoPage,AccountOptionPage,ViewCreditCardsPage,
     ChangePasswordPage,EditCreditCardPage,CreditCardDetailPage,UpgradeCenterPage,EditAccountPage,CreateHotSheetPage,EditHotSheetPage,

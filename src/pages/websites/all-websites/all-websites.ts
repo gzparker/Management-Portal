@@ -7,6 +7,7 @@ import { DashboardPage } from '../../dashboard/dashboard';
 import { FbConfirmPage } from '../../fb-confirm/fb-confirm';
 import { CreateWebsitePage } from '../../websites/create-website/create-website';
 import { EditWebsitePage } from '../../websites/edit-website/edit-website';
+import { WebsitesWebsiteLinksPage } from '../../websites/websites-website-links/websites-website-links';
 import { DashboardTabsPage } from '../../tabs/dashboard-tabs/dashboard-tabs';
 import { AlertController } from 'ionic-angular';
 import { MlsSettingsPage } from '../../setup/mls-settings/mls-settings';
@@ -71,6 +72,13 @@ export class AllWebsitesPage {
   {
     window.open(redirectUrl, '_black');
     
+  }
+  websiteLinks(websiteId:string)
+  {
+    //debugger;
+    this.ngZone.run(() => {
+      this.navCtrl.push(WebsitesWebsiteLinksPage,{websiteId:websiteId.toString()});
+      });
   }
   viewAllWebsite(refresher:any):void{
     //alert(this.userId);

@@ -401,6 +401,10 @@ export class UserProvider {
     {
       data.append('last_name', dataObj.last_name);
     }
+    if(dataObj.company!="")
+    {
+      data.append('company', dataObj.company);
+    }
     if(dataObj.phone_number!="")
     {
       data.append('phone_mobile', dataObj.phone_number);
@@ -709,6 +713,17 @@ deleteWebsite(user_id:string,website_id:string){
     .post(this.sharedServiceObj.apiBaseUrl+'members/deleteWebsite', data, this.headerOptions)
     .map(this.extractData)
     return websiteListing;
+}
+loadAllWebsiteLinks(user_id:string,website_id:string){
+
+  let data = new URLSearchParams();
+data.append('member_id',user_id);
+data.append('website_id',website_id);
+
+let websiteLinks=this.http
+  .post(this.sharedServiceObj.apiBaseUrl+'members/viewWebsiteLinks', data, this.headerOptions)
+  .map(this.extractData)
+  return websiteLinks;
 }
 allListCreditCards(user_id:string,service_id:string){
   //debugger;
