@@ -46,7 +46,8 @@
   </ion-item>
       <ion-item>
           <ion-label floating>Phone Mobile</ion-label>
-          <ion-input type="text" [(ngModel)]="phone_mobile" name="phone_mobile" id="phone_mobile" pattern="^[0-9]*$"></ion-input>
+          <ion-input type="text" [(ngModel)]="phone_mobile" name="phone_mobile" id="phone_mobile"  
+          [brmasker]="{mask:'(000) 000-0000', len:14, type:'num'}"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label floating>Access Level</ion-label>

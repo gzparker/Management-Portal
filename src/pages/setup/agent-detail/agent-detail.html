@@ -25,7 +25,7 @@
         <img src={{no_image_found}} *ngIf="agentDetail.image_url==undefined||agentDetail.image_url==null||agentDetail.image_url==''"/></ion-avatar>
     <h2>{{agentDetail.first_name}} {{agentDetail.last_name}}</h2>
     <p>Email:{{agentDetail.email}}</p>
-    <p>Description:{{agentDetail.description}}</p>
+    <p [innerHTML]="agentDetail.description"></p>
   
   </ion-card>
 </ion-content>

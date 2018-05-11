@@ -40,6 +40,8 @@ export class EditAgentPage {
   public lastName:string="";
   public email:string="";
   public password:string="";
+  public selectedCountryCode: string = "";
+  public selectedCountryAbbv: string = "";
   public access_level:string="";
   public phone_mobile:string="";
   public agentUpdateMsg:string="";
@@ -109,6 +111,16 @@ export class EditAgentPage {
        this.agent_id = this.navParams.get('agent_id');
        this.loadAgentDetails();
        }
+       let country_abbv = this.storage.get('country_abbv');
+       country_abbv.then((data) => {
+         this.selectedCountryAbbv=data;
+        // debugger;
+       });
+       let country_code = this.storage.get('country_code');
+       country_code.then((data) => {
+         this.selectedCountryCode=data;
+        // debugger;
+       });
     });
   }
   onAgentBreifDescBlured(quill) {
@@ -155,6 +167,7 @@ loadAgentDetailsResp(result:any)
       this.mls_id=this.agentDetail.mls_id;
       this.phone_mobile=this.agentDetail.phone_mobile;
       this.access_level=this.agentDetail.access_level;
+      debugger;
       this.password=this.agentDetail.password;
       this.description=this.agentDetail.description;
       if(this.agentDetail.image_url!=undefined)
@@ -224,8 +237,56 @@ updateAgent()
   {
     if(this.agent_id!="")
     {
-    this.userServiceObj.updateAgent(this.agent_id,this.firstName,this.lastName,this.email,this.phone_mobile.toString(),this.access_level,
-    this.password,this.agentImage,this.description,this.mls_id)
+      let dataObj = {
+        first_name: "",
+        agent_image:"",
+        last_name: "",
+        mls_id:"",
+        phone_mobile:"",
+        access_level:"",
+        password:"",
+        description: "",
+        country_abbv: "",
+        country_code:"",
+        email: ""
+      };
+  dataObj.agent_image=this.agentImage;
+  //debugger;
+  
+  if(this.agentDetail.email!=this.email)
+  {
+    dataObj.email = this.email;
+  }
+  if(this.agentDetail.password!=this.password)
+  {
+   // debugger;
+        dataObj.password = this.password;
+  } 
+  if(this.agentDetail.first_name!=this.firstName)
+  {
+        dataObj.first_name = this.firstName;
+  } 
+  if(this.agentDetail.last_name!=this.lastName)
+  {
+        dataObj.last_name = this.lastName;
+  }
+  if(this.agentDetail.phone_mobile!=this.phone_mobile.toString().replace(/\D/g, ''))
+  {
+    //debugger;
+        dataObj.phone_mobile = this.phone_mobile;
+  }
+  if(this.agentDetail.mls_id!=this.mls_id)
+  {
+        dataObj.mls_id = this.mls_id;
+  }
+  if(this.agentDetail.description!=this.description)
+  {
+        dataObj.description = this.description;
+  }
+  dataObj.country_abbv=this.selectedCountryAbbv;
+  dataObj.country_code=this.selectedCountryCode;
+  //debugger;
+    this.userServiceObj.updateAgent(this.agent_id,dataObj)
     .subscribe((result) => this.updateAgentResp(result));
     }
   }

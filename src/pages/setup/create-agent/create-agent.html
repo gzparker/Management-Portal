@@ -20,6 +20,9 @@
 
 
 <ion-content padding>
+    <ion-chip *ngIf="agentCreateMsg!=''">
+        <ion-label color="danger">{{agentCreateMsg}}</ion-label>
+      </ion-chip>
   <form role="form" data-toggle="validator" #createAgentForm="ngForm">
     <ion-item>
       <ion-label floating>First Name<span [ngClass]="{'error': firstName==''}" *ngIf="firstName==''">*</span>
@@ -44,10 +47,22 @@
     <ion-label floating>MLS ID</ion-label>
     <ion-input type="text" [(ngModel)]="mls_id" name="mls_id" id="mls_id"></ion-input>
 </ion-item>
-    <ion-item>
+<!--<ion-item>
+  <ion-label>Select Country<span [ngClass]="{'error': selectedCountryAbbv==''}" 
+    *ngIf="selectedCountryAbbv==''">*</span></ion-label>
+  <ion-select [(ngModel)]="selectedCountryAbbv" name="selectedCountryAbbv" 
+  (ngModelChange)="onCountryCodeSelection($event)" required>
+    <ion-option value="">--- Select Country Code ---</ion-option>
+    <ion-option *ngFor="let countryCode of allCountryCodes" value={{countryCode.country_abbv}}>
+      {{countryCode.name}}
+    </ion-option>
+  </ion-select>
+</ion-item>-->
+  <ion-item>
         <ion-label floating>Phone Mobile</ion-label>
-        <ion-input type="text" [(ngModel)]="phone_mobile" name="phone_mobile" id="phone_mobile" pattern="^[0-9]*$"></ion-input>
-    </ion-item>
+        <ion-input type="text" [(ngModel)]="phone_mobile" name="phone_mobile" id="phone_mobile"  
+        [brmasker]="{mask:'(000) 000-0000', len:14, type:'num'}"></ion-input>
+  </ion-item>
     <ion-item>
       <ion-label floating>Access Level</ion-label>
       <ion-select [(ngModel)]="access_level" 
@@ -105,4 +120,7 @@
         <button ion-button color="primary" block (click)="createAgent();" [disabled]="!createAgentForm.valid">Create Agent</button>
     </div>
 </form>
+<ion-chip *ngIf="agentCreateMsg!=''">
+  <ion-label color="danger">{{agentCreateMsg}}</ion-label>
+</ion-chip>
 </ion-content>

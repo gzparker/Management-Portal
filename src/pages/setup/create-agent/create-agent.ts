@@ -43,6 +43,9 @@ export class CreateAgentPage {
   public mls_id:string="";
   public access_level:string="";
   public phone_mobile:string='';
+  public selectedCountryCode: string = "";
+  public selectedCountryAbbv: string = "";
+  public allCountryCodes: any[] = [];
   public agentCreateMsg:string="";
   public description:string="";
   public cropperWidth:string="";
@@ -97,10 +100,20 @@ export class CreateAgentPage {
   }
   
   ionViewDidLoad() {
+    //this.getAllCountryCodes();
     let member_id = this.storage.get('userId');
     member_id.then((data) => {
       this.userId=data;
-      
+    let country_abbv = this.storage.get('country_abbv');
+    country_abbv.then((data) => {
+      this.selectedCountryAbbv=data;
+     // debugger;
+    });
+    let country_code = this.storage.get('country_code');
+    country_code.then((data) => {
+      this.selectedCountryCode=data;
+     // debugger;
+    });
     });
   }
   onAgentBreifDescBlured(quill) {
@@ -125,20 +138,92 @@ this.description=html;
   {
     if(this.userId!="")
     {
-      
-  this.userServiceObj.createAgent(this.userId,this.firstName,this.lastName,this.email,this.phone_mobile.toString(),this.access_level,
-    this.password,this.agentImage,this.description,this.mls_id)
+    //debugger;  
+  this.userServiceObj.createAgent(this.userId,this.firstName,this.lastName,this.email,this.selectedCountryCode,this.phone_mobile.toString(),this.access_level,
+    this.password,this.agentImage,this.description,this.mls_id,this.selectedCountryAbbv)
     .subscribe((result) => this.createAgentResp(result));
  
     }
   }
   createAgentResp(result:any)
   {
-    this.agentCreateMsg="Agent has been created successfully.";
+    //debugger;
+    if(result.status==true)
+    {
+      this.agentCreateMsg="Agent has been created successfully.";
 
-    this.ngZone.run(() => {
-      this.navCtrl.push(ManageAgentsPage,{notificationMsg:this.agentCreateMsg.toUpperCase()});
+      this.ngZone.run(() => {
+        this.navCtrl.push(ManageAgentsPage,{notificationMsg:this.agentCreateMsg.toUpperCase()});
+      });
+    }
+    else if(result.status==false)
+    {
+      this.ngZone.run(() => {
+      this.agentCreateMsg=result.message;
     });
+    }
+  }
+  getAllCountryCodes(): void {
+    let avilableCountryList = this.storage.get('availableCountryList');
+    avilableCountryList.then((data) => {
+      if (data == null) {
+
+        this.userServiceObj.loadCountryCodes()
+          .subscribe((result) => this.getAllCountryCodesResp(result));
+      }
+      else {
+
+        this.allCountryCodes = data;
+        this.setCountryInfo();
+
+      }
+
+    })
+
+  }
+  getAllCountryCodesResp(result: any): void {
+
+    let countryCodesDummy = [];
+    if (result.status == true) {
+
+      this.allCountryCodes = result.countryArray;
+      this.setCountryInfo();
+    }
+
+  }
+  setCountryInfo() {
+
+    this.selectedCountryAbbv = "US";
+    let countryGeoInfo = this.storage.get("userCountryInfo");
+    countryGeoInfo.then((data) => {
+     // debugger;
+      if (data == null) {
+
+        this.selectedCountryAbbv = "US";
+        this.setCountryCode();
+      }
+      else {
+
+        this.selectedCountryAbbv = data.countryCode;
+        this.setCountryCode();
+      }
+
+    });
+
+    
+  }
+ setCountryCode()
+  {
+    let foundCountry = this.allCountryCodes.filter(
+      country => country.country_abbv === this.selectedCountryAbbv);
+    this.selectedCountryCode = foundCountry[0].country_code;
+  }
+  onCountryCodeSelection($event: any): void {
+    let selectedCountryCodeData: any;
+    selectedCountryCodeData = this.allCountryCodes.filter(item => item.country_abbv == $event);
+    this.selectedCountryAbbv = selectedCountryCodeData[0].country_abbv;
+    this.selectedCountryCode = selectedCountryCodeData[0].country_code;
+    // debugger;
   }
   fileChangeListener($event) {
     this.crop_agent_image=true;

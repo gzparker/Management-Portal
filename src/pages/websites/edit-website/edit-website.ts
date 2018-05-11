@@ -302,8 +302,8 @@ export class EditWebsitePage {
     }
   }
   editWebsiteResp(result:any):void{
- 
-    if(result.result.status==true)
+ //debugger;
+    if(result.status==true)
     {
      // debugger;
 this.identity_name=result.result.identity_name;
@@ -489,12 +489,12 @@ else
   }
   /////////////////////Generate Thumbnail//////////////////////
   createLogoThumbnail(bigMatch:any) {
-    alert('in create thumbnail');
+    //alert('in create thumbnail');
     let that=this;
     this.generateLogoFromImage(bigMatch, 500, 500, 0.5, data => {
       this.ngZone.run(() => {
       that.dataWebsiteLogo.image=data;
-alert(that.dataWebsiteLogo.image);
+//alert(that.dataWebsiteLogo.image);
       });
     });
   }

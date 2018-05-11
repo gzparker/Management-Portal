@@ -915,20 +915,22 @@ viewMemberAgents(user_id:string)
 {
   let data = new URLSearchParams();
   data.append('member_id',user_id);
- 
+  data.append('service_id',this.sharedServiceObj.service_id.toString());
   let agentListResp=this.http
-     .post(this.sharedServiceObj.apiBaseUrl+'members/viewAgents', data, this.headerOptions)
+     .post(this.sharedServiceObj.registerationApiBaseUrl+'members/viewSubMembers', data, this.headerOptions)
      .map(this.extractData)
      return agentListResp;
 }
-createAgent(user_id:string,first_name:string,last_name:string,email:string,phone_mobile:string,access_level:string,
-password:string,image:string,description:string,mls_id:string)
+createAgent(user_id:string,first_name:string,last_name:string,email:string,countryCode:string,phone_mobile:string,access_level:string,
+password:string,image:string,description:string,mls_id:string,countryCodeAbbv:string)
 {
   let data = new URLSearchParams();
   data.append('member_id',user_id);
   data.append('first_name',first_name);
   data.append('last_name',last_name);
   data.append('email',email);
+  data.append('country_code',countryCode);
+  data.append('country_abbv',countryCodeAbbv);
   data.append('phone_mobile',phone_mobile);
   data.append('access_level',access_level);
   data.append('password',password);
@@ -937,26 +939,28 @@ password:string,image:string,description:string,mls_id:string)
   data.append('description',description);
   //debugger;
  let createAgentResp=this.http
-     .post(this.sharedServiceObj.apiBaseUrl+'members/createAgent', data, this.headerOptions)
+     .post(this.sharedServiceObj.registerationApiBaseUrl+'members/createSubMember', data, this.headerOptions)
      .map(this.extractData)
      return createAgentResp;
 }
-updateAgent(agent_id:string,first_name:string,last_name:string,email:string,phone_mobile:string,access_level:string,
-  password:string,image:string,description:string,mls_id:string)
+updateAgent(agent_id:string,dataObj:any)
   {
     let data = new URLSearchParams();
-    data.append('agent_id',agent_id);
-    data.append('first_name',first_name);
-    data.append('last_name',last_name);
-    data.append('email',email);
-    data.append('phone_mobile',phone_mobile);
-    data.append('access_level',access_level);
-    data.append('password',password);
-    data.append('mls_id',mls_id);
-    data.append('image',image);
-    data.append('description',description);
+    data.append('member_id',agent_id);
+    data.append('first_name',dataObj.first_name);
+    data.append('last_name',dataObj.last_name);
+    data.append('email',dataObj.email);
+    data.append('country_code',dataObj.country_code);
+    data.append('country_abbv',dataObj.country_abbv);
+    data.append('phone_mobile',dataObj.phone_mobile);
+    data.append('access_level',dataObj.access_level);
+    data.append('password',dataObj.password);
+    data.append('mls_id',dataObj.mls_id);
+    data.append('image',dataObj.agent_image);
+    data.append('description',dataObj.description);
+    debugger;
    let updateAgentResp=this.http
-       .post(this.sharedServiceObj.apiBaseUrl+'members/updateAgent', data, this.headerOptions)
+       .post(this.sharedServiceObj.registerationApiBaseUrl+'members/updateSubMember', data, this.headerOptions)
        .map(this.extractData)
        return updateAgentResp;
   }
@@ -965,16 +969,16 @@ agentDetail(agent_id:string)
   let data = new URLSearchParams();
   data.append('agent_id',agent_id);
   let agentDetailResp=this.http
-     .post(this.sharedServiceObj.apiBaseUrl+'members/viewAgentDetails', data, this.headerOptions)
+     .post(this.sharedServiceObj.registerationApiBaseUrl+'members/viewSubMemberDetails', data, this.headerOptions)
      .map(this.extractData)
      return agentDetailResp;
 }
 deleteAgent(agent_id:string)
 {
   let data = new URLSearchParams();
-  data.append('agent_id',agent_id);
+  data.append('member_id',agent_id);
  let agentResp=this.http
-     .post(this.sharedServiceObj.apiBaseUrl+'members/deleteAgent', data, this.headerOptions)
+     .post(this.sharedServiceObj.registerationApiBaseUrl+'members/deleteSubMember', data, this.headerOptions)
      .map(this.extractData)
      return agentResp;
 }
@@ -1014,10 +1018,10 @@ loadPaperWorkStatus(website_id:string)
      .map(this.extractData)
      return paperWorkResp;
 }
-  private extractData(res: Response) {
+private extractData(res: Response) {
 //debugger;
     return res.json();
-  }
+}
   private handleErrorObservable(error: Response | any) {
     /// debugger;
     console.error(error.message || error);

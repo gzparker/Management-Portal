@@ -86,6 +86,7 @@ loadAllAgentsResp(result:any)
    //debugger;
     this.allAgents=result.results;
     this.agentServices=result.services;
+    //debugger;
     if(this.allAgents.length.toString()>=this.agentServices[0].max_users.toString())
     {
       this.max_agents_added=true;
@@ -178,6 +179,7 @@ agentDetail(agent_id:string)
   //debugger;
    if(agent_id!="")
    {
+     //debugger;
      this.navCtrl.push(AgentDetailPage,{agent_id:agent_id});
    }
 }
