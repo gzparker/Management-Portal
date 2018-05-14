@@ -11,12 +11,12 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Manage Agents</ion-title>
-    <ion-buttons end *ngIf="max_agents_added==false">
-      <button ion-button (click)="createAgent();">Create Agent</button>
-    </ion-buttons>
-    <!--<ion-buttons end>
+    <!--<ion-buttons end *ngIf="max_agents_added==false">
       <button ion-button (click)="createAgent();">Create Agent</button>
     </ion-buttons>-->
+    <ion-buttons end>
+      <button ion-button (click)="createAgent();">Create Agent</button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>

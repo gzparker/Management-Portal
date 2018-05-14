@@ -41,11 +41,12 @@ export class CreateAgentPage {
   public email:string="";
   public password:string="";
   public mls_id:string="";
-  public access_level:string="";
+  public access_level:any[]=[];
   public phone_mobile:string='';
   public selectedCountryCode: string = "";
   public selectedCountryAbbv: string = "";
   public allCountryCodes: any[] = [];
+  public allRoles:any[]=[];
   public agentCreateMsg:string="";
   public description:string="";
   public cropperWidth:string="";
@@ -107,14 +108,13 @@ export class CreateAgentPage {
     let country_abbv = this.storage.get('country_abbv');
     country_abbv.then((data) => {
       this.selectedCountryAbbv=data;
-     // debugger;
     });
     let country_code = this.storage.get('country_code');
     country_code.then((data) => {
       this.selectedCountryCode=data;
-     // debugger;
     });
     });
+    this.getAllRoles();
   }
   onAgentBreifDescBlured(quill) {
     //console.log('editor blur!', quill);
@@ -162,6 +162,22 @@ this.description=html;
       this.agentCreateMsg=result.message;
     });
     }
+  }
+  getAllRoles(){
+    this.userServiceObj.loadAllRoles()
+    .subscribe((result) => this.getAllRolesResp(result));
+  }
+  getAllRolesResp(result: any)
+  {
+    if(result.status==true)
+    {
+this.allRoles=result.results;
+    }
+    else
+    {
+this.allRoles=[];
+    }
+
   }
   getAllCountryCodes(): void {
     let avilableCountryList = this.storage.get('availableCountryList');

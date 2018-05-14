@@ -42,10 +42,11 @@ export class EditAgentPage {
   public password:string="";
   public selectedCountryCode: string = "";
   public selectedCountryAbbv: string = "";
-  public access_level:string="";
+  public access_level:any[]=[];
   public phone_mobile:string="";
   public agentUpdateMsg:string="";
   public description:string="";
+  public allRoles:any[]=[];
   public cropperSettings: CropperSettings;
 
   public dataAgentImage:any;
@@ -122,6 +123,7 @@ export class EditAgentPage {
         // debugger;
        });
     });
+    this.getAllRoles();
   }
   onAgentBreifDescBlured(quill) {
     //console.log('editor blur!', quill);
@@ -166,8 +168,12 @@ loadAgentDetailsResp(result:any)
       this.email=this.agentDetail.email;
       this.mls_id=this.agentDetail.mls_id;
       this.phone_mobile=this.agentDetail.phone_mobile;
-      this.access_level=this.agentDetail.access_level;
-      debugger;
+      if(this.agentDetail.access_level!=null)
+      {
+        this.access_level=this.agentDetail.access_level.split(",");
+        //debugger;
+      }
+      
       this.password=this.agentDetail.password;
       this.description=this.agentDetail.description;
       if(this.agentDetail.image_url!=undefined)
@@ -181,6 +187,23 @@ loadAgentDetailsResp(result:any)
   {
 
   }
+}
+getAllRoles(){
+  this.userServiceObj.loadAllRoles()
+  .subscribe((result) => this.getAllRolesResp(result));
+}
+getAllRolesResp(result: any)
+{
+//  debugger;
+  if(result.status==true)
+  {
+this.allRoles=result.results;
+  }
+  else
+  {
+this.allRoles=[];
+  }
+
 }
 loadImage(baseUrl:string,imageUrl:string) {
   //debugger;
@@ -243,7 +266,7 @@ updateAgent()
         last_name: "",
         mls_id:"",
         phone_mobile:"",
-        access_level:"",
+        access_level:[],
         password:"",
         description: "",
         country_abbv: "",
@@ -283,6 +306,7 @@ updateAgent()
   {
         dataObj.description = this.description;
   }
+  dataObj.access_level=this.access_level;
   dataObj.country_abbv=this.selectedCountryAbbv;
   dataObj.country_code=this.selectedCountryCode;
   //debugger;

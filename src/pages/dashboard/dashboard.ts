@@ -76,16 +76,25 @@ private subscription: ISubscription;
   ionViewWillUnload(){
   }
   ionViewWillEnter(){
-    //debugger;
-    this.getUserDetailedInfo();
-  }
-  getUserDetailedInfo(): void {
     let member_id = this.storage.get('userId');
     member_id.then((data) => {
     this.userId=data;
-      this.userServiceObj.getMemberInfo(data)
-        .subscribe((result) => this.userDetailedInfoResp(result));
+  });
+    let parent_id = this.storage.get('parent_id');
+    parent_id.then((data) => {
+     // debugger;
+      if(data==null)
+      {
+        this.getUserDetailedInfo();
+      }
+    
     });
+  }
+  getUserDetailedInfo(): void {
+   //debugger;
+      this.userServiceObj.getMemberInfo(this.userId)
+        .subscribe((result) => this.userDetailedInfoResp(result));
+    
 
   }
   userDetailedInfoResp(status: any) {

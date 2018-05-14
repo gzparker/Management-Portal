@@ -94,10 +94,11 @@ export class LoginPage {
           this.storage.set('userType', "1");
           this.storage.set('country_abbv', result.memberCredentials.country_abbv);
           this.storage.set('country_code', result.memberCredentials.country_code);
+          this.storage.set('parent_id', result.memberCredentials.parent_id);
           this.storage.set('loggedInUserInfo', result);
           this.storage.set('globalSettings',result.globalSettings);
           this.userLoggedId = true;
-         // debugger;
+        //debugger;
           this.sharedServiceObj.setLoginStatus(true);
           this.navCtrl.setRoot(DashboardTabsPage);
         }

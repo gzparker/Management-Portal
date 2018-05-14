@@ -921,7 +921,7 @@ viewMemberAgents(user_id:string)
      .map(this.extractData)
      return agentListResp;
 }
-createAgent(user_id:string,first_name:string,last_name:string,email:string,countryCode:string,phone_mobile:string,access_level:string,
+createAgent(user_id:string,first_name:string,last_name:string,email:string,countryCode:string,phone_mobile:string,access_level:any,
 password:string,image:string,description:string,mls_id:string,countryCodeAbbv:string)
 {
   let data = new URLSearchParams();
@@ -937,11 +937,11 @@ password:string,image:string,description:string,mls_id:string,countryCodeAbbv:st
   data.append('mls_id',mls_id);
   data.append('image',image);
   data.append('description',description);
-  //debugger;
+ // debugger;
  let createAgentResp=this.http
      .post(this.sharedServiceObj.registerationApiBaseUrl+'members/createSubMember', data, this.headerOptions)
      .map(this.extractData)
-     return createAgentResp;
+    return createAgentResp;
 }
 updateAgent(agent_id:string,dataObj:any)
   {
@@ -958,10 +958,10 @@ updateAgent(agent_id:string,dataObj:any)
     data.append('mls_id',dataObj.mls_id);
     data.append('image',dataObj.agent_image);
     data.append('description',dataObj.description);
-    debugger;
-   let updateAgentResp=this.http
-       .post(this.sharedServiceObj.registerationApiBaseUrl+'members/updateSubMember', data, this.headerOptions)
-       .map(this.extractData)
+ // debugger;
+  let updateAgentResp=this.http
+   .post(this.sharedServiceObj.registerationApiBaseUrl+'members/updateSubMember', data, this.headerOptions)
+     .map(this.extractData)
        return updateAgentResp;
   }
 agentDetail(agent_id:string)
@@ -981,6 +981,15 @@ deleteAgent(agent_id:string)
      .post(this.sharedServiceObj.registerationApiBaseUrl+'members/deleteSubMember', data, this.headerOptions)
      .map(this.extractData)
      return agentResp;
+}
+loadAllRoles()
+{
+  let data = new URLSearchParams();
+  data.append('service_id',this.sharedServiceObj.service_id);
+ let roleResp=this.http
+     .post(this.sharedServiceObj.registerationApiBaseUrl+'members/allRoles', data, this.headerOptions)
+     .map(this.extractData)
+     return roleResp;
 }
 viewGlobalSettings(member_id:string){
   let data = new URLSearchParams();

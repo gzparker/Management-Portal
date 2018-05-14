@@ -50,11 +50,12 @@
           [brmasker]="{mask:'(000) 000-0000', len:14, type:'num'}"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label floating>Access Level</ion-label>
+        <ion-label floating>Access Level<span [ngClass]="error" *ngIf="allRoles.length==0">*</span></ion-label>
         <ion-select [(ngModel)]="access_level" 
-    name="access_level">
-    <ion-option value="admin">Admin</ion-option>
-    <ion-option value="agent">Agent</ion-option>
+    name="access_level" multiple="true" required>
+    <ion-option *ngFor="let role of allRoles" value= {{role.name}}>
+      {{role.name}}
+     </ion-option>
      </ion-select>
     </ion-item>
     <div>

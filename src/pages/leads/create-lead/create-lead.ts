@@ -96,6 +96,7 @@ export class CreateLeadPage {
     {
       if(this.userId.toString())
       {
+       // debugger;
         this.userServiceObj.viewMemberAgents(this.userId.toString())
       .subscribe((result) => this.loadAllAgentsResp(result));
       }
@@ -103,7 +104,7 @@ export class CreateLeadPage {
     }
     loadAllAgentsResp(result:any)
     {
-     
+     debugger;
       if(result.status==true)
       {
        
