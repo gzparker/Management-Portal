@@ -64,6 +64,7 @@ export class CreateAgentPage {
     { name: 'styles', items: ['Format', 'FontSize' ] }
   ]};
   public userId:string="";
+  public parentId:string="";
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,
     public sharedServiceObj: SharedProvider, private storage: Storage,
@@ -105,6 +106,19 @@ export class CreateAgentPage {
     let member_id = this.storage.get('userId');
     member_id.then((data) => {
       this.userId=data;
+      let parent_id = this.storage.get('parent_id');
+      parent_id.then((data) => {
+        if(data!=null)
+        {
+      this.parentId=data;
+      this.getAllRoles();
+        }
+        else
+        {
+          this.getAllRoles();
+        }
+     
+      });
     let country_abbv = this.storage.get('country_abbv');
     country_abbv.then((data) => {
       this.selectedCountryAbbv=data;
@@ -114,7 +128,7 @@ export class CreateAgentPage {
       this.selectedCountryCode=data;
     });
     });
-    this.getAllRoles();
+    
   }
   onAgentBreifDescBlured(quill) {
     //console.log('editor blur!', quill);
@@ -164,7 +178,17 @@ this.description=html;
     }
   }
   getAllRoles(){
-    this.userServiceObj.loadAllRoles()
+    debugger;
+  let member_id="";
+  if(this.parentId!="")
+  {
+    member_id=this.parentId;
+  }
+  else
+  {
+    member_id=this.userId;
+  }
+    this.userServiceObj.loadAllRoles(member_id)
     .subscribe((result) => this.getAllRolesResp(result));
   }
   getAllRolesResp(result: any)

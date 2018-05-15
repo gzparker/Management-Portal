@@ -33,6 +33,10 @@ import { ViewCreditCardsPage } from '../billing/view-credit-cards/view-credit-ca
 import { EditCreditCardPage } from '../billing/edit-credit-card/edit-credit-card';
 import { CreditCardDetailPage } from '../billing/credit-card-detail/credit-card-detail';
 
+import { CreateRolePage } from '../roles/create-role/create-role';
+import { EditRolePage } from '../roles/edit-role/edit-role';
+import { ViewRolesPage } from '../roles/view-roles/view-roles';
+
 import { SharedProvider } from '../../providers/shared/shared';
 import { UserProvider } from '../../providers/user/user';
 
@@ -227,7 +231,14 @@ if(status==true)
     if (pageNumber == "22") {
       this.navCtrl.push(UpcomingSubscriptionPage);
     }
-   
-    
+    if (pageNumber == "23") {
+      this.navCtrl.setRoot(ViewRolesPage);
+    }
+    if (pageNumber == "24") {
+      this.navCtrl.push(CreateRolePage);
+    }
+    if (pageNumber == "25") {
+      this.navCtrl.push(EditRolePage);
+    }
   }
 }

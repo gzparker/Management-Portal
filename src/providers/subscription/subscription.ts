@@ -154,8 +154,32 @@ return allAvailableMLS;
    // return checkSubscriptionResp;
    // });
   }
+  loadUpgradeList(user_id:string,service_id:string,interval:string)
+{
+  let data = new URLSearchParams();
+  data.append('member_id',user_id);
+  data.append('service_id',service_id);
+  data.append('interval',interval);
+let upgradeCenterList=this.http
+  .post(this.sharedServiceObj.registerationApiBaseUrl+'subscriptions/listUpgrades', data, this.headerOptions)
+  .map(this.extractData)
+  return upgradeCenterList;
+}
+upgradeDowngradePlan(user_id:string,upgrade_id:string)
+{
+//debugger;
+    let data = new URLSearchParams();
+ data.append('member_id',user_id);
+ data.append('upgrade_id',upgrade_id);
+ data.append('service_id',this.sharedServiceObj.service_id);
+  let upgradeResp=this.http
+    .post(this.sharedServiceObj.registerationApiBaseUrl+'subscriptions/upgradeDowngradeMember', data, this.headerOptions)
+    .map(this.extractData)
+    return upgradeResp;
+
+}
   private extractData(res: Response) {
-    //debugger;
+   // debugger;
     return res.json();
   }
   private handleErrorObservable(error: Response | any) {

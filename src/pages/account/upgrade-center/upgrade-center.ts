@@ -35,13 +35,16 @@ export class UpgradeCenterPage {
   public userId:string="";
   public upgradePlans:any[]=[];
   public current_upgrade:any[]=[];
+  public upgradeFilteredPlans:any[]=[];
+  public currentFilteredPlans:any[]=[];
   public selectedSegment:any="1";
   public upgradeCenterSegment:string="1";
   public interval:string="month";
+  public notificationMsg:string="";
   public loader:any;
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
-    public modalCtrl: ModalController, public alertCtrl: AlertController, 
+    public modalCtrl: ModalController, public alertCtrl: AlertController,public subscribtionObj:SubscriptionProvider, 
     public platform: Platform,public loadingCtrl: LoadingController) {
       this.loader = this.loadingCtrl.create({
         content: "Please wait...",
@@ -67,7 +70,7 @@ export class UpgradeCenterPage {
         duration: 700
       });
       loader.present();
-  this.userServiceObj.loadUpgradeList(this.userId.toString(),this.sharedServiceObj.service_id.toString(),
+  this.subscribtionObj.loadUpgradeList(this.userId.toString(),this.sharedServiceObj.service_id.toString(),
   this.interval.toString())
     .subscribe((result) => this.loadUpgradeListResp(result));
     }
@@ -78,9 +81,42 @@ if(result.status==true)
 {
   this.upgradePlans=result.plans;
   this.current_upgrade=result.current_upgrade;
+  this.currentFilteredPlans=this.current_upgrade;
+  this.upgradeFilteredPlans=this.upgradePlans;
+  //debugger;
 }
-//debugger;
+
   }
+  filterPlansList()
+  {
+    this.currentFilteredPlans=this.filterCurrentItems(this.interval);
+    this.upgradeFilteredPlans=this.filterUpgradeItems(this.interval);
+    //debugger;
+  }
+  filterCurrentItems(searchTerm){
+    return this.current_upgrade.filter((item) => {
+        return (item.interval.toLowerCase()).indexOf(searchTerm.toLowerCase()) > -1;
+    });
+}
+filterUpgradeItems(searchTerm){
+  return this.upgradePlans.filter((item) => {
+      return (item.interval.toLowerCase()).indexOf(searchTerm.toLowerCase()) > -1;
+  });
+}
+upgradeDowngradePlan(plan_id:any)
+{
+ // debugger;
+  this.subscribtionObj.upgradeDowngradePlan(this.userId.toString(),plan_id)
+    .subscribe((result) => this.upgradeDowngradePlanResp(result));
+}
+upgradeDowngradePlanResp(result:any)
+{
+  if(result.status==true)
+  {
+this.notificationMsg=result.message;
+  }
+//debugger;
+}
   segmentChanged(event:any)
   {
     if(event.value=="1")

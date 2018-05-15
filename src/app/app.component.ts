@@ -321,6 +321,9 @@ this.storage.set("userCountryInfo", this.geoCoderData);
     if (pageNumber == "9") {
       this.nav.setRoot(DashboardTabsPage,{selectedPage:"9"});
     }
+    if (pageNumber == "23") {
+      this.nav.setRoot(DashboardTabsPage,{selectedPage:"23"});
+    }
   }
 
   subMenueToggle(option:string)

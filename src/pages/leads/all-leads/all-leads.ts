@@ -91,7 +91,7 @@ export class AllLeadsPage {
 this.searchedLeadsList=this.filterItems(this.searchLeadTerm);
   }
   filterItems(searchTerm){
-    debugger;
+    //debugger;
     return this.allLeadsList.filter((item) => {
         return (item.first_name.toLowerCase()+" "+item.last_name.toLowerCase()).indexOf(searchTerm.toLowerCase()) > -1;
     });

@@ -67,7 +67,7 @@
       <ion-label floating>Access Level<span [ngClass]="error" *ngIf="allRoles.length==0">*</span></ion-label>
       <ion-select [(ngModel)]="access_level" 
   name="access_level" multiple="true" required>
-  <ion-option *ngFor="let role of allRoles" value= {{role.name}}>
+  <ion-option *ngFor="let role of allRoles" value= {{role.id}}>
     {{role.name}}
    </ion-option>
    </ion-select>

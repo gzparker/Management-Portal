@@ -84,6 +84,10 @@ import { BillingHistoryPage } from '../pages/account/billing-history/billing-his
 import { UpcomingSubscriptionPage } from '../pages/account/upcoming-subscription/upcoming-subscription';
 import { GlobalSettingsPopupPage } from '../pages/modal-popup/global-settings-popup/global-settings-popup';
 
+import { CreateRolePage } from '../pages/roles/create-role/create-role';
+import { EditRolePage } from '../pages/roles/edit-role/edit-role';
+import { ViewRolesPage } from '../pages/roles/view-roles/view-roles';
+
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { BrMaskerModule } from 'brmasker-ionic-3';
@@ -109,7 +113,8 @@ var firebaseConfig = {
     MlsSettingsPage,SetupOptionPage,UserOptionPage,AccountInfoPage,AccountOptionPage,ViewCreditCardsPage,
     ChangePasswordPage,EditCreditCardPage,CreditCardDetailPage,UpgradeCenterPage,EditAccountPage,CreateHotSheetPage,EditHotSheetPage,
     EditLeadRoutingPage,UpcomingSubscriptionPage,
-    BillingHistoryPage,AgentDetailPage,EditAgentPage,GlobalSettingsPopupPage,ImageCropperComponent,AddCreditCardPage
+    BillingHistoryPage,AgentDetailPage,EditAgentPage,GlobalSettingsPopupPage,
+    ImageCropperComponent,AddCreditCardPage,CreateRolePage,EditRolePage,ViewRolesPage
   ],
   imports: [
     BrowserModule, HttpModule,CKEditorModule,
@@ -132,7 +137,8 @@ var firebaseConfig = {
     CreateAgentPage,GlobalPreferencesPage,ManageAgentsPage,
     MlsSettingsPage,SetupOptionPage,UserOptionPage,AccountInfoPage,AccountOptionPage,ViewCreditCardsPage,
     ChangePasswordPage,EditCreditCardPage,CreditCardDetailPage,UpgradeCenterPage,EditAccountPage,CreateHotSheetPage,EditHotSheetPage,
-    EditLeadRoutingPage,UpcomingSubscriptionPage,BillingHistoryPage,AgentDetailPage,EditAgentPage,GlobalSettingsPopupPage,AddCreditCardPage
+    EditLeadRoutingPage,UpcomingSubscriptionPage,BillingHistoryPage,AgentDetailPage,
+    EditAgentPage,GlobalSettingsPopupPage,AddCreditCardPage,CreateRolePage,EditRolePage,ViewRolesPage
   ],
   providers: [
     StatusBar,

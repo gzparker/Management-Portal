@@ -66,6 +66,7 @@ export class EditAgentPage {
     { name: 'styles', items: ['Format', 'FontSize' ] }
   ]};
   public userId:string="";
+  public parentId:string="";
   public agent_id:string="";
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,
@@ -107,6 +108,21 @@ export class EditAgentPage {
     let member_id = this.storage.get('userId');
     member_id.then((data) => {
       this.userId=data;
+      let parent_id = this.storage.get('parent_id');
+      parent_id.then((data) => {
+        if(data!=null)
+        {
+      this.parentId=data;
+      //debugger;
+      this.getAllRoles();
+        }
+        else
+        {
+        //  debugger;
+          this.getAllRoles();
+        }
+      //debugger;
+      });
       if(this.navParams.get('agent_id')!=undefined)
       {
        this.agent_id = this.navParams.get('agent_id');
@@ -123,7 +139,7 @@ export class EditAgentPage {
         // debugger;
        });
     });
-    this.getAllRoles();
+   
   }
   onAgentBreifDescBlured(quill) {
     //console.log('editor blur!', quill);
@@ -189,7 +205,17 @@ loadAgentDetailsResp(result:any)
   }
 }
 getAllRoles(){
-  this.userServiceObj.loadAllRoles()
+ // debugger;
+  let member_id="";
+  if(this.parentId!="")
+  {
+    member_id=this.parentId;
+  }
+  else
+  {
+    member_id=this.userId;
+  }
+  this.userServiceObj.loadAllRoles(member_id)
   .subscribe((result) => this.getAllRolesResp(result));
 }
 getAllRolesResp(result: any)
