@@ -28,7 +28,17 @@ import { SubscriptionProvider } from '../../../providers/subscription/subscripti
   templateUrl: 'edit-role.html',
 })
 export class EditRolePage {
-
+  public role_name:string="";
+  public roleUpdateMsg:string="";
+  public isActive:boolean=true;
+  public userId:string="";
+  public all_access_levels:any[]=[];
+  public access_level:any[]=[];
+  public parentId:string="";
+ 
+  public role_id:string="";
+  public roleDetail:any;
+  public isApp=false;
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,
     public sharedServiceObj: SharedProvider, private storage: Storage,
@@ -38,7 +48,78 @@ export class EditRolePage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad EditRolePage');
+    let member_id = this.storage.get('userId');
+    member_id.then((data) => {
+      this.userId=data;
+      this.getAllAccessLevels();
+      if(this.navParams.get('role_id')!=undefined)
+      {
+       this.role_id = this.navParams.get('role_id');
+       this.loadRoleDetail();
+       }
+    });
   }
+  getAllAccessLevels()
+  {
+    this.userServiceObj.loadAllAccessLevels()
+    .subscribe((result) => this.getAllAccessLevelsResp(result));
 
+  }
+  getAllAccessLevelsResp(result: any)
+  {
+    if(result.status==true)
+    {
+this.all_access_levels=result.results;
+    }
+    else
+    {
+      this.all_access_levels=[];
+    }
+    //debugger;
+  }
+  loadRoleDetail()
+  {
+    this.userServiceObj.roleDetail(this.role_id)
+    .subscribe((result) => this.loadRoleDetailResp(result));
+  }
+  loadRoleDetailResp(result:any)
+  {
+    if(result.status==true)
+    {
+      if(result.result)
+      {
+        this.roleDetail=result.result;
+        //debugger;
+        this.role_name=this.roleDetail.name;
+        if(this.roleDetail.allowed_options!=null)
+      {
+        this.access_level=this.roleDetail.allowed_options.split(",");
+        //debugger;
+      }
+      }
+    }
+  }
+  updateRole()
+  {
+   // debugger;
+this.userServiceObj.updateRole(this.access_level,this.role_id,this.role_name)
+.subscribe((result) => this.updateRoleResp(result));
+  }
+  updateRoleResp(result:any)
+  {
+    
+//debugger;
+if(result.status==true)
+{
+  this.roleUpdateMsg="Role has been updated successfully.";
+  this.ngZone.run(() => {
+    this.navCtrl.push(ViewRolesPage,{notificationMsg:this.roleUpdateMsg.toUpperCase()});
+  });
+}
+else
+{
+  this.roleUpdateMsg="Role has not been updated successfully.";
+}
+    
+  }
 }

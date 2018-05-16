@@ -984,6 +984,63 @@ loadAllRoles(member_id:string)
      .map(this.extractData)
      return roleResp;
 }
+deleteRole(role_id:string)
+{
+  let data = new URLSearchParams();
+  //debugger;
+  data.append('role_id',role_id);
+ let roleResp=this.http
+     .post(this.sharedServiceObj.registerationApiBaseUrl+'members/deleteRole', data, this.headerOptions)
+     .map(this.extractData)
+     return roleResp;
+}
+loadAllAccessLevels()
+{
+  let data = new URLSearchParams();
+  //debugger;
+  data.append('service_id',this.sharedServiceObj.service_id);
+ let roleResp=this.http
+     .post(this.sharedServiceObj.registerationApiBaseUrl+'members/allAccessLevels', data, this.headerOptions)
+     .map(this.extractData)
+     return roleResp;
+}
+createRole(access_level:any,user_id:string,name:string)
+{
+  let data = new URLSearchParams();
+  //debugger;
+  data.append('access_level',access_level);
+  data.append('member_id',user_id);
+  data.append('service_id',this.sharedServiceObj.service_id);
+  data.append('name',name);
+ // debugger;
+ let roleResp=this.http
+     .post(this.sharedServiceObj.registerationApiBaseUrl+'members/createRole', data, this.headerOptions)
+     .map(this.extractData)
+     return roleResp;
+}
+updateRole(access_level:any,role_id:string,name:string)
+{
+  let data = new URLSearchParams();
+  //debugger;
+  data.append('access_level',access_level);
+
+  data.append('role_id',role_id);
+  data.append('name',name);
+ // debugger;
+ let roleResp=this.http
+     .post(this.sharedServiceObj.registerationApiBaseUrl+'members/updateRole', data, this.headerOptions)
+     .map(this.extractData)
+     return roleResp;
+}
+roleDetail(role_id:string)
+{
+  let data = new URLSearchParams();
+  data.append('role_id',role_id);
+ let roleResp=this.http
+     .post(this.sharedServiceObj.registerationApiBaseUrl+'members/roleDetail', data, this.headerOptions)
+     .map(this.extractData)
+     return roleResp;
+}
 viewGlobalSettings(member_id:string){
   let data = new URLSearchParams();
     data.append('master_id',member_id);

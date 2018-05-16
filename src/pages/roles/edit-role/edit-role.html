@@ -7,12 +7,39 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>edit-role</ion-title>
+    <ion-title>Edit Role</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="updateRole()" [disabled]="!roleForm.valid">Update Role</button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-
+    <ion-chip *ngIf="roleUpdateMsg!=''">
+        <ion-label color="danger">{{roleUpdateMsg}}</ion-label>
+      </ion-chip>
+  <form role="form" data-toggle="validator" #roleForm="ngForm">
+    <ion-item>
+              <ion-label floating>Role Name<span [ngClass]="{'error': role_name==''}" *ngIf="role_name==''">*</span></ion-label>
+              <ion-input type="text" [(ngModel)]="role_name" 
+              name="role_name" id="role_name" required placeholder="Role Name"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label floating>Access Level<span [ngClass]="error" *ngIf="access_level.length==0">*</span></ion-label>
+        <ion-select [(ngModel)]="access_level" 
+    name="access_level" multiple="true" required>
+    <ion-option *ngFor="let access_option of all_access_levels" value= {{access_option.id}}>
+      {{access_option.name}}
+     </ion-option>
+     </ion-select>
+    </ion-item>
+    <div padding>
+        <button ion-button color="primary" block (click)="updateRole();" [disabled]="!roleForm.valid">Update Role</button>
+      </div>
+      </form>
+      <ion-chip *ngIf="roleUpdateMsg!=''">
+          <ion-label color="danger">{{roleUpdateMsg}}</ion-label>
+        </ion-chip>
 </ion-content>

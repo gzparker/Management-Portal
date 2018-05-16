@@ -178,7 +178,6 @@ this.description=html;
     }
   }
   getAllRoles(){
-    debugger;
   let member_id="";
   if(this.parentId!="")
   {
