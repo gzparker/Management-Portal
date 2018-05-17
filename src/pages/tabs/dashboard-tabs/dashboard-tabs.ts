@@ -38,6 +38,7 @@ export class DashboardTabsPage {
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform) {
     //debugger;
+    this.sharedServiceObj.setLoginStatus(true);
     this.dashBoardParams={ notificationMsg: "",selectedPage:"" };
       if(this.navParams.get('notificationMsg')!=undefined&&this.navParams.get('notificationMsg')!='')
       {

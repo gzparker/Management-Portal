@@ -71,6 +71,11 @@ this.all_access_levels=result.results;
     }
     //debugger;
   }
+  /*selectAllAccessLevels(option:any)
+  {
+debugger;
+this.access_level=this.all_access_levels;
+  }*/
   createRole()
   {
     this.userServiceObj.createRole(this.access_level,this.userId,this.role_name)

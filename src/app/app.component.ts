@@ -68,11 +68,14 @@ export class MyApp {
   public showWebsiteSubmenu=false;
   public showLeadsSubmenu=false;
   public showHotsheetsSubmenu=false;
+  public isOwner:boolean=false;
   pages: Array<{ title: string, component: any }>;
   public geoCoderData={
     country:"",
     countryCode:""
   }
+  public userId:string="";
+  public parentId:string="";
   constructor(public platform: Platform,
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
@@ -104,7 +107,7 @@ export class MyApp {
   }
   initializeApp() {
     this.platform.ready().then(() => {
-this.setDeviceToken();
+     this.setDeviceToken();
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       this.clearAllStorageElement();
@@ -258,6 +261,7 @@ this.storage.set("userCountryInfo", this.geoCoderData);
         this.userLoggedIn = false;
       }
       else {
+        this.setAccessLevels();
         //debugger;
         this.userLoggedIn = true;
         this.rootPage = DashboardTabsPage;
@@ -270,6 +274,8 @@ this.storage.set("userCountryInfo", this.geoCoderData);
   setLoginStatus(item: any): void {
 
     this.userLoggedIn = item;
+    //debugger;
+    this.setAccessLevels();
     // debugger;
   }
   setPaidStatus(item: any):void{
@@ -348,6 +354,38 @@ else if(option=='6')
 }
 
   }
+  setAccessLevels()
+  {
+
+    let parent_id = this.storage.get('parent_id');
+      parent_id.then((data) => {
+        if(data!=null)
+        {
+          //debugger;    
+      this.parentId=data;
+      this.isOwner=false;
+      this.allowMenuOptions();
+        }
+       else
+       {
+         //debugger;
+      this.isOwner=true;
+       }
+      
+      });
+      //debugger;
+  }
+  allowMenuOptions()
+  {
+    let allowed_access_options = this.storage.get('allowed_access_options');
+    allowed_access_options.then((data) => {
+      if(data!=null)
+      {
+        //debugger;
+    //this.allowMenuOptions();
+      }
+    });
+  }
   logOut() {
     this.storage.remove('userId');
     this.storage.remove('email');
@@ -357,6 +395,8 @@ else if(option=='6')
     this.storage.remove('loggedInUserInfo');
     this.storage.remove('fbAuthResp');
     this.storage.remove("fbMembershipResp");
+    this.storage.remove("parent_id");
+    this.storage.remove("loggedInUserInfo");
     if (this.userServiceObj.facebookObject != undefined) {
       if (this.userServiceObj.facebookObject.getAccessToken.length > 0) {
         this.userServiceObj.facebookObject.logout();

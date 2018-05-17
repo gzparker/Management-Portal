@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, Platform,LoadingController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
@@ -58,7 +58,7 @@ export class LoginPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform
-    ,public loadingCtrl: LoadingController) {
+    ,public loadingCtrl: LoadingController,public ngZone: NgZone) {
     userServiceObj.fbLoginDecision.subscribe(item => this.faceBookDecisionMethod(item));
     this.loader = this.loadingCtrl.create({
       content: "Please wait...",
@@ -79,10 +79,12 @@ export class LoginPage {
   }
   userLoginResponse(result: any): void {
     //this.loader.dismiss();
+
     if (result.status == true) {
       if (result.memberCredentials) {
 
         if (result.memberCredentials.verified == "1") {
+          this.storage.ready().then(() => {
           this.storage.set('loggedId', '1');
           this.storage.set('selectedService','2');
           this.storage.set('userId', result.memberCredentials.id);
@@ -95,12 +97,25 @@ export class LoginPage {
           this.storage.set('country_abbv', result.memberCredentials.country_abbv);
           this.storage.set('country_code', result.memberCredentials.country_code);
           this.storage.set('parent_id', result.memberCredentials.parent_id);
+//debugger;
           this.storage.set('loggedInUserInfo', result);
+        if(result.memberCredentials.parent_id!=undefined)
+        {
+          this.storage.set('is_submember', "1");
+          this.storage.set('allowed_access_options', result.memberAllowedOptions);
+        }
+        else
+        {
+          this.storage.set('is_submember', "0");
+        }
+        //  debugger;
           this.storage.set('globalSettings',result.globalSettings);
           this.userLoggedId = true;
         //debugger;
-          this.sharedServiceObj.setLoginStatus(true);
+        //this.sharedServiceObj.setLoginStatus(true);
           this.navCtrl.setRoot(DashboardTabsPage);
+          
+      });
         }
         else if (result.memberCredentials.verified == "0") {
           this.selectedCountryCode = result.memberCredentials.country_code;
@@ -129,7 +144,7 @@ export class LoginPage {
       // this.loginModal.close();
 
     }
-
+ 
   }
 
   public openUserVerificationModal(master_id: any) {

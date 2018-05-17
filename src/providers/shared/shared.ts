@@ -5,6 +5,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from "rxjs/Subject";
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Storage } from '@ionic/storage';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 
@@ -36,7 +37,7 @@ export class SharedProvider {
   public noImageUrl="././assets/imgs/noImage.png";
   // public FB:any;
 
-  constructor(private http: Http) {
+  constructor(private http: Http,private storage: Storage) {
     this.isLoggedInEmitter = new EventEmitter();
     this.isPaidEmitter=new EventEmitter();
     this.navigationalPage=new EventEmitter();
@@ -184,7 +185,7 @@ rgbaToHex (rgba) {
     return ('#' + r.toString(16) + g.toString(16) + b.toString(16) + (a * 255).toString(16).substring(0,2));
 }
 
-  
+ 
   // this could also be a private method of the component class
   private extractData(res: Response) {
     //debugger;
