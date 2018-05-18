@@ -31,7 +31,8 @@
   </ion-segment>
   <ion-list *ngIf="selectedSegment=='1'">
   <ion-item *ngFor="let website_link of website_links">
-     <p><a (click)="openInAppBrowser(website_link.url)">{{website_link.name}}</a></p> 
+     <p><a (click)="openInAppBrowser(website_link.url)">{{website_link.name}}</a></p>
+     <div contenteditable="true">{{website_link.url}}</div>
     </ion-item>
   </ion-list>
   <ion-list *ngIf="selectedSegment=='2'">

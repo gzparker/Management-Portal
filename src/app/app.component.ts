@@ -69,6 +69,13 @@ export class MyApp {
   public showLeadsSubmenu=false;
   public showHotsheetsSubmenu=false;
   public isOwner:boolean=false;
+  public isDashboard:boolean=false;
+  public isWebsites:boolean=false;
+  public isLeads:boolean=false;
+  public isHotSheets:boolean=false;
+  public isRoles:boolean=false;
+  public isAccount:boolean=false;
+
   pages: Array<{ title: string, component: any }>;
   public geoCoderData={
     country:"",
@@ -364,27 +371,134 @@ else if(option=='6')
           //debugger;    
       this.parentId=data;
       this.isOwner=false;
-      this.allowMenuOptions();
         }
        else
        {
          //debugger;
       this.isOwner=true;
        }
+       this.allowMenuOptions();
       
       });
       //debugger;
   }
   allowMenuOptions()
   {
+    if(this.isOwner==false)
+    {
     let allowed_access_options = this.storage.get('allowed_access_options');
     allowed_access_options.then((data) => {
       if(data!=null)
       {
         //debugger;
-    //this.allowMenuOptions();
+        this.isAccount=true;
+        let savedAccessLevels:any[]=data;
+        let websiteAccesLevels=savedAccessLevels.filter((element) => {
+          return (element.name=="View Websites"||element.name=="Create Website"||element.name=="Mls Settings"
+          ||element.name=="Edit Website"||element.name=="Delete Website"||element.name=="Leads Setup");
+      });
+      if(websiteAccesLevels.length>0)
+      {
+        this.isWebsites=true;
+      }
+      else
+      {
+        this.isWebsites=false;
+      }
+      let leadAccesLevels=savedAccessLevels.filter((element) => {
+        return (element.name=="View Leads"||element.name=="Create Lead"||element.name=="Edit Lead"
+        ||element.name=="Lead Detail"||element.name=="Delete Lead"||element.name=="Leads Setup");
+    });
+    if(leadAccesLevels.length>0)
+      {
+        this.isLeads=true;
+      }
+      else
+      {
+        this.isLeads=false;
+      }
+      let hotsheetAccesLevels=savedAccessLevels.filter((element) => {
+        return (element.name=="View Hotsheets"||element.name=="Create Hotsheet"||element.name=="Edit Hotsheet"
+        ||element.name=="Delete Hotsheet");
+    });
+    if(hotsheetAccesLevels.length>0)
+      {
+        this.isHotSheets=true;
+      }
+      else
+      {
+        this.isHotSheets=false;
+      }
+    let accountAccesLevels=savedAccessLevels.filter((element) => {
+        return (element.name=="Credit Card List"||element.name=="Credit Card Detail"||element.name=="Add Credit Card"
+        ||element.name=="Edit Credit Card"||element.name=="Billing History"||element.name=="Upcoming Subscription"
+      ||element.name=="View Upgrade Plans"||element.name=="Upgrade/Downgrade"||element.name=="General Info"||
+      element.name=="Global Preference"||element.name=="View Agents"||element.name=="Edit Agent"
+      ||element.name=="Delete Agent"||element.name=="Agent Detail"||element.name=="Agent Detail");
+    });
+    if(accountAccesLevels.length>0)
+      {
+        this.isAccount=true;
+      }
+      else
+      {
+        this.isAccount=false;
+      }
+  //debugger;
+        /*data.forEach(element => {
+          if(element.name=="View Websites"||element.name=="Create Website"||element.name=="Mls Settings"
+          ||element.name=="Edit Website"||element.name=="Delete Website"||element.name=="Leads Setup")
+          {
+            this.isWebsites=true;
+          }
+          else
+          {
+            this.isWebsites=false;
+          }
+          if(element.name=="View Leads"||element.name=="Create Lead"||element.name=="Edit Lead"
+          ||element.name=="Lead Detail"||element.name=="Delete Lead"||element.name=="Leads Setup")
+          {
+            this.isLeads=true;
+          }
+          else
+          {
+            this.isLeads=false;
+          }
+          if(element.name=="View Hotsheets"||element.name=="Create Hotsheet"||element.name=="Edit Hotsheet"
+          ||element.name=="Delete Hotsheet")
+          {
+            this.isHotSheets=true;
+          }
+          else
+          {
+            this.isHotSheets=false;
+          }
+          if(element.name=="Credit Card List"||element.name=="Credit Card Detail"||element.name=="Add Credit Card"
+          ||element.name=="Edit Credit Card"||element.name=="Billing History"||element.name=="Upcoming Subscription"
+        ||element.name=="View Upgrade Plans"||element.name=="Upgrade/Downgrade"||element.name=="General Info"||
+        element.name=="Global Preference"||element.name=="View Agents"||element.name=="Edit Agent"
+        ||element.name=="Delete Agent"||element.name=="Agent Detail"||element.name=="Agent Detail")
+          {
+            this.isAccount=true;
+          }
+          else
+          {
+            this.isAccount=false;
+          }
+        });*/
       }
     });
+  }
+  else
+  {
+    //debugger;
+    this.isAccount=true;
+    this.isDashboard=true;
+    this.isHotSheets=true;
+    this.isLeads=true;
+    this.isRoles=true;
+    this.isWebsites=true;
+  }
   }
   logOut() {
     this.storage.remove('userId');
