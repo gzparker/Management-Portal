@@ -9,34 +9,43 @@
   <ion-content>
     <ion-list id="sidenav">
    
-      <ion-item menuClose ion-item (tap)="openPage('1')" *ngIf="userLoggedIn==false">
+      <ion-item menuClose ion-item (tap)="openPage('1')" 
+      *ngIf="userLoggedIn==false">
         Home
       </ion-item>
-      <ion-item menuClose ion-item (tap)="openPage('2')" *ngIf="userLoggedIn==false">
+      <ion-item menuClose ion-item (tap)="openPage('2')" 
+      *ngIf="userLoggedIn==false">
         Login
       </ion-item>
-      <ion-item menuClose ion-item (tap)="openPage('3')" *ngIf="userLoggedIn==false">
+      <ion-item menuClose ion-item (tap)="openPage('3')" 
+      *ngIf="userLoggedIn==false">
         Register
       </ion-item>
-      <ion-item menuClose ion-item (tap)="openPage('4')" *ngIf="userLoggedIn==true&&paidStatus==true&&isOwner==true">      
+      <ion-item menuClose ion-item (tap)="openPage('4')" 
+      *ngIf="userLoggedIn==true&&paidStatus==true&&isDashboard==true">      
         Dashboard
       </ion-item>
-      <ion-item menuClose ion-item (tap)="openPage('5')" *ngIf="userLoggedIn==true&&paidStatus==true&&isOwner==true">      
+      <ion-item menuClose ion-item (tap)="openPage('5')" 
+      *ngIf="userLoggedIn==true&&paidStatus==true&&isWebsites==true">      
         Websites
       </ion-item>
-      <ion-item menuClose ion-item (tap)="openPage('6')" *ngIf="userLoggedIn==true&&paidStatus==true&&isOwner==true">      
+      <ion-item menuClose ion-item (tap)="openPage('6')" 
+      *ngIf="userLoggedIn==true&&paidStatus==true&&isLeads==true">      
         Leads
       </ion-item>
-      <ion-item menuClose ion-item (tap)="openPage('7')" *ngIf="userLoggedIn==true&&paidStatus==true&&isOwner==true">      
+      <ion-item menuClose ion-item (tap)="openPage('7')" 
+      *ngIf="userLoggedIn==true&&paidStatus==true&&isHotSheets==true">      
         HotSheets
       </ion-item>
-      <ion-item menuClose ion-item (tap)="openPage('23')" *ngIf="userLoggedIn==true&&paidStatus==true&&isOwner==true">      
+      <ion-item menuClose ion-item (tap)="openPage('23')" 
+      *ngIf="userLoggedIn==true&&paidStatus==true&&isRoles==true">      
         Roles
       </ion-item>
       <!--<ion-item menuClose ion-item (tap)="openPage('8')" *ngIf="userLoggedIn==true">      
         Setup
       </ion-item>-->
-      <ion-item menuClose ion-item (tap)="openPage('9')" *ngIf="userLoggedIn==true&&paidStatus==true">      
+      <ion-item menuClose ion-item (tap)="openPage('9')" 
+      *ngIf="userLoggedIn==true&&paidStatus==true&&isAccount==true">      
         Account
       </ion-item>
      
