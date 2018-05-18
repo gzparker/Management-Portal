@@ -5,58 +5,53 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
   <ion-navbar>
+
     <button ion-button menuToggle start>
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Roles Management</ion-title>
     <ion-buttons end>
-      <button ion-button (click)="createRole();">Create Role</button>
+      <button ion-button icon-left  (click)="createRole();">
+        <ion-icon name="create"></ion-icon>
+        Create Role
+      </button>
     </ion-buttons>
+
   </ion-navbar>
-
-
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
+  <h1 class="contentTitle">Roles Management</h1>
+
   <ion-refresher (ionRefresh)="getAllRoles($event)">
-          <ion-refresher-content></ion-refresher-content>
+    <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-<ion-chip *ngIf="notificationMsg!=''">
-  <ion-label color="secondary">{{notificationMsg}}</ion-label>
-</ion-chip>
-<ion-list>
-   
-  
-      <!--<ion-card-title>
-        
-      </ion-card-title>-->
-     
-    <!--<ion-card *ngFor="let agent of allAgents">
-      
-      <ion-card-content>
-        <ion-card-title>
-          
-          </ion-card-title>-->
-          <ion-item *ngFor="let role of allRoles">
-          <ion-item no-lines>
-          <h2>{{role.name}}</h2>
-        </ion-item>
-          <button ion-button item-right color="secondary" (click)="editRole(role.id)">
-              <ion-icon name="create"></ion-icon>
-            </button>
-          <button ion-button item-right color="danger" (click)="deleteRole(role)">
-            <ion-icon name="trash"></ion-icon>
-          </button>
-        </ion-item>
-      <!--</ion-card-content>
-    </ion-card>-->
-   
-  
-  </ion-list>
-  <ion-chip *ngIf='allRoles.length<=0&&allRolesFound!=""'>
-      <ion-label color="danger">{{allRolesFound}}</ion-label>
+
+  <ion-chip *ngIf="notificationMsg!=''">
+    <ion-label color="secondary">{{notificationMsg}}</ion-label>
   </ion-chip>
+
+  <ion-list>    
+    <ion-item-sliding *ngFor="let role of allRoles">    
+      
+      <ion-item>
+        <ion-icon name="ios-contacts" item-start></ion-icon>
+        <h2>{{role.name}}</h2>
+        <ion-icon class="light" name="arrow-forward" item-right></ion-icon>
+      </ion-item>
+      
+      <ion-item-options side="right">
+        <button ion-button color="primary" (click)="editRole(role.id)">Edit</button>
+        <button ion-button color="danger" (click)="deleteRole(role)">Delete</button>        
+      </ion-item-options>
+
+    </ion-item-sliding>
+  </ion-list>
+
+  <ion-chip *ngIf='allRoles.length<=0&&allRolesFound!=""'>
+    <ion-label color="danger">{{allRolesFound}}</ion-label>
+  </ion-chip>
+
 </ion-content>
