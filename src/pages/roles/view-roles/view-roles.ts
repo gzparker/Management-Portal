@@ -143,7 +143,7 @@ deleteRole(role:any)
             this.allRolesFound="All roles have been deleted.Please add new role.";
             this.notificationMsg="";
           }
-          this.userServiceObj.deleteAgent(role.id.toString())
+          this.userServiceObj.deleteRole(role.id.toString())
           .subscribe((result) => this.deleteRoleResp(result));
         }
       }

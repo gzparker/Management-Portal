@@ -28,17 +28,74 @@ import { SubscriptionProvider } from '../../../providers/subscription/subscripti
   templateUrl: 'create-role.html',
 })
 export class CreateRolePage {
-
+  public role_name:string="";
+  public roleUpdateMsg:string="";
+  public isActive:boolean=true;
+  public userId:string="";
+  public all_access_levels:any[]=[];
+  public access_level:any[]=[];
+  public parentId:string="";
+  public roleCreateMsg:string="";
+  public isApp=false;
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,
     public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform, 
     public ngZone: NgZone,public menuCtrl: MenuController,public loadingCtrl: LoadingController,
     private crop: Crop,private camera: Camera,private imagePicker: ImagePicker) {
+      this.isApp = (!document.URL.startsWith("http"));
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad CreateRolePage');
+    let member_id = this.storage.get('userId');
+    member_id.then((data) => {
+      this.userId=data;
+      this.getAllAccessLevels();
+    });
   }
+  getAllAccessLevels()
+  {
+    this.userServiceObj.loadAllAccessLevels()
+    .subscribe((result) => this.getAllAccessLevelsResp(result));
 
+  }
+  getAllAccessLevelsResp(result: any)
+  {
+    if(result.status==true)
+    {
+this.all_access_levels=result.results;
+    }
+    else
+    {
+      this.all_access_levels=[];
+    }
+    //debugger;
+  }
+  /*selectAllAccessLevels(option:any)
+  {
+debugger;
+this.access_level=this.all_access_levels;
+  }*/
+  createRole()
+  {
+    this.userServiceObj.createRole(this.access_level,this.userId,this.role_name)
+    .subscribe((result) => this.createRoleResp(result));
+  }
+  createRoleResp(result:any)
+  {
+    if(result.status==true)
+    {
+      this.roleCreateMsg="Role has been created successfully.";
+
+      this.ngZone.run(() => {
+        this.navCtrl.push(ViewRolesPage,{notificationMsg:this.roleCreateMsg.toUpperCase()});
+      });
+    }
+    else if(result.status==false)
+    {
+      this.ngZone.run(() => {
+      this.roleCreateMsg=result.message;
+    });
+    }
+  }
 }

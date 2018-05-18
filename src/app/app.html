@@ -18,19 +18,19 @@
       <ion-item menuClose ion-item (tap)="openPage('3')" *ngIf="userLoggedIn==false">
         Register
       </ion-item>
-      <ion-item menuClose ion-item (tap)="openPage('4')" *ngIf="userLoggedIn==true&&paidStatus==true">      
+      <ion-item menuClose ion-item (tap)="openPage('4')" *ngIf="userLoggedIn==true&&paidStatus==true&&isOwner==true">      
         Dashboard
       </ion-item>
-      <ion-item menuClose ion-item (tap)="openPage('5')" *ngIf="userLoggedIn==true&&paidStatus==true">      
+      <ion-item menuClose ion-item (tap)="openPage('5')" *ngIf="userLoggedIn==true&&paidStatus==true&&isOwner==true">      
         Websites
       </ion-item>
-      <ion-item menuClose ion-item (tap)="openPage('6')" *ngIf="userLoggedIn==true&&paidStatus==true">      
+      <ion-item menuClose ion-item (tap)="openPage('6')" *ngIf="userLoggedIn==true&&paidStatus==true&&isOwner==true">      
         Leads
       </ion-item>
-      <ion-item menuClose ion-item (tap)="openPage('7')" *ngIf="userLoggedIn==true&&paidStatus==true">      
+      <ion-item menuClose ion-item (tap)="openPage('7')" *ngIf="userLoggedIn==true&&paidStatus==true&&isOwner==true">      
         HotSheets
       </ion-item>
-      <ion-item menuClose ion-item (tap)="openPage('23')" *ngIf="userLoggedIn==true&&paidStatus==true">      
+      <ion-item menuClose ion-item (tap)="openPage('23')" *ngIf="userLoggedIn==true&&paidStatus==true&&isOwner==true">      
         Roles
       </ion-item>
       <!--<ion-item menuClose ion-item (tap)="openPage('8')" *ngIf="userLoggedIn==true">      
