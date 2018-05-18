@@ -26,3 +26,133 @@
       }
     }
   }
+
+.menu-inner {
+
+  .toolbar, .toolbar-md, .toolbar-wp, .toolbar-background {
+  background: transparent !important;
+
+    .toolbar-background-md, .toolbar-background-ios {
+    border: none;
+    background: none;
+    }
+  }
+
+  .content {
+  // background: #0D83DD;
+  background: #00d2ff;
+  background: -webkit-linear-gradient(to top, #1f9eff, #00d2ff);
+  background: linear-gradient(to top, #1f9eff, #00d2ff);
+  }
+
+  .item {
+  color: #FFF;
+  background: none;
+  }
+}
+
+// content bg
+// .content-ios, .content-md, .content-wp {
+// background: #E6EBF1;
+// }
+
+// tabbar bg
+.tabs {
+  .tabbar {
+  background: #F4F5F7;
+  }
+}
+
+// ion-label {
+// font-family: $font-one;
+// font-weight: 300;
+// letter-spacing: .5px;
+// }
+
+.noScroll {
+  .scroll-content {
+  overflow-y: hidden !important;
+  }
+}
+
+.profileCard {
+margin-top: 0px !important;
+margin-bottom: 20px;
+padding-bottom: 20px;
+box-shadow: none !important;
+background: none !important;
+border-bottom: 1px solid rgba(221, 221, 221, 0.19);
+  .username {
+  font-family: "Noto Sans";
+  font-size: 18px;
+  color: #FFF;
+  font-weight: 700;
+
+  margin: 20px 0 5px 0 !important;
+  }
+  .tagline {
+  font-family: "Roboto";
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: .3px;
+  color: #eee;
+  }
+}
+
+.custom-avatar {
+height: 110px;
+width: 110px;
+border-radius: 50%;
+display: inline-block;  
+margin: 12px auto 0 auto;
+background: none;
+box-shadow: 0 0 0 10px rgba(5, 23, 36, 0.25);
+}
+
+.company-logo {
+  &:before {
+  content: '';
+  width: 81px;
+  height: 30px;
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  display: block;
+  background: url("../assets/imgs/idx-logo2.png") no-repeat center center;
+  background-size: 90%;
+  }
+}
+
+.toolbar-background-ios, .toolbar-background-md, .toolbar-background-wp {
+background-color: $color-1;  
+}
+
+.bar-button-default-ios, .bar-button-default-md, .bar-button-default-wp {
+color: $color-2 !important;
+}
+
+.hidden {
+display: none;
+}
+
+.contentTitle {
+font-family: $font-one;
+font-weight: 300;
+font-size: 18px;
+padding: 12px 15px;
+margin: 0;
+color: #FFF;
+letter-spacing: 1px;
+text-align: center;
+background: $title-bg;
+}
+
+ion-icon {
+  &.light {
+  opacity: .3;
+  }
+}

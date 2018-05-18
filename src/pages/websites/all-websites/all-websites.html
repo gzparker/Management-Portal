@@ -19,73 +19,70 @@
 </ion-header>
 
 
-<ion-content padding>
-    <ion-refresher (ionRefresh)="viewAllWebsite($event)">
-        <ion-refresher-content></ion-refresher-content>
-      </ion-refresher>
-    <ion-chip *ngIf="notificationMsg!=''">
-        <ion-label color="secondary">{{notificationMsg}}</ion-label>
-      </ion-chip>
+<ion-content>
+  <h1 class="contentTitle">All Websites</h1>
+
+  <ion-refresher (ionRefresh)="viewAllWebsite($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-chip *ngIf="notificationMsg!=''">
+    <ion-label color="secondary">{{notificationMsg}}</ion-label>
+  </ion-chip>
+
   <ion-list *ngIf="!isApp">
-    <ion-item *ngFor="let website of allWebsiteList">
-        <ion-item no-lines (click)="editWebsite(website.id)">
-            
-    <ion-avatar item-start>
-      <img src={{imgBaseUrl}}{{website.identity_logo}} *ngIf="website.identity_logo!=''"/>
-      <img src={{noImgUrl}} *ngIf="website.identity_logo==''"/></ion-avatar>
-      <h2>{{website.identity_name}}</h2>
-      <p>{{website.website}}</p>
-      <p>Private Key:{{website.key_private}}</p>
-      <p>Public Key:{{website.key_public}}</p>
-      <p>Status:<span *ngIf="website.status==1">Yes</span>
-        <span *ngIf="website.status==0">No</span></p>
-       
-        </ion-item>
-        <p>
-          <a (click)="websiteLinks(website.id)">View Pages/Widgets</a>
-        </p>
-        <button ion-button item-right color="danger" (click)="deleteWebsite(website)">
-            <ion-icon name="trash"></ion-icon>
-          </button>
-        
-            <button ion-button item-right color="secondary" (click)="editLeadRouting(website.id)">
-              <ion-icon name="construct"></ion-icon>
-            </button>
-            <button ion-button item-right color="secondary" (click)="viewPaperWorkStatus(website.id)">
-              <ion-icon name="settings"></ion-icon>
-            </button>
-    </ion-item>
-  </ion-list>
-    <ion-list *ngIf="isApp">
     <ion-item-sliding *ngFor="let website of allWebsiteList">
-      <ion-item no-lines (click)="editWebsite(website.id)">
-            
-        <ion-avatar item-start>
-          <img src={{imgBaseUrl}}{{website.identity_logo}} *ngIf="website.identity_logo!=''"/>
-          <img src={{noImgUrl}} *ngIf="website.identity_logo==''"/></ion-avatar>
-          <h2>{{website.identity_name}}</h2>
-          <p>{{website.website}}</p>
-          <p>Private Key:{{website.key_private}}</p>
-          <p>Public Key:{{website.key_public}}</p>
-          <p>Status:<span *ngIf="website.status==1">Yes</span>
-            <span *ngIf="website.status==0">No</span></p>
-            </ion-item>
-      <ion-item-options side="right">
-        <button ion-button item-right color="danger" (click)="deleteWebsite(website)">
-          <ion-icon name="trash"></ion-icon>
-        </button>
       
-          <button ion-button item-right color="secondary" (click)="editLeadRouting(website.id)">
-            <ion-icon name="construct"></ion-icon>
-          </button>
-          <button ion-button item-right color="secondary" (click)="viewPaperWorkStatus(website.id)">
-            <ion-icon name="settings"></ion-icon>
-          </button>
+      <ion-item class="websiteThumb">
+        <ion-thumbnail item-start (click)="editWebsite(website.id)">
+          <img src={{imgBaseUrl}}{{website.identity_logo}} *ngIf="website.identity_logo!=''"/>
+          <img src={{noImgUrl}} *ngIf="website.identity_logo==''"/>
+        </ion-thumbnail>
+        <h2 (click)="editWebsite(website.id)">{{website.identity_name}}</h2>
+        <p class="hidden">{{website.website}}</p>
+        <p class="hidden">Private Key:{{website.key_private}}</p>
+        <p class="hidden">Public Key:{{website.key_public}}</p>
+        <p>Status: <span *ngIf="website.status==1"><ion-badge color="primary">Active</ion-badge></span>
+        <span *ngIf="website.status==0"><ion-badge color="danger">Not Active</ion-badge></span></p>
+        <p><a (click)="websiteLinks(website.id)">View Pages/Widgets</a></p>    
+      </ion-item>
+
+      <ion-item-options side="right">
+        <button ion-button color="primary" class="roundedOption btn-settings" (click)="editLeadRouting(website.id)"><ion-icon name="md-create"></ion-icon>Edit</button>
+        <button ion-button color="primary" class="roundedOption btn-info" (click)="viewPaperWorkStatus(website.id)"><ion-icon name="ios-pulse"></ion-icon>Status</button>
+        <button ion-button color="danger" class="roundedOption btn-del" (click)="deleteWebsite(website)"><ion-icon name="md-close"></ion-icon>Delete</button>
       </ion-item-options>
+
     </ion-item-sliding>
   </ion-list>
+
+  <ion-list *ngIf="isApp">
+    <ion-item-sliding *ngFor="let website of allWebsiteList">
+      
+      <ion-item class="websiteThumb">
+        <ion-avatar item-start (click)="editWebsite(website.id)">
+          <img src={{imgBaseUrl}}{{website.identity_logo}} *ngIf="website.identity_logo!=''"/>
+          <img src={{noImgUrl}} *ngIf="website.identity_logo==''"/>
+        </ion-avatar>
+        <h2 (click)="editWebsite(website.id)">{{website.identity_name}}</h2>
+        <p class="hidden">{{website.website}}</p>
+        <p class="hidden">Private Key:{{website.key_private}}</p>
+        <p class="hidden">Public Key:{{website.key_public}}</p>
+        <p>Status: <span *ngIf="website.status==1"><ion-badge color="primary">Active</ion-badge></span>
+        <span *ngIf="website.status==0"><ion-badge color="danger">Not Active</ion-badge></span></p>
+      </ion-item>
+
+      <ion-item-options side="right">        
+        <button ion-button color="primary" class="roundedOption btn-settings" (click)="editLeadRouting(website.id)"><ion-icon name="md-create"></ion-icon>Edit</button>
+        <button ion-button color="primary" class="roundedOption btn-info" (click)="viewPaperWorkStatus(website.id)"><ion-icon name="ios-pulse"></ion-icon>Status</button>
+        <button ion-button color="danger" class="roundedOption btn-del" (click)="deleteWebsite(website)"><ion-icon name="md-close"></ion-icon>Delete</button>
+      </ion-item-options>
+
+    </ion-item-sliding>
+  </ion-list>
+
   <ion-chip *ngIf='allWebsiteList.length<=0&&websiteFoundMessage!=""'>
-      <ion-label color="danger">{{websiteFoundMessage}}</ion-label>
+    <ion-label color="danger">{{websiteFoundMessage}}</ion-label>
   </ion-chip>
  
 </ion-content>

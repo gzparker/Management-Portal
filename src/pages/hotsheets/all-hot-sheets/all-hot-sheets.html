@@ -5,62 +5,71 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
   <ion-navbar>
-      <button ion-button menuToggle start>
-          <ion-icon name="menu"></ion-icon>
-        </button>
-    <ion-title>Hot Sheets</ion-title>
-    <ion-buttons end>
-        <button ion-button (click)="createHotSheet();">Create Hot Sheet</button>
-      </ion-buttons>
-  </ion-navbar>
+    
+    <button ion-button menuToggle start>
+      <ion-icon name="menu"></ion-icon>
+    </button>
 
+    <ion-title>Hot Sheets</ion-title>
+    
+    <ion-buttons end>
+      <button ion-button icon-left (click)="createHotSheet();">
+        <ion-icon name="create"></ion-icon>
+        Create
+      </button>
+    </ion-buttons>
+
+  </ion-navbar>
 </ion-header>
 
 
-<ion-content padding>
-    <ion-refresher (ionRefresh)="viewAllHotSheets($event)">
-        <ion-refresher-content></ion-refresher-content>
-      </ion-refresher>
-    <ion-chip *ngIf="notificationMsg!=''">
-        <ion-label color="secondary">{{notificationMsg}}</ion-label>
-      </ion-chip>
-      <ion-list *ngIf="!isApp">
-          <!--<ion-item-sliding *ngFor="let hotsheet of allHotSheetList">-->
-          <ion-item *ngFor="let hotsheet of allHotSheetList">
-          <ion-item no-lines (click)="editHotsheet(hotsheet.id)">
-            <h2>{{hotsheet.name}}</h2>
-            <p>Slug:{{hotsheet.slug}}</p>
-          </ion-item>
-            <button ion-button item-right color="danger" (click)="deleteHotsheet(hotsheet)">
-              <ion-icon name="trash"></ion-icon>
-            </button>
-          </ion-item>
-          <!--<ion-item-options side="right">
-            <button ion-button color="danger" (click)="deleteHotsheet(hotsheet)">
-              <ion-icon name="trash"></ion-icon>
-            </button>
-            <button ion-button color="danger" (click)="editHotsheet(hotsheet.id)">
-                <ion-icon name="create"></ion-icon>
-              </button>
-          </ion-item-options>
-        </ion-item-sliding>-->
-        </ion-list>
-        <ion-list *ngIf="isApp">
-          <ion-item-sliding *ngFor="let hotsheet of allHotSheetList">
-            <ion-item no-lines (click)="editHotsheet(hotsheet.id)">
-              <h2>{{hotsheet.name}}</h2>
-              <p>Slug:{{hotsheet.slug}}</p>
-            </ion-item>
-            <ion-item-options side="right">
-              <button ion-button item-right color="danger" (click)="deleteHotsheet(hotsheet)">
-                <ion-icon name="trash"></ion-icon>
-              </button>
-            </ion-item-options>
-          </ion-item-sliding>
-        </ion-list>
-        <ion-chip *ngIf='allHotSheetList.length<=0&&hotsheetFoundMessage!=""'>
-            <ion-label color="danger">{{hotsheetFoundMessage}}</ion-label>
-        </ion-chip>
+<ion-content>
+  <h1 class="contentTitle">Hot Sheets</h1>
+  
+  <ion-refresher (ionRefresh)="viewAllHotSheets($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  
+  <ion-chip *ngIf="notificationMsg!=''">
+    <ion-label color="secondary">{{notificationMsg}}</ion-label>
+  </ion-chip>
+
+  <ion-list *ngIf="!isApp">    
+    <ion-item-sliding *ngFor="let hotsheet of allHotSheetList">
+
+      <ion-item (click)="editHotsheet(hotsheet.id)">
+        <h2>{{hotsheet.name}}</h2>
+        <p class="slug">Slug:{{hotsheet.slug}}</p>
+        <ion-icon class="light" name="arrow-forward" item-right></ion-icon>
+      </ion-item>
+
+      <ion-item-options side="right">
+        <button ion-button color="danger" (click)="deleteHotsheet(hotsheet)">Delete</button>
+      </ion-item-options>
+
+    </ion-item-sliding>
+  </ion-list>
+
+  <ion-list *ngIf="isApp">
+    <ion-item-sliding *ngFor="let hotsheet of allHotSheetList">
+
+      <ion-item (click)="editHotsheet(hotsheet.id)">
+        <h2>{{hotsheet.name}}</h2>
+        <p class="slug">Slug:{{hotsheet.slug}}</p>
+        <ion-icon class="light" name="arrow-forward" item-right></ion-icon>
+      </ion-item>
+
+      <ion-item-options side="right">
+        <button ion-button color="danger" (click)="deleteHotsheet(hotsheet)">Delete</button>
+      </ion-item-options>
+
+    </ion-item-sliding>
+  </ion-list>
+
+  
+  <ion-chip *ngIf='allHotSheetList.length<=0&&hotsheetFoundMessage!=""'>
+    <ion-label color="danger">{{hotsheetFoundMessage}}</ion-label>
+  </ion-chip>
+
 </ion-content>

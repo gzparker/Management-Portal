@@ -1,3 +1,9 @@
 page-all-hot-sheets {
-
+  p.slug {
+  display: none !important;
+  }
+  ion-icon, .iconLabel {
+  float: left !important;
+  display: inline-block !important;
+  }
 }
