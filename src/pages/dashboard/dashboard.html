@@ -4,27 +4,33 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
-
-  <ion-navbar hideBackButton="true">
+<ion-header no-border>
+  <ion-navbar hide-nav-bar="true" hideBackButton="true">
     <button ion-button menuToggle start>
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Dashboard</ion-title>
   </ion-navbar>
-
 </ion-header>
 
 
-<ion-content padding>
-    <ion-chip *ngIf="notificationMsg!=''">
-        <ion-label color="secondary">{{notificationMsg}}</ion-label>
-      </ion-chip>
-  <h3>Welcome To Dashboard</h3>
-  <ion-list>
-  <ion-item menuClose ion-item (tap)="openPage('6')" *ngIf="userId!=''">
+<ion-content class="card-background-page">
+  <h1 class="contentTitle">Welcome To Dashboard</h1>
+
+  <ion-chip *ngIf="notificationMsg!=''">
+    <ion-label color="secondary">{{notificationMsg}}</ion-label>
+  </ion-chip>  
+
+  <!-- <ion-list>
+    <ion-item menuClose ion-item (tap)="openPage('6')" *ngIf="userId!=''">
     Leads
-  </ion-item>
-</ion-list>
+    </ion-item>
+  </ion-list> -->
+
+  <ion-card menuClose (tap)="openPage('6')" *ngIf="userId!=''">
+    <img src="assets/imgs/card-saopaolo.png"/>
+    <div class="card-title">Leads</div>
+    <div class="card-subtitle">41 Listings</div>
+  </ion-card>
 
 </ion-content>

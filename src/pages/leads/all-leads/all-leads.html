@@ -11,29 +11,32 @@
         <ion-icon name="menu"></ion-icon>
       </button>
   <ion-title>ALL LEADS</ion-title>
-  <ion-buttons end *ngIf="userWebsites.length>0">
+  <!-- <ion-buttons end *ngIf="userWebsites.length>0">
     <button ion-button (click)="sendToPaperWork();">Where to send leads</button>
-  </ion-buttons>
-  <ion-buttons end>
+  </ion-buttons> -->
+  <!-- <ion-buttons end>
     <button ion-button (click)="createLead();">Create Lead</button>
-  </ion-buttons>
+  </ion-buttons> -->
 </ion-navbar>
 
 </ion-header>
-<ion-content padding>
-    <ion-refresher (ionRefresh)="viewAllLeads($event)">
-        <ion-refresher-content></ion-refresher-content>
-      </ion-refresher>
-    <ion-chip *ngIf="notificationMsg!=''">
-        <ion-label color="secondary">{{notificationMsg}}</ion-label>
-    </ion-chip>
-    <ion-item>
-    <ion-searchbar [(ngModel)]="searchLeadTerm" (ionInput)="setLeadFilteredItems()"></ion-searchbar>
-  </ion-item>
-    <ion-item>
-      <ion-label floating>Category</ion-label>
-      <ion-select [(ngModel)]="category" name="category" id="category" (ngModelChange)="filterItemsByCategory()">
-       
+<ion-content>
+  <h1 class="contentTitle">All Leads</h1>
+
+  <ion-refresher (ionRefresh)="viewAllLeads($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-chip *ngIf="notificationMsg!=''">
+    <ion-label color="secondary">{{notificationMsg}}</ion-label>
+  </ion-chip>
+  
+  <ion-searchbar [(ngModel)]="searchLeadTerm" (ionInput)="setLeadFilteredItems()"></ion-searchbar>
+
+  <ion-item>
+    <ion-label>Category</ion-label>
+    <ion-select [(ngModel)]="category" name="category" id="category" (ngModelChange)="filterItemsByCategory()">
+     
       <ion-option value="buyer">Buyer</ion-option>
       <ion-option value="seller">Seller</ion-option>
       <ion-option value="prospect">Prospect</ion-option>
@@ -45,48 +48,69 @@
       <ion-option value="old">Old</ion-option>
       <ion-option value="new">New</ion-option>
       <ion-option value="other">Other</ion-option>
-       </ion-select>
-    </ion-item>
-    <ion-list *ngIf="!isApp">
-        <ion-item *ngFor="let lead of searchedLeadsList">
-            <ion-item no-lines (click)="leadDetail(lead.lead_id);">
-          <p>{{lead.first_name}}-<b>{{lead.last_name}}</b></p>
-         <!-- <p>Email:{{lead.email}}</p>
-          <p>Website:{{lead.website}}</p>
-          <p>Mobile Number:{{lead.phone_mobile}}</p>
-          <p>Office Number:{{lead.phone_office}}</p>
-          <p>Home:{{lead.phone_home}}</p>-->
-          </ion-item>
-          <button ion-button item-right color="danger" (click)="deleteLead(lead)">
-            <ion-icon name="trash"></ion-icon>
-          </button>
-          <button ion-button item-right color="secondary" (click)="editLead(lead.lead_id)">
-              <ion-icon name="create"></ion-icon>
-            </button>
-            
-        </ion-item> 
-    </ion-list>
-    <ion-list *ngIf="isApp">
-      <ion-item-sliding *ngFor="let lead of searchedLeadsList">
-        <ion-item no-lines (click)="leadDetail(lead.lead_id);">
-          <h2>{{lead.first_name}}-{{lead.last_name}}</h2>
-          <p>Email:{{lead.email}}</p>
-          <p>Website:{{lead.website}}</p>
-          <p>Mobile Number:{{lead.phone_mobile}}</p>
-          <p>Office Number:{{lead.phone_office}}</p>
-          <p>Home:{{lead.phone_home}}</p>
-          </ion-item>
-        <ion-item-options side="right">
-          <button ion-button item-right color="danger" (click)="deleteLead(lead)">
-            <ion-icon name="trash"></ion-icon>
-          </button>
-            <button ion-button item-right color="secondary" (click)="editLead(lead.lead_id)">
-              <ion-icon name="construct"></ion-icon>
-            </button>
-        </ion-item-options>
-      </ion-item-sliding>
-    </ion-list>
-    <ion-chip *ngIf='searchedLeadsList.length<=0&&leadsFoundMessage!=""'>
-        <ion-label color="danger">{{leadsFoundMessage}}</ion-label>
-    </ion-chip>
+
+    </ion-select>
+  </ion-item>
+
+  <ion-list *ngIf="!isApp">
+    <ion-item-sliding *ngFor="let lead of searchedLeadsList">
+      
+      <ion-item (click)="leadDetail(lead.lead_id);">
+        <ion-avatar item-start *ngIf="leadDetail!=undefined">
+          <img src="assets/imgs/profile-photo.jpg">
+        </ion-avatar>
+        <h2>{{lead.first_name}} <b>{{lead.last_name}}</b></h2>
+        <!-- <p>Email:{{lead.email}}</p>
+        <p>Website:{{lead.website}}</p>
+        <p>Mobile Number:{{lead.phone_mobile}}</p>
+        <p>Office Number:{{lead.phone_office}}</p>
+        <p>Home:{{lead.phone_home}}</p>-->
+        <ion-icon class="light" name="arrow-forward" item-right></ion-icon>
+      </ion-item>
+      
+      <ion-item-options side="right">
+        <button ion-button color="primary" class="roundedOption btn-settings" (click)="deleteLead(lead)">
+          Edit
+        </button>
+
+        <button ion-button color="danger" class="roundedOption btn-del" (click)="editLead(lead.lead_id)">
+          Delete
+        </button>
+      </ion-item-options>
+        
+    </ion-item-sliding> 
+  </ion-list>
+
+  <ion-list *ngIf="isApp">
+    <ion-item-sliding *ngFor="let lead of searchedLeadsList">
+      
+      <ion-item no-lines (click)="leadDetail(lead.lead_id);">
+        <ion-avatar item-start *ngIf="leadDetail!=undefined">
+          <img src="assets/imgs/profile-photo.jpg">
+        </ion-avatar>
+        <h2>{{lead.first_name}}-{{lead.last_name}}</h2>
+        <p>Email:{{lead.email}}</p>
+        <p>Website:{{lead.website}}</p>
+        <p>Mobile Number:{{lead.phone_mobile}}</p>
+        <p>Office Number:{{lead.phone_office}}</p>
+        <p>Home:{{lead.phone_home}}</p>
+        <ion-icon class="light" name="arrow-forward" item-right></ion-icon>
+      </ion-item>
+
+      <ion-item-options side="right">
+        <button ion-button color="primary" class="roundedOption btn-settings" (click)="deleteLead(lead)">
+          Edit
+        </button>
+        <button ion-button color="danger" class="roundedOption btn-del" (click)="editLead(lead.lead_id)">
+          Delete
+        </button>
+      </ion-item-options>
+
+    </ion-item-sliding>
+  </ion-list>
+
+  <ion-chip *ngIf='searchedLeadsList.length<=0&&leadsFoundMessage!=""'>
+    <ion-label color="danger">{{leadsFoundMessage}}</ion-label>
+  </ion-chip>
+
 </ion-content>

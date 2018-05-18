@@ -1,46 +1,63 @@
 <ion-split-pane>
 <ion-menu [content]="content" persistent="true">
   <ion-header>
-    <ion-toolbar>
+    <ion-toolbar class="company-logo">
       <ion-title>Menu</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <ion-content>
-    <ion-list id="sidenav">
+  <ion-content class="noScroll">
+    
+    <ion-card text-center class="profileCard" *ngIf="userLoggedIn==true">
+    <img src="../assets/imgs/profile-photo.jpg" class="custom-avatar"/>
+    <h2 class="username">Hiruyuki Xanada</h2>
+    <p class="tagline">Let your fingers do the walking.</p>
+    </ion-card>
+
+    <ion-list id="sidenav" class="app-menu disable-user-behavior">
    
-      <ion-item menuClose ion-item (tap)="openPage('1')" *ngIf="userLoggedIn==false">
+      <ion-item no-lines menuClose ion-item (tap)="openPage('1')" *ngIf="userLoggedIn==false">
+        <ion-icon name="home" item-start></ion-icon>
         Home
       </ion-item>
-      <ion-item menuClose ion-item (tap)="openPage('2')" *ngIf="userLoggedIn==false">
+      <ion-item no-lines menuClose ion-item (tap)="openPage('2')" *ngIf="userLoggedIn==false">
+        <ion-icon name="ios-unlock" item-start></ion-icon>
         Login
       </ion-item>
-      <ion-item menuClose ion-item (tap)="openPage('3')" *ngIf="userLoggedIn==false">
+      <ion-item no-lines menuClose ion-item (tap)="openPage('3')" *ngIf="userLoggedIn==false">
+        <ion-icon name="person-add" item-start></ion-icon>
         Register
       </ion-item>
-      <ion-item menuClose ion-item (tap)="openPage('4')" *ngIf="userLoggedIn==true&&paidStatus==true&&isOwner==true">      
+      <ion-item no-lines menuClose ion-item (tap)="openPage('4')" *ngIf="userLoggedIn==true&&paidStatus==true&&isOwner==true">
+        <ion-icon name="home" item-start></ion-icon>
         Dashboard
       </ion-item>
-      <ion-item menuClose ion-item (tap)="openPage('5')" *ngIf="userLoggedIn==true&&paidStatus==true&&isOwner==true">      
+      <ion-item no-lines menuClose ion-item (tap)="openPage('5')" *ngIf="userLoggedIn==true&&paidStatus==true&&isOwner==true">
+        <ion-icon name="laptop" item-start></ion-icon>
         Websites
       </ion-item>
-      <ion-item menuClose ion-item (tap)="openPage('6')" *ngIf="userLoggedIn==true&&paidStatus==true&&isOwner==true">      
+      <ion-item no-lines menuClose ion-item (tap)="openPage('6')" *ngIf="userLoggedIn==true&&paidStatus==true&&isOwner==true">
+        <ion-icon name="ios-bulb-outline" item-start></ion-icon>
         Leads
       </ion-item>
-      <ion-item menuClose ion-item (tap)="openPage('7')" *ngIf="userLoggedIn==true&&paidStatus==true&&isOwner==true">      
+      <ion-item no-lines menuClose ion-item (tap)="openPage('7')" *ngIf="userLoggedIn==true&&paidStatus==true&&isOwner==true">
+        <ion-icon name="logo-buffer" item-start></ion-icon>
         HotSheets
       </ion-item>
-      <ion-item menuClose ion-item (tap)="openPage('23')" *ngIf="userLoggedIn==true&&paidStatus==true&&isOwner==true">      
+      <ion-item no-lines menuClose ion-item (tap)="openPage('23')" *ngIf="userLoggedIn==true&&paidStatus==true&&isOwner==true">
+        <ion-icon name="ios-contacts" item-start></ion-icon>
         Roles
       </ion-item>
-      <!--<ion-item menuClose ion-item (tap)="openPage('8')" *ngIf="userLoggedIn==true">      
+      <!--<ion-item no-lines menuClose ion-item (tap)="openPage('8')" *ngIf="userLoggedIn==true">      
         Setup
       </ion-item>-->
-      <ion-item menuClose ion-item (tap)="openPage('9')" *ngIf="userLoggedIn==true&&paidStatus==true">      
+      <ion-item no-lines menuClose ion-item (tap)="openPage('9')" *ngIf="userLoggedIn==true&&paidStatus==true">
+        <ion-icon name="contact" item-start></ion-icon>
         Account
       </ion-item>
      
-      <ion-item menuClose ion-item (tap)="logOut()" *ngIf="userLoggedIn==true&&paidStatus==false">
+      <ion-item no-lines menuClose ion-item (tap)="logOut()" *ngIf="userLoggedIn==true&&paidStatus==false">
+        <ion-icon name="undo" item-start></ion-icon>
         LogOut
       </ion-item>
     
