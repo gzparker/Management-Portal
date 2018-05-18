@@ -22,8 +22,14 @@ $app-direction: ltr;
 // To view all the possible Ionic variables, see:
 // http://ionicframework.com/docs/theming/overriding-ionic-variables/
 
-
-
+$font-one: "Roboto";
+$font-two: "Noto Sans";
+$title-bg: #3a474e;
+$color-1: #00c8ff;
+$color-2: #FFF;
+$color-3: #212121;
+$color-4: #4B4B4B;
+$color-5: #c4d3e8;
 
 // Named Color Variables
 // --------------------------------------------------
@@ -46,15 +52,20 @@ $colors: (
 // --------------------------------------------------
 // iOS only Sass variables can go here
 
+$toolbar-ios-title-font-size: 0px;
 
+$tabs-ios-tab-text-color: $color-4;
+$tabs-ios-tab-icon-color: $color-4;
+$tabs-ios-tab-text-color-active: $color-4;
+$tabs-ios-tab-icon-color-active: $color-4;
 
+$tabs-ios-tab-padding-bottom: 4px;
 
 // App Material Design Variables
 // --------------------------------------------------
 // Material Design only Sass variables can go here
 
-
-
+$toolbar-md-title-font-size: 0px;
 
 // App Windows Variables
 // --------------------------------------------------
