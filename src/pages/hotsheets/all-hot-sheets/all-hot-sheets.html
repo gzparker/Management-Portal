@@ -39,9 +39,13 @@
     <ion-item-sliding *ngFor="let hotsheet of allHotSheetList">
 
       <ion-item (click)="editHotsheet(hotsheet.id)">
+        <ion-thumbnail item-start>
+          <img src="../assets/imgs/hotsheets-thumbnail.jpg">
+        </ion-thumbnail>
         <h2>{{hotsheet.name}}</h2>
-        <p class="slug">Slug:{{hotsheet.slug}}</p>
-        <ion-icon class="light" name="arrow-forward" item-right></ion-icon>
+        <p>visit/{{hotsheet.slug}}</p>        
+        <!-- <ion-icon class="light" name="arrow-forward" item-right></ion-icon> -->
+        <!-- <button ion-button clear item-end>View</button> -->
       </ion-item>
 
       <ion-item-options side="right">
