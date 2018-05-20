@@ -25,7 +25,11 @@ import { UserOptionPage } from '../../setup/user-option/user-option';
   templateUrl: 'setup-option.html',
 })
 export class SetupOptionPage {
-
+  public userId:string="";
+  public parentId:string="";
+  public isOwner:boolean=false;
+  public isGlobalPreference:boolean=false;
+  public isAgents:boolean=false;
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform) {
@@ -33,6 +37,70 @@ export class SetupOptionPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SetupOptionPage');
+    this.setAccessLevels();
+  }
+  setAccessLevels()
+  {
+
+    let parent_id = this.storage.get('parent_id');
+      parent_id.then((data) => {
+        if(data!=null)
+        {
+          //debugger;    
+      this.parentId=data;
+      this.isOwner=false;
+        }
+       else
+       {
+      this.isOwner=true;
+       }
+       this.allowMenuOptions();
+      
+      });
+  }
+  allowMenuOptions()
+  {
+    if(this.isOwner==false)
+    {
+    let allowed_access_options = this.storage.get('allowed_access_options');
+    allowed_access_options.then((data) => {
+      if(data!=null)
+      {
+        //debugger;
+        let savedAccessLevels:any[]=data;
+      
+    let globalPreferenceAccesLevels=savedAccessLevels.filter((element) => {
+        return (element.name=="Global Preference");
+    });
+    if(globalPreferenceAccesLevels.length>0)
+      {
+        this.isGlobalPreference=true;
+      }
+      else
+      {
+        this.isGlobalPreference=false;
+      }
+      let usersAccesLevels=savedAccessLevels.filter((element) => {
+        return (element.name=="View Agents");
+    });
+    if(usersAccesLevels.length>0)
+      {
+        this.isAgents=true;
+      }
+      else
+      {
+        this.isAgents=false;
+      } 
+      }
+    });
+  }
+  else
+  {
+    //debugger;
+    this.isGlobalPreference=true;
+    this.isAgents=true;
+    
+  }
   }
   openPage(pageNumber:string) {
     if(pageNumber=="10")

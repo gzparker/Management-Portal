@@ -432,7 +432,7 @@ else if(option=='6')
     let accountAccesLevels=savedAccessLevels.filter((element) => {
         return (element.name=="Credit Card List"||element.name=="Credit Card Detail"||element.name=="Add Credit Card"
         ||element.name=="Edit Credit Card"||element.name=="Billing History"||element.name=="Upcoming Subscription"
-      ||element.name=="View Upgrade Plans"||element.name=="Upgrade/Downgrade"||element.name=="General Info"||
+        ||element.name=="SetUp"||element.name=="View Upgrade Plans"||element.name=="Upgrade/Downgrade"||element.name=="General Info"||
       element.name=="Global Preference"||element.name=="View Agents"||element.name=="Edit Agent"
       ||element.name=="Delete Agent"||element.name=="Agent Detail"||element.name=="Agent Detail");
     });
@@ -444,48 +444,7 @@ else if(option=='6')
       {
         this.isAccount=false;
       }
-  //debugger;
-        /*data.forEach(element => {
-          if(element.name=="View Websites"||element.name=="Create Website"||element.name=="Mls Settings"
-          ||element.name=="Edit Website"||element.name=="Delete Website"||element.name=="Leads Setup")
-          {
-            this.isWebsites=true;
-          }
-          else
-          {
-            this.isWebsites=false;
-          }
-          if(element.name=="View Leads"||element.name=="Create Lead"||element.name=="Edit Lead"
-          ||element.name=="Lead Detail"||element.name=="Delete Lead"||element.name=="Leads Setup")
-          {
-            this.isLeads=true;
-          }
-          else
-          {
-            this.isLeads=false;
-          }
-          if(element.name=="View Hotsheets"||element.name=="Create Hotsheet"||element.name=="Edit Hotsheet"
-          ||element.name=="Delete Hotsheet")
-          {
-            this.isHotSheets=true;
-          }
-          else
-          {
-            this.isHotSheets=false;
-          }
-          if(element.name=="Credit Card List"||element.name=="Credit Card Detail"||element.name=="Add Credit Card"
-          ||element.name=="Edit Credit Card"||element.name=="Billing History"||element.name=="Upcoming Subscription"
-        ||element.name=="View Upgrade Plans"||element.name=="Upgrade/Downgrade"||element.name=="General Info"||
-        element.name=="Global Preference"||element.name=="View Agents"||element.name=="Edit Agent"
-        ||element.name=="Delete Agent"||element.name=="Agent Detail"||element.name=="Agent Detail")
-          {
-            this.isAccount=true;
-          }
-          else
-          {
-            this.isAccount=false;
-          }
-        });*/
+  
       }
     });
   }

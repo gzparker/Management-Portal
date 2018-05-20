@@ -30,14 +30,134 @@ import { UserProvider } from '../../../providers/user/user';
   templateUrl: 'account-option.html',
 })
 export class AccountOptionPage {
-
+  public isApp=false;
+  public userId:string="";
+  public parentId:string="";
+  public isOwner:boolean=false;
+  public isCreditCardList:boolean=false;
+  public isBillingHistory:boolean=false;
+  public isSetup:boolean=false;
+  public isUpcomingSubscription:boolean=false;
+  public isUpgradeCenter:boolean=false;
+  public isGeneralInfo:boolean=false;
+  
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad AccountOptionPage');
+    this.setAccessLevels();
+  }
+  setAccessLevels()
+  {
+
+    let parent_id = this.storage.get('parent_id');
+      parent_id.then((data) => {
+        if(data!=null)
+        {
+          //debugger;    
+      this.parentId=data;
+      this.isOwner=false;
+        }
+       else
+       {
+      this.isOwner=true;
+       }
+       this.allowMenuOptions();
+      
+      });
+  }
+  allowMenuOptions()
+  {
+    if(this.isOwner==false)
+    {
+    let allowed_access_options = this.storage.get('allowed_access_options');
+    allowed_access_options.then((data) => {
+      if(data!=null)
+      {
+        //debugger;
+        let savedAccessLevels:any[]=data;
+      
+    let creditCardAccesLevels=savedAccessLevels.filter((element) => {
+        return (element.name=="Credit Card List");
+    });
+    if(creditCardAccesLevels.length>0)
+      {
+        this.isCreditCardList=true;
+      }
+      else
+      {
+        this.isCreditCardList=false;
+      }
+      let billingHistoryAccesLevels=savedAccessLevels.filter((element) => {
+        return (element.name=="Billing History");
+    });
+    if(billingHistoryAccesLevels.length>0)
+      {
+        this.isBillingHistory=true;
+      }
+      else
+      {
+        this.isBillingHistory=false;
+      }
+      let setupAccesLevels=savedAccessLevels.filter((element) => {
+        return (element.name=="SetUp");
+    });
+    if(setupAccesLevels.length>0)
+      {
+        this.isSetup=true;
+      }
+      else
+      {
+        this.isSetup=false;
+      }
+      let upcomingSubscriptionAccesLevels=savedAccessLevels.filter((element) => {
+        return (element.name=="Upcoming Subscription");
+    });
+    if(upcomingSubscriptionAccesLevels.length>0)
+      {
+        this.isUpcomingSubscription=true;
+      }
+      else
+      {
+        this.isUpcomingSubscription=false;
+      }
+      let upgradeAccesLevels=savedAccessLevels.filter((element) => {
+        return (element.name=="View Upgrade Plans");
+    });
+    if(upgradeAccesLevels.length>0)
+      {
+        this.isUpgradeCenter=true;
+      }
+      else
+      {
+        this.isUpgradeCenter=false;
+      }
+      let generalInfoAccesLevels=savedAccessLevels.filter((element) => {
+        return (element.name=="General Info");
+    });
+    if(generalInfoAccesLevels.length>0)
+      {
+        this.isGeneralInfo=true;
+      }
+      else
+      {
+        this.isGeneralInfo=false;
+      }
+      }
+    });
+  }
+  else
+  {
+    //debugger;
+    this.isBillingHistory=true;
+    this.isCreditCardList=true;
+    this.isUpcomingSubscription=true;
+    this.isGeneralInfo=true;
+    this.isSetup=true;
+    this.isUpgradeCenter=true;
+  }
   }
   openPage(pageNumber:string) {
     if (pageNumber == "15") {

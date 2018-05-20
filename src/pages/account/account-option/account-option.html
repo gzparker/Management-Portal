@@ -18,22 +18,22 @@
 
 <ion-content padding>
   <ion-list>
-    <ion-item menuClose ion-item (tap)="openPage('16')">
+    <ion-item menuClose ion-item (tap)="openPage('16')" *ngIf="isCreditCardList==true">
       Credit Card List
     </ion-item>
-    <ion-item menuClose ion-item (tap)="openPage('21')">
+    <ion-item menuClose ion-item (tap)="openPage('21')" *ngIf="isBillingHistory==true">
         Billing History
     </ion-item>
-    <ion-item menuClose ion-item (tap)="openPage('22')">
+    <ion-item menuClose ion-item (tap)="openPage('22')" *ngIf="isUpcomingSubscription==true">
       Upcoming Subscription
     </ion-item>
-    <ion-item menuClose ion-item (tap)="openPage('19')">
+    <ion-item menuClose ion-item (tap)="openPage('19')" *ngIf="isUpgradeCenter==true">
       Upgrade Center
     </ion-item>
-    <ion-item menuClose ion-item (tap)="openPage('15')">
+    <ion-item menuClose ion-item (tap)="openPage('15')" *ngIf="isGeneralInfo==true">
       General Info
     </ion-item>
-    <ion-item menuClose ion-item (tap)="openPage('8')">
+    <ion-item menuClose ion-item (tap)="openPage('8')" *ngIf="isSetup==true">
       Setup
     </ion-item>
     <ion-item menuClose ion-item (tap)="logOut()">
