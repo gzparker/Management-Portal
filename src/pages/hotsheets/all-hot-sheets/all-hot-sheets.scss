@@ -6,4 +6,9 @@ page-all-hot-sheets {
   float: left !important;
   display: inline-block !important;
   }
+  ion-thumbnail {
+    img {
+    box-shadow: 0 0 0 1px #E0E0E0;
+    }
+  }
 }
