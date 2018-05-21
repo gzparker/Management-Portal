@@ -41,6 +41,9 @@ export class UpgradeCenterPage {
   public upgradeCenterSegment:string="1";
   public interval:string="month";
   public notificationMsg:string="";
+  public parentId:string="";
+  public isOwner:boolean=false;
+  public isUpgradeDowngradeAccess:boolean=false;
   public loader:any;
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
@@ -59,8 +62,62 @@ export class UpgradeCenterPage {
       this.userId=data;
      
        this.loadUpgradeList();
-   
+       this.setAccessLevels();
     });
+  }
+  setAccessLevels()
+  {
+
+    let parent_id = this.storage.get('parent_id');
+      parent_id.then((data) => {
+        if(data!=null)
+        {
+          //debugger;    
+      this.parentId=data;
+      this.isOwner=false;
+        }
+       else
+       {
+      this.isOwner=true;
+       }
+       this.allowMenuOptions();
+      
+      });
+  }
+  allowMenuOptions()
+  {
+    if(this.isOwner==false)
+    {
+    let allowed_access_options = this.storage.get('allowed_access_options');
+    allowed_access_options.then((data) => {
+      if(data!=null)
+      {
+        //debugger;
+        let savedAccessLevels:any[]=data;
+    //debugger;
+     
+      let editAgentAccesLevels=savedAccessLevels.filter((element) => {
+        return (element.name=="Upgrade/Downgrade");
+    });
+    if(editAgentAccesLevels.length>0)
+      {
+        this.isUpgradeDowngradeAccess=true;
+      }
+      else
+      {
+        this.isUpgradeDowngradeAccess=false;
+      }
+      
+      }
+    });
+    
+  }
+  else
+  {
+    
+    this.isUpgradeDowngradeAccess=true;
+    
+  }
   }
   loadUpgradeList()
   {

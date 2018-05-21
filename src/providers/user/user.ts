@@ -433,7 +433,7 @@ export class UserProvider {
    {
     data.append('photo_personal', dataObj.photo_personal);
    }
-    
+        
     data.append('member_id', user_id);
 //debugger;
     let accountUpdatingResp = this.http

@@ -48,7 +48,7 @@
           <ion-icon name="trash"></ion-icon>
         </button>-->
     </ion-item>
-    <button ion-button item-right color="secondary" (click)="upgradeDowngradePlan(plan.id)">
+    <button ion-button item-right color="secondary" (click)="upgradeDowngradePlan(plan.id)" *ngIf="isUpgradeDowngradeAccess==true">
         <ion-icon name="settings"></ion-icon>
       </button>
     <!--</ion-card>-->
@@ -62,7 +62,7 @@
       <p>Interval:{{current_plan.interval}}</p>
       <p>Description:{{current_plan.description}}</p>
     </ion-item>
-      <button ion-button item-right color="secondary" (click)="upgradeDowngradePlan(current_plan.id)">
+      <button ion-button item-right color="secondary" (click)="upgradeDowngradePlan(current_plan.id)" *ngIf="isUpgradeDowngradeAccess==true">
           <ion-icon name="settings"></ion-icon>
         </button>
         </ion-item>    

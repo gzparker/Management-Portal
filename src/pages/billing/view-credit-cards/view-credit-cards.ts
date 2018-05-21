@@ -34,6 +34,14 @@ export class ViewCreditCardsPage {
   public defaultCreditCard:any;
   public notificationMsg:string="";
   public userId:string="";
+  public parentId:string="";
+
+  public isAddCreditCardAccess:boolean=false;
+  public isEditCreditCardAccess:boolean=false;
+  public isCreditCardDetailAccess:boolean=false;
+  public isDeleteCreditCardAccess:boolean=false;
+
+  public isOwner:boolean=false;
   public creditCardsFoundMessage="";
   public totalCreditCards:number=0;
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
@@ -51,7 +59,96 @@ export class ViewCreditCardsPage {
     member_id.then((data) => {
       this.userId=data;
       this.loadAllCreditCards(null);
+      this.setAccessLevels();
     });
+  }
+  setAccessLevels()
+  {
+
+    let parent_id = this.storage.get('parent_id');
+      parent_id.then((data) => {
+        if(data!=null)
+        {
+          //debugger;    
+      this.parentId=data;
+      this.isOwner=false;
+        }
+       else
+       {
+      this.isOwner=true;
+       }
+       this.allowMenuOptions();
+      
+      });
+  }
+  allowMenuOptions()
+  {
+    if(this.isOwner==false)
+    {
+    let allowed_access_options = this.storage.get('allowed_access_options');
+    allowed_access_options.then((data) => {
+      if(data!=null)
+      {
+        //debugger;
+        let savedAccessLevels:any[]=data;
+    //debugger;
+     
+      let addCreditCardAccesLevels=savedAccessLevels.filter((element) => {
+        return (element.name=="Add Credit Card");
+    });
+    if(addCreditCardAccesLevels.length>0)
+      {
+        this.isAddCreditCardAccess=true;
+      }
+      else
+      {
+        this.isAddCreditCardAccess=false;
+      }
+    let editCreditCardAccesLevels=savedAccessLevels.filter((element) => {
+        return (element.name=="Edit Credit Card");
+    });
+    if(editCreditCardAccesLevels.length>0)
+      {
+        this.isEditCreditCardAccess=true;
+      }
+      else
+      {
+        this.isEditCreditCardAccess=false;
+      } 
+      let creditCardDetailAccesLevels=savedAccessLevels.filter((element) => {
+        return (element.name=="Credit Card Detail");
+    });
+    if(creditCardDetailAccesLevels.length>0)
+      {
+        this.isCreditCardDetailAccess=true;
+      }
+      else
+      {
+        this.isCreditCardDetailAccess=false;
+      }  
+      let deleteCreditCardAccesLevels=savedAccessLevels.filter((element) => {
+        return (element.name=="Delete Credit Card");
+    });
+    if(deleteCreditCardAccesLevels.length>0)
+      {
+        this.isDeleteCreditCardAccess=true;
+      }
+      else
+      {
+        this.isDeleteCreditCardAccess=false;
+      }  
+      }
+    });
+    
+  }
+  else
+  {
+    
+    this.isAddCreditCardAccess=true;
+    this.isCreditCardDetailAccess=true;
+    this.isEditCreditCardAccess=true;
+    
+  }
   }
   loadAllCreditCards(refresher:any)
   {
@@ -134,11 +231,15 @@ export class ViewCreditCardsPage {
     }
   cardDetail(unique_id:string)
   {
-     if(unique_id!="")
-     {
-       //debugger;
-       this.navCtrl.push(CreditCardDetailPage,{unique_id:unique_id});
-     }
+    if(this.isCreditCardDetailAccess==true)
+    {
+      if(unique_id!="")
+      {
+        //debugger;
+        this.navCtrl.push(CreditCardDetailPage,{unique_id:unique_id});
+      }
+    }
+     
   }
   editCreditCardDetail(unique_id:string)
   {

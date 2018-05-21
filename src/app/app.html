@@ -8,9 +8,11 @@
 
   <ion-content class="noScroll">
     
-    <ion-card text-center class="profileCard" *ngIf="userLoggedIn==true">
-    <img src="../assets/imgs/profile-photo.jpg" class="custom-avatar"/>
-    <h2 class="username">Hiruyuki Xanada</h2>
+    <ion-card text-center class="profileCard" *ngIf="userLoggedIn==true&&userGeneralInfo!=null">
+    <!--<img src="../assets/imgs/profile-photo.jpg" class="custom-avatar"/>-->
+    <img src={{this.sharedServiceObj.imgBucketUrl}}{{userGeneralInfo.image_url}} class="custom-avatar" *ngIf="userGeneralInfo.image_url!=null&&userGeneralInfo.image_url!=undefined&&userGeneralInfo.image_url!=''"/>
+          <img src={{no_image_found}} class="custom-avatar" *ngIf="userGeneralInfo.image_url==null||userGeneralInfo.image_url==''"/>
+    <h2 class="username">{{userGeneralInfo.first_name}} {{userGeneralInfo.last_name}}</h2>
     <p class="tagline">Let your fingers do the walking.</p>
     </ion-card>
 

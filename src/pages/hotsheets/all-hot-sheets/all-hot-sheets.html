@@ -14,7 +14,7 @@
     <ion-title>Hot Sheets</ion-title>
     
     <ion-buttons end>
-      <button ion-button icon-left (click)="createHotSheet();">
+      <button ion-button icon-left (click)="createHotSheet();" *ngIf="isCreateHotsheetAccess==true">
         <ion-icon name="create"></ion-icon>
         Create
       </button>
@@ -49,7 +49,7 @@
       </ion-item>
 
       <ion-item-options side="right">
-        <button ion-button color="danger" (click)="deleteHotsheet(hotsheet)">Delete</button>
+        <button ion-button color="danger" (click)="deleteHotsheet(hotsheet)" *ngIf="isDeleteHotsheetAccess==true">Delete</button>
       </ion-item-options>
 
     </ion-item-sliding>
@@ -65,7 +65,7 @@
       </ion-item>
 
       <ion-item-options side="right">
-        <button ion-button color="danger" (click)="deleteHotsheet(hotsheet)">Delete</button>
+        <button ion-button color="danger" (click)="deleteHotsheet(hotsheet)" *ngIf="isDeleteHotsheetAccess==true">Delete</button>
       </ion-item-options>
 
     </ion-item-sliding>

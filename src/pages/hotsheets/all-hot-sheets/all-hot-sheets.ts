@@ -28,6 +28,11 @@ export class AllHotSheetsPage {
   public notificationMsg="";
   public userId:string="";
   public hotsheetFoundMessage="";
+  public parentId:string="";
+ public isOwner:boolean=false;
+ public isCreateHotsheetAccess:boolean=false;
+ public isEditHotsheetAccess:boolean=false;
+ public isDeleteHotsheetAccess:boolean=false;
   public loader:any;
   public isApp=false;
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
@@ -58,9 +63,86 @@ export class AllHotSheetsPage {
     member_id.then((data) => {
       this.userId=data;
       this.viewAllHotSheets(null);
+      this.setAccessLevels();
     });
   }
+  setAccessLevels()
+  {
 
+    let parent_id = this.storage.get('parent_id');
+      parent_id.then((data) => {
+        if(data!=null)
+        {
+          //debugger;    
+      this.parentId=data;
+      this.isOwner=false;
+        }
+       else
+       {
+      this.isOwner=true;
+       }
+       this.allowMenuOptions();
+      
+      });
+  }
+  allowMenuOptions()
+  {
+    if(this.isOwner==false)
+    {
+    let allowed_access_options = this.storage.get('allowed_access_options');
+    allowed_access_options.then((data) => {
+      if(data!=null)
+      {
+        //debugger;
+        let savedAccessLevels:any[]=data;
+    //debugger;
+     
+      let createHotsheetAccesLevels=savedAccessLevels.filter((element) => {
+        return (element.name=="Create Hotsheet");
+    });
+    if(createHotsheetAccesLevels.length>0)
+      {
+        this.isCreateHotsheetAccess=true;
+      }
+      else
+      {
+        this.isCreateHotsheetAccess=false;
+      }
+      let editHotsheetAccesLevels=savedAccessLevels.filter((element) => {
+        return (element.name=="Edit Hotsheet");
+    });
+    if(editHotsheetAccesLevels.length>0)
+      {
+        this.isEditHotsheetAccess=true;
+      }
+      else
+      {
+        this.isEditHotsheetAccess=false;
+      }
+      let deleteHotsheetAccesLevels=savedAccessLevels.filter((element) => {
+        return (element.name=="Delete Hotsheet");
+    });
+    if(deleteHotsheetAccesLevels.length>0)
+      {
+        this.isDeleteHotsheetAccess=true;
+      }
+      else
+      {
+        this.isDeleteHotsheetAccess=false;
+      }
+      }
+    });
+    
+  }
+  else
+  {
+    
+    this.isCreateHotsheetAccess=true;
+    this.isEditHotsheetAccess=true;
+    this.isDeleteHotsheetAccess=true;
+    
+  }
+  }
   viewAllHotSheets(refresher:any):void{
     if(this.userId!="")
     {
@@ -99,7 +181,11 @@ export class AllHotSheetsPage {
   }
   editHotsheet(id:string):void{
    // debugger;
+   if(this.isEditHotsheetAccess==true)
+   {
     this.navCtrl.push(EditHotSheetPage,{id:id});
+   }
+    
   }
   deleteHotsheet(hotsheet:any):void{
     

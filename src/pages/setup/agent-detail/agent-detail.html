@@ -12,7 +12,7 @@
       </button>
   <ion-title>Agent Detail</ion-title>
   <ion-buttons end>
-      <button ion-button (click)="editAgent(agentDetail.id);">Edit</button>
+      <button ion-button (click)="editAgent(agentDetail.id);" *ngIf="isEditAgentAccess==true">Edit</button>
     </ion-buttons>
 </ion-navbar>
 

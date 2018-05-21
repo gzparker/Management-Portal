@@ -12,7 +12,7 @@
         </button>
     <ion-title>Credit Cards List</ion-title>
     <ion-buttons end>
-      <button ion-button (click)="addCreditCard();">Add</button>
+      <button ion-button (click)="addCreditCard();" *ngIf="isAddCreditCardAccess==true">Add</button>
     </ion-buttons>
   </ion-navbar>
 
@@ -51,10 +51,10 @@
             <!--<button ion-button item-right color="secondary" (click)="editCreditCardDetail(creditCard.unique_id)">
               <ion-icon name="create"></ion-icon>
             </button>-->
-            <button ion-button item-right color="danger" (click)="deleteCreditCard(creditCard)" *ngIf="totalCreditCards>1">
+            <button ion-button item-right color="danger" (click)="deleteCreditCard(creditCard)" *ngIf="totalCreditCards>1&&isDeleteCreditCardAccess==true">
               <ion-icon name="trash"></ion-icon>
             </button>
-            <button ion-button item-right color="secondary" (click)="editCreditCardDetail(creditCard.unique_id)">
+            <button ion-button item-right color="secondary" *ngIf="isEditCreditCardAccess==true" (click)="editCreditCardDetail(creditCard.unique_id)">
               <ion-icon name="create"></ion-icon>
             </button>
           </ion-item>

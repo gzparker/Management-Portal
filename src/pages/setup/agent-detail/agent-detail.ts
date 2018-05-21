@@ -29,6 +29,9 @@ import { SubscriptionProvider } from '../../../providers/subscription/subscripti
 export class AgentDetailPage {
   public userId:string="";
   public agent_id:string="";
+  public parentId:string="";
+  public isOwner:boolean=false;
+  public isEditAgentAccess:boolean=false;
   public agentDetail:any;
   public agentFoundMessage:string="";
   public no_image_found:string="https://s3.us-west-2.amazonaws.com/central-system/img/default/profile_icon.png";
@@ -53,8 +56,63 @@ export class AgentDetailPage {
       {
        this.agent_id = this.navParams.get('agent_id');
        this.loadAgentDetails();
+       this.setAccessLevels();
        }
     });
+  }
+  setAccessLevels()
+  {
+
+    let parent_id = this.storage.get('parent_id');
+      parent_id.then((data) => {
+        if(data!=null)
+        {
+          //debugger;    
+      this.parentId=data;
+      this.isOwner=false;
+        }
+       else
+       {
+      this.isOwner=true;
+       }
+       this.allowMenuOptions();
+      
+      });
+  }
+  allowMenuOptions()
+  {
+    if(this.isOwner==false)
+    {
+    let allowed_access_options = this.storage.get('allowed_access_options');
+    allowed_access_options.then((data) => {
+      if(data!=null)
+      {
+        //debugger;
+        let savedAccessLevels:any[]=data;
+    //debugger;
+     
+      let editAgentAccesLevels=savedAccessLevels.filter((element) => {
+        return (element.name=="Edit Agent");
+    });
+    if(editAgentAccesLevels.length>0)
+      {
+        this.isEditAgentAccess=true;
+      }
+      else
+      {
+        this.isEditAgentAccess=false;
+      }
+      
+      }
+    });
+    
+  }
+  else
+  {
+    
+    this.isEditAgentAccess=true;
+    
+  }
   }
 loadAgentDetails()
 {

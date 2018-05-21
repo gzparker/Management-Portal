@@ -12,7 +12,7 @@
     </button>
     <ion-title>Manage Agents</ion-title>
     <ion-buttons end *ngIf="max_agents_added==false">
-      <button ion-button (click)="createAgent();">Create Agent</button>
+      <button ion-button (click)="createAgent();" *ngIf="isCreateAgentAccess==true">Create Agent</button>
     </ion-buttons>
     <!--<ion-buttons end>
       <button ion-button (click)="createAgent();">Create Agent</button>
@@ -50,10 +50,10 @@
           <p>Email:{{agent.email}}</p>
           <p [innerHTML]="agent.description"></p>
         </ion-item>
-          <button ion-button item-right color="secondary" (click)="editAgent(agent.id)">
+          <button ion-button item-right color="secondary" (click)="editAgent(agent.id)" *ngIf="isEditAgentAccess==true">
               <ion-icon name="create"></ion-icon>
             </button>
-          <button ion-button item-right color="danger" (click)="deleteAgent(agent)">
+          <button ion-button item-right color="danger" (click)="deleteAgent(agent)" *ngIf="isDeleteAgentAccess==true">
             <ion-icon name="trash"></ion-icon>
           </button>
         </ion-item>

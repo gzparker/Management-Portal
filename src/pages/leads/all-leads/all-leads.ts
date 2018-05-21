@@ -48,6 +48,14 @@ export class AllLeadsPage {
   public confirmClicked: boolean = false;
   public cancelClicked: boolean = false;
   public isOpen: boolean = false;
+  public parentId:string="";
+  public isOwner:boolean=false;
+  public isCreateLeadAccess:boolean=false;
+  public isEditLeadAccess:boolean=false;
+  public isLeadDetailAccess:boolean=false;
+  public isDeleteLeadAccess:boolean=false;
+  public isLeadSetupAccess:boolean=false;
+  
   public loader:any;
   public isApp=false;
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
@@ -80,7 +88,107 @@ export class AllLeadsPage {
       this.userId=data;
       this.viewAllWebsite();
       this.viewAllLeads(null);
+      this.setAccessLevels();
     });
+  }
+  setAccessLevels()
+  {
+
+    let parent_id = this.storage.get('parent_id');
+      parent_id.then((data) => {
+        if(data!=null)
+        {
+          //debugger;    
+      this.parentId=data;
+      this.isOwner=false;
+        }
+       else
+       {
+      this.isOwner=true;
+       }
+       this.allowMenuOptions();
+      
+      });
+  }
+  allowMenuOptions()
+  {
+    if(this.isOwner==false)
+    {
+    let allowed_access_options = this.storage.get('allowed_access_options');
+    allowed_access_options.then((data) => {
+      if(data!=null)
+      {
+        //debugger;
+        let savedAccessLevels:any[]=data;
+    //debugger;
+      let createLeadAccesLevels=savedAccessLevels.filter((element) => {
+        return (element.name=="Create Lead");
+    });
+    if(createLeadAccesLevels.length>0)
+      {
+        this.isCreateLeadAccess=true;
+      }
+      else
+      {
+        this.isCreateLeadAccess=false;
+      }
+      let editLeadAccesLevels=savedAccessLevels.filter((element) => {
+        return (element.name=="Edit Lead");
+    });
+    if(editLeadAccesLevels.length>0)
+      {
+        this.isEditLeadAccess=true;
+      }
+      else
+      {
+        this.isEditLeadAccess=false;
+      }
+    let leadDetailAccesLevels=savedAccessLevels.filter((element) => {
+        return (element.name=="Lead Detail");
+    });
+    if(leadDetailAccesLevels.length>0)
+      {
+        this.isLeadDetailAccess=true;
+      }
+      else
+      {
+        this.isLeadDetailAccess=false;
+      }
+    let deleteLeadAccesLevels=savedAccessLevels.filter((element) => {
+        return (element.name=="Delete Lead");
+    });
+    if(deleteLeadAccesLevels.length>0)
+      {
+        this.isDeleteLeadAccess=true;
+      }
+      else
+      {
+        this.isDeleteLeadAccess=false;
+      }
+    let leadSetupAccesLevels=savedAccessLevels.filter((element) => {
+        return (element.name=="Leads Setup");
+    });
+    if(leadSetupAccesLevels.length>0)
+      {
+        this.isLeadSetupAccess=true;
+      }
+      else
+      {
+        this.isLeadSetupAccess=false;
+      } 
+      }
+    });
+    
+  }
+  else
+  {
+    //debugger;
+    this.isCreateLeadAccess=true;
+    this.isDeleteLeadAccess=true;
+    this.isEditLeadAccess=true;
+    this.isLeadDetailAccess=true;
+    this.isLeadSetupAccess=true;
+  }
   }
   createLead()
   {
@@ -164,7 +272,11 @@ filterItemsByCategory()
 this.navCtrl.push(EditLeadPage,{leadId:leadId});
   }
   leadDetail(leadId:string){
-    this.navCtrl.push(LeadDetailPage,{leadId:leadId});
+    if(this.isLeadDetailAccess==true)
+    {
+      this.navCtrl.push(LeadDetailPage,{leadId:leadId});
+    }
+    
       }
   editLeadRouting(websiteId:string)
   {

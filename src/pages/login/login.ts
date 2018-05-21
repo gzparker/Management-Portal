@@ -87,7 +87,7 @@ export class LoginPage {
           this.storage.ready().then(() => {
           this.storage.set('loggedId', '1');
           this.storage.set('selectedService','2');
-          this.storage.set('userId', result.memberCredentials.id);
+         // this.storage.set('userId', result.memberCredentials.id);
           this.storage.set('email', result.memberCredentials.email);
           this.storage.set('first_name', result.memberCredentials.first_name);
           this.storage.set('last_name', result.memberCredentials.last_name);
@@ -96,9 +96,21 @@ export class LoginPage {
           this.storage.set('userType', "1");
           this.storage.set('country_abbv', result.memberCredentials.country_abbv);
           this.storage.set('country_code', result.memberCredentials.country_code);
+          if(result.memberCredentials.parent_id!=null)
+          {
+            this.storage.set('userId', result.memberCredentials.parent_id);
+            this.storage.set('subMemberId', result.memberCredentials.id);
+            debugger;
+          }
+          else
+          {
+            debugger;
+            this.storage.set('userId', result.memberCredentials.id);
+          }
           this.storage.set('parent_id', result.memberCredentials.parent_id);
-//debugger;
+          this.storage.set('image_url',result.memberCredentials.image_url);
           this.storage.set('loggedInUserInfo', result);
+          //debugger;
         if(result.memberCredentials.parent_id!=undefined)
         {
           this.storage.set('is_submember', "1");

@@ -54,6 +54,8 @@ import { UserProvider } from '../../providers/user/user';
 })
 export class DashboardPage {
   //@ViewChild("idxpaymentTabs") idxpaymentTabs: Tabs;
+  //public allSubmembers:any[]=[];
+  public totalSubMembers:string="";
 public notificationMsg:string="";
 public userId:string="";
 public oldPageNumber:string="";
@@ -83,6 +85,7 @@ private subscription: ISubscription;
     let member_id = this.storage.get('userId');
     member_id.then((data) => {
     this.userId=data;
+    this.loadAllAgents();
   });
     let parent_id = this.storage.get('parent_id');
     parent_id.then((data) => {
@@ -94,6 +97,35 @@ private subscription: ISubscription;
     
     });
   }
+  loadAllAgents()
+{
+  
+    this.userServiceObj.viewMemberAgents(this.userId.toString())
+  .subscribe((result) => this.loadAllAgentsResp(result));
+  
+  
+}
+loadAllAgentsResp(result:any)
+{
+  
+  if(result.status==true)
+  {
+   //debugger;
+//this.allSubmembers=result.results;
+  
+    if(result.results.length>0)
+    {
+this.totalSubMembers=result.results.length.toString();
+    }
+   
+  }
+  else
+  {
+   
+    //this.allAgents=[];
+   this.totalSubMembers="0";
+  }
+}
   getUserDetailedInfo(): void {
    //debugger;
       this.userServiceObj.getMemberInfo(this.userId)

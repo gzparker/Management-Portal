@@ -12,7 +12,7 @@
           </button>
       <ion-title>Credit Card Detail</ion-title>
      <ion-buttons end>
-          <button ion-button (click)="editCreditCardDetail();">Edit</button>
+          <button ion-button (click)="editCreditCardDetail();" *ngIf="isEditCreditCardAccess==true">Edit</button>
         </ion-buttons>
     </ion-navbar>
 </ion-header>

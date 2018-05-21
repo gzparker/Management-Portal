@@ -11,7 +11,7 @@
           </button>
       <ion-title>Lead Detail</ion-title>
       <ion-buttons end>
-        <button ion-button (click)="editLead();">Edit Lead</button>
+        <button ion-button (click)="editLead();" *ngIf="isEditLeadAccess==true">Edit Lead</button>
       </ion-buttons>
     </ion-navbar>
 </ion-header>

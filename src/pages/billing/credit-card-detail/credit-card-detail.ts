@@ -30,6 +30,9 @@ export class CreditCardDetailPage {
   public cardDetail:any;
   public userId:string="";
   public uniquer_id:string="";
+  public isOwner:boolean=false;
+  public parentId:string="";
+  public isEditCreditCardAccess:boolean=false;
   public loader:any;
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
@@ -50,7 +53,58 @@ export class CreditCardDetailPage {
     member_id.then((data) => {
     this.userId=data;
     this.loadCreditCardDetail();
+    this.setAccessLevels();
     });
+  }
+  setAccessLevels()
+  {
+
+    let parent_id = this.storage.get('parent_id');
+      parent_id.then((data) => {
+        if(data!=null)
+        {
+          //debugger;    
+      this.parentId=data;
+      this.isOwner=false;
+        }
+       else
+       {
+      this.isOwner=true;
+       }
+       this.allowMenuOptions();
+      });
+  }
+  allowMenuOptions()
+  {
+    if(this.isOwner==false)
+    {
+    let allowed_access_options = this.storage.get('allowed_access_options');
+    allowed_access_options.then((data) => {
+      if(data!=null)
+      {
+        let savedAccessLevels:any[]=data;
+        let editCreditCardAccesLevels=savedAccessLevels.filter((element) => {
+        return (element.name=="Edit Credit Card");
+    });
+    if(editCreditCardAccesLevels.length>0)
+      {
+        this.isEditCreditCardAccess=true;
+      }
+      else
+      {
+        this.isEditCreditCardAccess=false;
+      } 
+    
+      }
+    });
+    
+  }
+  else
+  {
+    
+    this.isEditCreditCardAccess=true;
+    
+  }
   }
   loadCreditCardDetail()
   {

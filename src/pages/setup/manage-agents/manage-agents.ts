@@ -29,6 +29,12 @@ export class ManageAgentsPage {
   public agentServices:any[]=[];
   public notificationMsg:string="";
   public userId:string="";
+  public parentId:string="";
+  public isOwner:boolean=false;
+  public isEditAgentAccess:boolean=false;
+  public isDeleteAgentAccess:boolean=false;
+  public isCreateAgentAccess:boolean=false;
+  public isAgentDetailAccess:boolean=false;
   public agentsFoundMessage:string="";
   public max_agents_added:boolean=false;
   public no_image_found:string="https://s3.us-west-2.amazonaws.com/central-system/img/default/profile_icon.png";
@@ -58,8 +64,97 @@ export class ManageAgentsPage {
   member_id.then((data) => {
     this.userId=data;
     this.loadAllAgents(null);
+    this.setAccessLevels();
   });
 }
+setAccessLevels()
+  {
+
+    let parent_id = this.storage.get('parent_id');
+      parent_id.then((data) => {
+        if(data!=null)
+        {
+          //debugger;    
+      this.parentId=data;
+      this.isOwner=false;
+        }
+       else
+       {
+      this.isOwner=true;
+       }
+       this.allowMenuOptions();
+      
+      });
+  }
+  allowMenuOptions()
+  {
+    if(this.isOwner==false)
+    {
+    let allowed_access_options = this.storage.get('allowed_access_options');
+    allowed_access_options.then((data) => {
+      if(data!=null)
+      {
+        //debugger;
+        let savedAccessLevels:any[]=data;
+    //debugger;
+     
+      let editAgentAccesLevels=savedAccessLevels.filter((element) => {
+        return (element.name=="Edit Agent");
+    });
+    if(editAgentAccesLevels.length>0)
+      {
+        this.isEditAgentAccess=true;
+      }
+      else
+      {
+        this.isEditAgentAccess=false;
+      }
+      let deleteAgentAccesLevels=savedAccessLevels.filter((element) => {
+        return (element.name=="Delete Agent");
+    });
+    if(deleteAgentAccesLevels.length>0)
+      {
+        this.isDeleteAgentAccess=true;
+      }
+      else
+      {
+        this.isDeleteAgentAccess=false;
+      }
+      let agentDetailAccesLevels=savedAccessLevels.filter((element) => {
+        return (element.name=="Agent Detail");
+    });
+    if(agentDetailAccesLevels.length>0)
+      {
+        this.isAgentDetailAccess=true;
+      }
+      else
+      {
+        this.isAgentDetailAccess=false;
+      }
+      let createAgentAccesLevels=savedAccessLevels.filter((element) => {
+        return (element.name=="Create Agent");
+    });
+    if(createAgentAccesLevels.length>0)
+      {
+        this.isCreateAgentAccess=true;
+      }
+      else
+      {
+        this.isCreateAgentAccess=false;
+      }
+      }
+    });
+    
+  }
+  else
+  {
+    
+    this.isAgentDetailAccess=true;
+    this.isCreateAgentAccess=true;
+    this.isDeleteAgentAccess=true;
+    this.isEditAgentAccess=true;
+  }
+  }
 loadAllAgents(refresher:any)
 {
   if(this.userId.toString())
@@ -176,12 +271,15 @@ deleteAgentResp(result:any):void{
   }
 agentDetail(agent_id:string)
 {
-  //debugger;
-   if(agent_id!="")
-   {
-     //debugger;
-     this.navCtrl.push(AgentDetailPage,{agent_id:agent_id});
-   }
+ if(this.isAgentDetailAccess==true)
+ {
+  if(agent_id!="")
+  {
+    //debugger;
+    this.navCtrl.push(AgentDetailPage,{agent_id:agent_id});
+  }
+ }
+   
 }
 editAgent(agent_id:string)
 {

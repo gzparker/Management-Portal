@@ -62,20 +62,16 @@
           <img src="assets/imgs/profile-photo.jpg">
         </ion-avatar>
         <h2>{{lead.first_name}} <b>{{lead.last_name}}</b></h2>
-        <!-- <p>Email:{{lead.email}}</p>
-        <p>Website:{{lead.website}}</p>
-        <p>Mobile Number:{{lead.phone_mobile}}</p>
-        <p>Office Number:{{lead.phone_office}}</p>
-        <p>Home:{{lead.phone_home}}</p>-->
+
         <ion-icon class="light" name="arrow-forward" item-right></ion-icon>
       </ion-item>
       
       <ion-item-options side="right">
-        <button ion-button color="primary" class="roundedOption btn-settings" (click)="deleteLead(lead)">
+        <button ion-button color="primary" class="roundedOption btn-settings" *ngIf="isEditLeadAccess==true" (click)="editLead(lead.lead_id)">
           Edit
         </button>
 
-        <button ion-button color="danger" class="roundedOption btn-del" (click)="editLead(lead.lead_id)">
+        <button ion-button color="danger" class="roundedOption btn-del" (click)="deleteLead(lead)" *ngIf="isDeleteLeadAccess==true">
           Delete
         </button>
       </ion-item-options>
@@ -87,6 +83,7 @@
     <ion-item-sliding *ngFor="let lead of searchedLeadsList">
       
       <ion-item no-lines (click)="leadDetail(lead.lead_id);">
+        
         <ion-avatar item-start *ngIf="leadDetail!=undefined">
           <img src="assets/imgs/profile-photo.jpg">
         </ion-avatar>
@@ -100,10 +97,10 @@
       </ion-item>
 
       <ion-item-options side="right">
-        <button ion-button color="primary" class="roundedOption btn-settings" (click)="deleteLead(lead)">
+        <button ion-button color="primary" class="roundedOption btn-settings" (click)="editLead(lead.lead_id)" *ngIf="isEditLeadAccess==true">
           Edit
         </button>
-        <button ion-button color="danger" class="roundedOption btn-del" (click)="editLead(lead.lead_id)">
+        <button ion-button color="danger" class="roundedOption btn-del" (click)="deleteLead(lead)" *ngIf="isDeleteLeadAccess==true">
           Delete
         </button>
       </ion-item-options>
@@ -113,10 +110,10 @@
 
   <div padding>
     <ion-segment *ngIf="userWebsites.length>0">
-      <ion-segment-button (click)="sendToPaperWork();">
+      <ion-segment-button (click)="sendToPaperWork();" *ngIf="isLeadSetupAccess==true">
         Where to send leads
       </ion-segment-button>
-      <ion-segment-button (click)="createLead();">
+      <ion-segment-button (click)="createLead();" *ngIf="isCreateLeadAccess==true">
         Create Lead
       </ion-segment-button>
     </ion-segment>

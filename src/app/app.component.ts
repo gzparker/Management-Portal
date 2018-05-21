@@ -75,7 +75,10 @@ export class MyApp {
   public isHotSheets:boolean=false;
   public isRoles:boolean=false;
   public isAccount:boolean=false;
-
+  public userGeneralInfo:any;
+  public imgBaseUrl=this.sharedServiceObj.imgBucketUrl;
+  public noImgUrl="../assets/imgs/profile-photo.jpg";
+  
   pages: Array<{ title: string, component: any }>;
   public geoCoderData={
     country:"",
@@ -266,9 +269,11 @@ this.storage.set("userCountryInfo", this.geoCoderData);
 
       if (data == null) {
         this.userLoggedIn = false;
+
       }
       else {
         this.setAccessLevels();
+        this.setUserGeneralInfo();
         //debugger;
         this.userLoggedIn = true;
         this.rootPage = DashboardTabsPage;
@@ -283,6 +288,7 @@ this.storage.set("userCountryInfo", this.geoCoderData);
     this.userLoggedIn = item;
     //debugger;
     this.setAccessLevels();
+    this.setUserGeneralInfo();
     // debugger;
   }
   setPaidStatus(item: any):void{
@@ -360,6 +366,17 @@ else if(option=='6')
   this.showWebsiteSubmenu=false;
 }
 
+  }
+  setUserGeneralInfo()
+  {
+    let userInfo = this.storage.get('loggedInUserInfo')
+    this.storage.get('loggedInUserInfo').then((data) => {
+
+      if (data != null) {
+        this.userGeneralInfo=data.memberCredentials;
+//debugger;
+      }
+    });
   }
   setAccessLevels()
   {

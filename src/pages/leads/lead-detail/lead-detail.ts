@@ -45,6 +45,10 @@ export class LeadDetailPage {
  public selectedSegment:any="1";
  public leadsDetailSegment:string="1";
  public noImgUrl=this.sharedServiceObj.noImageUrl;
+ public isOpen: boolean = false;
+ public parentId:string="";
+ public isOwner:boolean=false;
+ public isEditLeadAccess:boolean=false;
 
 public loader:any;
 @ViewChild('mapHome') mapHomeElement: ElementRef;
@@ -75,8 +79,63 @@ mapWork: any;
       {
         this.leadId=this.navParams.get('leadId');
         this.loadLeadDetail();
+        this.setAccessLevels();
       }
     });
+  }
+  setAccessLevels()
+  {
+
+    let parent_id = this.storage.get('parent_id');
+      parent_id.then((data) => {
+        if(data!=null)
+        {
+          //debugger;    
+      this.parentId=data;
+      this.isOwner=false;
+        }
+       else
+       {
+      this.isOwner=true;
+       }
+       this.allowMenuOptions();
+      
+      });
+  }
+  allowMenuOptions()
+  {
+    if(this.isOwner==false)
+    {
+    let allowed_access_options = this.storage.get('allowed_access_options');
+    allowed_access_options.then((data) => {
+      if(data!=null)
+      {
+        //debugger;
+        let savedAccessLevels:any[]=data;
+    //debugger;
+     
+      let editLeadAccesLevels=savedAccessLevels.filter((element) => {
+        return (element.name=="Edit Lead");
+    });
+    if(editLeadAccesLevels.length>0)
+      {
+        this.isEditLeadAccess=true;
+      }
+      else
+      {
+        this.isEditLeadAccess=false;
+      }
+    
+      }
+    });
+    
+  }
+  else
+  {
+    
+    this.isEditLeadAccess=true;
+    
+  }
   }
   loadHomeMap(placeId:any){
     this.map_home_height=400;

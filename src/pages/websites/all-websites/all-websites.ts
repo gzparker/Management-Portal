@@ -38,6 +38,14 @@ export class AllWebsitesPage {
   public websiteFoundMessage="";
   public showCreateButton:boolean=false;
   public isApp=false;
+  public parentId:string="";
+  public isOwner:boolean=false;
+  public isWebsitePagesAccess:boolean=false;
+  public isDeleteWebsiteAccess:boolean=false;
+  public isCreateWebsiteAccess:boolean=false;
+  public isEditWebsiteAccess:boolean=false;
+  public isMlsSettings:boolean=false;
+  public isViewWebsiteAccess:boolean=false;
   public imgBaseUrl=this.sharedServiceObj.imgBucketUrl;
   public noImgUrl=this.sharedServiceObj.noImageUrl;
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
@@ -57,6 +65,7 @@ export class AllWebsitesPage {
       {
         this.notificationMsg=this.navParams.get('notificationMsg');
       }
+      //debugger;
   }
 
   ionViewDidLoad() {
@@ -65,8 +74,109 @@ export class AllWebsitesPage {
     member_id.then((data) => {
       //alert('welcome too');
       this.userId=data;
+      debugger;
       this.viewAllWebsite(null);
+      this.setAccessLevels();
     });
+  }
+  setAccessLevels()
+  {
+
+    let parent_id = this.storage.get('parent_id');
+      parent_id.then((data) => {
+        if(data!=null)
+        {
+          //debugger;    
+      this.parentId=data;
+      this.isOwner=false;
+        }
+       else
+       {
+      this.isOwner=true;
+       }
+       this.allowMenuOptions();
+      
+      });
+  }
+  allowMenuOptions()
+  {
+    if(this.isOwner==false)
+    {
+    let allowed_access_options = this.storage.get('allowed_access_options');
+    allowed_access_options.then((data) => {
+      if(data!=null)
+      {
+        //debugger;
+        let savedAccessLevels:any[]=data;
+    //debugger;
+      let createWebsiteAccesLevels=savedAccessLevels.filter((element) => {
+        return (element.name=="Create Website");
+    });
+    if(createWebsiteAccesLevels.length>0)
+      {
+        this.isCreateWebsiteAccess=true;
+      }
+      else
+      {
+        this.isCreateWebsiteAccess=false;
+      }
+      let mlsSettingsAccesLevels=savedAccessLevels.filter((element) => {
+        return (element.name=="Mls Settings");
+    });
+    if(mlsSettingsAccesLevels.length>0)
+      {
+        this.isMlsSettings=true;
+      }
+      else
+      {
+        this.isMlsSettings=false;
+      }
+    let editWebsiteAccesLevels=savedAccessLevels.filter((element) => {
+        return (element.name=="Edit Website");
+    });
+    if(editWebsiteAccesLevels.length>0)
+      {
+        this.isEditWebsiteAccess=true;
+      }
+      else
+      {
+        this.isEditWebsiteAccess=false;
+      }
+    let deleteWebsiteAccesLevels=savedAccessLevels.filter((element) => {
+        return (element.name=="Delete Website");
+    });
+    if(deleteWebsiteAccesLevels.length>0)
+      {
+        this.isDeleteWebsiteAccess=true;
+      }
+      else
+      {
+        this.isDeleteWebsiteAccess=false;
+      }
+    let viewPagesAccesLevels=savedAccessLevels.filter((element) => {
+        return (element.name=="View Pages/Widgets");
+    });
+    if(viewPagesAccesLevels.length>0)
+      {
+        this.isWebsitePagesAccess=true;
+      }
+      else
+      {
+        this.isWebsitePagesAccess=false;
+      } 
+      }
+    });
+    
+  }
+  else
+  {
+    //debugger;
+    this.isCreateWebsiteAccess=true;
+    this.isDeleteWebsiteAccess=true;
+    this.isEditWebsiteAccess=true;
+    this.isMlsSettings=true;
+    this.isWebsitePagesAccess=true;
+  }
   }
   openInAppBrowser(redirectUrl:string)
   {
