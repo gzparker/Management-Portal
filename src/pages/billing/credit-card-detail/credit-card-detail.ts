@@ -78,13 +78,16 @@ export class CreditCardDetailPage {
   {
     if(this.isOwner==false)
     {
+      this.isEditCreditCardAccess=false;
     let allowed_access_options = this.storage.get('allowed_access_options');
     allowed_access_options.then((data) => {
       if(data!=null)
       {
+        if(data!=false)
+        {
         let savedAccessLevels:any[]=data;
         let editCreditCardAccesLevels=savedAccessLevels.filter((element) => {
-        return (element.name=="Edit Credit Card");
+        return (element.key=="edit-credit-card");
     });
     if(editCreditCardAccesLevels.length>0)
       {
@@ -94,7 +97,7 @@ export class CreditCardDetailPage {
       {
         this.isEditCreditCardAccess=false;
       } 
-    
+    }
       }
     });
     

@@ -62,15 +62,18 @@ export class SetupOptionPage {
   {
     if(this.isOwner==false)
     {
+      this.isGlobalPreference=false;
+      this.isAgents=false;
     let allowed_access_options = this.storage.get('allowed_access_options');
     allowed_access_options.then((data) => {
       if(data!=null)
       {
-        //debugger;
+        if(data!=false)
+        {
         let savedAccessLevels:any[]=data;
       
     let globalPreferenceAccesLevels=savedAccessLevels.filter((element) => {
-        return (element.name=="Global Preference");
+        return (element.key=="global-preference");
     });
     if(globalPreferenceAccesLevels.length>0)
       {
@@ -81,7 +84,7 @@ export class SetupOptionPage {
         this.isGlobalPreference=false;
       }
       let usersAccesLevels=savedAccessLevels.filter((element) => {
-        return (element.name=="View Agents");
+        return (element.key=="view-agents");
     });
     if(usersAccesLevels.length>0)
       {
@@ -90,7 +93,8 @@ export class SetupOptionPage {
       else
       {
         this.isAgents=false;
-      } 
+      }
+    }
       }
     });
   }

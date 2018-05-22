@@ -72,15 +72,23 @@ export class AccountOptionPage {
   {
     if(this.isOwner==false)
     {
+      this.isBillingHistory=false;
+      this.isCreditCardList=false;
+      this.isUpcomingSubscription=false;
+      this.isGeneralInfo=false;
+      this.isSetup=false;
+      this.isUpgradeCenter=false;
     let allowed_access_options = this.storage.get('allowed_access_options');
     allowed_access_options.then((data) => {
       if(data!=null)
       {
         //debugger;
+        if(data!=false)
+        {
         let savedAccessLevels:any[]=data;
       
     let creditCardAccesLevels=savedAccessLevels.filter((element) => {
-        return (element.name=="Credit Card List");
+        return (element.key=="credit-card-list");
     });
     if(creditCardAccesLevels.length>0)
       {
@@ -91,7 +99,7 @@ export class AccountOptionPage {
         this.isCreditCardList=false;
       }
       let billingHistoryAccesLevels=savedAccessLevels.filter((element) => {
-        return (element.name=="Billing History");
+        return (element.key=="billing-history");
     });
     if(billingHistoryAccesLevels.length>0)
       {
@@ -102,7 +110,7 @@ export class AccountOptionPage {
         this.isBillingHistory=false;
       }
       let setupAccesLevels=savedAccessLevels.filter((element) => {
-        return (element.name=="SetUp");
+        return (element.key=="setup");
     });
     if(setupAccesLevels.length>0)
       {
@@ -113,7 +121,7 @@ export class AccountOptionPage {
         this.isSetup=false;
       }
       let upcomingSubscriptionAccesLevels=savedAccessLevels.filter((element) => {
-        return (element.name=="Upcoming Subscription");
+        return (element.key=="upcoming-subscription");
     });
     if(upcomingSubscriptionAccesLevels.length>0)
       {
@@ -124,7 +132,7 @@ export class AccountOptionPage {
         this.isUpcomingSubscription=false;
       }
       let upgradeAccesLevels=savedAccessLevels.filter((element) => {
-        return (element.name=="View Upgrade Plans");
+        return (element.key=="View Upgrade Plans");
     });
     if(upgradeAccesLevels.length>0)
       {
@@ -135,7 +143,7 @@ export class AccountOptionPage {
         this.isUpgradeCenter=false;
       }
       let generalInfoAccesLevels=savedAccessLevels.filter((element) => {
-        return (element.name=="General Info");
+        return (element.key=="general-info");
     });
     if(generalInfoAccesLevels.length>0)
       {
@@ -145,6 +153,7 @@ export class AccountOptionPage {
       {
         this.isGeneralInfo=false;
       }
+    }
       }
     });
   }

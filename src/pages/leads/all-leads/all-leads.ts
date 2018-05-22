@@ -114,15 +114,22 @@ export class AllLeadsPage {
   {
     if(this.isOwner==false)
     {
+      this.isCreateLeadAccess=false;
+    this.isDeleteLeadAccess=false;
+    this.isEditLeadAccess=false;
+    this.isLeadDetailAccess=false;
+    this.isLeadSetupAccess=false;
     let allowed_access_options = this.storage.get('allowed_access_options');
     allowed_access_options.then((data) => {
       if(data!=null)
       {
+        if(data!=false)
+        {
         //debugger;
         let savedAccessLevels:any[]=data;
     //debugger;
       let createLeadAccesLevels=savedAccessLevels.filter((element) => {
-        return (element.name=="Create Lead");
+        return (element.key=="create-lead");
     });
     if(createLeadAccesLevels.length>0)
       {
@@ -133,7 +140,7 @@ export class AllLeadsPage {
         this.isCreateLeadAccess=false;
       }
       let editLeadAccesLevels=savedAccessLevels.filter((element) => {
-        return (element.name=="Edit Lead");
+        return (element.key=="edit-lead");
     });
     if(editLeadAccesLevels.length>0)
       {
@@ -144,7 +151,7 @@ export class AllLeadsPage {
         this.isEditLeadAccess=false;
       }
     let leadDetailAccesLevels=savedAccessLevels.filter((element) => {
-        return (element.name=="Lead Detail");
+        return (element.key=="lead-detail");
     });
     if(leadDetailAccesLevels.length>0)
       {
@@ -155,7 +162,7 @@ export class AllLeadsPage {
         this.isLeadDetailAccess=false;
       }
     let deleteLeadAccesLevels=savedAccessLevels.filter((element) => {
-        return (element.name=="Delete Lead");
+        return (element.key=="delete-lead");
     });
     if(deleteLeadAccesLevels.length>0)
       {
@@ -166,7 +173,7 @@ export class AllLeadsPage {
         this.isDeleteLeadAccess=false;
       }
     let leadSetupAccesLevels=savedAccessLevels.filter((element) => {
-        return (element.name=="Leads Setup");
+        return (element.key=="leads-setup");
     });
     if(leadSetupAccesLevels.length>0)
       {
@@ -177,6 +184,7 @@ export class AllLeadsPage {
         this.isLeadSetupAccess=false;
       } 
       }
+    }
     });
     
   }

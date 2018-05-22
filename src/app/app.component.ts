@@ -69,7 +69,7 @@ export class MyApp {
   public showLeadsSubmenu=false;
   public showHotsheetsSubmenu=false;
   public isOwner:boolean=false;
-  public isDashboard:boolean=false;
+  public isDashboard:boolean=true;
   public isWebsites:boolean=false;
   public isLeads:boolean=false;
   public isHotSheets:boolean=false;
@@ -385,7 +385,7 @@ else if(option=='6')
       parent_id.then((data) => {
         if(data!=null)
         {
-          //debugger;    
+         // debugger;    
       this.parentId=data;
       this.isOwner=false;
         }
@@ -403,16 +403,25 @@ else if(option=='6')
   {
     if(this.isOwner==false)
     {
+     // debugger;
+      this.isAccount=false;
+    this.isHotSheets=false;
+    this.isLeads=false;
+    this.isRoles=false;
+    this.isWebsites=false;
     let allowed_access_options = this.storage.get('allowed_access_options');
     allowed_access_options.then((data) => {
       if(data!=null)
       {
+        if(data!=false)
+        {
         //debugger;
         this.isAccount=true;
         let savedAccessLevels:any[]=data;
+
+       // debugger;
         let websiteAccesLevels=savedAccessLevels.filter((element) => {
-          return (element.name=="View Websites"||element.name=="Create Website"||element.name=="Mls Settings"
-          ||element.name=="Edit Website"||element.name=="Delete Website"||element.name=="Leads Setup");
+          return (element.key=="view-websites");
       });
       if(websiteAccesLevels.length>0)
       {
@@ -423,8 +432,7 @@ else if(option=='6')
         this.isWebsites=false;
       }
       let leadAccesLevels=savedAccessLevels.filter((element) => {
-        return (element.name=="View Leads"||element.name=="Create Lead"||element.name=="Edit Lead"
-        ||element.name=="Lead Detail"||element.name=="Delete Lead"||element.name=="Leads Setup");
+        return (element.key=="view-leads");
     });
     if(leadAccesLevels.length>0)
       {
@@ -435,8 +443,7 @@ else if(option=='6')
         this.isLeads=false;
       }
       let hotsheetAccesLevels=savedAccessLevels.filter((element) => {
-        return (element.name=="View Hotsheets"||element.name=="Create Hotsheet"||element.name=="Edit Hotsheet"
-        ||element.name=="Delete Hotsheet");
+        return (element.key=="view-hotsheets");
     });
     if(hotsheetAccesLevels.length>0)
       {
@@ -447,11 +454,7 @@ else if(option=='6')
         this.isHotSheets=false;
       }
     let accountAccesLevels=savedAccessLevels.filter((element) => {
-        return (element.name=="Credit Card List"||element.name=="Credit Card Detail"||element.name=="Add Credit Card"
-        ||element.name=="Edit Credit Card"||element.name=="Billing History"||element.name=="Upcoming Subscription"
-        ||element.name=="SetUp"||element.name=="View Upgrade Plans"||element.name=="Upgrade/Downgrade"||element.name=="General Info"||
-      element.name=="Global Preference"||element.name=="View Agents"||element.name=="Edit Agent"
-      ||element.name=="Delete Agent"||element.name=="Agent Detail"||element.name=="Agent Detail");
+        return (element.key=="setup"||element.key=="view-agents");
     });
     if(accountAccesLevels.length>0)
       {
@@ -461,13 +464,15 @@ else if(option=='6')
       {
         this.isAccount=false;
       }
-  
+      
+    }
       }
     });
+    
   }
   else
   {
-    //debugger;
+   // debugger;
     this.isAccount=true;
     this.isDashboard=true;
     this.isHotSheets=true;
@@ -475,6 +480,7 @@ else if(option=='6')
     this.isRoles=true;
     this.isWebsites=true;
   }
+  //debugger;
   }
   logOut() {
     this.storage.remove('userId');
@@ -486,7 +492,9 @@ else if(option=='6')
     this.storage.remove('fbAuthResp');
     this.storage.remove("fbMembershipResp");
     this.storage.remove("parent_id");
-    this.storage.remove("loggedInUserInfo");
+    this.storage.remove("allowed_access_options");
+    this.storage.remove('is_submember');
+   // debugger;
     if (this.userServiceObj.facebookObject != undefined) {
       if (this.userServiceObj.facebookObject.getAccessToken.length > 0) {
         this.userServiceObj.facebookObject.logout();

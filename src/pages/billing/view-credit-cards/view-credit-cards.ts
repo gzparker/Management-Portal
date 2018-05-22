@@ -85,16 +85,21 @@ export class ViewCreditCardsPage {
   {
     if(this.isOwner==false)
     {
+      this.isAddCreditCardAccess=false;
+    this.isCreditCardDetailAccess=false;
+    this.isEditCreditCardAccess=false;
     let allowed_access_options = this.storage.get('allowed_access_options');
     allowed_access_options.then((data) => {
       if(data!=null)
       {
+        if(data!=false)
+        {
         //debugger;
         let savedAccessLevels:any[]=data;
     //debugger;
      
       let addCreditCardAccesLevels=savedAccessLevels.filter((element) => {
-        return (element.name=="Add Credit Card");
+        return (element.key=="add-credit-card");
     });
     if(addCreditCardAccesLevels.length>0)
       {
@@ -105,7 +110,7 @@ export class ViewCreditCardsPage {
         this.isAddCreditCardAccess=false;
       }
     let editCreditCardAccesLevels=savedAccessLevels.filter((element) => {
-        return (element.name=="Edit Credit Card");
+        return (element.key=="edit-credit-card");
     });
     if(editCreditCardAccesLevels.length>0)
       {
@@ -116,7 +121,7 @@ export class ViewCreditCardsPage {
         this.isEditCreditCardAccess=false;
       } 
       let creditCardDetailAccesLevels=savedAccessLevels.filter((element) => {
-        return (element.name=="Credit Card Detail");
+        return (element.key=="credit-card-detail");
     });
     if(creditCardDetailAccesLevels.length>0)
       {
@@ -127,7 +132,7 @@ export class ViewCreditCardsPage {
         this.isCreditCardDetailAccess=false;
       }  
       let deleteCreditCardAccesLevels=savedAccessLevels.filter((element) => {
-        return (element.name=="Delete Credit Card");
+        return (element.key=="delete-credit-card");
     });
     if(deleteCreditCardAccesLevels.length>0)
       {
@@ -136,7 +141,8 @@ export class ViewCreditCardsPage {
       else
       {
         this.isDeleteCreditCardAccess=false;
-      }  
+      }
+    }
       }
     });
     

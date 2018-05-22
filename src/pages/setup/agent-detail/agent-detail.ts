@@ -83,16 +83,19 @@ export class AgentDetailPage {
   {
     if(this.isOwner==false)
     {
+      this.isEditAgentAccess=false;
     let allowed_access_options = this.storage.get('allowed_access_options');
     allowed_access_options.then((data) => {
       if(data!=null)
       {
+        if(data!=false)
+        {
         //debugger;
         let savedAccessLevels:any[]=data;
     //debugger;
      
       let editAgentAccesLevels=savedAccessLevels.filter((element) => {
-        return (element.name=="Edit Agent");
+        return (element.key=="edit-agent");
     });
     if(editAgentAccesLevels.length>0)
       {
@@ -102,7 +105,7 @@ export class AgentDetailPage {
       {
         this.isEditAgentAccess=false;
       }
-      
+    }
       }
     });
     

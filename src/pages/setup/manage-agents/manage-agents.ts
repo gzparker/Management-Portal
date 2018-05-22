@@ -90,16 +90,19 @@ setAccessLevels()
   {
     if(this.isOwner==false)
     {
+      this.isEditAgentAccess=false;
     let allowed_access_options = this.storage.get('allowed_access_options');
     allowed_access_options.then((data) => {
       if(data!=null)
       {
+        if(data!=false)
+        {
         //debugger;
         let savedAccessLevels:any[]=data;
     //debugger;
      
       let editAgentAccesLevels=savedAccessLevels.filter((element) => {
-        return (element.name=="Edit Agent");
+        return (element.key=="edit-agent");
     });
     if(editAgentAccesLevels.length>0)
       {
@@ -110,7 +113,7 @@ setAccessLevels()
         this.isEditAgentAccess=false;
       }
       let deleteAgentAccesLevels=savedAccessLevels.filter((element) => {
-        return (element.name=="Delete Agent");
+        return (element.key=="delete-agent");
     });
     if(deleteAgentAccesLevels.length>0)
       {
@@ -121,7 +124,7 @@ setAccessLevels()
         this.isDeleteAgentAccess=false;
       }
       let agentDetailAccesLevels=savedAccessLevels.filter((element) => {
-        return (element.name=="Agent Detail");
+        return (element.key=="agent-detail");
     });
     if(agentDetailAccesLevels.length>0)
       {
@@ -132,7 +135,7 @@ setAccessLevels()
         this.isAgentDetailAccess=false;
       }
       let createAgentAccesLevels=savedAccessLevels.filter((element) => {
-        return (element.name=="Create Agent");
+        return (element.key=="create-agent");
     });
     if(createAgentAccesLevels.length>0)
       {
@@ -142,6 +145,7 @@ setAccessLevels()
       {
         this.isCreateAgentAccess=false;
       }
+    }
       }
     });
     

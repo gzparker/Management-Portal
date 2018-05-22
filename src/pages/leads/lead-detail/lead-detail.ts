@@ -106,16 +106,18 @@ mapWork: any;
   {
     if(this.isOwner==false)
     {
+      this.isEditLeadAccess=false;
     let allowed_access_options = this.storage.get('allowed_access_options');
     allowed_access_options.then((data) => {
       if(data!=null)
       {
-        //debugger;
+        if(data!=false)
+        {
         let savedAccessLevels:any[]=data;
     //debugger;
      
       let editLeadAccesLevels=savedAccessLevels.filter((element) => {
-        return (element.name=="Edit Lead");
+        return (element.key=="edit-lead");
     });
     if(editLeadAccesLevels.length>0)
       {
@@ -125,7 +127,7 @@ mapWork: any;
       {
         this.isEditLeadAccess=false;
       }
-    
+    }
       }
     });
     

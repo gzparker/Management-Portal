@@ -88,16 +88,19 @@ export class UpgradeCenterPage {
   {
     if(this.isOwner==false)
     {
+      this.isUpgradeDowngradeAccess=false;
     let allowed_access_options = this.storage.get('allowed_access_options');
     allowed_access_options.then((data) => {
       if(data!=null)
       {
+        if(data!=false)
+        {
         //debugger;
         let savedAccessLevels:any[]=data;
     //debugger;
      
       let editAgentAccesLevels=savedAccessLevels.filter((element) => {
-        return (element.name=="Upgrade/Downgrade");
+        return (element.key=="upgrade-downgrades");
     });
     if(editAgentAccesLevels.length>0)
       {
@@ -107,7 +110,7 @@ export class UpgradeCenterPage {
       {
         this.isUpgradeDowngradeAccess=false;
       }
-      
+    }
       }
     });
     

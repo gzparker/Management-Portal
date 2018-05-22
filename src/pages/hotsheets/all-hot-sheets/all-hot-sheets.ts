@@ -89,16 +89,21 @@ export class AllHotSheetsPage {
   {
     if(this.isOwner==false)
     {
+      this.isCreateHotsheetAccess=false;
+      this.isEditHotsheetAccess=false;
+      this.isDeleteHotsheetAccess=false;
     let allowed_access_options = this.storage.get('allowed_access_options');
     allowed_access_options.then((data) => {
       if(data!=null)
       {
+        if(data!=false)
+        {
         //debugger;
         let savedAccessLevels:any[]=data;
     //debugger;
      
       let createHotsheetAccesLevels=savedAccessLevels.filter((element) => {
-        return (element.name=="Create Hotsheet");
+        return (element.key=="create-hotsheet");
     });
     if(createHotsheetAccesLevels.length>0)
       {
@@ -109,7 +114,7 @@ export class AllHotSheetsPage {
         this.isCreateHotsheetAccess=false;
       }
       let editHotsheetAccesLevels=savedAccessLevels.filter((element) => {
-        return (element.name=="Edit Hotsheet");
+        return (element.key=="edit-hotsheet");
     });
     if(editHotsheetAccesLevels.length>0)
       {
@@ -120,7 +125,7 @@ export class AllHotSheetsPage {
         this.isEditHotsheetAccess=false;
       }
       let deleteHotsheetAccesLevels=savedAccessLevels.filter((element) => {
-        return (element.name=="Delete Hotsheet");
+        return (element.key=="delete-hotsheet");
     });
     if(deleteHotsheetAccesLevels.length>0)
       {
@@ -130,6 +135,7 @@ export class AllHotSheetsPage {
       {
         this.isDeleteHotsheetAccess=false;
       }
+    }
       }
     });
     

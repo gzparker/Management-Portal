@@ -102,15 +102,21 @@ export class AllWebsitesPage {
   {
     if(this.isOwner==false)
     {
+      this.isCreateWebsiteAccess=false;
+    this.isDeleteWebsiteAccess=false;
+    this.isEditWebsiteAccess=false;
+    this.isMlsSettings=false;
+    this.isWebsitePagesAccess=false;
     let allowed_access_options = this.storage.get('allowed_access_options');
     allowed_access_options.then((data) => {
       if(data!=null)
       {
-        //debugger;
+        if(data!=false)
+        {
         let savedAccessLevels:any[]=data;
     //debugger;
       let createWebsiteAccesLevels=savedAccessLevels.filter((element) => {
-        return (element.name=="Create Website");
+        return (element.key=="create-website");
     });
     if(createWebsiteAccesLevels.length>0)
       {
@@ -121,7 +127,7 @@ export class AllWebsitesPage {
         this.isCreateWebsiteAccess=false;
       }
       let mlsSettingsAccesLevels=savedAccessLevels.filter((element) => {
-        return (element.name=="Mls Settings");
+        return (element.key=="mls-settings");
     });
     if(mlsSettingsAccesLevels.length>0)
       {
@@ -132,7 +138,7 @@ export class AllWebsitesPage {
         this.isMlsSettings=false;
       }
     let editWebsiteAccesLevels=savedAccessLevels.filter((element) => {
-        return (element.name=="Edit Website");
+        return (element.key=="edit-website");
     });
     if(editWebsiteAccesLevels.length>0)
       {
@@ -143,7 +149,7 @@ export class AllWebsitesPage {
         this.isEditWebsiteAccess=false;
       }
     let deleteWebsiteAccesLevels=savedAccessLevels.filter((element) => {
-        return (element.name=="Delete Website");
+        return (element.key=="delete-website");
     });
     if(deleteWebsiteAccesLevels.length>0)
       {
@@ -154,7 +160,7 @@ export class AllWebsitesPage {
         this.isDeleteWebsiteAccess=false;
       }
     let viewPagesAccesLevels=savedAccessLevels.filter((element) => {
-        return (element.name=="View Pages/Widgets");
+        return (element.key=="view-pages-widgets");
     });
     if(viewPagesAccesLevels.length>0)
       {
@@ -163,7 +169,8 @@ export class AllWebsitesPage {
       else
       {
         this.isWebsitePagesAccess=false;
-      } 
+      }
+    }
       }
     });
     

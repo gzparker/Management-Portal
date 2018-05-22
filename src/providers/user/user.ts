@@ -1049,6 +1049,17 @@ viewGlobalSettings(member_id:string){
        .map(this.extractData)
        return viewSettingsResp;
 }
+getAllMemberAllowedOptions(allowedOptions)
+{
+  
+  let data = new URLSearchParams();
+  //debugger;
+    data.append('allowedOptions',allowedOptions);
+   let allowedOptionsResp=this.http
+       .post(this.sharedServiceObj.registerationApiBaseUrl+'members/memberAllowedOptions', data, this.headerOptions)
+       .map(this.extractData)
+       return allowedOptionsResp;
+}
 updateGlobalSettings(member_id:string,personalImage:string,companyImage:string,
   timezone:string,colorBase:string,secondColor:string,thirdColor:string){
   //  debugger;

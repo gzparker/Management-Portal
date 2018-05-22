@@ -100,32 +100,35 @@ export class LoginPage {
           {
             this.storage.set('userId', result.memberCredentials.parent_id);
             this.storage.set('subMemberId', result.memberCredentials.id);
-            debugger;
+            //debugger;
           }
           else
           {
-            debugger;
+            //;
             this.storage.set('userId', result.memberCredentials.id);
           }
           this.storage.set('parent_id', result.memberCredentials.parent_id);
           this.storage.set('image_url',result.memberCredentials.image_url);
           this.storage.set('loggedInUserInfo', result);
           //debugger;
+          this.storage.set('globalSettings',result.globalSettings);
+          this.userLoggedId = true;
         if(result.memberCredentials.parent_id!=undefined)
         {
           this.storage.set('is_submember', "1");
-          this.storage.set('allowed_access_options', result.memberAllowedOptions);
+          this.setAllAccessOptions(result.userAssignedRoles);
+          //this.storage.set('allowed_access_options', result.memberAllowedOptions);
         }
         else
         {
           this.storage.set('is_submember', "0");
+          this.navCtrl.setRoot(DashboardTabsPage);
         }
         //  debugger;
-          this.storage.set('globalSettings',result.globalSettings);
-          this.userLoggedId = true;
+         
         //debugger;
         //this.sharedServiceObj.setLoginStatus(true);
-          this.navCtrl.setRoot(DashboardTabsPage);
+          
           
       });
         }
@@ -146,6 +149,7 @@ export class LoginPage {
 
     }
     else {
+      //debugger;
       this.email = "";
       this.password = "";
       this.userLogginMsg = result.message;
@@ -158,7 +162,30 @@ export class LoginPage {
     }
  
   }
-
+setAllAccessOptions(userAllowedRoles:any)
+{
+let finalAllowedRolesOptions:number[]=[];
+userAllowedRoles.forEach(element => {
+  //finalAllowedRolesOptions.concat(element.allowed_options.split(','));
+  //debugger;
+  let dummyAllOptions=element.allowed_options.split(',');
+  for(let i=0;i<dummyAllOptions.length;i++)
+  {
+    finalAllowedRolesOptions.push(dummyAllOptions[i].toString());
+  }
+});
+//debugger;
+this.userServiceObj.getAllMemberAllowedOptions(finalAllowedRolesOptions)
+      .subscribe((result) => this.setAllAccessOptionsResp(result));
+}
+setAllAccessOptionsResp(result:any)
+{
+  if (result.status == true) {
+    //debugger;
+    this.storage.set('allowed_access_options', result.memberAllowedOptions);
+    this.navCtrl.setRoot(DashboardTabsPage);
+  }
+}
   public openUserVerificationModal(master_id: any) {
     var modalPage = this.modalCtrl.create(UserVerificationPage, { master_id: master_id });
     modalPage.present();
