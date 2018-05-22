@@ -36,7 +36,7 @@
   </ion-chip>
 
   <ion-list *ngIf="!isApp">    
-    <ion-item-sliding *ngFor="let hotsheet of allHotSheetList">
+    <ion-item *ngFor="let hotsheet of allHotSheetList">
 
       <ion-item (click)="editHotsheet(hotsheet.id)">
         <ion-thumbnail item-start>
@@ -48,11 +48,9 @@
         <!-- <button ion-button clear item-end>View</button> -->
       </ion-item>
 
-      <ion-item-options side="right">
-        <button ion-button color="danger" (click)="deleteHotsheet(hotsheet)" *ngIf="isDeleteHotsheetAccess==true">Delete</button>
-      </ion-item-options>
-
-    </ion-item-sliding>
+        <button ion-button item-right color="danger" (click)="deleteHotsheet(hotsheet)" *ngIf="isDeleteHotsheetAccess==true">Delete</button>
+      
+    </ion-item>
   </ion-list>
 
   <ion-list *ngIf="isApp">

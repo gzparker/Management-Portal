@@ -32,8 +32,23 @@
   <ion-chip *ngIf="notificationMsg!=''">
     <ion-label color="secondary">{{notificationMsg}}</ion-label>
   </ion-chip>
-
-  <ion-list>    
+  <ion-list *ngIf="!isApp">    
+      <ion-item *ngFor="let role of allRoles">    
+        
+        <ion-item>
+          <ion-icon name="ios-contacts" item-start></ion-icon>
+          <h2>{{role.name}}</h2>
+         
+        </ion-item>
+        
+      
+          <button ion-button  item-right color="primary" (click)="editRole(role.id)">Edit</button>
+          <button ion-button  item-right color="danger" (click)="deleteRole(role)">Delete</button>        
+      
+  
+      </ion-item>
+    </ion-list>
+  <ion-list *ngIf="isApp">    
     <ion-item-sliding *ngFor="let role of allRoles">    
       
       <ion-item>

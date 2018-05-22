@@ -29,19 +29,8 @@
 <ion-chip *ngIf="notificationMsg!=''">
   <ion-label color="secondary">{{notificationMsg}}</ion-label>
 </ion-chip>
-<ion-list>
+<ion-list *ngIf="!isApp">
    
-  
-      <!--<ion-card-title>
-        
-      </ion-card-title>-->
-     
-    <!--<ion-card *ngFor="let agent of allAgents">
-      
-      <ion-card-content>
-        <ion-card-title>
-          
-          </ion-card-title>-->
           <ion-item *ngFor="let agent of allAgents">
           <ion-item no-lines (click)="agentDetail(agent.id)">
           <ion-avatar item-start><img src={{this.sharedServiceObj.imgBucketUrl}}{{agent.image_url}} *ngIf="agent.image_url!=null&&agent.image_url!=undefined&&agent.image_url!=''"/>
@@ -57,11 +46,45 @@
             <ion-icon name="trash"></ion-icon>
           </button>
         </ion-item>
-      <!--</ion-card-content>
-    </ion-card>-->
-   
+    
   
   </ion-list>
+  <ion-list *ngIf="isApp">
+   
+      <ion-item *ngFor="let agent of allAgents">
+      <ion-item no-lines (click)="agentDetail(agent.id)">
+      <ion-avatar item-start><img src={{this.sharedServiceObj.imgBucketUrl}}{{agent.image_url}} *ngIf="agent.image_url!=null&&agent.image_url!=undefined&&agent.image_url!=''"/>
+      <img src={{no_image_found}} *ngIf="agent.image_url==null||agent.image_url==''"/></ion-avatar>
+      <h2>{{agent.first_name}} {{agent.last_name}}</h2>
+      <p>Email:{{agent.email}}</p>
+      <p [innerHTML]="agent.description"></p>
+    </ion-item>
+      <button ion-button item-right color="secondary" (click)="editAgent(agent.id)" *ngIf="isEditAgentAccess==true">
+          <ion-icon name="create"></ion-icon>
+        </button>
+      <button ion-button item-right color="danger" (click)="deleteAgent(agent)" *ngIf="isDeleteAgentAccess==true">
+        <ion-icon name="trash"></ion-icon>
+      </button>
+    </ion-item>
+
+
+</ion-list>
+<ion-list *ngIf="!isApp">
+    <ion-item-sliding *ngFor="let agent of allAgents">
+        <ion-item no-lines (click)="agentDetail(agent.id)">
+        <ion-avatar item-start><img src={{this.sharedServiceObj.imgBucketUrl}}{{agent.image_url}} *ngIf="agent.image_url!=null&&agent.image_url!=undefined&&agent.image_url!=''"/>
+        <img src={{no_image_found}} *ngIf="agent.image_url==null||agent.image_url==''"/></ion-avatar>
+        <h2>{{agent.first_name}} {{agent.last_name}}</h2>
+        <p>Email:{{agent.email}}</p>
+        <p [innerHTML]="agent.description"></p>
+      </ion-item>
+      <ion-item-options side="right">
+
+      </ion-item-options>
+      <button ion-button color="primary" (click)="editAgent(agent.id)" *ngIf="isEditAgentAccess==true">Edit</button>
+        <button ion-button color="danger" (click)="deleteAgent(agent)" *ngIf="isDeleteAgentAccess==true">Delete</button>
+      </ion-item-sliding>
+</ion-list>
   <ion-chip *ngIf='allAgents.length<=0&&agentsFoundMessage!=""'>
       <ion-label color="danger">{{agentsFoundMessage}}</ion-label>
   </ion-chip>

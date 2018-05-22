@@ -74,7 +74,7 @@ export class AllWebsitesPage {
     member_id.then((data) => {
       //alert('welcome too');
       this.userId=data;
-      debugger;
+      //debugger;
       this.viewAllWebsite(null);
       this.setAccessLevels();
     });

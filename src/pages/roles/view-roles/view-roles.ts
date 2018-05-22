@@ -51,6 +51,7 @@ export class ViewRolesPage {
         content: "Please wait...",
         duration: 5000
       });
+      //debugger;
   }
 
   ionViewDidLoad() {
