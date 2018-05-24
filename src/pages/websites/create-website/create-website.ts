@@ -31,7 +31,22 @@ export class CreateWebsitePage {
   public identity_name:string="";
   public websiteCreateMsg:string="";
   public isActive:boolean=true;
+  public intagent_website:boolean=true;
   public userId:string="";
+  public website_a_record_location:string="";
+  public identity_phone_number:string="";
+  public homepage_description:string="";
+  public homepageMeta_description:string="";
+  public homepage_search_text:string="";
+  public homepage_meta_title:string="";
+  private CkeditorConfig = {uiColor: '#99000',removeButtons:'Underline,Subscript,Superscript,SpecialChar'
+  ,toolbar: [
+    { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source'] },
+    { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', '-', 'RemoveFormat' ] },
+    { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
+    { name: 'links', items: [ 'Link', 'Unlink'] },
+    { name: 'styles', items: ['Format', 'FontSize' ] }
+  ]};
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,
     public sharedServiceObj: SharedProvider, private storage: Storage,
@@ -47,11 +62,48 @@ export class CreateWebsitePage {
       this.userId=data;
     });
   }
+  
+  homepageDescBlured(quill) {
+    //console.log('editor blur!', quill);
+  }
+ 
+  homepageDescFocused(quill) {
+    //console.log('editor focus!', quill);
+  }
+ 
+  homepageDescCreated(quill) {
+   // this.editor = quill;
+    //console.log('quill is ready! this is current quill instance object', quill);
+  }
+ 
+  homepageDescChanged(html) {
+//debugger;
+this.homepage_description=html;
+ 
+  }
+  homepageMetaDescBlured(quill) {
+    //console.log('editor blur!', quill);
+  }
+ 
+  homepageMetaDescFocused(quill) {
+    //console.log('editor focus!', quill);
+  }
+ 
+  homepageMetaDescCreated(quill) {
+   // this.editor = quill;
+    //console.log('quill is ready! this is current quill instance object', quill);
+  }
+ 
+  homepageMetaDescChanged(html) {
+//debugger;
+this.homepageMeta_description=html;
+ 
+  }
   createWebsite():void{
     if(this.userId!=""){
     //this.domainAccess=this.localStorageService.get('domainAccess');
     let isActiveFinal="1";
-  
+    let intagentWebsiteFinal:number=1;
      //if(this.domainAccess)
      //{
        if(this.isActive==true)
@@ -62,6 +114,14 @@ export class CreateWebsitePage {
        {
          isActiveFinal="0";
        }
+       if(this.intagent_website==true)
+       {
+intagentWebsiteFinal=1
+       }
+       else
+       {
+intagentWebsiteFinal=0;
+       }
        if(this.website_domain.indexOf("http://www")<0 && this.website_domain.indexOf("https://www")<0)
        {
          //debugger;
@@ -71,7 +131,9 @@ export class CreateWebsitePage {
        {
          this.website_domain=this.website_domain;
        }
-  this.userServiceObj.createWebsite(this.userId,isActiveFinal,this.website_domain,this.identity_name)
+  this.userServiceObj.createWebsite(this.userId,isActiveFinal,this.website_domain,this.identity_name,
+    intagentWebsiteFinal,this.website_a_record_location,this.identity_phone_number,this.homepage_description,
+    this.homepageMeta_description,this.homepage_search_text,this.homepage_meta_title)
     .subscribe((result) => this.createWebsiteResp(result));
     // }
       }

@@ -28,10 +28,67 @@
     <ion-input type="text" [(ngModel)]="website_domain" 
     name="website_domain" id="website_domain" required ></ion-input>
   </ion-item>
-  
+  <ion-item>
+      <!--<ion-label floating>Website a Record Location</ion-label>-->
+      <ion-input type="text" [(ngModel)]="website_a_record_location" 
+      name="website_a_record_location" id="website_a_record_location" 
+      placeholder="Please type exactly what your location is for your domain search."></ion-input>
+    </ion-item>
+   
+      <ion-item>
+          <ion-label floating>Identity Phone Number</ion-label>
+          <ion-input type="text" [(ngModel)]="identity_phone_number" 
+          name="identity_phone_number" id="identity_phone_number" [brmasker]="{mask:'(000) 000-0000', len:14, type:'num'}"></ion-input>
+    </ion-item>
+    <div class="itemPadding">
+        <ion-label>Home Page Description</ion-label>
+          <ckeditor
+          [config]="CkeditorConfig"
+          [readonly]="false" [(ngModel)]="homepage_description"
+          (change)="homepageDescChanged($event)"
+          (blur)="homepageDescBlured($event)"
+          (focus)="homepageDescFocused($event)"
+          (ready)="homepageDescCreated($event)"
+          debounce="500" name="editorHomePageDescription">
+          </ckeditor>
+        </div>
+        <ion-item>
+            <!--<ion-label floating>HomePage Search Text</ion-label>-->
+            <ion-input type="text" [(ngModel)]="homepage_search_text" 
+            name="homepage_search_text" id="homepage_search_text" 
+            placeholder="Action sentence to draw people to search for listings"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>Identity Phone Name</ion-label>
+            <ion-input type="text" [(ngModel)]="identity_phone_number" 
+            name="identity_phone_number" id="identity_phone_number" [brmasker]="{mask:'(000) 000-0000', len:14, type:'num'}"></ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-label floating>Home Page Meta Title</ion-label>
+          <ion-input type="text" [(ngModel)]="homepage_meta_title" 
+          name="homepage_meta_title" id="homepage_meta_title" ></ion-input>
+        </ion-item>
+        <div class="itemPadding">
+            <ion-label>Home Page Meta Description</ion-label>
+              <ckeditor
+              [config]="CkeditorConfig"
+              [readonly]="false" [(ngModel)]="homepageMeta_description"
+              (change)="homepageMetaDescChanged($event)"
+              (blur)="homepageMetaDescBlured($event)"
+              (focus)="homepageMetaDescFocused($event)"
+              (ready)="homepageMetaDescCreated($event)"
+              debounce="500" name="editorHomePageDescription">
+              </ckeditor>
+            </div>
+    <ion-item>
+        <ion-label>Intagent Website</ion-label>
+        <!--<ion-checkbox color="royal" checked="true" [(ngModel)]="intagent_website" name="intagent_website" id="intagent_website" 
+        required >Intagent Website</ion-checkbox>-->
+        <ion-toggle checked="true" [(ngModel)]="intagent_website" name="intagent_website" id="intagent_website"></ion-toggle>
+      </ion-item>
   <ion-item>
     <ion-label>Is Active<span [ngClass]="{'error': isActive==false}" *ngIf="isActive==false">*</span></ion-label>
-    <ion-checkbox color="royal" checked="false" [(ngModel)]="isActive" name="isActive" id="isActive" 
+    <ion-checkbox color="royal" checked="true" [(ngModel)]="isActive" name="isActive" id="isActive" 
     required >Is Active</ion-checkbox>
   </ion-item>
   <div padding>

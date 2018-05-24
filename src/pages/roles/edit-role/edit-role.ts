@@ -32,8 +32,10 @@ export class EditRolePage {
   public roleUpdateMsg:string="";
   public isActive:boolean=true;
   public userId:string="";
+  public access_level_model:string="";
   public all_access_levels:any[]=[];
   public access_level:any[]=[];
+  public testCheckbox:boolean=true;
   public parentId:string="";
  
   public role_id:string="";
@@ -51,13 +53,19 @@ export class EditRolePage {
     let member_id = this.storage.get('userId');
     member_id.then((data) => {
       this.userId=data;
-      this.getAllAccessLevels();
       if(this.navParams.get('role_id')!=undefined)
       {
        this.role_id = this.navParams.get('role_id');
        this.loadRoleDetail();
+       this.getAllAccessLevels();
        }
     });
+  }
+  ngAfterContentInit(){
+    //debugger;
+   
+     
+    //debugger;
   }
   getAllAccessLevels()
   {
@@ -75,8 +83,41 @@ this.all_access_levels=result.results;
     {
       this.all_access_levels=[];
     }
+
     //debugger;
   }
+setSelectedAccessLevels(roleId:string)
+{
+
+let selectedIndex = this.access_level.indexOf(roleId);
+    
+    
+    if (selectedIndex >= 0) {
+    
+      this.access_level.splice(selectedIndex, 1);
+
+    }
+    else {
+
+      this.access_level.push(roleId);
+    }
+//debugger;
+}
+checkAccessLevelExistis(access_option)
+{
+  //debugger;
+  let selectedIndex = this.access_level.indexOf(access_option);
+      
+    //debugger;
+    if (selectedIndex >= 0) {
+ return true;
+   }
+    else
+   {
+     return false;
+   }
+    //return true;
+}
   loadRoleDetail()
   {
     this.userServiceObj.roleDetail(this.role_id)
@@ -98,6 +139,7 @@ this.all_access_levels=result.results;
       }
       }
     }
+    //debugger;
   }
   updateRole()
   {
@@ -107,8 +149,6 @@ this.userServiceObj.updateRole(this.access_level,this.role_id,this.role_name)
   }
   updateRoleResp(result:any)
   {
-    
-//debugger;
 if(result.status==true)
 {
   this.roleUpdateMsg="Role has been updated successfully.";
@@ -122,4 +162,5 @@ else
 }
     
   }
+
 }

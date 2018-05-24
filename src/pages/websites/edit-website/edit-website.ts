@@ -72,7 +72,20 @@ export class EditWebsitePage {
   public favIconHeight:string="";
   public logoWidth:string="";
   public logoHeight:string="";
-
+  public website_a_record_location:string="";
+  public identity_phone_number:string="";
+  public homepage_description:string="";
+  public homepageMeta_description:string="";
+  public homepage_search_text:string="";
+  public homepage_meta_title:string="";
+  private CkeditorConfig = {uiColor: '#99000',removeButtons:'Underline,Subscript,Superscript,SpecialChar'
+  ,toolbar: [
+    { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source'] },
+    { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', '-', 'RemoveFormat' ] },
+    { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
+    { name: 'links', items: [ 'Link', 'Unlink'] },
+    { name: 'styles', items: ['Format', 'FontSize' ] }
+  ]};
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,
@@ -307,6 +320,12 @@ export class EditWebsitePage {
     {
      // debugger;
 this.identity_name=result.result.identity_name;
+this.website_a_record_location=result.result.website_a_record_location;
+this.identity_phone_number=result.result.identity_phone_number;
+this.homepage_description=result.result.homepage_description;
+this.homepageMeta_description=result.result.homepage_meta_description;
+this.homepage_search_text=result.result.homepage_search_text;
+this.homepage_meta_title=result.result.homepage_meta_title;
 if(result.result.identity_logo!=undefined)
       {
       
@@ -710,7 +729,9 @@ else
   this.userServiceObj.updateWebsite(this.userId,isActiveFinal,this.website_domain,this.websiteId,
     this.contact_email,this.header_wrapper,this.footer_wrapper,intagent_website_dummy,this.custom_css,
     show_new_listing_dummy,show_open_houses_dummy,feature_agent_listings_dummy,
-    feature_broker_listings_dummy,feature_office_listings_dummy,this.identity_name,this.identity_logo,this.identity_icon)
+    feature_broker_listings_dummy,feature_office_listings_dummy,this.identity_name,this.identity_logo,
+    this.identity_icon,this.website_a_record_location,this.identity_phone_number,this.homepage_description,
+    this.homepageMeta_description,this.homepage_search_text,this.homepage_meta_title)
     .subscribe((result) => this.updateWebsiteResp(result));
      //}
       
@@ -723,5 +744,42 @@ else
   this.ngZone.run(() => {
     this.navCtrl.push(AllWebsitesPage,{notificationMsg:this.websiteUpdateMsg.toUpperCase()});
     });
+  }
+  
+  homepageDescBlured(quill) {
+    //console.log('editor blur!', quill);
+  }
+ 
+  homepageDescFocused(quill) {
+    //console.log('editor focus!', quill);
+  }
+ 
+  homepageDescCreated(quill) {
+   // this.editor = quill;
+    //console.log('quill is ready! this is current quill instance object', quill);
+  }
+ 
+  homepageDescChanged(html) {
+//debugger;
+this.homepage_description=html;
+ 
+  }
+  homepageMetaDescBlured(quill) {
+    //console.log('editor blur!', quill);
+  }
+ 
+  homepageMetaDescFocused(quill) {
+    //console.log('editor focus!', quill);
+  }
+ 
+  homepageMetaDescCreated(quill) {
+   // this.editor = quill;
+    //console.log('quill is ready! this is current quill instance object', quill);
+  }
+ 
+  homepageMetaDescChanged(html) {
+//debugger;
+this.homepageMeta_description=html;
+ 
   }
 }

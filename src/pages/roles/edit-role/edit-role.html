@@ -31,7 +31,7 @@
       name="role_name" id="role_name" required placeholder="Role Name"></ion-input>
     </ion-item>
 
-    <ion-item>
+    <!--<ion-item>
       <ion-label stacked>Access Level<span [ngClass]="error" *ngIf="access_level.length==0">*</span></ion-label>
       <ion-select [(ngModel)]="access_level" 
       name="access_level" multiple="true" required>
@@ -39,8 +39,17 @@
       {{access_option.name}}
       </ion-option>
       </ion-select>
+    </ion-item>-->
+    <ion-item>
+        <ion-label stacked>Access Level<span [ngClass]="error" *ngIf="access_level.length==0">*</span></ion-label>
     </ion-item>
-    
+    <ion-item *ngFor="let access_option of all_access_levels" >
+       
+        <ion-label (tap)="setSelectedAccessLevels(access_option.id);" tappable>{{access_option.name}}
+        </ion-label>
+        <ion-checkbox red item-right name="chkOption_{{access_option.id}}" id="chkOption_{{access_option.id}}" (ionChange)="setSelectedAccessLevels(access_option.id);"  checked="{{checkAccessLevelExistis(access_option.id)}}">
+        </ion-checkbox>
+   </ion-item>
     <div padding>
       <button ion-button color="primary" block (click)="updateRole();" [disabled]="!roleForm.valid">Update</button>
     </div>

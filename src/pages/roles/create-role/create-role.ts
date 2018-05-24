@@ -53,6 +53,23 @@ export class CreateRolePage {
       this.getAllAccessLevels();
     });
   }
+  setSelectedAccessLevels(roleId:string)
+{
+
+let selectedIndex = this.access_level.indexOf(roleId);
+    
+    
+    if (selectedIndex >= 0) {
+    
+      this.access_level.splice(selectedIndex, 1);
+
+    }
+    else {
+
+      this.access_level.push(roleId);
+    }
+debugger;
+}
   getAllAccessLevels()
   {
     this.userServiceObj.loadAllAccessLevels()

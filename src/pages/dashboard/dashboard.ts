@@ -135,7 +135,9 @@ this.totalSubMembers=result.results.length.toString();
   }
   userDetailedInfoResp(status: any) {
     if (status.status == true) {
+     // debugger;
       if (status.result != undefined) {
+        if (status.result.subscribed_services!=undefined){
         if (status.result.subscribed_services.length > 0) {
           if (status.result.subscribed_services[0].service_status == null) {
          
@@ -165,6 +167,19 @@ this.totalSubMembers=result.results.length.toString();
           }
         }
       }
+      else
+      {
+        this.ngZone.run(() => {
+          this.sharedServiceObj.setPaidStatus(false);
+          this.navCtrl.push(SubscriptionPage, { full_name: status.result.first_name + " " + status.result.last_name });
+        });
+      }
+      
+    }
+    }
+    else
+    {
+     // debugger;
     }
   }
 redirectToGlobalPreferences(status:boolean)

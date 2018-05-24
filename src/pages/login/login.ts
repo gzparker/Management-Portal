@@ -73,7 +73,6 @@ export class LoginPage {
     //public back = (url) => this.navCtrl.pop();
   }
   userLogin(): void {
-   //this.loader.present();
     this.userServiceObj.userLogin(this.email, this.password)
       .subscribe((result) => this.userLoginResponse(result));
   }
@@ -87,13 +86,12 @@ export class LoginPage {
           this.storage.ready().then(() => {
           this.storage.set('loggedId', '1');
           this.storage.set('selectedService','2');
-         // this.storage.set('userId', result.memberCredentials.id);
           this.storage.set('email', result.memberCredentials.email);
           this.storage.set('first_name', result.memberCredentials.first_name);
           this.storage.set('last_name', result.memberCredentials.last_name);
           this.storage.set('userType', "1");
           this.storage.set('last_name', result.memberCredentials.last_name);
-          this.storage.set('userType', "1");
+        
           this.storage.set('country_abbv', result.memberCredentials.country_abbv);
           this.storage.set('country_code', result.memberCredentials.country_code);
           if(result.memberCredentials.parent_id!=null)

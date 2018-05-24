@@ -16,20 +16,22 @@
 
 
 <ion-content padding>
+    <form #modalFormLogin="ngForm">
   <ion-item>
     <ion-label floating>Email Address</ion-label>
-    <ion-input type="text" [(ngModel)]="email" name="email"></ion-input>
+    <ion-input type="text" [(ngModel)]="email" name="email" required></ion-input>
   </ion-item>
 
   <ion-item>
     <ion-label floating>Password</ion-label>
-    <ion-input type="password" [(ngModel)]="password" name="password"></ion-input>
+    <ion-input type="password" [(ngModel)]="password" name="password" required></ion-input>
   </ion-item>
 
   <div padding>
-    <button ion-button color="primary" block (click)="userLogin();">Login</button>
+    <button ion-button color="primary" block (click)="userLogin();" [disabled]="!modalFormLogin.valid">Login</button>
     <button ion-button color="primary" block (click)="onFacebookLoginClick();">Facebook Login</button>
   </div>
+</form>
   <ion-chip *ngIf="userLogginMsg!=''">
     <ion-label color="danger">{{userLogginMsg}}</ion-label>
   </ion-chip>

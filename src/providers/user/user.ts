@@ -647,7 +647,9 @@ allUserWebsites(user_id:string){
     .map(this.extractData)
     return websiteListing;
 }
-createWebsite(user_id:string,isActive:string,website_domain:string,identity_name:string){
+createWebsite(user_id:string,isActive:string,website_domain:string,identity_name:string,
+  intagent_website:number,website_a_record_location:string,identity_phone_number:string,homepage_description:string,
+  homepageMeta_description:string,homepage_search_text:string,homepage_meta_title:string){
 //debugger;
     let data = new URLSearchParams();
     data.append('website_domain',website_domain);
@@ -655,6 +657,14 @@ createWebsite(user_id:string,isActive:string,website_domain:string,identity_name
  data.append('member_id',user_id);
  data.append('active',isActive);
  data.append('mls_server_id',this.sharedServiceObj.mlsServerId);
+
+ data.append('intagent_website',intagent_website.toString());
+ data.append('website_a_record_location',website_a_record_location);
+data.append('identity_phone_number',identity_phone_number);
+data.append('homepage_description',homepage_description);
+data.append('homepageMeta_description',homepageMeta_description);
+data.append('homepage_search_text',homepage_search_text);
+data.append('homepage_meta_title',homepage_meta_title);
 //debugger;
   let websiteListing=this.http
     .post(this.sharedServiceObj.apiBaseUrl+'members/createWebsite', data, this.headerOptions)
@@ -676,7 +686,9 @@ updateWebsite(user_id:string,isActive:string,website_domain:string,website_id:st
   header_wrapper:string,footer_wrapper:string,intagent_website:string,custom_css:string,
   show_new_listings:string,show_open_houses:string,feature_agent_listings:string,
   feature_broker_listings:string,
-  feature_office_listings:string,identity_name:string,identity_logo:string,identity_icon:string){
+  feature_office_listings:string,identity_name:string,identity_logo:string,
+  identity_icon:string,website_a_record_location:string,identity_phone_number:string,homepage_description:string,
+  homepageMeta_description:string,homepage_search_text:string,homepage_meta_title:string){
 
 let data = new URLSearchParams();
  data.append('website_domain',website_domain);
@@ -697,6 +709,13 @@ let data = new URLSearchParams();
  data.append('feature_agent_listings',feature_agent_listings);
  data.append('feature_broker_listings',feature_broker_listings);
  data.append('feature_office_listings',feature_office_listings);
+
+ data.append('website_a_record_location',website_a_record_location);
+data.append('identity_phone_number',identity_phone_number);
+data.append('homepage_description',homepage_description);
+data.append('homepageMeta_description',homepageMeta_description);
+data.append('homepage_search_text',homepage_search_text);
+data.append('homepage_meta_title',homepage_meta_title);
 //debugger;
   let websiteListing=this.http
     .post(this.sharedServiceObj.apiBaseUrl+'members/updateWebsite', data, this.headerOptions)
