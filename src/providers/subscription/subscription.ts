@@ -179,7 +179,7 @@ upgradeDowngradePlan(user_id:string,upgrade_id:string)
 
 }
   private extractData(res: Response) {
-   // debugger;
+  debugger;
     return res.json();
   }
   private handleErrorObservable(error: Response | any) {

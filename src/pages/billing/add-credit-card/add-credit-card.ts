@@ -35,6 +35,9 @@ export class AddCreditCardPage {
   public primary_source_data:string="";
   public calendarMinDate:any;
   public calendarMaxDate:any;
+  public first_name:string="";
+  public last_name:string="";
+  public email:string="";
   public loader:any;
   //public calendarMinDate=new Date().toISOString();
 
@@ -54,13 +57,27 @@ export class AddCreditCardPage {
     let member_id = this.storage.get('userId');
     member_id.then((data) => {
     this.userId=data;
-   
+    let first_name = this.storage.get('first_name');
+    first_name.then((data) => {
+    this.first_name=data;
+    });
+    let last_name = this.storage.get('last_name');
+    last_name.then((data) => {
+    this.last_name=data;
+    });
+    let email = this.storage.get('email');
+    email.then((data) => {
+    this.email=data;
+    });
     });
   }
   saveCreditCard() {
       let dataObj = {
         member_id: "",
         full_name: "",
+        first_name:"",
+        last_name:"",
+        email:"",
         cc_number: "",
         exp_month: "",
         exp_year: "",
@@ -76,6 +93,9 @@ export class AddCreditCardPage {
       this.primary_source_data="0";
     }*/
       dataObj.full_name = this.full_name;
+      dataObj.first_name=this.first_name;
+      dataObj.last_name=this.last_name;
+      dataObj.email=this.email;
       dataObj.cc_number = this.cc_number;
       dataObj.exp_month = this.expiryDate.split("-")[1];
       dataObj.exp_year = this.expiryDate.split("-")[0];
