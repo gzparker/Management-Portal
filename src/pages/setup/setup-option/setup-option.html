@@ -22,9 +22,9 @@
     <ion-item menuClose ion-item (tap)="openPage('10')" *ngIf="isGlobalPreference==true">
       Global Preferences
     </ion-item>
-    <!--<ion-item menuClose ion-item (tap)="openPage('11')">
-      MLS Settings
-    </ion-item>-->
+    <ion-item menuClose ion-item (tap)="openPage('23')" *ngIf="isOwner==true">
+      Roles
+    </ion-item>
     <ion-item menuClose ion-item (tap)="openPage('12')" *ngIf="isAgents==true">
       Users
     </ion-item>

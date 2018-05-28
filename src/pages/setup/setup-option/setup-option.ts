@@ -30,6 +30,7 @@ export class SetupOptionPage {
   public isOwner:boolean=false;
   public isGlobalPreference:boolean=false;
   public isAgents:boolean=false;
+  public isRoles:boolean=false;
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform) {
@@ -114,6 +115,10 @@ export class SetupOptionPage {
     else if(pageNumber=="12")
     {
       this.navCtrl.push(ManageAgentsPage);
+    }
+    else if(pageNumber=="23")
+    {
+      this.navCtrl.setRoot(DashboardTabsPage,{selectedPage:"23"});
     }
     //debugger;
     //this.sharedServiceObj.setNavigationalPage(pageNumber);

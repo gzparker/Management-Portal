@@ -24,9 +24,17 @@ import { SharedProvider } from '../../providers/shared/shared';
 export class SubscriptionProvider {
   private headers: Headers = new Headers();
   private headerOptions: RequestOptions = new RequestOptions();
+  private headersIDX: Headers = new Headers();
+  private headerOptionsIDX: RequestOptions = new RequestOptions();
   constructor(private http: Http, public sharedServiceObj: SharedProvider,
     private storage: Storage, public modalCtrl: ModalController) {
-    console.log('Hello SubscriptionProvider Provider');
+    //console.log('Hello SubscriptionProvider Provider');
+    //this.headers.append("IDX-API-KEY",this.sharedServiceObj.idxapiKey);
+//this.headerOptions= new RequestOptions({ headers: this.headers });
+this.headersIDX.append("IDXKEY",this.sharedServiceObj.idxapiKey);
+this.headerOptionsIDX= new RequestOptions({ headers: this.headersIDX });
+this.headers.append("REGISTRATIONKEY",this.sharedServiceObj.registerationApiKey);
+this.headerOptions= new RequestOptions({ headers: this.headers });
   }
   getServicePackagesList() {
     let url = "";
@@ -148,7 +156,7 @@ export class SubscriptionProvider {
     url = this.sharedServiceObj.apiBaseUrl + 'members/getAvailableMLS';
 
     let allAvailableMLS = this.http
-      .post(url, data, this.headerOptions)
+      .post(url, data, this.headerOptionsIDX)
       .map(this.extractData);
 return allAvailableMLS;
    // return checkSubscriptionResp;
@@ -179,7 +187,7 @@ upgradeDowngradePlan(user_id:string,upgrade_id:string)
 
 }
   private extractData(res: Response) {
-  debugger;
+  //debugger;
     return res.json();
   }
   private handleErrorObservable(error: Response | any) {

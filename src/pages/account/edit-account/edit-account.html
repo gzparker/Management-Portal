@@ -32,10 +32,10 @@
           <ion-label floating>Last Name<span [ngClass]="{'error': last_name==''}" *ngIf="last_name==''">*</span></ion-label>
           <ion-input type="text" required [(ngModel)]="last_name" name="last_name" ></ion-input>
         </ion-item>
-        <ion-item>
+        <!--<ion-item>
           <ion-label floating>Company</ion-label>
           <ion-input type="text" [(ngModel)]="company" name="company" ></ion-input>
-        </ion-item>
+        </ion-item>-->
       <ion-item>
           <ion-label floating>Email Address<span [ngClass]="{'error': email==''}" *ngIf="email==''">*</span></ion-label>
           <ion-input type="email" [(ngModel)]="email" name="email" [email]="true" required></ion-input>
@@ -103,7 +103,20 @@
             <!--<ion-input type="tel" [(ngModel)]="phone_number" name="phone_number" 
             required pattern="^[0-9]*$"></ion-input>-->
           </ion-item>
+          <div class="itemPadding">
+            <ion-label>Description</ion-label>
+              <ckeditor
+              [config]="CkeditorConfig"
+              [readonly]="false" [(ngModel)]="user_description"
+              (change)="userDescChanged($event)"
+              (blur)="userDescBlured($event)"
+              (focus)="userDescFocused($event)"
+              (ready)="userDescCreated($event)"
+              debounce="500" name="user_description">
+              </ckeditor>
+            </div>
       <div padding>
+          <button ion-button color="primary" block  (click)="moveGlobalSettings();" *ngIf="isGlobalPreference==true">Global Settings</button>
           <button ion-button color="primary" block  (click)="updateAccount();"
            [disabled]="!accountForm.valid">Update Account</button>
       </div>

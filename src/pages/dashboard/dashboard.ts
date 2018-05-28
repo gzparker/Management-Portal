@@ -22,6 +22,7 @@ import { SetupOptionPage } from '../setup/setup-option/setup-option';
 import { UserOptionPage } from '../setup/user-option/user-option';
 
 import { AccountInfoPage } from '../account/account-info/account-info';
+import { EditAccountPage } from '../account/edit-account/edit-account';
 import { AccountOptionPage } from '../account/account-option/account-option';
 import { BillingHistoryPage } from '../../pages/account/billing-history/billing-history';
 import { UpcomingSubscriptionPage } from '../../pages/account/upcoming-subscription/upcoming-subscription';
@@ -286,6 +287,9 @@ if(status==true)
     }
     if (pageNumber == "25") {
       this.navCtrl.push(EditRolePage);
+    }
+    if (pageNumber == "26") {
+      this.navCtrl.push(EditAccountPage);
     }
   }
 }

@@ -30,7 +30,7 @@
         <img src={{imgBaseUrl}}{{globalSettings.photo_personal}} *ngIf="globalSettings.photo_personal!=''"/>
         <img src={{noImgUrl}} *ngIf="globalSettings.photo_personal==''"/></ion-avatar>
       <h2>{{accountInfo.first_name}} {{accountInfo.last_name}}</h2>
-      <p *ngIf="accountInfo.company!=null&&accountInfo.company!=undefined">{{accountInfo.company}}</p>
+      <!--<p *ngIf="accountInfo.company!=null&&accountInfo.company!=undefined">{{accountInfo.company}}</p>-->
       <p>{{accountInfo.phone_number}}</p>
       <p>{{accountInfo.email}}</p>
     </ion-item>

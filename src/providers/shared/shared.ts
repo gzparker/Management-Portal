@@ -24,11 +24,15 @@ export class SharedProvider {
   public signOutEmitter: EventEmitter<String>;
   //public registerationApiBaseUrl="http://registration.menu/api/";
   public registerationApiBaseUrl = "https://api.registration.menu/api/";
-  public idxapikey:string="1761ea8f043c53e44e3ccd90c18b0404c20152f0";
+  //public idxapikey:string="1761ea8f043c53e44e3ccd90c18b0404c20152f0";
+  public idxapiKey:string="14s1eol3f043c58344e3ccd90c18b0404c20152f";
+  public registerationApiKey="mf8fXFYtl3DqRpxzu1XZWTD1GNHtUSqQ";
   public idxFirebasePublicKey="BFLnyRGk5TlJYMkX6X-H7xZWikEdVZL9tE5t3x_q2mh4P3OM-kHkOmhlmYUGSxSV6BYdCbuSpwcBCQ3Oc0Gb3t4";
   public defaultNoImage="assets/imgs/noImage.png";
   private headers: Headers = new Headers();
   private headerOptions: RequestOptions = new RequestOptions();
+  private headersIDX: Headers = new Headers();
+  private headerOptionsIDX: RequestOptions = new RequestOptions();
   public service_id = "2";
   public mlsServerId = "23";
   public apiBaseUrl = "https://api.idx.company/api/";
@@ -42,6 +46,10 @@ export class SharedProvider {
     this.isPaidEmitter=new EventEmitter();
     this.navigationalPage=new EventEmitter();
     this.signOutEmitter=new EventEmitter();
+    this.headersIDX.append("IDXKEY",this.idxapiKey);
+this.headerOptionsIDX= new RequestOptions({ headers: this.headersIDX });
+this.headers.append("REGISTRATIONKEY",this.registerationApiKey);
+this.headerOptions= new RequestOptions({ headers: this.headers });
     // debugger;
   }
   simplyfierLatitude (source, kink)
@@ -188,7 +196,7 @@ rgbaToHex (rgba) {
  
   // this could also be a private method of the component class
   private extractData(res: Response) {
-    //debugger;
+    debugger;
     return res.json();
   }
   private handleErrorObservable(error: Response | any) {

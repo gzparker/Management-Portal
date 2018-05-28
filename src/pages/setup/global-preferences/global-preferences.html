@@ -21,25 +21,29 @@
 
 <ion-content padding>
   <form role="form" data-toggle="validator" #globalSettingsForm="ngForm">
+      <ion-item>
+          <ion-label floating>Identity Name<span [ngClass]="{'error': identity_name==''}" *ngIf="identity_name==''">*</span></ion-label>
+          <ion-input type="text" required [(ngModel)]="identity_name" name="identity_name" placeholder="my name or team"></ion-input>
+        </ion-item>
       <ion-list *ngIf="isApp">
 
           <ion-item>
-            <button ion-button color="primary" block (click)="takeCompanyLogoPicture();" >Select Company Logo</button>
+            <button ion-button color="primary" block (click)="takeCompanyLogoPicture();" >Select Identity Photo</button>
           </ion-item>
           <ion-item *ngIf="companyLogoImage!=''">
             <img [src]="companyLogoImage" />
           </ion-item>
-          <ion-item>
+          <!--<ion-item>
             <button ion-button color="primary" block (click)="takePersonalPicture();" >Select Personal Image</button>
           </ion-item>
           <ion-item *ngIf="personalImage!=''">
             <img [src]="personalImage" />
-          </ion-item>
+          </ion-item>-->
           </ion-list>
       
           <ion-list *ngIf="!isApp">
               <ion-list-header>
-                  <h2>Select Company Logo</h2>
+                  <h2>Select Identity Photo</h2>
                 </ion-list-header>
                 <ion-item *ngIf="dataCompanyLogoImage.image">
                   <ion-label>Edit Image</ion-label>
@@ -56,7 +60,7 @@
                      [height]="companyHeight">
                      <!--<img-loader [src]="dataCompanyLogoImage.image" useImg></img-loader>-->
                 </span>  
-          <ion-list-header>
+          <!--<ion-list-header>
             <h2>Select Personal Logo</h2>
           </ion-list-header>
           <ion-item *ngIf="dataPersonalImage.image">
@@ -72,7 +76,7 @@
               <img [src]="dataPersonalImage.image" [width]="personalWidth"
                [height]="personalHeight">
               
-          </span>
+          </span>-->
       
           </ion-list>
          <div>

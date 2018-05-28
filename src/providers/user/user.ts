@@ -27,6 +27,8 @@ export class UserProvider {
   public fbLoginDecision: EventEmitter<String>;
   private headers: Headers = new Headers();
   private headerOptions: RequestOptions = new RequestOptions();
+  private headersIDX: Headers = new Headers();
+  private headerOptionsIDX: RequestOptions = new RequestOptions();
   public fbLoginStatus: any;
   public facebookObject: any;
   public fbAuthResp: any;
@@ -38,6 +40,12 @@ export class UserProvider {
       
    
     this.fbLoginDecision = new EventEmitter();
+    this.headersIDX.append("IDXKEY",this.sharedServiceObj.idxapiKey);
+this.headerOptionsIDX= new RequestOptions({ headers: this.headersIDX });
+this.headers.append("REGISTRATIONKEY",this.sharedServiceObj.registerationApiKey);
+this.headerOptions= new RequestOptions({ headers: this.headers });
+   // this.headers.append("IDX-API-KEY",this.sharedServiceObj.idxapiKey);
+//this.headerOptionsIDX= new RequestOptions({ headers: this.headers });
     /*if(this.platform.is('core') || this.platform.is('mobileweb') || this.platform.is('cordova') || this.platform.is('mobile')) {
       this.isApp=false;
     }
@@ -401,6 +409,10 @@ export class UserProvider {
     {
       data.append('last_name', dataObj.last_name);
     }
+    if(dataObj.description!="")
+    {
+      data.append('description', dataObj.description);
+    }
     if(dataObj.company!="")
     {
       data.append('company', dataObj.company);
@@ -475,7 +487,7 @@ export class UserProvider {
  data.append('lead_id',lead_id);
  data.append('member_id',user_id);
   let deleteLeadResp=this.http
-    .post(this.sharedServiceObj.apiBaseUrl+'members/deleteLead', data, this.headerOptions)
+    .post(this.sharedServiceObj.apiBaseUrl+'members/deleteLead', data, this.headerOptionsIDX)
     .map(this.extractData)
     return deleteLeadResp;
 }
@@ -485,7 +497,7 @@ leadDetail(lead_id:string,member_id:string){
  data.append('lead_id',lead_id);
 data.append('member_id',member_id);
   let searchedListing=this.http
-    .post(this.sharedServiceObj.apiBaseUrl+'members/viewLeadDetails', data, this.headerOptions)
+    .post(this.sharedServiceObj.apiBaseUrl+'members/viewLeadDetails', data, this.headerOptionsIDX)
     .map(this.extractData)
     return searchedListing;
 }
@@ -544,7 +556,7 @@ data.append('work_lat_lng',work_lat_lng);
 data.append('work_google_place_id',work_google_place_id);
 //debugger;
   let searchedListing=this.http
-    .post(this.sharedServiceObj.apiBaseUrl+'members/createLead', data, this.headerOptions)
+    .post(this.sharedServiceObj.apiBaseUrl+'members/createLead', data, this.headerOptionsIDX)
     .map(this.extractData)
     return searchedListing;
 }
@@ -596,7 +608,7 @@ data.append('category',category);
 data.append('internal_notes',internal_notes);
 //debugger;
   let searchedListing=this.http
-    .post(this.sharedServiceObj.apiBaseUrl+'members/updateLead', data, this.headerOptions)
+    .post(this.sharedServiceObj.apiBaseUrl+'members/updateLead', data, this.headerOptionsIDX)
     .map(this.extractData)
     return searchedListing;
 }
@@ -607,7 +619,7 @@ allLeads(user_id:string,category:string){
  data.append('member_id',user_id);
 data.append('category',category);
   let savedListing=this.http
-    .post(this.sharedServiceObj.apiBaseUrl+'members/viewAllLeads', data, this.headerOptions)
+    .post(this.sharedServiceObj.apiBaseUrl+'members/viewAllLeads', data, this.headerOptionsIDX)
     .map(this.extractData)
     return savedListing;
 }
@@ -617,7 +629,7 @@ viewLeadRouting(website_id:string){
 data.append('website_id',website_id);
 //debugger;
 let leadRouting=this.http
-  .post(this.sharedServiceObj.apiBaseUrl+'members/viewWebsiteLeadRouting', data, this.headerOptions)
+  .post(this.sharedServiceObj.apiBaseUrl+'members/viewWebsiteLeadRouting', data, this.headerOptionsIDX)
   .map(this.extractData)
   return leadRouting;
 }
@@ -633,7 +645,7 @@ updateLeadRouting(website_id:string,send_to_email_addresses:string,
   data.append('send_to_zapier',send_to_zapier);
 
   let leadRouting=this.http
-  .post(this.sharedServiceObj.apiBaseUrl+'members/updateWebsiteLeadRouting', data, this.headerOptions)
+  .post(this.sharedServiceObj.apiBaseUrl+'members/updateWebsiteLeadRouting', data, this.headerOptionsIDX)
   .map(this.extractData)
   return leadRouting;
 }
@@ -643,7 +655,7 @@ allUserWebsites(user_id:string){
  data.append('member_id',user_id);
 
   let websiteListing=this.http
-    .post(this.sharedServiceObj.apiBaseUrl+'members/viewAllWebsites', data, this.headerOptions)
+    .post(this.sharedServiceObj.apiBaseUrl+'members/viewAllWebsites', data, this.headerOptionsIDX)
     .map(this.extractData)
     return websiteListing;
 }
@@ -667,7 +679,7 @@ data.append('homepage_search_text',homepage_search_text);
 data.append('homepage_meta_title',homepage_meta_title);
 //debugger;
   let websiteListing=this.http
-    .post(this.sharedServiceObj.apiBaseUrl+'members/createWebsite', data, this.headerOptions)
+    .post(this.sharedServiceObj.apiBaseUrl+'members/createWebsite', data, this.headerOptionsIDX)
     .map(this.extractData)
     return websiteListing;
 }
@@ -678,7 +690,7 @@ editWebsite(user_id:string,website_id:string){
  data.append('id',website_id);
 
   let websiteListing=this.http
-    .post(this.sharedServiceObj.apiBaseUrl+'members/editWebsite', data, this.headerOptions)
+    .post(this.sharedServiceObj.apiBaseUrl+'members/editWebsite', data, this.headerOptionsIDX)
     .map(this.extractData)
     return websiteListing;
 }
@@ -718,7 +730,7 @@ data.append('homepage_search_text',homepage_search_text);
 data.append('homepage_meta_title',homepage_meta_title);
 //debugger;
   let websiteListing=this.http
-    .post(this.sharedServiceObj.apiBaseUrl+'members/updateWebsite', data, this.headerOptions)
+    .post(this.sharedServiceObj.apiBaseUrl+'members/updateWebsite', data, this.headerOptionsIDX)
     .map(this.extractData)
     return websiteListing;
 }
@@ -729,7 +741,7 @@ deleteWebsite(user_id:string,website_id:string){
  data.append('id',website_id);
 
   let websiteListing=this.http
-    .post(this.sharedServiceObj.apiBaseUrl+'members/deleteWebsite', data, this.headerOptions)
+    .post(this.sharedServiceObj.apiBaseUrl+'members/deleteWebsite', data, this.headerOptionsIDX)
     .map(this.extractData)
     return websiteListing;
 }
@@ -740,7 +752,7 @@ data.append('member_id',user_id);
 data.append('website_id',website_id);
 
 let websiteLinks=this.http
-  .post(this.sharedServiceObj.apiBaseUrl+'members/viewWebsiteLinks', data, this.headerOptions)
+  .post(this.sharedServiceObj.apiBaseUrl+'members/viewWebsiteLinks', data, this.headerOptionsIDX)
   .map(this.extractData)
   return websiteLinks;
 }
@@ -821,14 +833,15 @@ allUserHotSheets(user_id:string){
     let data = new URLSearchParams();
  data.append('member_id',user_id);
   let websiteListing=this.http
-    .post(this.sharedServiceObj.apiBaseUrl+'members/viewAllSavedHotsheets', data, this.headerOptions)
+    .post(this.sharedServiceObj.apiBaseUrl+'members/viewAllSavedHotsheets', data, this.headerOptionsIDX)
     .map(this.extractData)
     return websiteListing;
 }
 createHotSheet(user_id:string,website_id:string,mlsServerId:string,name:string,hotsheet_Title:string,slug:string,
   json_search:any,brief_description:any,main_description:any,virtual_tour_url:any,video_url:any,
   sub_city:any,communityImage:any,headerImage:any,local:any,
-  administrative_area_level_1:any,community:any,agent_ids:any,polygon_search:any,meta_description:any,meta_title:any,parent_id:any){
+  administrative_area_level_1:any,community:any,agent_ids:any,polygon_search:any,
+  meta_description:any,meta_title:any,parent_id:any){
  let data = new URLSearchParams();
  data.append('name',name);
  data.append('title',hotsheet_Title);
@@ -854,7 +867,7 @@ createHotSheet(user_id:string,website_id:string,mlsServerId:string,name:string,h
  data.append('assigned_agent_ids',agent_ids);
 //debugger;
   let hotSheetCreatingResp=this.http
-    .post(this.sharedServiceObj.apiBaseUrl+'members/createHotsheet', data, this.headerOptions)
+    .post(this.sharedServiceObj.apiBaseUrl+'members/createHotsheet', data, this.headerOptionsIDX)
     .map(this.extractData)
     return hotSheetCreatingResp;
 }
@@ -863,7 +876,7 @@ checkHotSheetSlug(slug:string,user_id:string){
  data.append('slug',slug);
  data.append('member_id',user_id);
   let hotSheetCheckResp=this.http
-    .post(this.sharedServiceObj.apiBaseUrl+'members/checkHotsheetSlug', data, this.headerOptions)
+    .post(this.sharedServiceObj.apiBaseUrl+'members/checkHotsheetSlug', data, this.headerOptionsIDX)
     .map(this.extractData)
     return hotSheetCheckResp;
 }
@@ -873,14 +886,15 @@ editHotSheet(user_id:string,id:string){
  data.append('id',id);
  data.append('member_id',user_id);
   let hotSheetCheckResp=this.http
-    .post(this.sharedServiceObj.apiBaseUrl+'members/editSavedHotsheet', data, this.headerOptions)
+    .post(this.sharedServiceObj.apiBaseUrl+'members/editSavedHotsheet', data, this.headerOptionsIDX)
     .map(this.extractData)
     return hotSheetCheckResp;
 }
 updateHotSheet(id:string,user_id:string,website_id:string,mlsServerId:string,name:string,hotsheet_Title:string,slug:string,
   json_search:any,brief_description:any,main_description:any,virtual_tour_url:any,video_url:any,
   sub_city:any,communityImage:any,headerImage:any,local:any,
-  administrative_area_level_1:any,community:any,agent_ids:any,polygon_search:any,meta_description:any,meta_title:any,parent_id:any){
+  administrative_area_level_1:any,community:any,agent_ids:any,polygon_search:any,
+  meta_description:any,meta_title:any,parent_id:any){
  let data = new URLSearchParams();
  data.append('id',id);
  data.append('name',name);
@@ -907,7 +921,7 @@ updateHotSheet(id:string,user_id:string,website_id:string,mlsServerId:string,nam
  data.append('assigned_agent_ids',agent_ids);
 //debugger;
   let hotSheetUpdatingResp=this.http
-    .post(this.sharedServiceObj.apiBaseUrl+'members/updateSavedHotsheet', data, this.headerOptions)
+    .post(this.sharedServiceObj.apiBaseUrl+'members/updateSavedHotsheet', data, this.headerOptionsIDX)
     .map(this.extractData)
     return hotSheetUpdatingResp;
 }
@@ -917,7 +931,7 @@ deleteHotsheet(user_id:string,id:string){
  data.append('id',id);
 
 let hotSheetDeletingResp=this.http
-    .post(this.sharedServiceObj.apiBaseUrl+'members/deleteSavedHotsheet', data, this.headerOptions)
+    .post(this.sharedServiceObj.apiBaseUrl+'members/deleteSavedHotsheet', data, this.headerOptionsIDX)
     .map(this.extractData)
     return hotSheetDeletingResp;
 }
@@ -1080,7 +1094,7 @@ getAllMemberAllowedOptions(allowedOptions)
        return allowedOptionsResp;
 }
 updateGlobalSettings(member_id:string,personalImage:string,companyImage:string,
-  timezone:string,colorBase:string,secondColor:string,thirdColor:string){
+  timezone:string,colorBase:string,secondColor:string,thirdColor:string,identity_name:string){
   //  debugger;
     let data = new URLSearchParams();
     data.append('master_id',member_id);
@@ -1090,7 +1104,7 @@ updateGlobalSettings(member_id:string,personalImage:string,companyImage:string,
     data.append('color_base',colorBase);
     data.append('color_second',secondColor);
     data.append('color_third',thirdColor);
-
+    data.append('identity_name',identity_name);
  //debugger;
    let updateSettingsResp=this.http
        .post(this.sharedServiceObj.registerationApiBaseUrl+'members/updateGlobalSettings', data, this.headerOptions)
@@ -1103,7 +1117,7 @@ loadPaperWorkStatus(website_id:string)
   data.append('website_id',website_id);
  
  let paperWorkResp=this.http
-     .post(this.sharedServiceObj.apiBaseUrl+'members/viewPaperworkStatus', data, this.headerOptions)
+     .post(this.sharedServiceObj.apiBaseUrl+'members/viewPaperworkStatus', data, this.headerOptionsIDX)
      .map(this.extractData)
      return paperWorkResp;
 }

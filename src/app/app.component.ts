@@ -35,6 +35,7 @@ import { SetupOptionPage } from '../pages/setup/setup-option/setup-option';
 import { UserOptionPage } from '../pages/setup/user-option/user-option';
 
 import { AccountInfoPage } from '../pages/account/account-info/account-info';
+import { EditAccountPage } from '../pages/account/edit-account/edit-account';
 import { AccountOptionPage } from '../pages/account/account-option/account-option';
 import { BillingHistoryPage } from '../pages/account/billing-history/billing-history';
 import { UpcomingSubscriptionPage } from '../pages/account/upcoming-subscription/upcoming-subscription';
@@ -127,7 +128,6 @@ export class MyApp {
     });
   }
   ionViewDidLoad() {
-    //debugger;
     
   }
   setDeviceToken(){
@@ -319,13 +319,16 @@ this.storage.set("userCountryInfo", this.geoCoderData);
     else if (pageNumber == "2") {
       this.nav.setRoot(LoginPage);
     }
-    if (pageNumber == "3") {
+    else if(pageNumber == "3") {
       this.nav.setRoot(RegisterPage);
     }    
-    if (pageNumber == "4") {     
+    else if (pageNumber == "4") {     
      this.nav.setRoot(DashboardTabsPage);
     }
-    if (pageNumber == "5") {  
+    else{
+      this.nav.setRoot(DashboardTabsPage,{selectedPage:pageNumber});
+    }
+    /*if (pageNumber == "5") {  
       this.nav.setRoot(DashboardTabsPage,{selectedPage:"5"});
     }
     if (pageNumber == "6") {
@@ -343,8 +346,14 @@ this.storage.set("userCountryInfo", this.geoCoderData);
     if (pageNumber == "23") {
       this.nav.setRoot(DashboardTabsPage,{selectedPage:"23"});
     }
+    if (pageNumber == "26") {
+      this.nav.setRoot(DashboardTabsPage,{selectedPage:"26"});
+    }*/
   }
-
+  editAccount()
+  {
+this.nav.push(EditAccountPage,{userId:this.userId});
+  }
   subMenueToggle(option:string)
   {
     if(option=='4')
@@ -369,11 +378,11 @@ else if(option=='6')
   }
   setUserGeneralInfo()
   {
-    let userInfo = this.storage.get('loggedInUserInfo')
-    this.storage.get('loggedInUserInfo').then((data) => {
+    let userInfo = this.storage.get('globalSettings')
+    this.storage.get('globalSettings').then((data) => {
 
       if (data != null) {
-        this.userGeneralInfo=data.memberCredentials;
+        this.userGeneralInfo=data;
 //debugger;
       }
     });

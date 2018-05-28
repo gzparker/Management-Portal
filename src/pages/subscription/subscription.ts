@@ -51,6 +51,7 @@ export class SubscriptionPage {
   public service_id:string="";
   public mls_server_id:any[]=[];
   public allMls:any[]=[];
+  public selectedPlanStringListString:string="";
   public selectedPromoCode:any;
   public tos_url:string="http://www.idxcompany.com/terms-of-service/";
   public loader:any;
@@ -174,16 +175,18 @@ if(this.selectedPackagesList.length>0)
 for(let i=0;i<this.selectedPackagesList.length;i++)
 {
   dataObj.service_plans_array.push(this.selectedPackagesList[i].id);
+  debugger;
 }
   dataObj.full_name = this.full_name;
   dataObj.cc_number = this.cc_number;
   dataObj.exp_month = this.expiryDate.split("-")[1];
   dataObj.exp_year = this.expiryDate.split("-")[0];
   dataObj.cvc = this.cvc;
-  dataObj.service_plans_array = this.selectedPackagesList;
+  //dataObj.service_plans_array = this.selectedPackagesList;
+  //dataObj.service_plans_array=this.selectedPlanStringListString;
   dataObj.mls_service_id=this.mls_server_id;
   dataObj.stripe_coupon_code=this.selectedCoupon;
-  //debugger;
+  debugger;
   let member_id = this.storage.get('userId');
   member_id.then((memberResp) => {
     //debugger;
@@ -274,6 +277,7 @@ if(this.selectedPackagesList!=undefined)
       {
        // debugger;
         this.selectedCoupon=this.selectedPromoCode.coupon;
+        
         this.totalAmount=this.totalAmount+parseFloat(this.selectedPromoCode.subtract_amount);
       }
       else
@@ -285,6 +289,14 @@ if(this.selectedPackagesList!=undefined)
     {
       this.totalAmount=this.totalAmount+parseFloat(this.selectedPackagesList[i].amount);
     }
+   /* if(this.selectedPlanStringListString!="")
+    {
+      this.selectedPlanStringListString=this.selectedPlanStringListString+","+this.selectedPackagesList[i].stripe_dev_plan_id.toString();
+    }
+    else
+    {
+      this.selectedPlanStringListString=this.selectedPlanStringListString;
+    }*/
   //debugger;
   }
 }

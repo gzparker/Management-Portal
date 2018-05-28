@@ -24,12 +24,16 @@ import { SharedProvider } from '../../providers/shared/shared';
 @Injectable()
 export class ListingProvider {
   private allListings:any[]=[];
-    private headers:Headers=new Headers();
-   private headerOptions:RequestOptions=new RequestOptions();
+  private headers: Headers = new Headers();
+  private headerOptions: RequestOptions = new RequestOptions();
+  private headersIDX: Headers = new Headers();
+  private headerOptionsIDX: RequestOptions = new RequestOptions();
   public searchListingEmitter: EventEmitter<String>;
   constructor(private http : Http,private sharedServiceObj:SharedProvider) {
-      this.headers.append("idx-api-key",this.sharedServiceObj.idxapikey);
-this.headerOptions= new RequestOptions({ headers: this.headers });
+    this.headersIDX.append("IDXKEY",this.sharedServiceObj.idxapiKey);
+    this.headerOptionsIDX= new RequestOptions({ headers: this.headersIDX });
+    this.headers.append("REGISTRATIONKEY",this.sharedServiceObj.registerationApiKey);
+    this.headerOptions= new RequestOptions({ headers: this.headers });
   }
   
  getBrokerListingForSale(brokerId:string){
@@ -39,7 +43,7 @@ this.headerOptions= new RequestOptions({ headers: this.headers });
  data.append('broker_id',brokerId);
 
   let searchedListing=this.http
-    .post(this.sharedServiceObj.apiBaseUrl+'listings/getFeaturedListingsByBroker', data, this.headerOptions)
+    .post(this.sharedServiceObj.apiBaseUrl+'listings/getFeaturedListingsByBroker', data, this.headerOptionsIDX)
     .map(this.extractListingData)
     return searchedListing;
 }
@@ -50,7 +54,7 @@ getAgentListingForSale(agentId:string){
  data.append('agent_id',agentId);
 
   let searchedListing=this.http
-    .post(this.sharedServiceObj.apiBaseUrl+'listings/getFeaturedListingsByAgent', data, this.headerOptions)
+    .post(this.sharedServiceObj.apiBaseUrl+'listings/getFeaturedListingsByAgent', data, this.headerOptionsIDX)
     .map(this.extractListingData)
     return searchedListing;
 }
@@ -71,7 +75,7 @@ getAvailableSearchFields(){
   data.append('mls_server_id', this.sharedServiceObj.mlsServerId);
  //debugger;
   let searchFields=this.http
-    .post(this.sharedServiceObj.apiBaseUrl+'listings/getSearchFields', data, this.headerOptions)
+    .post(this.sharedServiceObj.apiBaseUrl+'listings/getSearchFields', data, this.headerOptionsIDX)
     .map(this.extractData)
     return searchFields;
 }
@@ -82,7 +86,7 @@ getSearchResult(searchListObj:any){
  data.append('search_filter_json',searchListObj);
 
   let searchedListing=this.http
-    .post(this.sharedServiceObj.apiBaseUrl+'listings/getSearchResults', data, this.headerOptions)
+    .post(this.sharedServiceObj.apiBaseUrl+'listings/getSearchResults', data, this.headerOptionsIDX)
     .map(this.extractListingData)
     return searchedListing;
 }
@@ -92,7 +96,7 @@ let data = new URLSearchParams();
   data.append('mls_server_id', this.sharedServiceObj.mlsServerId);
  data.append('id',listingId);
   let searchedListing=this.http
-    .post(this.sharedServiceObj.apiBaseUrl+'listings/getListingByID', data, this.headerOptions)
+    .post(this.sharedServiceObj.apiBaseUrl+'listings/getListingByID', data, this.headerOptionsIDX)
     .map(this.extractListingData)
     return searchedListing;
 }

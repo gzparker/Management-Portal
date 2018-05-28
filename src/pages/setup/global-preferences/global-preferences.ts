@@ -47,6 +47,7 @@ export class GlobalPreferencesPage {
   public cropperJsConfig: object;
   public isApp=false;
   public userLoggedId:boolean=false;
+  public identity_name:string="";
   public colorBase:string="";
   public secondColor:string="";
   public thirdColor:string="";
@@ -175,14 +176,15 @@ export class GlobalPreferencesPage {
      this.colorBase=this.globalSettings.color_base;
     this.secondColor=this.globalSettings.color_second;
      this.thirdColor=this.globalSettings.color_third;
+     this.identity_name=this.globalSettings.identity_name;
         if(this.globalSettings.photo_company!=undefined)
       {
         this.loadCompanyImage(this.sharedServiceObj.imgBucketUrl,this.globalSettings.photo_company);
       }
-      if(this.globalSettings.photo_personal!=undefined)
+      /*if(this.globalSettings.photo_personal!=undefined)
       { 
         this.loadPersonalImage(this.sharedServiceObj.imgBucketUrl,this.globalSettings.photo_personal);
-      }
+      }*/
         //debugger;
       }
       this.storage.set('globalSettings',this.globalSettings);
@@ -614,7 +616,7 @@ else
         debugger;
       }*/
     this.userServiceObj.updateGlobalSettings(this.userId,this.personalImage,this.companyLogoImage,this.user.timezone,
-      this.colorBase,this.secondColor,this.thirdColor)
+      this.colorBase,this.secondColor,this.thirdColor,this.identity_name)
     .subscribe((result) => this.updateGlobalSettingsResp(result));
  
     }

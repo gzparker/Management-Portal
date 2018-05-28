@@ -41,8 +41,10 @@ export class UpgradeCenterPage {
   public upgradeCenterSegment:string="1";
   public interval:string="month";
   public notificationMsg:string="";
+  public notificationError:string="";
   public parentId:string="";
   public isOwner:boolean=false;
+  public selectedCurrentPlans:string="";
   public isUpgradeDowngradeAccess:boolean=false;
   public loader:any;
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
@@ -140,16 +142,46 @@ export class UpgradeCenterPage {
 if(result.status==true)
 {
   this.upgradePlans=result.plans;
-  this.current_upgrade=result.current_upgrade;
-  this.currentFilteredPlans=this.current_upgrade;
+  //this.current_upgrade=result.current_upgrade;
+  //this.currentFilteredPlans=this.current_upgrade;
   this.upgradeFilteredPlans=this.upgradePlans;
+  this.loadCurrentUpgrades(result.current_upgrade)
+  //debugger;
   //debugger;
 }
-
+  }
+  loadCurrentUpgrades(currentUpgradePlan:any)
+  {
+    let currentPlan=this.upgradePlans.filter((item) => {
+    //  return (item.id).indexOf(currentUpgradePlan) > -1;
+    if(item.id!=null)
+    {
+     
+//        return this.upgradeFilteredPlans[0];
+   //debugger;
+     return (item.id).indexOf(currentUpgradePlan) > -1;
+     //return this.upgradePlans[0];
+    }
+    else
+    {
+      if(currentUpgradePlan==null||currentUpgradePlan=="")
+      {
+      //  debugger;
+        return this.upgradePlans[0];
+      }
+    }
+  });
+  //debugger;
+  if(currentPlan.length>0)
+  {
+    this.current_upgrade=currentPlan[0];
+    this.selectedCurrentPlans=currentPlan[0].id.toString();
+  }
+  //debugger;
   }
   filterPlansList()
   {
-    this.currentFilteredPlans=this.filterCurrentItems(this.interval);
+    //this.currentFilteredPlans=this.filterCurrentItems(this.interval);
     this.upgradeFilteredPlans=this.filterUpgradeItems(this.interval);
     //debugger;
   }
@@ -163,16 +195,71 @@ filterUpgradeItems(searchTerm){
       return (item.interval.toLowerCase()).indexOf(searchTerm.toLowerCase()) > -1;
   });
 }
-upgradeDowngradePlan(plan_id:any)
+onPlanSelection(plan:any)
 {
- // debugger;
-  this.subscribtionObj.upgradeDowngradePlan(this.userId.toString(),plan_id)
-    .subscribe((result) => this.upgradeDowngradePlanResp(result));
+  //debugger;
+  let selectedPlan=this.upgradeFilteredPlans.filter((item) => {
+    if(item.id!=null)
+    {
+     
+//        return this.upgradeFilteredPlans[0];
+     return (item.id).indexOf(plan) > -1;
+    }
+    else
+    {
+      if(plan==null||plan=="")
+      {
+      //  debugger;
+        return this.upgradeFilteredPlans[0];
+      }
+    }
+ //  debugger;
+});
+if(selectedPlan.length>0)
+{
+  //debugger;
+  let confirm = this.alertCtrl.create({
+    title: 'Upgrade Plan?',
+    message: 'Would you like to change to '+selectedPlan[0].name+" ?",
+    buttons: [
+      {
+        text: 'Cancel',
+        handler: () => {
+       
+        }
+      },
+      {
+        text: 'Ok',
+        handler: () => {
+        //  debugger;
+         this.upgradeDowngradePlan(selectedPlan[0]);
+       //  debugger;
+        }
+      }
+    ]
+  });
+  confirm.present();
 }
+}
+upgradeDowngradePlan(selectedPlan:any)
+{
+  if(selectedPlan.id!=null&&selectedPlan.id!="")
+  {
+    this.subscribtionObj.upgradeDowngradePlan(this.userId.toString(),selectedPlan.id)
+    .subscribe((result) => this.upgradeDowngradePlanResp(result));
+  }
+  else
+    {
+this.notificationError="Plan does not exists.";
+this.notificationMsg="";
+    }
+}
+
 upgradeDowngradePlanResp(result:any)
 {
   if(result.status==true)
   {
+    this.notificationError="";
 this.notificationMsg=result.message;
   }
 //debugger;

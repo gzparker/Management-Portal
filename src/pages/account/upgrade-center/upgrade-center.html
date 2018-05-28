@@ -20,6 +20,9 @@
     <ion-chip *ngIf="notificationMsg!=''">
         <ion-label color="secondary">{{notificationMsg}}</ion-label>
       </ion-chip>
+      <ion-chip *ngIf="notificationError!=''">
+        <ion-label color="danger">{{notificationError}}</ion-label>
+      </ion-chip>
     <ion-item>
         <ion-label floating>Interval</ion-label>
         <ion-select [(ngModel)]="interval" 
@@ -28,7 +31,41 @@
     <ion-option value="year">YEAR</ion-option>
      </ion-select>
     </ion-item>
-  <ion-segment [(ngModel)]="upgradeCenterSegment" color="primary" (ionChange)="segmentChanged($event)">
+    <ion-item>
+      <ion-label>Select Plan To Upgrade</ion-label>
+      <!--<ion-select [(ngModel)]="interval" 
+  name="interval" (ngModelChange)="filterPlansList()">
+  <ion-option value="month">MONTH</ion-option>
+  <ion-option value="year">YEAR</ion-option>
+   </ion-select>-->
+   <ion-select [(ngModel)]="selectedCurrentPlans" (ngModelChange)="onPlanSelection($event)" 
+   name="selectedCurrentPlans">
+    <ion-option *ngFor="let plan of upgradeFilteredPlans" value= {{plan.id}}>
+       {{plan.name}}
+     </ion-option>
+   </ion-select>
+  </ion-item>
+  <ion-list *ngIf="current_upgrade!=undefined">
+  <ion-item>
+    <ion-label> Current Plan Level:</ion-label>
+  </ion-item>
+  <ion-card>
+    <ion-item>
+    <h2>Name:{{current_upgrade.name}}</h2>
+    <p>Interval:{{current_upgrade.interval}}</p>
+    <p>Amount:${{current_upgrade.amount}}</p>
+  </ion-item>
+  </ion-card>
+</ion-list>
+    <!--<ion-item>
+      <ion-label floating>Interval</ion-label>
+      <ion-select [(ngModel)]="interval" 
+  name="interval" (ngModelChange)="filterPlansList()">
+  <ion-option value="month">MONTH</ion-option>
+  <ion-option value="year">YEAR</ion-option>
+   </ion-select>
+  </ion-item>-->
+  <!--<ion-segment [(ngModel)]="upgradeCenterSegment" color="primary" (ionChange)="segmentChanged($event)">
     <ion-segment-button value="1">
       Plans
     </ion-segment-button>
@@ -38,20 +75,18 @@
   </ion-segment>
   <ion-list *ngIf="selectedSegment=='1'">
   <ion-item *ngFor="let plan of upgradeFilteredPlans">
-    <!--<ion-card>-->
+   
       <ion-item>
       <h2>Name:{{plan.name}}</h2>
       <p>Amount Due:{{plan.amount}}</p>
       <p>Interval:{{plan.interval}}</p>
       <p>Description:{{plan.description}}</p>
-      <!--<button ion-button item-right color="danger" (click)="deleteSubscription(subscription)">
-          <ion-icon name="trash"></ion-icon>
-        </button>-->
+    
     </ion-item>
     <button ion-button item-right color="secondary" (click)="upgradeDowngradePlan(plan.id)" *ngIf="isUpgradeDowngradeAccess==true">
         <ion-icon name="settings"></ion-icon>
       </button>
-    <!--</ion-card>-->
+   
     </ion-item>
   </ion-list>
   <ion-list *ngIf="selectedSegment=='2'">
@@ -66,5 +101,5 @@
           <ion-icon name="settings"></ion-icon>
         </button>
         </ion-item>    
-  </ion-list>
+  </ion-list>-->
 </ion-content>

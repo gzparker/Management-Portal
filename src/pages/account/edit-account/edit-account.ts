@@ -6,7 +6,7 @@ import { Crop } from '@ionic-native/crop';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { ImageCropperComponent, CropperSettings } from "ngx-img-cropper";
-
+import { GlobalPreferencesPage } from '../../setup/global-preferences/global-preferences';
 import 'moment';
 import * as moment from 'moment-timezone';
 import { AccountInfoPage } from '../account-info/account-info';
@@ -51,6 +51,7 @@ export class EditAccountPage {
   public phone_number: number;
   public selectedCountryCode: string = "";
   public selectedCountryAbbv: string = "";
+  public user_description:string="";
   public allCountryCodes: any[] = [];
   public accountInfoUpdateMsg: string = "";
   public updatedValue:boolean=false;
@@ -59,7 +60,9 @@ export class EditAccountPage {
   public office_id:string="";
   public broker_id:string="";
   public agent_id:string="";
-
+  public isGlobalPreference:boolean=false;
+  public isOwner:boolean=false;
+  public parentId:string="";
   public loader:any;
 
   public dataPersonalImage:any;
@@ -67,7 +70,14 @@ export class EditAccountPage {
 
   public imgBaseUrl=this.sharedServiceObj.imgBucketUrl;
   public noImgUrl=this.sharedServiceObj.noImageUrl;
-
+  private CkeditorConfig = {uiColor: '#99000',removeButtons:'Underline,Subscript,Superscript,SpecialChar'
+  ,toolbar: [
+    { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source'] },
+    { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', '-', 'RemoveFormat' ] },
+    { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
+    { name: 'links', items: [ 'Link', 'Unlink'] },
+    { name: 'styles', items: ['Format', 'FontSize' ] }
+  ]};
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform,
@@ -110,7 +120,65 @@ export class EditAccountPage {
       this.userId=data;
       this.viewAccount();
       this.getAllCountryCodes();
+      this.setAccessLevels();
     });
+  }
+  setAccessLevels()
+  {
+
+    let parent_id = this.storage.get('parent_id');
+      parent_id.then((data) => {
+        if(data!=null)
+        {
+          //debugger;    
+      this.parentId=data;
+      this.isOwner=false;
+        }
+       else
+       {
+      this.isOwner=true;
+       }
+       this.allowMenuOptions();
+      
+      });
+  }
+  allowMenuOptions()
+  {
+    if(this.isOwner==false)
+    {
+      this.isGlobalPreference=false;
+     
+    let allowed_access_options = this.storage.get('allowed_access_options');
+    allowed_access_options.then((data) => {
+      if(data!=null)
+      {
+        if(data!=false)
+        {
+        let savedAccessLevels:any[]=data;
+      
+    let globalPreferenceAccesLevels=savedAccessLevels.filter((element) => {
+        return (element.key=="global-preference");
+    });
+    if(globalPreferenceAccesLevels.length>0)
+      {
+        this.isGlobalPreference=true;
+      }
+      else
+      {
+        this.isGlobalPreference=false;
+      }
+     
+    
+    }
+      }
+    });
+  }
+  else
+  {
+    //debugger;
+    this.isGlobalPreference=true;
+  
+  }
   }
   viewAccount():void{
     if(this.userId!="")
@@ -137,10 +205,12 @@ export class EditAccountPage {
         this.loadPersonalImage(this.sharedServiceObj.imgBucketUrl,this.globalSettings.photo_personal);
       }
      }
-     
+    // debugger;
      this.first_name=this.accountInfo.first_name;
      this.last_name=this.accountInfo.last_name;
      this.company=this.accountInfo.company;
+     //debugger;
+     this.user_description=this.accountInfo.description;
      this.email=this.accountInfo.email;
      this.broker_id=this.accountInfo.broker_id;
      this.agent_id=this.accountInfo.agent_id;
@@ -151,6 +221,24 @@ export class EditAccountPage {
      this.selectedCountryAbbv=this.accountInfo.country_abbv;
     }
     
+  }
+  userDescBlured(quill) {
+    //console.log('editor blur!', quill);
+  }
+ 
+  userDescFocused(quill) {
+    //console.log('editor focus!', quill);
+  }
+ 
+  userDescCreated(quill) {
+   // this.editor = quill;
+    //console.log('quill is ready! this is current quill instance object', quill);
+  }
+ 
+  userDescChanged(html) {
+//debugger;
+this.user_description=html;
+ 
   }
   loadPersonalImage(baseUrl:string,imageUrl:string) {
     //debugger;
@@ -400,6 +488,10 @@ else
   this.hideImageCropper=false;
 }
   }
+  moveGlobalSettings()
+  {
+    this.navCtrl.push(GlobalPreferencesPage);
+  }
   /////////////////////Generate Thumbnail//////////////////////
 
   createPersonalImageThumbnail(bigMatch:any) {
@@ -483,6 +575,7 @@ else
       first_name: "",
       photo_personal:"",
       last_name: "",
+      description:"",
       company:"",
       office_id:"",
       agent_id:"",
@@ -513,6 +606,10 @@ if(this.accountInfo.first_name!=this.first_name)
 if(this.accountInfo.last_name!=this.last_name)
 {
       dataObj.last_name = this.last_name;
+}
+if(this.accountInfo.description!=this.user_description)
+{
+      dataObj.description = this.user_description;
 }
 if(this.accountInfo.company!=this.company)
 {

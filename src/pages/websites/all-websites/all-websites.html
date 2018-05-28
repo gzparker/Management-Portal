@@ -45,7 +45,7 @@
                   <img src={{noImgUrl}} *ngIf="website.identity_logo==''"/>
                 </ion-thumbnail>-->
               <!--<h2 (click)="editWebsite(website.id)"  *ngIf="isEditWebsiteAccess==true">{{website.identity_name}}</h2>-->
-              <h2  (click)="websiteLinks(website.id)">{{website.identity_name}}</h2>
+              <h2 (click)="websiteLinks(website.id)">{{website.identity_name}}</h2>
               <p class="hidden">{{website.website}}</p>
               <p class="hidden">Private Key:{{website.key_private}}</p>
               <p class="hidden">Public Key:{{website.key_public}}</p>
