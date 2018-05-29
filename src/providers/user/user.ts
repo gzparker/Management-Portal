@@ -1121,6 +1121,15 @@ loadPaperWorkStatus(website_id:string)
      .map(this.extractData)
      return paperWorkResp;
 }
+getUsersChartsData(member_id:string)
+{
+  let data = new URLSearchParams();
+    data.append('member_id',member_id);
+   let userChartsResp=this.http
+       .post(this.sharedServiceObj.apiBaseUrl+'members/getDashboardCharts', data, this.headerOptionsIDX)
+       .map(this.extractData)
+       return userChartsResp;
+}
 private extractData(res: Response) {
 //debugger;
     return res.json();

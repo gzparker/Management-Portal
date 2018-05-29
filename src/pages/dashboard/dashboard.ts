@@ -6,6 +6,7 @@ import { Storage } from '@ionic/storage';
 import { ISubscription } from "rxjs/Subscription";
 import { AlertController } from 'ionic-angular';
 import { FbConfirmPage } from '../fb-confirm/fb-confirm';
+import { Chart } from 'chart.js';
 import { SubscriptionPage } from '../subscription/subscription';
 
 import { DashboardTabsPage } from '../tabs/dashboard-tabs/dashboard-tabs';
@@ -56,6 +57,14 @@ import { UserProvider } from '../../providers/user/user';
 export class DashboardPage {
   //@ViewChild("idxpaymentTabs") idxpaymentTabs: Tabs;
   //public allSubmembers:any[]=[];
+  @ViewChild('barCanvas') barCanvas;
+ // @ViewChild('doughnutCanvas') doughnutCanvas;
+  //@ViewChild('lineCanvas') lineCanvas;
+
+  barChart: any;
+  //doughnutChart: any;
+  //lineChart: any;
+
   public totalSubMembers:string="";
 public notificationMsg:string="";
 public userId:string="";
@@ -94,6 +103,7 @@ private subscription: ISubscription;
       if(data==null)
       {
         this.getUserDetailedInfo();
+        this.loadDashboardCharts();
       }
     
     });
@@ -126,6 +136,173 @@ this.totalSubMembers=result.results.length.toString();
     //this.allAgents=[];
    this.totalSubMembers="0";
   }
+}
+loadDashboardCharts()
+{
+//  debugger;
+  this.userServiceObj.getUsersChartsData(this.userId)
+        .subscribe((result) => this.loadDashboardChartsResp(result));
+}
+loadDashboardChartsResp(result:any){
+//debugger;
+let leads_by_months:any[]=result.leads_by_month_chart;
+let leads_chart_values:any[]=[];
+let leadCountExists:boolean=false;
+/*for(let i=0;i<=11;i++)
+{
+  leadCountExists=false;
+  if(i<leads_by_months.length)
+  {
+  for(let j=1;j<=12;j++)
+  {
+    if(leads_by_months[i].mth==j.toString())
+    {
+      leadCountExists=true;
+//leads_chart_values.push(leads_by_months[i].totalLeads);
+    }
+
+  }
+  if(leadCountExists==true)
+  {
+    leads_chart_values.push(leads_by_months[i].totalLeads);
+  }
+  else
+  {
+    leads_chart_values.push("0");
+  }
+}
+else
+{
+  leads_chart_values.push("0");
+}
+}*/
+for(let i=1;i<=12;i++)
+{
+let found_lead=leads_by_months.find( month_leads => month_leads.mth === i.toString() );
+if(found_lead)
+{
+  leads_chart_values.push(found_lead.totalLeads);
+}
+else
+{
+  leads_chart_values.push("0");
+}
+}
+
+//debugger;
+this.barChart = new Chart(this.barCanvas.nativeElement, {
+ 
+  type: 'bar',
+  data: {
+      labels: ["Jan", "Feb", "Mar", "Apr", "May", "June","July","Aug","Sept","Oct","Nov","Dec"],
+      datasets: [{
+          label: '# of Leads',
+          data: leads_chart_values,
+          backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(255, 99, 132, 0.2)'
+          ],
+          borderColor: [
+              'rgba(255,99,132,1)',
+              'rgba(255,99,132,1)',
+              'rgba(255,99,132,1)',
+              'rgba(255,99,132,1)',
+              'rgba(255,99,132,1)',
+              'rgba(255,99,132,1)',
+              'rgba(255,99,132,1)',
+              'rgba(255,99,132,1)',
+              'rgba(255,99,132,1)',
+              'rgba(255,99,132,1)',
+              'rgba(255,99,132,1)',
+              'rgba(255,99,132,1)'
+          ],
+          borderWidth: 1
+      }]
+  },
+  options: {
+      scales: {
+          yAxes: [{
+              ticks: {
+                  beginAtZero:true
+              }
+          }]
+      }
+  }
+
+});
+
+/*this.doughnutChart = new Chart(this.doughnutCanvas.nativeElement, {
+
+  type: 'doughnut',
+  data: {
+      labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+      datasets: [{
+          label: '# of Votes',
+          data: [12, 19, 3, 5, 2, 3],
+          backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+              'rgba(255, 206, 86, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(153, 102, 255, 0.2)',
+              'rgba(255, 159, 64, 0.2)'
+          ],
+          hoverBackgroundColor: [
+              "#FF6384",
+              "#36A2EB",
+              "#FFCE56",
+              "#FF6384",
+              "#36A2EB",
+              "#FFCE56"
+          ]
+      }]
+  }
+
+});
+
+this.lineChart = new Chart(this.lineCanvas.nativeElement, {
+
+  type: 'line',
+  data: {
+      labels: ["January", "February", "March", "April", "May", "June", "July"],
+      datasets: [
+          {
+              label: "My First dataset",
+              fill: false,
+              lineTension: 0.1,
+              backgroundColor: "rgba(75,192,192,0.4)",
+              borderColor: "rgba(75,192,192,1)",
+              borderCapStyle: 'butt',
+              borderDash: [],
+              borderDashOffset: 0.0,
+              borderJoinStyle: 'miter',
+              pointBorderColor: "rgba(75,192,192,1)",
+              pointBackgroundColor: "#fff",
+              pointBorderWidth: 1,
+              pointHoverRadius: 5,
+              pointHoverBackgroundColor: "rgba(75,192,192,1)",
+              pointHoverBorderColor: "rgba(220,220,220,1)",
+              pointHoverBorderWidth: 2,
+              pointRadius: 1,
+              pointHitRadius: 10,
+              data: [65, 59, 80, 81, 56, 55, 40],
+              spanGaps: false,
+          }
+      ]
+  }
+
+});*/
+//debugger;
 }
   getUserDetailedInfo(): void {
    //debugger;

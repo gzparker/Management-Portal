@@ -11,6 +11,7 @@ import { Http, Response, URLSearchParams, Headers, RequestOptions, HttpModule } 
 import {AccordionModule} from "ng2-accordion";
 import { IonicImageLoader } from 'ionic-image-loader';
 import { CKEditorModule } from 'ng2-ckeditor';
+import { ChartsModule } from 'ng2-charts';
 
 import { ColorPickerModule } from 'ngx-color-picker';
 
@@ -126,7 +127,7 @@ var firebaseConfig = {
       apiKey: 'AIzaSyA9aj3-17cojks6gicZZ_PY2t5ERVu25ac'
     }),ColorPickerModule,TimezonePickerModule,BrMaskerModule,IonicImageLoader.forRoot(),
     AngularFireModule.initializeApp(firebaseConfig),
-    AngularFirestoreModule
+    AngularFirestoreModule,ChartsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

@@ -21,16 +21,36 @@
     <ion-label color="secondary">{{notificationMsg}}</ion-label>
   </ion-chip>  
 
-  <!-- <ion-list>
-    <ion-item menuClose ion-item (tap)="openPage('6')" *ngIf="userId!=''">
-    Leads
-    </ion-item>
-  </ion-list> -->
 
-  <ion-card menuClose (tap)="openPage('6')" *ngIf="userId!=''">
+  <!--<ion-card menuClose (tap)="openPage('6')" *ngIf="userId!=''">
     <img src="assets/imgs/card-leads.jpg"/>
     <div class="card-title">Leads</div>
     <div class="card-subtitle">{{totalSubMembers}} Listings</div>
+  </ion-card>-->
+  <ion-card>
+    <ion-card-header>
+      Leads Chart
+    </ion-card-header>
+    <ion-card-content>
+      <canvas #barCanvas></canvas>
+    </ion-card-content>
   </ion-card>
 
+  <!--<ion-card>
+    <ion-card-header>
+      Doughnut Chart
+    </ion-card-header>
+    <ion-card-content>
+      <canvas #doughnutCanvas></canvas>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      Line Chart
+    </ion-card-header>
+    <ion-card-content>
+      <canvas #lineCanvas></canvas>
+    </ion-card-content>
+  </ion-card>-->
 </ion-content>
