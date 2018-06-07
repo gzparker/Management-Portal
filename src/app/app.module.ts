@@ -89,6 +89,20 @@ import { CreateRolePage } from '../pages/roles/create-role/create-role';
 import { EditRolePage } from '../pages/roles/edit-role/edit-role';
 import { ViewRolesPage } from '../pages/roles/view-roles/view-roles';
 
+import { ChatPage } from '../pages/chatmodule/chat/chat';
+import { ChatAccountPage } from '../pages/chatmodule/chat-account/chat-account';
+import { ChatActivitiesPage } from '../pages/chatmodule/chat-activities/chat-activities';
+import { ChatDetailPage } from '../pages/chatmodule/chat-detail/chat-detail';
+import { ChatEmojiPopupoverPage } from '../pages/chatmodule/chat-emoji-popupover/chat-emoji-popupover';
+import { ChatFriendsPage } from '../pages/chatmodule/chat-friends/chat-friends';
+import { ChatFriendsActivePage } from '../pages/chatmodule/chat-friends-active/chat-friends-active';
+import { ChatFriendsMessengerPage } from '../pages/chatmodule/chat-friends-messenger/chat-friends-messenger';
+import { ChatGroupsPage } from '../pages/chatmodule/chat-groups/chat-groups';
+import { ChatsPage } from '../pages/chatmodule/chats/chats';
+import { ChatingImagePopUpPage } from '../pages/chatmodule/chating-image-pop-up/chating-image-pop-up';
+import { NewGroupPopupPage } from '../pages/chatmodule/new-group-popup/new-group-popup';
+import { NewMessagePopupPage } from '../pages/chatmodule/new-message-popup/new-message-popup';
+
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { BrMaskerModule } from 'brmasker-ionic-3';
@@ -115,7 +129,9 @@ var firebaseConfig = {
     ChangePasswordPage,EditCreditCardPage,CreditCardDetailPage,UpgradeCenterPage,EditAccountPage,CreateHotSheetPage,EditHotSheetPage,
     EditLeadRoutingPage,UpcomingSubscriptionPage,
     BillingHistoryPage,AgentDetailPage,EditAgentPage,GlobalSettingsPopupPage,
-    ImageCropperComponent,AddCreditCardPage,CreateRolePage,EditRolePage,ViewRolesPage
+    ImageCropperComponent,AddCreditCardPage,CreateRolePage,EditRolePage,ViewRolesPage,ChatPage,ChatAccountPage,
+    ChatActivitiesPage,ChatDetailPage,ChatEmojiPopupoverPage,ChatFriendsActivePage,ChatFriendsActivePage,
+    ChatFriendsMessengerPage,ChatGroupsPage,ChatsPage,ChatingImagePopUpPage,NewGroupPopupPage,NewMessagePopupPage
   ],
   imports: [
     BrowserModule, HttpModule,CKEditorModule,
@@ -139,7 +155,10 @@ var firebaseConfig = {
     MlsSettingsPage,SetupOptionPage,UserOptionPage,AccountInfoPage,AccountOptionPage,ViewCreditCardsPage,
     ChangePasswordPage,EditCreditCardPage,CreditCardDetailPage,UpgradeCenterPage,EditAccountPage,CreateHotSheetPage,EditHotSheetPage,
     EditLeadRoutingPage,UpcomingSubscriptionPage,BillingHistoryPage,AgentDetailPage,
-    EditAgentPage,GlobalSettingsPopupPage,AddCreditCardPage,CreateRolePage,EditRolePage,ViewRolesPage
+    EditAgentPage,GlobalSettingsPopupPage,AddCreditCardPage,CreateRolePage,EditRolePage,ViewRolesPage,
+    ChatPage,ChatAccountPage,
+    ChatActivitiesPage,ChatDetailPage,ChatEmojiPopupoverPage,ChatFriendsActivePage,ChatFriendsActivePage,
+    ChatFriendsMessengerPage,ChatGroupsPage,ChatsPage,ChatingImagePopUpPage,NewGroupPopupPage,NewMessagePopupPage
   ],
   providers: [
     StatusBar,

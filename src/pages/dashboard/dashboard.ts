@@ -39,6 +39,18 @@ import { CreateRolePage } from '../roles/create-role/create-role';
 import { EditRolePage } from '../roles/edit-role/edit-role';
 import { ViewRolesPage } from '../roles/view-roles/view-roles';
 
+import { ChatPage } from '../chatmodule/chat/chat';
+import { ChatAccountPage } from '../chatmodule/chat-account/chat-account';
+import { ChatActivitiesPage } from '../chatmodule/chat-activities/chat-activities';
+import { ChatDetailPage } from '../chatmodule/chat-detail/chat-detail';
+import { ChatEmojiPopupoverPage } from '../chatmodule/chat-emoji-popupover/chat-emoji-popupover';
+import { ChatFriendsPage } from '../chatmodule/chat-friends/chat-friends';
+import { ChatFriendsActivePage } from '../chatmodule/chat-friends-active/chat-friends-active';
+import { ChatFriendsMessengerPage } from '../chatmodule/chat-friends-messenger/chat-friends-messenger';
+import { ChatGroupsPage } from '../chatmodule/chat-groups/chat-groups';
+import { ChatsPage } from '../chatmodule/chats/chats';
+import { ChatingImagePopUpPage } from '../chatmodule/chating-image-pop-up/chating-image-pop-up';
+
 import { SharedProvider } from '../../providers/shared/shared';
 import { UserProvider } from '../../providers/user/user';
 
@@ -65,7 +77,8 @@ export class DashboardPage {
   //doughnutChart: any;
   //lineChart: any;
 
-  public totalSubMembers:string="";
+
+public totalSubMembers:string="";
 public notificationMsg:string="";
 public userId:string="";
 public oldPageNumber:string="";
@@ -467,6 +480,9 @@ if(status==true)
     }
     if (pageNumber == "26") {
       this.navCtrl.push(EditAccountPage);
+    }
+    if (pageNumber == "27") {
+      this.navCtrl.push(ChatPage);
     }
   }
 }

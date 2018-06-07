@@ -8,6 +8,7 @@ import { NativeGeocoder, NativeGeocoderReverseResult, NativeGeocoderForwardResul
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { LoginPage } from '../pages/login/login';
@@ -74,6 +75,7 @@ export class MyApp {
   public isWebsites:boolean=false;
   public isLeads:boolean=false;
   public isHotSheets:boolean=false;
+  public isChats:boolean=false;
   public isRoles:boolean=false;
   public isAccount:boolean=false;
   public userGeneralInfo:any;
@@ -111,6 +113,7 @@ export class MyApp {
    sharedServiceObj.signOutEmitter.subscribe(item => {
      this.logOut();
  });
+ //debugger;
   }
   ionViewWillEnter() { 
    //debugger;
@@ -118,6 +121,7 @@ export class MyApp {
   }
   initializeApp() {
     this.platform.ready().then(() => {
+      this.loadGeneralWebsiteSettings();
      this.setDeviceToken();
       this.statusBar.styleDefault();
       this.splashScreen.hide();
@@ -129,6 +133,29 @@ export class MyApp {
   }
   ionViewDidLoad() {
     
+  }
+  loadGeneralWebsiteSettings()
+  {
+this.sharedServiceObj.getServiceDefaultInfoByUrl(document.URL.toString())
+.subscribe((result) => this.loadGeneralWebsiteSettingsResp(result));
+
+  }
+  loadGeneralWebsiteSettingsResp(result:any)
+  {
+    
+//debugger;
+/*if(result.status==false)
+{
+
+}
+if(result.status==true)
+{
+
+}*/
+if(result)
+{
+this.storage.set("generalWebsiteSettings",result);
+}
   }
   setDeviceToken(){
     //debugger;
@@ -473,7 +500,17 @@ else if(option=='6')
       {
         this.isAccount=false;
       }
-      
+    let chatAccesLevels=savedAccessLevels.filter((element) => {
+        return (element.key=="chats");
+    });
+    if(chatAccesLevels.length>0)
+      {
+        this.isChats=true;
+      }
+      else
+      {
+        this.isChats=true;
+      }  
     }
       }
     });
@@ -483,6 +520,7 @@ else if(option=='6')
   {
    // debugger;
     this.isAccount=true;
+    this.isChats=true;
     this.isDashboard=true;
     this.isHotSheets=true;
     this.isLeads=true;
@@ -492,6 +530,14 @@ else if(option=='6')
   //debugger;
   }
   logOut() {
+    //debugger;
+    let firebaseUserId = this.storage.get('firebaseUserId');
+    firebaseUserId.then((data) => {
+    var fredRef=firebase.database().ref('users/'+data);
+ //debugger;
+//The following 2 function calls are equivalent
+fredRef.update({isOnline:'0'});
+    });
     this.storage.remove('userId');
     this.storage.remove('email');
     this.storage.remove('first_name');

@@ -104,16 +104,13 @@ export class CreateLeadPage {
     }
     loadAllAgentsResp(result:any)
     {
-     debugger;
+    // debugger;
       if(result.status==true)
       {
-       
-        this.allAgents=result.results;
-        
+        this.allAgents=result.results; 
       }
       else
       {
-      
         this.allAgents=[];
       }
     }

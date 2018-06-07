@@ -222,16 +222,14 @@ export class AllWebsitesPage {
     if(result.status==true)
     {
      //debugger;
-    //alert('all webs');
-    // alert(this.isApp);
       this.allWebsiteList=result.result;   
     }
     else
     {
-      //alert('dont');
       this.allWebsiteList=[];
       this.websiteFoundMessage="No website found.";
-    }    
+    }
+    debugger;
   }
   
   deleteWebsite(website:any):void{

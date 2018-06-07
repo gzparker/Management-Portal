@@ -19,6 +19,7 @@ import { UserProvider } from '../../providers/user/user';
  * Ionic pages and navigation.
  */
 //declare const FB:any;
+declare var firebase:any;
 @IonicPage()
 
 @Component({
@@ -120,13 +121,14 @@ export class LoginPage {
         else
         {
           this.storage.set('is_submember', "0");
+          this.userServiceObj.setFireBaseInfo(result.memberCredentials);
           this.navCtrl.setRoot(DashboardTabsPage);
         }
         //  debugger;
-         
+         debugger;
         //debugger;
         //this.sharedServiceObj.setLoginStatus(true);
-          
+         
           
       });
         }
@@ -160,6 +162,7 @@ export class LoginPage {
     }
  
   }
+  
 setAllAccessOptions(userAllowedRoles:any)
 {
 let finalAllowedRolesOptions:number[]=[];

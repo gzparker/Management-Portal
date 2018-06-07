@@ -193,14 +193,24 @@ rgbaToHex (rgba) {
     return ('#' + r.toString(16) + g.toString(16) + b.toString(16) + (a * 255).toString(16).substring(0,2));
 }
 
- 
+getServiceDefaultInfoByUrl(domain:string){
+
+    let data = new URLSearchParams();
+ //data.append('lead_id',lead_id);
+ data.append('domain',domain);
+ //debugger;
+  let websiteDefaultSettingsResp=this.http
+    .post(this.registerationApiBaseUrl+'general/getServiceDefaultInfoByDomainUrl', data, this.headerOptions)
+    .map(this.extractData)
+    return websiteDefaultSettingsResp;
+}
   // this could also be a private method of the component class
   private extractData(res: Response) {
-    debugger;
+   //debugger;
     return res.json();
   }
   private handleErrorObservable(error: Response | any) {
-    /// debugger;
+ //debugger;
     console.error(error.message || error);
     return Observable.throw(error.message || error);
   }

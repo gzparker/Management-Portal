@@ -22,6 +22,7 @@ import { SharedProvider } from '../../providers/shared/shared';
   and Angular DI.
 */
 declare const FB: any;
+declare var firebase:any;
 @Injectable()
 export class UserProvider {
   public fbLoginDecision: EventEmitter<String>;
@@ -124,6 +125,51 @@ this.headerOptions= new RequestOptions({ headers: this.headers });
       this.statusChangeCallback(this.fbLoginStatus);
     }
 
+  }
+  setFireBaseInfo(result:any)
+  {
+let that=this;
+     // debugger;
+    firebase.auth().createUserWithEmailAndPassword(result.email,result.password)
+                  .then(function (currentUser) {
+           //  debugger;
+                  }).catch(function(error) {
+  
+      
+      });
+         firebase.auth().signInWithEmailAndPassword(result.email, result.password)
+    .then(function(currentUser) {
+//debugger;
+that.storage.set('firebaseUserId',currentUser.uid);
+   
+     
+       var fredRef=firebase.database().ref('users/'+currentUser.uid);
+//debugger;
+fredRef.update({isOnline:'1',webUserId:result.id,first_name: result.first_name,
+last_name:result.last_name,
+user_type:"1",
+image_url: result.image_url,
+parent_id: result.parent_id,
+verified: "1",
+email:result.email});
+    
+     currentUser.updateProfile({
+      displayName: result.first_name+" "+result.last_name
+
+}).then(function() {
+
+// Update successful.
+}, function(error) {
+
+// An error happened.
+});
+      
+    }).catch(function(error) {
+      
+      console.error("Authentication failed:", error);
+     
+    });
+ 
   }
   statusChangeCallback(resp) {
 
@@ -276,8 +322,7 @@ this.headerOptions= new RequestOptions({ headers: this.headers });
   userSignUp(dataObj: any) {
     let firbase_token = this.storage.get('firebase_token');
     firbase_token.then((data) => {
-      //debugger;
-      //this.firebase_token_data=data;
+ 
       this.firbase_token_data=data;
     });
     let url = "";
@@ -382,8 +427,6 @@ this.headerOptions= new RequestOptions({ headers: this.headers });
    // debugger;
     let data = new URLSearchParams();
     data.append('member_id', user_id);
-
-
     let acountInfoResp = this.http
       .post(this.sharedServiceObj.registerationApiBaseUrl + 'members/generalinfo', data,
       this.headerOptions)
@@ -629,7 +672,7 @@ viewLeadRouting(website_id:string){
 data.append('website_id',website_id);
 //debugger;
 let leadRouting=this.http
-  .post(this.sharedServiceObj.apiBaseUrl+'members/viewWebsiteLeadRouting', data, this.headerOptionsIDX)
+  .post(this.sharedServiceObj.registerationApiBaseUrl+'members/viewWebsiteLeadRouting', data, this.headerOptions)
   .map(this.extractData)
   return leadRouting;
 }
@@ -638,24 +681,22 @@ updateLeadRouting(website_id:string,send_to_email_addresses:string,
 //debugger;
   let data = new URLSearchParams();
   data.append('website_id',website_id);
-  //data.append('send_to_email',send_to_email);
   data.append('send_to_email_addresses',send_to_email_addresses);
   data.append('send_to_zillow_crm',send_to_zillow_crm);
   data.append('send_to_intagent_crm',send_to_intagent_crm);
   data.append('send_to_zapier',send_to_zapier);
 
   let leadRouting=this.http
-  .post(this.sharedServiceObj.apiBaseUrl+'members/updateWebsiteLeadRouting', data, this.headerOptionsIDX)
+  .post(this.sharedServiceObj.registerationApiBaseUrl+'members/updateWebsiteLeadRouting', data, this.headerOptions)
   .map(this.extractData)
   return leadRouting;
 }
 allUserWebsites(user_id:string){
-
     let data = new URLSearchParams();
  data.append('member_id',user_id);
-
+//debugger;
   let websiteListing=this.http
-    .post(this.sharedServiceObj.apiBaseUrl+'members/viewAllWebsites', data, this.headerOptionsIDX)
+    .post(this.sharedServiceObj.registerationApiBaseUrl+'members/viewAllWebsites', data, this.headerOptions)
     .map(this.extractData)
     return websiteListing;
 }
@@ -679,7 +720,7 @@ data.append('homepage_search_text',homepage_search_text);
 data.append('homepage_meta_title',homepage_meta_title);
 //debugger;
   let websiteListing=this.http
-    .post(this.sharedServiceObj.apiBaseUrl+'members/createWebsite', data, this.headerOptionsIDX)
+    .post(this.sharedServiceObj.registerationApiBaseUrl+'members/createWebsite', data, this.headerOptions)
     .map(this.extractData)
     return websiteListing;
 }
@@ -690,7 +731,7 @@ editWebsite(user_id:string,website_id:string){
  data.append('id',website_id);
 
   let websiteListing=this.http
-    .post(this.sharedServiceObj.apiBaseUrl+'members/editWebsite', data, this.headerOptionsIDX)
+    .post(this.sharedServiceObj.registerationApiBaseUrl+'members/editWebsite', data, this.headerOptions)
     .map(this.extractData)
     return websiteListing;
 }
@@ -730,7 +771,7 @@ data.append('homepage_search_text',homepage_search_text);
 data.append('homepage_meta_title',homepage_meta_title);
 //debugger;
   let websiteListing=this.http
-    .post(this.sharedServiceObj.apiBaseUrl+'members/updateWebsite', data, this.headerOptionsIDX)
+    .post(this.sharedServiceObj.registerationApiBaseUrl+'members/updateWebsite', data, this.headerOptions)
     .map(this.extractData)
     return websiteListing;
 }
@@ -741,7 +782,7 @@ deleteWebsite(user_id:string,website_id:string){
  data.append('id',website_id);
 
   let websiteListing=this.http
-    .post(this.sharedServiceObj.apiBaseUrl+'members/deleteWebsite', data, this.headerOptionsIDX)
+    .post(this.sharedServiceObj.registerationApiBaseUrl+'members/deleteWebsite', data, this.headerOptions)
     .map(this.extractData)
     return websiteListing;
 }
@@ -752,7 +793,7 @@ data.append('member_id',user_id);
 data.append('website_id',website_id);
 
 let websiteLinks=this.http
-  .post(this.sharedServiceObj.apiBaseUrl+'members/viewWebsiteLinks', data, this.headerOptionsIDX)
+  .post(this.sharedServiceObj.registerationApiBaseUrl+'members/viewWebsiteLinks', data, this.headerOptions)
   .map(this.extractData)
   return websiteLinks;
 }
@@ -1117,7 +1158,7 @@ loadPaperWorkStatus(website_id:string)
   data.append('website_id',website_id);
  
  let paperWorkResp=this.http
-     .post(this.sharedServiceObj.apiBaseUrl+'members/viewPaperworkStatus', data, this.headerOptionsIDX)
+     .post(this.sharedServiceObj.registerationApiBaseUrl+'members/viewPaperworkStatus', data, this.headerOptions)
      .map(this.extractData)
      return paperWorkResp;
 }

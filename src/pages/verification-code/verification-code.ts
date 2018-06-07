@@ -11,7 +11,7 @@ import { DashboardTabsPage } from '../tabs/dashboard-tabs/dashboard-tabs';
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-
+declare var firebase:any;
 @IonicPage()
 @Component({
   selector: 'page-verification-code',
@@ -36,21 +36,6 @@ export class VerificationCodePage {
   
     if (result.status == true) {
   
-          /*this.storage.set('loggedId', '1');
-          this.storage.set('selectedService','2');
-          this.storage.set('userId', result.memberCredentials.id);
-          this.storage.set('email', result.memberCredentials.email);
-          this.storage.set('first_name', result.memberCredentials.first_name);
-          this.storage.set('last_name', result.memberCredentials.last_name);
-          this.storage.set('country_abbv', result.memberCredentials.country_abbv);
-          this.storage.set('country_code', result.memberCredentials.country_code);
-          this.storage.set('userType', "1");
-          this.storage.set('loggedInUserInfo', result);
-          this.sharedServiceObj.setLoginStatus(true);
-          this.ngZone.run(() => {
-          
-         this.navCtrl.setRoot(DashboardTabsPage,{notificationMsg:result.message.toUpperCase()});
-          });*/
           this.verificationMsg=result.message.toUpperCase();
           this.userLogin(result.memberCredentials.email,result.memberCredentials.password)
     }
@@ -106,6 +91,7 @@ export class VerificationCodePage {
         else
         {
           this.storage.set('is_submember', "0");
+          this.userServiceObj.setFireBaseInfo(result.memberCredentials);
           this.navCtrl.setRoot(DashboardTabsPage);
         }
         //  debugger;
@@ -126,6 +112,7 @@ export class VerificationCodePage {
     }
  
   }
+
 setAllAccessOptions(userAllowedRoles:any)
 {
 let finalAllowedRolesOptions:number[]=[];
