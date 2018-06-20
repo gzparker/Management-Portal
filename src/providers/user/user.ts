@@ -128,8 +128,11 @@ this.headerOptions= new RequestOptions({ headers: this.headers });
   }
   setFireBaseInfo(result:any)
   {
-let that=this;
-     // debugger;
+    //debugger;
+    let that=this;
+    let websiteInfo = this.storage.get('websiteInfo');
+    websiteInfo.then((data) => {
+//debugger;
     firebase.auth().createUserWithEmailAndPassword(result.email,result.password)
                   .then(function (currentUser) {
            //  debugger;
@@ -148,10 +151,11 @@ that.storage.set('firebaseUserId',currentUser.uid);
 fredRef.update({isOnline:'1',webUserId:result.id,first_name: result.first_name,
 last_name:result.last_name,
 user_type:"1",
+website_id:data.id,
 image_url: result.image_url,
 parent_id: result.parent_id,
 verified: "1",
-email:result.email});
+email:result.email,fbId:currentUser.uid});
     
      currentUser.updateProfile({
       displayName: result.first_name+" "+result.last_name
@@ -166,14 +170,14 @@ email:result.email});
       
     }).catch(function(error) {
       
-      console.error("Authentication failed:", error);
+      console.log("Authentication failed:", error);
      
     });
- 
+  });
   }
   statusChangeCallback(resp) {
 
-    if (resp != undefined) {
+    if (resp != 0) {
       if (resp.status === 'connected') {
         //alert('5');
     if(!this.isApp)
@@ -797,6 +801,16 @@ let websiteLinks=this.http
   .map(this.extractData)
   return websiteLinks;
 }
+loadAllWebsiteInfoByDomain(domain:string){
+
+  let data = new URLSearchParams();
+data.append('domain_name',domain);
+//debugger;
+let websiteDomainInfo=this.http
+  .post(this.sharedServiceObj.registerationApiBaseUrl+'members/viewWebsiteInfoByDomain', data, this.headerOptions)
+  .map(this.extractData)
+  return websiteDomainInfo;
+}
 allListCreditCards(user_id:string,service_id:string){
   //debugger;
   let data = new URLSearchParams();
@@ -1172,7 +1186,7 @@ getUsersChartsData(member_id:string)
        return userChartsResp;
 }
 private extractData(res: Response) {
-//debugger;
+  //debugger;
     return res.json();
 }
   private handleErrorObservable(error: Response | any) {

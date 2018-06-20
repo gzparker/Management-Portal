@@ -206,7 +206,7 @@ getServiceDefaultInfoByUrl(domain:string){
 }
   // this could also be a private method of the component class
   private extractData(res: Response) {
-   //debugger;
+  debugger;
     return res.json();
   }
   private handleErrorObservable(error: Response | any) {

@@ -126,7 +126,7 @@ export class MyApp {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       this.clearAllStorageElement();
-      
+      this.loadWebsiteInfoByDomain();
       this.loadAvailableCountries();
       this.setUserCurrentGeoLocation();
     });
@@ -136,14 +136,15 @@ export class MyApp {
   }
   loadGeneralWebsiteSettings()
   {
+    //debugger;
 this.sharedServiceObj.getServiceDefaultInfoByUrl(document.URL.toString())
 .subscribe((result) => this.loadGeneralWebsiteSettingsResp(result));
-
+//this.sharedServiceObj.getServiceDefaultInfoByUrl("https://idx.configuration.menu")
+//.subscribe((result) => this.loadGeneralWebsiteSettingsResp(result));
   }
   loadGeneralWebsiteSettingsResp(result:any)
   {
-    
-//debugger;
+
 /*if(result.status==false)
 {
 
@@ -156,6 +157,19 @@ if(result)
 {
 this.storage.set("generalWebsiteSettings",result);
 }
+  }
+  loadWebsiteInfoByDomain()
+  {
+    //debugger
+    //this.userServiceObj.loadAllWebsiteInfoByDomain(document.URL.toString())
+    //.subscribe((result) => this.loadWebsiteInfoByDomainResp(result));
+    this.userServiceObj.loadAllWebsiteInfoByDomain("cotierproperties.com")
+    .subscribe((result) => this.loadWebsiteInfoByDomainResp(result));
+  }
+  loadWebsiteInfoByDomainResp(result:any)
+  {
+//debugger;
+this.storage.set("websiteInfo",result.result);
   }
   setDeviceToken(){
     //debugger;

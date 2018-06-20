@@ -158,6 +158,7 @@ loadDashboardCharts()
 }
 loadDashboardChartsResp(result:any){
 //debugger;
+//debugger;
 let leads_by_months:any[]=result.leads_by_month_chart;
 let leads_chart_values:any[]=[];
 let leadCountExists:boolean=false;
@@ -189,17 +190,24 @@ else
   leads_chart_values.push("0");
 }
 }*/
-for(let i=1;i<=12;i++)
+if(leads_by_months!=null&&leads_by_months.length>0)
 {
-let found_lead=leads_by_months.find( month_leads => month_leads.mth === i.toString() );
-if(found_lead)
-{
-  leads_chart_values.push(found_lead.totalLeads);
+  for(let i=1;i<=12;i++)
+  {
+  let found_lead=leads_by_months.find( month_leads => month_leads.mth === i.toString() );
+  if(found_lead)
+  {
+    leads_chart_values.push(found_lead.totalLeads);
+  }
+  else
+  {
+    leads_chart_values.push("0");
+  }
+  }
 }
 else
 {
   leads_chart_values.push("0");
-}
 }
 
 //debugger;

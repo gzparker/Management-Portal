@@ -125,7 +125,7 @@ export class LoginPage {
           this.navCtrl.setRoot(DashboardTabsPage);
         }
         //  debugger;
-         debugger;
+         //debugger;
         //debugger;
         //this.sharedServiceObj.setLoginStatus(true);
          

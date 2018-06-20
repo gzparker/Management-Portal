@@ -229,7 +229,7 @@ export class AllWebsitesPage {
       this.allWebsiteList=[];
       this.websiteFoundMessage="No website found.";
     }
-    debugger;
+    //debugger;
   }
   
   deleteWebsite(website:any):void{

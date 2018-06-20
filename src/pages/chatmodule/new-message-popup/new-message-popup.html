@@ -17,16 +17,26 @@
 <ion-content padding>
   <h1 class="contentTitle">Send Message</h1>
   <form role="form" data-toggle="validator" #messageForm="ngForm">
-      <ion-item>
-          <ion-label floating>Select Contact</ion-label>
-          <ion-item>
-              <ion-searchbar #searchHomeBar placeholder="Search Home Address"></ion-searchbar>
-            </ion-item>
-        </ion-item>
+    <ion-item *ngIf="isContact==2">
+                
+      <ion-searchbar placeholder="Search for contacts" (input)="filterContacts()" [(ngModel)]="searchKeyword" 
+      name="searchKeyword" id="searchKeyword"></ion-searchbar>
+</ion-item>
+           <ion-list *ngIf="isContact==2">
+             <ion-item *ngFor="let availableContact of allAvailableSearchedContacts">
+               <ion-item (click)="selectChatMember(availableContact)">
+                    {{availableContact.first_name}}
+               </ion-item>
+             </ion-item>
+           </ion-list>
+    
         <ion-item>
-            <ion-label floating>Message</ion-label>
-            <ion-textarea type="text" [(ngModel)]="description" name="description"></ion-textarea>
+            <ion-label floating>Message<span [ngClass]="{'error': description==''}" *ngIf="description==''">*</span></ion-label>
+            <ion-textarea type="text" [(ngModel)]="description" name="description" required></ion-textarea>
           </ion-item>
+          <div padding>
+          <button ion-button color="primary" block (click)="sendMessage('new')">Send Message</button>
+          </div>
   </form>
 
 </ion-content>
