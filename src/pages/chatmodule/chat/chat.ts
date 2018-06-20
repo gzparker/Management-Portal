@@ -75,6 +75,7 @@ this.getMessages();
   {
     var searchText=this.searchText;
    var that=this;
+   //debugger;
       var chatMatches = this.chatGroupsOld.filter( function(chat) {
 if(chat.val().isGroup=="0")
         {
@@ -93,8 +94,9 @@ if(chat.val().groupTitle.toLowerCase().indexOf(searchText.toLowerCase()) !== -1 
     }
       });
 
-
       that.chatGroups=chatMatches;
+      //let abc="dfd";
+     // debugger;
       that.users=this.usersOld;
       that.groupMembersData=this.groupMembersDataOld;
 
@@ -103,7 +105,7 @@ if(chat.val().groupTitle.toLowerCase().indexOf(searchText.toLowerCase()) !== -1 
     var that=this;
     //debugger;
     this.chatGroups=[];
-   
+   this.chatGroupsOld=[];
   var fredRef=firebase.database().ref('users').on('child_added', function(snapshot) {
     //debugger;
       that.users.push(snapshot.val());
@@ -129,9 +131,10 @@ loadAllChatGroups()
 {
   var that=this;
   var fredRef=firebase.database().ref('groups').on('child_added', function(snapshot) {
-    debugger;
     that.chatGroups.push(snapshot);
     that.chatGroupsOld.push(snapshot);
+    //let abc="ssd";
+    //debugger;
     //debugger;
 });
 var chatsObjRef=firebase.database().ref('chats').once('value', function(chatsObjRefVal) {
@@ -243,41 +246,7 @@ if(deleteChatRefVal.exists())
   }});
  
 });
-/*deleteGroup.$loaded().then(function (){
-var deletedGroup=deleteGroup;
-                            
-                            var deletedGroupArray=[];
-                            deletedGroupArray=deletedGroup.deletedFor;
-                            
-                            deletedGroupArray.push(that.firebaseUserId);
-                           
-                            groupRef.update({deletedFor:deletedGroupArray});
 
-
-   var chatForDeleteArray = Firebase.get('chats','groupId',groupId);
-chatForDeleteArray.$loaded().then(function () {
-chatForDeleteArray.forEach(function(chatForDelete) {
-var fredRef=Firebase.firebaseRef().child('chats/'+chatForDelete.$id);
-
-var deleteChat=Firebase.getById('chats',chatForDelete.$id);
-   deleteChat.$loaded().then(function (){
-                            var deleteChating=deleteChat;
-                            
-                            var deletedChatingArray=[];
-                            deletedChatingArray=deleteChating.deletedFor;
-                            
-                            deletedChatingArray.push(that.firebaseUserId);
-                           
-                            fredRef.update({deletedFor:deletedChatingArray});
-                            
-                              });
-
-});
-
-
-});
-
-});*/
 that.getMessages();              
 
 }
