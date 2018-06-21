@@ -50,6 +50,9 @@ import { ChatFriendsMessengerPage } from '../chatmodule/chat-friends-messenger/c
 import { ChatGroupsPage } from '../chatmodule/chat-groups/chat-groups';
 import { ChatsPage } from '../chatmodule/chats/chats';
 import { ChatingImagePopUpPage } from '../chatmodule/chating-image-pop-up/chating-image-pop-up';
+import { GroupChatDetailPage } from '../chatmodule/group-chat-detail/group-chat-detail';
+import { GroupMembersPage } from '../chatmodule/group-members/group-members';
+
 
 import { SharedProvider } from '../../providers/shared/shared';
 import { UserProvider } from '../../providers/user/user';

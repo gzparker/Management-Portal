@@ -102,6 +102,8 @@ import { ChatsPage } from '../pages/chatmodule/chats/chats';
 import { ChatingImagePopUpPage } from '../pages/chatmodule/chating-image-pop-up/chating-image-pop-up';
 import { NewGroupPopupPage } from '../pages/chatmodule/new-group-popup/new-group-popup';
 import { NewMessagePopupPage } from '../pages/chatmodule/new-message-popup/new-message-popup';
+import { GroupChatDetailPage } from '../pages/chatmodule/group-chat-detail/group-chat-detail';
+import { GroupMembersPage } from '../pages/chatmodule/group-members/group-members';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -131,7 +133,8 @@ var firebaseConfig = {
     BillingHistoryPage,AgentDetailPage,EditAgentPage,GlobalSettingsPopupPage,
     ImageCropperComponent,AddCreditCardPage,CreateRolePage,EditRolePage,ViewRolesPage,ChatPage,ChatAccountPage,
     ChatActivitiesPage,ChatDetailPage,ChatEmojiPopupoverPage,ChatFriendsActivePage,ChatFriendsActivePage,
-    ChatFriendsMessengerPage,ChatGroupsPage,ChatsPage,ChatingImagePopUpPage,NewGroupPopupPage,NewMessagePopupPage
+    ChatFriendsMessengerPage,ChatGroupsPage,ChatsPage,ChatingImagePopUpPage,NewGroupPopupPage,
+    NewMessagePopupPage,GroupChatDetailPage,GroupMembersPage,ChatFriendsPage
   ],
   imports: [
     BrowserModule, HttpModule,CKEditorModule,
@@ -158,7 +161,8 @@ var firebaseConfig = {
     EditAgentPage,GlobalSettingsPopupPage,AddCreditCardPage,CreateRolePage,EditRolePage,ViewRolesPage,
     ChatPage,ChatAccountPage,
     ChatActivitiesPage,ChatDetailPage,ChatEmojiPopupoverPage,ChatFriendsActivePage,ChatFriendsActivePage,
-    ChatFriendsMessengerPage,ChatGroupsPage,ChatsPage,ChatingImagePopUpPage,NewGroupPopupPage,NewMessagePopupPage
+    ChatFriendsMessengerPage,ChatGroupsPage,ChatsPage,ChatingImagePopUpPage,NewGroupPopupPage,NewMessagePopupPage,
+    NewMessagePopupPage,GroupChatDetailPage,GroupMembersPage,ChatFriendsPage
   ],
   providers: [
     StatusBar,

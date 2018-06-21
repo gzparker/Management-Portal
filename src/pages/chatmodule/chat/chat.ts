@@ -18,6 +18,8 @@ import { ChatsPage } from '../chats/chats';
 import { ChatingImagePopUpPage } from '../chating-image-pop-up/chating-image-pop-up';
 import { NewGroupPopupPage } from '../new-group-popup/new-group-popup';
 import { NewMessagePopupPage } from '../new-message-popup/new-message-popup';
+import { GroupChatDetailPage } from '../group-chat-detail/group-chat-detail';
+import { GroupMembersPage } from '../group-members/group-members';
 
 import { SharedProvider } from '../../../providers/shared/shared';
 import { UserProvider } from '../../../providers/user/user';
@@ -44,6 +46,7 @@ export class ChatPage {
   public isApp=false;
   public users:any[]=[];
   public usersOld:any[]=[];
+  public noImgUrl="../assets/imgs/profile-photo.jpg";
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, 
     public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
@@ -105,11 +108,17 @@ if(chat.val().groupTitle.toLowerCase().indexOf(searchText.toLowerCase()) !== -1 
     var that=this;
     //debugger;
     this.chatGroups=[];
-   this.chatGroupsOld=[];
-  var fredRef=firebase.database().ref('users').on('child_added', function(snapshot) {
+    this.chatGroupsOld=[];
+  var fredRef=firebase.database().ref('users').on('value', function(snapshot) {
     //debugger;
-      that.users.push(snapshot.val());
-      that.usersOld.push(snapshot.val());
+    that.users=[];
+    that.usersOld=[];
+    snapshot.forEach((data)=>{
+      //debugger;
+      that.users.push(data.val());
+      that.usersOld.push(data.val());
+    })
+      
      // debugger;
 });
     this.loadAllGroupMembers();
@@ -207,14 +216,11 @@ deleteGroupChat(groupId,id) {
  var that=this;
  var groupRef=firebase.database().ref('groups/'+id);
 
- //var groupRef=Firebase.firebaseRef().child('groups/'+id);
-//var deleteGroup=firebase.database().getById('groups',id);
 var deleteGroupObjRef=firebase.database().ref('groups/'+id).once('value', function(deleteGroupRefVal) {
- // debugger;
+
   if(deleteGroupRefVal.exists())
  {
-  // let abc="dfdf";
-  // debugger;
+
   var deletedGroup=deleteGroupRefVal.val();
                             
   var deletedGroupArray=[];
@@ -249,6 +255,31 @@ if(deleteChatRefVal.exists())
 
 that.getMessages();              
 
+}
+chatDetail(groupId:string,fromFbUserId:string,fromUserName:string,toUserName:string,type:string)
+{
+ // debugger;
+  let chatterName="";
+  if(fromFbUserId==this.firebaseUserId)
+  {
+    chatterName=toUserName
+  }
+else
+{
+  chatterName=fromUserName;
+}
+if(type=="1")
+{
+  this.ngZone.run(() => {
+    this.navCtrl.push(ChatDetailPage, { groupId: groupId,chatterName:chatterName });
+  });
+}
+else if(type=="2")
+{
+  this.ngZone.run(() => {
+    this.navCtrl.push(GroupChatDetailPage, { groupId: groupId,chatterName:chatterName });
+  });
+}
 }
 convertToDate(modifiedDate)
 {

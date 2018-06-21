@@ -19,6 +19,8 @@ import { ChatsPage } from '../chats/chats';
 import { ChatingImagePopUpPage } from '../chating-image-pop-up/chating-image-pop-up';
 import { NewGroupPopupPage } from '../new-group-popup/new-group-popup';
 import { NewMessagePopupPage } from '../new-message-popup/new-message-popup';
+import { GroupChatDetailPage } from '../group-chat-detail/group-chat-detail';
+import { GroupMembersPage } from '../group-members/group-members';
 
 import { SharedProvider } from '../../../providers/shared/shared';
 import { UserProvider } from '../../../providers/user/user';

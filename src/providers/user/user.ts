@@ -36,7 +36,7 @@ export class UserProvider {
   public isApp=false;
   private firbase_token_data="";
   private device_name="Browser";
-  constructor(public platform: Platform,private http: Http, public sharedServiceObj: SharedProvider,
+  constructor(public sharedServiceObj: SharedProvider,public platform: Platform,private http: Http,
     private storage: Storage, public modalCtrl: ModalController,private fb: Facebook) {
       
    

@@ -66,6 +66,7 @@ public chatImage:string="";
    {
     this.redirectUserId = this.navParams.get('redirectUserId');
     }
+    sharedServiceObj.chatNewMsgSentEmiter.subscribe(item => this.msgSentResp(item));
   }
 
   ionViewDidLoad() {
@@ -131,8 +132,21 @@ this.loggedInUserInfo=data;
     this.allAvailableSearchedContacts=[];
 //debugger;
   }
- sendMessage(type:string) {
- debugger;
+sendMessage(type:string)
+{
+this.sharedServiceObj.sendMessage(type,this.description,this.redirectUserId,this.firebaseUserId,
+  this.newChatMember,this.groupId,this.loggedInUserInfo,this.chatImage,undefined);
+}
+msgSentResp(resp:any)
+{
+if(resp=="1")
+{
+  this.ngZone.run(() => {
+    this.navCtrl.push(ChatPage);
+  });
+}
+}
+ /*sendMessage(type:string) {
  let that=this;
     var deletedFor=["0"];
   
@@ -176,13 +190,11 @@ this.loggedInUserInfo=data;
   groupId=this.groupId;
     
    }
-    //var groups = firebase.database().ref.all('groups');
+  
     var groups=firebase.database().ref('groups');
-    //debugger;
     this.description=this.description;
     var groups=firebase.database().ref('groups').once('value', function(groupsVal) {
-     //debugger
-    //var groupsArray = groups;
+
     if(groupsVal.exists())
     {
      
@@ -190,19 +202,15 @@ this.loggedInUserInfo=data;
         if(snapshot.val()){
      
           var returnedGroup=snapshot.val();
-          //debugger;
           createDate=returnedGroup.dateCreated;
-         //debugger;
-           
+
           var fredRef=firebase.database().ref('groups/'+snapshot.key);
-  //debugger;
         fredRef.update({message:that.description,deletedFor:deletedFor,modifiedDate:Date()});
         that.saveMessage(groupId,memberId,type);
                          
                        }
                        else
                        {
-                       // debugger;
                         that.saveGroup(groupId,memberId,type,createDate);
                         that.saveMessage(groupId,memberId,type);
                        }
@@ -210,7 +218,6 @@ this.loggedInUserInfo=data;
     }
     else
     {
-//debugger;
       that.saveGroup(groupId,memberId,type,createDate);      
       that.saveMessage(groupId,memberId,type);                  
   
@@ -221,10 +228,7 @@ this.loggedInUserInfo=data;
   });
 
    }
-  
-  
    saveGroup(groupId,memberId,type,createDate){
-  //debugger;
    let that=this;
     var deletedFor=["0"];
     var toUserName="";
@@ -240,17 +244,7 @@ this.loggedInUserInfo=data;
   toUserImage=this.newChatMember.image_url;
   }
   }
-  /*else
-  {
-  if($("#firstName").val()!=undefined)
-  {
-    toUserName=$("#firstName").val();
-  }
-  if(document.getElementById("userImage").src!=undefined)
-  {
-  toUserImage=document.getElementById("userImage").src;
-  }
-  }*/
+
   var groups=firebase.database().ref('groups');
    
                                   groups.push({
@@ -276,7 +270,6 @@ this.loggedInUserInfo=data;
   
    };
    saveMessage(groupId,memberId,type){
-     debugger;
     let that=this;
     var readBy=this.firebaseUserId;
     var deletedFor=["0"];
@@ -300,18 +293,7 @@ this.loggedInUserInfo=data;
   toUserImage=this.newChatMember.image_url;
   }
   }
- debugger;
-  /*else
-  {
-  if($("#firstName").val()!=undefined)
-  {
-    toUserName=$("#firstName").val();
-  }
-  if(document.getElementById("userImage").src!=undefined)
-  {
-  toUserImage=document.getElementById("userImage").src;
-  }
-  }*/
+
          
                                   chat.push({
                                     fromUserName:that.loggedInUserInfo.memberCredentials.first_name,
@@ -338,93 +320,6 @@ this.loggedInUserInfo=data;
                                     });
                                   });
    }
-  /* else if(type=="old")
-   {
-  
-    $scope.lastMessage=$scope.chatDetailArray[$scope.chatDetailArray.length-1];
-  
-  if($scope.lastMessage.groupId==undefined)
-  {
-    $scope.lastMessage.groupId="";
-  }
-  
-  if($scope.lastMessage.fromFbUserId==undefined)
-  {
-    $scope.lastMessage.fromFbUserId="";
-  }
-  if($scope.lastMessage.fromUserName==undefined)
-  {
-    $scope.lastMessage.fromUserName="";
-  }
-  if($scope.lastMessage.fromFbUserId==undefined)
-  {
-    $scope.lastMessage.fromFbUserId="";
-  }
-  if($scope.lastMessage.toUserName==undefined)
-  {
-    $scope.lastMessage.toUserName="";
-  }
-  if($scope.lastMessage.toFbUserId==undefined)
-  {
-    $scope.lastMessage.toFbUserId="";
-  }
-  
-  var fromUserName="";
-  
-  var fromUserId="";
-  var toUserId="";
-  var fromImageUrlNew="";
-  
-  groupId=$scope.lastMessage.groupId;
-  if($rootScope.userId==$scope.lastMessage.fromFbUserId)
-  {
-  fromUserName=$scope.lastMessage.fromUserName;
-  fromUserId=$scope.lastMessage.fromFbUserId;
-  toUserName=$scope.lastMessage.toUserName;
-  toUserId=$scope.lastMessage.toFbUserId;
-  fromImageUrlNew=$scope.lastMessage.fromUserImage;
-  toImageUrl=$scope.lastMessage.toUserImage;
-  }
-  if($rootScope.userId!=$scope.lastMessage.fromFbUserId)
-  {
-  fromUserName=$scope.lastMessage.toUserName;
-  fromUserId=$scope.lastMessage.toFbUserId;
-  toUserName=$scope.lastMessage.fromUserName;
-  toUserId=$scope.lastMessage.fromFbUserId;
-  fromImageUrlNew=$scope.lastMessage.toUserImage;
-  toImageUrl=$scope.lastMessage.fromUserImage;
-  }
-  
-    chat.$add({
-                                    fromUserName:fromUserName,
-                                    toUserName:toUserName,
-                                      fromFbUserId: fromUserId,
-                                      toFbUserId: toUserId,
-                                      fromUserImage:fromImageUrlNew,
-                                      toUserImage:toImageUrl,
-                                      message:msgDescription,
-                                      //imageData:$scope.chatImage,
-                                      dateCreated: Date(),
-                                      provider: 'Firebase',
-                                      deletedFor:deletedFor,
-                                      readBy:readBy,
-                                      groupId:groupId
-                                     
-                                  }).then(function (ref) {
-  
-                                   this.messageSent="1";
-                                      $timeout(function () {
-           this.messageSent="0";
-      }, 4000);
-                                    this.description="";
-                                    this.chatImage="";
-                                     $ionicScrollDelegate.scrollBottom();
-                                    ContactService.sendMessageNotification(toUserId,fromUserName,"",msgDescription,$rootScope.image_url);
-                                  
-                                  });
-                                 
   
    }*/
-
-   }
 }

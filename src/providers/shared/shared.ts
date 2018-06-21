@@ -1,10 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Http, Response, URLSearchParams, Headers, RequestOptions } from '@angular/http';
 import { HTTP } from '@ionic-native/http';
-import { EventEmitter, Injectable } from '@angular/core';
+import { EventEmitter, Injectable, NgZone } from '@angular/core';
+import { IonicPage, NavController, NavParams, ModalController, Platform,
+    MenuController,ActionSheetController,Tabs, ViewController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from "rxjs/Subject";
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { ChatPage } from '../../pages/chatmodule/chat/chat';
 import { Storage } from '@ionic/storage';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
@@ -15,13 +18,15 @@ import 'rxjs/add/operator/toPromise';
   See https://angular.io/guide/dependency-injection for more info on providers
   and Angular DI.
 */
-
+declare var firebase:any;
 @Injectable()
 export class SharedProvider {
   public isLoggedInEmitter: EventEmitter<Boolean>;
   public isPaidEmitter: EventEmitter<Boolean>;
   public navigationalPage: EventEmitter<String>;
   public signOutEmitter: EventEmitter<String>;
+  public chatNewMsgSentEmiter: EventEmitter<String>;
+  public chatOldMsgSentEmiter: EventEmitter<String>;
   //public registerationApiBaseUrl="http://registration.menu/api/";
   public registerationApiBaseUrl = "https://api.registration.menu/api/";
   //public idxapikey:string="1761ea8f043c53e44e3ccd90c18b0404c20152f0";
@@ -33,6 +38,8 @@ export class SharedProvider {
   private headerOptions: RequestOptions = new RequestOptions();
   private headersIDX: Headers = new Headers();
   private headerOptionsIDX: RequestOptions = new RequestOptions();
+ // private navCtrl: NavController;
+ // private ngZone:NgZone;
   public service_id = "2";
   public mlsServerId = "23";
   public apiBaseUrl = "https://api.idx.company/api/";
@@ -46,6 +53,8 @@ export class SharedProvider {
     this.isPaidEmitter=new EventEmitter();
     this.navigationalPage=new EventEmitter();
     this.signOutEmitter=new EventEmitter();
+    this.chatNewMsgSentEmiter=new EventEmitter();
+    this.chatOldMsgSentEmiter=new EventEmitter();
     this.headersIDX.append("IDXKEY",this.idxapiKey);
 this.headerOptionsIDX= new RequestOptions({ headers: this.headersIDX });
 this.headers.append("REGISTRATIONKEY",this.registerationApiKey);
@@ -204,9 +213,271 @@ getServiceDefaultInfoByUrl(domain:string){
     .map(this.extractData)
     return websiteDefaultSettingsResp;
 }
+sendMessage(type:string,description:any,redirectUserId:any,firebaseUserId:any,
+    newChatMember:any,redirectedGroupId:string,loggedInUserInfo:any,chatImage:string,chatDetailArray:any) {
+        let respMsg:any;
+    let that=this;
+       var deletedFor=["0"];
+     
+       var groupId="group";
+       var memberId="1";
+       var createDate=Date();
+     
+     if(description=="")
+     {
+       return false;
+     }
+       if(redirectUserId)
+       {
+       memberId=redirectUserId;
+       
+           if(memberId<firebaseUserId)
+           {
+          groupId="group"+"_"+memberId+"_"+firebaseUserId;
+        }
+        else
+        {
+     groupId="group"+"_"+firebaseUserId+"_"+memberId;
+        }
+      }
+      else if(newChatMember)
+      {
+        memberId=newChatMember.fbId;
+       
+           if(memberId<firebaseUserId)
+           {
+          groupId="group"+"_"+memberId+"_"+firebaseUserId;
+        }
+        else
+        {
+     groupId="group"+"_"+firebaseUserId+"_"+memberId;
+        }
+      }
+      else
+      {
+     groupId=redirectedGroupId;   
+      }
+     
+       var groups=firebase.database().ref('groups');
+       description=description;
+       var groups=firebase.database().ref('groups').once('value', function(groupsVal) {
+   
+       if(groupsVal.exists())
+       {
+        
+         firebase.database().ref('groups').orderByChild("groupId").equalTo(groupId).on("child_added", function(snapshot) {
+           if(snapshot.val()){
+            //debugger;
+             var returnedGroup=snapshot.val();
+             createDate=returnedGroup.dateCreated;
+   
+             var fredRef=firebase.database().ref('groups/'+snapshot.key);
+           fredRef.update({message:description,deletedFor:deletedFor,modifiedDate:Date()});
+          respMsg=that.saveMessage(groupId,memberId,type,newChatMember,loggedInUserInfo,firebaseUserId,description,chatImage,chatDetailArray);
+         
+
+                          }
+                          else
+                          {
+                        that.saveGroup(groupId,memberId,type,createDate,newChatMember,loggedInUserInfo,firebaseUserId,description,chatImage);
+                        that.saveMessage(groupId,memberId,type,newChatMember,loggedInUserInfo,firebaseUserId,description,chatImage,chatDetailArray);
+                    }
+         });
+       }
+       else
+       {
+       that.saveGroup(groupId,memberId,type,createDate,newChatMember,loggedInUserInfo,firebaseUserId,description,chatImage);      
+      that.saveMessage(groupId,memberId,type,newChatMember,loggedInUserInfo,firebaseUserId,description,chatImage,chatDetailArray);   
+       //respMsg.then((data)=>{
+//return "1";
+                               //});
+    }
+       
+                    
+       
+     });
+    
+      }
+      saveGroup(groupId,memberId,type,createDate,newChatMember:any,loggedInUserInfo:any,firebaseUserId:string,
+        description:string,chatImage:string){
+      let that=this;
+       var deletedFor=["0"];
+       var toUserName="";
+       var toUserImage="";
+     if(newChatMember)
+     {
+     if(newChatMember.first_name!=undefined)
+     {
+     toUserName=newChatMember.first_name+" "+newChatMember.last_name;
+     }
+     if(newChatMember.image_url!=undefined)
+     {
+     toUserImage=newChatMember.image_url;
+     }
+     }
+   
+     var groups=firebase.database().ref('groups');
+      
+                                     groups.push({
+                                       fromUserName:loggedInUserInfo.memberCredentials.first_name,
+                                       toUserName:toUserName,
+                                         fromFbUserId: firebaseUserId,
+                                         toFbUserId: memberId,
+                                         isGroup:0,
+                                         groupImage:"",
+                                         fromUserImage:loggedInUserInfo.memberCredentials.image_url,
+                                         toUserImage:toUserImage,
+                                         groupTitle:"",
+                                         message:description,
+                                         dateCreated:createDate,
+                                         provider: 'Firebase',
+                                         deletedFor:deletedFor,
+                                         groupId:groupId,
+                                         modifiedDate:Date()
+                                        
+                                     }).then(function (ref) {
+                                       
+                                     });
+     
+      };
+     saveMessage(groupId,memberId,type,newChatMember:any,loggedInUserInfo:any,firebaseUserId:string,
+        description:string,chatImage:string,chatDetailArray:any){
+           // debugger;
+       let that=this;
+       let msgResp="";
+       var readBy=firebaseUserId;
+       var deletedFor=["0"];
+       var msgDescription=description;
+       var toImageUrl="";
+       var toUserName="";
+       var toUserImage="";
+     
+       var chat = firebase.database().ref('chats');
+       if(type=="new")
+     {
+         
+       if(newChatMember)
+     {
+     if(newChatMember.first_name!=undefined)
+     {
+     toUserName=newChatMember.first_name+" "+newChatMember.last_name;
+     }
+     if(newChatMember.image_url!=undefined)
+     {
+     toUserImage=newChatMember.image_url;
+     }
+     }    
+                                     chat.push({
+                                       fromUserName:loggedInUserInfo.memberCredentials.first_name,
+                                       toUserName:toUserName,
+                                         fromFbUserId: firebaseUserId,
+                                         toFbUserId: memberId,
+                                         fromUserImage:loggedInUserInfo.memberCredentials.image_url,
+                                         toUserImage:toImageUrl,
+                                         message:msgDescription,
+                                        imageData:chatImage,
+                                         dateCreated: Date(),
+                                         provider: 'Firebase',
+                                         deletedFor:deletedFor,
+                                         readBy:readBy,
+                                         groupId:groupId
+                                        
+                                     }).then(function (ref) {
+                                        //$scope.closeNewMessage();
+                                        chatImage="";
+                                        that.chatNewMsgSentEmiter.emit("1");
+                                        
+                                     });
+      }
+      else if(type=="old")
+ {
+
+  var lastMessage=chatDetailArray[chatDetailArray.length-1].val();
+
+if(lastMessage.groupId==undefined)
+{
+  lastMessage.groupId="";
+}
+
+if(lastMessage.fromFbUserId==undefined)
+{
+  lastMessage.fromFbUserId="";
+}
+if(lastMessage.fromUserName==undefined)
+{
+  lastMessage.fromUserName="";
+}
+if(lastMessage.fromFbUserId==undefined)
+{
+  lastMessage.fromFbUserId="";
+}
+if(lastMessage.toUserName==undefined)
+{
+  lastMessage.toUserName="";
+}
+if(lastMessage.toFbUserId==undefined)
+{
+  lastMessage.toFbUserId="";
+}
+
+var fromUserName="";
+
+var fromUserId="";
+var toUserId="";
+var fromImageUrlNew="";
+
+groupId=lastMessage.groupId;
+if(firebaseUserId==lastMessage.fromFbUserId)
+{
+fromUserName=lastMessage.fromUserName;
+fromUserId=lastMessage.fromFbUserId;
+toUserName=lastMessage.toUserName;
+toUserId=lastMessage.toFbUserId;
+fromImageUrlNew=lastMessage.fromUserImage;
+toImageUrl=lastMessage.toUserImage;
+}
+if(firebaseUserId!=lastMessage.fromFbUserId)
+{
+fromUserName=lastMessage.toUserName;
+fromUserId=lastMessage.toFbUserId;
+toUserName=lastMessage.fromUserName;
+toUserId=lastMessage.fromFbUserId;
+fromImageUrlNew=lastMessage.toUserImage;
+toImageUrl=lastMessage.fromUserImage;
+}
+debugger;
+  chat.push({
+                                  fromUserName:fromUserName,
+                                  toUserName:toUserName,
+                                    fromFbUserId: fromUserId,
+                                    toFbUserId: toUserId,
+                                    fromUserImage:fromImageUrlNew,
+                                    toUserImage:toImageUrl,
+                                    message:msgDescription,
+                                    imageData:chatImage,
+                                    dateCreated: Date(),
+                                    provider: 'Firebase',
+                                    deletedFor:deletedFor,
+                                    readBy:readBy,
+                                    groupId:groupId
+                                   
+                                }).then(function (ref) {
+that.chatOldMsgSentEmiter.emit("1");
+                                 //$scope.messageSent="1";
+                                   
+                                 // $scope.contactData.description="";
+                                 // $scope.chatImage="";
+                                  // $ionicScrollDelegate.scrollBottom();
+                                  //ContactService.sendMessageNotification(toUserId,fromUserName,"",msgDescription,$rootScope.image_url);
+                                
+                                });
+ 
+ }
+      //return await msgResp;
+      }
   // this could also be a private method of the component class
   private extractData(res: Response) {
-  debugger;
+  //debugger;
     return res.json();
   }
   private handleErrorObservable(error: Response | any) {

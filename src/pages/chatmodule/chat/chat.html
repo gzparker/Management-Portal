@@ -30,9 +30,10 @@
                 <div *ngIf="group.val().isGroup==0">
             
                 <ion-list>
-                    <ion-item class="item item-avatar item-text-wrap"  *ngIf="firebaseUserId==group.val().fromFbUserId||firebaseUserId==group.val().toFbUserId"
-                    href="#/app/chatDetail/{{group.val().groupId}}/{{firebaseUserId==group.val().fromFbUserId?group.val().toUserName:group.val().fromUserName}}">
-                      
+                    <!--<ion-item class="item item-avatar item-text-wrap"  *ngIf="firebaseUserId==group.val().fromFbUserId||firebaseUserId==group.val().toFbUserId"
+                    href="#/app/chatDetail/{{group.val().groupId}}/{{firebaseUserId==group.val().fromFbUserId?group.val().toUserName:group.val().fromUserName}}">-->
+                    <ion-item class="item item-avatar item-text-wrap"  *ngIf="firebaseUserId==group.val().fromFbUserId||firebaseUserId==group.val().toFbUserId" 
+                    (click)="chatDetail(group.val().groupId,group.val().fromFbUserId,group.val().fromUserName,group.val().toUserName,1)">
                       <div  *ngIf="firebaseUserId==group.val().fromFbUserId">
                         <div  *ngFor="let user of users">
                           <div *ngIf="user.fbId==group.val().toFbUserId && user.isOnline==0">              
@@ -45,7 +46,9 @@
                           </div>
                           <div  *ngIf="user.fbId==group.val().toFbUserId">              
                          
-                             <img src="{{user.image_url}}" class="chat-profile-group"/>
+                              <img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" *ngIf="user.image_url!=null&&user.image_url!=undefined&&user.image_url!=''"/>
+                              <img src={{noImgUrl}} class="custom-avatar" 
+                              *ngIf="user.image_url==null||user.image_url==''"/>
                           </div>
                         </div>
                         
@@ -62,7 +65,9 @@
                           </div>
                            <div  *ngIf="user.fbId==group.val().fromFbUserId">              
                          
-                           <img src="{{user.image_url}}" class="chat-group-profile" />
+                              <img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" *ngIf="user.image_url!=null&&user.image_url!=undefined&&user.image_url!=''"/>
+                              <img src={{noImgUrl}} class="custom-avatar" 
+                              *ngIf="user.image_url==null||user.image_url==''"/>
                           
                           </div>
                         </div>
@@ -91,7 +96,8 @@
                 <div  *ngIf="group.val().isGroup==1">
                   <div  *ngFor="let groupMember of groupMembersData">
                     <ion-list  *ngIf="groupMember.userId==firebaseUserId&&groupMember.groupId==group.val().groupId">
-                      <ion-item class="item item-avatar item-text-wrap" href="#/app/groupChatDetail/{{group.val().groupId}}">        
+                      <ion-item class="item item-avatar item-text-wrap" 
+                      (click)="chatDetail(group.val().groupId,group.val().fromFbUserId,group.val().fromUserName,group.val().toUserName,2)">        
                         
                            <img src="{{group.val().groupImage}}" class="chat-profile-group" />                    
                         <span class="chat-info mike">
@@ -122,22 +128,25 @@
             <div *ngIf="group.val().isGroup==0">
         
             <ion-list>
-                <ion-item class="item item-avatar item-text-wrap"  *ngIf="firebaseUserId==group.val().fromFbUserId||firebaseUserId==group.val().toFbUserId"
-                href="#/app/chatDetail/{{group.val().groupId}}/{{firebaseUserId==group.val().fromFbUserId?group.val().toUserName:group.val().fromUserName}}">
-                  
+                <!--<ion-item class="item item-avatar item-text-wrap"  *ngIf="firebaseUserId==group.val().fromFbUserId||firebaseUserId==group.val().toFbUserId"
+                href="#/app/chatDetail/{{group.val().groupId}}/{{firebaseUserId==group.val().fromFbUserId?group.val().toUserName:group.val().fromUserName}}">-->
+                <ion-item class="item item-avatar item-text-wrap"  *ngIf="firebaseUserId==group.val().fromFbUserId||firebaseUserId==group.val().toFbUserId" 
+                    (click)="chatDetail(group.val().groupId,group.val().fromFbUserId,group.val().fromUserName,group.val().toUserName,2)">  
                   <div  *ngIf="firebaseUserId==group.val().fromFbUserId">
                     <div  *ngFor="let user of users">
                       <div *ngIf="user.fbId==group.val().toFbUserId && user.isOnline==0">              
-                      <div class="userstatus-offline">Offline1</div>
+                      <div class="userstatus-offline">Offline</div>
                       
                       </div>
                       <div  *ngIf="user.fbId==group.val().toFbUserId && user.isOnline==1">              
-                      <div class="userstatus-online">Online1</div>
+                      <div class="userstatus-online">Online</div>
         
                       </div>
                       <div  *ngIf="user.fbId==group.val().toFbUserId">              
                      
-                         <img src="{{user.image_url}}" class="chat-profile-group"/>
+                          <img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" *ngIf="user.image_url!=null&&user.image_url!=undefined&&user.image_url!=''"/>
+                          <img src={{noImgUrl}} class="custom-avatar" 
+                          *ngIf="user.image_url==null||user.image_url==''"/>
                       </div>
                     </div>
                     
@@ -145,16 +154,18 @@
         
                   <div  *ngIf="firebaseUserId==group.val().toFbUserId">
                     <div  *ngFor="let user of users"> <div  *ngIf="user.fbId==group.val().fromFbUserId && user.isOnline==0">
-                      <div class="userstatus-offline">Offline2</div>
+                      <div class="userstatus-offline">Offline</div>
                      
                       </div>
                       <div  *ngIf="user.fbId==group.val().fromFbUserId && user.isOnline==1">              
-                      <div class="userstatus-online">Online2</div>
+                      <div class="userstatus-online">Online</div>
                      
                       </div>
                        <div  *ngIf="user.fbId==group.val().fromFbUserId">              
                      
-                       <img src="{{user.image_url}}" class="chat-group-profile" />
+                          <img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" *ngIf="user.image_url!=null&&user.image_url!=undefined&&user.image_url!=''"/>
+                          <img src={{noImgUrl}} class="custom-avatar" 
+                          *ngIf="user.image_url==null||user.image_url==''"/>
                       
                       </div>
                     </div>
@@ -183,7 +194,8 @@
             <div  *ngIf="group.val().isGroup==1">
               <div  *ngFor="let groupMember of groupMembersData">
                 <ion-list  *ngIf="groupMember.userId==firebaseUserId&&groupMember.groupId==group.val().groupId">
-                  <ion-item class="item item-avatar item-text-wrap" href="#/app/groupChatDetail/{{group.val().groupId}}">        
+                  <ion-item class="item item-avatar item-text-wrap" 
+                  (click)="chatDetail(group.val().groupId,group.val().fromFbUserId,group.val().fromUserName,group.val().toUserName,2)">        
                     
                        <img src="{{group.val().groupImage}}" class="chat-profile-group" />                    
                     <span class="chat-info mike">
