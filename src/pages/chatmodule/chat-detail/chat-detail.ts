@@ -86,6 +86,7 @@ this.loggedInUserInfo=data;
   }
   ionViewDidEnter()
   {
+    var that=this;
    this.scrollToBottom();
   }
   messageDetail(){
@@ -95,7 +96,7 @@ var that=this;
     firebase.database().ref('groups').orderByChild("groupId").equalTo(that.groupId).on("value", function(snapshot) {
       snapshot.forEach(element=>{
     that.returnedGroup=element;
-   // debugger;
+  // debugger;
       });
     //debugger;
  //let test="ddf";
@@ -134,9 +135,12 @@ that.scrollToBottom();
    }
    scrollToBottom()
    {
-     //debugger;
-     //this.chatScroll.
-     this.content.scrollToBottom();
+     var that=this;
+     if(this.content!=undefined)
+     {
+      that.content.scrollToBottom();
+     }
+     
    }
    setUserTyping=function(groupId){
     // debugger;
@@ -155,6 +159,7 @@ let that=this;
   }
   sendMessage(type:string)
   {
+   // debugger;
     this.sharedServiceObj.sendMessage(type,this.description,undefined,this.firebaseUserId,
       undefined,this.groupId,this.loggedInUserInfo,this.chatImage,this.chatDetailArray);
   }
@@ -207,7 +212,7 @@ var that=this;
     firebase.database().ref('groups').orderByChild("groupId").equalTo(groupId).on("value", function(groupObj) {
       groupObj.forEach(function(group) {
     var selectedGroup=group;
-   debugger;
+   //debugger;
     var fredRefGroup=firebase.database().ref('groups/'+selectedGroup.key);
    if(messageExist=="0")
    {
