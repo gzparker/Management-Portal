@@ -18,12 +18,30 @@
   <h1 class="contentTitle">Create Group</h1>
   <form role="form" data-toggle="validator" #groupForm="ngForm">
       <ion-item>
-          <ion-label floating>Select Contact</ion-label>
-          <ion-input type="text" [(ngModel)]="newChatMember" name="newChatMember" id="newChatMember"></ion-input>
+          <ion-label stacked>Subject<span [ngClass]="{'error': groupTitle==''}" *ngIf="groupTitle==''">*</span></ion-label>
+          <ion-input type="text" required [(ngModel)]="groupTitle" name="groupTitle" id="groupTitle"></ion-input>
         </ion-item>
-        <ion-item>
-            <ion-label floating>Message</ion-label>
-            <ion-textarea type="text" [(ngModel)]="description" name="description"></ion-textarea>
-          </ion-item>
+    <ion-item>
+        <ion-label stacked>Select Group Members</ion-label>
+        <ion-select [(ngModel)]="groupMembersData"  
+        name="groupMembersData" multiple="true">
+        <ion-option *ngFor="let availableContact of allAvailableContacts" [value]=availableContact>
+        {{availableContact.first_name}} {{availableContact.last_name}}
+        </ion-option>
+        </ion-select>
+      </ion-item>
+          <!--<ion-searchbar placeholder="Search for contacts" (input)="filterContacts()" [(ngModel)]="searchKeyword" 
+          name="searchKeyword" id="searchKeyword"></ion-searchbar>
+        </ion-item>
+        <ion-list>
+            <ion-item *ngFor="let availableContact of allAvailableSearchedContacts">
+              <ion-item (click)="selectChatMember(availableContact)">
+                   {{availableContact.first_name}}
+              </ion-item>
+            </ion-item>
+          </ion-list>-->
+          <div padding>
+            <button ion-button color="primary" block (click)="createGroup('new')">Create</button>
+            </div>
     </form>
 </ion-content>

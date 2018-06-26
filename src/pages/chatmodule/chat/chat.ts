@@ -53,6 +53,7 @@ export class ChatPage {
     public modalCtrl: ModalController, public alertCtrl: AlertController, 
     public platform: Platform,public actionSheetCtrl: ActionSheetController,public viewCtrl: ViewController) {
       this.isApp = (!document.URL.startsWith("http"));
+      sharedServiceObj.chatNewMsgSentEmiter.subscribe(item => this.msgSentResp(item));
   }
   ionViewDidLoad() {
     var that=this;
@@ -73,6 +74,11 @@ this.getMessages();
   {
     var modalPage = this.modalCtrl.create(NewMessagePopupPage, { isContact: "2" });
     modalPage.present();
+  }
+  manageGroups(groupId:string)
+  {
+    debugger;
+    this.navCtrl.push(GroupMembersPage, { groupId: groupId });
   }
   searchChat=function()
   {
@@ -125,6 +131,17 @@ if(chat.val().groupTitle.toLowerCase().indexOf(searchText.toLowerCase()) !== -1 
     this.loadAllChatGroups();
    
    }
+   msgSentResp(resp:any)
+{
+if(resp=="1")
+{
+  this.ngZone.run(() => {
+    //this.navCtrl.push(ChatPage);
+    //this.closePopUp();
+    this.getMessages();
+  });
+}
+}
 loadAllGroupMembers()
 {
   var that=this;
@@ -271,13 +288,13 @@ else
 if(type=="1")
 {
   this.ngZone.run(() => {
-    this.navCtrl.push(ChatDetailPage, { groupId: groupId,chatterName:chatterName });
+    this.navCtrl.setRoot(ChatDetailPage, { groupId: groupId,chatterName:chatterName });
   });
 }
 else if(type=="2")
 {
   this.ngZone.run(() => {
-    this.navCtrl.push(GroupChatDetailPage, { groupId: groupId,chatterName:chatterName });
+    this.navCtrl.setRoot(GroupChatDetailPage, { groupId: groupId,chatterName:chatterName });
   });
 }
 }

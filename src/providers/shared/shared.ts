@@ -267,7 +267,7 @@ sendMessage(type:string,description:any,redirectUserId:any,firebaseUserId:any,
         
          firebase.database().ref('groups').orderByChild("groupId").equalTo(groupId).on("child_added", function(snapshot) {
            if(snapshot.val()){
-            debugger;
+          //  debugger;
              var returnedGroup=snapshot.val();
              createDate=returnedGroup.dateCreated;
    
@@ -398,7 +398,7 @@ if(lastMessage.groupId==undefined)
 {
   lastMessage.groupId="";
 }
-debugger;
+//debugger;
 if(lastMessage.fromFbUserId==undefined)
 {
   lastMessage.fromFbUserId="";
@@ -445,7 +445,7 @@ toUserId=lastMessage.fromFbUserId;
 fromImageUrlNew=lastMessage.toUserImage;
 toImageUrl=lastMessage.fromUserImage;
 }
-debugger;
+//debugger;
   chat.push({
                                   fromUserName:fromUserName,
                                   toUserName:toUserName,

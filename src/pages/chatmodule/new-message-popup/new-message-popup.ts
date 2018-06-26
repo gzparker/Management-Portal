@@ -6,6 +6,8 @@ import { Storage } from '@ionic/storage';
 import { ISubscription } from "rxjs/Subscription";
 import { AlertController } from 'ionic-angular';
 
+import { DashboardTabsPage } from '../../tabs/dashboard-tabs/dashboard-tabs';
+
 import { ChatPage } from '../chat/chat';
 import { ChatAccountPage } from '../chat-account/chat-account';
 import { ChatActivitiesPage } from '../chat-activities/chat-activities';
@@ -121,16 +123,12 @@ this.loggedInUserInfo=data;
     {
       this.allAvailableSearchedContacts=[];
     }
-      //let abc="ddfd";
-      //debugger;
-   // this.selectedCountryCode = foundCountry[0].country_code;
   }
   selectChatMember(availableContact:any)
   {
     this.newChatMember=availableContact;
     this.searchKeyword=this.newChatMember.first_name+" "+this.newChatMember.last_name;
     this.allAvailableSearchedContacts=[];
-//debugger;
   }
 sendMessage(type:string)
 {
@@ -142,184 +140,13 @@ msgSentResp(resp:any)
 if(resp=="1")
 {
   this.ngZone.run(() => {
-    this.navCtrl.push(ChatPage);
+
+    //this.closePopUp();
+    //this.navCtrl.setRoot(DashboardTabsPage,{selectedPage:"27"});
+   // this.navCtrl.setRoot(ChatPage);
+   this.closePopUp();
   });
 }
 }
- /*sendMessage(type:string) {
- let that=this;
-    var deletedFor=["0"];
-  
-    var groupId="group";
-    var memberId="1";
-    var createDate=Date();
-  
-  if(this.description=="")
-  {
-    return false;
-  }
-    if(this.redirectUserId)
-    {
-    memberId=this.redirectUserId;
-    
-        if(memberId<this.firebaseUserId)
-        {
-       groupId="group"+"_"+memberId+"_"+this.firebaseUserId;
-     }
-     else
-     {
-  groupId="group"+"_"+this.firebaseUserId+"_"+memberId;
-     }
-   }
-   else if(this.newChatMember.fbId)
-   {
-   
-     memberId=this.newChatMember.fbId;
-    
-        if(memberId<this.firebaseUserId)
-        {
-       groupId="group"+"_"+memberId+"_"+this.firebaseUserId;
-     }
-     else
-     {
-  groupId="group"+"_"+this.firebaseUserId+"_"+memberId;
-     }
-   }
-   else
-   {
-  groupId=this.groupId;
-    
-   }
-  
-    var groups=firebase.database().ref('groups');
-    this.description=this.description;
-    var groups=firebase.database().ref('groups').once('value', function(groupsVal) {
-
-    if(groupsVal.exists())
-    {
-     
-      firebase.database().ref('groups').orderByChild("groupId").equalTo(groupId).on("child_added", function(snapshot) {
-        if(snapshot.val()){
-     
-          var returnedGroup=snapshot.val();
-          createDate=returnedGroup.dateCreated;
-
-          var fredRef=firebase.database().ref('groups/'+snapshot.key);
-        fredRef.update({message:that.description,deletedFor:deletedFor,modifiedDate:Date()});
-        that.saveMessage(groupId,memberId,type);
-                         
-                       }
-                       else
-                       {
-                        that.saveGroup(groupId,memberId,type,createDate);
-                        that.saveMessage(groupId,memberId,type);
-                       }
-      });
-    }
-    else
-    {
-      that.saveGroup(groupId,memberId,type,createDate);      
-      that.saveMessage(groupId,memberId,type);                  
-  
-    }
-    
-                 
-    
-  });
-
-   }
-   saveGroup(groupId,memberId,type,createDate){
-   let that=this;
-    var deletedFor=["0"];
-    var toUserName="";
-    var toUserImage="";
-  if(this.newChatMember)
-  {
-  if(this.newChatMember.first_name!=undefined)
-  {
-  toUserName=this.newChatMember.first_name+" "+this.newChatMember.last_name;
-  }
-  if(this.newChatMember.image_url!=undefined)
-  {
-  toUserImage=this.newChatMember.image_url;
-  }
-  }
-
-  var groups=firebase.database().ref('groups');
-   
-                                  groups.push({
-                                    fromUserName:that.loggedInUserInfo.memberCredentials.first_name,
-                                    toUserName:toUserName,
-                                      fromFbUserId: that.firebaseUserId,
-                                      toFbUserId: memberId,
-                                      isGroup:0,
-                                      groupImage:"",
-                                      fromUserImage:that.loggedInUserInfo.memberCredentials.image_url,
-                                      toUserImage:toUserImage,
-                                      groupTitle:"",
-                                      message:that.description,
-                                      dateCreated:createDate,
-                                      provider: 'Firebase',
-                                      deletedFor:deletedFor,
-                                      groupId:groupId,
-                                      modifiedDate:Date()
-                                     
-                                  }).then(function (ref) {
-                                    
-                                  });
-  
-   };
-   saveMessage(groupId,memberId,type){
-    let that=this;
-    var readBy=this.firebaseUserId;
-    var deletedFor=["0"];
-    var msgDescription=this.description;
-    var toImageUrl="";
-    var toUserName="";
-    var toUserImage="";
-  
-    var chat = firebase.database().ref('chats');
-    if(type=="new")
-  {
-      
-    if(this.newChatMember)
-  {
-  if(this.newChatMember.first_name!=undefined)
-  {
-  toUserName=this.newChatMember.first_name+" "+this.newChatMember.last_name;
-  }
-  if(this.newChatMember.image_url!=undefined)
-  {
-  toUserImage=this.newChatMember.image_url;
-  }
-  }
-
-         
-                                  chat.push({
-                                    fromUserName:that.loggedInUserInfo.memberCredentials.first_name,
-                                    toUserName:toUserName,
-                                      fromFbUserId: that.firebaseUserId,
-                                      toFbUserId: memberId,
-                                      fromUserImage:that.loggedInUserInfo.memberCredentials.image_url,
-                                      toUserImage:toImageUrl,
-                                      message:msgDescription,
-                                     imageData:that.chatImage,
-                                      dateCreated: Date(),
-                                      provider: 'Firebase',
-                                      deletedFor:deletedFor,
-                                      readBy:readBy,
-                                      groupId:groupId
-                                     
-                                  }).then(function (ref) {
-                                     //$scope.closeNewMessage();
-                                     that.chatImage="";
-                                   // ContactService.sendMessageNotification(memberId,that.loggedInUserInfo.memberCredentials.first_name,"",msgDescription,that.loggedInUserInfo.memberCredentials.image_url);
-                                    //$state.go("app.chat", null, {reload: true, notify:true});
-                                    that.ngZone.run(() => {
-                                      that.navCtrl.push(ChatPage);
-                                    });
-                                  });
-   }
-  
-   }*/
+ 
 }

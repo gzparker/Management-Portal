@@ -1,5 +1,10 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component, ViewChild, NgZone } from '@angular/core';
+import { IonicPage, NavController, NavParams, ModalController, Platform,
+   MenuController,ActionSheetController,Tabs,Content } from 'ionic-angular';
+import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
+import { Storage } from '@ionic/storage';
+import { ISubscription } from "rxjs/Subscription";
+import { AlertController } from 'ionic-angular';
 import { ChatPage } from '../chat/chat';
 import { ChatsPage } from '../chats/chats';
 import { ChatAccountPage } from '../chat-account/chat-account';
@@ -16,25 +21,61 @@ import { GroupChatDetailPage } from '../group-chat-detail/group-chat-detail';
 import { ChatingImagePopUpPage } from '../chating-image-pop-up/chating-image-pop-up';
 import { NewGroupPopupPage } from '../new-group-popup/new-group-popup';
 import { NewMessagePopupPage } from '../new-message-popup/new-message-popup';
+
+import { SharedProvider } from '../../../providers/shared/shared';
+import { UserProvider } from '../../../providers/user/user';
 /**
  * Generated class for the GroupMembersPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-
+declare var firebase:any;
 @IonicPage()
 @Component({
   selector: 'page-group-members',
   templateUrl: 'group-members.html',
 })
 export class GroupMembersPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  public noImgUrl="../assets/imgs/profile-photo.jpg";
+  public groupId:string="";
+  public groupMembersData:any[]=[];
+  public loggedInUserInfo:any;
+  public firebaseUserId:any;
+  public userId:string="";
+  constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
+    public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
+    public modalCtrl: ModalController, public alertCtrl: AlertController, 
+    public platform: Platform,public actionSheetCtrl: ActionSheetController) {
+    if(this.navParams.get('groupId')!=undefined)
+   {
+    this.groupId = this.navParams.get('groupId');
+    debugger;
+    }
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad GroupMembersPage');
+    var that=this;
+    let member_id = this.storage.get('userId');
+    member_id.then((data) => {
+      this.userId=data;
+      let firebaseUserId = this.storage.get('firebaseUserId');
+      firebaseUserId.then((data) => {
+      this.firebaseUserId=data;
+      let loggedInUserInfo = this.storage.get('loggedInUserInfo');
+      loggedInUserInfo.then((data) => {
+this.loggedInUserInfo=data;
+    this.groupMembers();
+    });
+    });
+    });
   }
-
+  groupMembers() {
+  var that=this;
+  firebase.database().ref('groupMembers').orderByChild("groupId").equalTo(that.groupId).on("child_added", function(snapshot) {
+    if(snapshot.val()){
+      that.groupMembersData.push(snapshot);
+    }});
+    
+  }
 }
