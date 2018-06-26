@@ -62,10 +62,9 @@ public messageSent:string="0";
     if(this.navParams.get('chatterName')!=undefined)
    {
     this.chatingUserName = this.navParams.get('chatterName');
-    //;
     }
     sharedServiceObj.chatOldMsgSentEmiter.subscribe(item => this.msgSentResp(item));
-    //debugger;
+    
   }
 
   ionViewDidLoad() {
@@ -91,7 +90,6 @@ this.loggedInUserInfo=data;
   }
   messageDetail(){
 var that=this;
-//debugger;
     var chatDetailArrayExist=[];
     firebase.database().ref('groups').orderByChild("groupId").equalTo(that.groupId).on("value", function(snapshot) {
       snapshot.forEach(element=>{

@@ -22,7 +22,7 @@
     <ion-list *ngIf="isApp&&chatDetailArray.length>0">
         <div *ngFor="let chat of chatDetailArray">
         <ion-item *ngIf="chat.val().deletedFor.indexOf(firebaseUserId) < 0">
-            <!--<div>-->
+          
                 <div *ngIf="firebaseUserId==chat.val().fromFbUserId">
                   <ion-item class="item item-avatar alternate-chat-right item-text-wrap">   
                   <div  *ngFor="let user of users">     
@@ -64,7 +64,7 @@
                   <button ion-button color="danger" item-right class="roundedOption btn-del" (click)="deleteSingleChat(chat.val().groupId,chat.key);"><ion-icon name="md-close"></ion-icon>Delete Chat</button>
                   </ion-item>
                 </div>
-              <!--</div>-->
+            
           </ion-item>
         </div>
     </ion-list>

@@ -1,5 +1,10 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component, ViewChild, NgZone } from '@angular/core';
+import { IonicPage, NavController, NavParams, ModalController, Platform,
+   MenuController,ActionSheetController,Tabs,Content } from 'ionic-angular';
+import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
+import { Storage } from '@ionic/storage';
+import { ISubscription } from "rxjs/Subscription";
+import { AlertController } from 'ionic-angular';
 import { ChatPage } from '../chat/chat';
 import { ChatsPage } from '../chats/chats';
 import { ChatAccountPage } from '../chat-account/chat-account';
@@ -16,13 +21,16 @@ import { GroupMembersPage } from '../group-members/group-members';
 import { ChatingImagePopUpPage } from '../chating-image-pop-up/chating-image-pop-up';
 import { NewGroupPopupPage } from '../new-group-popup/new-group-popup';
 import { NewMessagePopupPage } from '../new-message-popup/new-message-popup';
+
+import { SharedProvider } from '../../../providers/shared/shared';
+import { UserProvider } from '../../../providers/user/user';
 /**
  * Generated class for the GroupChatDetailPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-
+declare var firebase:any;
 @IonicPage()
 @Component({
   selector: 'page-group-chat-detail',
@@ -30,11 +38,209 @@ import { NewMessagePopupPage } from '../new-message-popup/new-message-popup';
 })
 export class GroupChatDetailPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  @ViewChild(Content) content: Content;
+  public groupId:string="";
+  public chatingUserName:string="";
+  public firebaseUserId:string="";
+  public returnedGroup:any;
+  public users:any[]=[];
+  public chatDetailArray:any[]=[];
+  public isApp=false;
+  public chatImage:string="";
+  public description:string="";
+  public userId:string="";
+  public noImgUrl="../assets/imgs/profile-photo.jpg";
+  public loggedInUserInfo:any;
+public messageSent:string="0";
+
+  constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
+    public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
+    public modalCtrl: ModalController, public alertCtrl: AlertController, 
+    public platform: Platform,public actionSheetCtrl: ActionSheetController) {
+      this.isApp = (!document.URL.startsWith("http"));
+      if(this.navParams.get('groupId')!=undefined)
+   {
+    this.groupId = this.navParams.get('groupId');
+    //debugger;
+    }
+    if(this.navParams.get('chatterName')!=undefined)
+   {
+    this.chatingUserName = this.navParams.get('chatterName');
+    //;
+    }
+   
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad GroupChatDetailPage');
+    var that=this;
+    let member_id = this.storage.get('userId');
+    member_id.then((data) => {
+      this.userId=data;
+      let firebaseUserId = this.storage.get('firebaseUserId');
+      firebaseUserId.then((data) => {
+      this.firebaseUserId=data;
+      let loggedInUserInfo = this.storage.get('loggedInUserInfo');
+      loggedInUserInfo.then((data) => {
+this.loggedInUserInfo=data;
+    this.groupMessageDetail();
+    });
+    });
+    });
   }
+  ionViewDidEnter()
+  {
+    var that=this;
+   that.scrollToBottom();
+  }
+  setUserTyping=function(groupId){
+    // debugger;
+let that=this;
+    var fredRef=firebase.database().ref('groups/'+groupId);
+  
+  //The following 2 function calls are equivalent
+  fredRef.update({userTyping:"1",typerId:that.firebaseUserId});
+  }
+   setUserNotTyping=function(groupId){
 
+    var fredRef=firebase.database().ref('groups/'+groupId);
+   
+  //The following 2 function calls are equivalent
+  fredRef.update({userTyping:"0"});
+  }
+  groupMessageDetail() {
+    var that=this;
+    //debugger;
+    that.chatDetailArray=[];
+        var chatDetailArrayExist=[];
+        firebase.database().ref('groups').orderByChild("groupId").equalTo(that.groupId).on("value", function(snapshot) {
+          snapshot.forEach(element=>{
+        that.returnedGroup=element;
+      // debugger;
+          });
+        //debugger;
+     //let test="ddf";
+     //debugger;
+        var fredRef=firebase.database().ref('users').on('value', function(snapshot) {
+          that.users=[];
+        snapshot.forEach(element=>{
+          that.users.push(element.val());
+        });
+            
+       
+      });
+      
+      firebase.database().ref('chats').orderByChild("groupId").equalTo(that.groupId).on("value", function(snapshot) {
+        that.chatDetailArray=[];
+       let i=0;
+     //debugger;
+        snapshot.forEach(element => {
+          that.chatDetailArray.push(element);
+    i=i+1;
+    if(i==snapshot.numChildren()){
+        //    debugger;
+    that.scrollToBottom();
+    }
+    //if(snapshot.length-1==i)
+    //{
+      //
+    //}
+          
+        });
+        
+      });
+      });
+      
+ }
+ saveGroupMessage(){
+   var that=this;
+  var readBy=[that.firebaseUserId];
+if(!that.description)
+{
+return false;
+}
+var groupId=that.groupId;
+ var deletedFor=["0"];
+//debugger;
+//var group =Firebase.get('groups','groupId',groupId);
+//group.$loaded().then(function (){
+  firebase.database().ref('groups').orderByChild("groupId").equalTo(groupId).on("child_added", function(snapshot) {
+    if(snapshot.val()){
+var selectedGroup=snapshot;
+
+var fredRef=firebase.database().ref('groups/'+selectedGroup.key);
+fredRef.update({deletedFor:deletedFor,modifiedDate:Date(),message:that.description});
+var chat = firebase.database().ref('chats');
+chat.push({
+                               fromUserName:that.loggedInUserInfo.memberCredentials.first_name,
+                               toUserName:"",
+                                 fromFbUserId: that.firebaseUserId,
+                                 toFbUserId: "",
+                                 fromUserImage:that.loggedInUserInfo.memberCredentials.image_url,
+                                 toUserImage:"",
+                                 message:that.description,
+                                 imageData:that.chatImage,
+                                 dateCreated: Date(),
+                                 deletedFor:deletedFor,
+                                 readBy:readBy,
+                                 provider: 'Firebase',
+                                 groupId:groupId
+                                
+                             }).then(function (ref) {
+                               that.description="";
+                               
+that.chatImage="";
+
+                               //sendGroupMessageNotification($rootScope.first_name,$scope.contactData.description,groupId);
+                             //$scope.contactData.description="";
+                             });
+
+
+
+//});
+                            }
+                          });
+};
+ scrollToBottom()
+   {
+     var that=this;
+     //debugger;
+     if(that.content!=undefined)
+     {
+      that.content.scrollToBottom();
+     }
+     //;
+   }
+   manageGroups(groupId:string)
+   {
+    // debugger;
+     this.navCtrl.push(GroupMembersPage, { groupId: groupId });
+   }
+   leaveGroup(groupId) {
+     var that=this;
+   // var groupMembers =Firebase.get('groupMembers','groupId',groupId);
+   firebase.database().ref('groupMembers').orderByChild("groupId").equalTo(that.groupId).on("value", function(snapshot) {
+    snapshot.forEach(element => {
+      if(element.val().userId==that.firebaseUserId)
+    {
+  var groupForDelete=firebase.database().ref('groupMembers/'+element.key).remove();
+    that.navCtrl.setRoot(ChatPage);
+    }
+    });
+   })
+  
+    }
+  deleteGroup(groupId) {
+  var that=this;
+  //var group= Firebase.get('groups','groupId',groupId);
+  
+  //group.$loaded().then(function () {
+    firebase.database().ref('groups').orderByChild("groupId").equalTo(groupId).once("value", function(snapshot) {
+      snapshot.forEach((data)=>{
+    
+   // debugger;
+     var groupForDelete=firebase.database().ref('groups/'+data.key).remove();
+     that.navCtrl.setRoot(ChatPage);
+                })
+              });
+    }
 }

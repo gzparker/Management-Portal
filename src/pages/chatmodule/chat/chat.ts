@@ -77,7 +77,7 @@ this.getMessages();
   }
   manageGroups(groupId:string)
   {
-    debugger;
+   // debugger;
     this.navCtrl.push(GroupMembersPage, { groupId: groupId });
   }
   searchChat=function()
@@ -294,6 +294,7 @@ if(type=="1")
 else if(type=="2")
 {
   this.ngZone.run(() => {
+    debugger;
     this.navCtrl.setRoot(GroupChatDetailPage, { groupId: groupId,chatterName:chatterName });
   });
 }
