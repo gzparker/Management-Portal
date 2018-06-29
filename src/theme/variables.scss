@@ -24,12 +24,24 @@ $app-direction: ltr;
 
 $font-one: "Roboto";
 $font-two: "Noto Sans";
+$font-three: "Varela Round";
+$font-four: "Nunito";
+$font-five: "Bree Serif";
+$font-six: "Barlow Semi Condensed";
 $title-bg: #3a474e;
 $color-1: #00c8ff;
 $color-2: #FFF;
 $color-3: #212121;
 $color-4: #4B4B4B;
 $color-5: #c4d3e8;
+
+%transition {
+-webkit-transition: all .5s ease;
+-moz-transition: all .5s ease;
+-o-transition: all .5s ease;
+-ms-transition: all .5s ease;
+transition: all .5s ease;
+}
 
 // Named Color Variables
 // --------------------------------------------------
@@ -97,3 +109,53 @@ $toolbar-md-title-font-size: 0px;
 
 @import "roboto";
 @import "noto-sans";
+
+
+// Google Fonts
+// --------------------------------------------------
+@font-face{
+font-family: "Varela Round";
+src: url('../assets/fonts/varela-round.woff2') format('woff2');
+}
+
+@font-face{
+font-family: "Nunito";
+font-weight: 300;
+src: url('../assets/fonts/nunito-light.woff2') format('woff2');
+}
+@font-face{
+font-family: "Nunito";
+font-weight: 400;
+src: url('../assets/fonts/nunito-regular.woff2') format('woff2');
+}
+@font-face{
+font-family: "Nunito";
+font-weight: 600;
+src: url('../assets/fonts/nunito-medium.woff2') format('woff2');
+}
+
+@font-face{
+font-family: "Bree Serif";
+src: url('../assets/fonts/bree-serif.woff2') format('woff2');
+}
+
+@font-face{
+font-family: "Barlow Semi Condensed";
+font-weight: 400;
+src: url('../assets/fonts/barlow-semi-condensed-regular.woff2') format('woff2');
+}
+@font-face{
+font-family: "Barlow Semi Condensed";
+font-weight: 500;
+src: url('../assets/fonts/barlow-semi-condensed-medium.woff2') format('woff2');
+}
+@font-face{
+font-family: "Barlow Semi Condensed";
+font-weight: 600;
+src: url('../assets/fonts/barlow-semi-condensed-semibold.woff2') format('woff2');
+}
+@font-face{
+font-family: "Barlow Semi Condensed";
+font-weight: 700;
+src: url('../assets/fonts/barlow-semi-condensed-bold.woff2') format('woff2');
+}

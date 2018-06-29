@@ -16,12 +16,12 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding class="login-background">
   
-  <form role="form" data-toggle="validator" #userVerificationForm="ngForm">
+  <form role="form" data-toggle="validator" #userVerificationForm="ngForm" class="signupForm animated bounceInDown">
   <ion-list>
     <ion-item>
-      <ion-label>Select Country<span [ngClass]="{'error': selectedCountryAbbv==''}" *ngIf="selectedCountryAbbv==''">*</span></ion-label>
+      <ion-label stacked>Select Country<span [ngClass]="{'error': selectedCountryAbbv==''}" *ngIf="selectedCountryAbbv==''">*</span></ion-label>
       <ion-select [(ngModel)]="selectedCountryAbbv" (ngModelChange)="onCountryCodeSelection($event)" required name="selectedCountryAbbv">
         <ion-option value="">--- Select Country Code ---</ion-option>
         <ion-option *ngFor="let countryCode of allCountryCodes" value={{countryCode.country_abbv}}>
@@ -30,7 +30,7 @@
       </ion-select>
     </ion-item>
     <ion-item>
-      <ion-label floating>Cell Number<span [ngClass]="{'error': phone_number_verify==null}" *ngIf="phone_number_verify==null">*</span></ion-label>
+      <ion-label stacked>Cell Number<span [ngClass]="{'error': phone_number_verify==null}" *ngIf="phone_number_verify==null">*</span></ion-label>
       <!--<ion-input type="tel" [(ngModel)]="phone_number_verify" name="phone_number_verify" 
       required pattern="^[0-9]*$"></ion-input>-->
       <ion-input type="text" name="phone_number_verify" [(ngModel)]="phone_number_verify" placeholder="Phone Number" 
@@ -39,7 +39,7 @@
 
   </ion-list>
 
-  <div padding>
+  <div class="verifyButton">
     <button ion-button color="primary" block (click)="verifyUser();" [disabled]="!userVerificationForm.valid">Verify</button>
   </div>
   </form>
