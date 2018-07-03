@@ -138,17 +138,20 @@
           </div>
 </ion-content>
 
-<ion-footer keyboard-attach class="bar bar-stable bar-footer chatbar" *ngIf="returnedGroup">    
+<ion-footer keyboard-attach class="bar bar-stable bar-footer chatbar">    
   
-  <div>
+  <div *ngIf="returnedGroup">
   <ion-list *ngIf="returnedGroup.val().userTyping">
     <div class="useristypingtext" *ngIf="returnedGroup.val().userTyping==1&&returnedGroup.val().typerId!=firebaseUserId">...</div>
   </ion-list>
   </div>
     <form role="form" data-toggle="validator" #replyMessageForm="ngForm">
     <div class="chatbox-container" data-tap-disabled="true">
-    
-    <ion-textarea type="text" [(ngModel)]="description" name="description" (keydown)="setUserTyping(returnedGroup.key)" (blur)="setUserNotTyping(returnedGroup.key)"></ion-textarea>
+      <div contenteditable="true" class="chatbox-box input-chat" id="chatDescription" name="chatDescription" type="text" 
+      placeholder="Type something..." (keydown)="setUserTyping(returnedGroup.key)" 
+      (blur)="setUserNotTyping(returnedGroup.key)" [innerHTML]="description" ></div>
+    <!--<ion-textarea type="text" [(ngModel)]="description" name="description" 
+      (keydown)="setUserTyping(returnedGroup.key)" (blur)="setUserNotTyping(returnedGroup.key)"></ion-textarea>-->
  
     </div>
 

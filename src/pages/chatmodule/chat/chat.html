@@ -27,7 +27,7 @@
 </ion-item>
 <ion-list *ngIf="!isApp">
   <div *ngFor="let group of chatGroups">
-    <ion-item *ngIf="group.val().deletedFor.indexOf(firebaseUserId) < 0" >
+    <div *ngIf="group.val().deletedFor.indexOf(firebaseUserId) < 0" >
                 <div *ngIf="group.val().isGroup==0">
             
                 <ion-list>
@@ -78,17 +78,20 @@
                         <div *ngIf="firebaseUserId==group.val().fromFbUserId">
                         <span class="msgdate">{{convertToDate(group.val().modifiedDate) | date : "shortTime"}}</span>
                       
-                        <h2>{{group.val().toUserName}}<span class="msgcounter"  *ngIf="group.val().unreadMessagesCounter">({{group.val().unreadMessagesCounter}})</span></h2>
+                        <h2>{{group.val().toUserName}}<span class="msgcounter"  *ngIf="group['unreadMsgs']">({{group['unreadMsgs']}})</span></h2>
                         </div>
                         <div  *ngIf="firebaseUserId==group.val().toFbUserId">
                         <span class="msgdate">{{convertToDate(group.val().modifiedDate) | date : "shortTime"}}</span>
                        
-                        <h2 class="item-text-wrap">{{group.val().fromUserName}}<span class="msgcounter"  *ngIf="group.val().unreadMessagesCounter">({{group.val().unreadMessagesCounter}})</span></h2>
+                        <h2 class="item-text-wrap">{{group.val().fromUserName}}<span class="msgcounter"  *ngIf="group['unreadMsgs']">({{group['unreadMsgs']}})</span></h2>
                         </div>
                         <p [innerHTML]="group.val().message"></p>
                        
                       </div>
             
+        <button ion-button color="danger" item-right class="roundedOption btn-del" (click)="deleteGroupChat(group.val().groupId,group.key);"  *ngIf="group.val().isGroup==1&&group.val().deletedFor.indexOf(firebaseUserId) < 0"><ion-icon name="md-close"></ion-icon>Delete Chat</button>
+        <button ion-button color="danger" item-right class="roundedOption btn-del" (click)="deleteGroupChat(group.val().groupId,group.key);"  *ngIf="group.val().isGroup==0&&group.val().deletedFor.indexOf(firebaseUserId) < 0"><ion-icon name="md-close"></ion-icon>Delete Chat</button>
+        <button ion-button color="primary" item-right class="roundedOption btn-settings" (click)="manageGroups(group.val().groupId)" *ngIf="group.val().isGroup==1"><ion-icon name="md-create"></ion-icon>Group Members</button>
                       </ion-item>
                   </ion-list>
                 </div>
@@ -102,33 +105,35 @@
                            <img src="{{group.val().groupImage}}" class="chat-profile-group" />                    
                         <span class="chat-info mike">
                           <span class="msgdate">{{convertToDate(group.val().modifiedDate) | date : "shortTime"}}</span>
-                          <h2>{{group.val().groupTitle}}<span class="msgcounter" ng-if="group.val().unreadMessagesCounter">({{group.val().unreadMessagesCounter}})</span></h2>
+                          <h2>{{group.val().groupTitle}}<span class="msgcounter" *ngIf="group['unreadMsgs']">({{group['unreadMsgs']}})</span></h2>
                           <p ng-bind-html="group.val().message"></p>          
                         </span>
             
             
+        <button ion-button color="danger" item-right class="roundedOption btn-del" (click)="deleteGroupChat(group.val().groupId,group.key);"  *ngIf="group.val().isGroup==1&&group.val().deletedFor.indexOf(firebaseUserId) < 0"><ion-icon name="md-close"></ion-icon>Delete Chat</button>
+        <button ion-button color="danger" item-right class="roundedOption btn-del" (click)="deleteGroupChat(group.val().groupId,group.key);"  *ngIf="group.val().isGroup==0&&group.val().deletedFor.indexOf(firebaseUserId) < 0"><ion-icon name="md-close"></ion-icon>Delete Chat</button>
+        <button ion-button color="primary" item-right class="roundedOption btn-settings" (click)="manageGroups(group.val().groupId)" *ngIf="group.val().isGroup==1"><ion-icon name="md-create"></ion-icon>Group Members</button>
                       </ion-item>
                     </ion-list>
                   </div>
                 </div>  
         
-        <button ion-button color="danger" item-right class="roundedOption btn-del" (click)="deleteGroupChat(group.val().groupId,group.key);"  *ngIf="group.val().isGroup==1&&group.val().deletedFor.indexOf(firebaseUserId) < 0"><ion-icon name="md-close"></ion-icon>Delete Chat</button>
-        <button ion-button color="danger" item-right class="roundedOption btn-del" (click)="deleteGroupChat(group.val().groupId,group.key);"  *ngIf="group.val().isGroup==0&&group.val().deletedFor.indexOf(firebaseUserId) < 0"><ion-icon name="md-close"></ion-icon>Delete Chat</button>
-        <button ion-button color="primary" item-right class="roundedOption btn-settings" (click)="manageGroups(group.val().groupId)" *ngIf="group.val().isGroup==1"><ion-icon name="md-create"></ion-icon>Group Members</button>
-      </ion-item>
+              </div>
     </div>
 </ion-list>
 <ion-list *ngIf="isApp">
   <div *ngFor="let group of chatGroups">
-  <ion-item-sliding *ngIf="group.val().deletedFor.indexOf(firebaseUserId) < 0">
-  <ion-item>
+  <div *ngIf="group.val().deletedFor.indexOf(firebaseUserId) < 0">
+ 
             <div *ngIf="group.val().isGroup==0">
         
             <ion-list>
                 
                 <ion-item class="item item-avatar item-text-wrap"  *ngIf="firebaseUserId==group.val().fromFbUserId||firebaseUserId==group.val().toFbUserId" 
                     (click)="chatDetail(group.val().groupId,group.val().fromFbUserId,group.val().fromUserName,group.val().toUserName,2)">  
-                  <div  *ngIf="firebaseUserId==group.val().fromFbUserId">
+                    <ion-item-sliding>
+                      <ion-item>
+                    <div  *ngIf="firebaseUserId==group.val().fromFbUserId">
                     <div  *ngFor="let user of users">
                       <div *ngIf="user.fbId==group.val().toFbUserId && user.isOnline==0">              
                       <div class="userstatus-offline">Offline</div>
@@ -172,47 +177,51 @@
                     <div *ngIf="firebaseUserId==group.val().fromFbUserId">
                     <span class="msgdate">{{convertToDate(group.val().modifiedDate) | date : "shortTime"}}</span>
                   
-                    <h2>{{group.val().toUserName}}<span class="msgcounter"  *ngIf="group.val().unreadMessagesCounter">({{group.val().unreadMessagesCounter}})</span></h2>
+                    <h2>{{group.val().toUserName}}<span class="msgcounter"  *ngIf="group['unreadMsgs']">({{group['unreadMsgs']}})</span></h2>
                     </div>
                     <div  *ngIf="firebaseUserId==group.val().toFbUserId">
                     <span class="msgdate">{{convertToDate(group.val().modifiedDate) | date : "shortTime"}}</span>
                    
-                    <h2 class="item-text-wrap">{{group.val().fromUserName}}<span class="msgcounter"  *ngIf="group.val().unreadMessagesCounter">({{group.val().unreadMessagesCounter}})</span></h2>
+                    <h2 class="item-text-wrap">{{group.val().fromUserName}}<span class="msgcounter"  *ngIf="group['unreadMsgs']">({{group['unreadMsgs']}})</span></h2>
                     </div>
                     <p [innerHTML]="group.val().message"></p>
                    
                   </div>
-        
+                </ion-item>
+                <ion-item-options side="right">
+                  <button ion-button color="danger" class="roundedOption btn-del"  (click)="deleteGroupChat(group.val().groupId,group.key);"  *ngIf="group.val().isGroup==1&&group.val().deletedFor.indexOf(firebaseUserId) < 0"><ion-icon name="md-close"></ion-icon>Delete Chat</button>
+                  <button ion-button color="danger" class="roundedOption btn-del"  (click)="deleteGroupChat(group.val().groupId,group.key);"  *ngIf="group.val().isGroup==0&&group.val().deletedFor.indexOf(firebaseUserId) < 0"><ion-icon name="md-close"></ion-icon>Delete Chat</button>
+                  <button ion-button color="primary" item-right class="roundedOption btn-settings" (click)="manageGroups(group.val().groupId)" *ngIf="group.val().isGroup==1"><ion-icon name="md-create"></ion-icon>Group Members</button>
+                </ion-item-options>
+  </ion-item-sliding>
                   </ion-item>
               </ion-list>
             </div>
         
             <div  *ngIf="group.val().isGroup==1">
               <div  *ngFor="let groupMember of groupMembersData">
-                <ion-list  *ngIf="groupMember.userId==firebaseUserId&&groupMember.groupId==group.val().groupId">
+                <ion-item-sliding  *ngIf="groupMember.userId==firebaseUserId&&groupMember.groupId==group.val().groupId">
                   <ion-item class="item item-avatar item-text-wrap" 
                   (click)="chatDetail(group.val().groupId,group.val().fromFbUserId,group.val().fromUserName,group.val().toUserName,2)">        
                     
                        <img src="{{group.val().groupImage}}" class="chat-profile-group" />                    
                     <span class="chat-info mike">
                       <span class="msgdate">{{convertToDate(group.val().modifiedDate) | date : "shortTime"}}</span>
-                      <h2>{{group.val().groupTitle}}<span class="msgcounter" ng-if="group.val().unreadMessagesCounter">({{group.val().unreadMessagesCounter}})</span></h2>
+                      <h2>{{group.val().groupTitle}}<span class="msgcounter" *ngIf="group['unreadMsgs']">({{group['unreadMsgs']}})</span></h2>
                       <p ng-bind-html="group.val().message"></p>          
                     </span>
         
         
                   </ion-item>
-                </ion-list>
+                  <ion-item-options side="right">
+                    <button ion-button color="danger" class="roundedOption btn-del"  (click)="deleteGroupChat(group.val().groupId,group.key);"  *ngIf="group.val().isGroup==1&&group.val().deletedFor.indexOf(firebaseUserId) < 0"><ion-icon name="md-close"></ion-icon>Delete Chat</button>
+                    <button ion-button color="danger" class="roundedOption btn-del"  (click)="deleteGroupChat(group.val().groupId,group.key);"  *ngIf="group.val().isGroup==0&&group.val().deletedFor.indexOf(firebaseUserId) < 0"><ion-icon name="md-close"></ion-icon>Delete Chat</button>
+                    <button ion-button color="primary" item-right class="roundedOption btn-settings" (click)="manageGroups(group.val().groupId)" *ngIf="group.val().isGroup==1"><ion-icon name="md-create"></ion-icon>Group Members</button>
+                  </ion-item-options>
+                </ion-item-sliding>
               </div>
             </div>    
-          </ion-item>
-    <ion-item-options side="right">
-      <button ion-button color="danger" class="roundedOption btn-del"  (click)="deleteGroupChat(group.val().groupId,group.key);"  *ngIf="group.val().isGroup==1&&group.val().deletedFor.indexOf(firebaseUserId) < 0"><ion-icon name="md-close"></ion-icon>Delete Chat</button>
-      <button ion-button color="danger" class="roundedOption btn-del"  (click)="deleteGroupChat(group.val().groupId,group.key);"  *ngIf="group.val().isGroup==0&&group.val().deletedFor.indexOf(firebaseUserId) < 0"><ion-icon name="md-close"></ion-icon>Delete Chat</button>
-      <button ion-button color="primary" item-right class="roundedOption btn-settings" (click)="manageGroups(group.val().groupId)" *ngIf="group.val().isGroup==1"><ion-icon name="md-create"></ion-icon>Group Members</button>
-    </ion-item-options>
-
-  </ion-item-sliding>
+          </div>
 </div>
 </ion-list>
 

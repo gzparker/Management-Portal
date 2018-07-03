@@ -81,7 +81,7 @@ export class MyApp {
   public userGeneralInfo:any;
   public imgBaseUrl=this.sharedServiceObj.imgBucketUrl;
   public noImgUrl="../assets/imgs/profile-photo.jpg";
-  
+  public allUnreadMsg:string="";
   pages: Array<{ title: string, component: any }>;
   public geoCoderData={
     country:"",
@@ -100,6 +100,7 @@ export class MyApp {
     this.initializeApp();
     sharedServiceObj.isLoggedInEmitter.subscribe(item => this.setLoginStatus(item));
     sharedServiceObj.isPaidEmitter.subscribe(item => this.setPaidStatus(item));
+    sharedServiceObj.unreadMsgCounterEmitter.subscribe(item => this.setUnreadMsgs(item));
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Home', component: HomePage },
@@ -129,9 +130,14 @@ export class MyApp {
       this.loadWebsiteInfoByDomain();
       this.loadAvailableCountries();
       this.setUserCurrentGeoLocation();
+      let allUnreadMessage = this.storage.get('allUnreadMessage');
+    allUnreadMessage.then((data) => {
+      this.setUnreadMsgs(data);
+    });
     });
   }
   ionViewDidLoad() {
+    //debugger;
     
   }
   loadGeneralWebsiteSettings()
@@ -251,6 +257,10 @@ this.geolocation.getCurrentPosition().then((resp) => {
   }
   AfterViewInit(){
    // debugger;
+  }
+  setUnreadMsgs(msgCounter:string)
+  {
+this.allUnreadMsg=msgCounter;
   }
   setUserCountry(latitude: any, longitude: any) {
  
@@ -544,14 +554,6 @@ else if(option=='6')
   //debugger;
   }
   logOut() {
-    //debugger;
-    let firebaseUserId = this.storage.get('firebaseUserId');
-    firebaseUserId.then((data) => {
-    var fredRef=firebase.database().ref('users/'+data);
- //debugger;
-//The following 2 function calls are equivalent
-fredRef.update({isOnline:'0'});
-    });
     this.storage.remove('userId');
     this.storage.remove('email');
     this.storage.remove('first_name');
@@ -563,6 +565,16 @@ fredRef.update({isOnline:'0'});
     this.storage.remove("parent_id");
     this.storage.remove("allowed_access_options");
     this.storage.remove('is_submember');
+    this.storage.remove('allUnreadMessage');
+    //debugger;
+    let firebaseUserId = this.storage.get('firebaseUserId');
+    firebaseUserId.then((data) => {
+    var fredRef=firebase.database().ref('users/'+data);
+ //debugger;
+//The following 2 function calls are equivalent
+fredRef.update({isOnline:'0'});
+    });
+    
    // debugger;
     if (this.userServiceObj.facebookObject != undefined) {
       if (this.userServiceObj.facebookObject.getAccessToken.length > 0) {

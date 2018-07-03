@@ -27,6 +27,8 @@ export class SharedProvider {
   public signOutEmitter: EventEmitter<String>;
   public chatNewMsgSentEmiter: EventEmitter<String>;
   public chatOldMsgSentEmiter: EventEmitter<String>;
+  public groupCreationEmiter: EventEmitter<String>;
+  public unreadMsgCounterEmitter: EventEmitter<String>;
   //public registerationApiBaseUrl="http://registration.menu/api/";
   public registerationApiBaseUrl = "https://api.registration.menu/api/";
   //public idxapikey:string="1761ea8f043c53e44e3ccd90c18b0404c20152f0";
@@ -55,6 +57,8 @@ export class SharedProvider {
     this.signOutEmitter=new EventEmitter();
     this.chatNewMsgSentEmiter=new EventEmitter();
     this.chatOldMsgSentEmiter=new EventEmitter();
+    this.groupCreationEmiter=new EventEmitter();
+    this.unreadMsgCounterEmitter=new EventEmitter();
     this.headersIDX.append("IDXKEY",this.idxapiKey);
 this.headerOptionsIDX= new RequestOptions({ headers: this.headersIDX });
 this.headers.append("REGISTRATIONKEY",this.registerationApiKey);
@@ -213,6 +217,46 @@ getServiceDefaultInfoByUrl(domain:string){
     .map(this.extractData)
     return websiteDefaultSettingsResp;
 }
+markMessageAsRead(firebaseUserId:any,chatDetailArray:any)
+{
+ //debugger;
+  if(firebaseUserId!=undefined)
+  {
+if(chatDetailArray!=undefined)
+{
+//$scope.chatDetailData=$scope.chatDetailArray;
+chatDetailArray.forEach(function(chatData) {
+var fredRef=firebase.database().ref('chats/'+chatData.key);
+
+ var readByData=chatData.val().readBy;
+ if(readByData!=undefined)
+ {
+ if(readByData.indexOf(firebaseUserId)<0)
+ {
+   //debugger;
+ readByData.push(firebaseUserId);
+//The following 2 function calls are equivalent
+fredRef.update({readBy:readByData});
+}
+}
+else
+{
+   var readBy=[firebaseUserId];
+fredRef.update({readBy:readBy});
+}
+   });
+
+}
+}
+}
+setUnreadMsgs(msgCounter:string)
+{
+this.unreadMsgCounterEmitter.emit(msgCounter);
+}
+createGroupEmitter()
+{
+  this.groupCreationEmiter.emit("1");
+}
 sendMessage(type:string,description:any,redirectUserId:any,firebaseUserId:any,
     newChatMember:any,redirectedGroupId:string,loggedInUserInfo:any,chatImage:string,chatDetailArray:any) {
         let respMsg:any;
@@ -230,7 +274,6 @@ sendMessage(type:string,description:any,redirectUserId:any,firebaseUserId:any,
        if(redirectUserId)
        {
        memberId=redirectUserId;
-       
            if(memberId<firebaseUserId)
            {
           groupId="group"+"_"+memberId+"_"+firebaseUserId;
@@ -243,7 +286,6 @@ sendMessage(type:string,description:any,redirectUserId:any,firebaseUserId:any,
       else if(newChatMember)
       {
         memberId=newChatMember.fbId;
-       
            if(memberId<firebaseUserId)
            {
           groupId="group"+"_"+memberId+"_"+firebaseUserId;
@@ -257,7 +299,6 @@ sendMessage(type:string,description:any,redirectUserId:any,firebaseUserId:any,
       {
      groupId=redirectedGroupId;   
       }
-     
        var groups=firebase.database().ref('groups');
        description=description;
        var groups=firebase.database().ref('groups').once('value', function(groupsVal) {
@@ -274,8 +315,6 @@ sendMessage(type:string,description:any,redirectUserId:any,firebaseUserId:any,
              var fredRef=firebase.database().ref('groups/'+snapshot.key);
            fredRef.update({message:description,deletedFor:deletedFor,modifiedDate:Date()});
           respMsg=that.saveMessage(groupId,memberId,type,newChatMember,loggedInUserInfo,firebaseUserId,description,chatImage,chatDetailArray);
-         
-
                           }
                           else
                           {
@@ -287,14 +326,8 @@ sendMessage(type:string,description:any,redirectUserId:any,firebaseUserId:any,
        else
        {
        that.saveGroup(groupId,memberId,type,createDate,newChatMember,loggedInUserInfo,firebaseUserId,description,chatImage);      
-      that.saveMessage(groupId,memberId,type,newChatMember,loggedInUserInfo,firebaseUserId,description,chatImage,chatDetailArray);   
-       //respMsg.then((data)=>{
-//return "1";
-                               //});
+      that.saveMessage(groupId,memberId,type,newChatMember,loggedInUserInfo,firebaseUserId,description,chatImage,chatDetailArray);
     }
-       
-                    
-       
      });
     
       }
@@ -354,8 +387,7 @@ sendMessage(type:string,description:any,redirectUserId:any,firebaseUserId:any,
      
        var chat = firebase.database().ref('chats');
        if(type=="new")
-     {
-         
+     { 
        if(newChatMember)
      {
      if(newChatMember.first_name!=undefined)
@@ -475,6 +507,105 @@ that.chatOldMsgSentEmiter.emit("1");
  }
       //return await msgResp;
       }
+      replaceEmoji(description)
+   {
+    description=description.replace(/:bleh:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-01.png" height="32" width="32" />');
+    description=description.replace(/:happy:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-02.png" height="32" width="32" />');
+    description=description.replace(/:smile:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-03.png" height="32" width="32" />');
+    description=description.replace(/:smirk:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-04.png" height="32" width="32" />');
+    description=description.replace(/:sleeping:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-05.png" height="32" width="32" />');
+    description=description.replace(/:tears_of_joy:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-06.png" height="32" width="32" />');
+    description=description.replace(/:dull:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-07.png" height="32" width="32" />');
+    description=description.replace(/:laugh:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-08.png" height="32" width="32" />');
+    description=description.replace(/:sour:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-09.png" height="32" width="32" />');
+    description=description.replace(/:love:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-10.png" height="32" width="32" />');
+    description=description.replace(/:mad:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-11.png" height="32" width="32" />');
+    description=description.replace(/:cringe:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-12.png" height="32" width="32" />');
+    description=description.replace(/:unease:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-13.png" height="32" width="32" />');
+    description=description.replace(/:kiss:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-14.png" height="32" width="32" />');
+    description=description.replace(/:wink:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-15.png" height="32" width="32" />');
+    description=description.replace(/:crying:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-16.png" height="32" width="32" />');
+    description=description.replace(/:blushing:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-17.png" height="32" width="32" />');
+    description=description.replace(/:spooked:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-18.png" height="32" width="32" />');
+    description=description.replace(/:cool:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-19.png" height="32" width="32" />');
+    description=description.replace(/:sad:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-20.png" height="32" width="32" />');
+    description=description.replace(/:worried:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-21.png" height="32" width="32" />');
+    description=description.replace(/:lonely:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-22.png" height="32" width="32" />');
+    description=description.replace(/:poker_face:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-23.png" height="32" width="32" />');
+    description=description.replace(/:speechless:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-24.png" height="32" width="32" />');
+    description=description.replace(/:uhhh:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-25.png" height="32" width="32" />');
+    description=description.replace(/:whistle:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-26.png" height="32" width="32" />');
+    description=description.replace(/:wink:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-27.png" height="32" width="32" />');
+    description=description.replace(/:lol:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-28.png" height="32" width="32" />');
+    description=description.replace(/:angel:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-29.png" height="32" width="32" />');
+    description=description.replace(/:cheer:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-30.png" height="32" width="32" />');
+    description=description.replace(/:fang:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-31.png" height="32" width="32" />');
+    description=description.replace(/:amuzed:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-32.png" height="32" width="32" />');
+    description=description.replace(/:smug:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-33.png" height="32" width="32" />');
+    description=description.replace(/:chill:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-34.png" height="32" width="32" />');
+    description=description.replace(/:grin:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-35.png" height="32" width="32" />');
+   
+  
+  return description
+   }
+   selectEmoji(emojiCode,description)
+   {
+     emojiCode=emojiCode.replace(/:bleh:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-01.png" height="32" width="32" />');
+     emojiCode=emojiCode.replace(/:happy:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-02.png" height="32" width="32" />');
+     emojiCode=emojiCode.replace(/:smile:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-03.png" height="32" width="32" />');
+     emojiCode=emojiCode.replace(/:smirk:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-04.png" height="32" width="32" />');
+     emojiCode=emojiCode.replace(/:sleeping:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-05.png" height="32" width="32" />');
+     emojiCode=emojiCode.replace(/:tears_of_joy:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-06.png" height="32" width="32" />');
+     emojiCode=emojiCode.replace(/:dull:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-07.png" height="32" width="32" />');
+     emojiCode=emojiCode.replace(/:laugh:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-08.png" height="32" width="32" />');
+     emojiCode=emojiCode.replace(/:sour:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-09.png" height="32" width="32" />');
+     emojiCode=emojiCode.replace(/:love:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-10.png" height="32" width="32" />');
+     emojiCode=emojiCode.replace(/:mad:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-11.png" height="32" width="32" />');
+     emojiCode=emojiCode.replace(/:cringe:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-12.png" height="32" width="32" />');
+     emojiCode=emojiCode.replace(/:unease:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-13.png" height="32" width="32" />');
+     emojiCode=emojiCode.replace(/:kiss:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-14.png" height="32" width="32" />');
+     emojiCode=emojiCode.replace(/:wink:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-15.png" height="32" width="32" />');
+     emojiCode=emojiCode.replace(/:crying:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-16.png" height="32" width="32" />');
+     emojiCode=emojiCode.replace(/:blushing:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-17.png" height="32" width="32" />');
+     emojiCode=emojiCode.replace(/:spooked:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-18.png" height="32" width="32" />');
+     emojiCode=emojiCode.replace(/:cool:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-19.png" height="32" width="32" />');
+     emojiCode=emojiCode.replace(/:sad:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-20.png" height="32" width="32" />');
+     emojiCode=emojiCode.replace(/:worried:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-21.png" height="32" width="32" />');
+     emojiCode=emojiCode.replace(/:lonely:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-22.png" height="32" width="32" />');
+     emojiCode=emojiCode.replace(/:poker_face:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-23.png" height="32" width="32" />');
+     emojiCode=emojiCode.replace(/:speechless:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-24.png" height="32" width="32" />');
+     emojiCode=emojiCode.replace(/:uhhh:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-25.png" height="32" width="32" />');
+     emojiCode=emojiCode.replace(/:whistle:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-26.png" height="32" width="32" />');
+     emojiCode=emojiCode.replace(/:wink:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-27.png" height="32" width="32" />');
+     emojiCode=emojiCode.replace(/:lol:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-28.png" height="32" width="32" />');
+     emojiCode=emojiCode.replace(/:angel:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-29.png" height="32" width="32" />');
+     emojiCode=emojiCode.replace(/:cheer:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-30.png" height="32" width="32" />');
+     emojiCode=emojiCode.replace(/:fang:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-31.png" height="32" width="32" />');
+     emojiCode=emojiCode.replace(/:amuzed:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-32.png" height="32" width="32" />');
+     emojiCode=emojiCode.replace(/:smug:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-33.png" height="32" width="32" />');
+     emojiCode=emojiCode.replace(/:chill:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-34.png" height="32" width="32" />');
+     emojiCode=emojiCode.replace(/:grin:/g,'<img class="emoji" src="../assets/imgs/emoji/emoji-35.png" height="32" width="32" />');
+   //debugger;
+     if(description!=undefined)
+   {
+    description=description+emojiCode;
+    }
+    else
+    {
+      description=emojiCode;
+    }
+    return description;
+   }
+  setUserTyping(groupId,firebaseUserId){
+        let that=this;
+        //debugger;
+            var fredRef=firebase.database().ref('groups/'+groupId);
+          fredRef.update({userTyping:"1",typerId:firebaseUserId});
+          }
+  setUserNotTyping(groupId){
+            var fredRef=firebase.database().ref('groups/'+groupId);
+          fredRef.update({userTyping:"0"});
+          }
   // this could also be a private method of the component class
   private extractData(res: Response) {
   //debugger;

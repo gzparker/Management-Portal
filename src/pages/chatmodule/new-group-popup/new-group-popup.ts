@@ -147,6 +147,7 @@ this.loggedInUserInfo=data;
     groupId:groupId,
     provider: 'Firebase'
   });
+  let i=0;
                                    that.groupMembersData.forEach(function(memberData) {
                                      var name="";
                                      var fbId="";
@@ -175,12 +176,23 @@ if(memberData.image_url)
     groupId:groupId,
     provider: 'Firebase'
   });
+  
+  i=i+1;
+  i=i;
+  //debugger;
+if(i==that.groupMembersData.length){
+  //debugger;
+  that.sharedServiceObj.createGroupEmitter();
+  that.closePopUp();
+
+}
                                    });
   
   }
 }
   closePopUp()
   {
+    //debugger;
     this.viewCtrl.dismiss();
   }
   selectChatMember(availableContact:any)

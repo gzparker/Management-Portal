@@ -50,7 +50,7 @@ export class GroupMembersPage {
     if(this.navParams.get('groupId')!=undefined)
    {
     this.groupId = this.navParams.get('groupId');
-    debugger;
+    
     }
   }
 
@@ -72,10 +72,34 @@ this.loggedInUserInfo=data;
   }
   groupMembers() {
   var that=this;
+  that.groupMembersData=[];
   firebase.database().ref('groupMembers').orderByChild("groupId").equalTo(that.groupId).on("child_added", function(snapshot) {
     if(snapshot.val()){
       that.groupMembersData.push(snapshot);
     }});
     
   }
+  deleteMember(memberId) {
+     var that=this;
+     let confirm = this.alertCtrl.create({
+      title: 'Delete Group Member?',
+      message: 'Are you sure you want to delete this member?',
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: () => {
+          }
+        },
+        {
+          text: 'Ok',
+          handler: () => {
+      var groupForDelete=firebase.database().ref('groupMembers/'+memberId).remove();
+      that.groupMembers();
+        
+    }
+  }
+]
+});
+confirm.present();   
+    }
 }

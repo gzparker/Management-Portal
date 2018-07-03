@@ -90,23 +90,26 @@ this.loggedInUserInfo=data;
   ionViewDidEnter()
   {
     var that=this;
-   that.scrollToBottom();
+    setTimeout(() => {
+    
+      that.scrollToBottom();
+    }, 400);
+   //that.scrollToBottom();
   }
-  setUserTyping=function(groupId){
-    // debugger;
+  setUserTyping(groupId){
 let that=this;
-    var fredRef=firebase.database().ref('groups/'+groupId);
-  
-  //The following 2 function calls are equivalent
-  fredRef.update({userTyping:"1",typerId:that.firebaseUserId});
+//debugger;
+    //var fredRef=firebase.database().ref('groups/'+groupId);
+  //fredRef.update({userTyping:"1",typerId:that.firebaseUserId});
+  that.sharedServiceObj.setUserTyping(groupId,that.firebaseUserId);
   }
-   setUserNotTyping=function(groupId){
-
-    var fredRef=firebase.database().ref('groups/'+groupId);
-   
-  //The following 2 function calls are equivalent
-  fredRef.update({userTyping:"0"});
-  }
+   setUserNotTyping(groupId){
+    let that=this;
+    //debugger;
+    //var fredRef=firebase.database().ref('groups/'+groupId);
+  //fredRef.update({userTyping:"0"});
+that.sharedServiceObj.setUserNotTyping(groupId);
+   }
   groupMessageDetail() {
     var that=this;
     //debugger;
@@ -137,8 +140,9 @@ let that=this;
           that.chatDetailArray.push(element);
     i=i+1;
     if(i==snapshot.numChildren()){
+      that.sharedServiceObj.markMessageAsRead(that.firebaseUserId,that.chatDetailArray)
         //    debugger;
-    that.scrollToBottom();
+    //that.scrollToBottom();
     }
     //if(snapshot.length-1==i)
     //{
@@ -154,7 +158,7 @@ let that=this;
  saveGroupMessage(){
    var that=this;
   var readBy=[that.firebaseUserId];
-if(!that.description)
+if(document.getElementById("chatDescription").innerHTML=="")
 {
 return false;
 }
@@ -177,7 +181,7 @@ chat.push({
                                  toFbUserId: "",
                                  fromUserImage:that.loggedInUserInfo.memberCredentials.image_url,
                                  toUserImage:"",
-                                 message:that.description,
+                                 message:document.getElementById("chatDescription").innerHTML,
                                  imageData:that.chatImage,
                                  dateCreated: Date(),
                                  deletedFor:deletedFor,
@@ -186,8 +190,8 @@ chat.push({
                                  groupId:groupId
                                 
                              }).then(function (ref) {
-                               that.description="";
-                               
+                              document.getElementById("chatDescription").innerHTML="";
+                               that.scrollToBottom();
 that.chatImage="";
 
                                //sendGroupMessageNotification($rootScope.first_name,$scope.contactData.description,groupId);
@@ -200,11 +204,29 @@ that.chatImage="";
                             }
                           });
 };
+openEmoji()
+   {
+     var that=this;
+     var modalPage = this.modalCtrl.create(ChatEmojiPopupoverPage);
+     modalPage.onDidDismiss(data => {
+       that.selectEmoji(data.selectedEmoji);
+   });
+     modalPage.present();
+   }
+   replaceEmoji(description)
+   {
+    return this.sharedServiceObj.replaceEmoji(description);
+   }
+   selectEmoji(emojiCode)
+   {
+     this.description=this.sharedServiceObj.selectEmoji(emojiCode,document.getElementById("chatDescription").innerHTML);
+     
+   }
  scrollToBottom()
    {
      var that=this;
      //debugger;
-     if(that.content!=undefined)
+     if(that.content!=undefined&&that.content!=null)
      {
       that.content.scrollToBottom();
      }
@@ -217,7 +239,18 @@ that.chatImage="";
    }
    leaveGroup(groupId) {
      var that=this;
-   // var groupMembers =Firebase.get('groupMembers','groupId',groupId);
+     let confirm = this.alertCtrl.create({
+      title: 'Leave Group?',
+      message: 'Are you sure you want to leave this Group?',
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: () => {
+          }
+        },
+        {
+          text: 'Ok',
+          handler: () => {
    firebase.database().ref('groupMembers').orderByChild("groupId").equalTo(that.groupId).on("value", function(snapshot) {
     snapshot.forEach(element => {
       if(element.val().userId==that.firebaseUserId)
@@ -227,13 +260,26 @@ that.chatImage="";
     }
     });
    })
-  
+  }
+}
+]
+});
+confirm.present();  
     }
   deleteGroup(groupId) {
   var that=this;
-  //var group= Firebase.get('groups','groupId',groupId);
-  
-  //group.$loaded().then(function () {
+  let confirm = this.alertCtrl.create({
+    title: 'Delete Group?',
+    message: 'Are you sure you want to delete this Group?',
+    buttons: [
+      {
+        text: 'Cancel',
+        handler: () => {
+        }
+      },
+      {
+        text: 'Ok',
+        handler: () => {
     firebase.database().ref('groups').orderByChild("groupId").equalTo(groupId).once("value", function(snapshot) {
       snapshot.forEach((data)=>{
     
@@ -242,5 +288,11 @@ that.chatImage="";
      that.navCtrl.setRoot(ChatPage);
                 })
               });
+            }
+          }
+        ]
+        });
+        confirm.present();  
+          
     }
 }

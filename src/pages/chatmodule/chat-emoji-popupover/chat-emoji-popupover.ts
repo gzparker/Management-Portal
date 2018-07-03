@@ -1,6 +1,6 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, Platform,
-   MenuController,ActionSheetController,Tabs } from 'ionic-angular';
+   MenuController,ActionSheetController,Tabs, ViewController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 import { ISubscription } from "rxjs/Subscription";
@@ -28,7 +28,7 @@ import { UserProvider } from '../../../providers/user/user';
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-
+declare var firebase:any;
 @IonicPage()
 @Component({
   selector: 'page-chat-emoji-popupover',
@@ -39,9 +39,12 @@ export class ChatEmojiPopupoverPage {
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, 
-    public platform: Platform,public actionSheetCtrl: ActionSheetController) {
+    public platform: Platform,public actionSheetCtrl: ActionSheetController,public viewCtrl: ViewController) {
   }
-
+  selectEmoji(emojiCode:any)
+  {
+    this.viewCtrl.dismiss({"selectedEmoji" : emojiCode});
+  }
   ionViewDidLoad() {
     console.log('ionViewDidLoad ChatEmojiPopupoverPage');
   }
