@@ -17,50 +17,60 @@
 </ion-header>
 
 
-<ion-content padding>
-<form #modalFormSignUp="ngForm">
+<ion-content padding class="login-background">
+<h1 class="contentTitle">Create a New Account</h1>
+<form #modalFormSignUp="ngForm" class="signupForm animated bounceInUp">
+
+  <div class="registerformBlock">
   <ion-item>
-    <ion-label floating>Email Address<span [ngClass]="{'error': email==''}" *ngIf="email==''">*</span></ion-label>
-    <ion-input type="email" [(ngModel)]="email" name="email" [email]="true"
-     ></ion-input>
+    <!-- <ion-label floating>Email Address<span [ngClass]="{'error': email==''}" *ngIf="email==''">*</span></ion-label> -->
+    <ion-input type="email" placeholder="Email Address*" [(ngModel)]="email" name="email" [email]="true"></ion-input>
+    <ion-icon name="ios-mail" item-left></ion-icon>
   </ion-item>
   <ion-item>
-    <ion-label floating>Password<span [ngClass]="{'error': password==''}" *ngIf="password==''">*</span></ion-label>
-    <ion-input type="password" required [(ngModel)]="password" name="password"></ion-input>
+    <!-- <ion-label floating>Password<span [ngClass]="{'error': password==''}" *ngIf="password==''">*</span></ion-label> -->
+    <ion-input type="password" placeholder="Password*" required [(ngModel)]="password" name="password"></ion-input>
+    <ion-icon name="ios-lock" item-left></ion-icon>
   </ion-item>
   <ion-item>
-    <ion-label floating>First Name<span [ngClass]="{'error': first_name==''}" *ngIf="first_name==''">*</span></ion-label>
-    <ion-input type="text" required [(ngModel)]="first_name" name="first_name"></ion-input>
+    <!-- <ion-label floating>First Name<span [ngClass]="{'error': first_name==''}" *ngIf="first_name==''">*</span></ion-label> -->
+    <ion-input type="text" placeholder="First Name*" required [(ngModel)]="first_name" name="first_name"></ion-input>
+    <ion-icon name="ios-person" item-left></ion-icon>
   </ion-item>
   <ion-item>
-    <ion-label floating>Last Name<span [ngClass]="{'error': last_name==''}" *ngIf="last_name==''">*</span></ion-label>
-    <ion-input type="text" required [(ngModel)]="last_name" name="last_name"></ion-input>
+    <!-- <ion-label floating>Last Name<span [ngClass]="{'error': last_name==''}" *ngIf="last_name==''">*</span></ion-label> -->
+    <ion-input type="text" placeholder="Last Name*" required [(ngModel)]="last_name" name="last_name"></ion-input>
+    <ion-icon name="ios-person" item-left></ion-icon>
   </ion-item>
   <ion-item>
-    <ion-label>Select Country<span [ngClass]="{'error': selectedCountryAbbv==''}" 
-      *ngIf="selectedCountryAbbv==''">*</span></ion-label>
-    <ion-select [(ngModel)]="selectedCountryAbbv" name="selectedCountryAbbv" 
-    (ngModelChange)="onCountryCodeSelection($event)" required>
+    <!-- <ion-label>Country<span [ngClass]="{'error': selectedCountryAbbv==''}" *ngIf="selectedCountryAbbv==''">*</span></ion-label> -->
+    <ion-select [(ngModel)]="selectedCountryAbbv" name="selectedCountryAbbv" (ngModelChange)="onCountryCodeSelection($event)" required>
       <ion-option value="">--- Select Country Code ---</ion-option>
       <ion-option *ngFor="let countryCode of allCountryCodes" value={{countryCode.country_abbv}}>
         {{countryCode.name}}
       </ion-option>
     </ion-select>
+    <ion-icon name="md-globe" item-left></ion-icon>
   </ion-item>
   <ion-item>
-    <ion-label floating>Cell Number
-      <span [ngClass]="{'error': phone_number==null}" *ngIf="phone_number==null">*</span></ion-label>
+    <!-- <ion-label floating>Cell Number<span [ngClass]="{'error': phone_number==null}" *ngIf="phone_number==null">*</span></ion-label> -->
     <!--<ion-input type="tel" [(ngModel)]="phone_number" name="phone_number" required pattern="^[0-9]*$"></ion-input>-->
-    <ion-input type="text" name="phone_number" [(ngModel)]="phone_number" 
-            [brmasker]="{mask:'(000) 000-0000', len:14, type:'num'}" required></ion-input>
+    <ion-input type="text" placeholder="Cell Number*" name="phone_number" [(ngModel)]="phone_number" [brmasker]="{mask:'(000) 000-0000', len:14, type:'num'}" required></ion-input>
+    <ion-icon name="ios-phone-portrait" item-left></ion-icon>
   </ion-item>
+  </div>
 
-  <div padding>
+  <div class="loginButtons">
     <button ion-button color="primary" block (click)="userSignUp();" [disabled]="!modalFormSignUp.valid">Sign Up</button>
-    <button ion-button color="primary" block (click)="onFacebookLoginClick();">Signup with Facebook</button>
+    <button ion-button color="primary" block icon-start (click)="onFacebookLoginClick();">
+      <ion-icon name="logo-facebook"></ion-icon>Signup with Facebook
+    </button>
   </div>
 </form>
+  
+  <a href="#" class="signupLink">Already a member? <strong>Sign in now</strong></a>
+
   <ion-chip *ngIf="userSignUpMsg!=''">
-      <ion-label color="danger">{{userSignUpMsg}}</ion-label>
-    </ion-chip>
+    <ion-label color="danger">{{userSignUpMsg}}</ion-label>
+  </ion-chip>
 </ion-content>

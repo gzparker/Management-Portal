@@ -16,15 +16,15 @@
 </ion-header>
 
 
-<ion-content padding>
-  <form role="form" data-toggle="validator" #verificationCodeForm="ngForm">
+<ion-content padding class="login-background">
+  <form role="form" data-toggle="validator" #verificationCodeForm="ngForm" class="signupForm animated bounceInDown">
   <ion-item *ngIf="!acctVerified">
-    <ion-label floating>Verification Code</ion-label>
+    <ion-label stacked>Verification Code</ion-label>
     <ion-input type="text" [(ngModel)]="verification_code" name="verification_code" id="verification_code" required></ion-input>
   </ion-item>
 
 
-  <div padding *ngIf="!acctVerified">
+  <div class="verifyButton" *ngIf="!acctVerified">
     <button ion-button color="primary" block (click)="confirmVerification();" [disabled]="!verificationCodeForm.valid">Confirm</button>
   </div>
 </form>

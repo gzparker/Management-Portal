@@ -1,3 +1,234 @@
 page-login {
 
+  [padding] .scroll-content {
+  padding: 30px 20px !important;
+  }
+
+  ion-navbar {  
+  opacity: 0px !important;
+  display: none !important;
+  }
+
+  ion-content {  
+  background: #00d2ff;
+  background: -webkit-linear-gradient(to top, #1f9eff, #00d2ff);
+  background: linear-gradient(to top, #1f9eff, #00d2ff);
+
+    &.login-background {    
+    background: url("../assets/imgs/login-bg.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+      &:before {
+      content: "";
+      width: 100%;
+      height: 100%;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;      
+      position: absolute;
+      background: url("../assets/imgs/login-bg.jpg") no-repeat center center fixed;
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+      filter: grayscale(0%) blur(5px) brightness(100%) contrast(100%) hue-rotate(0deg) opacity(100%) invert(0%) saturate(100%) sepia(0%);      
+      }
+      &:after {
+      content: "";
+      width: 100%;
+      height: 100%;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;      
+      position: absolute;
+      display: block;
+      // opacity: .85;
+      background: #7D59C7;
+      background: -webkit-linear-gradient(to bottom, rgba(8, 183, 222, 0.81), rgba(61, 145, 249, 0.85), rgba(40, 118, 187, 0.42));
+      background: linear-gradient(to bottom, rgba(8, 183, 222, 0.81), rgba(61, 145, 249, 0.85), rgba(40, 118, 187, 0.42));
+      }
+    }
+
+    .loginLogo {
+    width: 100%;
+    height: 45vh;    
+      img {
+      width: 100%;
+      max-width: 50%;
+      display: block;
+      padding-top: 20%;
+      margin: 0 auto;      
+      }
+      .newAccount {
+      width: 100%;
+      display: block;
+      font-family: $font-four;
+      font-size: 14px;
+      letter-spacing: .3px;
+      color: #F5F5F5;
+      text-align: right;
+      padding: 10px 0 0 0;
+      text-decoration: none;
+        strong {
+        font-family: $font-four;
+        font-weight: 700;
+        color: #FFF;
+        }
+      }
+    }
+
+    .loginForm {
+    width: 100%;
+    height: 55vh;
+
+      ion-item {
+      padding-right: 20px;
+
+          &.item-md {
+            .item-inner {
+            margin-left: 0;
+            outline: none;
+            box-shadow: none !important;
+            }
+            .text-input-md {
+            margin: 13px 8px 13px 0px;
+            }
+            ion-icon {
+            color: #FFF;
+            opacity: .85;
+            margin: 0px !important;
+            position: absolute;
+            }
+          }
+
+          &.item-wp {
+            .item-inner {
+            margin-left: 0;
+            outline: none;
+            box-shadow: none !important;
+            }
+            .text-input-wp, .select-wp {
+            margin: 13px 8px 13px 0px;
+            padding-left: 0px;
+            border: none !important;
+            }          
+          }
+
+        .item-inner {
+        padding-left: 40px;
+        position: relative;
+        border-color: #FFF !important;
+        font-family: $font-four;
+        font-size: 16px;
+        letter-spacing: .3px;
+        color: #FAFAFA;
+        }
+
+        ion-icon {
+        color: #FFF;
+        opacity: .95;
+        margin: 0px !important;
+        position: absolute;
+        }
+                
+        ::placeholder {
+        font-family: $font-four;
+        font-size: 16px;
+        letter-spacing: .3px;
+        color: #FFF;
+        opacity: .4;
+        text-shadow: none;
+        }
+
+      }
+    }
+
+    .item-block {
+    background: none;
+    }
+
+    .button-block {    
+    font-family: $font-three;      
+    letter-spacing: .8px;
+    text-transform: uppercase;
+    border-radius: 5px;
+    border: 2px solid rgba(255, 255, 255, 0.6);    
+    background: transparent;
+    @extend %transition;
+      &:hover, &:focus {
+      color: #000;
+      border: 2px solid #FFF;
+      background: #FFF;
+      }
+      &:last-child {
+      margin-top: 20px;
+      }
+      
+      &:nth-child(1) {
+      margin-top: 20px;
+      border-color: #19e1e1;
+      background: #19e1e1;
+      @extend %transition;
+        &:hover, &:focus {
+        color: #FFF;
+        border-color: #43eaea;
+        background: #43eaea;
+        }
+      }
+
+      &:nth-child(2) {
+      padding-left: 50px;
+      border-color: #2d5595;
+      background: #3365B6;
+      position: relative;
+        &:before {
+        content: "";
+        width: 50px;
+        height: auto;
+        position: absolute;
+        top: 0px;
+        left: 0;
+        bottom: 0;
+        background: #2d5595;
+        @extend %transition;
+        }
+
+        &:hover, &:focus {
+        color: #FFF;
+        border-color: darken(#2d5595, 10%);
+        background: darken(#3365B6, 6%);
+          &:before {
+          background: darken(#2d5595, 10%);
+          }
+        }          
+
+        ion-icon {
+        font-size: 32px;
+        top: 10px;
+        left: 12px;
+        position: absolute;
+        margin: 0px !important;        
+        }
+
+      }
+
+    }
+  }
+
+  .scroll-content {
+  margin-top: 0px !important;
+  overflow-y: hidden !important;
+  }
+}
+
+.button-md, .button-wp {
+min-height: 45px;
+box-shadow: none;
 }

@@ -4,12 +4,39 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Welcome please login</ion-title>
-  </ion-navbar>
+  </ion-navbar>  
 </ion-header>
 
 <ion-content padding>
-  <div padding>
-    <button ion-button color="primary" block (click)="openPage('2');">Login</button>
-    <button ion-button color="primary" block (click)="openPage('3');">Sign Up</button>
+
+  <ion-slides pager>
+    <ion-slide *ngFor="let slide of slides">
+      <img [src]="slide.image" class="slide-image"/>
+      <h2 class="slide-title" [innerHTML]="slide.title"></h2>
+      <p [innerHTML]="slide.description"></p>
+    </ion-slide>
+    <ion-slide class="animated fadeInDown">
+      <img src="assets/imgs/idx-main-logo-white.png" class="slide-image"/>
+      <h2 class="slide-title">IDX COMPANY&reg; App</h2>
+      <p>IDX is an industry standard that enables a real estate professional to display all of an MLS’s property listings on their website, provided they in turn permit other MLS members to display their listings.</p>
+    </ion-slide>
+    <ion-slide>
+      <img src="assets/imgs/ica-slidebox-img-1.png" class="slide-image"/>
+      <h2 class="slide-title">What is IDX?</h2>
+      <p>The simple definition: For real estate agents and brokers in the US, IDX is the system that allows REALTORS® to show MLS property listings on their websites. IDX stands for "Internet Data Exchange", which sounds technical, but really it's quite simple from the agent's perspective.</p>
+    </ion-slide>
+    <ion-slide>
+      <img src="assets/imgs/ica-slidebox-img-2.png" class="slide-image"/>
+      <h2 class="slide-title">Why use IDX?</h2>
+      <p>These are the benefits of IDX Integration on website, Catch Audience’s Attention, Capture Leads, Search Engine Friendly, interact with your client directly.</p>
+    </ion-slide>
+  </ion-slides>
+
+  <div class="formBlock animated fadeInUp">
+    <div class="colBlock">
+    <button ion-button color="primary" block (click)="openPage('2');">Sign In</button></div>
+    <div class="colBlock">
+    <button ion-button color="primary" block (click)="openPage('3');">Sign Up</button></div>
   </div>
+
 </ion-content>
