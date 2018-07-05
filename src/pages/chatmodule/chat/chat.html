@@ -145,7 +145,8 @@
                       </div>
                       <div  *ngIf="user.fbId==group.val().toFbUserId">              
                      
-                          <img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" *ngIf="user.image_url!=null&&user.image_url!=undefined&&user.image_url!=''"/>
+                          <img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" 
+                          *ngIf="user.image_url!=null&&user.image_url!=undefined&&user.image_url!=''"/>
                           <img src={{noImgUrl}} class="custom-avatar" 
                           *ngIf="user.image_url==null||user.image_url==''"/>
                       </div>
@@ -193,7 +194,7 @@
                   <button ion-button color="danger" class="roundedOption btn-del"  (click)="deleteGroupChat(group.val().groupId,group.key);"  *ngIf="group.val().isGroup==0&&group.val().deletedFor.indexOf(firebaseUserId) < 0"><ion-icon name="md-close"></ion-icon>Delete Chat</button>
                   <button ion-button color="primary" item-right class="roundedOption btn-settings" (click)="manageGroups(group.val().groupId)" *ngIf="group.val().isGroup==1"><ion-icon name="md-create"></ion-icon>Group Members</button>
                 </ion-item-options>
-  </ion-item-sliding>
+                </ion-item-sliding>
                   </ion-item>
               </ion-list>
             </div>

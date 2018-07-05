@@ -137,6 +137,7 @@ this.sharedServiceObj.sendMessage(type,this.description,this.redirectUserId,this
 }
 msgSentResp(resp:any)
 {
+  //debugger;
 if(resp=="1")
 {
   this.ngZone.run(() => {

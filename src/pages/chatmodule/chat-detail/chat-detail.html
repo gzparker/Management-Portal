@@ -134,7 +134,39 @@
 </ion-content>
 
 <ion-footer keyboard-attach class="bar bar-stable bar-footer chatbar">    
-  
+  <ion-list *ngIf="isApp">
+
+    <ion-item>
+      <button ion-button color="primary" block (click)="takePicture();" >Upload Company/Agent logo or brand</button>
+    </ion-item>
+    <ion-item *ngIf="dataWebsiteLogo.image" >
+      <img [src]="dataWebsiteLogo.image" [width]="logoWidth"
+      [height]="logoHeight">
+    </ion-item>
+    <ion-item>
+      <button ion-button color="primary" block (click)="takeFavIconPicture();" >Upload Website FavIcon</button>
+    </ion-item>
+    <ion-item *ngIf="dataWebsiteIcon.image" >
+      <img [src]="dataWebsiteIcon.image" [width]="favIconWidth"
+       [height]="favIconHeight">
+       </ion-item>
+    </ion-list>
+    <ion-list *ngIf="!isApp">
+        <ion-list-header>
+          Upload Image
+          </ion-list-header>
+          <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" 
+          multiple (change)="imgFileChangeListener($event)">
+ 
+          <img-cropper #imgCropper [image]="dataImage" [settings]="imgCropperSettings"
+           (onCrop)="imgIdentityImageCropped($event)" *ngIf="hideImgCropper"></img-cropper>
+          <br>
+          <span *ngIf="dataImage.image" >
+              <img [src]="dataImage.image" [width]="imgWidth"
+               [height]="imgHeight">
+          </span>
+         
+    </ion-list>
   <div *ngIf="returnedGroup">
   <ion-list *ngIf="returnedGroup.val().userTyping">
     <div class="useristypingtext" *ngIf="returnedGroup.val().userTyping==1&&returnedGroup.val().typerId!=firebaseUserId">...</div>

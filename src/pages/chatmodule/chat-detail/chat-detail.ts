@@ -3,6 +3,10 @@ import { IonicPage, NavController, NavParams, ModalController, Platform,
    MenuController,ActionSheetController,Tabs,Content } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
+import { Crop } from '@ionic-native/crop';
+import { Camera, CameraOptions } from '@ionic-native/camera';
+import { ImagePicker } from '@ionic-native/image-picker';
+import { ImageCropperComponent, CropperSettings } from "ngx-img-cropper";
 import { ISubscription } from "rxjs/Subscription";
 import { AlertController } from 'ionic-angular';
 import { ChatPage } from '../chat/chat';
@@ -35,6 +39,8 @@ declare var firebase:any;
   templateUrl: 'chat-detail.html',
 })
 export class ChatDetailPage {
+  @ViewChild('imgCropper', undefined)
+  imgCropper:ImageCropperComponent;
   @ViewChild(Content) content: Content;
   public groupId:string="";
   public chatingUserName:string="";
@@ -49,6 +55,13 @@ export class ChatDetailPage {
   public noImgUrl="../assets/imgs/profile-photo.jpg";
   public loggedInUserInfo:any;
 public messageSent:string="0";
+public dataImage:any;
+public imgWidth:string="";
+public imgHeight:string="";
+public crop_image:boolean=false;
+public imgCropperSettings;
+public identity_img:string="";
+public hideImgCropper:boolean=true;
 private CkeditorConfig = {uiColor: '#99000',removeButtons:'Underline,Subscript,Superscript,SpecialChar'
   ,toolbar: [
     { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source'] },
@@ -72,7 +85,21 @@ private CkeditorConfig = {uiColor: '#99000',removeButtons:'Underline,Subscript,S
     this.chatingUserName = this.navParams.get('chatterName');
     }
     sharedServiceObj.chatOldMsgSentEmiter.subscribe(item => this.msgSentResp(item));
-    
+    this.hideImgCropper=false;
+      this.imgCropperSettings = new CropperSettings();
+      this.imgCropperSettings.width = 100;
+      this.imgCropperSettings.height = 100;
+      this.imgCropperSettings.croppedWidth = 1280;
+      this.imgCropperSettings.croppedHeight = 1000;
+      this.imgCropperSettings.canvasWidth = 500;
+      this.imgCropperSettings.canvasHeight = 300;
+      this.imgCropperSettings.minWidth = 10;
+      this.imgCropperSettings.minHeight = 10;
+  
+      this.imgCropperSettings.rounded = false;
+      this.imgCropperSettings.keepAspect = false;
+  
+      this.imgCropperSettings.noFileInput = true;
   }
 
   ionViewDidLoad() {
@@ -101,8 +128,126 @@ this.loggedInUserInfo=data;
     that.scrollToBottom();
   }, 400);
   }
+  imgFileChangeListener($event) {
+   this.crop_image=true;
+    this.hideImgCropper=true;
+  //  this.edit_identity_logo=true;
+    var image:any = new Image();
+    var file:File = $event.target.files[0];
+    var myReader:FileReader = new FileReader();
+    var that = this;
+    myReader.onloadend = function (loadEvent:any) {
+        image.src = loadEvent.target.result;
+        image.onload = function () {
+          
+          that.imgCropperSettings.croppedWidth = this.width;
+          that.imgCropperSettings.croppedHeight = this.height;
+          
+          that.imgCropper.setImage(image);
+      };
+        //that.companyLogoCropper.setImage(image);
+    };
+    myReader.readAsDataURL(file);
+}
+  imgIdentityImageCropped(image:any)
+   {
+    if(this.crop_image)
+    {
+      this.imgCropperSettings.croppedWidth = image.width;
+      this.imgCropperSettings.croppedHeight = image.height;
+      let that=this;
+      this.resizeImage(this.dataImage.image, data => {
+      
+        that.identity_img=data;
+        this.createThumbnail(that.identity_img);
+          });
+    }
+    else
+    {
+      this.crop_image=true;
+    }
+ 
+   }
+   resizeImage(img:any,callback)
+  {
+    var canvas: any = document.createElement("canvas");
+    var image:any = new Image();
+   
+    var that=this;
+
+    image.src = img;
+    image.onload = function () {
+     
+      var width=that.imgCropperSettings.croppedWidth;
+      var height=that.imgCropperSettings.croppedHeight;
+    
+      canvas.width = width;
+      canvas.height = height;
+
+      var ctx = canvas.getContext("2d");
+ 
+      ctx.drawImage(image, 0, 0, width, height);
+
+      var dataUrl = canvas.toDataURL('image/jpeg', 1);
+
+     callback(dataUrl)
+    }
+  }
+  /////////////////////Generate Thumbnail//////////////////////
+  createThumbnail(bigMatch:any) {
+    //alert('in create thumbnail');
+    let that=this;
+    this.generateImageFromImage(bigMatch, 500, 500, 0.5, data => {
+      this.ngZone.run(() => {
+      that.dataImage.image=data;
+//alert(that.dataWebsiteLogo.image);
+      });
+    });
+  }
+  generateImageFromImage(img, MAX_WIDTH: number = 700, MAX_HEIGHT: number = 700, quality: number = 1, callback) {
+    var canvas: any = document.createElement("canvas");
+    var image:any = new Image();
+    var self=this;
+ //debugger;
+    image.src = img;
+    image.onload = function () {
+        
+    //var width = image.width;
+      
+    // var height = image.height;
+     //debugger;
+     var width=self.imgCropperSettings.croppedWidth;
+     var height=self.imgCropperSettings.croppedHeight;
+   // debugger;
+      if (width > height) {
+        if (width > MAX_WIDTH) {
+          height *= MAX_WIDTH / width;
+          width = MAX_WIDTH;
+        }
+      } else {
+        if (height > MAX_HEIGHT) {
+          width *= MAX_HEIGHT / height;
+          height = MAX_HEIGHT;
+        }
+      }
+      canvas.width = width;
+      canvas.height = height;
+      self.imgWidth = width;
+      self.imgHeight = height;
+    // debugger;
+      var ctx = canvas.getContext("2d");
+ 
+      ctx.drawImage(image, 0, 0, width, height);
+ 
+      // IMPORTANT: 'jpeg' NOT 'jpg'
+      var dataUrl = canvas.toDataURL('image/jpeg', quality);
+ 
+      callback(dataUrl)
+    }
+    
+  }
   messageDetail(){
-var that=this;
+    var that=this;
     var chatDetailArrayExist=[];
     firebase.database().ref('groups').orderByChild("groupId").equalTo(that.groupId).on("value", function(snapshot) {
       snapshot.forEach(element=>{
@@ -132,27 +277,16 @@ if(i==snapshot.numChildren()){
   firebase.database().ref('chats').orderByChild("groupId").equalTo(that.groupId).on("value", function(snapshot) {
     that.chatDetailArray=[];
    let i=0;
- //debugger;
     snapshot.forEach(element => {
       that.chatDetailArray.push(element);
 i=i+1;
 if(i==snapshot.numChildren()){
   that.sharedServiceObj.markMessageAsRead(that.firebaseUserId,that.chatDetailArray)
-  //debugger;
-//that.scrollToBottom();
 }
-//if(snapshot.length-1==i)
-//{
-  //
-//}
-      
     });
     
   });
   });
-  
-  
-  
    }
 
    openEmoji()

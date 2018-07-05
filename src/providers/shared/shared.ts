@@ -259,6 +259,7 @@ createGroupEmitter()
 }
 sendMessage(type:string,description:any,redirectUserId:any,firebaseUserId:any,
     newChatMember:any,redirectedGroupId:string,loggedInUserInfo:any,chatImage:string,chatDetailArray:any) {
+     // debugger;
         let respMsg:any;
     let that=this;
        var deletedFor=["0"];
@@ -285,6 +286,7 @@ sendMessage(type:string,description:any,redirectUserId:any,firebaseUserId:any,
       }
       else if(newChatMember)
       {
+        //debugger;
         memberId=newChatMember.fbId;
            if(memberId<firebaseUserId)
            {
@@ -302,22 +304,26 @@ sendMessage(type:string,description:any,redirectUserId:any,firebaseUserId:any,
        var groups=firebase.database().ref('groups');
        description=description;
        var groups=firebase.database().ref('groups').once('value', function(groupsVal) {
-   
+ //debugger;
        if(groupsVal.exists())
        {
         
-         firebase.database().ref('groups').orderByChild("groupId").equalTo(groupId).on("child_added", function(snapshot) {
-           if(snapshot.val()){
-          //  debugger;
-             var returnedGroup=snapshot.val();
+         firebase.database().ref('groups').orderByChild("groupId").equalTo(groupId).once("value", function(snapshot) {
+           //debugger;
+           if(snapshot.exists()){
+            snapshot.forEach((data)=>{
+             var returnedGroup=data.val();
+             debugger;
              createDate=returnedGroup.dateCreated;
    
-             var fredRef=firebase.database().ref('groups/'+snapshot.key);
+             var fredRef=firebase.database().ref('groups/'+data.key);
            fredRef.update({message:description,deletedFor:deletedFor,modifiedDate:Date()});
           respMsg=that.saveMessage(groupId,memberId,type,newChatMember,loggedInUserInfo,firebaseUserId,description,chatImage,chatDetailArray);
-                          }
+            });                  
+        }
                           else
                           {
+                            //debugger;
                         that.saveGroup(groupId,memberId,type,createDate,newChatMember,loggedInUserInfo,firebaseUserId,description,chatImage);
                         that.saveMessage(groupId,memberId,type,newChatMember,loggedInUserInfo,firebaseUserId,description,chatImage,chatDetailArray);
                     }
@@ -325,6 +331,7 @@ sendMessage(type:string,description:any,redirectUserId:any,firebaseUserId:any,
        }
        else
        {
+      //   debugger;
        that.saveGroup(groupId,memberId,type,createDate,newChatMember,loggedInUserInfo,firebaseUserId,description,chatImage);      
       that.saveMessage(groupId,memberId,type,newChatMember,loggedInUserInfo,firebaseUserId,description,chatImage,chatDetailArray);
     }
