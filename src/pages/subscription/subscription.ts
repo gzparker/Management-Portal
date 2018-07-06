@@ -32,10 +32,12 @@ export class SubscriptionPage {
   public allAvailablePackages: any[] = [];
   public intervalBasedPackages: any[] = [];
   public selectedPackagesList: any[] = [];
+  public yearValues:any[]=[];
+  public monthValues:any[]=[];
   public selectedCoupon:string="";
   public full_name: string;
   public cc_number: string;
-  public expiryDate: string=new Date(new Date().getFullYear().toString()+"-"+(parseInt("1")).toString()).toISOString();
+  public expiryDate: string="";
   public exp_month: string;
   public exp_year: string;
   public userSubscribed: boolean = false;
@@ -62,6 +64,8 @@ export class SubscriptionPage {
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform, 
     public ngZone: NgZone,public menuCtrl: MenuController,public actionSheetCtrl: ActionSheetController,
     public loadingCtrl: LoadingController) {
+      this.setYearMonthValues();
+      //this.expiryDate=new Date(new Date().getFullYear().toString()+"-"+(new Date().getMonth().toString())).toISOString();
       this.calendarMinDate=new Date();
       this.calendarMinDate.setFullYear(this.calendarMinDate.getFullYear(),0);
       this.calendarMinDate=this.calendarMinDate.toISOString();
@@ -80,6 +84,19 @@ export class SubscriptionPage {
       //debugger;
     });
     ///debugger;
+  }
+  setYearMonthValues()
+  {
+    let currentYear=parseInt(new Date().getFullYear().toString());
+    for(let i=currentYear;i<=currentYear+50;i++)
+    {
+      this.yearValues.push(i);
+    }
+    for(let i=1;i<=12;i++)
+    {
+      this.monthValues.push(i);
+    }
+    this.expiryDate=new Date(new Date().getFullYear().toString()+"-"+(new Date().getMonth().toString())).toISOString();
   }
   listAllPackages() {
     //debugger;
@@ -175,7 +192,7 @@ if(this.selectedPackagesList.length>0)
 for(let i=0;i<this.selectedPackagesList.length;i++)
 {
   dataObj.service_plans_array.push(this.selectedPackagesList[i].id);
-  debugger;
+ // debugger;
 }
   dataObj.full_name = this.full_name;
   dataObj.cc_number = this.cc_number;
@@ -186,7 +203,7 @@ for(let i=0;i<this.selectedPackagesList.length;i++)
   //dataObj.service_plans_array=this.selectedPlanStringListString;
   dataObj.mls_service_id=this.mls_server_id;
   dataObj.stripe_coupon_code=this.selectedCoupon;
-  debugger;
+  //debugger;
   let member_id = this.storage.get('userId');
   member_id.then((memberResp) => {
     //debugger;
@@ -203,13 +220,10 @@ else
   }
   
   saveSubscribeUserResp(data: any) {
-    //debugger;
     if (data.status == true) {
       this.sharedServiceObj.setPaidStatus(true);
       this.ngZone.run(() => {
         this.navCtrl.setRoot(DashboardTabsPage,{notificationMsg:data.message.toUpperCase()});
-       
-      
       });
     }
     else {
@@ -219,43 +233,29 @@ else
   }
   checkPromoCode()
   {
-    //debugger;
     if(this.promo_code!="")
     {
       this.subscriptionObj.checkPromoCode(this.promo_code).
       subscribe((result) => this.checkPromoCodeResp(result));
-
     }
-    
   }
   checkPromoCodeResp(resp:any)
   {
     if(resp.status==true)
     {
-      
       this.selectedPromoCode=resp;
       this.calculateTotalPrice();
-      //debugger;
     }
-//debugger;
   }
   setSelectedPackage(packageItem:any) {
-  
     let selectedIndex = this.selectedPackagesList.indexOf(packageItem);
-    
-    
     if (selectedIndex >= 0) {
-      //this.totalAmount=this.totalAmount-parseFloat(price);
-
       this.selectedPackagesList.splice(selectedIndex, 1);
     }
     else {
-      //this.totalAmount=this.totalAmount+parseFloat(price);
       this.selectedPackagesList.push(packageItem);
     }
     this.calculateTotalPrice();
- //debugger;
-
   }
   calculateTotalPrice()
   {
@@ -271,13 +271,12 @@ if(this.selectedPackagesList!=undefined)
 {
   for(let i=0;i<this.selectedPackagesList.length;i++)
   {
-    if(this.selectedPromoCode!=undefined)
+    if(this.selectedPromoCode!=undefined&&this.selectedPromoCode.coupon==this.promo_code)
     {
-      if(this.selectedPromoCode.id==this.selectedPackagesList[i].id)
+      //debugger;
+      if(this.selectedPromoCode.id==this.selectedPackagesList[i].id&&this.selectedPromoCode.coupon==this.promo_code)
       {
-       // debugger;
         this.selectedCoupon=this.selectedPromoCode.coupon;
-        
         this.totalAmount=this.totalAmount+parseFloat(this.selectedPromoCode.subtract_amount);
       }
       else

@@ -112,8 +112,6 @@
                           <span class="msgdate">{{convertToDate(group.val().modifiedDate) | date : "shortTime"}}</span>
                           <h2>{{group.val().groupTitle}}<span class="msgcounter" *ngIf="group['unreadMsgs']">({{group['unreadMsgs']}})</span></h2>
                           <p ng-bind-html="group.val().message"></p>          
-                        </span>
-            
             
         <button ion-button color="danger" item-right class="roundedOption btn-del" (click)="deleteGroupChat(group.val().groupId,group.key);"  *ngIf="group.val().isGroup==1&&group.val().deletedFor.indexOf(firebaseUserId) < 0"><ion-icon name="md-close"></ion-icon>Delete Chat</button>
         <button ion-button color="danger" item-right class="roundedOption btn-del" (click)="deleteGroupChat(group.val().groupId,group.key);"  *ngIf="group.val().isGroup==0&&group.val().deletedFor.indexOf(firebaseUserId) < 0"><ion-icon name="md-close"></ion-icon>Delete Chat</button>

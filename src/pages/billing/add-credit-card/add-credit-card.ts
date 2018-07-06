@@ -26,7 +26,7 @@ export class AddCreditCardPage {
   public userId:string="";
   public full_name: string;
   public cc_number: string;
-  public expiryDate: string=new Date(new Date().getFullYear().toString()+"-"+(parseInt("1")).toString()).toISOString();
+  public expiryDate: string="";
   public exp_month: string;
   public exp_year: string;
   public creditCardMsg: string = "";
@@ -38,6 +38,8 @@ export class AddCreditCardPage {
   public first_name:string="";
   public last_name:string="";
   public email:string="";
+  public yearValues:any[]=[];
+  public monthValues:any[]=[];
   public loader:any;
   //public calendarMinDate=new Date().toISOString();
 
@@ -45,6 +47,8 @@ export class AddCreditCardPage {
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, 
     public platform: Platform,public loadingCtrl: LoadingController) {
+      this.setYearMonthValues();
+     // this.expiryDate=new Date(new Date().getFullYear().toString()+"-"+(new Date().getMonth().toString())).toISOString();
       this.calendarMinDate=new Date();
       this.calendarMinDate.setFullYear(this.calendarMinDate.getFullYear(),0);
       this.calendarMinDate=this.calendarMinDate.toISOString();
@@ -70,6 +74,19 @@ export class AddCreditCardPage {
     this.email=data;
     });
     });
+  }
+  setYearMonthValues()
+  {
+    let currentYear=parseInt(new Date().getFullYear().toString());
+    for(let i=currentYear;i<=currentYear+50;i++)
+    {
+      this.yearValues.push(i);
+    }
+    for(let i=1;i<=12;i++)
+    {
+      this.monthValues.push(i);
+    }
+    this.expiryDate=new Date(new Date().getFullYear().toString()+"-"+(new Date().getMonth().toString())).toISOString();
   }
   saveCreditCard() {
       let dataObj = {

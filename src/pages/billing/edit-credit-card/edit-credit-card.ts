@@ -41,6 +41,8 @@ export class EditCreditCardPage {
   public cvc:string="";
   public primary_source:boolean=false;
   public primary_source_data:string="";
+  public yearValues:any[]=[];
+  public monthValues:any[]=[];
   public loader:any;
   //public calendarMinDate=new Date().toISOString();
   public calendarMinDate:any;
@@ -51,6 +53,7 @@ export class EditCreditCardPage {
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, 
     public platform: Platform,public loadingCtrl: LoadingController) {
+      this.setYearMonthValues();
       this.calendarMinDate=new Date();
       this.calendarMinDate.setFullYear(this.calendarMinDate.getFullYear(),0);
       this.calendarMinDate=this.calendarMinDate.toISOString();
@@ -74,6 +77,19 @@ export class EditCreditCardPage {
     this.userId=data;
     this.loadCreditCardDetail();
     });
+  }
+  setYearMonthValues()
+  {
+    let currentYear=parseInt(new Date().getFullYear().toString());
+    for(let i=currentYear;i<=currentYear+50;i++)
+    {
+      this.yearValues.push(i);
+    }
+    for(let i=1;i<=12;i++)
+    {
+      this.monthValues.push(i);
+    }
+    this.expiryDate=new Date(new Date().getFullYear().toString()+"-"+(new Date().getMonth().toString())).toISOString();
   }
   loadCreditCardDetail()
   {
