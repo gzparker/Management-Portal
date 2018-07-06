@@ -37,8 +37,10 @@
       <ion-item *ngFor="let website of allWebsiteList">
           <ion-item class="websiteThumb">
               <ion-thumbnail item-start  (click)="websiteLinks(website.id)">
-                <img src={{imgBaseUrl}}{{website.identity_logo}} *ngIf="website.identity_logo!=''"/>
-                <img src={{noImgUrl}} *ngIf="website.identity_logo==''"/>
+                <!--<img src={{imgBaseUrl}}{{website.identity_logo}} *ngIf="website.identity_logo!=''"/>
+                <img src={{noImgUrl}} *ngIf="website.identity_logo==''"/>-->
+                <img src={{this.sharedServiceObj.imgBucketUrl}}{{website.identity_logo}} (error)="imgIdentityLogo.src = this.sharedServiceObj.noImageUrl" #imgIdentityLogo/>
+                 
               </ion-thumbnail>
               <!--<ion-thumbnail item-start *ngIf="isEditWebsiteAccess==false">
                   <img src={{imgBaseUrl}}{{website.identity_logo}} *ngIf="website.identity_logo!=''"/>
@@ -93,12 +95,16 @@
       
       <ion-item class="websiteThumb">
         <ion-avatar item-start (click)="editWebsite(website.id)"  *ngIf="isEditWebsiteAccess==true">
-          <img src={{imgBaseUrl}}{{website.identity_logo}} *ngIf="website.identity_logo!=''"/>
-          <img src={{noImgUrl}} *ngIf="website.identity_logo==''"/>
+          <!--<img src={{imgBaseUrl}}{{website.identity_logo}} *ngIf="website.identity_logo!=''"/>
+          <img src={{noImgUrl}} *ngIf="website.identity_logo==''"/>-->
+          <img src={{this.sharedServiceObj.imgBucketUrl}}{{website.identity_logo}} 
+                    class="custom-avatar" (error)="imgWebsite.src = this.sharedServiceObj.noImageUrl" #imgWebsite/>
         </ion-avatar>
         <ion-avatar item-start  *ngIf="isEditWebsiteAccess==false">
-            <img src={{imgBaseUrl}}{{website.identity_logo}} *ngIf="website.identity_logo!=''"/>
-            <img src={{noImgUrl}} *ngIf="website.identity_logo==''"/>
+            <img src={{this.sharedServiceObj.imgBucketUrl}}{{website.identity_logo}} 
+            class="custom-avatar" (error)="imgWebsite1.src = this.sharedServiceObj.noImageUrl" #imgWebsite1/>
+            <!--<img src={{imgBaseUrl}}{{website.identity_logo}} *ngIf="website.identity_logo!=''"/>
+            <img src={{noImgUrl}} *ngIf="website.identity_logo==''"/>-->
           </ion-avatar>
         <h2 (click)="editWebsite(website.id)"  *ngIf="isEditWebsiteAccess==true">{{website.identity_name}}</h2>
         <h2 *ngIf="isEditWebsiteAccess==false">{{website.identity_name}}</h2>

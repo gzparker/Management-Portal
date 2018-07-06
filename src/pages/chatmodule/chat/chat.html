@@ -46,9 +46,11 @@
                           </div>
                           <div  *ngIf="user.fbId==group.val().toFbUserId">              
                          
-                              <img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" *ngIf="user.image_url!=null&&user.image_url!=undefined&&user.image_url!=''"/>
+                              <!--<img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" *ngIf="user.image_url!=null&&user.image_url!=undefined&&user.image_url!=''"/>
                               <img src={{noImgUrl}} class="custom-avatar" 
-                              *ngIf="user.image_url==null||user.image_url==''"/>
+                              *ngIf="user.image_url==null||user.image_url==''"/>-->
+                              <img src={{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}} class="custom-avatar" 
+                              (error)="imgChat.src = this.sharedServiceObj.noImageUrl" #imgChat/>
                           </div>
                         </div>
                         
@@ -64,10 +66,11 @@
                          
                           </div>
                            <div  *ngIf="user.fbId==group.val().fromFbUserId">              
-                         
-                              <img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" *ngIf="user.image_url!=null&&user.image_url!=undefined&&user.image_url!=''"/>
+                              <img src={{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}} class="custom-avatar" 
+                              (error)="imgChat1.src = this.sharedServiceObj.noImageUrl" #imgChat1/>
+                              <!--<img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" *ngIf="user.image_url!=null&&user.image_url!=undefined&&user.image_url!=''"/>
                               <img src={{noImgUrl}} class="custom-avatar" 
-                              *ngIf="user.image_url==null||user.image_url==''"/>
+                              *ngIf="user.image_url==null||user.image_url==''"/>-->
                           
                           </div>
                         </div>
@@ -102,8 +105,10 @@
                       <ion-item class="item item-avatar item-text-wrap" 
                       (click)="chatDetail(group.val().groupId,group.val().fromFbUserId,group.val().fromUserName,group.val().toUserName,2)">        
                         
-                           <img src="{{group.val().groupImage}}" class="chat-profile-group" />                    
-                        <span class="chat-info mike">
+                           <!--<img src="{{group.val().groupImage}}" class="chat-profile-group" />                    
+                        <span class="chat-info mike">-->
+                          <img src={{group.val().groupImage}} class="custom-avatar" 
+                            (error)="imgGroup.src = this.sharedServiceObj.noImageUrl" #imgGroup/>
                           <span class="msgdate">{{convertToDate(group.val().modifiedDate) | date : "shortTime"}}</span>
                           <h2>{{group.val().groupTitle}}<span class="msgcounter" *ngIf="group['unreadMsgs']">({{group['unreadMsgs']}})</span></h2>
                           <p ng-bind-html="group.val().message"></p>          
@@ -145,10 +150,12 @@
                       </div>
                       <div  *ngIf="user.fbId==group.val().toFbUserId">              
                      
-                          <img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" 
+                          <!--<img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" 
                           *ngIf="user.image_url!=null&&user.image_url!=undefined&&user.image_url!=''"/>
                           <img src={{noImgUrl}} class="custom-avatar" 
-                          *ngIf="user.image_url==null||user.image_url==''"/>
+                          *ngIf="user.image_url==null||user.image_url==''"/>-->
+                          <img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" 
+                          (error)="imgUser.src = this.sharedServiceObj.noImageUrl" #imgUser/>
                       </div>
                     </div>
                     
@@ -164,10 +171,11 @@
                      
                       </div>
                        <div  *ngIf="user.fbId==group.val().fromFbUserId">              
-                     
-                          <img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" *ngIf="user.image_url!=null&&user.image_url!=undefined&&user.image_url!=''"/>
+                          <img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" 
+                          (error)="imgUser1.src = this.sharedServiceObj.noImageUrl" #imgUser1/>
+                          <!--<img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" *ngIf="user.image_url!=null&&user.image_url!=undefined&&user.image_url!=''"/>
                           <img src={{noImgUrl}} class="custom-avatar" 
-                          *ngIf="user.image_url==null||user.image_url==''"/>
+                          *ngIf="user.image_url==null||user.image_url==''"/>-->
                       
                       </div>
                     </div>

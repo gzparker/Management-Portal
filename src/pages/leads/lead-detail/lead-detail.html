@@ -18,8 +18,11 @@
 <ion-content padding>
   <ion-list>
       <ion-item><ion-avatar item-start *ngIf="leadDetail!=undefined">
-          <img src={{leadDetail.image_url}} *ngIf="leadDetail.image_url!=null"/>
-          <img src={{noImgUrl}} *ngIf="leadDetail.image_url==null"/></ion-avatar></ion-item>
+          <!--<img src={{leadDetail.image_url}} *ngIf="leadDetail.image_url!=null"/>
+          <img src={{noImgUrl}} *ngIf="leadDetail.image_url==null"/>-->
+          <img src="{{leadDetail.image_url}}" class="custom-avatar" 
+                      (error)="imgLead.src = this.sharedServiceObj.noImageUrl" #imgLead/>
+        </ion-avatar></ion-item>
           <ion-item *ngIf="leadDetail!=undefined"><h2>{{leadDetail.first_name}} {{leadDetail.last_name}}</h2></ion-item>
           <ion-item *ngIf="leadDetail!=undefined"><p>Email:{{leadDetail.email}}</p></ion-item>
           <ion-item *ngIf="leadDetail!=undefined"><p>Website:{{leadDetail.website}}</p></ion-item>
@@ -59,8 +62,12 @@
       <ion-list *ngIf="selectedSegment=='2'">
           <ion-item *ngFor="let saved_listing of savedListings">
               
-            <ion-avatar item-start><img [src]="saved_listing.url" *ngIf="saved_listing.url!=''"/>
-              <img src="././assets/imgs/noImage.png" *ngIf="saved_listing.url==''"/></ion-avatar>
+            <ion-avatar item-start>
+                <img src="{{saved_listing.url}}" class="custom-avatar" 
+                (error)="imgListing.src = this.sharedServiceObj.noImageUrl" #imgListing/>
+              <!--<img [src]="saved_listing.url" *ngIf="saved_listing.url!=''"/>
+              <img src="././assets/imgs/noImage.png" *ngIf="saved_listing.url==''"/>-->
+            </ion-avatar>
               <h2 *ngIf="saved_listing.listing_type=='for_sale'">For Sale</h2>
             <h2 *ngIf="saved_listing.listing_type=='for_rent'">For Rent</h2>
               <p>Price:${{saved_listing.price}}</p>

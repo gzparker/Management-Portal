@@ -27,10 +27,12 @@
             <div *ngIf="groupMember.val().userId!=firebaseUserId">
       
             <ion-item class="item item-avatar alternate-chat-left item-text-wrap" >
-                <img src="{{this.sharedServiceObj.imgBucketUrl}}{{groupMember.val().image}}" 
+                <!--<img src="{{this.sharedServiceObj.imgBucketUrl}}{{groupMember.val().image}}" 
                 class="custom-avatar" *ngIf="groupMember.val().image!=null&&groupMember.val().image!=undefined&&groupMember.val().image!=''"/>
                 <img src={{noImgUrl}} class="custom-avatar" 
-                *ngIf="groupMember.val().image==null||groupMember.val().image==''" />
+                *ngIf="groupMember.val().image==null||groupMember.val().image==''" />-->
+                <img src="{{this.sharedServiceObj.imgBucketUrl}}{{groupMember.val().image}}" class="custom-avatar" 
+                      (error)="imgGroupMember.src = this.sharedServiceObj.noImageUrl" #imgGroupMember/>
               <!--<object data="{{groupMember.image}}" type="image/jpg" class="manage-chat-profile"></object>-->
               <span class="chat-info">
                 <h1>{{groupMember.val().memberName}}</h1>

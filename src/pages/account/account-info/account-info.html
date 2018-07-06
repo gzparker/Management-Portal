@@ -27,8 +27,10 @@
 
     <ion-item *ngIf="accountInfo!=null" (click)="editAccount();">
       <ion-avatar item-start *ngIf="globalSettings!=null">
-        <img src={{imgBaseUrl}}{{globalSettings.photo_personal}} *ngIf="globalSettings.photo_personal!=''"/>
-        <img src={{noImgUrl}} *ngIf="globalSettings.photo_personal==''"/></ion-avatar>
+        <!--<img src={{imgBaseUrl}}{{globalSettings.photo_personal}} *ngIf="globalSettings.photo_personal!=''"/>
+        <img src={{noImgUrl}} *ngIf="globalSettings.photo_personal==''"/>-->
+        <img src={{this.sharedServiceObj.imgBucketUrl}}{{globalSettings.photo_personal}} (error)="imgAccount.src = this.sharedServiceObj.noImageUrl" #imgAccount/>
+      </ion-avatar>
       <h2>{{accountInfo.first_name}} {{accountInfo.last_name}}</h2>
       <!--<p *ngIf="accountInfo.company!=null&&accountInfo.company!=undefined">{{accountInfo.company}}</p>-->
       <p>{{accountInfo.phone_number}}</p>

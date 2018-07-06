@@ -34,9 +34,11 @@
                   <div *ngIf="user.fbId==chat.val().fromFbUserId">              
                 
                   <div class="chat-profile">
-                  <img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" *ngIf="user.image_url!=null&&user.image_url!=undefined&&user.image_url!=''"/>
+                      <img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" 
+                      (error)="imgUser.src = this.sharedServiceObj.noImageUrl" #imgUser/>
+                  <!--<img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" *ngIf="user.image_url!=null&&user.image_url!=undefined&&user.image_url!=''"/>
                   <img src={{noImgUrl}} class="custom-avatar" 
-                  *ngIf="user.image_url==null||user.image_url==''"/>  
+                  *ngIf="user.image_url==null||user.image_url==''"/>-->
                 </div>
         
                 </div>
@@ -58,9 +60,14 @@
                 <div  *ngFor="let user of users">     
                   <div *ngIf="user.fbId==chat.val().fromFbUserId">              
                      
-                  <div class="chat-profile"><img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" *ngIf="user.image_url!=null&&user.image_url!=undefined&&user.image_url!=''"/>
+                  <div class="chat-profile">
+                      <img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" 
+                      (error)="imgUser1.src = this.sharedServiceObj.noImageUrl" #imgUser1/>
+                    <!--<img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" 
+                    class="custom-avatar" *ngIf="user.image_url!=null&&user.image_url!=undefined&&user.image_url!=''"/>
                     <img src={{noImgUrl}} class="custom-avatar" 
-                    *ngIf="user.image_url==null||user.image_url==''"/></div> 
+                    *ngIf="user.image_url==null||user.image_url==''"/>-->
+                  </div> 
                       </div>
                   </div>
                   <span class="chat-info" [innerHTML]="chat.val().message"></span>
@@ -84,9 +91,12 @@
                   <div *ngIf="user.fbId==chat.val().fromFbUserId">              
                 
                   <div class="chat-profile">
-                  <img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" *ngIf="user.image_url!=null&&user.image_url!=undefined&&user.image_url!=''"/>
+                      <img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" 
+                      (error)="imgUser2.src = this.sharedServiceObj.noImageUrl" #imgUser2/>
+                  <!--<img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" 
+                  class="custom-avatar" *ngIf="user.image_url!=null&&user.image_url!=undefined&&user.image_url!=''"/>
                   <img src={{noImgUrl}} class="custom-avatar" 
-                  *ngIf="user.image_url==null||user.image_url==''"/>  
+                  *ngIf="user.image_url==null||user.image_url==''"/> -->
                 </div>
         
                 </div>
@@ -109,9 +119,14 @@
                 <div  *ngFor="let user of users">     
                   <div *ngIf="user.fbId==chat.val().fromFbUserId">              
                      
-                  <div class="chat-profile"><img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" *ngIf="user.image_url!=null&&user.image_url!=undefined&&user.image_url!=''"/>
+                  <div class="chat-profile">
+                      <img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" 
+                      (error)="imgUser3.src = this.sharedServiceObj.noImageUrl" #imgUser3/>
+                    <!--<img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" 
+                    *ngIf="user.image_url!=null&&user.image_url!=undefined&&user.image_url!=''"/>
                     <img src={{noImgUrl}} class="custom-avatar" 
-                    *ngIf="user.image_url==null||user.image_url==''"/></div> 
+                    *ngIf="user.image_url==null||user.image_url==''"/>-->
+                  </div> 
                       </div>
                   </div>
                   <span class="chat-info" [innerHTML]="chat.val().message"></span>

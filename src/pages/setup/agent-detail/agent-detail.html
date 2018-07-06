@@ -21,8 +21,14 @@
 
 <ion-content padding>
   <ion-card *ngIf="agentDetail!=undefined">
-      <ion-avatar item-start><img src={{this.sharedServiceObj.imgBucketUrl}}{{agentDetail.image_url}} *ngIf="agentDetail.image_url!=undefined&&agentDetail.image_url!=null&&agentDetail.image_url!=''"/>
-        <img src={{no_image_found}} *ngIf="agentDetail.image_url==undefined||agentDetail.image_url==null||agentDetail.image_url==''"/></ion-avatar>
+      <ion-avatar item-start>
+          <img src="{{this.sharedServiceObj.imgBucketUrl}}{{agentDetail.image_url}}" class="custom-avatar" 
+          (error)="imgAgent.src = this.sharedServiceObj.noImageUrl" #imgAgent/>
+        <!--<img src={{this.sharedServiceObj.imgBucketUrl}}{{agentDetail.image_url}} 
+        *ngIf="agentDetail.image_url!=undefined&&agentDetail.image_url!=null&&agentDetail.image_url!=''"/>
+        <img src={{no_image_found}} 
+        *ngIf="agentDetail.image_url==undefined||agentDetail.image_url==null||agentDetail.image_url==''"/>-->
+      </ion-avatar>
     <h2>{{agentDetail.first_name}} {{agentDetail.last_name}}</h2>
     <p>Email:{{agentDetail.email}}</p>
     <p [innerHTML]="agentDetail.description"></p>

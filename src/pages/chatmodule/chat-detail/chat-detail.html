@@ -29,9 +29,10 @@
                   <div *ngIf="user.fbId==chat.val().fromFbUserId">              
                 
                   <div class="chat-profile">
-                  <img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" *ngIf="user.image_url!=null&&user.image_url!=undefined&&user.image_url!=''"/>
+                  <!--<img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" *ngIf="user.image_url!=null&&user.image_url!=undefined&&user.image_url!=''"/>
                   <img src={{noImgUrl}} class="custom-avatar" 
-                  *ngIf="user.image_url==null||user.image_url==''"/>  
+                  *ngIf="user.image_url==null||user.image_url==''"/> -->
+                  <img src={{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}} class="custom-avatar" (error)="imgChatDetail.src = this.sharedServiceObj.noImageUrl" #imgChatDetail/>
                 </div>
         
                 </div>
@@ -53,14 +54,19 @@
                 <div  *ngFor="let user of users">     
                   <div *ngIf="user.fbId==chat.val().fromFbUserId">              
                      
-                  <div class="chat-profile"><img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" *ngIf="user.image_url!=null&&user.image_url!=undefined&&user.image_url!=''"/>
+                  <div class="chat-profile">
+                    <!--<img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" *ngIf="user.image_url!=null&&user.image_url!=undefined&&user.image_url!=''"/>
                     <img src={{noImgUrl}} class="custom-avatar" 
-                    *ngIf="user.image_url==null||user.image_url==''"/></div> 
+                    *ngIf="user.image_url==null||user.image_url==''"/>-->
+                    <img src={{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}} class="custom-avatar" 
+                    (error)="imgChatDetail1.src = this.sharedServiceObj.noImageUrl" #imgChatDetail1/>
+                  </div> 
                       </div>
                   </div>
                   <span class="chat-info" [innerHTML]="chat.val().message"></span>
         
-                  <span class="chat-info chat-img" *ngIf="chat.val().imageData"><img src="{{chat.val().imageData}}" (click)="showBigImage(chat.val().imageData)" /></span>
+                  <span class="chat-info chat-img" *ngIf="chat.val().imageData">
+                    <img src="{{chat.val().imageData}}" (click)="showBigImage(chat.val().imageData)" /></span>
                   <button ion-button color="danger" item-right class="roundedOption btn-del" (click)="deleteSingleChat(chat.val().groupId,chat.key);"><ion-icon name="md-close"></ion-icon>Delete Chat</button>
                   </ion-item>
                 </div>
@@ -79,9 +85,11 @@
                   <div *ngIf="user.fbId==chat.val().fromFbUserId">              
                 
                   <div class="chat-profile">
-                  <img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" *ngIf="user.image_url!=null&&user.image_url!=undefined&&user.image_url!=''"/>
+                      <img src={{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}} class="custom-avatar" 
+                      (error)="imgChatDetail2.src = this.sharedServiceObj.noImageUrl" #imgChatDetail2/>
+                  <!--<img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" *ngIf="user.image_url!=null&&user.image_url!=undefined&&user.image_url!=''"/>
                   <img src={{noImgUrl}} class="custom-avatar" 
-                  *ngIf="user.image_url==null||user.image_url==''"/>  
+                  *ngIf="user.image_url==null||user.image_url==''"/>-->
                 </div>
         
                 </div>
@@ -104,9 +112,13 @@
                 <div  *ngFor="let user of users">     
                   <div *ngIf="user.fbId==chat.val().fromFbUserId">              
                      
-                  <div class="chat-profile"><img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" *ngIf="user.image_url!=null&&user.image_url!=undefined&&user.image_url!=''"/>
+                  <div class="chat-profile">
+                    <!--<img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" *ngIf="user.image_url!=null&&user.image_url!=undefined&&user.image_url!=''"/>
                     <img src={{noImgUrl}} class="custom-avatar" 
-                    *ngIf="user.image_url==null||user.image_url==''"/></div> 
+                    *ngIf="user.image_url==null||user.image_url==''"/>-->
+                    <img src={{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}} 
+                    class="custom-avatar" (error)="imgChatDetail3.src = this.sharedServiceObj.noImageUrl" #imgChatDetail3/>
+                  </div> 
                       </div>
                   </div>
                   <span class="chat-info" [innerHTML]="chat.val().message"></span>
@@ -134,7 +146,7 @@
 </ion-content>
 
 <ion-footer keyboard-attach class="bar bar-stable bar-footer chatbar">    
-  <ion-list *ngIf="isApp">
+  <!--<ion-list *ngIf="isApp">
 
     <ion-item>
       <button ion-button color="primary" block (click)="takePicture();" >Upload Company/Agent logo or brand</button>
@@ -166,7 +178,7 @@
                [height]="imgHeight">
           </span>
          
-    </ion-list>
+    </ion-list>-->
   <div *ngIf="returnedGroup">
   <ion-list *ngIf="returnedGroup.val().userTyping">
     <div class="useristypingtext" *ngIf="returnedGroup.val().userTyping==1&&returnedGroup.val().typerId!=firebaseUserId">...</div>
