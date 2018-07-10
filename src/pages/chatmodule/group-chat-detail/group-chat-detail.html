@@ -23,7 +23,9 @@
 
 
 <ion-content padding>
-  
+  <ion-refresher (ionRefresh)="groupMessageDetail($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
     <ion-list *ngIf="isApp&&chatDetailArray.length>0">
         <div *ngFor="let chat of chatDetailArray">
         <ion-item *ngIf="chat.val().deletedFor.indexOf(firebaseUserId) < 0">
@@ -145,12 +147,25 @@
         </div>
     </ion-list>
     
-    <div *ngIf="chatImage!=''">
+    <div *ngIf="chatImage!=''&&isApp">
         <ion-list show-delete="true" can-swipe="true">
          <img src="{{chatImage}}" />
          <button color="danger" item-right class="roundedOption btn-del" (click)="deleteChatImage();">Delete Image</button>
           </ion-list>
           </div>
+          <ion-list *ngIf="!isApp">
+              <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple 
+              (change)="chatFileChangeListener($event)">
+               
+              <img-cropper class="imgCropper" #chatImageCropper [image]="dataChatImage" [settings]="chatCropperSettings"
+                 (onCrop)="chatImageCropped($event)" *ngIf="hideChatCropper"></img-cropper>
+              
+              <span class="cropPreview" *ngIf="dataChatImage.image" >
+                <span class="cropPreviewLabel">Chat Image Preview</span>
+                <img [src]="dataChatImage.image" [width]="chatWidth"
+                [height]="chatHeight">
+              </span>
+            </ion-list>
 </ion-content>
 
 <ion-footer keyboard-attach class="bar bar-stable bar-footer chatbar">    

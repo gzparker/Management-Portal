@@ -9,12 +9,9 @@
   <ion-content class="noScroll">
     
     <ion-card text-center class="profileCard" *ngIf="userLoggedIn==true&&userGeneralInfo!=null"  (tap)="openPage('26')" >
-    <!--<img src="../assets/imgs/profile-photo.jpg" class="custom-avatar"/>-->
-    <!--<img src={{this.sharedServiceObj.imgBucketUrl}}{{userGeneralInfo.photo_company}} class="custom-avatar" 
-    *ngIf="userGeneralInfo.photo_company!=null&&userGeneralInfo.photo_company!=undefined&&userGeneralInfo.photo_company!=''"/>
-          <img src={{noImgUrl}} class="custom-avatar" 
-          *ngIf="userGeneralInfo.photo_company==null||userGeneralInfo.photo_company==''"/>-->
-    <img src={{this.sharedServiceObj.imgBucketUrl}}{{userGeneralInfo.photo_company}} class="custom-avatar" (error)="imgProfile.src = this.sharedServiceObj.noImageUrl" #imgProfile/>
+    
+    <img src={{this.sharedServiceObj.imgBucketUrl}}{{userGeneralInfo.photo_company}} 
+    class="custom-avatar" (error)="imgProfile.src = this.sharedServiceObj.noImageUrl" #imgProfile/>
     <h2 class="username">{{userGeneralInfo.identity_name}}</h2>
     <p class="tagline">Let your fingers do the walking.</p>
     </ion-card>

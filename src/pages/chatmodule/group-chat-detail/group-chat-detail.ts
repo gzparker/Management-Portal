@@ -1,10 +1,14 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, Platform,
-   MenuController,ActionSheetController,Tabs,Content } from 'ionic-angular';
+   MenuController,ActionSheetController,Tabs,Content,LoadingController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 import { ISubscription } from "rxjs/Subscription";
 import { AlertController } from 'ionic-angular';
+import { Crop } from '@ionic-native/crop';
+import { Camera, CameraOptions } from '@ionic-native/camera';
+import { ImagePicker } from '@ionic-native/image-picker';
+import { ImageCropperComponent, CropperSettings } from "ngx-img-cropper";
 import { ChatPage } from '../chat/chat';
 import { ChatsPage } from '../chats/chats';
 import { ChatAccountPage } from '../chat-account/chat-account';
@@ -37,7 +41,8 @@ declare var firebase:any;
   templateUrl: 'group-chat-detail.html',
 })
 export class GroupChatDetailPage {
-
+  @ViewChild('chatImageCropper', undefined)
+  chatImageCropper:ImageCropperComponent;
   @ViewChild(Content) content: Content;
   public groupId:string="";
   public chatingUserName:string="";
@@ -46,29 +51,50 @@ export class GroupChatDetailPage {
   public users:any[]=[];
   public chatDetailArray:any[]=[];
   public isApp=false;
-  public chatImage:string="";
   public description:string="";
   public userId:string="";
   public noImgUrl="../assets/imgs/profile-photo.jpg";
   public loggedInUserInfo:any;
 public messageSent:string="0";
+public chatImage:string="";
+public hideChatCropper:boolean=true;
+public edit_chat_image:boolean=false;
+public crop_chat_image:boolean=false;
+public chatCropperSettings;
+public dataChatImage:any;
+public chatWidth:string="";
+  public chatHeight:string="";
 
+  public chatImageChangedEvent:any='';
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, 
-    public platform: Platform,public actionSheetCtrl: ActionSheetController) {
+    public platform: Platform,public actionSheetCtrl: ActionSheetController,public loadingCtrl: LoadingController) {
       this.isApp = (!document.URL.startsWith("http"));
       if(this.navParams.get('groupId')!=undefined)
    {
     this.groupId = this.navParams.get('groupId');
-    //debugger;
     }
     if(this.navParams.get('chatterName')!=undefined)
    {
     this.chatingUserName = this.navParams.get('chatterName');
-    //;
     }
-   
+    this.hideChatCropper=false;
+    this.chatCropperSettings = new CropperSettings();
+    this.chatCropperSettings.width = 100;
+    this.chatCropperSettings.height = 100;
+    this.chatCropperSettings.croppedWidth = 1280;
+    this.chatCropperSettings.croppedHeight = 1000;
+    this.chatCropperSettings.canvasWidth = 500;
+    this.chatCropperSettings.canvasHeight = 300;
+    this.chatCropperSettings.minWidth = 10;
+    this.chatCropperSettings.minHeight = 10;
+
+    this.chatCropperSettings.rounded = false;
+    this.chatCropperSettings.keepAspect = false;
+
+    this.chatCropperSettings.noFileInput = true;
+    this.dataChatImage= {};
   }
 
   ionViewDidLoad() {
@@ -82,7 +108,7 @@ public messageSent:string="0";
       let loggedInUserInfo = this.storage.get('loggedInUserInfo');
       loggedInUserInfo.then((data) => {
 this.loggedInUserInfo=data;
-    this.groupMessageDetail();
+    this.groupMessageDetail(null);
     });
     });
     });
@@ -91,28 +117,28 @@ this.loggedInUserInfo=data;
   {
     var that=this;
     setTimeout(() => {
-    
       that.scrollToBottom();
     }, 400);
-   //that.scrollToBottom();
   }
   setUserTyping(groupId){
 let that=this;
-//debugger;
-    //var fredRef=firebase.database().ref('groups/'+groupId);
-  //fredRef.update({userTyping:"1",typerId:that.firebaseUserId});
   that.sharedServiceObj.setUserTyping(groupId,that.firebaseUserId);
   }
    setUserNotTyping(groupId){
     let that=this;
-    //debugger;
-    //var fredRef=firebase.database().ref('groups/'+groupId);
-  //fredRef.update({userTyping:"0"});
 that.sharedServiceObj.setUserNotTyping(groupId);
    }
-  groupMessageDetail() {
+  groupMessageDetail(refresher:any) {
     var that=this;
-    //debugger;
+    let loader = this.loadingCtrl.create({
+      content: "Please wait...",
+      duration: 700
+    });
+    loader.present();
+    if(refresher!=null)
+  {
+    refresher.complete();
+  }
     that.chatDetailArray=[];
         var chatDetailArrayExist=[];
         firebase.database().ref('groups').orderByChild("groupId").equalTo(that.groupId).on("value", function(snapshot) {
@@ -160,6 +186,12 @@ that.sharedServiceObj.setUserNotTyping(groupId);
   var readBy=[that.firebaseUserId];
 if(document.getElementById("chatDescription").innerHTML=="")
 {
+  let alert = this.alertCtrl.create({
+    title: 'Message Alert',
+    subTitle: 'Please type something in message box.',
+    buttons: ['Dismiss']
+  });
+  alert.present();
 return false;
 }
 var groupId=that.groupId;
@@ -191,9 +223,14 @@ chat.push({
                                 
                              }).then(function (ref) {
                               document.getElementById("chatDescription").innerHTML="";
+                              //debugger;
                                that.scrollToBottom();
 that.chatImage="";
-
+that.hideChatCropper=false;
+that.edit_chat_image=false;
+that.crop_chat_image=false;
+that.dataChatImage={};
+that.chatImage="";
                                //sendGroupMessageNotification($rootScope.first_name,$scope.contactData.description,groupId);
                              //$scope.contactData.description="";
                              });
@@ -295,4 +332,141 @@ confirm.present();
         confirm.present();  
           
     }
+    chatFileChangeListener($event) {
+      this.hideChatCropper=true;
+      this.edit_chat_image=true;
+      this.crop_chat_image=true;
+      var image:any = new Image();
+      var file:File = $event.target.files[0];
+      var myReader:FileReader = new FileReader();
+      var that = this;
+      myReader.onloadend = function (loadEvent:any) {
+          image.src = loadEvent.target.result;
+          //that.chatImageCropper.setImage(image);
+          image.onload = function () {
+            that.chatCropperSettings.croppedWidth=this.width;
+            that.chatCropperSettings.croppedHeight=this.height;
+            that.chatImageCropper.setImage(image);
+          }
+      };
+  
+      myReader.readAsDataURL(file);
+  }
+  showHideChatCropper(){
+    this.crop_chat_image=false;
+    const self = this;
+if(this.edit_chat_image)
+{
+  this.hideChatCropper=true;
+  if(this.chatImage!="")
+  {
+   // this.companyCropperLoaded=true;
+    var image:any = new Image();
+    image.src = this.chatImage;
+            image.onload = function () {
+              self.chatImageCropper.setImage(image); 
+            }
+ }
+  
+}
+else
+{
+  this.hideChatCropper=false;
+}
+  }
+  chatImageCropped(image:any)
+    {
+      if(this.crop_chat_image)
+      {
+        this.chatCropperSettings.croppedWidth=image.width;
+        this.chatCropperSettings.croppedHeight=image.height;
+        
+        let that=this;
+        this.resizeChatImage(this.dataChatImage.image, data => {
+        
+          that.chatImage=data;
+          that.chatImage=data;
+          this.createChatImageThumbnail(that.chatImage);
+            });
+      }
+     else
+     {
+       this.crop_chat_image=true;
+     } 
+     
+    }
+    createChatImageThumbnail(bigMatch:any) {
+      let that=this;
+      //debugger;
+        this.generateChatImageFromImage(bigMatch, 500, 500, 0.5, data => {
+          
+      that.dataChatImage.image=data;
+        });
+      }
+      generateChatImageFromImage(img, MAX_WIDTH: number = 700, MAX_HEIGHT: number = 700, quality: number = 1, callback) {
+        var canvas: any = document.createElement("canvas");
+        var image:any = new Image();
+        //image.width=this.companyCropperSettings.croppedWidth;
+        //image.height=this.companyCropperSettings.croppedHeight;
+        var that=this;
+     //debugger;
+        image.src = img;
+        image.onload = function () {
+         
+          var width=that.chatCropperSettings.croppedWidth;
+          var height=that.chatCropperSettings.croppedHeight;
+         //debugger;
+          if (width > height) {
+            if (width > MAX_WIDTH) {
+              height *= MAX_WIDTH / width;
+              width = MAX_WIDTH;
+            }
+          } else {
+            if (height > MAX_HEIGHT) {
+              width *= MAX_HEIGHT / height;
+              height = MAX_HEIGHT;
+            }
+          }
+          //debugger;
+          canvas.width = width;
+          canvas.height = height;
+          that.chatWidth = width;
+          that.chatHeight = height;
+          //debugger;
+          var ctx = canvas.getContext("2d");
+     
+          ctx.drawImage(image, 0, 0, width, height);
+     
+          // IMPORTANT: 'jpeg' NOT 'jpg'
+          var dataUrl = canvas.toDataURL('image/jpeg', quality);
+     
+          callback(dataUrl)
+        }
+        
+      }
+      resizeChatImage(img:any,callback)
+      {
+        var canvas: any = document.createElement("canvas");
+        var image:any = new Image();
+       
+        var that=this;
+    
+        image.src = img;
+        image.onload = function () {
+         
+          var width=that.chatCropperSettings.croppedWidth;
+          var height=that.chatCropperSettings.croppedHeight;
+        
+          canvas.width = width;
+          canvas.height = height;
+    
+          var ctx = canvas.getContext("2d");
+     
+          ctx.drawImage(image, 0, 0, width, height);
+    
+          var dataUrl = canvas.toDataURL('image/jpeg', 1);
+    
+         callback(dataUrl)
+        }
+      }
 }

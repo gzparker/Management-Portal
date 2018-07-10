@@ -250,11 +250,7 @@ public isWebBrowser=false;
       this.loadAllAgents();
       this.viewAllHotSheets();
     });
-    //this.loadMap();
-    //this.loadSearchedField();
-   
-   
-    //this.geolocation.getCurrentPosition().then((position) => {
+    
       if(!this.isWebBrowser)
     {
       if (window.navigator.geolocation) {
@@ -285,7 +281,6 @@ else
       }
   });
 }
-   // });
   }
   setCurrenttPosition(result:any)
   {

@@ -113,35 +113,10 @@
       debounce="500" name="editorMainDescription">
     </ckeditor>  
     </div>
-
-    <!--<ion-item>
-      <ion-label stacked>Main Description</ion-label>
-      <ion-textarea type="text" [(ngModel)]="main_description" name="main_description"></ion-textarea>
-    </ion-item>-->
-
-    <!--<ion-item>
-      <ion-label stacked>Brief Description</ion-label>
-      <ion-textarea type="text" [(ngModel)]="brief_description" name="brief_description"></ion-textarea>
-    </ion-item>-->
- 
     <ion-item>
       <ion-label stacked>Meta Title</ion-label>
       <ion-input type="text" [(ngModel)]="meta_title" name="meta_title"></ion-input>
     </ion-item>
-
-    <!--<div>
-        <ion-label>Meta Description</ion-label>
-        <ckeditor  [(ngModel)]="meta_description"
-        [config]="CkeditorConfig"
-        [readonly]="false"
-        (change)="onHotSheetMetaDescChanged($event)"
-        (blur)="onHotSheetMetaDescBlured($event)"
-        (focus)="onHotSheetMetaDescFocused($event)"
-        (ready)="onHotSheetMetaDescCreated($event)"
-        debounce="500" name="editorMainDescription" id="editorMainDescription">
-      </ckeditor>
-    </div>-->
-
     <ion-item>
       <ion-label stacked>Meta Description</ion-label>
       <ion-textarea type="text" [(ngModel)]="meta_description" name="meta_description"></ion-textarea>
@@ -156,11 +131,6 @@
       </ion-option>
       </ion-select>
     </ion-item>
-
-    <!-- <ion-item>
-      <button ion-button style="text-transform:lowercase !important;" color="secondary" outline (click)="toggleAdditionalInfo()" full small>additional options</button>
-    </ion-item> -->
-
     <ion-item>
       <ion-label>Additional Options</ion-label>
       <ion-toggle checked="false" (click)="toggleAdditionalInfo()"></ion-toggle>
@@ -206,7 +176,8 @@
           name="edit_header_image" (click)="showHideHeaderCropper()"></ion-toggle>
         </ion-item>
 
-        <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="headerFileChangeListener($event)">
+        <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple 
+        (change)="headerFileChangeListener($event)">
          
         <img-cropper class="imgCropper" #headerImageCropper [image]="dataHeaderImage" [settings]="headerCropperSettings"
            (onCrop)="headerImageCropped($event)" *ngIf="hideHeaderCropper"></img-cropper>

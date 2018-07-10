@@ -3,7 +3,7 @@ import { Http, Response, URLSearchParams, Headers, RequestOptions } from '@angul
 import { HTTP } from '@ionic-native/http';
 import { EventEmitter, Injectable, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, Platform,
-    MenuController,ActionSheetController,Tabs, ViewController } from 'ionic-angular';
+    MenuController,ActionSheetController,Tabs, ViewController,AlertController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from "rxjs/Subject";
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -50,7 +50,7 @@ export class SharedProvider {
   public noImageUrl="././assets/imgs/noImage.png";
   // public FB:any;
 
-  constructor(private http: Http,private storage: Storage) {
+  constructor(private http: Http,private storage: Storage, public alertCtrl: AlertController) {
     this.isLoggedInEmitter = new EventEmitter();
     this.isPaidEmitter=new EventEmitter();
     this.navigationalPage=new EventEmitter();
@@ -270,6 +270,12 @@ sendMessage(type:string,description:any,redirectUserId:any,firebaseUserId:any,
      
      if(description=="")
      {
+      let alert = this.alertCtrl.create({
+        title: 'Message Alert',
+        subTitle: 'Please type something in message box.',
+        buttons: ['Dismiss']
+      });
+      alert.present();
        return false;
      }
        if(redirectUserId)
@@ -313,7 +319,7 @@ sendMessage(type:string,description:any,redirectUserId:any,firebaseUserId:any,
            if(snapshot.exists()){
             snapshot.forEach((data)=>{
              var returnedGroup=data.val();
-             debugger;
+             //debugger;
              createDate=returnedGroup.dateCreated;
    
              var fredRef=firebase.database().ref('groups/'+data.key);

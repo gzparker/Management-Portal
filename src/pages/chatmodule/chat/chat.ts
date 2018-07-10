@@ -1,6 +1,6 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, Platform,
-   MenuController,ActionSheetController,Tabs, ViewController } from 'ionic-angular';
+   MenuController,ActionSheetController,Tabs, ViewController,LoadingController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 import { ISubscription } from "rxjs/Subscription";
@@ -51,7 +51,8 @@ export class ChatPage {
     public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, 
-    public platform: Platform,public actionSheetCtrl: ActionSheetController,public viewCtrl: ViewController) {
+    public platform: Platform,public actionSheetCtrl: ActionSheetController,
+    public viewCtrl: ViewController,public loadingCtrl: LoadingController) {
       this.isApp = (!document.URL.startsWith("http"));
       sharedServiceObj.chatNewMsgSentEmiter.subscribe(item => this.msgSentResp(item));
       sharedServiceObj.groupCreationEmiter.subscribe(item => this.groupCreationResp(item));
@@ -63,7 +64,7 @@ export class ChatPage {
     this.firebaseUserId=data;
     //let abc="dfdf";
     //debugger;
-this.getMessages();
+this.getMessages(null);
     });
   }
   showNewGroupPopUp()
@@ -112,9 +113,17 @@ if(chat.val().groupTitle.toLowerCase().indexOf(searchText.toLowerCase()) !== -1 
       that.groupMembersData=this.groupMembersDataOld;
 
   }
-  getMessages() {
+  getMessages(refresher:any) {
     var that=this;
-    //debugger;
+    let loader = this.loadingCtrl.create({
+      content: "Please wait...",
+      duration: 700
+    });
+    loader.present();
+    if(refresher!=null)
+  {
+    refresher.complete();
+  }
     this.chatGroups=[];
     this.chatGroupsOld=[];
   var fredRef=firebase.database().ref('users').on('value', function(snapshot) {
@@ -140,7 +149,7 @@ if(resp=="1")
   this.ngZone.run(() => {
     //this.navCtrl.push(ChatPage);
     //this.closePopUp();
-    this.getMessages();
+    this.getMessages(null);
   });
 }
 }
@@ -151,7 +160,7 @@ if(resp=="1")
   this.ngZone.run(() => {
     //this.navCtrl.push(ChatPage);
     //this.closePopUp();
-    this.getMessages();
+    this.getMessages(null);
   });
 }
 }
@@ -324,7 +333,7 @@ if(deleteChatRefVal.exists())
  
 });
 
-that.getMessages();              
+that.getMessages(null);              
    
 }
 }

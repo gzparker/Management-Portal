@@ -120,11 +120,6 @@ export class SubscriptionPage {
   listIntervalBasedPackages()
   {
     this.selectedPackagesList=[];
-    //this.loader = this.loadingCtrl.create({
-      //content: "Please wait...",
-      //duration: 1000
-    //});
-    //debugger;
     this.totalAmount=0;
     let pay_yearly_dummy="";
   if(this.pay_yearly)
@@ -135,10 +130,9 @@ export class SubscriptionPage {
   {
     pay_yearly_dummy="month";
   }
-  //this.allAvailablePackages.filter()
   this.intervalBasedPackages=this.allAvailablePackages.filter(
     packageList => packageList.interval === pay_yearly_dummy);
-//debugger;
+
   }
   loadAllAvailableMLS()
   {
@@ -147,7 +141,6 @@ export class SubscriptionPage {
   }
   allAvailableMLSResp(resp: any)
   {
-
 if(resp.status==true)
 {
   this.allMls=resp.available_mls;
@@ -159,8 +152,7 @@ else
   }
   openInAppBrowser()
   {
-    window.open(this.tos_url, '_black');
-    
+    window.open(this.tos_url, '_black'); 
   }
   openMenu() {
     //debugger;
