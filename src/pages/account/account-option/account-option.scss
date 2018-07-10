@@ -1,3 +1,86 @@
 page-account-option {
+  .item-ios, .item-md, .item-wp {
+  margin-left: 0px !important;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+  position: relative;
+    &:nth-child(1) {
+      .item-inner {
+        &:before {
+        background: url("../assets/icon/svg/credit-card.svg") no-repeat center center !important;
+        background-size: 95% !important;
+        }
+      }
+    }
+    &:nth-child(2) {
+      .item-inner {
+        &:before {
+        background: url("../assets/icon/svg/billing-history.svg") no-repeat center center !important;
+        background-size: 95% !important;
+        }
+      }
+    }
+    &:nth-child(3) {
+      .item-inner {
+        &:before {
+        background: url("../assets/icon/svg/upcoming-subscription.svg") no-repeat center center !important;
+        background-size: 95% !important;
+        }
+      }
+    }
+    &:nth-child(4) {
+      .item-inner {
+        &:before {
+        background: url("../assets/icon/svg/upgrade-center.svg") no-repeat center center !important;
+        background-size: 100% !important;
+        }
+      }
+    }
+    &:nth-child(5) {
+      .item-inner {
+        &:before {
+        background: url("../assets/icon/svg/general-info.svg") no-repeat center center !important;
+        background-size: 85% !important;
+        }
+      }
+    }
+    &:nth-child(6) {
+      .item-inner {
+        &:before {
+        background: url("../assets/icon/svg/setup.svg") no-repeat center center !important;
+        background-size: 100% !important;
+        }
+      }
+    }
+    &:nth-child(7) {
+      .item-inner {
+        &:before {
+        background: url("../assets/icon/svg/logout/logout-16.svg") no-repeat center center !important;
+        background-size: 92% !important;
+        }
+      }
+    }
 
+    .item-inner {
+    padding-left: 16px !important;
+    padding-right: 8px !important;
+    margin-left: 0px !important;
+    border-color: #ebe9f0 !important;
+      
+      &:before {
+      content: "";
+      width: 36px;
+      height: 36px;      
+      top: 11px;
+      left: 16px;
+      display: block;
+      position: absolute;
+      }
+
+      .label-ios, .label-md, .label-wp {
+      margin: 22px 0px !important;
+      padding-left: 50px;
+      }
+    }
+  }
 }

@@ -4,30 +4,37 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
+<ion-header class="dashboardUI">
 
   <ion-navbar>
-    <button ion-button menuToggle start>
+    <!-- <button ion-button menuToggle start>
       <ion-icon name="menu"></ion-icon>
-    </button>
+    </button> -->
     <ion-title>Global Preferences</ion-title>
     <ion-buttons end>
-      <button ion-button (click)="updateGlobalSettings();" [disabled]="!globalSettingsForm.valid">Save</button>
+      <button ion-button (click)="updateGlobalSettings();" [disabled]="!globalSettingsForm.valid">
+        <ion-icon name="ios-bookmark"></ion-icon>
+      </button>
     </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
-  <form role="form" data-toggle="validator" #globalSettingsForm="ngForm">
-      <ion-item>
-          <ion-label floating>Identity Name<span [ngClass]="{'error': identity_name==''}" *ngIf="identity_name==''">*</span></ion-label>
+<ion-content padding class="dashboardUI">
+  <!-- <h1 class="contentTitle animated bounceInRight">Global Preferences</h1> -->
+
+  <form role="form" data-toggle="validator" #globalSettingsForm="ngForm" class="animated fadeIn">
+     
+    <div class="formUI"> 
+      <ion-item class="identityName b32">
+          <ion-label stacked>Identity Name<span [ngClass]="{'error': identity_name==''}" *ngIf="identity_name==''">*</span></ion-label>
           <ion-input type="text" required [(ngModel)]="identity_name" name="identity_name" placeholder="my name or team"></ion-input>
         </ion-item>
+      
       <ion-list *ngIf="isApp">
 
-          <ion-item>
+          <ion-item class="customList nobrTop">
             <button ion-button color="primary" block (click)="takeCompanyLogoPicture();" >Select Identity Photo</button>
           </ion-item>
           <ion-item *ngIf="companyLogoImage!=''">
@@ -41,12 +48,12 @@
           </ion-item>-->
           </ion-list>
       
-          <ion-list *ngIf="!isApp">
+          <ion-list *ngIf="!isApp" class="customList">
               <ion-list-header>
                   <h2>Select Identity Photo</h2>
                 </ion-list-header>
                 <ion-item *ngIf="dataCompanyLogoImage.image">
-                  <ion-label>Edit Image</ion-label>
+                  <ion-label stacked>Edit Image</ion-label>
                   <ion-toggle [(ngModel)]="edit_company_image" name="edit_company_image" (click)="showHideCompanyCropper()"></ion-toggle>
                 </ion-item>
                 <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="companyFileChangeListener($event)">
@@ -78,18 +85,20 @@
               
           </span>-->
       
-          </ion-list>
-         <div>
-            <ion-label floating>TimeZone<span [ngClass]="{'error': timezone==''}" *ngIf="timezone==''">*</span>
-            </ion-label>
-            <ng2-timezone-picker
-    [timezone]="user.timezone"
-    (change)="changeTimezone($event)"
-    placeholder="Select timezone"
-    showOffset="true"
-    guess="true">
-</ng2-timezone-picker>
-</div>
+        </ion-list>
+
+        <div class="customList b32">
+          <ion-label>TimeZone<span [ngClass]="{'error': timezone==''}" *ngIf="timezone==''">*</span>
+          </ion-label>
+          <ng2-timezone-picker
+          [timezone]="user.timezone"
+          (change)="changeTimezone($event)"
+          placeholder="Select timezone"
+          showOffset="true"
+          guess="true">
+          </ng2-timezone-picker>
+        </div>
+
             <!--<ion-input type="text" required [(ngModel)]="timezone" name="timezone" id="timezone"></ion-input>-->
             <!--<ion-select [(ngModel)]="access_level" 
         name="access_level" required>
@@ -97,10 +106,10 @@
         <ion-option value="agent">Agent</ion-option>
          </ion-select>-->
   
-    <ion-list *ngIf="selectedRoute==''">
+    <ion-list *ngIf="selectedRoute==''" class="customList">
+    <label>Color Scheme</label>
     <div *ngIf="colorBase!=''">
-      <ion-label>Color Base
-      </ion-label>
+      <ion-label stacked>Color Base</ion-label>
     
         <button ion-button color="secondary" outline [colorPicker]="colorBase" 
         (colorPickerChange)="colorBase=$event"
@@ -113,8 +122,7 @@
          [cpOutputFormat]="'rgba'" >Select Color</div>-->
     </div>
     <div *ngIf="secondColor!=''">
-        <ion-label>Second Color
-        </ion-label>
+        <ion-label stacked>Second Color</ion-label>
         <button ion-button color="secondary" outline [colorPicker]="secondColor" 
         (colorPickerChange)="secondColor=$event"
         [ngStyle]="{'background-color': secondColor}" [cpPosition]="'bottom'" [cpCancelButton]="true" 
@@ -126,8 +134,7 @@
           [value]="secondColor" [cpOutputFormat]="'rgba'"></ion-input>-->
     </div>
     <div *ngIf="thirdColor!=''">
-          <ion-label>Third Color
-          </ion-label>
+          <ion-label stacked>Third Color</ion-label>
           <button ion-button color="secondary" outline [colorPicker]="thirdColor" 
           (colorPickerChange)="thirdColor=$event"
           [ngStyle]="{'background-color': thirdColor}" [cpPosition]="'bottom'" [cpCancelButton]="true" [cpCancelButtonClass]="'btn btn-primary btn-xs'"
@@ -138,10 +145,11 @@
             [value]="thirdColor" [cpOutputFormat]="'rgba'"></ion-input>-->
     </div>
   </ion-list>
+  </div>
   
-  
-    <div padding>
-        <button ion-button color="primary" block (click)="updateGlobalSettings();" [disabled]="!globalSettingsForm.valid">Save</button>
+    <div class="dashboardBtn">
+      <button ion-button color="primary" block (click)="updateGlobalSettings();" [disabled]="!globalSettingsForm.valid">Save</button>
     </div>
+    
 </form>
 </ion-content>

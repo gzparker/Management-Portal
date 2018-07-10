@@ -1,40 +1,8 @@
 page-dashboard {
-  .card-background-page {
-    ion-card {
-    position: relative;
-    text-align: center;
-    }
-
-    .card-title {
-    position: absolute;
-    top: 34%;
-    font-size: 2.0em;
-    width: 100%;
-    font-weight: bold;
-    color: $color-4;
-    }
-
-    .card-subtitle {
-    font-size: 1.0em;
-    position: absolute;
-    top: 50%;
-    width: 100%;
-    color: $color-3;
-    }
+  .card-ios, .card-md, .card-wp {
+  width: 100%;
+  margin: 0;
+  border-radius: 5px;
+  box-shadow: -1px 0px 18px 1px rgba(41, 81, 123, 0.15);
   }
-  .ios, .md {
- 
-    page-home {
- 
-        .scroll-content {
-            background-color: map-get($colors, light);
-        }
- 
-        ion-card-header {
-            font-weight: bold;
-        }
- 
-    }
- 
-} 
 }

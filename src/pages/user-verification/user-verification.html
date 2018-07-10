@@ -18,7 +18,7 @@
 
 <ion-content padding class="login-background">
   
-  <form role="form" data-toggle="validator" #userVerificationForm="ngForm" class="signupForm animated bounceInDown">
+  <form role="form" data-toggle="validator" #userVerificationForm="ngForm">
   <ion-list>
     <ion-item>
       <ion-label stacked>Select Country<span [ngClass]="{'error': selectedCountryAbbv==''}" *ngIf="selectedCountryAbbv==''">*</span></ion-label>

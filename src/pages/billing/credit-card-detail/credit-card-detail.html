@@ -4,33 +4,43 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
+<ion-header class="dashboardUI">
 
     <ion-navbar>
-        <button ion-button menuToggle start>
+        <!-- <button ion-button menuToggle start>
             <ion-icon name="menu"></ion-icon>
-          </button>
+          </button> -->
       <ion-title>Credit Card Detail</ion-title>
      <ion-buttons end>
-          <button ion-button (click)="editCreditCardDetail();" *ngIf="isEditCreditCardAccess==true">Edit</button>
+          <button ion-button (click)="editCreditCardDetail();" *ngIf="isEditCreditCardAccess==true">
+            <ion-icon name="md-create"></ion-icon>            
+          </button>
         </ion-buttons>
     </ion-navbar>
 </ion-header>
 
 
-<ion-content padding>
-    <ion-card *ngIf="cardDetail!=undefined">
-        <ion-card-title>
-            Credit Card Detail
-        </ion-card-title>
-        <h2>Name:{{cardDetail.name}}</h2>
-        <p>Brand:{{cardDetail.brand}}</p>
-        <p>Card Number:xxx-{{cardDetail.last4}}</p>
-        <p>Exp Year:{{cardDetail.exp_year}}</p>
-      <p>Exp Month:{{cardDetail.exp_month}}</p>
-      <p *ngIf="cardDetail.country!=undefined">Country:{{cardDetail.country}}</p>
-      <p *ngIf="cardDetail.address_line1!=undefined">Address Line1:{{cardDetail.address_line1}}</p>
-      <p *ngIf="cardDetail.address_line2!=undefined">Address Line2:{{cardDetail.address_line2}}</p>
-      <p *ngIf="cardDetail.address_state!=undefined">State:{{cardDetail.address_state}}</p>
-      </ion-card>
+<ion-content padding class="dashboardUI noScroll">
+
+    <ion-list *ngIf="cardDetail!=undefined">
+
+      <ion-list-header>Card Info</ion-list-header>
+      <div class="animated lightSpeedIn formShadow">
+      <ion-item>
+        <h2 class="cardDetail"><strong>Name:</strong> {{cardDetail.name}}</h2>
+        <div class="cardbrand {{cardDetail.brand}}">Brand</div>
+        <div class="cardDetails">
+        <p><strong>Card #:</strong> xxxx-xxxx-xxxx-{{cardDetail.last4}}</p>
+        <p><strong>Exp Year:</strong> {{cardDetail.exp_year}}</p>
+        <p><strong>Exp Month:</strong> {{cardDetail.exp_month}}</p>
+        <p *ngIf="cardDetail.country!=undefined"><strong>Country:</strong> {{cardDetail.country}}</p>
+        <p *ngIf="cardDetail.address_line1!=undefined"><strong>Address Line1:</strong> {{cardDetail.address_line1}}</p>
+        <p *ngIf="cardDetail.address_line2!=undefined"><strong>Address Line2:</strong> {{cardDetail.address_line2}}</p>
+        <p *ngIf="cardDetail.address_state!=undefined"><strong>State:</strong> {{cardDetail.address_state}}</p>
+        </div>
+        </ion-item>
+      </div>
+
+    </ion-list >
+
 </ion-content>

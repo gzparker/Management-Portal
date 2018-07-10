@@ -1,3 +1,130 @@
 page-subscription {
+  ion-navbar {
+    .bar-buttons {
+      .button-inner {
+        .icon-ios, .icon-md, .icon-wp {
+        font-size: 30px !important;
+          &:before {
+          content: "";
+          width: 32px;
+          height: 32px;
+          display: block;          
+          background: url("../assets/icon/svg/save.svg") no-repeat center center !important;
+          background-size: 62% !important;
+          }
+        }
+      }
+    }
+  }
+
+  .item-ios, .item-md, .item-wp {
+  margin-left: 0px !important;
+  padding-left: 0px !important;
+    .item-inner {    
+    padding-left: 16px !important;
+    padding-right: 0 !important;
+    margin-left: 0px !important;
+    border-color: #ebe9f0 !important;
+    }
+  }  
+
+  .formShadow {
+  margin-bottom: 35px;
+  }
+
+  ion-content {
+    &.dashboardUI {
+      .contentTitle {
+      font-family: $font-four;
+      font-size: 16px !important;
+      letter-spacing: .5px;
+      padding: 15px 0 12px 0;      
+      }
+    }
+
+    .OptPackage {}
+    
+    .OptPromo {
+      .button {
+      right: 6px;
+      bottom: 0;
+      position: absolute;      
+      height: 24px;      
+        .button-inner {
+          ion-icon {
+            &:before {
+            font-size: 30px;
+            color: $color-3;
+            font-weight: 400;
+            opacity: .6;
+            }
+          }
+        }
+      }
+    }
+
+    .TotalPrice {
+      strong {
+      font-family: $font-three;
+      font-size: 16px;
+      float: right;
+      color: #000;
+      letter-spacing: .5px;
+      }
+    }
+
+    .OptMLS {
+      .item-block {
+      border-radius: 6px !important;
+        .label-ios, .label-md, .label-wp {        
+        }
+        ion-select {
+        margin-top: -6px;    
+        text-overflow: unset;
+        white-space: normal;
+          .select-text {
+          font-size: 14px;
+          line-height: 21px;
+          letter-spacing: .3px;
+          text-overflow: unset;
+          white-space: normal;
+          }
+        }
+      }
+    }
+
+    .conditions { 
+    padding: 0px;
+    margin: 0 0 35px 0;
+      .ion-label {
+      font-size: 12px !important;
+      line-height: 21px;
+      padding-left: 30px;
+      }
+      a {
+      font-size: 12px !important;
+      line-height: 21px;
+      padding-left: 2px;
+      color: darken($color-1, 10%);
+      cursor: pointer;
+      }
+      ion-checkbox {
+      margin: 0;
+      padding: 0;
+      position: absolute;
+      }
+    }
+
+    .cardDetails {
+    padding: 6px;
+    background: #63a0ed !important;
+      .item-block {
+        &:last-child {
+        padding-bottom: 6px;        
+        }
+      }
+    }
+
+  }
 
 }

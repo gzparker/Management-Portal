@@ -4,27 +4,29 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
+<ion-header class="dashboardUI">
 
   <ion-navbar>
-    <button ion-button menuToggle start>
+    <!-- <button ion-button menuToggle start>
       <ion-icon name="menu"></ion-icon>
-    </button>
+    </button> -->
     <ion-title>Upgrade Center</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding class="dashboardUI noScroll">
     <ion-chip *ngIf="notificationMsg!=''">
         <ion-label color="secondary">{{notificationMsg}}</ion-label>
       </ion-chip>
       <ion-chip *ngIf="notificationError!=''">
         <ion-label color="danger">{{notificationError}}</ion-label>
       </ion-chip>
+
+    <div class="animated bounceInUp formShadow">
     <ion-item>
-        <ion-label floating>Interval</ion-label>
+        <ion-label stacked>Interval</ion-label>
         <ion-select [(ngModel)]="interval" 
     name="interval" (ngModelChange)="filterPlansList()">
     <ion-option value="month">MONTH</ion-option>
@@ -32,7 +34,7 @@
      </ion-select>
     </ion-item>
     <ion-item>
-      <ion-label>Select Plan To Upgrade</ion-label>
+    <ion-label stacked>Select Plan To Upgrade</ion-label>
       <!--<ion-select [(ngModel)]="interval" 
   name="interval" (ngModelChange)="filterPlansList()">
   <ion-option value="month">MONTH</ion-option>
@@ -45,20 +47,73 @@
      </ion-option>
    </ion-select>
   </ion-item>
+  </div>
+
+  <!-- <ion-list *ngIf="current_upgrade!=undefined">
+    <ion-item>
+      <ion-label stacked>Current Plan Level:</ion-label>
+    </ion-item>
+    <ion-card>
+      <ion-item>
+      <h2>Name: {{current_upgrade.name}}</h2>
+      <p>Interval: {{current_upgrade.interval}}</p>
+      <p>Amount: ${{current_upgrade.amount}}</p>
+    </ion-item>
+    </ion-card>
+  </ion-list> -->
+
+  <h1 class="contentTitle animated fadeInLeft">Account Details</h1>
+
+  <ion-list class="animated bounceInUp">
+    <ion-item *ngIf="current_upgrade!=null" (click)="editAccount();">
+      <ion-icon name="ios-home-outline" item-start></ion-icon>
+        <h2>Name</h2>
+        <p>{{current_upgrade.name}}</p>
+    </ion-item>
+
+    <ion-item *ngIf="current_upgrade!=null" (click)="editAccount();">
+      <ion-icon name="ios-calendar-outline" item-start></ion-icon>
+        <h2>Interval</h2>
+        <p>{{current_upgrade.interval}}</p>
+    </ion-item>
+
+    <ion-item *ngIf="current_upgrade!=null" (click)="editAccount();">
+      <ion-icon name="logo-usd" item-start></ion-icon>
+        <h2>Amount</h2>
+        <p>${{current_upgrade.amount}}</p>
+    </ion-item>
+  </ion-list>  
+
+  <!-- <ion-list *ngIf="current_upgrade!=undefined">
+    <ion-item>
+      <ion-label stacked>Current Plan Level:</ion-label>
+    </ion-item>
+    <ion-card>
+      <ion-item>
+      <h2>Name: {{current_upgrade.name}}</h2>
+      <p>Interval: {{current_upgrade.interval}}</p>
+      <p>Amount: ${{current_upgrade.amount}}</p>
+    </ion-item>
+    </ion-card>
+  </ion-list> -->
+
+
+  <!-- <div class="formShadow">
   <ion-list *ngIf="current_upgrade!=undefined">
   <ion-item>
-    <ion-label> Current Plan Level:</ion-label>
+    <ion-label stacked>Current Plan Level:</ion-label>
   </ion-item>
   <ion-card>
     <ion-item>
-    <h2>Name:{{current_upgrade.name}}</h2>
-    <p>Interval:{{current_upgrade.interval}}</p>
-    <p>Amount:${{current_upgrade.amount}}</p>
+    <h2>Name: {{current_upgrade.name}}</h2>
+    <p>Interval: {{current_upgrade.interval}}</p>
+    <p>Amount: ${{current_upgrade.amount}}</p>
   </ion-item>
   </ion-card>
 </ion-list>
+</div> -->
     <!--<ion-item>
-      <ion-label floating>Interval</ion-label>
+      <ion-label stacked>Interval</ion-label>
       <ion-select [(ngModel)]="interval" 
   name="interval" (ngModelChange)="filterPlansList()">
   <ion-option value="month">MONTH</ion-option>

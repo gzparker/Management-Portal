@@ -4,183 +4,235 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
+<ion-header class="dashboardUI">
 
   <ion-navbar>
     <ion-title>Edit Website</ion-title>
     <ion-buttons end>
-      <button ion-button (click)="updateWebsite();" [disabled]="!websiteForm.valid">Update Website</button>
+      <button ion-button (click)="updateWebsite();" [disabled]="!websiteForm.valid">
+        <ion-icon name="ios-bookmark"></ion-icon>
+      </button>
     </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding class="dashboardUI">
     <form role="form" data-toggle="validator" #websiteForm="ngForm" >
+
+      <ion-list class="animated lightSpeedIn blk1">
         <ion-item>
-            <ion-label floating>Identity Name<span [ngClass]="{'error': identity_name==''}" *ngIf="identity_name==''">*</span></ion-label>
+            <ion-label stacked>Identity Name<span [ngClass]="{'error': identity_name==''}" *ngIf="identity_name==''">*</span></ion-label>
             <ion-input type="text" [(ngModel)]="identity_name" 
             name="identity_name" id="identity_name" required placeholder="Identity Name"></ion-input>
         </ion-item>
+        
         <ion-item>
-        <ion-label floating>Website Domain<span [ngClass]="{'error': website_domain==''}" *ngIf="website_domain==''">*</span></ion-label>
-        <ion-input type="text" [(ngModel)]="website_domain" 
-        name="website_domain" id="website_domain" required ></ion-input>
-      </ion-item>
-      <ion-item>
-          <!--<ion-label floating>Website a Record Location</ion-label>-->
-          <ion-input type="text" [(ngModel)]="website_a_record_location" 
-          name="website_a_record_location" id="website_a_record_location" 
-          placeholder="Please type exactly what your location is for your domain search."></ion-input>
+            <ion-label stacked>Website Domain<span [ngClass]="{'error': website_domain==''}" *ngIf="website_domain==''">*</span></ion-label>
+            <ion-input type="text" [(ngModel)]="website_domain" 
+            name="website_domain" id="website_domain" required ></ion-input>
+        </ion-item>
+      
+        <ion-item>
+            <ion-label stacked>Domain Search Location</ion-label>
+            <ion-input type="text" [(ngModel)]="website_a_record_location" 
+            name="website_a_record_location" id="website_a_record_location" 
+            placeholder="Please type exactly what your location is for your domain search."></ion-input>
         </ion-item>
        
-          <ion-item>
-              <ion-label floating>Identity Phone Number</ion-label>
-              <ion-input type="text" [(ngModel)]="identity_phone_number" 
-              name="identity_phone_number" id="identity_phone_number" [brmasker]="{mask:'(000) 000-0000', len:14, type:'num'}"></ion-input>
-        </ion-item>
+        <ion-item>
+            <ion-label stacked>Identity Phone Number</ion-label>
+            <ion-input type="text" [(ngModel)]="identity_phone_number" 
+            name="identity_phone_number" id="identity_phone_number" [brmasker]="{mask:'(000) 000-0000', len:14, type:'num'}"></ion-input>
+        </ion-item>      
+      </ion-list>
+
+        
+      <div class="animated lightSpeedIn formShadow blk2">
+        
         <div class="itemPadding">
-            <ion-label>Home Page Description</ion-label>
-              <ckeditor
-              [config]="CkeditorConfig"
-              [readonly]="false" [(ngModel)]="homepage_description"
-              (change)="homepageDescChanged($event)"
-              (blur)="homepageDescBlured($event)"
-              (focus)="homepageDescFocused($event)"
-              (ready)="homepageDescCreated($event)"
-              debounce="500" name="editorHomePageDescription">
-              </ckeditor>
-            </div>
-            <ion-item>
-                <!--<ion-label floating>HomePage Search Text</ion-label>-->
-                <ion-input type="text" [(ngModel)]="homepage_search_text" 
-                name="homepage_search_text" id="homepage_search_text" 
-                placeholder="Action sentence to draw people to search for listings"></ion-input>
-            </ion-item>
-            <!--<ion-item>
-                <ion-label floating>Identity Phone Name</ion-label>
-                <ion-input type="text" [(ngModel)]="identity_phone_number" 
-                name="identity_phone_number" id="identity_phone_number" [brmasker]="{mask:'(000) 000-0000', len:14, type:'num'}"></ion-input>
-          </ion-item>-->
-          <ion-item>
-              <ion-label floating>Home Page Meta Title</ion-label>
-              <ion-input type="text" [(ngModel)]="homepage_meta_title" 
-              name="homepage_meta_title" id="homepage_meta_title" ></ion-input>
-            </ion-item>
-            <div class="itemPadding">
-                <ion-label>Home Page Meta Description</ion-label>
-                  <ckeditor
-                  [config]="CkeditorConfig"
-                  [readonly]="false" [(ngModel)]="homepageMeta_description"
-                  (change)="homepageMetaDescChanged($event)"
-                  (blur)="homepageMetaDescBlured($event)"
-                  (focus)="homepageMetaDescFocused($event)"
-                  (ready)="homepageMetaDescCreated($event)"
-                  debounce="500" name="editorHomePageDescription">
-                  </ckeditor>
-                </div>
-      <ion-list *ngIf="isApp">
+            <ion-label>Homepage Description</ion-label>
+            <ckeditor
+            [config]="CkeditorConfig"
+            [readonly]="false" [(ngModel)]="homepage_description"
+            (change)="homepageDescChanged($event)"
+            (blur)="homepageDescBlured($event)"
+            (focus)="homepageDescFocused($event)"
+            (ready)="homepageDescCreated($event)"
+            debounce="500" name="editorHomePageDescription">
+            </ckeditor>
+        </div>
+          
+        <ion-item>
+            <ion-label stacked class="labelLarge">Homepage Search Text</ion-label>
+            <ion-textarea type="text" class="expandText" [(ngModel)]="homepage_search_text" 
+            name="homepage_search_text" id="homepage_search_text" 
+            placeholder="Action sentence to draw people to search for listings"></ion-textarea>
+        </ion-item>
+
+        <!--<ion-item>
+            <ion-label stacked>Identity Phone Name</ion-label>
+            <ion-input type="text" [(ngModel)]="identity_phone_number" 
+            name="identity_phone_number" id="identity_phone_number" [brmasker]="{mask:'(000) 000-0000', len:14, type:'num'}"></ion-input>
+        </ion-item>-->
+
+        <ion-item>
+            <ion-label stacked class="labelLarge">Homepage Meta Title</ion-label>
+            <ion-textarea type="text" class="expandText h45" [(ngModel)]="homepage_meta_title" 
+            name="homepage_meta_title" id="homepage_meta_title" ></ion-textarea>
+        </ion-item>
+
+        <div class="itemPadding bt16">
+            <ion-label>Homepage Meta Description</ion-label>
+            <ckeditor
+            [config]="CkeditorConfig"
+            [readonly]="false" [(ngModel)]="homepageMeta_description"
+            (change)="homepageMetaDescChanged($event)"
+            (blur)="homepageMetaDescBlured($event)"
+            (focus)="homepageMetaDescFocused($event)"
+            (ready)="homepageMetaDescCreated($event)"
+            debounce="500" name="editorHomePageDescription">
+            </ckeditor>
+        </div> 
+      </div>
+    
+
+      <div class="animated lightSpeedIn formShadow blk3">
+        <ion-list *ngIf="isApp">
 
           <ion-item>
-            <button ion-button color="primary" block (click)="takePicture();" >Upload Company/Agent logo or brand</button>
+              <button ion-button color="primary" block (click)="takePicture();" >Upload Company/Agent logo or brand</button>
           </ion-item>
+
           <ion-item *ngIf="dataWebsiteLogo.image" >
-            <img [src]="dataWebsiteLogo.image" [width]="logoWidth"
-            [height]="logoHeight">
+              <img [src]="dataWebsiteLogo.image" [width]="logoWidth"
+              [height]="logoHeight">
           </ion-item>
+
           <ion-item>
-            <button ion-button color="primary" block (click)="takeFavIconPicture();" >Upload Website FavIcon</button>
+              <button ion-button color="primary" block (click)="takeFavIconPicture();" >Upload Website FavIcon</button>
           </ion-item>
+
           <ion-item *ngIf="dataWebsiteIcon.image" >
-            <img [src]="dataWebsiteIcon.image" [width]="favIconWidth"
-             [height]="favIconHeight">
-             </ion-item>
-          </ion-list>
-          <ion-list *ngIf="!isApp">
-              <ion-list-header>
-                Upload Company/Agent logo or brand
-                </ion-list-header>
-                <ion-item *ngIf="dataWebsiteLogo.image">
-                  <ion-label>Edit Image</ion-label>
-                  <ion-toggle [(ngModel)]="edit_identity_logo" 
-                  name="edit_identity_logo" (click)="showHideLogoCropper()"></ion-toggle>
-                </ion-item>
-                <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="websiteLogoFileChangeListener($event)">
+              <img [src]="dataWebsiteIcon.image" [width]="favIconWidth"
+              [height]="favIconHeight">
+          </ion-item>
+
+        </ion-list>
+      </div>
+
+      
+      <div class="animated lightSpeedIn formShadow blk4">
+        <ion-list class="noShadow" *ngIf="!isApp">
+
+            <ion-list-header>Upload Company/Brand Logo</ion-list-header>
+            <ion-item *ngIf="dataWebsiteLogo.image">
+                <ion-label>Edit Image</ion-label>
+                <ion-toggle [(ngModel)]="edit_identity_logo" 
+                name="edit_identity_logo" (click)="showHideLogoCropper()"></ion-toggle>
+            </ion-item>
+            
+            <div class="customList">
+              <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="websiteLogoFileChangeListener($event)">
        
-                <img-cropper #companyLogoCropper [image]="dataWebsiteLogo" [settings]="logoCropperSettings"
-                 (onCrop)="websiteIdentityImageCropped($event)" *ngIf="hideLogoCropper"></img-cropper>
-                <br>
-                <span *ngIf="dataWebsiteLogo.image" >
-                    <img [src]="dataWebsiteLogo.image" [width]="logoWidth"
-                     [height]="logoHeight">
-                </span>
-                <ion-list-header>
-                  Upload Website FavIcon
-                  </ion-list-header>
-                  <ion-item *ngIf="dataWebsiteIcon.image">
-                    <ion-label>Edit Image</ion-label>
-                    <ion-toggle [(ngModel)]="edit_favivon_image" 
-                    name="edit_favivon_image" (click)="showHideFavIconCropper()"></ion-toggle>
-                  </ion-item>
-                  <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="websiteFavIconFileChangeListener($event)">
-         
-                  <img-cropper #favIconLogoCropper [image]="dataWebsiteIcon" [settings]="favIconCropperSettings"
-                   (onCrop)="websiteFavIconImageCropped($event)" *ngIf="hideFavIconCropper"></img-cropper>
-                  <br>
-                  <span *ngIf="dataWebsiteIcon.image" >
-                      <img [src]="dataWebsiteIcon.image" [width]="favIconWidth"
-                       [height]="favIconHeight">
-                  </span>
-          </ion-list>
-      <ion-item>
-        <ion-label floating>Header Wrapper</ion-label>
-        <ion-textarea type="text" [(ngModel)]="header_wrapper" name="header_wrapper"></ion-textarea>
-      </ion-item>
-      <ion-item>
-        <ion-label floating>Footer Wrapper</ion-label>
-        <ion-textarea type="text" [(ngModel)]="footer_wrapper" name="footer_wrapper"></ion-textarea>
-      </ion-item>
-      <ion-item>
-        <ion-label>Intagent Website</ion-label>
-        <ion-checkbox color="royal" checked="false" [(ngModel)]="intagent_website" name="intagent_website" id="intagent_website" 
-        required >intagent_website</ion-checkbox>
-      </ion-item>
-      <!--<ion-item>
-        <ion-label floating>Intagent Website</ion-label>
-        <ion-input type="number" [(ngModel)]="intagent_website" name="intagent_website"></ion-input>
-      </ion-item>-->
-      <ion-item>
-        <ion-label floating>Custom CSS</ion-label>
-        <ion-textarea type="text" [(ngModel)]="custom_css" name="custom_css"></ion-textarea>
-      </ion-item>
-      <ion-item>
-        <ion-label>Show Open Houses</ion-label>
-        <ion-toggle [(ngModel)]="show_open_houses" name="show_open_houses"></ion-toggle>
-      </ion-item>
-      <ion-item>
-        <ion-label>Show New Houses</ion-label>
-        <ion-toggle [(ngModel)]="show_new_listings" name="show_new_listings"></ion-toggle>
-      </ion-item>
-      <ion-item>
-        <ion-label>Feature Agent Listing</ion-label>
-        <ion-toggle [(ngModel)]="feature_agent_listings" name="feature_agent_listings"></ion-toggle>
-      </ion-item>
-      <ion-item>
-        <ion-label>Feature Broker Listing</ion-label>
-        <ion-toggle [(ngModel)]="feature_broker_listings" name="feature_broker_listings"></ion-toggle>
-      </ion-item>
-      <ion-item>
-        <ion-label>Feature Office Listing</ion-label>
-        <ion-toggle [(ngModel)]="feature_office_listings" name="feature_office_listings"></ion-toggle>
-      </ion-item>
-      <ion-item>
-        <ion-label>Is Active<span [ngClass]="{'error': isActive==false}" *ngIf="isActive==false">*</span></ion-label>
-        <ion-checkbox color="royal" checked="false" [(ngModel)]="isActive" name="isActive" id="isActive" 
-        required >Is Active</ion-checkbox>
-      </ion-item>
-      <div padding>
+              <img-cropper #companyLogoCropper [image]="dataWebsiteLogo" [settings]="logoCropperSettings"
+               (onCrop)="websiteIdentityImageCropped($event)" *ngIf="hideLogoCropper"></img-cropper>
+              <br>
+              <span *ngIf="dataWebsiteLogo.image" >
+                  <img [src]="dataWebsiteLogo.image" [width]="logoWidth"
+                   [height]="logoHeight">
+              </span>
+            </div>
+
+            <ion-list-header>Upload Website FavIcon</ion-list-header>            
+            <ion-item *ngIf="dataWebsiteIcon.image">
+                <ion-label>Edit Image</ion-label>
+                <ion-toggle [(ngModel)]="edit_favivon_image" 
+                name="edit_favivon_image" (click)="showHideFavIconCropper()"></ion-toggle>
+            </ion-item>
+
+            <div class="customList">
+              <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="websiteFavIconFileChangeListener($event)">
+
+              <img-cropper #favIconLogoCropper [image]="dataWebsiteIcon" [settings]="favIconCropperSettings"
+              onCrop)="websiteFavIconImageCropped($event)" *ngIf="hideFavIconCropper"></img-cropper>
+              <br>
+              <span *ngIf="dataWebsiteIcon.image" >
+              <img [src]="dataWebsiteIcon.image" [width]="favIconWidth"
+              [height]="favIconHeight">
+              </span>
+            </div>
+
+        </ion-list>
+      </div>
+
+
+      <ion-list class="animated lightSpeedIn blk5">
+          <ion-item>
+            <ion-label stacked>Header Wrapper</ion-label>
+            <ion-textarea type="text" class="expandText" [(ngModel)]="header_wrapper" name="header_wrapper"></ion-textarea>
+          </ion-item>
+          
+          <ion-item>
+            <ion-label stacked>Footer Wrapper</ion-label>
+            <ion-textarea type="text" class="expandText" [(ngModel)]="footer_wrapper" name="footer_wrapper"></ion-textarea>
+          </ion-item>
+
+          <ion-item>
+            <ion-label stacked>Intagent Website</ion-label>
+            <ion-checkbox color="royal" item-right checked="false" [(ngModel)]="intagent_website" name="intagent_website" id="intagent_website" 
+            required >intagent_website</ion-checkbox>
+          </ion-item>
+
+          <!--<ion-item>
+            <ion-label stacked>Intagent Website</ion-label>
+            <ion-input type="number" [(ngModel)]="intagent_website" name="intagent_website"></ion-input>
+          </ion-item>-->
+
+          <ion-item>
+            <ion-label stacked>Custom CSS</ion-label>
+            <ion-textarea type="text" class="expandText" [(ngModel)]="custom_css" name="custom_css"></ion-textarea>
+          </ion-item>
+      </ion-list>
+
+      
+      <ion-list class="animated lightSpeedIn blk6">
+          <ion-item>
+            <ion-label>Show Open Houses</ion-label>
+            <ion-toggle [(ngModel)]="show_open_houses" name="show_open_houses"></ion-toggle>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Show New Houses</ion-label>
+            <ion-toggle [(ngModel)]="show_new_listings" name="show_new_listings"></ion-toggle>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Feature Agent Listing</ion-label>
+            <ion-toggle [(ngModel)]="feature_agent_listings" name="feature_agent_listings"></ion-toggle>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Feature Broker Listing</ion-label>
+            <ion-toggle [(ngModel)]="feature_broker_listings" name="feature_broker_listings"></ion-toggle>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Feature Office Listing</ion-label>
+            <ion-toggle [(ngModel)]="feature_office_listings" name="feature_office_listings"></ion-toggle>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Is Active<span [ngClass]="{'error': isActive==false}" *ngIf="isActive==false">*</span></ion-label>
+            <ion-checkbox color="royal" item-right checked="false" [(ngModel)]="isActive" name="isActive" id="isActive" 
+            required >Is Active</ion-checkbox>
+          </ion-item>
+      </ion-list>
+      
+      <div class="dashboardBtn">
           <button ion-button color="primary" block (click)="updateWebsite();" [disabled]="!websiteForm.valid">Update Website</button>
-        </div>
+      </div>
+
     </form>
 </ion-content>

@@ -1,3 +1,37 @@
 page-create-role {
+  
+  .contentTitle {
+    span {
+    color: #F44336;
+    position: absolute;
+    font-size: 16px !important;
+    }
+  }
+
+  ion-content {
+    &.dashboardUI {
+      &:before {
+      height: 55vh;
+      z-index: 1;
+      }
+      &:after {
+      height: 100vh;
+      }
+
+      ion-list {      
+        &:first-child {
+        margin-bottom: 15px;
+          .item-inner {
+          padding-right: 0px;
+          padding-bottom: 6px;
+            .label-ios, .label-md, .label-wp {
+            opacity: .65;
+            }
+          }
+        }        
+      }
+
+    }
+  }
 
 }

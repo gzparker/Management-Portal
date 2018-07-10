@@ -4,61 +4,66 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
+<ion-header class="dashboardUI">
 
   <ion-navbar>
-      <button ion-button menuToggle start>
-          <ion-icon name="menu"></ion-icon>
-      </button>
+    <!-- <button ion-button menuToggle start>
+        <ion-icon name="menu"></ion-icon>
+    </button> -->
     <ion-title>Edit Credit Card</ion-title>
     <ion-buttons end>
-        <button ion-button (click)="updateCreditCard();" [disabled]="!editCreditCardFormForm.valid">Update</button>
+        <button ion-button (click)="updateCreditCard();" [disabled]="!editCreditCardFormForm.valid">
+          <ion-icon name="person-add"></ion-icon>
+        </button>
     </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding class="dashboardUI noScroll">
 
-    <ion-chip *ngIf="updateCardMsg!=''">
-        <ion-label color="danger">{{updateCardMsg}}</ion-label>
-      </ion-chip>
-    <form role="form" data-toggle="validator" #editCreditCardFormForm="ngForm"> 
-<ion-list>
+  <ion-chip *ngIf="updateCardMsg!=''">
+    <ion-label color="danger">{{updateCardMsg}}</ion-label>
+  </ion-chip>
+
+  <form role="form" data-toggle="validator" #editCreditCardFormForm="ngForm"> 
   
-  <ion-list>
-  </ion-list>
-  <ion-item>
-    <ion-label floating>Card Name</ion-label>
-    <ion-input type="text" [(ngModel)]="full_name" name="full_name" required></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label>Credit Card Number</ion-label>
-    <ion-input type="text" [(ngModel)]="cc_number" name="cc_number"  [readonly]="true"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label>Expiry Date</ion-label>
-    <ion-datetime displayFormat="MM/YYYY" pickerFormat="MM/YYYY" [yearValues]="yearValues" [monthValues]="monthValues" [(ngModel)]="expiryDate" 
-    name="expiryDate" required></ion-datetime>
-  </ion-item>
-  <ion-item>
-      <ion-label floating>Credit Card CVC</ion-label>
-      <ion-input type="text" [(ngModel)]="cvc" name="cvc" required></ion-input>
+  <ion-list class="animated lightSpeedIn">
+
+    <ion-item>
+      <ion-label stacked>Card Name</ion-label>
+      <ion-input type="text" [(ngModel)]="full_name" name="full_name" placeholder="Full Name" required></ion-input>
     </ion-item>
-  <ion-item>
-      <ion-label floating>ZipCode</ion-label>
-      <ion-input type="text" [(ngModel)]="zipCode" name="zipCode" required></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label>Make Default</ion-label>
-    <ion-checkbox color="royal" [(ngModel)]="primary_source" name="primary_source" id="primary_source">Make Default</ion-checkbox>
-  </ion-item>
-  <div padding>
+    <ion-item>
+      <ion-label stacked>Credit Card Number</ion-label>
+      <ion-input type="text" [(ngModel)]="cc_number" name="cc_number" placeholder="CC Number" [readonly]="true"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>Expiry Date</ion-label>
+      <ion-datetime displayFormat="MM/YYYY" pickerFormat="MM/YYYY" [yearValues]="yearValues" [monthValues]="monthValues" [(ngModel)]="expiryDate" 
+      name="expiryDate" required></ion-datetime>
+    </ion-item>
+    <ion-item>
+        <ion-label stacked>Credit Card CVC</ion-label>
+        <ion-input type="text" [(ngModel)]="cvc" name="cvc" placeholder="XXX" required></ion-input>
+      </ion-item>
+    <ion-item>
+        <ion-label stacked>ZipCode</ion-label>
+        <ion-input type="text" [(ngModel)]="zipCode" name="zipCode" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Make Default</ion-label>
+      <ion-checkbox item-right color="royal" [(ngModel)]="primary_source" name="primary_source" id="primary_source">Make Default</ion-checkbox>
+    </ion-item>
+
+</ion-list>
+
+  <div class="dashboardBtn">
     <button ion-button color="primary" block (click)="updateCreditCard();">Update</button>
   </div>
-</ion-list>
-    </form>
+
+</form>
 <ion-chip *ngIf="updateCardMsg!=''">
   <ion-label color="danger">{{updateCardMsg}}</ion-label>
 </ion-chip>

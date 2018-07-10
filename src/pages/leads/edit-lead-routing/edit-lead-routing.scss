@@ -1,3 +1,50 @@
 page-edit-lead-routing {
+  ion-navbar {
+    .bar-buttons {
+      .button-inner {
+        .icon-ios, .icon-md, .icon-wp {
+        font-size: 30px !important;
+          &:before {
+          content: "";
+          width: 32px;
+          height: 32px;
+          display: block;          
+          background: url("../assets/icon/svg/save.svg") no-repeat center center !important;
+          background-size: 62% !important;
+          }
+        }
+      }
+    }
+  }
+
+  .notification {
+  border-radius: 0;
+  height: auto;
+  margin: 0 0 8px 0 !important;
+  padding: 0;
+  background: none;  
+    .contentTitle {
+    text-transform: unset;
+    font-family: $font-four;
+    font-size: 16px;
+    font-weight: 300;
+    letter-spacing: .7px;
+    margin: 0;
+    padding: 10px 0 8px 0;    
+    }
+  }
+
+
+
+  .list-ios, .list-md, .list-wp {
+    .item-block {
+      &:last-child {
+      padding-bottom: 8px;      
+      }
+      .item-inner {
+      border-color: #ebe9f0 !important;
+      }
+    }
+  }
 
 }

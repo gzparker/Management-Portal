@@ -5,8 +5,7 @@
   Ionic pages and navigation.
 -->
 <ion-tabs #idxpaymentTabs>
-  <ion-tab [root]="dashboardRoot" tabTitle="Dashboard" tabIcon="home" 
-  [rootParams]="dashBoardParams"></ion-tab>
-  <ion-tab [root]="setupRoot" tabTitle="SetUp" tabIcon="settings" 
-  [rootParams]="setUpPage" *ngIf="showSetupTab"></ion-tab>
+  <!-- <ion-tab [root]="dashboardRoot" tabTitle="Dashboard" tabIcon="home" [rootParams]="dashBoardParams"></ion-tab> -->
+  <ion-tab [root]="dashboardRoot" tabTitle="Dashboard" tabIcon="ios-home-outline" [rootParams]="dashBoardParams"></ion-tab>
+  <ion-tab [root]="setupRoot" tabTitle="SetUp" tabIcon="settings" [rootParams]="setUpPage" *ngIf="showSetupTab"></ion-tab>
 </ion-tabs>

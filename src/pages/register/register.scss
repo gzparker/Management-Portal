@@ -263,5 +263,14 @@ page-register {
   overflow-y: hidden !important;
   }
 
+  ion-app {
+    &.ios, &.md, &.wp {
+      [padding] .scroll-content {
+      padding: 20px;
+      margin-bottom: 0px !important;
+      }
+    }
+  }
+
 }
 

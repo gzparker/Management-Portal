@@ -23,17 +23,19 @@ $app-direction: ltr;
 // http://ionicframework.com/docs/theming/overriding-ionic-variables/
 
 $font-one: "Roboto";
-$font-two: "Noto Sans";
+$font-two: "Montserrat";
 $font-three: "Varela Round";
 $font-four: "Nunito";
 $font-five: "Bree Serif";
 $font-six: "Barlow Semi Condensed";
+$font-seven: "Noto Sans";
 $title-bg: #3a474e;
 $color-1: #00c8ff;
 $color-2: #FFF;
 $color-3: #212121;
 $color-4: #4B4B4B;
 $color-5: #c4d3e8;
+$color-6: #4276a3;
 
 %transition {
 -webkit-transition: all .5s ease;
@@ -133,6 +135,11 @@ font-family: "Nunito";
 font-weight: 600;
 src: url('../assets/fonts/nunito-medium.woff2') format('woff2');
 }
+@font-face{
+font-family: "Nunito";
+font-weight: 700;
+src: url('../assets/fonts/nunito-bold.woff2') format('woff2');
+}
 
 @font-face{
 font-family: "Bree Serif";
@@ -154,8 +161,14 @@ font-family: "Barlow Semi Condensed";
 font-weight: 600;
 src: url('../assets/fonts/barlow-semi-condensed-semibold.woff2') format('woff2');
 }
+
 @font-face{
-font-family: "Barlow Semi Condensed";
+font-family: "Montserrat";
+font-weight: 400;
+src: url('../assets/fonts/montserrat-medium.woff2') format('woff2');
+}
+@font-face{
+font-family: "Montserrat";
 font-weight: 700;
-src: url('../assets/fonts/barlow-semi-condensed-bold.woff2') format('woff2');
+src: url('../assets/fonts/montserrat-bold.woff2') format('woff2');
 }

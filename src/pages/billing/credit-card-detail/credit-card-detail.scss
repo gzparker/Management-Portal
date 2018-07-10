@@ -1,3 +1,174 @@
-page-credit-card-detail {
+page-credit-card-detail {  
 
+  .scroll-content {
+  margin-top: 75px  !important;
+  }
+
+  ion-app.ios [padding] {
+  padding: 20px !important;
+  }
+
+  .list-header-ios, .list-header-md, .list-header-wp {
+  margin: 0;
+  padding: 0;
+  border: none !important;
+    
+    .item-inner {
+      .input-wrapper {
+        .label-ios, .label-md, .label-wp {
+        font-family: $font-three;
+        font-size: 16px;
+        letter-spacing: 0px;
+        text-transform: none;
+        color: lighten(#696D72, 6%);
+        margin: 0;
+        padding: 0;
+        }
+      }
+    } 
+  }
+  ion-list {
+  overflow: unset;
+  box-shadow: -1px 0px 18px 1px rgba(41, 81, 123, 0.15);      
+    &:first-child, &:last-child {
+    border: none;
+    }
+    ion-item {
+      .item-inner {
+        .input-wrapper {
+          .label-ios, .label-md, .label-wp {
+          margin: 20px 0;
+          }
+          .cardDetail {
+          font-family: $font-four;          
+          font-size: 16px;   
+          font-weight: 400;
+          padding:  0 0 4px 0;
+          display: block;
+            strong {
+            font-weight: 400;
+            color: #4276a3;
+            margin-right: 5px;
+            }
+          }
+          .cardbrand {
+          width: 100%;
+          height: 30px;
+          font-family: $font-four;
+          font-weight: 400;
+          font-size: 16px;
+          color: #4276a3;
+          margin: 5px 18px 0 0;
+          position: relative;
+            &:before {
+            content: "";
+            width: 60px;
+            height: 34px;                        
+            position: absolute;
+            top: -8px;
+            left: 52px;
+            display: block;
+            background: red;
+            }
+            &.Visa {
+              &:before {
+              background: url("../assets/imgs/cc-visa.png") no-repeat center center;
+              }
+            }
+            &.Mastercard {
+              &:before {
+              background: url("../assets/imgs/cc-mastercard.png") no-repeat center center;
+              }  
+            }
+            &.AmericanExpress {
+              &:before {
+              background: url("../assets/imgs/cc-amex.jpg") no-repeat center center;
+              }
+            }
+            &.Chase {
+              &:before {
+              background: url("../assets/imgs/cc-chase.jpg") no-repeat center center;
+              }
+            }
+            &.Citi {
+              &:before {
+              background: url("../assets/imgs/cc-citi.jpg") no-repeat center center;
+              }
+            }
+            &.Discover {
+              &:before {
+              background: url("../assets/imgs/cc-discover.jpg") no-repeat center center;
+              }
+            }
+            &.Bankofamerica {
+              &:before {
+              background: url("../assets/imgs/cc-boa.jpg") no-repeat center center;
+              }
+            }
+          }
+          .cardDetails {          
+          width: auto;
+          overflow: hidden;
+            p {
+            font-family: $font-four;
+            font-size: 16px;
+            line-height: 19px;
+            letter-spacing: .3px;
+            padding: 0 0 4px 0;
+              strong {
+              font-weight: 400;
+              color: #4276a3;
+              margin-right: 5px;
+              }
+            }            
+          }
+        }
+      }
+    }
+
+  }
+  ion-content {
+    &.dashboardUI {
+      &:before {
+      height: 65px;
+      z-index: 1;
+      }
+      &:after {
+      height: 100vh;
+      }
+
+      ion-list {
+      overflow: unset;
+      }
+
+      .item-ios, .item-md, .item-wp {      
+        &:last-child {        
+          .item-inner {          
+          border-bottom: none !important;
+          }
+        }        
+      }
+
+      .list-ios, .list-md, .list-wp {
+      box-shadow: none;
+        .item-block {
+        padding-left: 0px;
+        padding-right: 0px;
+          &:first-child {
+          border-top-left-radius: 4px;
+          border-top-right-radius: 4px;
+          }
+          &:last-child {
+          border-bottom-left-radius: 4px;
+          border-bottom-right-radius: 4px;
+          }
+          .item-inner {
+          padding-left: 16px;
+          padding-right: 18px;
+          border-color: #EBEFF9;
+          }      
+        }
+      }
+    }
+  }
 }

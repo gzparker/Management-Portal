@@ -1,3 +1,114 @@
 page-lead-detail {
+  
+  ion-navbar {
+    .bar-buttons {
+      .button-inner {
+        .icon-ios, .icon-md, .icon-wp {
+        font-size: 30px !important;
+          &:before {
+          content: "";
+          width: 32px;
+          height: 32px;
+          display: block;
+          background: url("../assets/icon/svg/save.svg") no-repeat center center !important;
+          background-size: 62% !important;
+          }
+        }
+      }
+    }
+  }
+
+  ion-content.generalInfoUI {
+
+    .contentTitle {
+    padding-top: 5px !important;
+    }
+    
+    ion-item {
+      &.leadsProfile {
+      border-radius: 2px !important;
+      background: #FFF !important;
+      box-shadow: -1px 0px 18px 1px rgba(41, 81, 123, 0.15) !important;
+        ion-list {
+        border-radius: 2px !important;
+        }
+
+        .item-inner {
+        padding-right: 0px !important;
+        }
+        .label-ios, .label-md, .label-wp {
+        margin: 16px 0;
+        padding: 0px;
+        }
+      }
+    }
+
+    ion-list {
+    border-radius: 2px !important;
+    }
+  }
+
+  ion-item {
+  overflow: visible !important;
+  width: 100%;    
+  position: relative;
+
+    ion-avatar {
+      &.imgFull {
+      width: 100%;
+        img {
+        width: 72px;
+        height: 72px;
+        margin: 0 auto;
+        display: block;
+        }
+      }
+    }
+    .label-ios, .label-md, .label-wp {      
+    padding-bottom: 10px;
+    }
+  }
+
+  .agentName, .agentEmail {
+  font-family: $font-three;
+  font-size: 14px;
+  line-height: 21px;
+  text-align: center;
+  }
+
+    .agentName {
+    font-family: $font-six;
+    font-size: 18px !important;
+    font-weight: 600;
+    width: 100%;
+    display: block;
+    margin: 12px 0 5px 0 !important;
+    padding: 0;
+    color: #506D7B;
+    }
+
+    .agentEmail {
+    font-size: 14px;
+    color: #788C96;
+    }
+
+  .contentTitle {
+  color: #696D72 !important;
+  }
+
+  ion-content {
+    &.generalInfoUI {
+      &:before {
+      height: 25vh !important;
+      z-index: 1;
+      }
+      &:after {
+      height: 100vh;
+      }
+      ion-item:first-child {
+      border-radius: 0px;
+      }
+    }
+  }
 
 }

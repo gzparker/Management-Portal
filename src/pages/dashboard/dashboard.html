@@ -7,7 +7,7 @@
 <script>
   alert('here');
 </script>
-<ion-header no-border>
+<ion-header class="dashboardUI">
   <ion-navbar hide-nav-bar="true" hideBackButton="true">
     <button ion-button menuToggle start>
       <ion-icon name="menu"></ion-icon>
@@ -17,12 +17,15 @@
 </ion-header>
 
 
-<ion-content class="card-background-page">
-  <h1 class="contentTitle">Welcome To Dashboard</h1>
+<!-- <ion-content class="card-background-page"> -->
+<ion-content padding class="dashboardUI noScroll">
 
   <ion-chip *ngIf="notificationMsg!=''">
     <ion-label color="secondary">{{notificationMsg}}</ion-label>
-  </ion-chip>  
+  </ion-chip>
+
+  <!-- <h1 class="contentTitle">Welcome To Dashboard</h1> -->
+  <h1 class="contentTitle animated bounceInRight">Leads Chart</h1>  
 
 
   <!--<ion-card menuClose (tap)="openPage('6')" *ngIf="userId!=''">
@@ -30,12 +33,11 @@
     <div class="card-title">Leads</div>
     <div class="card-subtitle">{{totalSubMembers}} Listings</div>
   </ion-card>-->
-  <ion-card>
-    <ion-card-header>
-      Leads Chart
-    </ion-card-header>
+  
+  <ion-card class="animated bounceInDown">
+    <!-- <ion-card-header>Leads Chart</ion-card-header> -->
     <ion-card-content>
-      <canvas #barCanvas></canvas>
+      <canvas #barCanvas></canvas>      
     </ion-card-content>
   </ion-card>
  

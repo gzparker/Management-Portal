@@ -1,3 +1,113 @@
 page-global-preferences {
 
+  .formUI {
+  border-radius: 6px;
+  box-shadow: -1px 0px 18px 1px rgba(41, 81, 123, 0.15);
+  background: #FFF !important;  
+    ion-item, .customList {
+    border-radius: 0px !important;
+    margin-bottom: 0px !important;
+    box-shadow: none !important;
+    background: none !important;
+    border-bottom: 1px solid #E2E2E2;
+    }
+  }
+
+  ion-navbar {
+    .bar-buttons {
+      .button-inner {
+        .icon-ios, .icon-md, .icon-wp {
+        font-size: 30px !important;
+          &:before {
+          content: "";
+          width: 32px;
+          height: 32px;
+          display: block;          
+          background: url("../assets/icon/svg/save.svg") no-repeat center center !important;
+          background-size: 62% !important;
+          }
+        }
+      }
+    }
+  }
+
+  ion-item {
+    &.identityName {
+    padding: 0 8px 12px 16px !important;
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+    // border-radius: 6px !important;
+      .label-ios, .label-md, .label-wp {
+      font-size: 14px;
+      color: #696D72;
+      }
+      .item-inner {
+      padding-right: 0px !important;
+      border: none !important;
+      }
+      .text-input-ios, .text-input-md, .text-input-wp {
+      padding: 8px 6px !important;
+      background: #f4f4f4;
+      }      
+    }
+  }
+
+  .customList {
+  border-radius: 0px !important;
+  box-shadow: none !important;
+    &.b32 {
+    // margin-bottom: 16px;
+    }
+    
+    &:nth-child(2) {
+      margin-bottom: 0px !important;
+      .list-header-ios, .list-header-md, .list-header-wp {
+      padding-left: 0px !important;
+      border: none !important;
+        .label-ios, .label-md, .label-wp {
+          h2 {
+          margin: 0px;
+          padding: 0px;
+          text-transform: capitalize !important;          
+          }
+        }
+      }
+    }
+
+    &:nth-child(4) {
+      div {      
+      padding-top: 6px !important;
+      }
+      .button-outline-ios-secondary, .button-outline-md-secondary, .button-outline-wp-secondary {
+      height: 34px;
+      border: none !important;
+      position: relative;
+        .button-inner {
+        width: auto;
+        height: 20px !important;
+        line-height: 20px !important;
+        padding: 0 12px;
+        border-radius: 3px;
+        display: table;
+        font-family: $font-four;
+        font-size: 12px;
+        font-weight: 300;
+        color: #FFF;
+        letter-spacing: .3px;        
+        margin-top: -10px;
+        margin-left: -2px;
+        // right: 0px;
+        // left: 0px;
+        display: block;
+        position: absolute;
+        background: rgba(34, 34, 34, 0.4);
+        }
+      }
+    }
+  }
+
+  .dashboardBtn {
+  padding-bottom: 140px;
+  }
+
 }
