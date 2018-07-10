@@ -89,36 +89,24 @@
                   <div class="chat-profile">
                       <img src={{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}} class="custom-avatar" 
                       (error)="imgChatDetail2.src = this.sharedServiceObj.noImageUrl" #imgChatDetail2/>
-                  <!--<img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" *ngIf="user.image_url!=null&&user.image_url!=undefined&&user.image_url!=''"/>
-                  <img src={{noImgUrl}} class="custom-avatar" 
-                  *ngIf="user.image_url==null||user.image_url==''"/>-->
                 </div>
         
                 </div>
                   </div>
                   <span class="chat-info" [innerHTML]="chat.val().message"></span>
-                
                   <p *ngIf="messageSent==1 && chat.val()==chatDetailArray[chatDetailArray.length-1].val()" 
                   class="description item-text-wrap">Sent</p>
-                
                   <span class="chat-info chat-img" *ngIf="chat.val().imageData">
                     <img src="{{chat.val().imageData}}" (click)="showBigImage(chat.val().imageData)" />
-                  </span>
-                  
+                  </span> 
                   </ion-item>
-                  
                 </div>
-        
-        
                 <div *ngIf="firebaseUserId!=chat.val().fromFbUserId">
                 <ion-item class="item item-avatar alternate-chat-left item-text-wrap">       
                 <div  *ngFor="let user of users">     
                   <div *ngIf="user.fbId==chat.val().fromFbUserId">              
                      
                   <div class="chat-profile">
-                    <!--<img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" *ngIf="user.image_url!=null&&user.image_url!=undefined&&user.image_url!=''"/>
-                    <img src={{noImgUrl}} class="custom-avatar" 
-                    *ngIf="user.image_url==null||user.image_url==''"/>-->
                     <img src={{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}} 
                     class="custom-avatar" (error)="imgChatDetail3.src = this.sharedServiceObj.noImageUrl" #imgChatDetail3/>
                   </div> 
