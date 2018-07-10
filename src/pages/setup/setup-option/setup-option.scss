@@ -1,3 +1,12 @@
 page-setup-option {
-
+  ion-content {
+    &.dashboardUI {
+      &:before {
+      height: 23vh;
+      }
+      &:after {
+      height: 77vh;
+      }
+    }
+  }
 }

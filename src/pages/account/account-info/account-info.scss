@@ -1,3 +1,99 @@
 page-account-info {
 
+  ion-thumbnail {
+    img {
+    border-radius: 50%;
+    }
+  }
+  
+  .item-ios, .item-md, .item-wp {
+    &:nth-child(1) {
+      h2 {
+      font-family: $font-four;
+      font-size: 18px !important;
+      font-weight: 700 !important;
+      letter-spacing: .5px !important;
+      color: #FFF;
+      }
+      p {
+      font-family: $font-four;
+      font-size: 13px !important;
+      font-weight: 400;
+      letter-spacing: .8px !important;
+      color: #FFF;
+      }
+    }
+    &:nth-child(4) {
+      ion-icon {
+        margin-top: -12px !important;
+      }
+    }
+    &:nth-child(5) {
+      ion-icon {
+        font-size: 24px !important;
+        margin-top: -2px !important;
+      }
+    }
+    &:nth-child(6) {
+      ion-icon {
+        margin-top: -2px !important;
+      }
+    }
+    &:nth-child(7) {
+      ion-icon {
+        font-size: 28px !important;
+        margin-top: -2px !important;
+      }
+    }
+  }
+
+  .broker-agent-id {
+  font-family: $font-three;  
+  border-radius: 6px;
+  box-shadow: -1px 0px 18px 1px rgba(41, 81, 123, 0.15);
+  padding: 16px 12px;
+  position: relative;
+  display: flex;
+  background: #FFF;
+  margin-top: 10px;
+    .col3 {
+    width: 100%;
+    float: left;
+    display: grid;
+    text-align: center;
+      &:nth-child(1) {
+      max-width: 22%;
+      padding-right: 10px;
+      }
+      &:nth-child(2) {
+      max-width: 56%;
+      border-left: 1px solid #DDD;
+      border-right: 1px solid #DDD;
+      }
+      &:nth-child(3) {
+      max-width: 22%;
+      padding-left: 10px;
+      }
+
+      h2, p {
+      width: 100%;
+      display: block;
+      margin: 0;
+      padding: 0;
+      }
+      h2 {
+      font-family: $font-two;
+      font-size: 16px;
+      color: #505050;
+      font-weight: 700;
+      }
+      p {
+      font-family: $font-three;
+      font-size: 12px;
+      padding-top: 3px;
+      color: #a0a0a0;
+      }
+
+    }
+  }  
 }

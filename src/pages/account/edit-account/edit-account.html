@@ -4,45 +4,52 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
+<ion-header no-border class="dashboardUI">
 
   <ion-navbar>
-      <button ion-button menuToggle start>
-          <ion-icon name="menu"></ion-icon>
-      </button>
+    <!-- <button ion-button menuToggle start>
+        <ion-icon name="menu"></ion-icon>
+    </button> -->
     <ion-title>Edit Account</ion-title>
+    <!-- <ion-buttons end>
+      <button ion-button (click)="updateAccount();" [disabled]="!accountForm.valid">Update Account</button>
+    </ion-buttons> -->
     <ion-buttons end>
-        <button ion-button (click)="updateAccount();" [disabled]="!accountForm.valid">Update Account</button>
-      </ion-buttons>
+      <button ion-button (click)="updateAccount();" [disabled]="!accountForm.valid">
+        <ion-icon name="person-add"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
   
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding class="dashboardUI">
     <ion-chip *ngIf="accountInfoUpdateMsg!=''">
         <ion-label color="danger">{{accountInfoUpdateMsg}}</ion-label>
       </ion-chip>
   <form role="form" data-toggle="validator" #accountForm="ngForm">
+
+    <div class="formShadow">
       <ion-item>
-          <ion-label floating>First Name<span [ngClass]="{'error': first_name==''}" *ngIf="first_name==''">*</span></ion-label>
+          <ion-label stacked>First Name<span [ngClass]="{'error': first_name==''}" *ngIf="first_name==''">*</span></ion-label>
           <ion-input type="text" required [(ngModel)]="first_name" name="first_name"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label floating>Last Name<span [ngClass]="{'error': last_name==''}" *ngIf="last_name==''">*</span></ion-label>
+          <ion-label stacked>Last Name<span [ngClass]="{'error': last_name==''}" *ngIf="last_name==''">*</span></ion-label>
           <ion-input type="text" required [(ngModel)]="last_name" name="last_name" ></ion-input>
         </ion-item>
         <!--<ion-item>
-          <ion-label floating>Company</ion-label>
+          <ion-label stacked>Company</ion-label>
           <ion-input type="text" [(ngModel)]="company" name="company" ></ion-input>
         </ion-item>-->
       <ion-item>
-          <ion-label floating>Email Address<span [ngClass]="{'error': email==''}" *ngIf="email==''">*</span></ion-label>
+          <ion-label stacked>Email Address<span [ngClass]="{'error': email==''}" *ngIf="email==''">*</span></ion-label>
           <ion-input type="email" [(ngModel)]="email" name="email" [email]="true" required></ion-input>
         </ion-item>
       
         <ion-item>
-          <ion-label floating>Password<span [ngClass]="{'error': passwordUpdated==''}" *ngIf="passwordUpdated==''">*</span></ion-label>
+          <ion-label stacked>Password<span [ngClass]="{'error': passwordUpdated==''}" *ngIf="passwordUpdated==''">*</span></ion-label>
           <ion-input type="password" required [(ngModel)]="passwordUpdated" name="passwordUpdated" 
           ></ion-input>
         </ion-item>
@@ -53,12 +60,10 @@
           <ion-item *ngIf="personalImage!=''">
             <img [src]="personalImage" />
           </ion-item>
-          </ion-list>
+        </ion-list>
       
-          <ion-list *ngIf="!isApp">
-          <ion-list-header>
-            Upload personal Photo
-          </ion-list-header>
+        <ion-list *ngIf="!isApp" class="customList uploadPhoto">
+          <ion-list-header>Upload personal Photo</ion-list-header>
           <ion-item *ngIf="dataPersonalImage.image">
             <ion-label>Edit Image</ion-label>
             <ion-toggle [(ngModel)]="edit_personal_logo" 
@@ -73,21 +78,24 @@
               <img [src]="dataPersonalImage.image" [width]="personalWidth"
                [height]="personalHeight">
           </span>
-          </ion-list>
-          <ion-item>
-            <ion-label floating>Mls Agent Id<span [ngClass]="{'error': agent_id==''}" *ngIf="agent_id==''">*</span></ion-label>
+        </ion-list>
+      </div>
+      
+      <div class="formShadow"> 
+        <ion-item>
+            <ion-label stacked>MLS Agent ID<span [ngClass]="{'error': agent_id==''}" *ngIf="agent_id==''">*</span></ion-label>
             <ion-input type="text" required [(ngModel)]="agent_id" name="agent_id"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label floating>Broker id<span [ngClass]="{'error': broker_id==''}" *ngIf="broker_id==''">*</span></ion-label>
+            <ion-label stacked>Broker ID<span [ngClass]="{'error': broker_id==''}" *ngIf="broker_id==''">*</span></ion-label>
             <ion-input type="text" required [(ngModel)]="broker_id" name="broker_id" ></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label floating>Office Id<span [ngClass]="{'error': office_id==''}" *ngIf="office_id==''">*</span></ion-label>
+            <ion-label stacked>Office ID<span [ngClass]="{'error': office_id==''}" *ngIf="office_id==''">*</span></ion-label>
             <ion-input type="text" required [(ngModel)]="office_id" name="office_id" ></ion-input>
           </ion-item>
         <ion-item>
-            <ion-label>Select Country<span [ngClass]="{'error': selectedCountryAbbv==''}" *ngIf="selectedCountryAbbv==''">*</span></ion-label>
+            <ion-label stacked>Select Country<span [ngClass]="{'error': selectedCountryAbbv==''}" *ngIf="selectedCountryAbbv==''">*</span></ion-label>
             <ion-select [(ngModel)]="selectedCountryAbbv" name="selectedCountryAbbv" 
             (ngModelChange)="onCountryCodeSelection($event);" required >
               <ion-option value="">--- Select Country Code ---</ion-option>
@@ -97,14 +105,14 @@
             </ion-select>
           </ion-item>
         <ion-item>
-            <ion-label floating>Cell Number<span [ngClass]="{'error': phone_number==null}" *ngIf="phone_number==null">*</span></ion-label>
+            <ion-label stacked>Cell Number<span [ngClass]="{'error': phone_number==null}" *ngIf="phone_number==null">*</span></ion-label>
             <ion-input type="text" name="phone_number" [(ngModel)]="phone_number" placeholder="Phone Number" 
             [brmasker]="{phone: true}"></ion-input>
             <!--<ion-input type="tel" [(ngModel)]="phone_number" name="phone_number" 
             required pattern="^[0-9]*$"></ion-input>-->
           </ion-item>
-          <div class="itemPadding">
-            <ion-label>Description</ion-label>
+          <div class="customList">
+            <ion-label stacked>Description</ion-label>
               <ckeditor
               [config]="CkeditorConfig"
               [readonly]="false" [(ngModel)]="user_description"
@@ -115,7 +123,9 @@
               debounce="500" name="user_description">
               </ckeditor>
             </div>
-      <div padding>
+        </div>
+
+      <div class="dashboardBtn">
           <button ion-button color="primary" block  (click)="moveGlobalSettings();" *ngIf="isGlobalPreference==true">Global Settings</button>
           <button ion-button color="primary" block  (click)="updateAccount();"
            [disabled]="!accountForm.valid">Update Account</button>

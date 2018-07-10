@@ -1,3 +1,37 @@
 page-mls-settings {
+  p {
+  padding: 3.5px 0;
+    span {
+    font-family: $font-four !important;
+    font-size: 16px !important;
+    letter-spacing: .8px !important;
+    position: relative;
+      &:before {
+      content: "";
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      float: left;
+      margin-right: 10px;
+      display: inline-block;      
+      }
+      
+        &.success {
+        color: #36b39e;
+          &:before {          
+          background: url("../assets/icon/svg/paperworks-success.svg") no-repeat center center;
+          background-size: 96%;
+          }
+        }
 
+        &.failed {
+        color: #e35848;
+          &:before {
+          background: url("../assets/icon/svg/paperworks-failed.svg") no-repeat center center;
+          background-size: 96%;
+          }
+        }
+
+    }
+  }
 }

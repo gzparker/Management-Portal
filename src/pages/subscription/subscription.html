@@ -4,101 +4,114 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
+<ion-header class="dashboardUI">
 
   <ion-navbar>
-    <button ion-button menuToggle start>
+    <!-- <button ion-button menuToggle start>
       <ion-icon name="menu"></ion-icon>
-    </button>
+    </button> -->
     <ion-title>Subscription</ion-title>
     <ion-buttons end>
-        <button ion-button (click)="saveSubscribeUser();" [disabled]="!subscribeForm.valid||!agree_terms">Subscribe</button>
+        <button ion-button (click)="saveSubscribeUser();" [disabled]="!subscribeForm.valid||!agree_terms">
+          <ion-icon name="ios-bookmark"></ion-icon>
+        </button>
       </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
-<ion-content padding>
-  <h3>Choose Subscription Packages</h3>
+<ion-content padding class="dashboardUI">  
   
-      <ion-chip *ngIf="subscriptionMsg!=''">
-          <ion-label color="danger">{{subscriptionMsg}}</ion-label>
-        </ion-chip>
-      <form role="form" data-toggle="validator" #subscribeForm="ngForm"> 
-  <ion-list *ngIf="!userSubscribed">
-    
-      <ion-list>
+  <ion-chip *ngIf="subscriptionMsg!=''">
+    <ion-label color="danger">{{subscriptionMsg}}</ion-label>
+  </ion-chip>
+
+  <h3 class="contentTitle animated bounceInRight">Choose Subscription Packages</h3>
+
+  <form role="form" data-toggle="validator" #subscribeForm="ngForm"> 
+  <ion-list class="noShadow" *ngIf="!userSubscribed">
+
+    <div class="formShadow">
       <ion-item>
           <ion-label *ngIf="pay_yearly==false">Pay Monthly</ion-label>
           <ion-label *ngIf="pay_yearly==true">Pay Yearly</ion-label>
           <ion-toggle [(ngModel)]="pay_yearly" name="pay_yearly" (ngModelChange)="listIntervalBasedPackages()"></ion-toggle>
       </ion-item>
-      <ion-item *ngFor="let package of intervalBasedPackages">
-     
-        <ion-label>{{package.name}}</ion-label>
-        <ion-label *ngIf="pay_yearly==true">${{package.amount/12}}/month</ion-label>
-        <ion-label *ngIf="pay_yearly==false">${{package.amount}}</ion-label>
-        <ion-label>{{package.description}}</ion-label>
-        <!--<ion-toggle [(ngModel)]="pepperoni"></ion-toggle>-->
- 
-     <ion-checkbox color="royal" checked="false" item-right 
-        (click)="setSelectedPackage(package)"></ion-checkbox>
+
+      <ion-item class="OptPackage" *ngFor="let package of intervalBasedPackages">
+          <ion-label>{{package.name}}</ion-label>
+          <p *ngIf="pay_yearly==true">${{package.amount/12}}/month</p>
+          <p *ngIf="pay_yearly==false">${{package.amount}}</p>
+          <!-- <ion-label>{{package.description}}</ion-label> -->
+          <!--<ion-toggle [(ngModel)]="pepperoni"></ion-toggle>--> 
+          <ion-checkbox color="royal" checked="false" item-right (click)="setSelectedPackage(package)"></ion-checkbox>
       </ion-item>
-      <ion-item>
-        <ion-label floating>Promo Code</ion-label>
-        <ion-input type="text" [(ngModel)]="promo_code" name="promo_code" id="promo_code"></ion-input>
+
+      <ion-item class="OptPromo">
+        <ion-label stacked>Promo Code</ion-label>
+        <ion-input type="text" [(ngModel)]="promo_code" placeholder="Enter Promo Code" name="promo_code" id="promo_code"></ion-input>
         <button ion-button large clear (click)="checkPromoCode()" item-end>
           <ion-icon name="add"></ion-icon>
         </button>
       </ion-item>
+
+      <ion-item class="TotalPrice">
+        <ion-label *ngIf="pay_yearly==true">Total Price: <strong>${{totalAmount}}/year</strong></ion-label>
+        <ion-label *ngIf="pay_yearly==false">Total Price: <strong>${{totalAmount}}/month</strong></ion-label>
+      </ion-item>
+    </div>
+
+    <ion-list class="noShadow cardDetails">
       <ion-item>
-        <ion-label *ngIf="pay_yearly==true">Total Price:${{totalAmount}}/year</ion-label>
-        <ion-label *ngIf="pay_yearly==false">Total Price:${{totalAmount}}/month</ion-label>
+        <ion-label stacked>Card Name</ion-label>
+        <ion-input type="text" placeholder="Full Name" [(ngModel)]="full_name" name="full_name" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>Credit Card Number</ion-label>
+        <ion-input type="text" placeholder="XXXX XXXX XXXX XXXX" [(ngModel)]="cc_number" name="cc_number" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Expiry Date</ion-label>
+        <ion-datetime displayFormat="MM/YYYY" pickerFormat="MM/YYYY" 
+        [(ngModel)]="expiryDate" name="expiryDate" required [yearValues]="yearValues" [monthValues]="monthValues"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>Credit Card CVC</ion-label>
+        <ion-input type="text" placeholder="XXX" [(ngModel)]="cvc" name="cvc" required></ion-input>
       </ion-item>
     </ion-list>
-    <ion-item>
-      <ion-label floating>Card Name</ion-label>
-      <ion-input type="text" [(ngModel)]="full_name" name="full_name" required></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label floating>Credit Card Number</ion-label>
-      <ion-input type="text" [(ngModel)]="cc_number" name="cc_number" required></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label>Expiry Date</ion-label>
-      <ion-datetime displayFormat="MM/YYYY" pickerFormat="MM/YYYY" 
-      [(ngModel)]="expiryDate" name="expiryDate" required [yearValues]="yearValues" [monthValues]="monthValues"></ion-datetime>
-    </ion-item>
-    <ion-item>
-      <ion-label floating>Credit Card CVC</ion-label>
-      <ion-input type="text" [(ngModel)]="cvc" name="cvc" required></ion-input>
-    </ion-item>
-    <ion-list *ngIf="service_id=='2'">
-        <ion-item>
-            <ion-label floating>Select your MLS</ion-label>
-            <ion-select [(ngModel)]="mls_server_id"  
-            name="mls_server_id" multiple="true" required>
-              <ion-option *ngFor="let mls of allMls" value= {{mls.mls_server_id}}>{{mls.name}}
-               </ion-option>
-            </ion-select>
-          </ion-item>
-    <!--<ion-item>
-      <ion-label><a (click)="openInAppBrowser()">Agrees to our terms of service</a></ion-label>
-      <ion-checkbox color="royal" checked="false" [(ngModel)]="agree_terms" name="agree_terms" id="agree_terms" 
-      required ></ion-checkbox>
-    </ion-item>-->
+
+    <ion-list *ngIf="service_id=='2'" class="OptMLS noShadow">
+      <ion-item>
+        <ion-label stacked>Select your MLS</ion-label>
+        <ion-select placeholder="-----" [(ngModel)]="mls_server_id"  
+        name="mls_server_id" multiple="true" required>
+          <ion-option *ngFor="let mls of allMls" value= {{mls.mls_server_id}}>{{mls.name}}
+           </ion-option>
+        </ion-select>
+      </ion-item>
+      <!--<ion-item>
+        <ion-label><a (click)="openInAppBrowser()">Agrees to our terms of service</a></ion-label>
+        <ion-checkbox color="royal" checked="false" [(ngModel)]="agree_terms" name="agree_terms" id="agree_terms" 
+        required ></ion-checkbox>
+      </ion-item>-->      
+    </ion-list>
+
     <div class="conditions">
       <ion-checkbox name="agree_terms" [(ngModel)]="agree_terms" id="agree_terms">
       </ion-checkbox>
-      I agree to The IDX Company's <a (click)="openInAppBrowser()">Terms of Service.</a>
-  </div>
-  </ion-list>
-    <div padding>
+      <div class="ion-label">I agree to The IDX Company's <a (click)="openInAppBrowser()">Terms of Service.</a></div>
+    </div>
+
+    <div class="dashboardBtn">
       <button ion-button color="primary" block (click)="saveSubscribeUser();" [disabled]="!subscribeForm.valid||!agree_terms">Subscribe</button>
     </div>
-  </ion-list>
-      </form>
+    </ion-list>
+
+  </form>
+  
   <ion-chip *ngIf="subscriptionMsg!=''">
     <ion-label color="danger">{{subscriptionMsg}}</ion-label>
   </ion-chip>
+
 </ion-content>

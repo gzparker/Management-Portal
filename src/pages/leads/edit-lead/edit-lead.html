@@ -4,35 +4,37 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
+<ion-header class="dashboardUI">
 
     <ion-navbar>
-        <button ion-button menuToggle start>
-            <ion-icon name="menu"></ion-icon>
-          </button>
+      <!-- <button ion-button menuToggle start>
+        <ion-icon name="menu"></ion-icon>
+      </button> -->
       <ion-title>Edit Lead</ion-title>
       <ion-buttons end>
-        <button ion-button (click)="updateLead();" [disabled]="!leadForm.valid">Update Lead</button>
+        <button ion-button (click)="updateLead();" [disabled]="!leadForm.valid">
+          <ion-icon name="ios-bookmark"></ion-icon>
+        </button>
       </ion-buttons>
     </ion-navbar>
 </ion-header>
 
-    <ion-content padding>
+    <ion-content padding class="dashboardUI noScroll">
         <form role="form" data-toggle="validator" #leadForm="ngForm">
             <!--<ion-item>
-              <ion-label floating>First Name</ion-label>
+              <ion-label stacked>First Name</ion-label>
               <ion-input type="text" [(ngModel)]="firstName" name="firstName" id="firstName"></ion-input>
             </ion-item>
             <ion-item>
-                <ion-label floating>Last Name</ion-label>
+                <ion-label stacked>Last Name</ion-label>
                 <ion-input type="text" [(ngModel)]="lastName" name="lastName" id="lastName"></ion-input>
             </ion-item>
             <ion-item>
-                <ion-label floating>Email</ion-label>
+                <ion-label stacked>Email</ion-label>
                 <ion-input type="email" [(ngModel)]="email" name="email" [email]="true"></ion-input>
             </ion-item>
             <ion-item>
-                <ion-label floating>Password(Leave blank to not change)</ion-label>
+                <ion-label stacked>Password(Leave blank to not change)</ion-label>
                 <ion-input type="password" [(ngModel)]="password" name="password" id="password"></ion-input>
             </ion-item>
             <ion-item>
@@ -45,72 +47,73 @@
                 </ion-select>
            </ion-item>
             <ion-item>
-                <ion-label floating>Mobile Number</ion-label>
+                <ion-label stacked>Mobile Number</ion-label>
                 <ion-input type="text" 
                 [(ngModel)]="mobileNumber" name="mobileNumber" id="mobileNumber" pattern="^[0-9]*$"></ion-input>
             </ion-item>
             <ion-item>
-                <ion-label floating>Office Number</ion-label>
+                <ion-label stacked>Office Number</ion-label>
                 <ion-input type="text" [(ngModel)]="officeNumber" name="officeNumber" 
                 id="officeNumber" pattern="^[0-9]*$"></ion-input>
             </ion-item>
             <ion-item>
-                <ion-label floating>Home Number</ion-label>
+                <ion-label stacked>Home Number</ion-label>
                 <ion-input type="text"   
                 [(ngModel)]="homeNumber" name="homeNumber" id="homeNumber" pattern="^[0-9]*$"></ion-input>
             </ion-item>
             <ion-item>
-                <ion-label floating>Home Address Street</ion-label>
+                <ion-label stacked>Home Address Street</ion-label>
                 <ion-input type="text" [(ngModel)]="home_address_street" name="home_address_street" id="home_address_street"></ion-input>
             </ion-item>
             <ion-item>
-                <ion-label floating>Home Address City</ion-label>
+                <ion-label stacked>Home Address City</ion-label>
                 <ion-input type="text" [(ngModel)]="home_address_city" name="home_address_city" id="home_address_city"></ion-input>
             </ion-item>
             <ion-item>
-                <ion-label floating>Home Address State/Province</ion-label>
+                <ion-label stacked>Home Address State/Province</ion-label>
                 <ion-input type="text" [(ngModel)]="home_address_state_or_province" 
                 name="home_address_state_or_province" id="home_address_state_or_province"></ion-input>
             </ion-item>
             <ion-item>
-                <ion-label floating>Home Address ZipCode</ion-label>
+                <ion-label stacked>Home Address ZipCode</ion-label>
                 <ion-input type="text" [(ngModel)]="home_address_zipcode" 
                 name="home_address_zipcode" id="home_address_zipcode"></ion-input>
             </ion-item>
             <ion-item>
-                <ion-label floating>Work Address Street</ion-label>
+                <ion-label stacked>Work Address Street</ion-label>
                 <ion-input type="text" [(ngModel)]="work_address_street" 
                 name="work_address_street" id="work_address_street"></ion-input>
             </ion-item>
             <ion-item>
-                <ion-label floating>Work Address City</ion-label>
+                <ion-label stacked>Work Address City</ion-label>
                 <ion-input type="text" [(ngModel)]="work_address_city" 
                 name="work_address_city" id="work_address_city"></ion-input>
             </ion-item>
             <ion-item>
-                <ion-label floating>Work Address State/Province</ion-label>
+                <ion-label stacked>Work Address State/Province</ion-label>
                 <ion-input type="text" [(ngModel)]="work_address_state_or_province" 
                 name="work_address_state_or_province" id="work_address_state_or_province"></ion-input>
             </ion-item>
             <ion-item>
-                <ion-label floating>Work ZipCode</ion-label>
+                <ion-label stacked>Work ZipCode</ion-label>
                 <ion-input type="text" [(ngModel)]="work_zipcode" 
                 name="work_zipcode" id="work_zipcode"></ion-input>
             </ion-item>-->
             <ion-item>
-                <ion-label floating>Assigned Agent/Broker</ion-label>
+                <ion-label stacked>Assigned Agent/Broker</ion-label>
                 <ion-select [(ngModel)]="assigned_agent_id"  
                 name="assigned_agent_id" multiple="true">
                   <ion-option *ngFor="let agent of allAgents" value= {{agent.id}}>
                     {{agent.first_name}} {{agent.last_name}}
                    </ion-option>
                 </ion-select>
-                <button ion-button item-right color="secondary" (click)="editAgents()">
-                    <ion-icon name="create"></ion-icon>
+                <button class="edit-agent-list" ion-button item-right color="secondary" (click)="editAgents()">
+                    <!-- <ion-icon name="create"></ion-icon> -->
+                    [edit list]
                   </button>
             </ion-item>
             <ion-item>
-                <ion-label floating>Category</ion-label>
+                <ion-label stacked>Category</ion-label>
                 <ion-select [(ngModel)]="category" name="category" id="category">
                  
                 <ion-option value="buyer">Buyer</ion-option>
@@ -127,10 +130,10 @@
                  </ion-select>
               </ion-item>
               <ion-item>
-                <ion-label floating>Internal Notes</ion-label>
+                <ion-label stacked>Internal Notes</ion-label>
                 <ion-textarea type="text" [(ngModel)]="internal_notes" name="internal_notes"></ion-textarea>
               </ion-item>
-            <div padding>
+            <div class="dashboardBtn">
                 <button ion-button color="primary" block (click)="updateLead();" [disabled]="!leadForm.valid">Update Lead</button>
             </div>
         </form>

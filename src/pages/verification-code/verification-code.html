@@ -17,7 +17,7 @@
 
 
 <ion-content padding class="login-background">
-  <form role="form" data-toggle="validator" #verificationCodeForm="ngForm" class="signupForm animated bounceInDown">
+  <form role="form" data-toggle="validator" #verificationCodeForm="ngForm">
   <ion-item *ngIf="!acctVerified">
     <ion-label stacked>Verification Code</ion-label>
     <ion-input type="text" [(ngModel)]="verification_code" name="verification_code" id="verification_code" required></ion-input>

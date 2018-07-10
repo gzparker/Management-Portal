@@ -4,20 +4,20 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
+<ion-header class="dashboardUI">
 
   <ion-navbar hideBackButton="false">
-    <button ion-button menuToggle start>
+    <!-- <button ion-button menuToggle start>
       <ion-icon name="menu"></ion-icon>
-    </button>
+    </button> -->
     <ion-title>Setup</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
-  <ion-list>
+<ion-content padding class="dashboardUI noScroll">
+  <ion-list class="animated lightSpeedIn">
    
     <ion-item menuClose ion-item (tap)="openPage('10')" *ngIf="isGlobalPreference==true">
       Global Preferences

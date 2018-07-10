@@ -1,3 +1,73 @@
 page-edit-account {
 
+  .formShadow {
+  margin-bottom: 32px;
+  }
+
+  .item-ios, .item-md, .item-wp {
+  margin-left: 0px !important;
+  padding-left: 0px !important;
+    .item-inner {    
+    padding-left: 16px !important;
+    padding-right: 8px !important;
+    margin-left: 0px !important;
+    border-color: #ebe9f0 !important;
+    }
+  }
+
+  ion-navbar {
+    .bar-buttons {
+      .button-inner {
+        .icon-ios, .icon-md, .icon-wp {
+        font-size: 30px !important;
+          &:before {
+          content: "";
+          width: 32px;
+          height: 32px;
+          display: block;          
+          background: url("../assets/icon/svg/save.svg") no-repeat center center !important;
+          background-size: 62% !important;
+          }
+        }
+      }
+    }
+  }
+  
+  .customList {
+  border-radius: 0px 0px 6px 6px !important;  
+    &.uploadPhoto {
+    padding-top: 10px !important;   
+        
+      .list-header-ios, .list-header-md, .list-header-wp {
+      border: none !important;
+        .item-inner {
+        padding-left: 0px !important;
+        }
+      }
+
+      .item-ios, .item-md, .item-wp {      
+      padding-left: 0px;
+        .label-ios, .label-md, .label-wp {        
+        font-size: 1.2rem;
+        letter-spacing: 0px !important;
+        text-transform: capitalize !important;
+        padding-top: 0px !important;
+        margin-top: 0px !important;
+        margin-bottom: 0px !important;        
+        }
+      }
+
+    }
+  }
+
+  .dashboardBtn {
+    .button-ios, .button-md, .button-wp {      
+      margin-bottom: 20px !important;      
+    }
+  }
+
+  .label-ios, .label-md, .label-wp {
+  opacity: .68;
+  }
+
 }

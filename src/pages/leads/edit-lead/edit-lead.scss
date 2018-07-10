@@ -1,3 +1,62 @@
 page-edit-lead {
+  
+  .edit-agent-list {
+  font-family: $font-three;  
+  top: 4px;
+  right: 0;
+  position: absolute;  
+  border: none;
+  background: none !important;  
+    .button-inner {
+    color: lighten($color-6, 25%);
+    font-size: 12px !important;
+    }
+  }
 
+  ion-navbar {
+    .bar-buttons {
+      .button-inner {
+        .icon-ios, .icon-md, .icon-wp {
+        font-size: 30px !important;
+          &:before {
+          content: "";
+          width: 32px;
+          height: 32px;
+          display: block;
+          background: url("../assets/icon/svg/save.svg") no-repeat center center !important;
+          background-size: 62% !important;
+          }
+        }
+      }
+    }
+  }
+  .label-ios, .label-md, .label-wp {
+  opacity: .68;
+  }
+
+  ion-textarea {
+    .text-input {
+    font-family: $font-three;
+    font-size: 14px;
+    height: 160px;  
+    border-radius: 2px;
+    padding: 10px 8px;
+    margin-bottom: 16px !important;
+    background: lighten($color-5, 10%);
+    text-overflow: unset;
+    white-space: normal;    
+    box-sizing: border-box;
+    }  
+  }
+
+  .item-ios, .item-md, .item-wp {
+  margin-left: 0px !important;
+  padding-left: 0px !important;
+    .item-inner {    
+    padding-left: 16px !important;
+    padding-right: 8px !important;
+    margin-left: 0px !important;
+    border-color: #ebe9f0 !important;
+    }
+}
 }

@@ -4,7 +4,7 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
+<ion-header class="dashboardUI">
   <ion-navbar>
 
     <!-- <button ion-button menuToggle start>
@@ -22,20 +22,23 @@
 </ion-header>
 
 
-<ion-content>
-  <h1 class="contentTitle">Create Role</h1>
+<ion-content padding class="dashboardUI">  
+  <!-- <h1 class="contentTitle animated bounceInRight">Create Role</h1> -->
 
   <ion-chip *ngIf="roleCreateMsg!=''">
     <ion-label color="danger">{{roleCreateMsg}}</ion-label>
   </ion-chip>
 
   <form role="form" data-toggle="validator" #roleForm="ngForm">
+  <ion-list class="animated fadeIn">
 
     <ion-item>
       <ion-label stacked>Role Name<span [ngClass]="{'error': role_name==''}" *ngIf="role_name==''">*</span></ion-label>
       <ion-input type="text" [(ngModel)]="role_name" 
       name="role_name" id="role_name" required placeholder="Role Name"></ion-input>
     </ion-item>
+
+  </ion-list>
 
     <!--<ion-item>
       <ion-label stacked>Access Level<span [ngClass]="error" *ngIf="access_level.length==0">*</span></ion-label>
@@ -47,9 +50,11 @@
       </ion-option>
       </ion-select>
     </ion-item>-->
-    <ion-item>
-        <ion-label stacked>Access Level<span [ngClass]="error" *ngIf="access_level.length==0">*</span></ion-label>
-    </ion-item>
+
+  <h1 class="contentTitle animated bounceInRight">Access Level<span [ngClass]="error" *ngIf="access_level.length==0">*</span></h1>
+  
+  <ion-list class="animated fadeIn">
+    
     <ion-item *ngFor="let access_option of all_access_levels" >
        
         <ion-label (tap)="setSelectedAccessLevels(access_option.id);" tappable>{{access_option.name}}
@@ -57,10 +62,12 @@
         <ion-checkbox red item-right (ionChange)="setSelectedAccessLevels(access_option.id);">
         </ion-checkbox>
    </ion-item>
-    <div padding>
+   </ion-list>
+
+    <div class="dashboardBtn">
       <button ion-button color="primary" block (click)="createRole();" [disabled]="!roleForm.valid">Create</button>
     </div>
-
+  
   </form>
 
   <ion-chip *ngIf="roleCreateMsg!=''">

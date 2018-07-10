@@ -4,122 +4,134 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
+<ion-header class="dashboardUI">
 
   <ion-navbar>
-    <button ion-button menuToggle start>
+    <!-- <button ion-button menuToggle start>
       <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Create Agent</ion-title>
+    </button> -->
+    <!-- <ion-title>Create Agent</ion-title> -->    
     <ion-buttons end>
-      <button ion-button (click)="createAgent();" [disabled]="!createAgentForm.valid">Create Agent</button>
+      <button ion-button (click)="createAgent();" [disabled]="!createAgentForm.valid">
+        <ion-icon name="md-checkmark"></ion-icon> Create
+      </button>
     </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
-    <ion-chip *ngIf="agentCreateMsg!=''">
-        <ion-label color="danger">{{agentCreateMsg}}</ion-label>
-      </ion-chip>
+<ion-content padding class="dashboardUI">
+  
+  <ion-chip *ngIf="agentCreateMsg!=''">
+    <ion-label color="danger">{{agentCreateMsg}}</ion-label>
+  </ion-chip>
+
+  <h1 class="contentTitle animated bounceInRight">Create Agent</h1>
+
   <form role="form" data-toggle="validator" #createAgentForm="ngForm">
+
+    <ion-list class="animated fadeInDown">
     <ion-item>
-      <ion-label floating>First Name<span [ngClass]="{'error': firstName==''}" *ngIf="firstName==''">*</span>
+      <ion-label stacked>First Name<span [ngClass]="{'error': firstName==''}" *ngIf="firstName==''">*</span>
       </ion-label>
-      <ion-input type="text" required [(ngModel)]="firstName" name="firstName" id="firstName"></ion-input>
+      <ion-input type="text" required [(ngModel)]="firstName" name="firstName" id="firstName" placeholder="Your First Name"></ion-input>
     </ion-item>
     <ion-item>
-        <ion-label floating>Last Name<span [ngClass]="{'error': lastName==''}" *ngIf="lastName==''">*</span>
+        <ion-label stacked>Last Name<span [ngClass]="{'error': lastName==''}" *ngIf="lastName==''">*</span>
         </ion-label>
-        <ion-input type="text" required [(ngModel)]="lastName" name="lastName" id="lastName"></ion-input>
+        <ion-input type="text" required [(ngModel)]="lastName" name="lastName" id="lastName" placeholder="Your Last Name"></ion-input>
     </ion-item>
     <ion-item>
-        <ion-label floating>Email<span [ngClass]="{'error': email==''}" *ngIf="email==''">*</span>
+        <ion-label stacked>Email<span [ngClass]="{'error': email==''}" *ngIf="email==''">*</span>
         </ion-label>
-        <ion-input type="email" required [(ngModel)]="email" name="email" [email]="true"></ion-input>
+        <ion-input type="email" required [(ngModel)]="email" name="email" [email]="true" placeholder="Email Address"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label floating>Password</ion-label>
-      <ion-input type="password" [(ngModel)]="password" name="password" id="password"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label floating>MLS ID</ion-label>
-    <ion-input type="text" [(ngModel)]="mls_id" name="mls_id" id="mls_id"></ion-input>
-</ion-item>
-<!--<ion-item>
-  <ion-label>Select Country<span [ngClass]="{'error': selectedCountryAbbv==''}" 
-    *ngIf="selectedCountryAbbv==''">*</span></ion-label>
-  <ion-select [(ngModel)]="selectedCountryAbbv" name="selectedCountryAbbv" 
-  (ngModelChange)="onCountryCodeSelection($event)" required>
-    <ion-option value="">--- Select Country Code ---</ion-option>
-    <ion-option *ngFor="let countryCode of allCountryCodes" value={{countryCode.country_abbv}}>
-      {{countryCode.name}}
-    </ion-option>
-  </ion-select>
-</ion-item>-->
-  <ion-item>
-        <ion-label floating>Phone Mobile</ion-label>
-        <ion-input type="text" [(ngModel)]="phone_mobile" name="phone_mobile" id="phone_mobile"  
-        [brmasker]="{mask:'(000) 000-0000', len:14, type:'num'}"></ion-input>
-  </ion-item>
+      <ion-label stacked>Password</ion-label>
+      <ion-input type="password" [(ngModel)]="password" name="password" id="password" placeholder="Password"></ion-input>
+    </ion-item>
     <ion-item>
-      <ion-label floating>Access Level<span [ngClass]="error" *ngIf="access_level.length==0">*</span></ion-label>
-      <ion-select [(ngModel)]="access_level" 
-  name="access_level" multiple="true" required>
-  <ion-option *ngFor="let role of allRoles" value= {{role.id}}>
-    {{role.name}}
-   </ion-option>
-   </ion-select>
-  </ion-item>
-  <div>
-    <ion-label>Brief Description</ion-label>
-    <ckeditor
-    [config]="CkeditorConfig"
-    [readonly]="false" [(ngModel)]="description"
-    (change)="onAgentBreifDescChanged($event)"
-    (blur)="onAgentBreifDescBlured($event)"
-    (focus)="onAgentBreifDescFocused($event)"
-    (ready)="onAgentBreifDescCreated($event)"
-    debounce="500" name="editorMainDescription">
-  </ckeditor>
-</div>
+      <ion-label stacked>MLS ID</ion-label>
+      <ion-input type="text" [(ngModel)]="mls_id" name="mls_id" id="mls_id" placeholder="Your MLS ID"></ion-input>
+    </ion-item>
+    <!--<ion-item>
+      <ion-label>Select Country<span [ngClass]="{'error': selectedCountryAbbv==''}" 
+        *ngIf="selectedCountryAbbv==''">*</span></ion-label>
+      <ion-select [(ngModel)]="selectedCountryAbbv" name="selectedCountryAbbv" 
+      (ngModelChange)="onCountryCodeSelection($event)" required>
+        <ion-option value="">--- Select Country Code ---</ion-option>
+        <ion-option *ngFor="let countryCode of allCountryCodes" value={{countryCode.country_abbv}}>
+          {{countryCode.name}}
+        </ion-option>
+      </ion-select>
+    </ion-item>-->
+    <ion-item>
+      <ion-label stacked>Mobile Number</ion-label>
+      <ion-input type="text" [(ngModel)]="phone_mobile" name="phone_mobile" id="phone_mobile"  
+      [brmasker]="{mask:'(000) 000-0000', len:14, type:'num'}" placeholder="Phone Number"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label stacked>Access Level<span [ngClass]="error" *ngIf="access_level.length==0">*</span></ion-label>
+        <ion-select [(ngModel)]="access_level" 
+    name="access_level" multiple="true" required placeholder="Select Access Level">
+    <ion-option *ngFor="let role of allRoles" value= {{role.id}}>
+      {{role.name}}
+     </ion-option>
+    </ion-select>
+    </ion-item>
+  </ion-list>
+  
+  <div class="customList">
+    <ion-label stacked>Brief Description</ion-label>
+      <ckeditor
+      [config]="CkeditorConfig"
+      [readonly]="false" [(ngModel)]="description"
+      (change)="onAgentBreifDescChanged($event)"
+      (blur)="onAgentBreifDescBlured($event)"
+      (focus)="onAgentBreifDescFocused($event)"
+      (ready)="onAgentBreifDescCreated($event)"
+      debounce="500" name="editorMainDescription">
+    </ckeditor>
+  </div>
   <!--<ion-item>
-    <ion-label floating>Brief Description</ion-label>
+    <ion-label stacked>Brief Description</ion-label>
     <ion-textarea type="text" [(ngModel)]="description" name="description"></ion-textarea>
   </ion-item>-->
-  <ion-list *ngIf="isApp">
-
+  
+  <ion-list *ngIf="isApp" class="customList">
     <ion-item>
       <button ion-button color="primary" block (click)="takePicture();" >Select Image</button>
     </ion-item>
     <ion-item *ngIf="agentImage!=''">
       <img [src]="agentImage" />
     </ion-item>
-    </ion-list>
-    <ion-list *ngIf="!isApp">
-        <ion-list-header>
-            Select Image
-          </ion-list-header>
-          <ion-item *ngIf="dataAgentImage.image">
-            <ion-label>Edit Image</ion-label>
-            <ion-toggle [(ngModel)]="edit_agent_image" 
-            name="edit_agent_image" (click)="showHideAgentCropper()"></ion-toggle>
-          </ion-item>
-            <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="fileChangeListener($event)">
-       
-        <img-cropper #agentCropper [image]="dataAgentImage" [settings]="cropperSettings"
-         (onCrop)="agentImageCropped($event)" *ngIf="hideAgentCropper"></img-cropper>
-        <br>
-        <span *ngIf="dataAgentImage.image" >
-            <img [src]="dataAgentImage.image" [width]="cropperWidth"
-             [height]="cropperHeight">
-        </span>
+  </ion-list>
 
-    </ion-list>
-    <div padding>
+  <ion-list *ngIf="!isApp" class="customList">
+      <ion-label stacked>Select Image</ion-label>
+        <ion-item *ngIf="dataAgentImage.image">
+          <ion-label stacked>Edit Image</ion-label>
+          <ion-toggle [(ngModel)]="edit_agent_image" 
+          name="edit_agent_image" (click)="showHideAgentCropper()"></ion-toggle>
+        </ion-item>
+          <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="fileChangeListener($event)">
+     
+      <img-cropper #agentCropper [image]="dataAgentImage" [settings]="cropperSettings"
+       (onCrop)="agentImageCropped($event)" *ngIf="hideAgentCropper"></img-cropper>
+      <br>
+      <span *ngIf="dataAgentImage.image" >
+          <img [src]="dataAgentImage.image" [width]="cropperWidth"
+           [height]="cropperHeight">
+      </span>
+
+  </ion-list>
+
+
+    <div class="dashboardBtn">
         <button ion-button color="primary" block (click)="createAgent();" [disabled]="!createAgentForm.valid">Create Agent</button>
     </div>
+
 </form>
 <ion-chip *ngIf="agentCreateMsg!=''">
   <ion-label color="danger">{{agentCreateMsg}}</ion-label>

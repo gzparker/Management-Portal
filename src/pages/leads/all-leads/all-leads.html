@@ -4,14 +4,14 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
+<ion-header class="dashboardUI">
   <ion-navbar>
     
     <button ion-button menuToggle start>
       <ion-icon name="menu"></ion-icon>
     </button>
 
-    <ion-title>ALL LEADS</ion-title>
+    <ion-title>All Leads</ion-title>
     <!-- <ion-buttons end *ngIf="userWebsites.length>0">
       <button ion-button (click)="sendToPaperWork();">Where to send leads</button>
     </ion-buttons> -->
@@ -22,8 +22,8 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content>
-  <h1 class="contentTitle">All Leads</h1>
+<ion-content padding class="dashboardUI">  
+  <!-- <h1 class="contentTitle animated bounceInRight">All Leads</h1> -->
 
   <ion-refresher (ionRefresh)="viewAllLeads($event)">
     <ion-refresher-content></ion-refresher-content>
@@ -33,29 +33,38 @@
     <ion-label color="secondary">{{notificationMsg}}</ion-label>
   </ion-chip>
   
+  <div class="animated lightSpeedIn">
   <ion-searchbar [(ngModel)]="searchLeadTerm" (ionInput)="setLeadFilteredItems()"></ion-searchbar>
 
-  <ion-item>
-    <ion-label>Category</ion-label>
-    <ion-select [(ngModel)]="category" name="category" id="category" (ngModelChange)="filterItemsByCategory()">
-     
-      <ion-option value="buyer">Buyer</ion-option>
-      <ion-option value="seller">Seller</ion-option>
-      <ion-option value="prospect">Prospect</ion-option>
-      <ion-option value="friend">Friend</ion-option>
-      <ion-option value="client">Client</ion-option>
-      <ion-option value="active">Active</ion-option>
-      <ion-option value="pending">Pending</ion-option>
-      <ion-option value="closed">Closed</ion-option>
-      <ion-option value="old">Old</ion-option>
-      <ion-option value="new">New</ion-option>
-      <ion-option value="other">Other</ion-option>
+  <ion-list class="noShadow">
+    <ion-item>
+      <ion-label>Category</ion-label>
+      <ion-select [(ngModel)]="category" name="category" id="category" (ngModelChange)="filterItemsByCategory()">
+       
+        <ion-option value="buyer">Buyer</ion-option>
+        <ion-option value="seller">Seller</ion-option>
+        <ion-option value="prospect">Prospect</ion-option>
+        <ion-option value="friend">Friend</ion-option>
+        <ion-option value="client">Client</ion-option>
+        <ion-option value="active">Active</ion-option>
+        <ion-option value="pending">Pending</ion-option>
+        <ion-option value="closed">Closed</ion-option>
+        <ion-option value="old">Old</ion-option>
+        <ion-option value="new">New</ion-option>
+        <ion-option value="other">Other</ion-option>
 
-    </ion-select>
-  </ion-item>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+  </div>
+  
+  <ion-list-header>Leads Name</ion-list-header>
 
-  <ion-list *ngIf="!isApp">
-    <ion-item *ngFor="let lead of searchedLeadsList">
+  <div class="formShadow">
+  <ion-list *ngIf="!isApp" class="animated lightSpeedIn noShadow">
+
+    <ion-item-sliding *ngFor="let lead of searchedLeadsList">
+      
         <ion-item (click)="leadDetail(lead.lead_id);">
             <ion-avatar item-start *ngIf="leadDetail!=undefined">
               <img src="assets/imgs/profile-photo.jpg">
@@ -63,18 +72,21 @@
             <h2>{{lead.first_name}} <b>{{lead.last_name}}</b></h2>
     
           </ion-item>
-          <button ion-button color="primary" item-right class="roundedOption btn-settings" *ngIf="isEditLeadAccess==true" (click)="editLead(lead.lead_id)">
-              Edit
-            </button>
-    
+          <ion-item-options side="right">
+            <button ion-button color="primary" item-right class="roundedOption btn-settings" *ngIf="isEditLeadAccess==true" (click)="editLead(lead.lead_id)">
+              <ion-icon name="ios-brush">Edit</ion-icon>
+            </button>    
             <button ion-button color="danger" item-right class="roundedOption btn-del" (click)="deleteLead(lead)" *ngIf="isDeleteLeadAccess==true">
-              Delete
+              <ion-icon name="md-trash">Delete</ion-icon>
             </button>
-    </ion-item>
-    
-  </ion-list>
+          </ion-item-options>
 
-  <ion-list *ngIf="isApp">
+    </ion-item-sliding>    
+  </ion-list>
+  </div>
+
+  <div class="formShadow">
+  <ion-list *ngIf="isApp" class="noShadow">
     <ion-item-sliding *ngFor="let lead of searchedLeadsList">
       
       <ion-item no-lines (click)="leadDetail(lead.lead_id);">
@@ -102,8 +114,9 @@
 
     </ion-item-sliding>
   </ion-list>
+  </div>
 
-  <div padding>
+  <div>
     <ion-segment *ngIf="userWebsites.length>0">
       <ion-segment-button (click)="sendToPaperWork();" *ngIf="isLeadSetupAccess==true">
         Where to send leads

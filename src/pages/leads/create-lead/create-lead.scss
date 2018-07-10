@@ -1,3 +1,82 @@
 page-create-lead {
+  .item-ios, .item-md, .item-wp {
+  margin-left: 0px !important;
+  padding-left: 0px !important;
+    .item-inner {    
+    padding-left: 16px !important;
+    padding-right: 8px !important;
+    margin-left: 0px !important;
+    border-color: #ebe9f0 !important;
+    }
+  }
+
+  .label-ios, .label-md, .label-wp {
+  opacity: .68;
+  }
+
+  .searchbarLabel {
+  font-size: 1.2rem;
+  opacity: .68;
+  display: block;
+  padding: 0 0 5px 0;
+  }
+
+  .searchbar-ios, .searchbar-md, .searchbar-wp {
+  padding: 0;
+  min-height: unset;
+  border: 0px;
+  background: none;
+    .searchbar-input-container {
+      .searchbar-search-icon {
+      top: 11px;
+      }
+      .searchbar-input {
+      min-height: 35px;
+      border-radius: 2px;
+      background: #F3F3F3;
+      }
+    }
+  }
+
+  ion-navbar {
+    .bar-buttons {
+      .button-inner {
+        .icon-ios, .icon-md, .icon-wp {
+        font-size: 30px !important;
+          &:before {
+          content: "";
+          width: 32px;
+          height: 32px;
+          display: block;          
+          background: url("../assets/icon/svg/save.svg") no-repeat center center !important;
+          background-size: 62% !important;
+          }
+        }
+      }
+    }
+  }
+
+  ion-content.dashboardUI {
+    .list-ios {
+      .item-block {
+      padding-right: 0px;
+      }
+    }
+  }
+
+  ion-textarea {
+    .text-input {
+    font-family: $font-three;
+    font-size: 14px;
+    height: 140px;  
+    border-radius: 2px;
+    padding: 10px 8px;
+    margin-bottom: 16px !important;
+    background: #f0f3f6;
+    text-overflow: unset;
+    white-space: normal;    
+    box-sizing: border-box;
+    }  
+  }
 
 }

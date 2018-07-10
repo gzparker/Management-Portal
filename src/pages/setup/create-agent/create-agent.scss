@@ -1,3 +1,31 @@
 page-create-agent {
+  
+  .item-ios, .item-md, .item-wp {
+  margin-left: 0px !important;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+    .item-inner {
+    padding-left: 16px !important;
+    padding-right: 8px !important;
+    margin-left: 0px !important;    
+    border-color: #ebe9f0 !important;
+    }
+  }  
 
+  .customList {    
+  margin-bottom: 32px;
+  }
+  .item-toggle {
+  padding-left: 0px;
+    .item-inner {
+    padding-right: 0px !important;
+      .input-wrapper {
+        ion-label {        
+        font-size: 16px;
+        margin-top: 12px !important;        
+        margin-bottom: 6px !important;
+        }
+      }
+    }
+  }
 }

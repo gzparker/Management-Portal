@@ -4,15 +4,17 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
+<ion-header no-border class="dashboardUI">
 
   <ion-navbar>
-    <button ion-button menuToggle start>
+    <!-- <button ion-button menuToggle start>
       <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Manage Agents</ion-title>
+    </button> -->
+    <!-- <ion-title>Manage Agents</ion-title> -->
     <ion-buttons end *ngIf="max_agents_added==false">
-      <button ion-button (click)="createAgent();" *ngIf="isCreateAgentAccess==true">Create Agent</button>
+      <button ion-button (click)="createAgent();" *ngIf="isCreateAgentAccess==true">
+        <ion-icon name="person-add"></ion-icon>
+      </button>
     </ion-buttons>
     <!--<ion-buttons end>
       <button ion-button (click)="createAgent();">Create Agent</button>
@@ -22,85 +24,109 @@
 </ion-header>
 
 
-<ion-content padding>
-  <ion-refresher (ionRefresh)="loadAllAgents($event)">
-          <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
-<ion-chip *ngIf="notificationMsg!=''">
-  <ion-label color="secondary">{{notificationMsg}}</ion-label>
-</ion-chip>
-<ion-list *ngIf="!isApp">
-   
-          <ion-item *ngFor="let agent of allAgents">
-          <ion-item no-lines (click)="agentDetail(agent.id)">
-          <ion-avatar item-start>
-              <img src="{{this.sharedServiceObj.imgBucketUrl}}{{agent.image_url}}" class="custom-avatar" 
-          (error)="imgAgent.src = this.sharedServiceObj.noImageUrl" #imgAgent/>
-            <!--<img src={{this.sharedServiceObj.imgBucketUrl}}{{agent.image_url}} 
-            *ngIf="agent.image_url!=null&&agent.image_url!=undefined&&agent.image_url!=''"/>
-          <img src={{no_image_found}} *ngIf="agent.image_url==null||agent.image_url==''"/>-->
-        </ion-avatar>
-          <h2>{{agent.first_name}} {{agent.last_name}}</h2>
-          <p>Email:{{agent.email}}</p>
-          <p [innerHTML]="agent.description"></p>
-        </ion-item>
-          <button ion-button item-right color="secondary" (click)="editAgent(agent.id)" *ngIf="isEditAgentAccess==true">
-              <ion-icon name="create"></ion-icon>
-            </button>
-          <button ion-button item-right color="danger" (click)="deleteAgent(agent)" *ngIf="isDeleteAgentAccess==true">
-            <ion-icon name="trash"></ion-icon>
-          </button>
-        </ion-item>
-    
+<ion-content padding class="dashboardUI">
   
-  </ion-list>
-  <ion-list *ngIf="isApp">
+  <ion-refresher (ionRefresh)="loadAllAgents($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-chip *ngIf="notificationMsg!=''">
+    <ion-label color="secondary">{{notificationMsg}}</ion-label>
+  </ion-chip>
+
+  <h1 class="contentTitle animated bounceInRight">Manage Agents</h1>
+  
+  <div class="formShadow">
+  <ion-list *ngIf="!isApp" class="animated lightSpeedIn noShadow">
    
-      <ion-item *ngFor="let agent of allAgents">
-      <ion-item no-lines (click)="agentDetail(agent.id)">
-      <ion-avatar item-start>
-          <img src="{{this.sharedServiceObj.imgBucketUrl}}{{agent.image_url}}" class="custom-avatar" 
-          (error)="imgAgent1.src = this.sharedServiceObj.noImageUrl" #imgAgent1/>
+    <ion-item-sliding *ngFor="let agent of allAgents">
+      <ion-item (click)="agentDetail(agent.id)">
+        <ion-avatar class="imgFull">
+        <img src="{{this.sharedServiceObj.imgBucketUrl}}{{agent.image_url}}" (error)="imgAgent.src = this.sharedServiceObj.noImageUrl" #imgAgent/>
         <!--<img src={{this.sharedServiceObj.imgBucketUrl}}{{agent.image_url}} 
         *ngIf="agent.image_url!=null&&agent.image_url!=undefined&&agent.image_url!=''"/>
-      <img src={{no_image_found}} *ngIf="agent.image_url==null||agent.image_url==''"/>-->
-    </ion-avatar>
-      <h2>{{agent.first_name}} {{agent.last_name}}</h2>
-      <p>Email:{{agent.email}}</p>
-      <p [innerHTML]="agent.description"></p>
-    </ion-item>
-      <button ion-button item-right color="secondary" (click)="editAgent(agent.id)" *ngIf="isEditAgentAccess==true">
-          <ion-icon name="create"></ion-icon>
-        </button>
-      <button ion-button item-right color="danger" (click)="deleteAgent(agent)" *ngIf="isDeleteAgentAccess==true">
-        <ion-icon name="trash"></ion-icon>
-      </button>
-    </ion-item>
+        <img src={{no_image_found}} *ngIf="agent.image_url==null||agent.image_url==''"/>-->
+        </ion-avatar>
+        <h2 class="agentName">{{agent.first_name}} {{agent.last_name}}</h2>
+        <p class="agentEmail">{{agent.email}}</p>
+        <p class="agentDescription" [innerHTML]="agent.description"></p>
+      </ion-item>
 
+      <ion-item-options side="right">
+        <button ion-button item-right color="primary" (click)="editAgent(agent.id)" *ngIf="isEditAgentAccess==true">
+          <ion-icon name="ios-brush">Edit</ion-icon>
+        </button>
+        <button ion-button item-right color="danger" (click)="deleteAgent(agent)" *ngIf="isDeleteAgentAccess==true">          
+          <ion-icon name="md-trash">Delete</ion-icon>
+        </button>
+      </ion-item-options>
+
+  </ion-item-sliding>    
+  
+  </ion-list>
+  </div>
+
+  
+  <div class="formShadow">
+  <ion-list *ngIf="isApp" class="animated lightSpeedIn noShadow">
+   
+    <ion-item-sliding *ngFor="let agent of allAgents">
+      <ion-item (click)="agentDetail(agent.id)">
+        <ion-avatar class="imgFull">
+        <img src="{{this.sharedServiceObj.imgBucketUrl}}{{agent.image_url}}" (error)="imgAgent1.src = this.sharedServiceObj.noImageUrl" #imgAgent1/>
+        <!--<img src={{this.sharedServiceObj.imgBucketUrl}}{{agent.image_url}} 
+        *ngIf="agent.image_url!=null&&agent.image_url!=undefined&&agent.image_url!=''"/>
+        <img src={{no_image_found}} *ngIf="agent.image_url==null||agent.image_url==''"/>-->
+        </ion-avatar>
+        <h2 class="agentName">{{agent.first_name}} {{agent.last_name}}</h2>
+        <p class="agentEmail">{{agent.email}}</p>
+        <p class="agentDescription" [innerHTML]="agent.description"></p>
+    </ion-item>
+    <ion-item-options side="right">
+      <button ion-button item-right color="primary" (click)="editAgent(agent.id)" *ngIf="isEditAgentAccess==true">
+        <ion-icon name="ios-brush">Edit</ion-icon>
+      </button>
+      <button ion-button item-right color="danger" (click)="deleteAgent(agent)" *ngIf="isDeleteAgentAccess==true">
+        <ion-icon name="md-trash">Delete</ion-icon>
+      </button>
+    </ion-item-options>
+  </ion-item-sliding>
 
 </ion-list>
-<ion-list *ngIf="!isApp">
-    <ion-item-sliding *ngFor="let agent of allAgents">
-        <ion-item no-lines (click)="agentDetail(agent.id)">
-        <ion-avatar item-start>
-            <img src="{{this.sharedServiceObj.imgBucketUrl}}{{agent.image_url}}" class="custom-avatar" 
-            (error)="imgAgent2.src = this.sharedServiceObj.noImageUrl" #imgAgent2/>
-          <!--<img src={{this.sharedServiceObj.imgBucketUrl}}{{agent.image_url}} 
-          *ngIf="agent.image_url!=null&&agent.image_url!=undefined&&agent.image_url!=''"/>
+</div>
+
+<div class="formShadow">
+<ion-list *ngIf="!isApp" class="animated lightSpeedIn noShadow">
+
+  <ion-item-sliding *ngFor="let agent of allAgents">
+    <ion-item (click)="agentDetail(agent.id)">
+      <ion-avatar class="imgFull">
+        <img src="{{this.sharedServiceObj.imgBucketUrl}}{{agent.image_url}}" (error)="imgAgent2.src = this.sharedServiceObj.noImageUrl" #imgAgent2/>
+        <!--<img src={{this.sharedServiceObj.imgBucketUrl}}{{agent.image_url}} 
+        *ngIf="agent.image_url!=null&&agent.image_url!=undefined&&agent.image_url!=''"/>
         <img src={{no_image_found}} *ngIf="agent.image_url==null||agent.image_url==''"/>-->
       </ion-avatar>
-        <h2>{{agent.first_name}} {{agent.last_name}}</h2>
-        <p>Email:{{agent.email}}</p>
-        <p [innerHTML]="agent.description"></p>
-      </ion-item>
-      <ion-item-options side="right">
+      <h2 class="agentName">{{agent.first_name}} {{agent.last_name}}</h2>
+      <p class="agentEmail">{{agent.email}}</p>
+      <p class="agentDescription" [innerHTML]="agent.description"></p>
+    </ion-item>
 
-      </ion-item-options>
-      <button ion-button color="primary" (click)="editAgent(agent.id)" *ngIf="isEditAgentAccess==true">Edit</button>
-        <button ion-button color="danger" (click)="deleteAgent(agent)" *ngIf="isDeleteAgentAccess==true">Delete</button>
-      </ion-item-sliding>
+    <ion-item-options side="right">    
+      <button ion-button color="primary" (click)="editAgent(agent.id)" *ngIf="isEditAgentAccess==true">
+        <ion-icon name="ios-brush">Edit</ion-icon>
+      </button>
+      <button ion-button color="danger" (click)="deleteAgent(agent)" *ngIf="isDeleteAgentAccess==true">
+        <ion-icon name="md-trash">Delete</ion-icon>
+      </button>
+    </ion-item-options>
+
+  </ion-item-sliding>
+
 </ion-list>
-  <ion-chip *ngIf='allAgents.length<=0&&agentsFoundMessage!=""'>
-      <ion-label color="danger">{{agentsFoundMessage}}</ion-label>
-  </ion-chip>
+</div>
+
+<ion-chip *ngIf='allAgents.length<=0&&agentsFoundMessage!=""'>
+  <ion-label color="danger">{{agentsFoundMessage}}</ion-label>
+</ion-chip>
+
 </ion-content>
