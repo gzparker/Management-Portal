@@ -39,7 +39,7 @@
   <div class="formShadow">
   <ion-list *ngIf="!isApp" class="animated lightSpeedIn noShadow">
    
-    <ion-item-sliding *ngFor="let agent of allAgents">
+    <ion-item *ngFor="let agent of allAgents">
       <ion-item (click)="agentDetail(agent.id)">
         <ion-avatar class="imgFull">
         <img src="{{this.sharedServiceObj.imgBucketUrl}}{{agent.image_url}}" (error)="imgAgent.src = this.sharedServiceObj.noImageUrl" #imgAgent/>
@@ -52,16 +52,13 @@
         <p class="agentDescription" [innerHTML]="agent.description"></p>
       </ion-item>
 
-      <ion-item-options side="right">
         <button ion-button item-right color="primary" (click)="editAgent(agent.id)" *ngIf="isEditAgentAccess==true">
           <ion-icon name="ios-brush">Edit</ion-icon>
         </button>
         <button ion-button item-right color="danger" (click)="deleteAgent(agent)" *ngIf="isDeleteAgentAccess==true">          
           <ion-icon name="md-trash">Delete</ion-icon>
         </button>
-      </ion-item-options>
-
-  </ion-item-sliding>    
+  </ion-item>    
   
   </ion-list>
   </div>

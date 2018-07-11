@@ -34,7 +34,7 @@
   <h1 class="contentTitle animated bounceInRight">Hot Sheets</h1>
 
   <ion-list class="animated fadeIn noShadow" *ngIf="!isApp">    
-    <ion-item-sliding *ngFor="let hotsheet of allHotSheetList">
+    <ion-item *ngFor="let hotsheet of allHotSheetList">
 
       <ion-item (click)="editHotsheet(hotsheet.id)">
         <ion-thumbnail item-start>
@@ -46,11 +46,11 @@
         <!-- <button ion-button clear item-end>View</button> -->
       </ion-item>
 
-      <ion-item-options side="right">
+      <!--<ion-item-options side="right">-->
         <button ion-button color="danger" item-right class="btn-del" (click)="deleteHotsheet(hotsheet)" *ngIf="isDeleteHotsheetAccess==true"><ion-icon name="md-close"></ion-icon>Delete</button>
-      </ion-item-options>
+      <!--</ion-item-options>-->
       
-    </ion-item-sliding>
+    </ion-item>
   </ion-list>
 
   <ion-list class="animated fadeIn noShadow" *ngIf="isApp">

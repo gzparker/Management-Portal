@@ -35,7 +35,7 @@
   <h1 class="contentTitle animated bounceInRight">All Websites</h1>
 
   <ion-list class="noShadow" *ngIf="!isApp">
-    <ion-item-sliding class="animated lightSpeedIn" *ngFor="let website of allWebsiteList">
+    <ion-item class="animated lightSpeedIn" *ngFor="let website of allWebsiteList">
 
         <ion-item class="websiteThumb">
             <ion-thumbnail item-start  (click)="websiteLinks(website.id)">
@@ -56,42 +56,13 @@
             <span *ngIf="website.status==0"><ion-badge color="danger" class="badgeNotActive">Not Active</ion-badge></span></p>
             <!--<p><a (click)="websiteLinks(website.id)">View Pages/Widgets</a></p>-->
         </ion-item>
-          
-        <ion-item-options side="right">
+
             <button ion-button color="primary" item-right class="btn-edit" (click)="editWebsite(website.id)" *ngIf="isEditWebsiteAccess==true"><ion-icon name="md-create"></ion-icon>Edit</button>
             <button ion-button color="primary" item-right class="btn-lead" (click)="editLeadRouting(website.id)"><ion-icon name="ios-paper-plane"></ion-icon>Lead Routing</button>
             <button ion-button color="primary" item-right class="btn-status" (click)="viewPaperWorkStatus(website.id)" *ngIf="isMlsSettings==true"><ion-icon name="ios-pulse"></ion-icon>Status</button>
             <button ion-button color="danger" item-right class="btn-del" (click)="deleteWebsite(website)" *ngIf="isDeleteWebsiteAccess==true"><ion-icon name="md-close"></ion-icon>Delete</button>
-        </ion-item-options>
-        
-    <!--<ion-item-sliding *ngFor="let website of allWebsiteList">
-      
-      <ion-item class="websiteThumb">
-        <ion-thumbnail item-start (click)="editWebsite(website.id)" *ngIf="isEditWebsiteAccess==true">
-          <img src={{imgBaseUrl}}{{website.identity_logo}} *ngIf="website.identity_logo!=''"/>
-          <img src={{noImgUrl}} *ngIf="website.identity_logo==''"/>
-        </ion-thumbnail>
-        <ion-thumbnail item-start *ngIf="isEditWebsiteAccess==false">
-            <img src={{imgBaseUrl}}{{website.identity_logo}} *ngIf="website.identity_logo!=''"/>
-            <img src={{noImgUrl}} *ngIf="website.identity_logo==''"/>
-          </ion-thumbnail>
-        <h2 (click)="editWebsite(website.id)"  *ngIf="isEditWebsiteAccess==true">{{website.identity_name}}</h2>
-        <h2 *ngIf="isEditWebsiteAccess==false">{{website.identity_name}}</h2>
-        <p class="hidden">{{website.website}}</p>
-        <p class="hidden">Private Key:{{website.key_private}}</p>
-        <p class="hidden">Public Key:{{website.key_public}}</p>
-        <p>Status: <span *ngIf="website.status==1"><ion-badge color="primary">Active</ion-badge></span>
-        <span *ngIf="website.status==0"><ion-badge color="danger">Not Active</ion-badge></span></p>
-        <p><a (click)="websiteLinks(website.id)">View Pages/Widgets</a></p>    
-      </ion-item>
 
-      <ion-item-options side="right">        
-          <button ion-button color="primary" class="roundedOption btn-settings" (click)="editLeadRouting(website.id)" *ngIf="isEditWebsiteAccess==false"><ion-icon name="md-create"></ion-icon>Edit</button>
-          <button ion-button color="primary" class="roundedOption btn-info" (click)="viewPaperWorkStatus(website.id)" *ngIf="isMlsSettings==true"><ion-icon name="ios-pulse"></ion-icon>Status</button>
-          <button ion-button color="danger" class="roundedOption btn-del" (click)="deleteWebsite(website)" *ngIf="isDeleteWebsiteAccess==true"><ion-icon name="md-close"></ion-icon>Delete</button>
-        </ion-item-options>-->    
-
-    </ion-item-sliding>
+    </ion-item>
   </ion-list>
 
   <ion-list class="noShadow" *ngIf="isApp">

@@ -36,7 +36,7 @@
   <div class="formShadow">
   <ion-list *ngIf="!isApp" class="animated lightSpeedIn noShadow">
 
-    <ion-item-sliding *ngFor="let role of allRoles">
+    <ion-item *ngFor="let role of allRoles">
       
       <!-- <ion-item>
         <ion-icon name="ios-contacts" item-start></ion-icon>
@@ -49,17 +49,13 @@
         </ion-avatar>
         <h2>{{role.name}}</h2>
       </ion-item>
-    
-      <ion-item-options side="right">
         <button ion-button  item-right color="primary" (click)="editRole(role.id)">
           <ion-icon name="ios-brush">Edit</ion-icon>
         </button>
         <button ion-button  item-right color="danger" (click)="deleteRole(role)">
           <ion-icon name="md-trash">Delete</ion-icon>
         </button>
-      </ion-item-options>    
-
-    </ion-item-sliding>
+    </ion-item>
 
   </ion-list>
   </div>

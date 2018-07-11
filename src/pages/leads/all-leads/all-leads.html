@@ -63,25 +63,21 @@
   <div class="formShadow">
   <ion-list *ngIf="!isApp" class="animated lightSpeedIn noShadow">
 
-    <ion-item-sliding *ngFor="let lead of searchedLeadsList">
+    <ion-item *ngFor="let lead of searchedLeadsList">
       
         <ion-item (click)="leadDetail(lead.lead_id);">
             <ion-avatar item-start *ngIf="leadDetail!=undefined">
               <img src="assets/imgs/profile-photo.jpg">
             </ion-avatar>
             <h2>{{lead.first_name}} <b>{{lead.last_name}}</b></h2>
-    
           </ion-item>
-          <ion-item-options side="right">
             <button ion-button color="primary" item-right class="roundedOption btn-settings" *ngIf="isEditLeadAccess==true" (click)="editLead(lead.lead_id)">
               <ion-icon name="ios-brush">Edit</ion-icon>
             </button>    
             <button ion-button color="danger" item-right class="roundedOption btn-del" (click)="deleteLead(lead)" *ngIf="isDeleteLeadAccess==true">
               <ion-icon name="md-trash">Delete</ion-icon>
             </button>
-          </ion-item-options>
-
-    </ion-item-sliding>    
+    </ion-item>    
   </ion-list>
   </div>
 
