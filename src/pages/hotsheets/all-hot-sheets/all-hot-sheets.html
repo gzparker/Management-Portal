@@ -33,7 +33,7 @@
 
   <h1 class="contentTitle animated bounceInRight">Hot Sheets</h1>
 
-  <ion-list class="animated fadeIn noShadow" *ngIf="!isApp">    
+  <!--<ion-list class="animated fadeIn noShadow" *ngIf="!isApp">    
     <ion-item *ngFor="let hotsheet of allHotSheetList">
 
       <ion-item (click)="editHotsheet(hotsheet.id)">
@@ -42,30 +42,32 @@
         </ion-thumbnail>
         <h2 class="HotsheetName">{{hotsheet.name}}</h2>
         <p class="HotsheetSlug">visit/{{hotsheet.slug}}</p>        
-        <!-- <ion-icon class="light" name="arrow-forward" item-right></ion-icon> -->
-        <!-- <button ion-button clear item-end>View</button> -->
+       
       </ion-item>
 
-      <!--<ion-item-options side="right">-->
         <button ion-button color="danger" item-right class="btn-del" (click)="deleteHotsheet(hotsheet)" *ngIf="isDeleteHotsheetAccess==true"><ion-icon name="md-close"></ion-icon>Delete</button>
-      <!--</ion-item-options>-->
-      
+  
     </ion-item>
-  </ion-list>
+  </ion-list>-->
 
-  <ion-list class="animated fadeIn noShadow" *ngIf="isApp">
+  <ion-list class="animated fadeIn noShadow">
     <ion-item-sliding *ngFor="let hotsheet of allHotSheetList">
 
       <ion-item (click)="editHotsheet(hotsheet.id)">
+          <ion-thumbnail item-start>
+              <img src="../assets/imgs/hotsheets-thumbnail.jpg">
+            </ion-thumbnail>
         <h2 class="HotsheetName">{{hotsheet.name}}</h2>
         <p class="HotsheetSlug">visit/{{hotsheet.slug}}</p>
-        <!-- <ion-icon class="light" name="arrow-forward" item-right></ion-icon> -->
+      
       </ion-item>
 
-      <ion-item-options side="right">
+      <ion-item-options side="right" *ngIf="isApp">
         <button ion-button color="danger" item-right class="btn-del" (click)="deleteHotsheet(hotsheet)" *ngIf="isDeleteHotsheetAccess==true"><ion-icon name="md-close"></ion-icon>Delete</button>
       </ion-item-options>
-
+      <ion-item side="right" *ngIf="!isApp">
+        <button ion-button color="danger" item-right class="btn-del" (click)="deleteHotsheet(hotsheet)" *ngIf="isDeleteHotsheetAccess==true"><ion-icon name="md-close"></ion-icon>Delete</button>
+      </ion-item>
     </ion-item-sliding>
   </ion-list>
 

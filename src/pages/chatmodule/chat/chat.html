@@ -28,7 +28,7 @@
     <ion-searchbar placeholder="Search for contacts" (input)="searchChat()" [(ngModel)]="searchText" 
     name="searchText" id="searchText"></ion-searchbar>
 </ion-item>
-<ion-list *ngIf="!isApp">
+<!--<ion-list *ngIf="!isApp">
   <div *ngFor="let group of chatGroups">
     <div *ngIf="group.val().deletedFor.indexOf(firebaseUserId) < 0" >
                 <div *ngIf="group.val().isGroup==0">
@@ -49,9 +49,7 @@
                           </div>
                           <div  *ngIf="user.fbId==group.val().toFbUserId">              
                          
-                              <!--<img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" *ngIf="user.image_url!=null&&user.image_url!=undefined&&user.image_url!=''"/>
-                              <img src={{noImgUrl}} class="custom-avatar" 
-                              *ngIf="user.image_url==null||user.image_url==''"/>-->
+                            
                               <img src={{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}} class="custom-avatar" 
                               (error)="imgChat.src = this.sharedServiceObj.noImageUrl" #imgChat/>
                           </div>
@@ -71,9 +69,7 @@
                            <div  *ngIf="user.fbId==group.val().fromFbUserId">              
                               <img src={{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}} class="custom-avatar" 
                               (error)="imgChat1.src = this.sharedServiceObj.noImageUrl" #imgChat1/>
-                              <!--<img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" *ngIf="user.image_url!=null&&user.image_url!=undefined&&user.image_url!=''"/>
-                              <img src={{noImgUrl}} class="custom-avatar" 
-                              *ngIf="user.image_url==null||user.image_url==''"/>-->
+                           
                           
                           </div>
                         </div>
@@ -107,9 +103,7 @@
                     <ion-list  *ngIf="groupMember.userId==firebaseUserId&&groupMember.groupId==group.val().groupId">
                       <ion-item class="item item-avatar item-text-wrap" 
                       (click)="chatDetail(group.val().groupId,group.val().fromFbUserId,group.val().fromUserName,group.val().toUserName,2)">        
-                        
-                           <!--<img src="{{group.val().groupImage}}" class="chat-profile-group" />                    
-                        <span class="chat-info mike">-->
+                       
                           <img src={{group.val().groupImage}} class="custom-avatar" 
                             (error)="imgGroup.src = this.sharedServiceObj.noImageUrl" #imgGroup/>
                           <span class="msgdate">{{convertToDate(group.val().modifiedDate) | date : "shortTime"}}</span>
@@ -126,8 +120,8 @@
         
               </div>
     </div>
-</ion-list>
-<ion-list *ngIf="isApp">
+</ion-list>-->
+<ion-list>
   <div *ngFor="let group of chatGroups">
   <div *ngIf="group.val().deletedFor.indexOf(firebaseUserId) < 0">
  
@@ -151,10 +145,7 @@
                       </div>
                       <div  *ngIf="user.fbId==group.val().toFbUserId">              
                      
-                          <!--<img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" 
-                          *ngIf="user.image_url!=null&&user.image_url!=undefined&&user.image_url!=''"/>
-                          <img src={{noImgUrl}} class="custom-avatar" 
-                          *ngIf="user.image_url==null||user.image_url==''"/>-->
+                        
                           <img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" 
                           (error)="imgUser.src = this.sharedServiceObj.noImageUrl" #imgUser/>
                       </div>
@@ -174,9 +165,7 @@
                        <div  *ngIf="user.fbId==group.val().fromFbUserId">              
                           <img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" 
                           (error)="imgUser1.src = this.sharedServiceObj.noImageUrl" #imgUser1/>
-                          <!--<img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" *ngIf="user.image_url!=null&&user.image_url!=undefined&&user.image_url!=''"/>
-                          <img src={{noImgUrl}} class="custom-avatar" 
-                          *ngIf="user.image_url==null||user.image_url==''"/>-->
+                         
                       
                       </div>
                     </div>
@@ -198,11 +187,16 @@
                    
                   </div>
                 </ion-item>
-                <ion-item-options side="right">
+                <ion-item-options side="right" *ngIf="isApp">
                   <button ion-button color="danger" class="roundedOption btn-del"  (click)="deleteGroupChat(group.val().groupId,group.key);"  *ngIf="group.val().isGroup==1&&group.val().deletedFor.indexOf(firebaseUserId) < 0"><ion-icon name="md-close"></ion-icon>Delete Chat</button>
                   <button ion-button color="danger" class="roundedOption btn-del"  (click)="deleteGroupChat(group.val().groupId,group.key);"  *ngIf="group.val().isGroup==0&&group.val().deletedFor.indexOf(firebaseUserId) < 0"><ion-icon name="md-close"></ion-icon>Delete Chat</button>
                   <button ion-button color="primary" item-right class="roundedOption btn-settings" (click)="manageGroups(group.val().groupId)" *ngIf="group.val().isGroup==1"><ion-icon name="md-create"></ion-icon>Group Members</button>
                 </ion-item-options>
+                <ion-item side="right" *ngIf="!isApp">
+                  <button ion-button color="danger" class="roundedOption btn-del"  (click)="deleteGroupChat(group.val().groupId,group.key);"  *ngIf="group.val().isGroup==1&&group.val().deletedFor.indexOf(firebaseUserId) < 0"><ion-icon name="md-close"></ion-icon>Delete Chat</button>
+                  <button ion-button color="danger" class="roundedOption btn-del"  (click)="deleteGroupChat(group.val().groupId,group.key);"  *ngIf="group.val().isGroup==0&&group.val().deletedFor.indexOf(firebaseUserId) < 0"><ion-icon name="md-close"></ion-icon>Delete Chat</button>
+                  <button ion-button color="primary" item-right class="roundedOption btn-settings" (click)="manageGroups(group.val().groupId)" *ngIf="group.val().isGroup==1"><ion-icon name="md-create"></ion-icon>Group Members</button>
+                </ion-item>
                 </ion-item-sliding>
                   </ion-item>
               </ion-list>
@@ -223,11 +217,16 @@
         
         
                   </ion-item>
-                  <ion-item-options side="right">
+                  <ion-item-options side="right" *ngIf="isApp">
                     <button ion-button color="danger" class="roundedOption btn-del"  (click)="deleteGroupChat(group.val().groupId,group.key);"  *ngIf="group.val().isGroup==1&&group.val().deletedFor.indexOf(firebaseUserId) < 0"><ion-icon name="md-close"></ion-icon>Delete Chat</button>
                     <button ion-button color="danger" class="roundedOption btn-del"  (click)="deleteGroupChat(group.val().groupId,group.key);"  *ngIf="group.val().isGroup==0&&group.val().deletedFor.indexOf(firebaseUserId) < 0"><ion-icon name="md-close"></ion-icon>Delete Chat</button>
                     <button ion-button color="primary" item-right class="roundedOption btn-settings" (click)="manageGroups(group.val().groupId)" *ngIf="group.val().isGroup==1"><ion-icon name="md-create"></ion-icon>Group Members</button>
                   </ion-item-options>
+                  <ion-item side="right" *ngIf="!isApp">
+                    <button ion-button color="danger" class="roundedOption btn-del"  (click)="deleteGroupChat(group.val().groupId,group.key);"  *ngIf="group.val().isGroup==1&&group.val().deletedFor.indexOf(firebaseUserId) < 0"><ion-icon name="md-close"></ion-icon>Delete Chat</button>
+                    <button ion-button color="danger" class="roundedOption btn-del"  (click)="deleteGroupChat(group.val().groupId,group.key);"  *ngIf="group.val().isGroup==0&&group.val().deletedFor.indexOf(firebaseUserId) < 0"><ion-icon name="md-close"></ion-icon>Delete Chat</button>
+                    <button ion-button color="primary" item-right class="roundedOption btn-settings" (click)="manageGroups(group.val().groupId)" *ngIf="group.val().isGroup==1"><ion-icon name="md-create"></ion-icon>Group Members</button>
+                  </ion-item>
                 </ion-item-sliding>
               </div>
             </div>    

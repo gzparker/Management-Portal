@@ -76,8 +76,8 @@ this.loggedInUserInfo=data;
   firebase.database().ref('groupMembers').orderByChild("groupId").equalTo(that.groupId).on("child_added", function(snapshot) {
     if(snapshot.val()){
       that.groupMembersData.push(snapshot);
+      //debugger;
     }});
-    
   }
   deleteMember(memberId) {
      var that=this;

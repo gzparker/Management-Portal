@@ -33,15 +33,11 @@
     <ion-label color="secondary">{{notificationMsg}}</ion-label>
   </ion-chip>
 
-  <div class="formShadow">
+  <!--<div class="formShadow">
   <ion-list *ngIf="!isApp" class="animated lightSpeedIn noShadow">
 
     <ion-item *ngFor="let role of allRoles">
       
-      <!-- <ion-item>
-        <ion-icon name="ios-contacts" item-start></ion-icon>
-        <h2>{{role.name}}</h2>         
-      </ion-item> -->
 
       <ion-item>
         <ion-avatar item-start>
@@ -58,10 +54,10 @@
     </ion-item>
 
   </ion-list>
-  </div>
+  </div>-->
   
   <div class="formShadow">
-  <ion-list *ngIf="isApp" class="noShadow">
+  <ion-list class="noShadow">
     <ion-item-sliding *ngFor="let role of allRoles">    
       
       <ion-item>
@@ -70,7 +66,7 @@
         <ion-icon class="light" name="arrow-forward" item-right></ion-icon>
       </ion-item>
       
-      <ion-item-options side="right">
+      <ion-item-options side="right" *ngIf="isApp">
         <button ion-button color="primary" (click)="editRole(role.id)">
           <ion-icon name="ios-brush">Edit</ion-icon>
         </button>
@@ -78,7 +74,14 @@
           <ion-icon name="md-trash">Delete</ion-icon>
         </button>
       </ion-item-options>
-
+      <ion-item side="right" *ngIf="!isApp">
+        <button ion-button color="primary" (click)="editRole(role.id)">
+          <ion-icon name="ios-brush">Edit</ion-icon>
+        </button>
+        <button ion-button color="danger" (click)="deleteRole(role)">
+          <ion-icon name="md-trash">Delete</ion-icon>
+        </button>
+      </ion-item>
     </ion-item-sliding>
   </ion-list>
   </div>

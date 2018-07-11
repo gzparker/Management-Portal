@@ -26,7 +26,7 @@
   <ion-refresher (ionRefresh)="groupMessageDetail($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-    <ion-list *ngIf="isApp&&chatDetailArray.length>0">
+    <!--<ion-list *ngIf="isApp&&chatDetailArray.length>0">
         <div *ngFor="let chat of chatDetailArray">
         <ion-item *ngIf="chat.val().deletedFor.indexOf(firebaseUserId) < 0">
        
@@ -38,9 +38,7 @@
                   <div class="chat-profile">
                       <img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" 
                       (error)="imgUser.src = this.sharedServiceObj.noImageUrl" #imgUser/>
-                  <!--<img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" *ngIf="user.image_url!=null&&user.image_url!=undefined&&user.image_url!=''"/>
-                  <img src={{noImgUrl}} class="custom-avatar" 
-                  *ngIf="user.image_url==null||user.image_url==''"/>-->
+                
                 </div>
         
                 </div>
@@ -65,10 +63,7 @@
                   <div class="chat-profile">
                       <img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" 
                       (error)="imgUser1.src = this.sharedServiceObj.noImageUrl" #imgUser1/>
-                    <!--<img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" 
-                    class="custom-avatar" *ngIf="user.image_url!=null&&user.image_url!=undefined&&user.image_url!=''"/>
-                    <img src={{noImgUrl}} class="custom-avatar" 
-                    *ngIf="user.image_url==null||user.image_url==''"/>-->
+                 
                   </div> 
                       </div>
                   </div>
@@ -81,9 +76,9 @@
             
           </ion-item>
         </div>
-    </ion-list>
+    </ion-list>-->
 
-    <ion-list *ngIf="!isApp&&chatDetailArray.length>0">
+    <ion-list *ngIf="chatDetailArray.length>0">
       <div *ngFor="let chat of chatDetailArray">
         <ion-item-sliding *ngIf="chat.val().deletedFor.indexOf(firebaseUserId) < 0">
           <ion-item>
@@ -95,10 +90,7 @@
                   <div class="chat-profile">
                       <img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" 
                       (error)="imgUser2.src = this.sharedServiceObj.noImageUrl" #imgUser2/>
-                  <!--<img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" 
-                  class="custom-avatar" *ngIf="user.image_url!=null&&user.image_url!=undefined&&user.image_url!=''"/>
-                  <img src={{noImgUrl}} class="custom-avatar" 
-                  *ngIf="user.image_url==null||user.image_url==''"/> -->
+                 
                 </div>
         
                 </div>
@@ -124,10 +116,7 @@
                   <div class="chat-profile">
                       <img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" 
                       (error)="imgUser3.src = this.sharedServiceObj.noImageUrl" #imgUser3/>
-                    <!--<img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" 
-                    *ngIf="user.image_url!=null&&user.image_url!=undefined&&user.image_url!=''"/>
-                    <img src={{noImgUrl}} class="custom-avatar" 
-                    *ngIf="user.image_url==null||user.image_url==''"/>-->
+                 
                   </div> 
                       </div>
                   </div>
@@ -139,10 +128,12 @@
                  
                 </div>
               </ion-item>
-              <ion-item-options side="right">
-                     
+              <ion-item-options side="right" *ngIf="isApp">   
                   <button ion-button color="danger" class="roundedOption btn-del"  (click)="deleteSingleChat(chat.val().groupId,chat.key);"><ion-icon name="md-close"></ion-icon>Delete Chat</button>
-                </ion-item-options>
+              </ion-item-options>
+              <ion-item *ngIf="!isApp">
+                <button ion-button color="danger" class="roundedOption btn-del"  (click)="deleteSingleChat(chat.val().groupId,chat.key);"><ion-icon name="md-close"></ion-icon>Delete Chat</button>
+              </ion-item>
           </ion-item-sliding>
         </div>
     </ion-list>
@@ -180,16 +171,12 @@
       <div contenteditable="true" class="chatbox-box input-chat" id="chatDescription" name="chatDescription" type="text" 
       placeholder="Type something..." (keydown)="setUserTyping(returnedGroup.key)" 
       (blur)="setUserNotTyping(returnedGroup.key)" [innerHTML]="description" ></div>
-    <!--<ion-textarea type="text" [(ngModel)]="description" name="description" 
-      (keydown)="setUserTyping(returnedGroup.key)" (blur)="setUserNotTyping(returnedGroup.key)"></ion-textarea>-->
- 
+    
     </div>
-
-   
     <div>
         <button class="button button-clear btn-chat" (click)="setUserNotTyping(returnedGroup.key);saveGroupMessage()">Send</button>
-      <button class="button button-clear btn-gallery" (click)="takeListingPhoto('gallery');">Select Image</button>
-      <button class="button button-clear btn-camera" (click)="takeListingPhoto('new');">Take Image</button>
+      <button class="button button-clear btn-gallery" (click)="takeListingPhoto('gallery');" *ngIf="isApp">Select Image</button>
+      <button class="button button-clear btn-camera" (click)="takeListingPhoto('new');" *ngIf="isApp">Take Image</button>
       <button class="button button-clear btn-emoji" (click)="openEmoji()">Select Emoji</button>
     </div>
 </form>

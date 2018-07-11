@@ -19,222 +19,37 @@
   <ion-content padding>
     <h1 class="contentTitle">Group Members</h1>
     
-  <ion-list *ngIf="!isApp">
+  <ion-list *ngIf="groupMembersData.length>0">
       <div class="main-chat-summary">
           <div class="list">
           <div  *ngFor="let groupMember of groupMembersData">
          
             <div *ngIf="groupMember.val().userId!=firebaseUserId">
       
-            <ion-item class="item item-avatar alternate-chat-left item-text-wrap" >
-                <!--<img src="{{this.sharedServiceObj.imgBucketUrl}}{{groupMember.val().image}}" 
-                class="custom-avatar" *ngIf="groupMember.val().image!=null&&groupMember.val().image!=undefined&&groupMember.val().image!=''"/>
-                <img src={{noImgUrl}} class="custom-avatar" 
-                *ngIf="groupMember.val().image==null||groupMember.val().image==''" />-->
-                <img src="{{this.sharedServiceObj.imgBucketUrl}}{{groupMember.val().image}}" class="custom-avatar" 
+            <ion-item-sliding class="item item-avatar alternate-chat-left item-text-wrap" >
+              <ion-item>
+                <img src={{this.sharedServiceObj.imgBucketUrl}}{{groupMember.val().image}} class="custom-avatar" 
                       (error)="imgGroupMember.src = this.sharedServiceObj.noImageUrl" #imgGroupMember/>
-              <!--<object data="{{groupMember.image}}" type="image/jpg" class="manage-chat-profile"></object>-->
+              
               <span class="chat-info">
                 <h1>{{groupMember.val().memberName}}</h1>
                 
               </span>
-              <button ion-button color="danger" item-right class="roundedOption btn-del" (click)="deleteMember(groupMember.key)"  ><ion-icon name="md-close"></ion-icon>Delete</button>
-              <!--<div class="button-assertive btn-gradient-right button-small" ng-Click="deleteMember(groupMember.$id)"><span class="badge badge-assertive dltmember"><i class="icon ion-trash-a"></i> Delete</span></div>-->
-               <!-- <button class="button button-small button-assertive text-right" ng-Click="deleteMember(groupMember.$id)" ng-controller="ContactsCtrl">
-                      <i class="icon ion-trash-a"></i> Delete</button> -->
-            </ion-item>
+              </ion-item>
+              <ion-item *ngIf="!isApp" side="right">
+                <button ion-button color="danger" item-right class="roundedOption btn-del" (click)="deleteMember(groupMember.key)"  ><ion-icon name="md-close"></ion-icon>Delete</button>
+              </ion-item>
+              <ion-item-options side="right" *ngIf="isApp">
+                <button ion-button color="danger" item-right class="roundedOption btn-del" (click)="deleteMember(groupMember.key)"  ><ion-icon name="md-close"></ion-icon>Delete</button>
+              </ion-item-options>
+              
+            </ion-item-sliding>
             </div>
             </div>
           </div>
          
          </div> 
-    <!--<div *ngFor="let group of chatGroups">
-      <ion-item *ngIf="group.val().deletedFor.indexOf(firebaseUserId) < 0" >
-                  <div *ngIf="group.val().isGroup==0">
-              
-                  <ion-list>
-         
-                      <ion-item class="item item-avatar item-text-wrap"  *ngIf="firebaseUserId==group.val().fromFbUserId||firebaseUserId==group.val().toFbUserId" 
-                      (click)="chatDetail(group.val().groupId,group.val().fromFbUserId,group.val().fromUserName,group.val().toUserName,1)">
-                        <div  *ngIf="firebaseUserId==group.val().fromFbUserId">
-                          <div  *ngFor="let user of users">
-                            <div *ngIf="user.fbId==group.val().toFbUserId && user.isOnline==0">              
-                            <div class="userstatus-offline">Offline</div>
-                            
-                            </div>
-                            <div  *ngIf="user.fbId==group.val().toFbUserId && user.isOnline==1">              
-                            <div class="userstatus-online">Online</div>
-              
-                            </div>
-                            <div  *ngIf="user.fbId==group.val().toFbUserId">              
-                           
-                                <img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" *ngIf="user.image_url!=null&&user.image_url!=undefined&&user.image_url!=''"/>
-                                <img src={{noImgUrl}} class="custom-avatar" 
-                                *ngIf="user.image_url==null||user.image_url==''"/>
-                            </div>
-                          </div>
-                          
-                        </div> 
-              
-                        <div  *ngIf="firebaseUserId==group.val().toFbUserId">
-                          <div  *ngFor="let user of users"> <div  *ngIf="user.fbId==group.val().fromFbUserId && user.isOnline==0">
-                            <div class="userstatus-offline">Offline</div>
-                           
-                            </div>
-                            <div  *ngIf="user.fbId==group.val().fromFbUserId && user.isOnline==1">              
-                            <div class="userstatus-online">Online</div>
-                           
-                            </div>
-                             <div  *ngIf="user.fbId==group.val().fromFbUserId">              
-                           
-                                <img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" *ngIf="user.image_url!=null&&user.image_url!=undefined&&user.image_url!=''"/>
-                                <img src={{noImgUrl}} class="custom-avatar" 
-                                *ngIf="user.image_url==null||user.image_url==''"/>
-                            
-                            </div>
-                          </div>
-                          
-                        </div>  
-              
-                        <div class="chat-info">
-                          <div *ngIf="firebaseUserId==group.val().fromFbUserId">
-                          <span class="msgdate">{{convertToDate(group.val().modifiedDate) | date : "shortTime"}}</span>
-                        
-                          <h2>{{group.val().toUserName}}<span class="msgcounter"  *ngIf="group.val().unreadMessagesCounter">({{group.val().unreadMessagesCounter}})</span></h2>
-                          </div>
-                          <div  *ngIf="firebaseUserId==group.val().toFbUserId">
-                          <span class="msgdate">{{convertToDate(group.val().modifiedDate) | date : "shortTime"}}</span>
-                         
-                          <h2 class="item-text-wrap">{{group.val().fromUserName}}<span class="msgcounter"  *ngIf="group.val().unreadMessagesCounter">({{group.val().unreadMessagesCounter}})</span></h2>
-                          </div>
-                          <p [innerHTML]="group.val().message"></p>
-                         
-                        </div>
-              
-                        </ion-item>
-                    </ion-list>
-                  </div>
-              
-                  <div  *ngIf="group.val().isGroup==1">
-                    <div  *ngFor="let groupMember of groupMembersData">
-                      <ion-list  *ngIf="groupMember.userId==firebaseUserId&&groupMember.groupId==group.val().groupId">
-                        <ion-item class="item item-avatar item-text-wrap" 
-                        (click)="chatDetail(group.val().groupId,group.val().fromFbUserId,group.val().fromUserName,group.val().toUserName,2)">        
-                          
-                             <img src="{{group.val().groupImage}}" class="chat-profile-group" />                    
-                          <span class="chat-info mike">
-                            <span class="msgdate">{{convertToDate(group.val().modifiedDate) | date : "shortTime"}}</span>
-                            <h2>{{group.val().groupTitle}}<span class="msgcounter" ng-if="group.val().unreadMessagesCounter">({{group.val().unreadMessagesCounter}})</span></h2>
-                            <p ng-bind-html="group.val().message"></p>          
-                          </span>
-              
-              
-                        </ion-item>
-                      </ion-list>
-                    </div>
-                  </div>  
-          
-          <button ion-button color="danger" item-right class="roundedOption btn-del" (click)="deleteGroupChat(group.val().groupId,group.key);"  *ngIf="group.val().isGroup==1&&group.val().deletedFor.indexOf(firebaseUserId) < 0"><ion-icon name="md-close"></ion-icon>Delete Chat</button>
-          <button ion-button color="danger" item-right class="roundedOption btn-del" (click)="deleteGroupChat(group.val().groupId,group.key);"  *ngIf="group.val().isGroup==0&&group.val().deletedFor.indexOf(firebaseUserId) < 0"><ion-icon name="md-close"></ion-icon>Delete Chat</button>
-        </ion-item>
-      </div>-->
+ 
   </ion-list>
-  <ion-list *ngIf="isApp">
-    <!--<div *ngFor="let group of chatGroups">
-    <ion-item-sliding *ngIf="group.val().deletedFor.indexOf(firebaseUserId) < 0">
-    <ion-item>
-              <div *ngIf="group.val().isGroup==0">
-          
-              <ion-list>
-                  
-                  <ion-item class="item item-avatar item-text-wrap"  *ngIf="firebaseUserId==group.val().fromFbUserId||firebaseUserId==group.val().toFbUserId" 
-                      (click)="chatDetail(group.val().groupId,group.val().fromFbUserId,group.val().fromUserName,group.val().toUserName,2)">  
-                    <div  *ngIf="firebaseUserId==group.val().fromFbUserId">
-                      <div  *ngFor="let user of users">
-                        <div *ngIf="user.fbId==group.val().toFbUserId && user.isOnline==0">              
-                        <div class="userstatus-offline">Offline</div>
-                        
-                        </div>
-                        <div  *ngIf="user.fbId==group.val().toFbUserId && user.isOnline==1">              
-                        <div class="userstatus-online">Online</div>
-          
-                        </div>
-                        <div  *ngIf="user.fbId==group.val().toFbUserId">              
-                       
-                            <img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" *ngIf="user.image_url!=null&&user.image_url!=undefined&&user.image_url!=''"/>
-                            <img src={{noImgUrl}} class="custom-avatar" 
-                            *ngIf="user.image_url==null||user.image_url==''"/>
-                        </div>
-                      </div>
-                      
-                    </div> 
-          
-                    <div  *ngIf="firebaseUserId==group.val().toFbUserId">
-                      <div  *ngFor="let user of users"> <div  *ngIf="user.fbId==group.val().fromFbUserId && user.isOnline==0">
-                        <div class="userstatus-offline">Offline</div>
-                       
-                        </div>
-                        <div  *ngIf="user.fbId==group.val().fromFbUserId && user.isOnline==1">              
-                        <div class="userstatus-online">Online</div>
-                       
-                        </div>
-                         <div  *ngIf="user.fbId==group.val().fromFbUserId">              
-                       
-                            <img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" *ngIf="user.image_url!=null&&user.image_url!=undefined&&user.image_url!=''"/>
-                            <img src={{noImgUrl}} class="custom-avatar" 
-                            *ngIf="user.image_url==null||user.image_url==''"/>
-                        
-                        </div>
-                      </div>
-                      
-                    </div>  
-          
-                    <div class="chat-info">
-                      <div *ngIf="firebaseUserId==group.val().fromFbUserId">
-                      <span class="msgdate">{{convertToDate(group.val().modifiedDate) | date : "shortTime"}}</span>
-                    
-                      <h2>{{group.val().toUserName}}<span class="msgcounter"  *ngIf="group.val().unreadMessagesCounter">({{group.val().unreadMessagesCounter}})</span></h2>
-                      </div>
-                      <div  *ngIf="firebaseUserId==group.val().toFbUserId">
-                      <span class="msgdate">{{convertToDate(group.val().modifiedDate) | date : "shortTime"}}</span>
-                     
-                      <h2 class="item-text-wrap">{{group.val().fromUserName}}<span class="msgcounter"  *ngIf="group.val().unreadMessagesCounter">({{group.val().unreadMessagesCounter}})</span></h2>
-                      </div>
-                      <p [innerHTML]="group.val().message"></p>
-                     
-                    </div>
-          
-                    </ion-item>
-                </ion-list>
-              </div>
-          
-              <div  *ngIf="group.val().isGroup==1">
-                <div  *ngFor="let groupMember of groupMembersData">
-                  <ion-list  *ngIf="groupMember.userId==firebaseUserId&&groupMember.groupId==group.val().groupId">
-                    <ion-item class="item item-avatar item-text-wrap" 
-                    (click)="chatDetail(group.val().groupId,group.val().fromFbUserId,group.val().fromUserName,group.val().toUserName,2)">        
-                      
-                         <img src="{{group.val().groupImage}}" class="chat-profile-group" />                    
-                      <span class="chat-info mike">
-                        <span class="msgdate">{{convertToDate(group.val().modifiedDate) | date : "shortTime"}}</span>
-                        <h2>{{group.val().groupTitle}}<span class="msgcounter" ng-if="group.val().unreadMessagesCounter">({{group.val().unreadMessagesCounter}})</span></h2>
-                        <p ng-bind-html="group.val().message"></p>          
-                      </span>
-          
-          
-                    </ion-item>
-                  </ion-list>
-                </div>
-              </div>    
-            </ion-item>
-      <ion-item-options side="right">
-        <button ion-button color="danger" class="roundedOption btn-del"  (click)="deleteGroupChat(group.val().groupId,group.key);"  *ngIf="group.val().isGroup==1&&group.val().deletedFor.indexOf(firebaseUserId) < 0"><ion-icon name="md-close"></ion-icon>Delete Chat</button>
-        <button ion-button color="danger" class="roundedOption btn-del"  (click)="deleteGroupChat(group.groupId,group.key);"  *ngIf="group.val().isGroup==0&&group.val().deletedFor.indexOf(firebaseUserId) < 0"><ion-icon name="md-close"></ion-icon>Delete Chat</button>
-      </ion-item-options>
-  
-    </ion-item-sliding>
-  </div>-->
-  </ion-list>
-  
   </ion-content>
   

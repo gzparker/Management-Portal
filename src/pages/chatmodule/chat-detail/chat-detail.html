@@ -21,7 +21,7 @@
     <ion-refresher (ionRefresh)="messageDetail($event)">
       <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
-    <ion-list *ngIf="!isApp&&chatDetailArray.length>0">
+    <!--<ion-list *ngIf="!isApp&&chatDetailArray.length>0">
         <div *ngFor="let chat of chatDetailArray">
         <ion-item *ngIf="chat.val().deletedFor.indexOf(firebaseUserId) < 0">
           
@@ -56,9 +56,7 @@
                   <div *ngIf="user.fbId==chat.val().fromFbUserId">              
                      
                   <div class="chat-profile">
-                    <!--<img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" *ngIf="user.image_url!=null&&user.image_url!=undefined&&user.image_url!=''"/>
-                    <img src={{noImgUrl}} class="custom-avatar" 
-                    *ngIf="user.image_url==null||user.image_url==''"/>-->
+                    
                     <img src={{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}} class="custom-avatar" 
                     (error)="imgChatDetail1.src = this.sharedServiceObj.noImageUrl" #imgChatDetail1/>
                   </div> 
@@ -76,9 +74,9 @@
          
         </div>
         
-    </ion-list>
+    </ion-list>-->
 
-    <ion-list *ngIf="isApp&&chatDetailArray.length>0">
+    <ion-list *ngIf="chatDetailArray.length>0">
         
       <div *ngFor="let chat of chatDetailArray">
         <ion-item-sliding *ngIf="chat.val().deletedFor.indexOf(firebaseUserId) < 0">
@@ -122,10 +120,14 @@
                  
                 </div>
               </ion-item>
-              <ion-item-options side="right">
+              <ion-item-options side="right" *ngIf="isApp">
                      
                   <button ion-button color="danger" class="roundedOption btn-del"  (click)="deleteSingleChat(chat.val().groupId,chat.key);"><ion-icon name="md-close"></ion-icon>Delete Chat</button>
                 </ion-item-options>
+                <ion-item side="right" *ngIf="!isApp">
+                     
+                  <button ion-button color="danger" class="roundedOption btn-del"  (click)="deleteSingleChat(chat.val().groupId,chat.key);"><ion-icon name="md-close"></ion-icon>Delete Chat</button>
+                </ion-item>
           </ion-item-sliding>
         </div>
     </ion-list>
