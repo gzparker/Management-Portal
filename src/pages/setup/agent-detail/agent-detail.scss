@@ -1,3 +1,159 @@
 page-agent-detail {
+  
+  ion-navbar {
+    .bar-buttons {
+      .button-inner {
+        .icon-ios, .icon-md, .icon-wp {
+        font-size: 26px !important;
+        }
+      }
+    }
+  }
+
+  ion-content {
+    &.dashboardUI {      
+      ion-item:first-child {
+      width: 100%;
+      padding-left: 0px;
+      border-radius: 6px;
+      }
+      ion-icon {
+      font-family: $font-three;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      color: #FFF;
+        &:before {
+        font-size: 22px;
+        display: block;
+        padding-bottom: 5px;
+        }
+      }
+      .item-ios, .item-md, .item-wp {
+        
+        .item-inner {
+        border-bottom: none !important;
+          &:first-child {
+          padding: 0px !important;
+            .label-ios, .label-md, .label-wp {
+            margin: 0px;
+            }
+            .input-wrapper {
+            padding: 0px;
+              .label-ios, .label-md, .label-wp {
+              padding: 16px;
+              margin: 0px !important;
+                .item-wrapper {
+                // padding: 16px;
+                  .item-inner {
+                  padding: 16px !important;
+                  }
+                  ion-item-options {
+                    border-bottom: none;
+                  }
+                }
+              }
+            }
+          }
+        }
+        
+      }
+    }
+  }
+
+  .list-ios > .item-block:last-child, .list-ios > .item-wrapper:last-child .item-block {
+  border-bottom: 0px !important;
+  }
+  
+  .item-ios, .item-md, .item-wp {
+    &.item-block .item-inner {
+    padding-right: 0px;
+      .label-ios, .label-md, .label-wp {
+      margin-right: 0px;
+        h1, h2, h3, h4 {
+        margin: 0px;
+        }        
+      }
+    }
+  }
+
+  .agentName, .agentEmail {
+  font-family: $font-three;
+  font-size: 14px;
+  line-height: 21px;
+  text-align: center;
+  }
+
+    .agentName {
+    font-family: $font-six;
+    font-size: 18px;
+    font-weight: 600;
+    width: 100%;
+    display: block;
+    margin: 12px 0 5px 0 !important;
+    padding: 0;
+    color: #506D7B;
+    }
+
+    .agentEmail {
+    font-size: 14px;
+    color: #788C96;
+    display: block;
+    margin-bottom: 25px;
+    }
+
+  .agentDescription {
+  font-family: $font-three;  
+  text-overflow: unset;
+  white-space: normal;  
+    p {
+    font-family: $font-four;
+    font-size: 14px;
+    line-height: 22px;    
+    letter-spacing: .5px;
+    text-overflow: unset;
+    white-space: normal;
+    margin: 0 0 16px 0;
+      &:last-child {
+      margin: 0;
+      }
+    }
+  }
+
+  .button {
+    &.button-ios-primary, &.button-md-primary, &.button-wp-primary {
+    background: #207EAF;
+    }
+  }
+    
+  .item {
+  contain: none !important;
+  margin-bottom: 50px;
+  }
+
+  .item-block {
+  overflow: visible !important;
+  }
+
+  ion-item {
+  overflow: visible !important;
+  width: 100%;    
+  position: relative;
+
+    ion-avatar {
+      &.imgFull {
+      width: 100%;
+        img {
+        width: 72px;
+        height: 72px;
+        margin: 0 auto;
+        display: block;
+        }
+      }
+    }
+    .label-ios, .label-md, .label-wp {      
+    padding-bottom: 10px;
+    }
+  }
 
 }

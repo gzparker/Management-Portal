@@ -1,3 +1,46 @@
 page-edit-agent {
+  ion-navbar {
+    .bar-buttons {
+      .button-inner {
+        .icon-ios, .icon-md, .icon-wp {
+        font-size: 30px !important;
+          &:before {
+          content: "";
+          width: 32px;
+          height: 32px;
+          display: block;          
+          background: url("../assets/icon/svg/save.svg") no-repeat center center !important;
+          background-size: 62% !important;
+          }
+        }
+      }
+    }
+  }
+  .item-ios, .item-md, .item-wp {
+  margin-left: 0px !important;
+  padding-left: 0px !important;
+    .item-inner {    
+    padding-left: 16px !important;
+    padding-right: 8px !important;
+    margin-left: 0px !important;
+    border-color: #ebe9f0 !important;
+    }
+  }
 
+  .descriptionBox {
+  margin-bottom: 32px;
+  }
+
+  .label-ios, .label-md, .label-wp {
+  opacity: .68;
+  }
+
+  .customList {
+    .item-ios, .item-md, .item-wp {
+      .item-inner {
+      padding-left: 0px !important;
+      padding-right: 0px !important;
+      }
+    }
+  }
 }

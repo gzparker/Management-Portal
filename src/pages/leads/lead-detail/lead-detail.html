@@ -10,11 +10,11 @@
         <ion-icon name="menu"></ion-icon>
       </button> -->
       <!-- <ion-title>Lead Detail</ion-title> -->
-      <ion-buttons end>
+      <!-- <ion-buttons end>
         <button ion-button (click)="editLead();" *ngIf="isEditLeadAccess==true">
           <ion-icon name="ios-bookmark"></ion-icon>
         </button>
-      </ion-buttons>
+      </ion-buttons> -->
     </ion-navbar>
 </ion-header>
 
@@ -33,7 +33,7 @@
   </ion-list>
   
   <h1 class="contentTitle animated bounceInRight">Lead Details</h1>
-
+  
   <ion-list class="animated lightSpeedIn leadsInfo">
       <!-- <ion-item *ngIf="leadDetail!=undefined">
         <ion-icon name="ios-mail-outline" item-start></ion-icon>
@@ -47,85 +47,88 @@
         <p>{{leadDetail.email}}</p>
       </ion-item> -->
 
-      <ion-item *ngIf="leadDetail!=undefined">
-        <ion-icon name="ios-mail-outline" item-start></ion-icon>
+      <ion-item class="leadsWebURL" *ngIf="leadDetail!=undefined">
+        <ion-icon name="ios-globe-outline" item-start></ion-icon>
         <h2>Website</h2>
-        <p>{{leadDetail.website}}</p>
+        <p data-placeholder="N/A">{{leadDetail.website}}</p>
       </ion-item>
 
-      <ion-item *ngIf="leadDetail!=undefined">
-        <ion-icon name="ios-mail-outline" item-start></ion-icon>
-        <h2>Phone Mobile</h2>
-        <p>{{leadDetail.phone_mobile}}</p>
+      <ion-item class="leadsPhone1" *ngIf="leadDetail!=undefined">
+        <ion-icon name="md-call" item-start></ion-icon>
+        <h2>Mobile #</h2>
+        <p data-placeholder="N/A">{{leadDetail.phone_mobile}}</p>
       </ion-item>
 
-      <ion-item *ngIf="leadDetail!=undefined">
-        <ion-icon name="ios-mail-outline" item-start></ion-icon>
-        <h2>Phone Office</h2>
-        <p>{{leadDetail.phone_office}}</p>
+      <ion-item class="leadsPhone2" *ngIf="leadDetail!=undefined">
+        <ion-icon name="md-call" item-start></ion-icon>
+        <h2>Office #</h2>
+        <p data-placeholder="N/A">{{leadDetail.phone_office}}</p>
       </ion-item>
 
-      <ion-item *ngIf="leadDetail!=undefined">
-        <ion-icon name="ios-mail-outline" item-start></ion-icon>
-        <h2>Phone Home</h2>
-        <p>{{leadDetail.phone_home}}</p>
+      <ion-item class="leadsPhone3" *ngIf="leadDetail!=undefined">
+        <ion-icon name="md-call" item-start></ion-icon>
+        <h2>Home #</h2>
+        <p data-placeholder="N/A">{{leadDetail.phone_home}}</p>
       </ion-item>
 
-      <ion-item *ngIf="leadDetail!=undefined">
-        <ion-icon name="ios-mail-outline" item-start></ion-icon>
+      <ion-item class="leadsHomeAddress" *ngIf="leadDetail!=undefined">
+        <ion-icon name="md-home" item-start></ion-icon>
         <h2>Home Address</h2>
-        <p>{{leadDetail.home_address}}</p>
+        <p data-placeholder="N/A">{{leadDetail.home_address}}</p>
       </ion-item>
 
-      <div>
+      <div class="leadsHomeAddressMap">
         <div #mapHome id="mapHome" style="width:100%;" [style.height]="map_home_height+'px'"></div>
       </div>
 
-      <ion-item *ngIf="leadDetail!=undefined">
-        <ion-icon name="ios-mail-outline" item-start></ion-icon>
+      <ion-item class="leadsWorkAddress" *ngIf="leadDetail!=undefined">
+        <ion-icon name="md-briefcase" item-start></ion-icon>
         <h2>Work Address</h2>
-        <p>{{leadDetail.work_address}}</p>
+        <p data-placeholder="N/A">{{leadDetail.work_address}}</p>
       </ion-item>
 
-      <div>
+      <div class="leadsWorkAddressMap">
         <div #mapWork id="mapWork" style="width:100%;" [style.height]="map_work_height+'px'"></div>
       </div>
-  </ion-list>
+  </ion-list>  
 
 
-  <ion-list>
+  <ion-list class="leadNotes">
       <ion-item *ngIf="leadDetail!=undefined">
-        <h2>Internal Notes</h2>
-        <p>{{leadDetail.internal_notes}}</p>
+        <h2 class="contentTitle">Internal Notes</h2>
+        <p data-placeholder="N/A">{{leadDetail.internal_notes}}</p>        
       </ion-item>
   </ion-list>
 
-  <ion-list *ngIf="selectedSegment=='2'">
-    <ion-item *ngFor="let saved_listing of savedListings">              
+  <ion-list class="leadListings" *ngIf="selectedSegment=='2'">
+
+    <!-- <h2 class="contentTitle">Saved Listings</h2> -->
+
+    <ion-item *ngFor="let saved_listing of savedListings">
         
         <ion-avatar item-start>
-            <img src="{{saved_listing.url}}" class="custom-avatar" 
-            (error)="imgListing.src = this.sharedServiceObj.noImageUrl" #imgListing/>
+          <img src="{{saved_listing.url}}"
+          (error)="imgListing.src = this.sharedServiceObj.noImageUrl" #imgListing/>
           <!--<img [src]="saved_listing.url" *ngIf="saved_listing.url!=''"/>
           <img src="././assets/imgs/noImage.png" *ngIf="saved_listing.url==''"/>-->
         </ion-avatar>
-          <h2 *ngIf="saved_listing.listing_type=='for_sale'">For Sale</h2>
+        <h2 *ngIf="saved_listing.listing_type=='for_sale'">For Sale</h2>
         <h2 *ngIf="saved_listing.listing_type=='for_rent'">For Rent</h2>
-          <p>Price:${{saved_listing.price}}</p>
-          <p>Description:{{saved_listing.description}}</p>
+        <p>Price: ${{saved_listing.price}}</p>
+        <p>Description: {{saved_listing.description}}</p>
         </ion-item>
-            
+
   </ion-list>
   
-  <ion-list *ngIf="selectedSegment=='3'">
+  <ion-list class="leadHotsheetName" *ngIf="selectedSegment=='3'">
       <ion-item *ngFor="let subscribed_hotsheet of subscribed_hotsheets">
-      <h2>{{subscribed_hotsheet.name}}</h2>              
+      <h2 class="contentTitle">{{subscribed_hotsheet.name}}</h2>
       </ion-item>
   </ion-list>
-
-  <ion-list *ngIf="selectedSegment=='1'">    
+  
+  <ion-list class="leadSearchName" *ngIf="selectedSegment=='1'">
     <ion-item *ngFor="let saved_search of saved_searches">      
-      <h2>{{saved_search.search_name}}</h2>
+      <h2 class="contentTitle">{{saved_search.search_name}}</h2>
     </ion-item>
   </ion-list>
 

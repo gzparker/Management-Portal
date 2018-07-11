@@ -34,8 +34,8 @@
 
   <h1 class="contentTitle animated bounceInRight">All Websites</h1>
 
-  <ion-list class="animated lightSpeedIn" *ngIf="!isApp">
-    <ion-item-sliding *ngFor="let website of allWebsiteList">
+  <ion-list class="noShadow" *ngIf="!isApp">
+    <ion-item-sliding class="animated lightSpeedIn" *ngFor="let website of allWebsiteList">
 
         <ion-item class="websiteThumb">
             <ion-thumbnail item-start  (click)="websiteLinks(website.id)">
@@ -94,8 +94,8 @@
     </ion-item-sliding>
   </ion-list>
 
-  <ion-list *ngIf="isApp">
-    <ion-item-sliding *ngFor="let website of allWebsiteList">
+  <ion-list class="noShadow" *ngIf="isApp">
+    <ion-item-sliding class="animated lightSpeedIn" *ngFor="let website of allWebsiteList">
       
       <ion-item class="websiteThumb">
         <ion-avatar item-start (click)="editWebsite(website.id)"  *ngIf="isEditWebsiteAccess==true">

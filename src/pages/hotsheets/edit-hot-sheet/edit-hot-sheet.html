@@ -4,17 +4,16 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
+<ion-header class="dashboardUI">
 
   <ion-navbar>
     <!-- <button ion-button menuToggle start>
-    <ion-icon name="menu"></ion-icon>
+      <ion-icon name="menu"></ion-icon>
     </button> -->
     <ion-title>Edit Hot Sheet</ion-title>
     <ion-buttons end>
     <button ion-button icon-left (click)="updateHotSheet();" [disabled]="!hotSheetForm.valid||polygon_search==''">
-      <ion-icon name="md-checkbox"></ion-icon>
-      Update
+      <ion-icon name="ios-bookmark"></ion-icon>      
     </button>
     </ion-buttons>
   </ion-navbar>  
@@ -22,16 +21,18 @@
 </ion-header>
 
 
-<ion-content>
-  <h1 class="contentTitle">Update HotSheet</h1>
+<ion-content padding class="dashboardUI">  
     
   <ion-chip *ngIf='hotsheetUpdateMsg!=""'>
     <ion-label color="danger">{{hotsheetUpdateMsg}}</ion-label>
   </ion-chip>
+  
+  <!-- <h1 class="contentTitle animated bounceInRight">Edit Hot Sheet</h1> -->
 
   <form role="form" data-toggle="validator" #hotSheetForm="ngForm">
-      
-    <ion-item>
+    
+  
+    <ion-item class="websiteSelect">
       <ion-label stacked>Select Website<span [ngClass]="{'error': selectedWebsite==''}" *ngIf="selectedWebsite==''">*</span></ion-label>
       <ion-select [(ngModel)]="selectedWebsite" (ngModelChange)="onWebsiteSelection($event)" name="selectedWebsite" required>
       <ion-option *ngFor="let website of allWebsiteList" value= {{website.id}}>
@@ -46,9 +47,11 @@
 
     </ng4geo-autocomplete>
     </div>-->
-
+    
     <ion-searchbar class="mapSearchBG"  #searchbar placeholder="Search"></ion-searchbar>
-
+    
+    
+    <ion-list class="animated fadeIn blk1">
     <ion-item class="drawMapNotes" *ngIf="map_height!=null">
       <ion-label>Draw Search Area Border<span [ngClass]="{'error': polygon_search==''}" *ngIf="polygon_search==''">*</span></ion-label>
     </ion-item>
@@ -56,159 +59,165 @@
     <div class="mapBlock">
       <div #map id="map" style="width:100%;" [style.height]="map_height+'px'"></div>
     </div>
-
-    <ion-item>
-      <ion-label stacked>Name<span [ngClass]="{'error': name==''}" *ngIf="name==''">*</span></ion-label>
-      <ion-input type="text" required [(ngModel)]="name" name="name" id="name" (input)="setHotSheetDefaultTitle()"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label stacked>Slug<span [ngClass]="{'error': slug==''}" *ngIf="slug==''">*</span></ion-label>
-      <ion-input type="text" required [(ngModel)]="slug" name="slug" id="slug"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Parent ID</ion-label>
-      <ion-select [(ngModel)]="parent_id"  
-      name="parent_id" >
-      <ion-option value="">None</ion-option>
-        <ion-option *ngFor="let hotsheet of allHotSheetList" value= {{hotsheet.id}}>
-          {{hotsheet.name}}
-         </ion-option>
-      </ion-select>
-    </ion-item>
-
-    <ion-item>
-      <ion-label stacked>Community/Neighborhood</ion-label>
-      <ion-input type="text" [(ngModel)]="community" name="community"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label stacked>City</ion-label>
-      <ion-input type="text" [(ngModel)]="city" name="city"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label stacked>Sub City</ion-label>
-      <ion-input type="text" [(ngModel)]="sub_city" name="sub_city"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label stacked>Title<span [ngClass]="{'error': hotsheet_Title==''}" *ngIf="hotsheet_Title==''">*</span></ion-label>
-      <ion-input type="text" required [(ngModel)]="hotsheet_Title" name="hotsheet_Title" id="hotsheet_Title"></ion-input>
-    </ion-item>
-
-    <div class="itemPadding">
-      <ion-label>Brief Description</ion-label>
-      <ckeditor
-      [config]="CkeditorConfig"
-      [readonly]="false" [(ngModel)]="brief_description"
-      (change)="onHotSheetBreifDescChanged($event)"
-      (blur)="onHotSheetBreifDescBlured($event)"
-      (focus)="onHotSheetBreifDescFocused($event)"
-      (ready)="onHotSheetBreifDescCreated($event)"
-      debounce="500" name="brief_description">
-      </ckeditor>
-    </div>
-
-    <div class="itemPadding">
-      <ion-label>Main Description</ion-label>
-      <ckeditor [(ngModel)]="main_description"
-      [config]="CkeditorConfig"
-      [readonly]="false"
-      (change)="onHotSheetDescChanged($event)"
-      (blur)="onHotSheetDescBlured($event)"
-      (focus)="onHotSheetDescFocused($event)"
-      (ready)="onHotSheetDescCreated($event)"
-      debounce="500" name="editorMainDescription">
-      </ckeditor>
-    </div>
-
-    <!--<ion-item>
-      <ion-label stacked>Main Description</ion-label>
-      <ion-textarea type="text" [(ngModel)]="main_description" name="main_description"></ion-textarea>
-    </ion-item>-->
-
-    <!--<ion-item>
-      <ion-label stacked>Brief Description</ion-label>
-      <ion-textarea type="text" [(ngModel)]="brief_description" name="brief_description"></ion-textarea>
-    </ion-item>-->
+    </ion-list>
     
-    <ion-item>
-      <ion-label stacked>Meta Title</ion-label>
-      <ion-input type="text" [(ngModel)]="meta_title" name="meta_title"></ion-input>
-    </ion-item>
+    <ion-list class="slugSettings">
+        <ion-item>
+          <ion-label stacked>Name<span [ngClass]="{'error': name==''}" *ngIf="name==''">*</span></ion-label>
+          <ion-input type="text" required [(ngModel)]="name" name="name" id="name" (input)="setHotSheetDefaultTitle()"></ion-input>
+        </ion-item>
 
-    <!--<div>
-        <ion-label>Meta Description</ion-label>
-        <ckeditor  [(ngModel)]="meta_description"
+        <ion-item>
+          <ion-label stacked>Slug<span [ngClass]="{'error': slug==''}" *ngIf="slug==''">*</span></ion-label>
+          <ion-input type="text" required [(ngModel)]="slug" name="slug" id="slug"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label stacked>Parent ID</ion-label>
+          <ion-select placeholder="-----" [(ngModel)]="parent_id"  
+          name="parent_id">
+          <ion-option value="">None</ion-option>
+            <ion-option *ngFor="let hotsheet of allHotSheetList" value= {{hotsheet.id}}>
+              {{hotsheet.name}}
+             </ion-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label stacked>Community/Neighborhood</ion-label>
+          <ion-input type="text" [(ngModel)]="community" name="community"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label stacked>City</ion-label>
+          <ion-input type="text" [(ngModel)]="city" name="city"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label stacked>Sub City</ion-label>
+          <ion-input type="text" [(ngModel)]="sub_city" name="sub_city"></ion-input>
+        </ion-item>
+    </ion-list>
+
+
+    <div class="customList metaSettings">
+      <ion-item class="noPadding">
+        <ion-label stacked>Title<span [ngClass]="{'error': hotsheet_Title==''}" *ngIf="hotsheet_Title==''">*</span></ion-label>
+        <ion-input type="text" required [(ngModel)]="hotsheet_Title" name="hotsheet_Title" id="hotsheet_Title"></ion-input>
+      </ion-item>
+      
+      <div class="briefDescription">
+        <ion-label stacked>Brief Description</ion-label>
+        <ckeditor
+        [config]="CkeditorConfig"
+        [readonly]="false" [(ngModel)]="brief_description"
+        (change)="onHotSheetBreifDescChanged($event)"
+        (blur)="onHotSheetBreifDescBlured($event)"
+        (focus)="onHotSheetBreifDescFocused($event)"
+        (ready)="onHotSheetBreifDescCreated($event)"
+        debounce="500" name="brief_description">
+        </ckeditor>
+      </div>
+
+      <div class="mainDescription">
+        <ion-label stacked>Main Description</ion-label>
+        <ckeditor [(ngModel)]="main_description"
         [config]="CkeditorConfig"
         [readonly]="false"
-        (change)="onHotSheetMetaDescChanged($event)"
-        (blur)="onHotSheetMetaDescBlured($event)"
-        (focus)="onHotSheetMetaDescFocused($event)"
-        (ready)="onHotSheetMetaDescCreated($event)"
-        debounce="500" name="meta_description">
-      </ckeditor>
-    </div>-->
+        (change)="onHotSheetDescChanged($event)"
+        (blur)="onHotSheetDescBlured($event)"
+        (focus)="onHotSheetDescFocused($event)"
+        (ready)="onHotSheetDescCreated($event)"
+        debounce="500" name="editorMainDescription">
+        </ckeditor>
+      </div>  
 
-    <ion-item>
-      <ion-label stacked>Meta Description</ion-label>
-      <ion-textarea type="text" [(ngModel)]="meta_description" name="meta_description"></ion-textarea>
-    </ion-item>
+      <!--<ion-item>
+        <ion-label stacked>Main Description</ion-label>
+        <ion-textarea type="text" [(ngModel)]="main_description" name="main_description"></ion-textarea>
+      </ion-item>-->
 
-    <ion-item>
-      <ion-label stacked>Assigned Agent IDs</ion-label>
-      <ion-select [(ngModel)]="assigned_agent_id"  
-      name="assigned_agent_id" multiple="true">
-      <ion-option *ngFor="let agent of allAgents" value= {{agent.id}}>
-      {{agent.first_name}} {{agent.last_name}}
-      </ion-option>
-      </ion-select>
-    </ion-item>
-
-    <!-- <ion-item>
-      <button ion-button style="text-transform:lowercase !important;" color="secondary" outline (click)="toggleAdditionalInfo()" full small>additional options</button>
-    </ion-item> -->
-
-    <ion-item>
-      <ion-label> Additional Options</ion-label>
-      <ion-toggle checked="false" (click)="toggleAdditionalInfo()"></ion-toggle>      
-    </ion-item>
-
-    <ion-list *ngIf="additionalInfoOption">
+      <!--<ion-item>
+        <ion-label stacked>Brief Description</ion-label>
+        <ion-textarea type="text" [(ngModel)]="brief_description" name="brief_description"></ion-textarea>
+      </ion-item>-->
       
-      <ion-item>
+      <ion-item class="noPadding">
+        <ion-label stacked>Meta Title</ion-label>
+        <ion-input type="text" [(ngModel)]="meta_title" name="meta_title"></ion-input>
+      </ion-item>
+
+      <!--<div>
+          <ion-label>Meta Description</ion-label>
+          <ckeditor  [(ngModel)]="meta_description"
+          [config]="CkeditorConfig"
+          [readonly]="false"
+          (change)="onHotSheetMetaDescChanged($event)"
+          (blur)="onHotSheetMetaDescBlured($event)"
+          (focus)="onHotSheetMetaDescFocused($event)"
+          (ready)="onHotSheetMetaDescCreated($event)"
+          debounce="500" name="meta_description">
+        </ckeditor>
+      </div>-->
+
+      <ion-item class="noPadding itemMargin">
+        <ion-label stacked>Meta Description</ion-label>
+        <ion-textarea type="text" [(ngModel)]="meta_description" name="meta_description"></ion-textarea>
+      </ion-item>
+
+      <ion-item class="noPadding itemMargin">
+        <ion-label stacked>Assigned Agent IDs</ion-label>
+        <ion-select placeholder="-----" [(ngModel)]="assigned_agent_id"  
+        name="assigned_agent_id" multiple="true">
+        <ion-option *ngFor="let agent of allAgents" value= {{agent.id}}>
+        {{agent.first_name}} {{agent.last_name}}
+        </ion-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- <ion-item>
+        <button ion-button style="text-transform:lowercase !important;" color="secondary" outline (click)="toggleAdditionalInfo()" full small>additional options</button>
+      </ion-item> -->
+
+      <ion-item class="noPadding itemLast">
+        <ion-label stacked>Additional Options</ion-label>
+        <ion-toggle checked="true" (click)="toggleAdditionalInfo()"></ion-toggle>
+      </ion-item>
+      
+      <ion-item class="noPadding vidTour" *ngIf="additionalInfoOption">
         <ion-label stacked>Video Tour Url</ion-label>
-        <ion-input type="text" [(ngModel)]="virtual_tour_url" name="virtual_tour_url" pattern="https?://.+"></ion-input>
+        <ion-textarea type="text" [(ngModel)]="virtual_tour_url" name="virtual_tour_url" pattern="https?://.+"></ion-textarea>
+      </ion-item>
+
+      <ion-item class="noPadding vidTour" *ngIf="additionalInfoOption">
+        <ion-label stacked>Video Url</ion-label>
+        <ion-textarea type="text" [(ngModel)]="video_url" name="video_url" pattern="https?://.+"></ion-textarea>
+      </ion-item>
+    </div>
+
+
+    <ion-list class="customList" *ngIf="isApp">
+      <ion-item>
+        <button ion-button color="primary" block (click)="takeHeaderPicture();" >Select Header Image</button>
+      </ion-item>
+
+      <ion-item *ngIf="headerImage!=''">
+        <img [src]="headerImage" />
       </ion-item>
 
       <ion-item>
-        <ion-label stacked>Video Url</ion-label>
-        <ion-input type="text" [(ngModel)]="video_url" name="video_url" pattern="https?://.+"></ion-input>
+        <button ion-button color="primary" block (click)="takeCommunityPicture();">Select Community Image</button>
       </ion-item>
 
-      <ion-list *ngIf="isApp">        
-        <ion-item>
-          <button ion-button color="primary" block (click)="takeHeaderPicture();" >Select Header Image</button>
-        </ion-item>
+      <ion-item *ngIf="communityImage!=''">
+        <img [src]="communityImage" />
+      </ion-item>
+    </ion-list>
 
-        <ion-item *ngIf="headerImage!=''">
-          <img [src]="headerImage" />
-        </ion-item>
 
-        <ion-item>
-          <button ion-button color="primary" block (click)="takeCommunityPicture();">Select Community Image</button>
-        </ion-item>
-
-        <ion-item *ngIf="communityImage!=''">
-          <img [src]="communityImage" />
-        </ion-item>
-      </ion-list>
-
-      <ion-list class="additionalOption" *ngIf="!isApp">
+    <ion-list class="additionalOption" *ngIf="!isApp">
         
-        <ion-list-header>Header Image</ion-list-header>
+        <ion-label stacked>Header Image</ion-label>
 
         <ion-item *ngIf="dataHeaderImage.image">
           <ion-label>Edit Image</ion-label>
@@ -227,303 +236,302 @@
           [height]="headerHeight">
         </span>
     
-        <ion-list-header>Community Image</ion-list-header>
+        <div class="customItem">
+            <ion-label stacked>Community Image</ion-label>
 
-        <ion-item *ngIf="dataCommunityImage.image">
-          <ion-label>Edit Image</ion-label>
-          <ion-toggle [(ngModel)]="edit_community_image" 
-          name="edit_community_image" (click)="showHideCommunityCropper()"></ion-toggle>
-        </ion-item>
-        
-        <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="communityFileChangeListener($event)">
-           
-        <img-cropper class="imgCropper"  #communityImageCropper [image]="dataCommunityImage" [settings]="communityCropperSettings"
-         (onCrop)="communtiyImageCropped($event)" *ngIf="hideCommunityCropper"></img-cropper>
-        
-        <span class="cropPreview" *ngIf="dataCommunityImage.image" >
-          <span class="cropPreviewLabel">Community Image Preview</span>
-          <img [src]="dataCommunityImage.image" [width]="communityWidth"
-          [height]="communityHeight">
-        </span>
-
+            <ion-item *ngIf="dataCommunityImage.image">
+              <ion-label>Edit Image</ion-label>
+              <ion-toggle [(ngModel)]="edit_community_image" 
+              name="edit_community_image" (click)="showHideCommunityCropper()"></ion-toggle>
+            </ion-item>
+            
+            <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="communityFileChangeListener($event)">
+               
+            <img-cropper class="imgCropper"  #communityImageCropper [image]="dataCommunityImage" [settings]="communityCropperSettings"
+             (onCrop)="communtiyImageCropped($event)" *ngIf="hideCommunityCropper"></img-cropper>
+            
+            <span class="cropPreview" *ngIf="dataCommunityImage.image" >
+              <span class="cropPreviewLabel">Community Image Preview</span>
+              <img [src]="dataCommunityImage.image" [width]="communityWidth"
+              [height]="communityHeight">
+            </span>
+        </div>
       </ion-list>
-    </ion-list>
 
     <!-- <ion-item>
       <button ion-button style="text-transform:lowercase !important;" color="secondary" outline (click)="toggleAdvanceSearch()" full small>filter</button>
     </ion-item> -->
 
-    <ion-item>
-      <ion-label> Filter</ion-label>
-      <ion-toggle checked="false" (click)="toggleAdvanceSearch()"></ion-toggle>
-    </ion-item>
-
-    <ion-list *ngIf="advanceSearchOption">
-     
-      <ion-item *ngIf="status!=undefined">
-        <ion-label stacked>Status</ion-label>
-        <ion-select [(ngModel)]="status_modal" (ngModelChange)="selectedStatus($event)" name="status_modal">
-          <ion-option *ngFor="let status of statusOptions" value= {{status.id}}>
-             {{status.name}}
-           </ion-option>
-         </ion-select>  
-      </ion-item>
-
-      <ion-item *ngIf="listing_type!=undefined">
-        <ion-label stacked>Listing Type</ion-label>
-        <ion-select [(ngModel)]="listing_type_modal" (ngModelChange)="selectedListingType($event)" 
-        name="listing_type_modal" multiple="true">
-
-          <ion-option *ngFor="let listingType of listingTypeOptions" value= {{listingType.id}}>
-             {{listingType.name}}
-           </ion-option>
-         </ion-select>
+    
+    <ion-list class="customList filterList">        
         
-      </ion-item>
+        <ion-item class="filterLabel">
+          <ion-label>Filter</ion-label>
+          <ion-toggle checked="false" (click)="toggleAdvanceSearch()"></ion-toggle>
+        </ion-item>
 
-      <ion-item>
-        <ion-label class="hotsheetPrice">Price ({{price.lower}} - {{price.upper}})</ion-label>
-        <ion-range dualKnobs="true" [(ngModel)]="price" min="0" max="600000000" 
-           color="primary" name="price"></ion-range>
-      </ion-item>
+        <div class="filterOptions" *ngIf="advanceSearchOption">     
+            <ion-item *ngIf="status!=undefined">
+              <ion-label>Status</ion-label>
+              <ion-select [(ngModel)]="status_modal" (ngModelChange)="selectedStatus($event)" name="status_modal">
+                <ion-option *ngFor="let status of statusOptions" value= {{status.id}}>
+                   {{status.name}}
+                 </ion-option>
+               </ion-select>  
+            </ion-item>
 
-      <!--<ion-item *ngIf="msl_id!=undefined">
-        <ion-label stacked>MLS #</ion-label>
-        <ion-input type="text" [(ngModel)]="msl_id" name="msl_id" id="msl_id" (blur)="updateSearchObject()"></ion-input>
-      </ion-item>-->
+            <ion-item *ngIf="listing_type!=undefined">
+              <ion-label>Listing Type</ion-label>
+              <ion-select [(ngModel)]="listing_type_modal" (ngModelChange)="selectedListingType($event)" 
+              name="listing_type_modal" multiple="true">
 
-      <ion-item *ngIf="bedrooms!=undefined">
-        <ion-label stacked>Beds</ion-label>
-        <ion-select [(ngModel)]="bedrooms" name="bedrooms" id="bedrooms" 
-        (ngModelChange)="updateSearchObject()">
-         
-           <ion-option value="1">1+</ion-option>
-           <ion-option value="2">2+</ion-option>
-           <ion-option value="3">3+</ion-option>
-           <ion-option value="4">4+</ion-option>
-           <ion-option value="5">5+</ion-option>
-           <ion-option value="6">6+</ion-option>
-           <ion-option value="7">7+</ion-option>
-           <ion-option value="8">8+</ion-option>
-           <ion-option value="9">9+</ion-option>
-           <ion-option value="10">10+</ion-option>
-         </ion-select>
+                <ion-option *ngFor="let listingType of listingTypeOptions" value= {{listingType.id}}>
+                   {{listingType.name}}
+                 </ion-option>
+               </ion-select>        
+            </ion-item>
+
+            <ion-item>
+              <ion-label stacked class="hotsheetPriceLabel">Price</ion-label>
+              <ion-label class="hotsheetPrice">$ ({{price.lower}} - {{price.upper}})</ion-label>
+              <ion-range dualKnobs="true" [(ngModel)]="price" min="0" max="600000000" 
+                 color="primary" name="price"></ion-range>
+            </ion-item>
+
+            <!--<ion-item *ngIf="msl_id!=undefined">
+              <ion-label stacked>MLS #</ion-label>
+              <ion-input type="text" [(ngModel)]="msl_id" name="msl_id" id="msl_id" (blur)="updateSearchObject()"></ion-input>
+            </ion-item>-->
+
+            <ion-item *ngIf="bedrooms!=undefined">
+              <ion-label>Beds</ion-label>
+              <ion-select [(ngModel)]="bedrooms" name="bedrooms" id="bedrooms" 
+              (ngModelChange)="updateSearchObject()">
+               
+                 <ion-option value="1">1+</ion-option>
+                 <ion-option value="2">2+</ion-option>
+                 <ion-option value="3">3+</ion-option>
+                 <ion-option value="4">4+</ion-option>
+                 <ion-option value="5">5+</ion-option>
+                 <ion-option value="6">6+</ion-option>
+                 <ion-option value="7">7+</ion-option>
+                 <ion-option value="8">8+</ion-option>
+                 <ion-option value="9">9+</ion-option>
+                 <ion-option value="10">10+</ion-option>
+               </ion-select>
+              
+            </ion-item>
+
+            <ion-item *ngIf="bathrooms!=undefined">
+              <ion-label>Baths</ion-label>
+              <ion-select [(ngModel)]="bathrooms" name="bathrooms" id="bathrooms" 
+              (ngModelChange)="updateSearchObject()">
+               
+                 <ion-option value="1">1+</ion-option>
+                 <ion-option value="2">2+</ion-option>
+                 <ion-option value="3">3+</ion-option>
+                 <ion-option value="4">4+</ion-option>
+                 <ion-option value="5">5+</ion-option>
+                 <ion-option value="6">6+</ion-option>
+                 <ion-option value="7">7+</ion-option>
+                 <ion-option value="8">8+</ion-option>
+                 <ion-option value="9">9+</ion-option>
+                 <ion-option value="10">10+</ion-option>
+               </ion-select>
+              
+            </ion-item>
+
+            <ion-item>
+                <ion-label fixed>Property Size</ion-label>        
+                <ion-input type="text" [(ngModel)]="unit_size_min"
+                name="unit_size_min" id="unit_size_min" placeholder="min" (blur)="updateSearchObject()"></ion-input>      
+                <ion-input type="text" [(ngModel)]="unit_size_max" 
+                name="unit_size_max" id="unit_size_max" placeholder="max" (blur)="updateSearchObject()"></ion-input>         
+            </ion-item>
+
+            <ion-item>
+              <ion-label fixed>Lot Size</ion-label>
+              <!--<ion-select [(ngModel)]="lot_size" name="lot_size" id="lot_size"
+              (ngModelChange)="updateSearchObject()">
+               
+              <ion-option value="2000">2,000+ sqft</ion-option>
+              <ion-option value="3000">3,000+ sqft</ion-option>
+              <ion-option value="4000">4,000+ sqft</ion-option>
+              <ion-option value="5000">5,000+ sqft</ion-option>
+              <ion-option value="7500">7,500+ sqft</ion-option>
+              <ion-option value="10890">.25+ acre (10,890+ sqft)</ion-option>
+              <ion-option value="21780">.5+ acre (21,780+ sqft)</ion-option>
+              <ion-option value="43560">1+ acre</ion-option>
+              <ion-option value="87120">2+ acres</ion-option>
+              <ion-option value="217800">5+ acres</ion-option>
+              <ion-option value="435600">10+ acres</ion-option>
+               </ion-select>-->
+               
+               <ion-input type="text" [(ngModel)]="lot_size_min"
+               name="lot_size_min" id="lot_size_min" placeholder="min" (blur)="updateSearchObject()"></ion-input>
+           
+               <ion-input type="text" [(ngModel)]="lot_size_max" 
+               name="lot_size_max" id="lot_size_max" placeholder="max" (blur)="updateSearchObject()"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label fixed>Year Built</ion-label>
+              
+               <ion-input type="text" [(ngModel)]="year_built_min"
+               name="year_built_min" id="year_built_min" placeholder="min" (blur)="updateSearchObject()"></ion-input>
+           
+               <ion-input type="text" [(ngModel)]="year_built_max" 
+               name="year_built_max" id="year_built_max" placeholder="max" (blur)="updateSearchObject()"></ion-input>
+
+            </ion-item>
+
+            <ion-item>
+              <ion-label>Days on the Market</ion-label>
+              <ion-select [(ngModel)]="dols" name="dols" id="dols">
+               
+                 <ion-option value="-1">Any</ion-option>
+                 <ion-option value="1"> < 1 Day</ion-option>
+                 <ion-option value="7"> < 7 Days</ion-option>
+                 <ion-option value="14"> < 14 Days</ion-option>
+                 <ion-option value="30"> < 30 Days</ion-option>
+                 <ion-option value="90"> < 90 Days</ion-option>
+                 <ion-option value="180"> < 6 Months</ion-option>
+                 <ion-option value="365"> < 1 Year</ion-option>
+               
+               </ion-select>
+              
+            </ion-item>
+
+            <!--<ion-item *ngIf="days_on_market!=undefined">
+            <ion-label stacked>Days on the Market</ion-label>
+            <ion-select [(ngModel)]="days_on_market" name="days_on_market" id="days_on_market"
+            (ngModelChange)="updateSearchObject()">
+             
+              <ion-option value="1">1 Day</ion-option>
+              <ion-option value="7">7 Days</ion-option>
+              <ion-option value="14">14 Days</ion-option>
+              <ion-option value="30">30 Days</ion-option>
+              <ion-option value="90">3 Months</ion-option>
+              <ion-option value="180">6 Months</ion-option>
+              <ion-option value="360">12 Months</ion-option>
+              <ion-option value="720">24 Months</ion-option>
+              <ion-option value="1080">36 Months</ion-option>
+
+             </ion-select>
+
+            </ion-item>-->
+            <!--<ion-item *ngIf="address_township!=undefined">
+              <ion-label stacked>Address Township</ion-label>
+              <ion-input type="text" [(ngModel)]="address_township" name="address_township" id="address_township" 
+              (blur)="updateSearchObject()"></ion-input>
+            </ion-item>
+
+            <ion-item *ngIf="garage_size!=undefined">
+              <ion-label stacked>Garage Size</ion-label>
+              <ion-select [(ngModel)]="garage_size" name="garage_size" id="garage_size"
+              (ngModelChange)="updateSearchObject()">
+               
+              <ion-option value="1">1 car</ion-option>
+              <ion-option value="2">2 car</ion-option>
+              <ion-option value="3">3 car</ion-option>
+              <ion-option value="4">4 car</ion-option>
+              <ion-option value="5">5 car</ion-option>
+               </ion-select>
+            </ion-item>-->
+
+            <!--<ion-item *ngIf="parcel_num!=undefined">
+              <ion-label stacked>Lot or Parcel #</ion-label>
+              <ion-input type="text" [(ngModel)]="parcel_num" name="parcel_num" id="parcel_num" (blur)="updateSearchObject()"></ion-input>
+            </ion-item>-->
+
+            <!--<ion-item *ngIf="school_district!=undefined">
+              <ion-label stacked>School District</ion-label>
+              <ion-input type="text" [(ngModel)]="school_district" name="school_district" id="school_district" (blur)="updateSearchObject()"></ion-input>
+            </ion-item>
+
+            <ion-item *ngIf="school_elem!=undefined">
+              <ion-label stacked>School Elem</ion-label>
+              <ion-input type="text" [(ngModel)]="school_elem" name="school_elem" id="school_elem" (blur)="updateSearchObject()"></ion-input>
+            </ion-item>-->
+
+            <!--<ion-item *ngIf="school_high!=undefined">
+              <ion-label stacked>School High</ion-label>
+              <ion-input type="text" [(ngModel)]="school_high" name="school_high" id="school_high" (blur)="updateSearchObject()"></ion-input>
+            </ion-item>-->
+
+            <!--<ion-item *ngIf="stories!=undefined">
+              <ion-label stacked>Stories</ion-label>
+              <ion-input type="text" [(ngModel)]="stories" name="stories" id="stories" (blur)="updateSearchObject()"></ion-input>
+            </ion-item>-->
+
+            <!--<ion-item *ngIf="address_city!=undefined">
+              <ion-label stacked>Specific Cities</ion-label>
+              <ion-select [(ngModel)]="address_city_modal" (ngModelChange)="selectedAddressCity($event)" 
+              name="address_city_modal" multiple="true">
+                <ion-option *ngFor="let address_city_option of address_city_options" value= {{address_city_option.id}}>
+                   {{address_city_option.name}}
+                 </ion-option>
+               </ion-select>
+            </ion-item>
+
+            <ion-item *ngIf="address_subdivision!=undefined">
+              <ion-label stacked>Select Subdivisions</ion-label>
+              <ion-select [(ngModel)]="address_subdivision_modal" (ngModelChange)="selectedSubDivision($event)" 
+              name="address_subdivision_modal" multiple="true">
+                <ion-option *ngFor="let address_subdivision_option of address_subdivision_options" value= {{address_subdivision_option.id}}>
+                   {{address_subdivision_option.name}}
+                 </ion-option>
+               </ion-select>
+            </ion-item>
+
+            <ion-item *ngIf="address_zip_code!=undefined">
+              <ion-label stacked>Zipcodes</ion-label>
+              <ion-select [(ngModel)]="address_zip_code_modal" (ngModelChange)="selectedSubDivision($event)" 
+              name="address_zip_code_modal" multiple="true">
+                <ion-option *ngFor="let address_zip_code_option of address_zip_code_options" value= {{address_zip_code_option.id}}>
+                   {{address_zip_code_option.name}}
+                 </ion-option>
+               </ion-select>
+            </ion-item>
+
+            <ion-item *ngIf="neighbourhood!=undefined">
+              <ion-label stacked>Select Neighborhoods</ion-label>
+              <ion-select [(ngModel)]="neighbourhood_modal" (ngModelChange)="selectedNeighbourHood($event)" 
+              name="neighbourhood_modal" multiple="true">
+                <ion-option *ngFor="let neighbourhood_option of neighbourhood_options" value= {{neighbourhood_option.id}}>
+                   {{neighbourhood_option.name}}
+                 </ion-option>
+               </ion-select>
+            </ion-item>-->
         
-      </ion-item>
+            <!--<ion-item>
+              <ion-label stacked>Community/Neighborhood</ion-label>
+              <ion-input type="text" [(ngModel)]="community" name="community"></ion-input>
+            </ion-item>
 
-      <ion-item *ngIf="bathrooms!=undefined">
-        <ion-label stacked>Baths</ion-label>
-        <ion-select [(ngModel)]="bathrooms" name="bathrooms" id="bathrooms" 
-        (ngModelChange)="updateSearchObject()">
-         
-           <ion-option value="1">1+</ion-option>
-           <ion-option value="2">2+</ion-option>
-           <ion-option value="3">3+</ion-option>
-           <ion-option value="4">4+</ion-option>
-           <ion-option value="5">5+</ion-option>
-           <ion-option value="6">6+</ion-option>
-           <ion-option value="7">7+</ion-option>
-           <ion-option value="8">8+</ion-option>
-           <ion-option value="9">9+</ion-option>
-           <ion-option value="10">10+</ion-option>
-         </ion-select>
-        
-      </ion-item>
+            <ion-item>
+              <ion-label stacked>Assigned Agent IDs</ion-label>
+              <ion-select [(ngModel)]="assigned_agent_id"  
+            name="assigned_agent_id" multiple="true">
+              <ion-option *ngFor="let agent of allAgents" value= {{agent.id}}>
+                {{agent.first_name}} {{agent.last_name}}
+               </ion-option>
+             </ion-select>
+            </ion-item>
 
-      <ion-item>
-        <ion-label>Property Size</ion-label>
-        
-          <ion-input type="text" [(ngModel)]="unit_size_min"
-          name="unit_size_min" id="unit_size_min" placeholder="min" (blur)="updateSearchObject()"></ion-input>
-      
-          <ion-input type="text" [(ngModel)]="unit_size_max" 
-          name="unit_size_max" id="unit_size_max" placeholder="max" (blur)="updateSearchObject()"></ion-input>
-         
-      </ion-item>
+            <ion-item>
+              <ion-label stacked>Sub City</ion-label>
+              <ion-input type="text" [(ngModel)]="sub_city" name="sub_city"></ion-input>
+            </ion-item>
 
-      <ion-item>
-        <ion-label>Lot Size</ion-label>
-        <!--<ion-select [(ngModel)]="lot_size" name="lot_size" id="lot_size"
-        (ngModelChange)="updateSearchObject()">
-         
-        <ion-option value="2000">2,000+ sqft</ion-option>
-        <ion-option value="3000">3,000+ sqft</ion-option>
-        <ion-option value="4000">4,000+ sqft</ion-option>
-        <ion-option value="5000">5,000+ sqft</ion-option>
-        <ion-option value="7500">7,500+ sqft</ion-option>
-        <ion-option value="10890">.25+ acre (10,890+ sqft)</ion-option>
-        <ion-option value="21780">.5+ acre (21,780+ sqft)</ion-option>
-        <ion-option value="43560">1+ acre</ion-option>
-        <ion-option value="87120">2+ acres</ion-option>
-        <ion-option value="217800">5+ acres</ion-option>
-        <ion-option value="435600">10+ acres</ion-option>
-         </ion-select>-->
-         
-         <ion-input type="text" [(ngModel)]="lot_size_min"
-         name="lot_size_min" id="lot_size_min" placeholder="min" (blur)="updateSearchObject()"></ion-input>
-     
-         <ion-input type="text" [(ngModel)]="lot_size_max" 
-         name="lot_size_max" id="lot_size_max" placeholder="max" (blur)="updateSearchObject()"></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label>Year Built</ion-label>
-        
-         <ion-input type="text" [(ngModel)]="year_built_min"
-         name="year_built_min" id="year_built_min" placeholder="min" (blur)="updateSearchObject()"></ion-input>
-     
-         <ion-input type="text" [(ngModel)]="year_built_max" 
-         name="year_built_max" id="year_built_max" placeholder="max" (blur)="updateSearchObject()"></ion-input>
-
-      </ion-item>
-
-      <ion-item>
-        <ion-label stacked>Days on the Market</ion-label>
-        <ion-select [(ngModel)]="dols" name="dols" id="dols">
-         
-           <ion-option value="-1">Any</ion-option>
-           <ion-option value="1"> < 1 Day</ion-option>
-           <ion-option value="7"> < 7 Days</ion-option>
-           <ion-option value="14"> < 14 Days</ion-option>
-           <ion-option value="30"> < 30 Days</ion-option>
-           <ion-option value="90"> < 90 Days</ion-option>
-           <ion-option value="180"> < 6 Months</ion-option>
-           <ion-option value="365"> < 1 Year</ion-option>
-         
-         </ion-select>
-        
-      </ion-item>
-
-      <!--<ion-item *ngIf="days_on_market!=undefined">
-      <ion-label stacked>Days on the Market</ion-label>
-      <ion-select [(ngModel)]="days_on_market" name="days_on_market" id="days_on_market"
-      (ngModelChange)="updateSearchObject()">
-       
-        <ion-option value="1">1 Day</ion-option>
-        <ion-option value="7">7 Days</ion-option>
-        <ion-option value="14">14 Days</ion-option>
-        <ion-option value="30">30 Days</ion-option>
-        <ion-option value="90">3 Months</ion-option>
-        <ion-option value="180">6 Months</ion-option>
-        <ion-option value="360">12 Months</ion-option>
-        <ion-option value="720">24 Months</ion-option>
-        <ion-option value="1080">36 Months</ion-option>
-
-       </ion-select>
-
-      </ion-item>-->
-      <!--<ion-item *ngIf="address_township!=undefined">
-        <ion-label stacked>Address Township</ion-label>
-        <ion-input type="text" [(ngModel)]="address_township" name="address_township" id="address_township" 
-        (blur)="updateSearchObject()"></ion-input>
-      </ion-item>
-
-      <ion-item *ngIf="garage_size!=undefined">
-        <ion-label stacked>Garage Size</ion-label>
-        <ion-select [(ngModel)]="garage_size" name="garage_size" id="garage_size"
-        (ngModelChange)="updateSearchObject()">
-         
-        <ion-option value="1">1 car</ion-option>
-        <ion-option value="2">2 car</ion-option>
-        <ion-option value="3">3 car</ion-option>
-        <ion-option value="4">4 car</ion-option>
-        <ion-option value="5">5 car</ion-option>
-         </ion-select>
-      </ion-item>-->
-
-      <!--<ion-item *ngIf="parcel_num!=undefined">
-        <ion-label stacked>Lot or Parcel #</ion-label>
-        <ion-input type="text" [(ngModel)]="parcel_num" name="parcel_num" id="parcel_num" (blur)="updateSearchObject()"></ion-input>
-      </ion-item>-->
-
-      <!--<ion-item *ngIf="school_district!=undefined">
-        <ion-label stacked>School District</ion-label>
-        <ion-input type="text" [(ngModel)]="school_district" name="school_district" id="school_district" (blur)="updateSearchObject()"></ion-input>
-      </ion-item>
-
-      <ion-item *ngIf="school_elem!=undefined">
-        <ion-label stacked>School Elem</ion-label>
-        <ion-input type="text" [(ngModel)]="school_elem" name="school_elem" id="school_elem" (blur)="updateSearchObject()"></ion-input>
-      </ion-item>-->
-
-      <!--<ion-item *ngIf="school_high!=undefined">
-        <ion-label stacked>School High</ion-label>
-        <ion-input type="text" [(ngModel)]="school_high" name="school_high" id="school_high" (blur)="updateSearchObject()"></ion-input>
-      </ion-item>-->
-
-      <!--<ion-item *ngIf="stories!=undefined">
-        <ion-label stacked>Stories</ion-label>
-        <ion-input type="text" [(ngModel)]="stories" name="stories" id="stories" (blur)="updateSearchObject()"></ion-input>
-      </ion-item>-->
-
-      <!--<ion-item *ngIf="address_city!=undefined">
-        <ion-label stacked>Specific Cities</ion-label>
-        <ion-select [(ngModel)]="address_city_modal" (ngModelChange)="selectedAddressCity($event)" 
-        name="address_city_modal" multiple="true">
-          <ion-option *ngFor="let address_city_option of address_city_options" value= {{address_city_option.id}}>
-             {{address_city_option.name}}
-           </ion-option>
-         </ion-select>
-      </ion-item>
-
-      <ion-item *ngIf="address_subdivision!=undefined">
-        <ion-label stacked>Select Subdivisions</ion-label>
-        <ion-select [(ngModel)]="address_subdivision_modal" (ngModelChange)="selectedSubDivision($event)" 
-        name="address_subdivision_modal" multiple="true">
-          <ion-option *ngFor="let address_subdivision_option of address_subdivision_options" value= {{address_subdivision_option.id}}>
-             {{address_subdivision_option.name}}
-           </ion-option>
-         </ion-select>
-      </ion-item>
-
-      <ion-item *ngIf="address_zip_code!=undefined">
-        <ion-label stacked>Zipcodes</ion-label>
-        <ion-select [(ngModel)]="address_zip_code_modal" (ngModelChange)="selectedSubDivision($event)" 
-        name="address_zip_code_modal" multiple="true">
-          <ion-option *ngFor="let address_zip_code_option of address_zip_code_options" value= {{address_zip_code_option.id}}>
-             {{address_zip_code_option.name}}
-           </ion-option>
-         </ion-select>
-      </ion-item>
-
-      <ion-item *ngIf="neighbourhood!=undefined">
-        <ion-label stacked>Select Neighborhoods</ion-label>
-        <ion-select [(ngModel)]="neighbourhood_modal" (ngModelChange)="selectedNeighbourHood($event)" 
-        name="neighbourhood_modal" multiple="true">
-          <ion-option *ngFor="let neighbourhood_option of neighbourhood_options" value= {{neighbourhood_option.id}}>
-             {{neighbourhood_option.name}}
-           </ion-option>
-         </ion-select>
-      </ion-item>-->
+            <ion-item>
+              <ion-label stacked>Main Description</ion-label>
+              <ion-textarea type="text" [(ngModel)]="main_description" name="main_description"></ion-textarea>
+            </ion-item>-->
+      </div>
+    </ion-list>
   
-      <!--<ion-item>
-        <ion-label stacked>Community/Neighborhood</ion-label>
-        <ion-input type="text" [(ngModel)]="community" name="community"></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label stacked>Assigned Agent IDs</ion-label>
-        <ion-select [(ngModel)]="assigned_agent_id"  
-      name="assigned_agent_id" multiple="true">
-        <ion-option *ngFor="let agent of allAgents" value= {{agent.id}}>
-          {{agent.first_name}} {{agent.last_name}}
-         </ion-option>
-       </ion-select>
-      </ion-item>
-
-      <ion-item>
-        <ion-label stacked>Sub City</ion-label>
-        <ion-input type="text" [(ngModel)]="sub_city" name="sub_city"></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label stacked>Main Description</ion-label>
-        <ion-textarea type="text" [(ngModel)]="main_description" name="main_description"></ion-textarea>
-      </ion-item>-->
-  
-      </ion-list>
-  
-      <div padding>
+      <div class="dashboardBtn">
         <button ion-button color="primary" block (click)="updateHotSheet();" 
         [disabled]="!hotSheetForm.valid||polygon_search==''">Update HotSheet</button>
       </div>

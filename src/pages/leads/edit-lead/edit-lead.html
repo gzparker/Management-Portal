@@ -101,7 +101,7 @@
             </ion-item>-->
             <ion-item>
                 <ion-label stacked>Assigned Agent/Broker</ion-label>
-                <ion-select [(ngModel)]="assigned_agent_id"  
+                <ion-select placeholder="-----" [(ngModel)]="assigned_agent_id"  
                 name="assigned_agent_id" multiple="true">
                   <ion-option *ngFor="let agent of allAgents" value= {{agent.id}}>
                     {{agent.first_name}} {{agent.last_name}}
@@ -114,7 +114,7 @@
             </ion-item>
             <ion-item>
                 <ion-label stacked>Category</ion-label>
-                <ion-select [(ngModel)]="category" name="category" id="category">
+                <ion-select placeholder="-----" [(ngModel)]="category" name="category" id="category">
                  
                 <ion-option value="buyer">Buyer</ion-option>
                 <ion-option value="seller">Seller</ion-option>
