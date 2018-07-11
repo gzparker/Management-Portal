@@ -27,7 +27,7 @@
     <ion-label color="secondary">{{notificationMsg}}</ion-label>
   </ion-chip>
 
-  <ion-list class="animated bounceInUp">
+  <ion-list class="animated bounceInUp"  *ngIf="accountInfo!=null">
 
     <ion-item class="profileAvatar" *ngIf="accountInfo!=null" (click)="editAccount();">      
       <ion-avatar item-start *ngIf="globalSettings!=null">
@@ -43,15 +43,15 @@
 
     <div class="broker-agent-id">
       <div class="col3">
-        <h2>DL1234</h2>
+        <h2 *ngIf="accountInfo.mls_id!=null&&accountInfo.mls_id!=undefined">{{accountInfo.mls_id}}</h2>
         <p>MLS ID</p>        
       </div>
       <div class="col3">
-        <h2>CAL-DRE-01928992</h2>
+        <h2 *ngIf="accountInfo.broker_id!=null&&accountInfo.broker_id!=undefined">{{accountInfo.broker_id}}</h2>
         <p>Broker ID</p>        
       </div>
       <div class="col3">
-        <h2>5625</h2>
+        <h2 *ngIf="accountInfo.office_id!=null&&accountInfo.office_id!=undefined">{{accountInfo.office_id}}</h2>
         <p>Office ID</p>        
       </div>
     </div>
@@ -66,20 +66,20 @@
 
     <ion-item *ngIf="accountInfo!=null" (click)="editAccount();">
       <ion-icon name="md-call" item-start></ion-icon>
-        <h2>Phone</h2>
-        <p>+91 9392776755</p>
+        <h2 *ngIf="accountInfo.phone_mobile!=null&&accountInfo.phone_mobile!=undefined">Phone</h2>
+        <p>{{accountInfo.phone_mobile}}</p>
     </ion-item>
 
     <ion-item *ngIf="accountInfo!=null" (click)="editAccount();">
       <ion-icon name="ios-globe-outline" item-start></ion-icon>
         <h2>Country</h2>
-        <p>{{accountInfo.email}}</p>
+        <p>{{accountInfo.country_abbv}}</p>
     </ion-item>
 
     <ion-item *ngIf="accountInfo!=null" (click)="editAccount();">
       <ion-icon name="ios-person" item-start></ion-icon>
-        <h2>About</h2>
-        <p>{{accountInfo.email}}</p>
+        <h2 *ngIf="accountInfo.description!=null&&accountInfo.description!=undefined">About</h2>
+        <p>{{accountInfo.description}}</p>
     </ion-item>
   
   </ion-list>

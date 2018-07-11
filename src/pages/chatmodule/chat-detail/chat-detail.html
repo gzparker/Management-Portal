@@ -31,7 +31,8 @@
                   <div *ngIf="user.fbId==chat.val().fromFbUserId">              
                 
                   <div class="chat-profile">
-                  <img src={{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}} class="custom-avatar" (error)="imgChatDetail.src = this.sharedServiceObj.noImageUrl" #imgChatDetail/>
+                  <img src={{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}} class="custom-avatar" 
+                  (error)="imgChatDetail.src = this.sharedServiceObj.noImageUrl" #imgChatDetail/>
                 </div>
         
                 </div>
@@ -43,7 +44,8 @@
                   <span class="chat-info chat-img" *ngIf="chat.val().imageData">
                     <img src="{{chat.val().imageData}}" (click)="showBigImage(chat.val().imageData)" />
                   </span>
-                  <button ion-button color="danger" item-right class="roundedOption btn-del" (click)="deleteSingleChat(chat.val().groupId,chat.key);">Delete Chat</button>
+                  <button ion-button color="danger" item-right class="roundedOption btn-del" 
+                  (click)="deleteSingleChat(chat.val().groupId,chat.key);">Delete Chat</button>
                   </ion-item>
                 </div>
         

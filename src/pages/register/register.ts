@@ -4,6 +4,7 @@ import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 import { DashboardPage } from '../dashboard/dashboard';
 import { DashboardTabsPage } from '../tabs/dashboard-tabs/dashboard-tabs';
+import { LoginPage } from '../../pages/login/login';
 import { FbConfirmPage } from '../fb-confirm/fb-confirm';
 import { UserVerificationPage } from '../user-verification/user-verification';
 import { SharedProvider } from '../../providers/shared/shared';
@@ -158,6 +159,10 @@ export class RegisterPage {
       this.userSignUpMsg = result.message.toUpperCase();
     }
 
+  }
+  userSignIn()
+  {
+this.navCtrl.setRoot(LoginPage);
   }
   public openUserVerificationModal(master_id: any) {
     var modalPage = this.modalCtrl.create(UserVerificationPage, { master_id: master_id });

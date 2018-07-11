@@ -6,6 +6,7 @@ import { DashboardPage } from '../dashboard/dashboard';
 import { DashboardTabsPage } from '../tabs/dashboard-tabs/dashboard-tabs';
 import { FbConfirmPage } from '../fb-confirm/fb-confirm';
 import { AlertController } from 'ionic-angular';
+import { RegisterPage } from '../../pages/register/register';
 
 import { UserVerificationPage } from '../user-verification/user-verification';
 
@@ -162,7 +163,10 @@ export class LoginPage {
     }
  
   }
-  
+userSignup()
+{
+this.navCtrl.setRoot(RegisterPage);
+}  
 setAllAccessOptions(userAllowedRoles:any)
 {
 let finalAllowedRolesOptions:number[]=[];
