@@ -115,6 +115,9 @@ page-manage-agents {
   .button {
     &.button-ios-primary, &.button-md-primary, &.button-wp-primary {
     background: #207EAF;
+      &:hover {
+      background: #207EAF;
+      }
     }
   }
 
@@ -174,6 +177,63 @@ page-manage-agents {
       padding-bottom: 10px;
       }
     }
+  }
+
+  .desktopOption {
+  width: auto;
+  display: table;
+  float: right;
+  top: 12px !important;
+  right: 0px !important;
+  position: absolute;
+  background: transparent;
+  padding: 0px;
+  margin: 0px;  
+    &:before {
+    display: none !important;
+    }
+
+    &:hover, &:focus {
+      button {
+      opacity: 1;
+      }
+    }
+
+    ion-icon {
+    line-height: 32px !important;
+      &:before {
+      margin-top: -1px !important;
+      font-size:  18px !important;
+      margin-right: 6px !important;
+      float: left !important;
+      display: inline-block !important;
+      // display: none !important;
+      }
+    }
+
+    button {
+    border-radius: 2px !important;
+    margin-left: 6px !important;
+    padding: 0 14px !important;
+    height: 32px !important;
+    padding-top: 4px !important;
+    min-height: 32px !important;
+    line-height: 32px !important;
+    @extend %transition;    
+    opacity: 0;
+    }
+
+    .item-inner {    
+      .input-wrapper {
+      margin: 0px;
+      padding: 0px;
+        .label-ios, .label-md, .label-wp {
+        margin: 0px !important;
+        padding: 0px !important;
+        }
+      }
+    }
+
   }
 
 }

@@ -34,7 +34,7 @@
   <div class="formShadow">
   <ion-list *ngIf="!isApp" class="animated lightSpeedIn noShadow">
    
-    <ion-item *ngFor="let agent of allAgents">
+    <ion-item-sliding *ngFor="let agent of allAgents">
       <ion-item (click)="agentDetail(agent.id)">
         <ion-avatar class="imgFull">
         <img src="{{this.sharedServiceObj.imgBucketUrl}}{{agent.image_url}}" (error)="imgAgent.src = this.sharedServiceObj.noImageUrl" #imgAgent/>
@@ -45,13 +45,24 @@
         <p class="agentDescription" [innerHTML]="agent.description"></p>
       </ion-item>
 
-        <button ion-button item-right color="primary" (click)="editAgent(agent.id)" *ngIf="isEditAgentAccess==true">
+      <ion-item class="desktopOption" side="right" *ngIf="!isApp">    
+        <button ion-button color="primary" (click)="editAgent(agent.id)" *ngIf="isEditAgentAccess==true">
           <ion-icon name="ios-brush">Edit</ion-icon>
         </button>
-        <button ion-button item-right color="danger" (click)="deleteAgent(agent)" *ngIf="isDeleteAgentAccess==true">          
+        <button ion-button color="danger" (click)="deleteAgent(agent)" *ngIf="isDeleteAgentAccess==true">
           <ion-icon name="md-trash">Delete</ion-icon>
         </button>
-  </ion-item>    
+      </ion-item>
+      <ion-item-options side="right" *ngIf="isApp">      
+        <button ion-button color="primary" (click)="editAgent(agent.id)" *ngIf="isEditAgentAccess==true">
+          <ion-icon name="ios-brush">Edit</ion-icon>
+        </button>
+        <button ion-button color="danger" (click)="deleteAgent(agent)" *ngIf="isDeleteAgentAccess==true">
+          <ion-icon name="md-trash">Delete</ion-icon>
+        </button>
+      </ion-item-options>
+        
+  </ion-item-sliding>
   
   </ion-list>
   </div>
@@ -87,16 +98,24 @@
 
   <ion-item-sliding *ngFor="let agent of allAgents">
     <ion-item (click)="agentDetail(agent.id)">
-      <ion-avatar class="imgFull">
-        <img src="{{this.sharedServiceObj.imgBucketUrl}}{{agent.image_url}}" (error)="imgAgent2.src = this.sharedServiceObj.noImageUrl" #imgAgent2/>
-      
-      </ion-avatar>
-      <h2 class="agentName">{{agent.first_name}} {{agent.last_name}}</h2>
-      <p class="agentEmail">{{agent.email}}</p>
-      <p class="agentDescription" [innerHTML]="agent.description"></p>
+        
+        <ion-avatar class="imgFull">
+        <img src="{{this.sharedServiceObj.imgBucketUrl}}{{agent.image_url}}" (error)="imgAgent2.src = this.sharedServiceObj.noImageUrl" #imgAgent2/>      
+        </ion-avatar>
+        <h2 class="agentName">{{agent.first_name}} {{agent.last_name}}</h2>
+        <p class="agentEmail">{{agent.email}}</p>
+        <p class="agentDescription" [innerHTML]="agent.description"></p>
     </ion-item>
 
-    <ion-item-options side="right" *ngIf="isApp">    
+    <ion-item class="desktopOption" side="right" *ngIf="!isApp">    
+      <button ion-button color="primary" (click)="editAgent(agent.id)" *ngIf="isEditAgentAccess==true">
+        <ion-icon name="ios-brush">Edit</ion-icon>
+      </button>
+      <button ion-button color="danger" (click)="deleteAgent(agent)" *ngIf="isDeleteAgentAccess==true">
+        <ion-icon name="md-trash">Delete</ion-icon>
+      </button>
+    </ion-item>
+    <ion-item-options side="right" *ngIf="isApp">
       <button ion-button color="primary" (click)="editAgent(agent.id)" *ngIf="isEditAgentAccess==true">
         <ion-icon name="ios-brush">Edit</ion-icon>
       </button>
@@ -104,14 +123,7 @@
         <ion-icon name="md-trash">Delete</ion-icon>
       </button>
     </ion-item-options>
-    <ion-item side="right" *ngIf="!isApp">    
-      <button ion-button color="primary" (click)="editAgent(agent.id)" *ngIf="isEditAgentAccess==true">
-        <ion-icon name="ios-brush">Edit</ion-icon>
-      </button>
-      <button ion-button color="danger" (click)="deleteAgent(agent)" *ngIf="isDeleteAgentAccess==true">
-        <ion-icon name="md-trash">Delete</ion-icon>
-      </button>
-    </ion-item>
+
   </ion-item-sliding>
 
 </ion-list>

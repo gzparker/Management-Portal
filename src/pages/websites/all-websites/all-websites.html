@@ -57,16 +57,17 @@
             <!--<p><a (click)="websiteLinks(website.id)">View Pages/Widgets</a></p>-->
         </ion-item>
           
-        <ion-item side="right" *ngIf="!isApp">
+        <ion-item class="desktopOption" side="right" *ngIf="!isApp">
             <button ion-button color="primary" item-right class="btn-edit" (click)="editWebsite(website.id)" *ngIf="isEditWebsiteAccess==true"><ion-icon name="md-create"></ion-icon>Edit</button>
             <button ion-button color="primary" item-right class="btn-lead" (click)="editLeadRouting(website.id)"><ion-icon name="ios-paper-plane"></ion-icon>Lead Routing</button>
             <button ion-button color="primary" item-right class="btn-status" (click)="viewPaperWorkStatus(website.id)" *ngIf="isMlsSettings==true"><ion-icon name="ios-pulse"></ion-icon>Status</button>
             <button ion-button color="danger" item-right class="btn-del" (click)="deleteWebsite(website)" *ngIf="isDeleteWebsiteAccess==true"><ion-icon name="md-close"></ion-icon>Delete</button>
         </ion-item>
-        <ion-item-options side="right" *ngIf="isApp">        
-          <button ion-button color="primary" class="roundedOption btn-settings" (click)="editLeadRouting(website.id)" *ngIf="isEditWebsiteAccess==true"><ion-icon name="md-create"></ion-icon>Edit</button>
-          <button ion-button color="primary" class="roundedOption btn-info" (click)="viewPaperWorkStatus(website.id)" *ngIf="isMlsSettings==true"><ion-icon name="ios-pulse"></ion-icon>Status</button>
-          <button ion-button color="danger" class="roundedOption btn-del" (click)="deleteWebsite(website)" *ngIf="isDeleteWebsiteAccess==true"><ion-icon name="md-close"></ion-icon>Delete</button>
+        <ion-item-options side="right" *ngIf="isApp">
+            <button ion-button color="primary" item-right class="btn-edit" (click)="editWebsite(website.id)" *ngIf="isEditWebsiteAccess==true"><ion-icon name="md-create"></ion-icon>Edit</button>
+            <button ion-button color="primary" item-right class="btn-lead" (click)="editLeadRouting(website.id)"><ion-icon name="ios-paper-plane"></ion-icon>Lead Routing</button>
+            <button ion-button color="primary" item-right class="btn-status" (click)="viewPaperWorkStatus(website.id)" *ngIf="isMlsSettings==true"><ion-icon name="ios-pulse"></ion-icon>Status</button>
+            <button ion-button color="danger" item-right class="btn-del" (click)="deleteWebsite(website)" *ngIf="isDeleteWebsiteAccess==true"><ion-icon name="md-close"></ion-icon>Delete</button>
         </ion-item-options>
  
     </ion-item-sliding>
