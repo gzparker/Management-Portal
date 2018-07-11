@@ -239,9 +239,11 @@ filterItemsByCategory()
     this.loader.dismiss();
     if(result.status==true)
     {
+     // debugger;
       //debugger;
       this.allLeadsList=result.results;
       this.searchedLeadsList=result.results;
+      
       if(this.category!="")
       {
         this.setLeadFilteredItems();

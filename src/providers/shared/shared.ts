@@ -36,6 +36,7 @@ export class SharedProvider {
   public registerationApiKey="mf8fXFYtl3DqRpxzu1XZWTD1GNHtUSqQ";
   public idxFirebasePublicKey="BFLnyRGk5TlJYMkX6X-H7xZWikEdVZL9tE5t3x_q2mh4P3OM-kHkOmhlmYUGSxSV6BYdCbuSpwcBCQ3Oc0Gb3t4";
   public defaultNoImage="assets/imgs/noImage.png";
+ 
   private headers: Headers = new Headers();
   private headerOptions: RequestOptions = new RequestOptions();
   private headersIDX: Headers = new Headers();
@@ -48,6 +49,8 @@ export class SharedProvider {
   //public imgBucketUrl="https://cdn.published.website/";
   public imgBucketUrl="https://s3-us-west-2.amazonaws.com/central-system/usr/";
   public noImageUrl="././assets/imgs/noImage.png";
+  public hotsheetNoImage="././assets/imgs/hotsheets-thumbnail.jpg";
+  public profileNoImage="././assets/imgs/profile-photo.jpg";
   // public FB:any;
 
   constructor(private http: Http,private storage: Storage, public alertCtrl: AlertController) {

@@ -6,19 +6,10 @@
 -->
 <ion-header class="dashboardUI">
   <ion-navbar>
-    
     <button ion-button menuToggle start>
       <ion-icon name="menu"></ion-icon>
     </button>
-
     <ion-title>All Leads</ion-title>
-    <!-- <ion-buttons end *ngIf="userWebsites.length>0">
-      <button ion-button (click)="sendToPaperWork();">Where to send leads</button>
-    </ion-buttons> -->
-    <!-- <ion-buttons end>
-      <button ion-button (click)="createLead();">Create Lead</button>
-    </ion-buttons> -->
-
   </ion-navbar>
 </ion-header>
 
@@ -88,7 +79,9 @@
       <ion-item no-lines (click)="leadDetail(lead.lead_id);">
         
         <ion-avatar item-start *ngIf="leadDetail!=undefined">
-          <img src="assets/imgs/profile-photo.jpg">
+            <img src={{this.sharedServiceObj.imgBucketUrl}}{{lead.image_url}} 
+            (error)="imgLead.src = this.sharedServiceObj.profileNoImage" #imgLead/>
+          <!--<img src="assets/imgs/profile-photo.jpg">-->
         </ion-avatar>
         <h2>{{lead.first_name}}-{{lead.last_name}}</h2>
         <p>Email:{{lead.email}}</p>

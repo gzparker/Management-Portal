@@ -175,7 +175,7 @@ export class AllHotSheetsPage {
       
      // debugger;
       this.allHotSheetList=result.result;
-      
+     // debugger;
     }
     else
     {
