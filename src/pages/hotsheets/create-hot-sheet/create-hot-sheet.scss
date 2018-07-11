@@ -1,10 +1,238 @@
 page-create-hot-sheet {
-  .text-input {  
-  margin: 4px 0px 8px 0;
-  padding: 5px 8px;
-  border-radius: 2px;
-  background: #EEE;
-  }  
+  ion-content {
+    &.dashboardUI {
+
+        &:before {
+        height: 53.5vh;
+        z-index: 1;        
+        }
+        &:after {
+        height: 100vh;
+        }
+    }
+  }
+
+  .label-ios, .label-md, .label-wp {
+  opacity: .68;
+  }
+
+  ion-navbar {
+    .bar-buttons {
+      .button-inner {
+        .icon-ios, .icon-md, .icon-wp {
+        font-size: 30px !important;
+          &:before {
+          content: "";
+          width: 32px;
+          height: 32px;
+          display: block;          
+          background: url("../assets/icon/svg/save.svg") no-repeat center center !important;
+          background-size: 62% !important;
+          }
+        }
+      }
+    }
+  }
+
+  .websiteSelect {
+    .label-ios[stacked], .label-md[stacked], .label-wp[stacked] {
+    margin: 18px 0 -4px 0 !important;    
+    }
+    .item-inner {
+    border-bottom: none !important;
+    }
+  }
+
+  .mapSearchBG {
+  padding: 10px 12px 14px 12px;
+  border: none !important;
+  box-shadow: none !important;
+  background: darken($color-5, 8%);   
+  }
+
+  ion-list {
+    
+    &.filterList {
+      .item-block {
+      padding-left: 0px;
+      padding-right: 0px !important;        
+      }
+
+      .filterOptions {        
+        ion-label:first-child {
+        // margin-top: 16px !important;
+        }
+
+        .item-block {
+          &:last-child {
+            .item-inner {
+            border: none !important;
+            padding-bottom: 6px;
+            }
+          }
+        }
+
+        .hotsheetPriceLabel {
+        font-size: 14px !important;;
+        margin-top: 16px !important;
+        margin-bottom: 6px !important;;
+        }
+        .hotsheetPrice {
+        font-family: $font-four !important;
+        font-size: 16px !important;
+        font-weight: 600 !important;
+        letter-spacing: .5px;
+        margin: 0;
+        color: #111;
+        background: $color-5;
+        }
+        #unit_size_min, #unit_size_max, #lot_size_min, #lot_size_max, #year_built_min, #year_built_max {        
+          .text-input {
+          text-align: right !important
+          }
+        }
+      }
+    }
+
+    &.blk1 {
+    padding: 14px 14px 16px 14px;
+    border-radius: 0 0 6px 6px;
+    background: #FFF;
+      .drawMapNotes {
+      padding: 7px 12px 12px 0;
+      border-radius: 0px !important;  
+      border: none !important;
+      box-shadow: none !important;
+      // background: darken($color-5, 35%) !important;
+      // background: $color-6 !important;
+      background: #FFF !important;
+        .label-ios, .label-md, .label-wp {
+        font-family: $font-three !important;
+        font-size: 12px !important;
+        color: #696D72 !important;
+        border: none !important;
+        opacity: .75 !important;
+        }
+      }
+    }
+    
+    &.slugSettings {
+      .item-block {
+        &:last-child {
+        padding-bottom: 10px;
+        }        
+      }
+    }
+  }
+  
+  .metaSettings {
+    ion-item.noPadding {
+    padding-left: 0px !important;
+      .text-input {
+      margin-bottom: 8px;
+      }
+      &.itemMargin {
+      margin-top: 16px;
+      }
+      &.vidTour {
+        .item-inner {
+        padding-right: 0px !important;
+        border: none !important;
+          .label-ios {          
+          margin-top: 14px !important;
+          }
+          ion-textarea {
+          height: 62px !important;
+          margin: 0px !important;
+            .text-input {
+            margin: 0px !important;
+            height: 62px !important;
+            }
+          }
+        }
+      }
+      &.itemLast {      
+        .item-inner {
+        box-shadow: none !important;
+        border-right: none !important;
+        border-left: none !important;
+        margin-left: -1px !important;
+        margin-right: -1px !important;
+          .label-ios {          
+          margin-top: 14px !important;
+          }
+        }
+      }
+    }
+    .briefDescription, .mainDescription {
+    padding: 16px 0 6px 0;
+      .label-ios, .label-md, .label-wp {
+      padding-bottom: 7px;
+      }
+    }
+    .mainDescription {
+    padding-bottom: 20px;
+    }
+
+    .vidSettings {
+      .item-block {
+      padding-top: 6px;
+      padding-left: 0px;
+        &:last-child {
+          .item-inner {
+          border: none !important;
+          }        
+        }
+      }
+    }
+
+    ion-textarea {
+      .text-input {
+      font-family: $font-three;
+      font-size: 13px;
+      line-height: 19px;
+      height: 120px;
+      letter-spacing: .3px;
+      border-radius: 2px;
+      padding: 12px;
+      margin-bottom: 16px !important;
+      background: #f0f3f6;
+      text-overflow: unset;
+      white-space: normal;    
+      box-sizing: border-box;
+      }
+    }
+  }
+
+  .additionalOption {
+  margin-top: 32px !important;
+  background: #FFF !important;
+  }
+
+  .item-ios, .item-md, .item-wp {
+    .item-inner {  
+    border-color: #ebe9f0 !important;
+    }
+  }
+
+  .customItem {
+  padding-bottom: 16px;
+  }
+
+  .customList.filterList {
+  padding: 8px 16px;
+    
+    ion-item.filterLabel {
+      .item-inner {
+      padding-right: 0px !important;
+      }
+    }
+
+    ion-label:first-child {
+    margin: 0;
+    }
+
+  }
 }
 
 .selectWebsite {

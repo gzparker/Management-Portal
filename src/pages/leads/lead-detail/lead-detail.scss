@@ -21,14 +21,267 @@ page-lead-detail {
   ion-content.generalInfoUI {
 
     .contentTitle {
-    padding-top: 5px !important;
+    font-family: $font-three !important;
+    font-size: 16px;    
+    color: #787c82;
+    text-transform: none;
+    margin: 0;
+    padding: 0px 0 12px 0 !important;    
+    }
+
+    ion-list.leadHotsheetName {
+      .contentTitle {
+      padding-bottom: 0px !important;
+      }
+    }
+
+    ion-list.leadSearchName, ion-list.leadHotsheetName {
+    border-radius: 4px !important;    
+    background: #FFF !important;
+    box-shadow: -1px 0px 16px rgba(41, 81, 123, 0.15) !important;
+      
+      .contentTitle {
+      padding-bottom: 0px !important;
+      }
+
+      .item-block {
+      border-bottom: 1px solid #ebe9f0 !important;
+      }
+      .item-inner {      
+      padding-right: 0px;
+        .input-wrapper {
+        padding: 0 16px;
+          .label-ios, .label-md, .label-wp {
+          margin:  16px 0;
+          padding: 2px 0 0 0;
+          position: relative;
+          overflow: visible;
+            
+            h2 {
+            font-size: 16px;
+            color: #787c82;
+            }
+
+            p {
+            font-size: 12px;
+            line-height: 19px;
+            text-overflow: unset;
+            white-space: normal;              
+              &:last-child {          
+              padding: 8px 0 0 0;
+              max-height: 60px;
+              overflow: hidden;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    ion-list.leadListings {
+    border-radius: 4px !important;    
+    background: #FFF !important;
+    box-shadow: -1px 0px 16px rgba(41, 81, 123, 0.15) !important;
+
+      .contentTitle {
+      font-family: "Varela Round" !important;
+      font-size: 16px;
+      color: #787c82;
+      text-transform: none;
+      padding: 14px 16px !important;
+      border-bottom: 2px solid $color-6;
+      }
+      
+      .item-block {
+      border-bottom: 1px solid #ebe9f0 !important;
+      }
+
+      ion-avatar {
+      padding-left: 16px;
+        img {
+        width: 50px;
+        height: 50px;
+        }
+      }
+
+      .item-inner {      
+      padding-right: 0px;
+        .input-wrapper {
+        padding: 0 16px 0 0;
+          .label-ios, .label-md, .label-wp {
+          margin:  16px 0 10px 0;
+          position: relative;
+          overflow: visible;
+            h2 {
+            top: 0;
+            right: 0;
+            text-align: right;
+            position: absolute;
+            border-radius: 10px;
+            padding: 0 12px;
+            height: 20px;
+            line-height: 22px;            
+            text-align: center;            
+            font-size: 1.3rem;
+            font-weight: bold;            
+            white-space: nowrap;
+            vertical-align: baseline;
+            font-family: $font-three;
+            font-size: 11px;
+            font-weight: 400;
+            color: #FFF;
+            box-sizing: border-box;
+            background: #3f719c;
+            }
+
+            p {
+            font-size: 12px;
+            line-height: 19px;
+            text-overflow: unset;
+            white-space: normal;              
+              &:last-child {          
+              padding: 8px 0 0 0;
+              max-height: 60px;
+              overflow: hidden;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    ion-list.leadNotes {
+    border-radius: 4px !important;    
+    background: #FFF !important;
+    box-shadow: -1px 0px 16px rgba(41, 81, 123, 0.15) !important;
+      .item-inner {
+      padding-right: 0px !important;      
+        .input-wrapper {
+        padding: 0 16px;
+          .label-ios, .label-md, .label-wp {
+          margin:  16px 0 10px 0;
+            .contentTitle {
+            font-family: $font-three;
+            font-size: 16px;
+            color: #787c82;
+            }
+            p {
+            font-family: $font-three;
+            font-size: 13px;
+            height: auto;
+            letter-spacing: .5px;
+            border-radius: 2px;
+            padding: 12px 10px;
+            margin: 0px;            
+            text-overflow: unset;
+            white-space: normal;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;            
+            border: 1px dashed #c4c6c8;
+            background: #f3f4f6;
+            }
+          }
+        }
+      }
+    }
+
+    ion-list.leadsInfo {
+    border-radius: 5px !important;
+    padding: 6px 0 0 0 !important;
+    background: #FFF !important;
+    box-shadow: -1px 0px 16px rgba(41, 81, 123, 0.15) !important;
+
+      ion-item {
+      position: relative;
+        
+        .label-ios, .label-md, .label-wp {
+        padding-bottom: 0px;
+        margin-bottom: 8px;
+        }
+
+        h2 {
+        color: #353535;
+        margin: 0 0 1px 0;
+        }
+
+        p {
+        line-height: 21px;
+        letter-spacing: .5px;
+        text-overflow: unset;
+        white-space: normal;        
+        }
+
+        &.leadsWebURL {
+        padding-left: 16px;
+        // border-bottom: 1px solid #ebe9f0 !important;
+          ion-icon {
+          font-size: 26px;
+          margin-top: 2px;
+          }
+        }
+        &.leadsPhone1, &.leadsPhone2, &.leadsPhone3 {
+        padding-left: 16px;
+        // border-bottom: 1px solid #ebe9f0 !important;
+          ion-icon {
+          font-size: 24px;
+          margin-top: 4px;
+          }
+        }
+        
+        &.leadsHomeAddress {
+        padding-left: 16px;        
+        // border-bottom: 1px solid #ebe9f0 !important;
+          ion-icon {
+          font-size: 28px;
+          margin-top: -12px;
+          }          
+          p {
+          min-height: 42px;
+          }
+        }
+
+        &.leadsWorkAddress {
+        padding-left: 16px;
+          ion-icon {
+          font-size: 28px;
+          margin-top: -12px;
+          }          
+          p {
+          min-height: 42px;
+          }
+        }
+
+      }
+
+      .leadsHomeAddressMap {      
+        #mapHome {
+        margin-top: 10px;
+        margin-bottom: 15px;
+        border: 8px solid $color-6;
+          &:empty {
+          display: none;
+          }
+        }
+      }
+
+      .leadsWorkAddressMap {        
+        #mapWork {        
+        margin-top: 10px;
+        border: 8px solid $color-6;
+          &:empty {
+          display: none;
+          }
+        }
+      }
+
     }
     
     ion-item {
       &.leadsProfile {
-      border-radius: 2px !important;
+      border-radius: 4px !important;
       background: #FFF !important;
-      box-shadow: -1px 0px 18px 1px rgba(41, 81, 123, 0.15) !important;
+      box-shadow: -1px -1px 16px rgba(41, 81, 123, 0.15) !important;
+        
         ion-list {
         border-radius: 2px !important;
         }
@@ -92,9 +345,9 @@ page-lead-detail {
     color: #788C96;
     }
 
-  .contentTitle {
-  color: #696D72 !important;
-  }
+  // .contentTitle {
+  // color: #696D72 !important;
+  // }
 
   ion-content {
     &.generalInfoUI {
@@ -104,10 +357,24 @@ page-lead-detail {
       }
       &:after {
       height: 100vh;
+      background: #EBF0F5;
       }
       ion-item:first-child {
       border-radius: 0px;
       }
+    }
+  }
+
+  .segment-button {
+  min-height: 40px !important;
+  line-height: 38px !important;
+  color: darken($color-1, 5%) !important;
+  border-color: darken($color-1, 5%) !important;
+  @extend %transition;
+    &.segment-activated, &:hover {
+    color: #FFF !important;
+    border-color: darken($color-1, 5%) !important;
+    background-color: darken($color-1, 5%) !important;
     }
   }
 

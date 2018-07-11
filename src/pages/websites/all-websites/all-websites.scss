@@ -2,6 +2,49 @@ page-all-websites {
   
   ion-content {
     &.dashboardUI {
+
+      &:before {
+        height: 53.5vh;
+        z-index: 1;        
+        }
+        &:after {
+        height: 100vh;
+        // background: #FEFEFE;
+        }
+
+      .item-wrapper {
+      overflow: hidden !important;
+      border-radius: 4px !important;      
+      margin-bottom: 15px !important;
+      box-shadow: -1px 0px 16px rgba(151, 156, 162, 0.15) !important;      
+        ion-item {        
+          &:first-child, &:last-child {
+          border-radius: 4px !important;          
+          }
+          .item-inner {
+          border: none !important;
+          }
+
+          .HotsheetName {
+          font-family: $font-three;
+          font-size: 15px !important;
+          font-weight: 400;
+          letter-spacing: .3px !important;
+          margin: 0;
+          padding: 0 0 2px 0;
+          // text-transform: uppercase;
+          }
+          .HotsheetSlug {
+          font-family: $font-three;
+          font-size: 13px !important;
+          letter-spacing: .5px !important;
+          margin: 0;
+          padding: 0;          
+          }
+
+        }
+      }
+
       .label-ios, .label-md, .label-wp {
       margin: 12px 10px 12px 0 !important;
       }
@@ -24,6 +67,10 @@ page-all-websites {
     
     ion-thumbnail {
     margin: 12px 16px 12px 0 !important;
+      img {
+      // border-radius: 50%;
+      box-shadow: 0 0 0 1px $color-5;
+      }
     }
 
     .item-inner {
@@ -105,44 +152,13 @@ page-all-websites {
   
   }
 
+  .list-ios, .list-md, .list-wp {
+    > .item-block:last-child, > .item-wrapper:last-child .item-block {
+    border-bottom: none !important;
+    }
+    ion-item-options {
+    border-bottom: none !important;
+    }
+  }
+
 }
-
-// .roundedOption {
-// font-family: $font-one;  
-// font-size: 16px;
-// font-weight: 400;
-// background: #8ba1a9;
-//   &.btn-settings {  
-//   background: #207EAF;
-//   }
-//   &.btn-info {
-//   background: #1D79A2;
-//   }
-//   &.btn-del {
-//   background: #FF3B2F;
-//   }
-
-//   .button-inner {
-//   min-width: 55px;
-//   }
-// }
-
-// .websiteThumb {
-//   ion-thumbnail {
-//   margin: 12px 16px 12px 0 !important;
-//   }
-//   img {
-//   width: 56px !important;
-//   height: 56px !important;
-//   box-shadow: 0 0 0 1px #DDD;
-//   } 
-//   a {
-//   color: #888;
-//   padding: 1px 0 2px 0;
-//   display: block;
-//   }
-//   ion-badge {
-//   font-size: 11px;
-//   font-weight: 400;
-//   }
-// }
