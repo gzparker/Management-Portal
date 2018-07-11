@@ -112,8 +112,12 @@ page-all-websites {
       }
     }
   }
+
+  ion-item-sliding {
+  max-height: 104px;
+  }
   
-  ion-item-options {
+  ion-item-options, .desktopOption {
     
     ion-icon {
     color: #FFF !important;
@@ -138,19 +142,60 @@ page-all-websites {
     .btn-edit {  
     background: #1d7bce !important;
     }
-    .btn-lead {  
-    // background: #253954 !important;
+    .btn-lead {    
     background: #37467a !important;
     }
     .btn-status {    
     background: #1D79A2 !important;
     }
-    .btn-del {
-    // background: #FF3B2F !important;
+    .btn-del {    
     background: #F53D3D !important;
     }
   
   }
+
+  // For Desktop Option
+  .desktopOption {  
+  width: auto;
+  display: table;
+  float: right;
+  top: 6px !important;
+  right: 0px !important;
+  position: absolute;
+  background: transparent;  
+    &:hover, &:focus {
+      &:before {
+      opacity: 1;
+      }
+
+      button {
+      opacity: 1;
+      }
+    }
+
+    button {
+    @extend %transition;
+    opacity: 0;    
+    }
+
+    ion-icon {
+    color: #FFF !important;
+    margin-right: 6px;
+      &:before {
+      font-size: 16px;
+      display: block;
+      padding-bottom: 5px;
+      }
+    }
+    .btn-edit, .btn-lead, .btn-status, .btn-del {
+    height: 32px;    
+    min-height: 32px;
+      .button-inner {
+      padding: 0 8px;
+      }
+    }
+  }
+
 
   .list-ios, .list-md, .list-wp {
     > .item-block:last-child, > .item-wrapper:last-child .item-block {
