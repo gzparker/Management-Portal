@@ -36,7 +36,27 @@ page-view-roles {
     }    
   }
 
-  ion-item-sliding {        
+  ion-item-sliding {
+
+    &:hover {
+      .optionIcon {
+      opacity: .7;
+      }
+    }
+    
+    .optionIcon {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 6px;
+    right: 4px;
+    display: block;
+    background: url("../assets/icon/svg/edit.svg") no-repeat center center !important;
+    background-size: 100% !important;
+    opacity: 0;
+    @extend %transition;
+    }
+
     .item-ios, .item-md, .item-wp {    
     padding-left: 16px !important;
       .item-inner {
@@ -103,11 +123,72 @@ page-view-roles {
   }
 
   ion-item-sliding {
+  max-height: 62px;
     ion-item-options {
+    border: none !important;
       .button-ios-primary {
       background: #1C7BCE;
       }
     }
+  }
+
+  .desktopOption {
+  width: auto;
+  display: table;
+  float: right;
+  top: 5px !important;
+  right: 0px !important;
+  position: absolute;
+  background: transparent;
+  padding: 0px;
+  margin: 0px;  
+    &:before {
+    display: none !important;
+    }
+
+    &:hover, &:focus {
+      button {
+      opacity: 1;
+      }
+    }
+
+    ion-icon {
+    line-height: 32px !important;
+      &:before {
+      margin-top: -1px !important;
+      font-size:  18px !important;
+      margin-right: 6px !important;
+      float: left !important;
+      display: inline-block !important;      
+      }
+    }
+
+    button {
+    border-radius: 2px !important;
+    margin-left: 6px !important;
+    padding: 0 14px !important;
+    height: 32px !important;
+    padding-top: 4px !important;
+    min-height: 32px !important;
+    line-height: 32px !important;
+    @extend %transition;    
+    opacity: 0;
+    }
+
+    .item-inner {    
+    border: none !important;
+    position: relative;
+
+      .input-wrapper {
+      margin: 0px;
+      padding: 0px;
+        .label-ios, .label-md, .label-wp {
+        margin: 0px !important;
+        padding: 0px !important;
+        }
+      }
+    }
+
   }
 
 }

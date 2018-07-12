@@ -45,7 +45,8 @@
         <p class="agentDescription" [innerHTML]="agent.description"></p>
       </ion-item>
 
-      <ion-item class="desktopOption" side="right" *ngIf="!isApp">    
+      <ion-item class="desktopOption" side="right" *ngIf="!isApp">
+        <div class="optionIcon" *ngIf="!isApp"></div>
         <button ion-button color="primary" (click)="editAgent(agent.id)" *ngIf="isEditAgentAccess==true">
           <ion-icon name="ios-brush">Edit</ion-icon>
         </button>
@@ -107,7 +108,8 @@
         <p class="agentDescription" [innerHTML]="agent.description"></p>
     </ion-item>
 
-    <ion-item class="desktopOption" side="right" *ngIf="!isApp">    
+    <ion-item class="desktopOption" side="right" *ngIf="!isApp">
+      <div class="optionIcon" *ngIf="!isApp"></div>
       <button ion-button color="primary" (click)="editAgent(agent.id)" *ngIf="isEditAgentAccess==true">
         <ion-icon name="ios-brush">Edit</ion-icon>
       </button>
