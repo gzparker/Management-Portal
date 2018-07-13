@@ -54,22 +54,23 @@
     <ion-item-sliding *ngFor="let hotsheet of allHotSheetList">
 
       <ion-item (click)="editHotsheet(hotsheet.id)">
-          <ion-thumbnail item-start>
-              <img src={{this.sharedServiceObj.imgBucketUrl}}{{hotsheet.header_image_url}} 
-              (error)="imgHotsheet.src = this.sharedServiceObj.hotsheetNoImage" #imgHotsheet/>
-              <!--<img src="../assets/imgs/hotsheets-thumbnail.jpg">-->
-            </ion-thumbnail>
+        <ion-thumbnail item-start>
+            <img src={{this.sharedServiceObj.imgBucketUrl}}{{hotsheet.header_image_url}} 
+            (error)="imgHotsheet.src = this.sharedServiceObj.hotsheetNoImage" #imgHotsheet/>
+            <!--<img src="../assets/imgs/hotsheets-thumbnail.jpg">-->
+        </ion-thumbnail>
         <h2 class="HotsheetName">{{hotsheet.name}}</h2>
         <p class="HotsheetSlug">visit/{{hotsheet.slug}}</p>
       
       </ion-item>
-
+      
+      <ion-item class="desktopOption" side="right" *ngIf="!isApp">
+        <div class="optionIcon" *ngIf="!isApp"></div>        
+        <button ion-button color="danger" item-right class="btn-del" (click)="deleteHotsheet(hotsheet)" *ngIf="isDeleteHotsheetAccess==true"><ion-icon name="md-close"></ion-icon>Delete</button>
+      </ion-item>
       <ion-item-options side="right" *ngIf="isApp">
         <button ion-button color="danger" item-right class="btn-del" (click)="deleteHotsheet(hotsheet)" *ngIf="isDeleteHotsheetAccess==true"><ion-icon name="md-close"></ion-icon>Delete</button>
       </ion-item-options>
-      <ion-item side="right" *ngIf="!isApp">
-        <button ion-button color="danger" item-right class="btn-del" (click)="deleteHotsheet(hotsheet)" *ngIf="isDeleteHotsheetAccess==true"><ion-icon name="md-close"></ion-icon>Delete</button>
-      </ion-item>
     </ion-item-sliding>
   </ion-list>
 
