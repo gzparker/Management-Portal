@@ -1476,6 +1476,12 @@ else
       {
         this.ngZone.run(()=>{ 
       this.hotsheetUpdateMsg='Slug already exists.';
+      let alert = this.alertCtrl.create({
+        title: 'Notification',
+        subTitle: this.hotsheetUpdateMsg,
+        buttons: ['Ok']
+      });
+      alert.present();
         });
       }
         }

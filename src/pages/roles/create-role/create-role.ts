@@ -68,7 +68,7 @@ let selectedIndex = this.access_level.indexOf(roleId);
 
       this.access_level.push(roleId);
     }
-debugger;
+//debugger;
 }
   getAllAccessLevels()
   {
@@ -112,6 +112,12 @@ this.access_level=this.all_access_levels;
     {
       this.ngZone.run(() => {
       this.roleCreateMsg=result.message;
+      let alert = this.alertCtrl.create({
+        title: 'Error',
+        subTitle: this.roleCreateMsg,
+        buttons: ['Ok']
+      });
+      alert.present();
     });
     }
   }

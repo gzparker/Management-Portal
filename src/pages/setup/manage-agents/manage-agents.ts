@@ -46,6 +46,12 @@ export class ManageAgentsPage {
       if(this.navParams.get('notificationMsg')!=undefined)
       {
         this.notificationMsg=this.navParams.get('notificationMsg');
+        let alert = this.alertCtrl.create({
+          title: 'Notification',
+          subTitle: this.notificationMsg,
+          buttons: ['Ok']
+        });
+        alert.present();
       }
       this.loader = this.loadingCtrl.create({
         content: "Please wait...",
@@ -221,6 +227,12 @@ loadAllAgentsResp(result:any)
     this.allAgents=[];
     this.agentServices=[];
     this.agentsFoundMessage="No agents found.";
+    let alert = this.alertCtrl.create({
+      title: 'Error',
+      subTitle: this.agentsFoundMessage,
+      buttons: ['Ok']
+    });
+    alert.present();
   }
 }
 deleteAgent(agent:any)

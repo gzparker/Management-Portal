@@ -45,6 +45,12 @@ export class ViewRolesPage {
       if(this.navParams.get('notificationMsg')!=undefined)
       {
         this.notificationMsg=this.navParams.get('notificationMsg');
+        let alert = this.alertCtrl.create({
+          title: 'Notification',
+          subTitle: this.notificationMsg,
+          buttons: ['Ok']
+        });
+        alert.present();
       }
       this.isApp = (!document.URL.startsWith("http"));
       this.loader = this.loadingCtrl.create({
@@ -116,6 +122,12 @@ else
 {
   this.allRoles=[];
   this.allRolesFound="No roles found.";
+  let alert = this.alertCtrl.create({
+    title: 'Error',
+    subTitle: this.allRolesFound,
+    buttons: ['Ok']
+  });
+  alert.present();
 }
 }
 deleteRole(role:any)
@@ -143,6 +155,12 @@ deleteRole(role:any)
           {
             this.allRolesFound="All roles have been deleted.Please add new role.";
             this.notificationMsg="";
+            let alert = this.alertCtrl.create({
+              title: 'Error',
+              subTitle: this.allRolesFound,
+              buttons: ['Ok']
+            });
+            alert.present();
           }
           this.userServiceObj.deleteRole(role.id.toString())
           .subscribe((result) => this.deleteRoleResp(result));

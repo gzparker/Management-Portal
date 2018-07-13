@@ -20,7 +20,7 @@
     <ion-item *ngIf="isContact==2">
                 
       <ion-searchbar placeholder="Search for contacts" (input)="filterContacts()" [(ngModel)]="searchKeyword" 
-      name="searchKeyword" id="searchKeyword"></ion-searchbar>
+      name="searchKeyword" id="searchKeyword" required></ion-searchbar>
 </ion-item>
            <ion-list *ngIf="isContact==2">
              <ion-item *ngFor="let availableContact of allAvailableSearchedContacts">
@@ -35,7 +35,7 @@
             <ion-textarea type="text" [(ngModel)]="description" name="description" required></ion-textarea>
           </ion-item>
           <div padding>
-          <button ion-button color="primary" block (click)="sendMessage('new')">Send Message</button>
+          <button ion-button color="primary" block (click)="sendMessage('new')" [disabled]="!messageForm.valid">Send Message</button>
           </div>
   </form>
 

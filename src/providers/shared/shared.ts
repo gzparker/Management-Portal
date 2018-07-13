@@ -276,7 +276,7 @@ sendMessage(type:string,description:any,redirectUserId:any,firebaseUserId:any,
       let alert = this.alertCtrl.create({
         title: 'Message Alert',
         subTitle: 'Please type something in message box.',
-        buttons: ['Dismiss']
+        buttons: ['Ok']
       });
       alert.present();
        return false;

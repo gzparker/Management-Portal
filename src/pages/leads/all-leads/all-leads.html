@@ -20,9 +20,9 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <ion-chip *ngIf="notificationMsg!=''">
+  <!--<ion-chip *ngIf="notificationMsg!=''">
     <ion-label color="secondary">{{notificationMsg}}</ion-label>
-  </ion-chip>
+  </ion-chip>-->
   
   <div class="animated lightSpeedIn">
   <ion-searchbar [(ngModel)]="searchLeadTerm" (ionInput)="setLeadFilteredItems()"></ion-searchbar>
@@ -123,8 +123,8 @@
     </ion-segment>
   </div>
 
-  <ion-chip *ngIf='searchedLeadsList.length<=0&&leadsFoundMessage!=""'>
+  <!--<ion-chip *ngIf='searchedLeadsList.length<=0&&leadsFoundMessage!=""'>
     <ion-label color="danger">{{leadsFoundMessage}}</ion-label>
-  </ion-chip>
+  </ion-chip>-->
 
 </ion-content>

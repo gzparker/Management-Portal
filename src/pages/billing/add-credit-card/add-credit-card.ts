@@ -138,7 +138,13 @@ export class AddCreditCardPage {
           });
         }
         else {
-          this.creditCardMsg=data.message.toUpperCase();
+          let alert = this.alertCtrl.create({
+            title: 'Error',
+            subTitle: this.creditCardMsg,
+            buttons: ['Ok']
+          });
+          alert.present();
+          //this.creditCardMsg=data.message.toUpperCase();
         }
       }
 }

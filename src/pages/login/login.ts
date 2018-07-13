@@ -158,6 +158,12 @@ export class LoginPage {
       this.storage.remove('userType');
       this.storage.remove('loggedInUserInfo');
       this.userLoggedId = false;
+      let alert = this.alertCtrl.create({
+        title: 'Error',
+        subTitle: this.userLogginMsg,
+        buttons: ['Ok']
+      });
+      alert.present();
       // this.loginModal.close();
 
     }

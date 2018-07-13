@@ -1209,6 +1209,12 @@ this.allListingTypeChecked=true;
     {
       this.ngZone.run(()=>{ 
       this.hotsheetCreateMsg="Slug already exists.";
+      let alert = this.alertCtrl.create({
+        title: 'Error',
+        subTitle: this.hotsheetCreateMsg,
+        buttons: ['Ok']
+      });
+      alert.present();
       });
     }
      

@@ -656,7 +656,13 @@ if(this.accountInfo.phone_mobile!=this.phone_number)
   else
   {
    // debugger;
-    this.accountInfoUpdateMsg=result.message;
+    //this.accountInfoUpdateMsg=result.message;
+    let alert = this.alertCtrl.create({
+      title: 'Notification',
+      subTitle: result.message,
+      buttons: ['Ok']
+    });
+    alert.present();
   }
   }
 

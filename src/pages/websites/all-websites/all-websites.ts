@@ -64,6 +64,12 @@ export class AllWebsitesPage {
       if(this.navParams.get('notificationMsg')!=undefined)
       {
         this.notificationMsg=this.navParams.get('notificationMsg');
+        let alert = this.alertCtrl.create({
+          title: 'Notification',
+          subTitle: this.notificationMsg,
+          buttons: ['Ok']
+        });
+        alert.present();
       }
       //debugger;
   }
@@ -228,6 +234,12 @@ export class AllWebsitesPage {
     {
       this.allWebsiteList=[];
       this.websiteFoundMessage="No website found.";
+      let alert = this.alertCtrl.create({
+        title: 'Error',
+        subTitle: this.websiteFoundMessage,
+        buttons: ['Ok']
+      });
+      alert.present();
     }
     //debugger;
   }
@@ -255,6 +267,12 @@ export class AllWebsitesPage {
             {
               this.websiteFoundMessage="All websites have been deleted.Please add new website.";
               this.notificationMsg="";
+              let alert = this.alertCtrl.create({
+                title: 'Error',
+                subTitle: this.websiteFoundMessage,
+                buttons: ['Ok']
+              });
+              alert.present();
             }
            this.userServiceObj.deleteWebsite(this.userId.toString(),website.id)
            .subscribe((result) => this.deleteWebsiteResp(result,website));

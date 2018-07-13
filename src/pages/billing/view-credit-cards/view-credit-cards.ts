@@ -51,6 +51,12 @@ export class ViewCreditCardsPage {
       if(this.navParams.get('notificationMsg')!=undefined)
       {
         this.notificationMsg=this.navParams.get('notificationMsg');
+        let alert = this.alertCtrl.create({
+          title: 'Notification',
+          subTitle: this.notificationMsg,
+          buttons: ['Ok']
+        });
+        alert.present();
       }
   }
 
@@ -191,6 +197,12 @@ export class ViewCreditCardsPage {
       this.allCreditCards=[];
       this.totalCreditCards=0;
       this.creditCardsFoundMessage="No billing info found.";
+      let alert = this.alertCtrl.create({
+        title: 'Error',
+        subTitle: this.creditCardsFoundMessage,
+        buttons: ['Ok']
+      });
+      alert.present();
     }
   }
   deleteCreditCard(creditCard:any)
@@ -215,8 +227,14 @@ export class ViewCreditCardsPage {
             }
             if(this.allCreditCards.length<=0)
             {
-              this.creditCardsFoundMessage="All credit cards have been deleted.Please add new credit card.";
-              this.notificationMsg="";
+              //this.creditCardsFoundMessage="All credit cards have been deleted.Please add new credit card.";
+              //this.notificationMsg="";
+              let alert = this.alertCtrl.create({
+                title: 'Error',
+                subTitle: this.creditCardsFoundMessage,
+                buttons: ['Ok']
+              });
+              alert.present();
             }
             this.userServiceObj.deleteCreditCard(this.userId.toString(),this.sharedServiceObj.service_id,creditCard.unique_id)
             .subscribe((result) => this.deleteCreditCardResp(result));

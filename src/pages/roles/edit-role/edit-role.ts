@@ -159,6 +159,12 @@ if(result.status==true)
 else
 {
   this.roleUpdateMsg="Role has not been updated successfully.";
+  let alert = this.alertCtrl.create({
+    title: 'Error',
+    subTitle: this.roleUpdateMsg,
+    buttons: ['Ok']
+  });
+  alert.present();
 }
     
   }

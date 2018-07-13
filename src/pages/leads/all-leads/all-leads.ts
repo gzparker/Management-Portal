@@ -74,6 +74,12 @@ export class AllLeadsPage {
       if(this.navParams.get('notificationMsg')!=undefined)
       {
         this.notificationMsg=this.navParams.get('notificationMsg');
+        let alert = this.alertCtrl.create({
+          title: 'Notification',
+          subTitle: this.notificationMsg,
+          buttons: ['Ok']
+        });
+        alert.present();
       }
       this.loader = this.loadingCtrl.create({
         content: "Please wait...",
@@ -255,6 +261,12 @@ filterItemsByCategory()
       this.allLeadsList=[];
       this.searchedLeadsList=[];
       this.leadsFoundMessage="No leads found.";
+      let alert = this.alertCtrl.create({
+        title: 'Error',
+        subTitle: this.leadsFoundMessage,
+        buttons: ['Ok']
+      });
+      alert.present();
     }
     
   }
@@ -315,7 +327,14 @@ this.navCtrl.push(EditLeadPage,{leadId:leadId});
             if(this.allLeadsList.length<=0)
             {
               this.leadsFoundMessage="All leads have been deleted.Please add new lead.";
+              
               this.notificationMsg="";
+              let alert = this.alertCtrl.create({
+                title: 'Error',
+                subTitle: this.leadsFoundMessage,
+                buttons: ['Ok']
+              });
+              alert.present();
             }
             this.userServiceObj.deleteLead(lead.lead_id,this.userId)
             .subscribe((result) => this.deleteLeadResp(result));

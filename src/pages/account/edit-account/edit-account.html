@@ -25,9 +25,9 @@
 
 
 <ion-content padding class="dashboardUI">
-    <ion-chip *ngIf="accountInfoUpdateMsg!=''">
+    <!--<ion-chip *ngIf="accountInfoUpdateMsg!=''">
         <ion-label color="danger">{{accountInfoUpdateMsg}}</ion-label>
-      </ion-chip>
+      </ion-chip>-->
   <form role="form" data-toggle="validator" #accountForm="ngForm">
 
     <div class="formShadow">
@@ -131,7 +131,7 @@
            [disabled]="!accountForm.valid">Update Account</button>
       </div>
   </form>
-  <ion-chip *ngIf="accountInfoUpdateMsg!=''">
+  <!--<ion-chip *ngIf="accountInfoUpdateMsg!=''">
       <ion-label color="danger">{{accountInfoUpdateMsg}}</ion-label>
-    </ion-chip>
+    </ion-chip>-->
 </ion-content>

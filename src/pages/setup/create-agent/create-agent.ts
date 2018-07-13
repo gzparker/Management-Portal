@@ -174,6 +174,12 @@ this.description=html;
     {
       this.ngZone.run(() => {
       this.agentCreateMsg=result.message;
+      let alert = this.alertCtrl.create({
+        title: 'Error',
+        subTitle: this.agentCreateMsg,
+        buttons: ['Ok']
+      });
+      alert.present();
     });
     }
   }

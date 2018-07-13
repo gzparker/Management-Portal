@@ -50,6 +50,12 @@ export class AllHotSheetsPage {
       if(this.navParams.get('notificationMsg')!=undefined)
       {
         this.notificationMsg=this.navParams.get('notificationMsg');
+        let alert = this.alertCtrl.create({
+          title: 'Notification',
+          subTitle: this.notificationMsg,
+          buttons: ['Ok']
+        });
+        alert.present();
       }
       this.loader = this.loadingCtrl.create({
         content: "Please wait...",
@@ -216,6 +222,12 @@ export class AllHotSheetsPage {
             {
               this.hotsheetFoundMessage="All hotsheets have been deleted.Please add new hotsheet.";
               this.notificationMsg="";
+              let alert = this.alertCtrl.create({
+                title: 'Error',
+                subTitle: this.hotsheetFoundMessage,
+                buttons: ['Ok']
+              });
+              alert.present();
             }
             this.userServiceObj.deleteHotsheet(this.userId.toString(),hotsheet.id)
             .subscribe((result) => this.deleteHotsheetResp(result));

@@ -189,7 +189,7 @@ if(document.getElementById("chatDescription").innerHTML=="")
   let alert = this.alertCtrl.create({
     title: 'Message Alert',
     subTitle: 'Please type something in message box.',
-    buttons: ['Dismiss']
+    buttons: ['Ok']
   });
   alert.present();
 return false;

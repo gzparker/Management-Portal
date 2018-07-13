@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController,LoadingController,ActionSheetController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController,LoadingController,ActionSheetController,AlertController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 import { DashboardPage } from '../dashboard/dashboard';
@@ -61,7 +61,7 @@ export class RegisterPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider,
     public modalCtrl: ModalController, private storage: Storage,
-    public loadingCtrl: LoadingController,public actionSheetCtrl: ActionSheetController) {
+    public loadingCtrl: LoadingController,public actionSheetCtrl: ActionSheetController, public alertCtrl: AlertController) {
       this.loader = this.loadingCtrl.create({
         content: "Please wait...",
         duration: 5000
@@ -135,6 +135,7 @@ export class RegisterPage {
       this.userCreated = true;
       this.userTypeSelected = true;
       this.userSignUpMsg = "User has been successfully registered.";
+
       //this.userType="1";
       if (!this.fbSignUp) {
 
@@ -157,6 +158,12 @@ export class RegisterPage {
       //this.modalType=3;
       this.userCreated = true;
       this.userSignUpMsg = result.message.toUpperCase();
+      let alert = this.alertCtrl.create({
+        title: 'Error',
+        subTitle: this.userSignUpMsg,
+        buttons: ['Ok']
+      });
+      alert.present();
     }
 
   }

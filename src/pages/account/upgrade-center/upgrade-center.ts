@@ -252,6 +252,12 @@ upgradeDowngradePlan(selectedPlan:any)
     {
 this.notificationError="Plan does not exists.";
 this.notificationMsg="";
+let alert = this.alertCtrl.create({
+  title: 'Notification',
+  subTitle: this.notificationError,
+  buttons: ['Ok']
+});
+alert.present();
     }
 }
 
@@ -261,6 +267,12 @@ upgradeDowngradePlanResp(result:any)
   {
     this.notificationError="";
 this.notificationMsg=result.message;
+let alert = this.alertCtrl.create({
+  title: 'Notification',
+  subTitle: this.notificationMsg,
+  buttons: ['Ok']
+});
+alert.present();
   }
 //debugger;
 }

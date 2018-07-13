@@ -43,7 +43,13 @@ export class UpcomingSubscriptionPage {
     public ngZone: NgZone,public menuCtrl: MenuController,public loadingCtrl: LoadingController) {
       if(this.navParams.get('notificationMsg')!=undefined)
       {
-        this.notificationMsg=this.navParams.get('notificationMsg');
+        let alert = this.alertCtrl.create({
+          title: 'Notification',
+          subTitle: this.navParams.get('notificationMsg'),
+          buttons: ['Ok']
+        });
+        alert.present();
+        //this.notificationMsg=this.navParams.get('notificationMsg');
       }
       this.loader = this.loadingCtrl.create({
         content: "Please wait...",
@@ -85,6 +91,12 @@ export class UpcomingSubscriptionPage {
     {
       this.allUpcomingSubscription=[];
       this.upcomingFoundMessage="No upcoming subscription.";
+      let alert = this.alertCtrl.create({
+        title: 'Notification',
+        subTitle: this.upcomingFoundMessage,
+        buttons: ['Ok']
+      });
+      alert.present();
     }
     
   }

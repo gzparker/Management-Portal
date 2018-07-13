@@ -76,8 +76,14 @@ loadPaperWorkStatusResp(result:any):void{
   }
   else
   {
-    this.paperWorkFoundMsg=result.message;
+    //this.paperWorkFoundMsg=result.message;
 //debugger;
+let alert = this.alertCtrl.create({
+  title: 'Error',
+  subTitle: this.paperWorkFoundMsg,
+  buttons: ['Ok']
+});
+alert.present();
   }
 }
 }

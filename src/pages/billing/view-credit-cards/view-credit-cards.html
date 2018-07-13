@@ -28,9 +28,9 @@
       <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
     
-    <ion-chip *ngIf="notificationMsg!=''">
+    <!--<ion-chip *ngIf="notificationMsg!=''">
       <ion-label color="secondary">{{notificationMsg}}</ion-label>
-    </ion-chip>
+    </ion-chip>-->
 
     <ion-list *ngIf="defaultCreditCard!=null" (click)="cardDetail(defaultCreditCard.unique_id)" class="animated lightSpeedIn">
       
@@ -81,8 +81,8 @@
 
     </ion-list>
       
-    <ion-chip *ngIf='allCreditCards.length<=0&&creditCardsFoundMessage!=""'>
+    <!--<ion-chip *ngIf='allCreditCards.length<=0&&creditCardsFoundMessage!=""'>
       <ion-label color="danger">{{creditCardsFoundMessage}}</ion-label>
-    </ion-chip>
+    </ion-chip>-->
 
 </ion-content>

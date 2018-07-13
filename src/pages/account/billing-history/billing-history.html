@@ -20,9 +20,9 @@
     <ion-refresher (ionRefresh)="viewAllBillingHistory($event)">
         <ion-refresher-content></ion-refresher-content>
       </ion-refresher>
-    <ion-chip *ngIf="notificationMsg!=''">
+    <!--<ion-chip *ngIf="notificationMsg!=''">
         <ion-label color="secondary">{{notificationMsg}}</ion-label>
-    </ion-chip>
+    </ion-chip>-->
     <ion-list>
       <accordion *ngFor="let subscription of allSubscriptionHistory">
         <accordion-group>

@@ -208,6 +208,12 @@ for(let i=0;i<this.selectedPackagesList.length;i++)
 else
 {
   this.subscriptionMsg="Please select package list.";
+  let alert = this.alertCtrl.create({
+    title: 'Error',
+    subTitle: this.subscriptionMsg,
+    buttons: ['Ok']
+  });
+  alert.present();
 }
   }
   
@@ -221,6 +227,12 @@ else
     else {
       this.sharedServiceObj.setPaidStatus(false);
       this.subscriptionMsg=data.message.toUpperCase();
+      let alert = this.alertCtrl.create({
+        title: 'Error',
+        subTitle: this.subscriptionMsg,
+        buttons: ['Ok']
+      });
+      alert.present();
     }
   }
   checkPromoCode()

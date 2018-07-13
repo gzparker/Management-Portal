@@ -41,8 +41,14 @@ export class AccountInfoPage {
     public loadingCtrl: LoadingController) {
       if(this.navParams.get('notificationMsg')!=undefined)
       {
+        let alert = this.alertCtrl.create({
+          title: 'Notification',
+          subTitle: this.navParams.get('notificationMsg'),
+          buttons: ['Ok']
+        });
+        alert.present();
        //debugger;
-        this.notificationMsg=this.navParams.get('notificationMsg');
+        //this.notificationMsg=this.navParams.get('notificationMsg');
       }
       this.loader = this.loadingCtrl.create({
         content: "Please wait...",
@@ -76,7 +82,7 @@ this.navCtrl.push(EditAccountPage,{userId:this.userId});
   
     if(result.status==true)
     {
-debugger;
+//debugger;
       this.accountInfo=result.result;
       this.globalSettings=result.globalSettings;
       /*if(this.localStorageService.get('fbAuthResp'))

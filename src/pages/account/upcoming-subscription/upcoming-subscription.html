@@ -20,9 +20,9 @@
       <ion-refresher (ionRefresh)="viewAllUpcomingSubscription($event)">
           <ion-refresher-content></ion-refresher-content>
         </ion-refresher>
-      <ion-chip *ngIf="notificationMsg!=''">
+      <!--<ion-chip *ngIf="notificationMsg!=''">
           <ion-label color="secondary">{{notificationMsg}}</ion-label>
-      </ion-chip>
+      </ion-chip>-->
       <ion-list>
         <accordion *ngFor="let subscription of allUpcomingSubscription">
           <accordion-group>
@@ -47,9 +47,9 @@
     </accordion>
       </ion-list>
      
-      <ion-chip *ngIf='allUpcomingSubscription.length<=0&&upcomingFoundMessage!=""'>
+      <!--<ion-chip *ngIf='allUpcomingSubscription.length<=0&&upcomingFoundMessage!=""'>
           <ion-label color="danger">{{upcomingFoundMessage}}</ion-label>
-      </ion-chip>
+      </ion-chip>-->
   </ion-content>
   
 <!--<ion-header>

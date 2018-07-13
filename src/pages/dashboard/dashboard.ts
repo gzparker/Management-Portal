@@ -93,6 +93,12 @@ private subscription: ISubscription;
       if(this.navParams.get('notificationMsg')!=undefined&&this.navParams.get('notificationMsg')!='')
       {
         this.notificationMsg=this.navParams.get('notificationMsg');
+        let alert = this.alertCtrl.create({
+          title: 'Notification',
+          subTitle: this.notificationMsg,
+          buttons: ['Ok']
+        });
+        alert.present();
       }
       if(this.navParams.get('selectedPage')!=undefined&&this.navParams.get('selectedPage')!='')
       {
