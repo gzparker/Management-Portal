@@ -356,14 +356,14 @@ else
 if(type=="1")
 {
   this.ngZone.run(() => {
-    this.navCtrl.setRoot(ChatDetailPage, { groupId: groupId,chatterName:chatterName });
+    this.navCtrl.push(ChatDetailPage, { groupId: groupId,chatterName:chatterName });
   });
 }
 else if(type=="2")
 {
   this.ngZone.run(() => {
     //debugger;
-    this.navCtrl.setRoot(GroupChatDetailPage, { groupId: groupId,chatterName:chatterName });
+    this.navCtrl.push(GroupChatDetailPage, { groupId: groupId,chatterName:chatterName });
   });
 }
 }

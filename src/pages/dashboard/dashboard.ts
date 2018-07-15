@@ -433,7 +433,7 @@ if(status==true)
       //this.navCtrl.setRoot(DashboardPage);
     }
     if (pageNumber == "5") {
-      this.navCtrl.setRoot(AllWebsitesPage);
+      this.navCtrl.push(AllWebsitesPage);
     }
     if (pageNumber == "6") {
       this.navCtrl.setRoot(AllLeadsPage);

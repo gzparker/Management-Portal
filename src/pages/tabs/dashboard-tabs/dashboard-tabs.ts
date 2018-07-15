@@ -118,9 +118,6 @@ this.showSetupTab=false;
   }
 setRootPages(option:any)
 {
-  //debugger;
-  //this.idxpaymentTabs.select(1);
-  //this.sharedServiceObj.setNavigationalPage('8');
  if(option=='1')
  {
   this.sharedServiceObj.setNavigationalPage('4');

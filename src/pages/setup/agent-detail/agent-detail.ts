@@ -62,12 +62,10 @@ export class AgentDetailPage {
   }
   setAccessLevels()
   {
-
     let parent_id = this.storage.get('parent_id');
       parent_id.then((data) => {
         if(data!=null)
         {
-          //debugger;    
       this.parentId=data;
       this.isOwner=false;
         }
@@ -76,7 +74,6 @@ export class AgentDetailPage {
       this.isOwner=true;
        }
        this.allowMenuOptions();
-      
       });
   }
   allowMenuOptions()
