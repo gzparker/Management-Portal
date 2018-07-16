@@ -51,6 +51,7 @@ export class SharedProvider {
   public noImageUrl="././assets/imgs/noImage.png";
   public hotsheetNoImage="././assets/imgs/hotsheets-thumbnail.jpg";
   public profileNoImage="././assets/imgs/profile-photo.jpg";
+  public groupNoImage="././assets/imgs/profile-group.jpg";
   // public FB:any;
 
   constructor(private http: Http,private storage: Storage, public alertCtrl: AlertController) {

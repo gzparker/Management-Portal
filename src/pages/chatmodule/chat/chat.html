@@ -247,7 +247,7 @@
                         <!-- <img src="{{group.val().groupImage}}" class="chat-profile-group" /> -->
                         <!-- <img src="{{group.val().groupImage}}" class="chat-profile-group" (error)="imgUser.src = this.sharedServiceObj.noImageUrl" #imgUser/> -->
                         <!-- <img src="{{group.val().groupImage}}" class="chat-profile-group" (error)="imgUser.src = this.sharedServiceObj.noImageUrl" #imgUser/> -->
-                        <img src="assets/imgs/profile-group.jpg">
+                        <img src="{{group.val().groupImage}}"  (error)="imgGroup.src = this.sharedServiceObj.groupNoImage" #imgGroup>
                       </div>
                       <div class="chat-info mike">                        
                         <span class="msgdate">{{convertToDate(group.val().modifiedDate) | date : "shortTime"}}</span>

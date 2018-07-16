@@ -31,7 +31,7 @@
         <ion-list class="msgSearchBarResults" *ngIf="isContact==2">
             <ion-item *ngFor="let availableContact of allAvailableSearchedContacts">
                 <ion-item (click)="selectChatMember(availableContact)">
-                  {{availableContact.first_name}}
+                  {{availableContact.first_name}} {{availableContact.last_name}}
                 </ion-item>
             </ion-item>
         </ion-list>
