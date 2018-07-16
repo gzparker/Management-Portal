@@ -162,11 +162,9 @@
             <div *ngIf="group.val().isGroup==0">
         
             <ion-list class="chatBoxWrapper">
-                
-                <ion-item class="item item-avatar item-text-wrap chatBoxItem"  *ngIf="firebaseUserId==group.val().fromFbUserId||firebaseUserId==group.val().toFbUserId" 
-                    (click)="chatDetail(group.val().groupId,group.val().fromFbUserId,group.val().fromUserName,group.val().toUserName,2)">  
                     <ion-item-sliding>
-                    <ion-item>
+                    <ion-item class="item item-avatar item-text-wrap chatBoxItem"  *ngIf="firebaseUserId==group.val().fromFbUserId||firebaseUserId==group.val().toFbUserId" 
+                    (click)="chatDetail(group.val().groupId,group.val().fromFbUserId,group.val().fromUserName,group.val().toUserName,2)">
                     <div  *ngIf="firebaseUserId==group.val().fromFbUserId">
                     <div  *ngFor="let user of users">
                       <div *ngIf="user.fbId==group.val().toFbUserId && user.isOnline==0">              
@@ -232,7 +230,7 @@
                     </ion-item-options>
 
                 </ion-item-sliding>
-                </ion-item>
+              
               </ion-list>
             </div>
         

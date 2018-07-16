@@ -119,7 +119,7 @@ public isWebBrowser=false;
   public listingTypeOptions:any[]=[{id:"all",name:"All"},{id:"house",name:"House"},{id:"cnd",name:"Condo"},
         {id:"twnhs",name:"TownHouse"},{id:"land",name:"Land"},{id:"duplx",name:"Duplex"},
         {id:"comm",name:"Commercial"}];
-  private CkeditorConfig = {uiColor: '#99000',removeButtons:'Underline,Subscript,Superscript,SpecialChar'
+  private CkeditorConfig = {removeButtons:'Underline,Subscript,Superscript,SpecialChar'
         ,toolbar: [
           { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source'] },
           { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', '-', 'RemoveFormat' ] },

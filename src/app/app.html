@@ -11,7 +11,7 @@
     <ion-card text-center class="profileCard" *ngIf="userLoggedIn==true&&userGeneralInfo!=null"  (tap)="openPage('26')" >
     
     <img src={{this.sharedServiceObj.imgBucketUrl}}{{userGeneralInfo.photo_company}} 
-    class="custom-avatar" (error)="imgProfile.src = this.sharedServiceObj.noImageUrl" #imgProfile/>
+    class="custom-avatar" (error)="imgProfile.src = this.sharedServiceObj.profileNoImage" #imgProfile/>
     <h2 class="username">{{userGeneralInfo.identity_name}}</h2>
     <p class="tagline">Let your fingers do the walking.</p>
     </ion-card>

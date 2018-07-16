@@ -113,7 +113,8 @@
           </ion-item>
           <div class="customList">
             <ion-label stacked>Description</ion-label>
-              <ckeditor
+            <textarea id="user_description" name="user_description" width="500" cols="110" rows="10" maxLength="500" [(ngModel)]="user_description"></textarea>
+              <!--<ckeditor
               [config]="CkeditorConfig"
               [readonly]="false" [(ngModel)]="user_description"
               (change)="userDescChanged($event)"
@@ -121,7 +122,7 @@
               (focus)="userDescFocused($event)"
               (ready)="userDescCreated($event)"
               debounce="500" name="user_description">
-              </ckeditor>
+              </ckeditor>-->
             </div>
         </div>
 

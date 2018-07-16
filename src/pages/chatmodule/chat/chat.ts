@@ -261,7 +261,7 @@ if(i==snapshot.numChildren())
   allUnreadMessage=allUnreadMessage+unreadCounter;
     //groupData.val().unreadMessagesCounter=unreadCounter;
     //that.chatGroups[arrIndex]=groupData;
-    that.chatGroups[arrIndex]['unreadMsgs']=unreadCounter;
+    //that.chatGroups[arrIndex]['unreadMsgs']=unreadCounter;
     let chatGroupsOld=that.chatGroups;
     that.chatGroups=[];
     that.chatGroups=chatGroupsOld;

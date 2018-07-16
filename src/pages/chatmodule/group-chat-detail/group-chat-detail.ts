@@ -183,7 +183,8 @@ that.sharedServiceObj.setUserNotTyping(groupId);
  }
  saveGroupMessage(){
    var that=this;
-  var readBy=[that.firebaseUserId];
+  var readBy=[];
+  readBy.push(that.firebaseUserId);
 if(document.getElementById("chatDescription").innerHTML=="")
 {
   let alert = this.alertCtrl.create({
@@ -246,7 +247,14 @@ openEmoji()
      var that=this;
      var modalPage = this.modalCtrl.create(ChatEmojiPopupoverPage);
      modalPage.onDidDismiss(data => {
-       that.selectEmoji(data.selectedEmoji);
+      if(data!=undefined)
+      {
+        if(data.selectedEmoji!=undefined||data.selectedEmoji!=null)
+        {
+         that.selectEmoji(data.selectedEmoji);
+        }
+      }
+      
    });
      modalPage.present();
    }

@@ -87,7 +87,7 @@
       
         </ion-list>
 
-        <div class="customList b32">
+        <div class="customList b32" *ngIf="globalSettings&&user.timezone!=null">
           <ion-label>TimeZone<span [ngClass]="{'error': timezone==''}" *ngIf="timezone==''">*</span>
           </ion-label>
           <ng2-timezone-picker

@@ -231,13 +231,13 @@ if(chatDetailArray!=undefined)
 //$scope.chatDetailData=$scope.chatDetailArray;
 chatDetailArray.forEach(function(chatData) {
 var fredRef=firebase.database().ref('chats/'+chatData.key);
-
+//debugger;
  var readByData=chatData.val().readBy;
  if(readByData!=undefined)
  {
  if(readByData.indexOf(firebaseUserId)<0)
  {
-   //debugger;
+  //debugger;
  readByData.push(firebaseUserId);
 //The following 2 function calls are equivalent
 fredRef.update({readBy:readByData});
@@ -245,6 +245,7 @@ fredRef.update({readBy:readByData});
 }
 else
 {
+  //debugger;
    var readBy=[firebaseUserId];
 fredRef.update({readBy:readBy});
 }
@@ -392,16 +393,17 @@ sendMessage(type:string,description:any,redirectUserId:any,firebaseUserId:any,
       };
      saveMessage(groupId,memberId,type,newChatMember:any,loggedInUserInfo:any,firebaseUserId:string,
         description:string,chatImage:string,chatDetailArray:any){
-           // debugger;
+         // debugger;
        let that=this;
        let msgResp="";
-       var readBy=firebaseUserId;
+       var readBy=[];
+       readBy.push(firebaseUserId);
        var deletedFor=["0"];
        var msgDescription=description;
        var toImageUrl="";
        var toUserName="";
        var toUserImage="";
-     
+     //debugger;
        var chat = firebase.database().ref('chats');
        if(type=="new")
      { 

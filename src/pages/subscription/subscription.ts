@@ -221,7 +221,21 @@ else
     if (data.status == true) {
       this.sharedServiceObj.setPaidStatus(true);
       this.ngZone.run(() => {
-        this.navCtrl.setRoot(DashboardTabsPage,{notificationMsg:data.message.toUpperCase()});
+        let confirm = this.alertCtrl.create({
+          title: 'Sign Up',
+          message: 'Thank you for singing up with our IDX System',
+          buttons: [
+           
+            {
+              text: 'Continue',
+              handler: () => {
+                this.navCtrl.push(GlobalPreferencesPage);
+                  }
+                }
+              ]
+              });
+              confirm.present();  
+        //this.navCtrl.setRoot(DashboardTabsPage,{notificationMsg:data.message.toUpperCase()});
       });
     }
     else {

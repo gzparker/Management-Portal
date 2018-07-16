@@ -73,7 +73,7 @@ export class GlobalPreferencesPage {
   public companyWidth:string="";
   public companyHeight:string="";
 
-  public user = {timezone:''};
+  public user = {timezone:'America/New_York'};
   public placeholderString = 'Select timezone';
   
 
@@ -171,7 +171,15 @@ export class GlobalPreferencesPage {
       if(this.globalSettings)
       {
         //debugger;
-        this.user.timezone = this.globalSettings.timezone;
+        if(this.globalSettings.timezone==null||this.globalSettings.timezone==undefined)
+        {
+          this.user.timezone='America/New_York';
+        }
+        else
+        {
+          this.user.timezone = this.globalSettings.timezone;
+        }
+        
      
      this.colorBase=this.globalSettings.color_base;
     this.secondColor=this.globalSettings.color_second;
@@ -610,11 +618,6 @@ else
       if(this.userId!="")
     {
     //debugger;
-     /*var image:any = new Image();
-     image.src = this.companyLogoImage;
-      image.onload = function () {
-        debugger;
-      }*/
     this.userServiceObj.updateGlobalSettings(this.userId,this.personalImage,this.companyLogoImage,this.user.timezone,
       this.colorBase,this.secondColor,this.thirdColor,this.identity_name)
     .subscribe((result) => this.updateGlobalSettingsResp(result));

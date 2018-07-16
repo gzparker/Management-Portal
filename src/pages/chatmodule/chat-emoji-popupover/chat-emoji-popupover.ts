@@ -48,5 +48,9 @@ export class ChatEmojiPopupoverPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad ChatEmojiPopupoverPage');
   }
-
+  closePopUp()
+  {
+    //debugger;
+    this.viewCtrl.dismiss();
+  }
 }

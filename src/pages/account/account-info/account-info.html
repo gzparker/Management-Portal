@@ -33,7 +33,7 @@
       <ion-avatar item-start *ngIf="globalSettings!=null">
         <!--<img src={{imgBaseUrl}}{{globalSettings.photo_personal}} *ngIf="globalSettings.photo_personal!=''"/>
         <img src={{noImgUrl}} *ngIf="globalSettings.photo_personal==''"/>-->
-        <ion-thumbnail><img src={{this.sharedServiceObj.imgBucketUrl}}{{globalSettings.photo_personal}} (error)="imgAccount.src = this.sharedServiceObj.noImageUrl" #imgAccount/></ion-thumbnail>
+        <ion-thumbnail><img src={{this.sharedServiceObj.imgBucketUrl}}{{globalSettings.photo_personal}} (error)="imgAccount.src = this.sharedServiceObj.profileNoImage" #imgAccount/></ion-thumbnail>
       </ion-avatar>
       <h2>{{accountInfo.first_name}} {{accountInfo.last_name}}</h2>
       <p data-placeholder="N/A">{{accountInfo.email}}</p>

@@ -65,7 +65,7 @@ public chatWidth:string="";
   public chatHeight:string="";
   //public chatImage:string="";
   public chatImageChangedEvent:any='';
-private CkeditorConfig = {uiColor: '#99000',removeButtons:'Underline,Subscript,Superscript,SpecialChar'
+private CkeditorConfig = {removeButtons:'Underline,Subscript,Superscript,SpecialChar'
   ,toolbar: [
     { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source'] },
     { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', '-', 'RemoveFormat' ] },
@@ -189,7 +189,14 @@ if(i==snapshot.numChildren()){
      var that=this;
      var modalPage = this.modalCtrl.create(ChatEmojiPopupoverPage);
      modalPage.onDidDismiss(data => {
-       that.selectEmoji(data.selectedEmoji);
+      if(data!=undefined)
+      {
+        if(data.selectedEmoji!=undefined||data.selectedEmoji!=null)
+        {
+         that.selectEmoji(data.selectedEmoji);
+        }
+      }
+       
    });
      modalPage.present();
    }
@@ -225,7 +232,7 @@ if(i==snapshot.numChildren()){
   }
   sendMessage(type:string)
   {
-   // debugger;
+   //debugger;
     this.sharedServiceObj.sendMessage(type,document.getElementById("chatDescription").innerHTML,undefined,this.firebaseUserId,
       undefined,this.groupId,this.loggedInUserInfo,this.chatImage,this.chatDetailArray);
   }
