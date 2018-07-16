@@ -4,19 +4,19 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
+<ion-header class="dashboardUI">
 
     <ion-navbar>
-        <button ion-button menuToggle start>
-            <ion-icon name="menu"></ion-icon>
-        </button>
+      <!-- <button ion-button menuToggle start>
+        <ion-icon name="menu"></ion-icon>
+      </button> -->
       <ion-title>Upcoming Subscription</ion-title>
     </ion-navbar>
   
   </ion-header>
   
   
-  <ion-content padding>
+  <ion-content padding class="dashboardUI">
       <ion-refresher (ionRefresh)="viewAllUpcomingSubscription($event)">
           <ion-refresher-content></ion-refresher-content>
         </ion-refresher>
@@ -35,17 +35,18 @@
                 </ion-item>
                 </ion-card>
               </accordion-heading>
-      <ion-card>
-          <ion-item *ngFor="let subscriptionItem of subscription.items">
-          <h2>Item Amount:{{subscriptionItem.item_amount}}</h2>
-          <p>Currency:{{subscriptionItem.item_currency}}</p>
-          <p>Description:{{subscriptionItem.item_description}}</p>
-       
-        </ion-item>
-        </ion-card>
-      </accordion-group>
-    </accordion>
-      </ion-list>
+        
+              <ion-card>
+                <ion-item *ngFor="let subscriptionItem of subscription.items">
+                <h2>Item Amount:{{subscriptionItem.item_amount}}</h2>
+                <p>Currency:{{subscriptionItem.item_currency}}</p>
+                <p>Description:{{subscriptionItem.item_description}}</p>
+                </ion-item>
+              </ion-card>
+
+        </accordion-group>
+      </accordion>
+    </ion-list>
      
       <!--<ion-chip *ngIf='allUpcomingSubscription.length<=0&&upcomingFoundMessage!=""'>
           <ion-label color="danger">{{upcomingFoundMessage}}</ion-label>

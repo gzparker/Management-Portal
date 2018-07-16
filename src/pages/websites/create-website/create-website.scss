@@ -1,3 +1,101 @@
 page-create-website {
+  ion-navbar {
+    .bar-buttons {
+      .button-inner {
+        .icon-ios, .icon-md, .icon-wp {
+        font-size: 30px !important;
+          &:before {
+          content: "";
+          width: 32px;
+          height: 32px;
+          display: block;          
+          background: url("../assets/icon/svg/save.svg") no-repeat center center !important;
+          background-size: 62% !important;
+          }
+        }
+      }
+    }
+  }
+
+  
+  .blk1 {
+    .item-block {
+      &:last-child {
+      padding-bottom: 8px;
+      }
+    }
+    .label-ios, .label-md, .label-wp {
+    opacity: .68;
+    }
+  }  
+
+  .blk2 {
+  margin-bottom: 32px;
+  background: #FFF;
+    .item-block {
+      &:last-child {
+      padding-bottom: 16px !important;
+      }
+    }
+    .item-inner {    
+    padding-right: 16px !important;
+    border-bottom: 0px !important;
+    }
+  }
+
+  .blk4 {
+  background: #FFF;
+    .list-header-ios, .list-header-md, .list-header-wp {
+    // border-color: #ebe9f0 !important;
+    border-bottom: none !important;
+          .item-inner {
+        .input-wrapper {
+          ion-label {
+          font-size: 14px;
+          color: #696D72;
+          letter-spacing: 0px !important;
+          text-transform: capitalize !important;
+          margin-bottom: 0px !important;
+          }
+        }
+      }
+    }
+    .customList {
+    border-bottom: 1px solid #ebe9f0 !important;      
+    }
+  }
+
+  .blk5 {
+    .item-block {
+      &:last-child {
+      padding-bottom: 12px;      
+      }
+
+      .label-ios, .label-md, .label-wp {
+      font-size: 14px;
+      }
+      .item-inner {
+      padding-right: 0px;
+      }
+      .text-input {
+      width: 100%;      
+      }
+    }  
+  }
+
+  .bt16 {
+  padding-bottom: 18px;
+  }
+
+  .labelLarge {
+  font-size: 14px !important;
+  margin-bottom: 2px !important;
+  }
+
+  .item-ios, .item-md, .item-wp {
+    .item-inner {  
+    border-color: #ebe9f0 !important;
+    }
+  }
 
 }

@@ -36,7 +36,7 @@
         <ion-thumbnail><img src={{this.sharedServiceObj.imgBucketUrl}}{{globalSettings.photo_personal}} (error)="imgAccount.src = this.sharedServiceObj.noImageUrl" #imgAccount/></ion-thumbnail>
       </ion-avatar>
       <h2>{{accountInfo.first_name}} {{accountInfo.last_name}}</h2>
-      <p>{{accountInfo.email}}</p>
+      <p data-placeholder="N/A">{{accountInfo.email}}</p>
       <!--<p *ngIf="accountInfo.company!=null&&accountInfo.company!=undefined">{{accountInfo.company}}</p>-->
       <!-- <p>{{accountInfo.phone_number}}</p> -->
     </ion-item>
@@ -44,7 +44,7 @@
     <div class="broker-agent-id">
       <div class="col3">
         <h2 *ngIf="accountInfo.mls_id!=null&&accountInfo.mls_id!=undefined">{{accountInfo.mls_id}}</h2>
-        <p>MLS ID</p>        
+        <p>MLS ID</p>
       </div>
       <div class="col3">
         <h2 *ngIf="accountInfo.broker_id!=null&&accountInfo.broker_id!=undefined">{{accountInfo.broker_id}}</h2>
@@ -61,25 +61,25 @@
     <ion-item *ngIf="accountInfo!=null" (click)="editAccount();">
       <ion-icon name="ios-mail-outline" item-start></ion-icon>
         <h2>Email</h2>
-        <p>{{accountInfo.email}}</p>
+        <p data-placeholder="N/A">{{accountInfo.email}}</p>
     </ion-item>
 
     <ion-item *ngIf="accountInfo!=null" (click)="editAccount();">
       <ion-icon name="md-call" item-start></ion-icon>
         <h2 *ngIf="accountInfo.phone_mobile!=null&&accountInfo.phone_mobile!=undefined">Phone</h2>
-        <p>{{accountInfo.phone_mobile}}</p>
+        <p data-placeholder="N/A">{{accountInfo.phone_mobile}}</p>
     </ion-item>
 
     <ion-item *ngIf="accountInfo!=null" (click)="editAccount();">
       <ion-icon name="ios-globe-outline" item-start></ion-icon>
         <h2>Country</h2>
-        <p>{{accountInfo.country_abbv}}</p>
+        <p data-placeholder="N/A">{{accountInfo.country_abbv}}</p>
     </ion-item>
 
     <ion-item *ngIf="accountInfo!=null" (click)="editAccount();">
       <ion-icon name="ios-person" item-start></ion-icon>
         <h2 *ngIf="accountInfo.description!=null&&accountInfo.description!=undefined">About</h2>
-        <p>{{accountInfo.description}}</p>
+        <p data-placeholder="N/A">{{accountInfo.description}}</p>
     </ion-item>
   
   </ion-list>

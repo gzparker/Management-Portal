@@ -4,35 +4,66 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
-
+<ion-header class="dashboardUI">
   <ion-navbar>
+    
     <ion-title>Create Group</ion-title>
-    <button ion-button end class="button button-clear" (click)="closePopUp();">Close</button>
-  </ion-navbar>
+    <!-- <button ion-button end class="button button-clear" (click)="closePopUp();">Close</button> -->
 
+    <ion-buttons end>
+      <button ion-button end icon-left (click)="closePopUp();">Close</button>
+    </ion-buttons>
+
+
+  </ion-navbar>
 </ion-header>
 
 
-<ion-content padding>
-  <h1 class="contentTitle">Create Group</h1>
+<ion-content padding class="dashboardUI newMessage noScroll">
+  
+  <!-- <h1 class="contentTitle">Create Group</h1> -->
+  
   <form role="form" data-toggle="validator" #groupForm="ngForm">
-      <ion-item>
-          <ion-label stacked>Subject<span [ngClass]="{'error': groupTitle==''}" *ngIf="groupTitle==''">*</span></ion-label>
-          <ion-input type="text" required [(ngModel)]="groupTitle" name="groupTitle" id="groupTitle" required></ion-input>
-        </ion-item>
-    <ion-item>
-        <ion-label stacked>Select Group Members</ion-label>
-        <ion-select [(ngModel)]="groupMembersData"  
-        name="groupMembersData" multiple="true" required>
-        <ion-option *ngFor="let availableContact of allAvailableContacts" [value]=availableContact>
-        {{availableContact.first_name}} {{availableContact.last_name}}
-        </ion-option>
-        </ion-select>
-      </ion-item>
-      <div padding>
-            <button ion-button color="primary" block (click)="createGroup('new')" 
-            [disabled]="!groupForm.valid">Create</button>
+  
+      <div class="customList">
+        <div class="msgBoxWrapper">
+          <ion-item>
+            <ion-label stacked>Subject<span [ngClass]="{'error': groupTitle==''}" *ngIf="groupTitle==''">*</span></ion-label>
+            <ion-input type="text" placeholder="Add Group Name" required [(ngModel)]="groupTitle" name="groupTitle" id="groupTitle"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label stacked>Select Group Members</ion-label>
+            <ion-select placeholder="-----" [(ngModel)]="groupMembersData"  
+            name="groupMembersData" multiple="true">
+            <ion-option *ngFor="let availableContact of allAvailableContacts" [value]=availableContact>
+            {{availableContact.first_name}} {{availableContact.last_name}}
+            </ion-option>
+            </ion-select>
+          </ion-item>        
+        
+          <!--<ion-searchbar placeholder="Search for contacts" (input)="filterContacts()" [(ngModel)]="searchKeyword" 
+            name="searchKeyword" id="searchKeyword"></ion-searchbar>
+          </ion-item>
+          
+          <ion-list>
+            <ion-item *ngFor="let availableContact of allAvailableSearchedContacts">
+              <ion-item (click)="selectChatMember(availableContact)">
+                   {{availableContact.first_name}}
+              </ion-item>
+            </ion-item>
+          </ion-list>-->
+
+          <div class="dashboardBtn">
+            <!-- <button ion-button color="primary" block (click)="createGroup('new')">Create</button> -->
+            <button ion-button icon-start color="primary" block (click)="createGroup('new')">
+              <ion-icon name="ios-send"></ion-icon>
+              Create
+            </button>
+          </div>
+
       </div>
-    </form>
+    </div>
+
+  </form>
 </ion-content>

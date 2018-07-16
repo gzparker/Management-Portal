@@ -1,3 +1,559 @@
 page-chat {
+  
+  ion-header {  
+    &.dashboardUI.chatUI {
+    min-height: 70px;
+    
+      ion-navbar {
+        .bar-button-ios, .bar-button-md, .bar-button-wp {
+        max-width: 30px;        
+        }
+        .bar-buttons {        
+          .button-inner {
+          font-size: 0px !important;          
+            .icon-ios, .icon-md, .icon-wp {
+              &.ion-ios-create-outline, &.ion-md-create-outline, &.ion-wp-create-outline {              
+                &:before {
+                content: "";
+                width: 25px;
+                height: 25px;
+                display: block;          
+                background: url(../assets/icon/svg/chat.svg) no-repeat left center !important;
+                background-size: 100% !important;
+                }
+              }
+              &.ion-ios-bookmark, &.ion-md-bookmark, &.ion-wp-bookmark {
+                &:before {
+                content: "";
+                width: 25px;
+                height: 25px;
+                display: block;
+                background: url("../assets/icon/svg/group-add.svg") no-repeat center center !important;
+                background-size: 100% !important;
+                }
+              }
+            }
+          }
+        }
+      }
 
+    }
+  }
+
+  ion-content.dashboardUI.chatUI {
+    &:before {
+    height: 70px !important;
+    // height: 125px !important;
+    z-index: 1;    
+    }
+    &:after {
+    height: 100vh;
+    background: #FFF !important;
+    }
+
+    .scroll-content {
+    margin-top: 88px !important;
+    padding: 0px !important;
+    }
+    
+    .noShadow {
+    // padding: 30px 20px 0 20px;
+    padding: 5px 20px 0 20px;
+    margin-bottom: 0px;
+    }
+
+    // CHATBOX
+    .chatBoxWrapper, .chatBoxWrapper2 {        
+    border-radius: 0px;
+    margin-bottom: 0px;
+    position: relative;    
+    box-shadow: none !important;
+    margin-bottom: 2px;
+    // border: 2px solid red;
+      
+      .chatBoxItem {
+      border-bottom: 1px solid #ebe9f0 !important;
+      }
+
+      .item-ios, .item-md, .item-wp {
+      padding: 0px !important;  
+      }
+
+      .item-inner {
+      margin: 0px !important;
+      padding: 0px !important;
+      border: none;
+        .label-ios, .label-md, .label-wp {
+        margin: 0;
+        padding: 0;
+        }
+      }
+
+      .chatAvatar {
+      min-height: 56px;
+      min-width: 56px;
+      margin: 12px 20px 12px 4px;
+      float: left;
+      display: inline-block;
+        img {        
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;        
+        }
+      }
+
+      .chat-info {      
+      width: auto;
+      min-height: 80px;
+      overflow: hidden;
+      padding: 14px 16px 0 0;
+      line-height: 17px;
+        // * {
+        // font-family: $font-three;
+        // font-size: 12px;
+        // line-height: 17px;
+        // }
+        .msgdate {
+        font-family: $font-three;
+        font-size: 10px;
+        letter-spacing: .3px;
+        text-transform: uppercase;
+        opacity: .6;
+        top: 16px;
+        right: 0px;
+        position: absolute;
+        }
+        h2, .chatName {
+        width: 100%;
+        max-width: 84%;
+        font-family: $font-three !important;
+        font-size: 15px  !important;
+        color: #111;
+        letter-spacing: 0px;
+        font-weight: 400;
+        margin: 2px 0;        
+        padding: 0;
+        display: block;
+        overflow: hidden;
+        // text-overflow: ellipsis;
+        text-overflow: unset;
+        white-space: normal;
+        line-height: 19px;
+        }
+        
+        .chatLastMsg {
+        font-family: $font-three;
+        font-size: 13px;
+        line-height: 18px;
+        max-height: 36px;
+        text-overflow: unset;
+        white-space: normal;
+        color: #a7a7a7;
+        letter-spacing: .2px;
+          .emoji {
+          width: 100%;
+          max-width: 22px;
+          margin: 0 4px -5px 4px;
+          height: auto;
+          }
+          &.chat-img {
+          width: inherit;
+          max-width: 75%;
+          padding: 6px;
+          border-radius: 6px;            
+          margin: 0px !important;
+            &:before, &:after {
+            display: none;
+            }
+            img {
+            width: 100%;
+            height: auto;
+            display: block;
+            }
+          }
+        }
+      }
+
+      .userstatus-offline, .userstatus-online {
+      width: 12px;
+      height: 12px;
+      font-size: 0;
+      bottom: 15px;
+      left: 42px;
+      opacity: .65;
+      position: absolute;
+      border-radius: 50%;
+      background: red;
+      }
+
+      .userstatus-online {
+      opacity: 1;
+      background: #14d574;
+      }
+
+    }
+
+    .chatBoxWrapper2 {
+    border-radius: 6px;    
+    }
+
+  }
+  
+
+  ion-segment {
+    &.chatHeader {
+    height: 45px;
+    padding: 0 20px;
+    background: transparent !important;    
+      .segment-button {
+      height: 45px;
+      line-height: 45px;
+      padding-bottom: 10px;
+      text-transform: uppercase;
+      font-family: $font-six;
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: .4px;
+      color: #FFF !important;
+      border: none;
+      position: relative;
+      background: transparent !important;
+        
+        &:hover {
+          &:before {
+          opacity: 1;
+          }
+        }
+
+        &:before {
+        content: "";        
+        bottom: 0px;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+        position: absolute;
+        display: block;
+        width: 0;
+        height: 0;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-bottom: 10px solid #FFF;
+        // border-bottom: 10px solid #EBF0F5 !important;        
+        opacity: 0;
+        @extend %transition;
+        }
+
+        ion-icon {                
+        font-size: 26px !important;
+        color: #FFF !important;
+        display: none;
+        }
+      }
+    }
+  }
+
+  .header-ios, .header-md, .header-wp {
+    ion-navbar {
+    position: relative;
+
+      .bar-buttons {
+      width: 32px;
+      max-width: 32px;
+      }
+      .back-button {
+      display: none !important;
+      }
+      .toolbar-content {
+      height: 36px;
+      max-height: 36px;
+      position: relative;
+        .headerSearch {         
+        width: 96%;
+        height: 36px;
+        max-height: 36px;
+        float: left;
+        left: 0;
+        right: 0;
+        margin: 0 auto !important;
+        display: inline-block;       
+          .searchbar-input-container {
+          margin: 0px;
+          border: none !important;
+            .searchbar-search-icon {
+            top: 12px;
+            }
+            .searchbar-input {
+            min-height: 36px;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.6);
+            }
+          }
+        }        
+      }
+    }
+  }
+
+  .searchbar-ios, .searchbar-md, .searchbar-wp {
+  min-height: unset;
+  border-radius: 0;
+  padding: 0;
+  border: none;  
+  background: none;
+    .searchbar-input-container {
+    margin-top: 16px;
+    border-radius: 0;
+    border-bottom: 2px solid #ebe9f0;
+      .searchbar-search-icon {
+      top: 16px;
+      left: 16px;
+      }
+      .searchbar-input {      
+      padding-left: 36px;
+      padding-right: 10px;
+      min-height: 45px;
+      border-radius: 5px 5px 0 0;      
+      }
+    }
+  }
+
+  ion-list {
+  overflow: unset;
+  box-shadow: -1px 0px 18px 1px rgba(41, 81, 123, 0.15);      
+    &:first-child, &:last-child {
+    border: none;
+    }
+  }
+
+  .item-ios, .item-md, .item-wp {
+  margin-left: 0px !important;
+  padding-left: 0px !important;
+    .item-inner {    
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    margin-left: 0px !important;
+    border-color: #ebe9f0 !important;
+      h2 {
+      margin-top: 0px;
+      }
+    }
+  }
+
+  ion-content.dashboardUI .formShadow {
+  border-radius: 5px !important;
+  box-shadow: -1px 0px 8px rgba(214, 220, 226, 0.51) !important;  
+  }
+  
+  ion-item-sliding {
+  max-height: 90px;
+    &:hover {
+      .optionIcon {
+      opacity: .7;
+      }
+    }    
+    .optionIcon {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 14px;
+    right: 10px;
+    display: block;
+    background: url("../assets/icon/svg/edit.svg") no-repeat center center !important;
+    background-size: 100% !important;
+    opacity: 0;
+    @extend %transition;
+    }
+  }
+  
+  ion-item-sliding, ion-item-options, .desktopOption {
+    
+    ion-icon {
+    color: #FFF !important;
+      &:before {
+      font-size: 22px;
+      display: block;
+      padding-bottom: 5px;
+      }
+    }
+
+    .btn-edit, .btn-lead, .btn-status, .btn-del {
+      .button-inner {
+      min-width: 40px !important;
+      font-family: $font-three;
+      font-size: 10px !important;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      color: #FFF !important;
+      }
+    }
+
+    .btn-edit {  
+    background: #1d7bce !important;
+    }
+    .btn-lead {    
+    background: #37467a !important;
+    }
+    .btn-status {    
+    background: #1D79A2 !important;
+    }
+    .btn-del {    
+    background: #F53D3D !important;
+    }
+  
+  }
+
+  // For Desktop Option
+  .desktopOption {  
+  width: auto;
+  display: table;
+  float: right;
+  top: 27px !important;
+  right: -8px !important;
+  position: absolute;
+  background: transparent;  
+    &:hover, &:focus {
+      &:before {
+      opacity: 1;
+      }
+
+      button {
+      opacity: 1;
+      }
+    }
+
+    button {
+    @extend %transition;
+    opacity: 0;
+    }
+
+    ion-icon {
+    color: #FFF !important;
+    margin-right: 6px;
+      &:before {
+      font-size: 16px;
+      display: block;
+      padding-bottom: 5px;
+      }
+    }
+    .btn-edit, .btn-lead, .btn-status, .btn-del {
+    height: 32px;    
+    min-height: 32px;
+      .button-inner {
+      padding: 0 8px;
+      }
+    }
+  }
+
+  ion-item-options {
+  border-bottom: none !important;
+  } 
+
+  ion-item-sliding {
+  max-height: 104px;
+    &:hover {
+      .optionIcon {
+      opacity: .7;
+      }
+    }    
+    .optionIcon {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 10px;
+    right: 4px;
+    display: block;
+    background: url("../assets/icon/svg/edit.svg") no-repeat center center !important;
+    background-size: 100% !important;
+    opacity: .7;
+    @extend %transition;
+    }
+  }
+  
+  ion-item-sliding, ion-item-options, .desktopOption {
+    
+    ion-icon {
+    color: #FFF !important;
+      &:before {
+      font-size: 22px;
+      display: block;
+      padding-bottom: 5px;
+      }
+    }
+
+    .btn-edit, .btn-lead, .btn-status, .btn-del {
+      .button-inner {
+      min-width: 40px !important;
+      font-family: $font-three;
+      font-size: 10px !important;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      color: #FFF !important;
+      }
+    }
+
+    .btn-edit {  
+    background: #1d7bce !important;
+    }
+    .btn-lead {    
+    background: #37467a !important;
+    }
+    .btn-status {    
+    background: #1D79A2 !important;
+    }
+    .btn-del {    
+    background: #F53D3D !important;
+    }
+  
+  }
+
+  // For Desktop Option
+  .desktopOption {  
+  width: auto;
+  display: table;
+  float: right;
+  top: 25px !important;
+  right: -4px !important;
+  position: absolute;
+  background: transparent;  
+    &:hover, &:focus {
+      &:before {
+      opacity: 1;
+      }
+      button {
+      opacity: 1;
+      }
+    }
+
+    button {
+    @extend %transition;
+    opacity: 0;
+    }
+
+    ion-icon {
+    color: #FFF !important;
+    margin-right: 5px;
+      &:before {
+      font-size: 16px;
+      display: block;
+      padding-bottom: 5px;
+      }
+    }
+    .btn-edit, .btn-lead, .btn-status, .btn-del {
+    height: 32px;    
+    min-height: 32px;
+      .button-inner {
+      padding: 0 3px;
+      }
+    }
+  }
+  
+  ion-item-options {
+  border-bottom: none !important;
+  }
+
+  .item-ios, .item-md, .item-wp {
+    .item-button {
+    margin: 0 4px !important;
+    }
+  }
+  
 }

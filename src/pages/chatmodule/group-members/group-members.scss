@@ -1,3 +1,283 @@
 page-group-members {
+  ion-content.dashboardUI.chatUI {
+    &:before {
+    height: 50vh !important;
+    z-index: 1;
+    }
+    &:after {
+    height: 100vh;
+    // background: #FFF !important;
+    }
+
+    .scroll-content {
+    // margin-top: 88px !important;
+    // padding: 0px !important;
+    }
+    
+    .noShadow {
+    // padding: 5px 20px 0 20px;
+    // margin-bottom: 0px;
+    }
+
+    // CHATBOX
+    .chatBoxWrapper, .chatBoxWrapper2 {        
+    // border-radius: 0px;
+    margin-bottom: 0px;
+    position: relative;    
+    box-shadow: none !important;
+    margin-bottom: 2px;
+    // border: 2px solid red;
+      
+      .chatBoxItem {
+      // border-bottom: 1px solid #ebe9f0 !important;
+      border-bottom: none !important;
+      }
+
+      .item-ios, .item-md, .item-wp {
+      // padding: 0px !important;  
+      }
+
+      .item-inner {
+      margin: 0px !important;
+      padding: 0px !important;
+      border: none;
+        .label-ios, .label-md, .label-wp {
+        margin: 0;
+        padding: 0;
+        }
+      }
+
+      .chatAvatar {
+      min-height: 56px;
+      min-width: 56px;
+      margin: 12px 20px 10px 4px;
+      float: left;
+      display: inline-block;
+        img {        
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;        
+        }
+      }
+
+      .chat-info {      
+      width: auto;
+      min-height: 80px;
+      overflow: hidden;
+      padding: 14px 16px 0 0;
+      line-height: 17px;
+        h1 {
+        width: 100%;
+        max-width: 88%;
+        height: auto;
+        font-family: $font-four;
+        font-size: 16px;
+        line-height: 19px;
+        font-weight: 600;
+        color: #555;
+        margin: 0px;
+        padding: 7px 0 3px 0;
+        text-align: left;
+        text-overflow: unset;
+        white-space: normal;
+        }
+        .msgdate {
+        font-family: $font-three;
+        font-size: 10px;
+        letter-spacing: .3px;
+        text-transform: uppercase;
+        opacity: .6;
+        top: 16px;
+        right: 0px;
+        position: absolute;
+        }
+        h2, .chatName {
+        width: 100%;
+        max-width: 84%;
+        font-family: $font-three !important;
+        font-size: 14px  !important;
+        color: #111;
+        letter-spacing: 0px;
+        font-weight: 400;
+        margin: 2px 0;        
+        padding: 0;
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        }
+        
+        .chatLastMsg {
+        font-family: $font-three;
+        font-size: 13px;
+        line-height: 18px;
+        max-height: 36px;
+        text-overflow: unset;
+        white-space: normal;
+        color: #a7a7a7;
+        letter-spacing: .2px;
+        }
+      }
+
+      .userstatus-offline, .userstatus-online {
+      width: 12px;
+      height: 12px;
+      font-size: 0;
+      bottom: 15px;
+      left: 42px;
+      opacity: .65;
+      position: absolute;
+      border-radius: 50%;
+      background: red;
+      }
+
+      .userstatus-online {
+      opacity: 1;
+      background: #14d574;
+      }
+
+
+    }
+
+    .chatBoxWrapper2 {
+    border-radius: 6px;
+    }
+  }
+
+ion-list {
+  overflow: unset;
+  box-shadow: -1px 0px 18px 1px rgba(41, 81, 123, 0.15);      
+    &:first-child, &:last-child {
+    border: none;
+    }
+  }
+
+  .item-ios, .item-md, .item-wp {
+  // margin-left: 0px !important;
+  // padding-left: 0px !important;
+    .item-inner {    
+    // padding-left: 0px !important;
+    // padding-right: 0px !important;
+    // margin-left: 0px !important;
+    border-color: #ebe9f0 !important;
+      h2 {
+      margin-top: 0px;
+      }
+    }
+  }
+
+  ion-content.dashboardUI .formShadow {
+  border-radius: 5px !important;
+  box-shadow: -1px 0px 8px rgba(214, 220, 226, 0.51) !important;  
+  }
+  
+  ion-item-sliding {
+  max-height: 90px;
+  overflow: hidden !important;
+  border-radius: 4px !important;
+  margin-bottom: 15px !important;
+  -webkit-box-shadow: -1px 0px 16px rgba(151, 156, 162, 0.15) !important;
+  box-shadow: -1px 0px 16px rgba(151, 156, 162, 0.15) !important;
+
+    &:hover {
+      .optionIcon {
+      opacity: .7;
+      }
+    }    
+    .optionIcon {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 14px;
+    right: 24px;
+    display: block;
+    background: url("../assets/icon/svg/edit.svg") no-repeat center center !important;
+    background-size: 100% !important;
+    opacity: .7;
+    @extend %transition;
+    }
+  }
+  
+  ion-item-sliding, ion-item-options, .desktopOption {
+    
+    ion-icon {
+    color: #FFF !important;
+      &:before {
+      font-size: 22px;
+      display: block;
+      padding-bottom: 5px;
+      }
+    }
+
+    .btn-edit, .btn-lead, .btn-status, .btn-del {
+      .button-inner {
+      min-width: 40px !important;
+      font-family: $font-three;
+      font-size: 10px !important;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      color: #FFF !important;
+      }
+    }
+
+    .btn-edit {  
+    background: #1d7bce !important;
+    }
+    .btn-lead {    
+    background: #37467a !important;
+    }
+    .btn-status {    
+    background: #1D79A2 !important;
+    }
+    .btn-del {    
+    background: #F53D3D !important;
+    }
+  
+  }
+
+  // For Desktop Option
+  .desktopOption {  
+  width: auto;
+  display: table;
+  float: right;
+  top: 6px !important;
+  right: -8px !important;
+  position: absolute;
+  background: transparent;  
+    &:hover, &:focus {
+      &:before {
+      opacity: 1;
+      }
+
+      button {
+      opacity: 1;
+      }
+    }
+
+    button {
+    @extend %transition;
+    opacity: 0;
+    }
+
+    ion-icon {
+    color: #FFF !important;
+    margin-right: 6px;
+      &:before {
+      font-size: 16px;
+      display: block;
+      padding-bottom: 5px;
+      }
+    }
+    .btn-edit, .btn-lead, .btn-status, .btn-del {
+    height: 32px;    
+    min-height: 32px;
+      .button-inner {
+      padding: 0 8px;
+      }
+    }
+  }
+
+  ion-item-options {
+  border-bottom: none !important;
+  } 
 
 }
