@@ -103,12 +103,17 @@ page-group-chat-detail {
     }
 
       .item-ios, .item-md, .item-wp {
+      padding-left: 14px;
       background: transparent;
       }
 
       .list-ios, .list-md, .list-wp {
       border-radius: 0px;
+        .item-block {
+        padding-right: 0px !important;
+        }
       }
+
   }
 
   .scroll-content {
@@ -208,6 +213,14 @@ page-group-chat-detail {
       word-break: break-word;
       word-wrap: break-word;
       box-sizing: border-box;
+        
+        .emoji {
+        width: 100%;
+        max-width: 22px;
+        margin: 0 4px -5px 4px;
+        height: auto;
+        }
+
       }
       .chatbox-box:empty:not(:focus):before{
       font-family: $font-three;
@@ -259,25 +272,27 @@ page-group-chat-detail {
 
   // Chatbox Content
   ion-list.chatBoxList {
-  padding-top: 16px;
+  padding: 16px 14px 20px 5px;
   box-sizing: border-box;
   box-shadow: none !important;
   // background: red;
-    .item-wrapper {
-    // padding: 0 16px 16px 16px;
-    padding: 0 0 10px 0;
+    .item-wrapper {    
+    padding: 0;
+    margin: 0 0 10px 0;
     border-radius: 6px !important;    
     background: transparent;
+    // background: red;
       .item-inner {      
       padding: 0px !important;
       border: none !important;
       }
       ion-item {
-      border-radius: 6px !important;
+      border-radius: 0px !important;
       }
       .label-ios, .label-md, .label-wp {
       margin: 0px;
       padding: 0px;
+      background: whitesmoke;
         .item-avatar {
         padding: 0px;
         border-radius: 0px !important;
@@ -289,7 +304,7 @@ page-group-chat-detail {
           // background: red;
             .chat-profile {
             float: right;
-            margin: 10px 10px 0 20px;
+            margin: 7px 8px 2px 20px;
             }
             .chat-info {
             direction: ltr;
@@ -423,12 +438,143 @@ page-group-chat-detail {
         }
       }
     }
-
   
     .desktopOption {
     display: none;
     }
 
+  }
+
+
+  .item-ios, .item-md, .item-wp {
+    &.noPadding {
+      .item-inner {
+        &:first-child {
+        padding: 0px !important;
+          .label-ios, .label-md, .label-wp {
+          margin: 0px;
+          }
+          .input-wrapper {
+          padding: 0px;
+            .label-ios, .label-md, .label-wp {
+              .item-wrapper {
+              // padding: 16px;
+                .item-inner {
+                padding: 16px !important;
+                }
+                ion-item-options {
+                  border-bottom: none;
+                }
+              }
+            }
+          }
+        }
+      }
+    }      
+  }
+
+  ion-item-sliding {
+  max-height: 104px;
+    &:hover {
+      .optionIcon {
+      opacity: .7;
+      }
+    }    
+    .optionIcon {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 10px;
+    right: 16px;
+    display: block;
+    background: url("../assets/icon/svg/edit.svg") no-repeat center center !important;
+    background-size: 100% !important;
+    opacity: 0;
+    @extend %transition;
+    }
+  }
+  
+  ion-item-sliding, ion-item-options, .desktopOption {
+    
+    ion-icon {
+    color: #FFF !important;
+      &:before {
+      font-size: 22px;
+      display: block;
+      padding-bottom: 5px;
+      }
+    }
+
+    .btn-edit, .btn-lead, .btn-status, .btn-del {
+      .button-inner {
+      min-width: 40px !important;
+      font-family: $font-three;
+      font-size: 10px !important;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      color: #FFF !important;
+      }
+    }
+
+    .btn-edit {  
+    background: #1d7bce !important;
+    }
+    .btn-lead {    
+    background: #37467a !important;
+    }
+    .btn-status {    
+    background: #1D79A2 !important;
+    }
+    .btn-del {    
+    background: #F53D3D !important;
+    }
+  
+  }
+
+  // For Desktop Option
+  .desktopOption {  
+  width: auto;
+  display: table;
+  float: right;
+  top: 6px !important;
+  right: 0px !important;
+  position: absolute;
+  background: transparent;  
+    &:hover, &:focus {
+      &:before {
+      opacity: 1;
+      }
+
+      button {
+      opacity: 1;
+      }
+    }
+
+    button {
+    @extend %transition;
+    opacity: 0;
+    }
+
+    ion-icon {
+    color: #FFF !important;
+    margin-right: 6px;
+      &:before {
+      font-size: 16px;
+      display: block;
+      padding-bottom: 5px;
+      }
+    }
+    .btn-edit, .btn-lead, .btn-status, .btn-del {
+    height: 32px;    
+    min-height: 32px;
+      .button-inner {
+      padding: 0 8px;
+      }
+    }
+  }
+  
+  ion-item-options {
+  border-bottom: none !important;
   }
 
 }
