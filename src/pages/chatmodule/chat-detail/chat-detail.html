@@ -91,7 +91,7 @@
                 
                   <div class="chat-profile">
                       <img src={{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}} class="custom-avatar" 
-                      (error)="imgChatDetail2.src = this.sharedServiceObj.noImageUrl" #imgChatDetail2/>
+                      (error)="imgChatDetail2.src = this.sharedServiceObj.profileNoImage" #imgChatDetail2/>
                 </div>
         
                 </div>
@@ -111,7 +111,7 @@
                      
                   <div class="chat-profile">
                     <img src={{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}} 
-                    class="custom-avatar" (error)="imgChatDetail3.src = this.sharedServiceObj.noImageUrl" #imgChatDetail3/>
+                    class="custom-avatar" (error)="imgChatDetail3.src = this.sharedServiceObj.profileNoImage" #imgChatDetail3/>
                   </div> 
                       </div>
                   </div>

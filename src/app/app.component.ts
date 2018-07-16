@@ -52,6 +52,7 @@ import { AllHotSheetsPage } from '../pages/hotsheets/all-hot-sheets/all-hot-shee
 import { CreateHotSheetPage } from '../pages/hotsheets/create-hot-sheet/create-hot-sheet';
 import { EditHotSheetPage } from '../pages/hotsheets/edit-hot-sheet/edit-hot-sheet';
 import { DashboardTabsComponent } from '../components/dashboard-tabs/dashboard-tabs';
+import { ChatPage } from '../pages/chatmodule/chat/chat';
 
 declare var google: any;
 declare var firebase:any;
@@ -362,6 +363,7 @@ this.storage.set("userCountryInfo", this.geoCoderData);
     }
 
   }
+
   openPage(pageNumber) {
     //debugger;
     if (pageNumber == "1") {
@@ -375,6 +377,10 @@ this.storage.set("userCountryInfo", this.geoCoderData);
     }    
     else if (pageNumber == "4") {     
      this.nav.setRoot(DashboardTabsPage);
+    }
+    else if(pageNumber == "27")
+    {
+      this.nav.setRoot(ChatPage);
     }
     else{
       this.nav.setRoot(DashboardTabsPage,{selectedPage:pageNumber});

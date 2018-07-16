@@ -332,6 +332,78 @@ confirm.present();
         confirm.present();  
           
     }
+    deleteSingleChat(groupId,chatId) {
+
+      var that=this;
+      let confirm = this.alertCtrl.create({
+        title: 'Delete Chat?',
+        message: 'Are you sure you want to delete this chat?',
+        buttons: [
+          {
+            text: 'Cancel',
+            handler: () => {
+            }
+          },
+          {
+            text: 'Ok',
+            handler: () => {
+          var fredRefChat=firebase.database().ref('chats/'+chatId);
+          firebase.database().ref('chats/'+chatId).once('value', function(snapshot) {
+            
+            if(snapshot.exists())
+            {
+                                      var deleteChating=snapshot.val();
+                                      
+                                      var deletedChatingArray=[];
+                                      var messageToUpdate="";
+                                      deletedChatingArray=deleteChating.deletedFor;
+                                      
+                                      deletedChatingArray.push(that.firebaseUserId);
+                                      fredRefChat.update({deletedFor:deletedChatingArray});
+                                      firebase.database().ref('chats').orderByChild("groupId").equalTo(groupId).on("value", function(chatDetailObj) {
+                                            var messageExist="0";
+                                            chatDetailObj.forEach(function(chatDetail) {
+        if(chatDetail.val().deletedFor.indexOf(that.firebaseUserId)<0)
+        {
+          
+        messageExist="1";
+        messageToUpdate=chatDetail.val().message;
+        
+        }
+        
+                                            });
+        
+          firebase.database().ref('groups').orderByChild("groupId").equalTo(groupId).on("value", function(groupObj) {
+            groupObj.forEach(function(group) {
+          var selectedGroup=group;
+          var fredRefGroup=firebase.database().ref('groups/'+selectedGroup.key);
+         if(messageExist=="0")
+         {
+                                      var deletedGroupArray=[];
+                                      deletedGroupArray=selectedGroup.val().deletedFor;
+                                      
+                                      deletedGroupArray.push(that.firebaseUserId);
+                                     
+                                      fredRefGroup.update({deletedFor:deletedGroupArray});
+          }
+          else
+          {
+            
+          }
+        });
+        });
+      
+                                          });
+                                        }
+                                        });
+        
+           }
+        }
+      ]
+      });
+      confirm.present();  
+        
+          }
     chatFileChangeListener($event) {
       this.hideChatCropper=true;
       this.edit_chat_image=true;

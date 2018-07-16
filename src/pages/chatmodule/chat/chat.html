@@ -147,7 +147,7 @@
                      
                         
                           <img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" 
-                          (error)="imgUser.src = this.sharedServiceObj.noImageUrl" #imgUser/>
+                          (error)="imgUser.src = this.sharedServiceObj.profileNoImage" #imgUser/>
                       </div>
                     </div>
                     
@@ -164,7 +164,7 @@
                       </div>
                        <div  *ngIf="user.fbId==group.val().fromFbUserId">              
                           <img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" 
-                          (error)="imgUser1.src = this.sharedServiceObj.noImageUrl" #imgUser1/>
+                          (error)="imgUser1.src = this.sharedServiceObj.profileNoImage" #imgUser1/>
                          
                       
                       </div>

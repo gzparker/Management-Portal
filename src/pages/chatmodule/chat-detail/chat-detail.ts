@@ -250,7 +250,7 @@ if(resp=="1")
   });
 }
 }
-deleteSingleChat = function(groupId,chatId) {
+deleteSingleChat(groupId,chatId) {
 
 var that=this;
 let confirm = this.alertCtrl.create({

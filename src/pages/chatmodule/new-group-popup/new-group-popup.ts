@@ -95,7 +95,7 @@ this.loggedInUserInfo=data;
       //crtuk
      
       this.allAvailableSearchedContacts = this.allAvailableContacts.filter(
-        contact => contact.first_name.toLowerCase().indexOf(this.searchKeyword.toLowerCase()) > -1);
+        contact => (contact.first_name.toLowerCase()+" "+contact.last_name.toLowerCase()).indexOf(this.searchKeyword.toLowerCase()) > -1);
     }
     else
     {

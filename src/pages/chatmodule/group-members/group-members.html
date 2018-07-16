@@ -29,7 +29,7 @@
             <ion-item-sliding class="item item-avatar alternate-chat-left item-text-wrap" >
               <ion-item>
                 <img src={{this.sharedServiceObj.imgBucketUrl}}{{groupMember.val().image}} class="custom-avatar" 
-                      (error)="imgGroupMember.src = this.sharedServiceObj.noImageUrl" #imgGroupMember/>
+                      (error)="imgGroupMember.src = this.sharedServiceObj.profileNoImage" #imgGroupMember/>
               
               <span class="chat-info">
                 <h1>{{groupMember.val().memberName}}</h1>
