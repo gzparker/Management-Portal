@@ -40,7 +40,7 @@
       </ion-item>
       <ion-item menuClose ion-item (tap)="openPage('6')" 
       *ngIf="userLoggedIn==true&&paidStatus==true&&isLeads==true">      
-        Leads
+        Contacts
       </ion-item>
       <ion-item menuClose ion-item (tap)="openPage('7')" 
       *ngIf="userLoggedIn==true&&paidStatus==true&&isHotSheets==true">      
@@ -48,7 +48,7 @@
       </ion-item>
 <ion-item menuClose ion-item (tap)="openPage('27')" 
       *ngIf="userLoggedIn==true&&paidStatus==true&&isChats==true">      
-        Chats<span class="msgcounter" *ngIf="allUnreadMsg">({{allUnreadMsg}})</span>
+        Chats <span class="msgcounter" *ngIf="allUnreadMsg">{{allUnreadMsg}}</span>
       </ion-item>
       <!--<ion-item menuClose ion-item (tap)="openPage('23')" 
       *ngIf="userLoggedIn==true&&paidStatus==true&&isRoles==true">      

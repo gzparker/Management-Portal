@@ -10,15 +10,28 @@
     <button ion-button menuToggle start>
       <ion-icon name="menu"></ion-icon>
     </button>
+    
     <!-- <ion-title>ALL WEBSITES</ion-title> -->
-    <ion-buttons end *ngIf="allWebsiteList.length<=0&&showCreateButton">
+    <!-- <ion-buttons end *ngIf="allWebsiteList.length<=0&&showCreateButton">
       <button ion-button (click)="createWebsite();">Create Website</button>
+    </ion-buttons> -->    
+    <!-- <ion-buttons end *ngIf="showCreateButton">
+      <button ion-button (click)="createWebsite();">Create Website</button>
+    </ion-buttons> -->
+
+    <ion-buttons end *ngIf="allWebsiteList.length<=0&&showCreateButton">
+      <button ion-button icon-left (click)="createWebsite();">
+        <ion-icon name="md-add"></ion-icon>
+      </button>
     </ion-buttons>
-    <!--<ion-buttons end *ngIf="showCreateButton">
-        <button ion-button (click)="createWebsite();">Create Website</button>
-      </ion-buttons>-->
-  </ion-navbar>
-  
+
+    <ion-buttons end *ngIf="showCreateButton">
+      <button ion-button icon-left (click)="createWebsite();">
+        <ion-icon name="md-add"></ion-icon>
+      </button>
+    </ion-buttons>
+
+  </ion-navbar>  
 </ion-header>
 
 
@@ -28,10 +41,10 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <!--<ion-chip *ngIf="notificationMsg!=''">
+  <!-- <ion-chip *ngIf="notificationMsg!=''">
     <ion-label class="notification" color="secondary">{{notificationMsg}}</ion-label>
-  </ion-chip>-->
-
+  </ion-chip>
+ -->
   <h1 class="contentTitle animated bounceInRight">All Websites</h1>
 
   <ion-list class="noShadow">
@@ -106,8 +119,8 @@
     </ion-item-sliding>
   </ion-list>-->
 
-  <!--<ion-chip *ngIf='allWebsiteList.length<=0&&websiteFoundMessage!=""'>
+  <ion-chip *ngIf='allWebsiteList.length<=0&&websiteFoundMessage!=""'>
     <ion-label color="danger">{{websiteFoundMessage}}</ion-label>
-  </ion-chip>-->
+  </ion-chip>
  
 </ion-content>

@@ -1,4 +1,10 @@
 page-all-websites {
+
+  ion-navbar {
+    .back-button, .back-button-icon-ios, .back-button-icon-md, .back-button-icon-wp {
+    display: none !important;
+    }    
+  }
   
   ion-content {
     &.dashboardUI {
@@ -52,8 +58,7 @@ page-all-websites {
       .notification {
       letter-spacing: .5px;
       text-overflow: unset;
-      white-space: normal;
-      text-align: left;
+      white-space: normal;      
       font-size: 12px !important;
       line-height: 18px;
       padding: 10px !important;
@@ -129,7 +134,7 @@ page-all-websites {
     display: block;
     background: url("../assets/icon/svg/edit.svg") no-repeat center center !important;
     background-size: 100% !important;
-    opacity: 0;
+    opacity: 1;
     @extend %transition;
     }
   }

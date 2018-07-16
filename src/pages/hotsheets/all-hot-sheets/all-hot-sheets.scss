@@ -174,7 +174,7 @@ page-all-hot-sheets {
     display: block;
     background: url("../assets/icon/svg/edit.svg") no-repeat center center !important;
     background-size: 100% !important;
-    opacity: 0;
+    opacity: .7;
     @extend %transition;
     }
   }

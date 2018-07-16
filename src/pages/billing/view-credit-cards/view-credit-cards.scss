@@ -1,6 +1,13 @@
 page-view-credit-cards {  
 
-  
+  .chip-ios, .chip-md, .chip-wp {
+  color: #FFF !important;
+  border-radius: 50px !important;
+  background: #12d4b1;
+    .label-ios, .label-md, .label-wp {    
+    }
+  }
+
   .card-list-option {  
 
     ion-icon {
@@ -96,10 +103,10 @@ page-view-credit-cards {
             &.Visa {
             background: url("../assets/imgs/cc-visa.png") no-repeat center center;
             }
-            &.Mastercard {
+            &.MasterCard {
             background: url("../assets/imgs/cc-mastercard.png") no-repeat center center;
             }
-            &.AmericanExpress {
+            &.AmericanExpress, &.American {
             background: url("../assets/imgs/cc-amex.jpg") no-repeat center center;
             }
             &.Chase {
@@ -111,8 +118,11 @@ page-view-credit-cards {
             &.Discover {
             background: url("../assets/imgs/cc-discover.jpg") no-repeat center center;
             }
-            &.Bankofamerica {
+            &.Bankofamerica, &.Bank {
             background: url("../assets/imgs/cc-boa.jpg") no-repeat center center;
+            }
+            &.Diners {
+            background: url("../assets/imgs/cc-diners-club.jpg") no-repeat center center;
             }
           }
           .cardDetails {          

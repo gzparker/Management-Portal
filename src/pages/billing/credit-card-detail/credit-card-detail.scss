@@ -68,19 +68,19 @@ page-credit-card-detail {
             top: -8px;
             left: 52px;
             display: block;
-            background: red;
+            background: #DDD;
             }
             &.Visa {
               &:before {
               background: url("../assets/imgs/cc-visa.png") no-repeat center center;
               }
             }
-            &.Mastercard {
+            &.MasterCard {
               &:before {
               background: url("../assets/imgs/cc-mastercard.png") no-repeat center center;
               }  
             }
-            &.AmericanExpress {
+            &.AmericanExpress, &.American {
               &:before {
               background: url("../assets/imgs/cc-amex.jpg") no-repeat center center;
               }
@@ -100,9 +100,14 @@ page-credit-card-detail {
               background: url("../assets/imgs/cc-discover.jpg") no-repeat center center;
               }
             }
-            &.Bankofamerica {
+            &.Bankofamerica, &.Bank {
               &:before {
               background: url("../assets/imgs/cc-boa.jpg") no-repeat center center;
+              }
+            }
+            &.Diners {
+              &:before {
+              background: url("../assets/imgs/cc-diners-club.jpg") no-repeat center center;
               }
             }
           }

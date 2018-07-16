@@ -4,39 +4,42 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
-    <ion-navbar>
-      <button ion-button menuToggle start>
-          <ion-icon name="menu"></ion-icon>
-        </button>
-    <ion-title>Group Members</ion-title>
+<ion-header class="dashboardUI chatUI">   
+  <ion-navbar>
+
+    <!-- <button ion-button menuToggle start>
+      <ion-icon name="menu"></ion-icon>
+    </button> -->
+    <ion-title>Edit Chat</ion-title>
     
-  </ion-navbar>
+  </ion-navbar>  
+</ion-header>
   
-  </ion-header>
   
+<ion-content padding class="dashboardUI chatUI">
   
-  <ion-content padding>
-    <h1 class="contentTitle">Group Members</h1>
-    
-  <ion-list *ngIf="groupMembersData.length>0">
-      <div class="main-chat-summary">
-          <div class="list">
+  <h1 class="contentTitle animated bounceInRight">Group Members</h1>
+  
+  <ion-list class="noShadow" *ngIf="groupMembersData.length>0">
+      <div class="chatBoxWrapper">          
+          <div class="chatBoxItem">
           <div  *ngFor="let groupMember of groupMembersData">
          
             <div *ngIf="groupMember.val().userId!=firebaseUserId">
       
             <ion-item-sliding class="item item-avatar alternate-chat-left item-text-wrap" >
               <ion-item>
-                <img src={{this.sharedServiceObj.imgBucketUrl}}{{groupMember.val().image}} class="custom-avatar" 
+                <div class="chatAvatar">
+                <img src={{this.sharedServiceObj.imgBucketUrl}}{{groupMember.val().image}} 
                       (error)="imgGroupMember.src = this.sharedServiceObj.noImageUrl" #imgGroupMember/>
-              
-              <span class="chat-info">
-                <h1>{{groupMember.val().memberName}}</h1>
-                
-              </span>
+                </div>
+                <span class="chat-info">
+                <h1>{{groupMember.val().memberName}}</h1>                
+                </span>
               </ion-item>
-              <ion-item *ngIf="!isApp" side="right">
+
+              <ion-item class="desktopOption" *ngIf="!isApp">
+                <div class="optionIcon" *ngIf="!isApp"></div>
                 <button ion-button color="danger" item-right class="roundedOption btn-del" (click)="deleteMember(groupMember.key)"  ><ion-icon name="md-close"></ion-icon>Delete</button>
               </ion-item>
               <ion-item-options side="right" *ngIf="isApp">

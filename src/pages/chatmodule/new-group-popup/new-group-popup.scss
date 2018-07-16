@@ -1,3 +1,158 @@
 page-new-group-popup {
+  ion-content.newMessage {
+    
+    .scroll-content {
+    padding: 0px !important;
+    }
 
+    .customList {
+    padding: 20px 16px 16px 16px;
+
+      .msgBoxWrapper {
+      padding: 7px 5px 5px 5px;
+      border-radius: 5px !important;
+      background: #FFF;
+      box-shadow: -1px 0px 18px 1px rgba(41, 81, 123, 0.15) !important;
+        .msgBox, .item-inner {
+        overflow: visible !important;
+        }
+
+        .item-ios, .item-md, .item-wp {
+        padding-righT: 16px;
+          .item-inner {  
+          border-color: #DEDEDE !important;
+          }          
+        }
+
+        .select-ios, .select-md, .select-wp {        
+          .select-text {
+          letter-spacing: .3px;
+          line-height: 20px;
+          text-overflow: unset;
+          white-space: normal;
+          }
+        }
+
+      }
+
+      .dashboardBtn {
+      padding: 20px 16px 20px 16px;
+
+        .button-inner {
+        font-family: $font-four !important;
+        font-weight: 600;
+        letter-spacing: 1.4px;
+        text-transform: uppercase;
+          ion-icon {
+          font-size: 30px;
+          color: #FFF;
+            &:before {
+            content: "";
+            width: 32px;
+            height: 32px;
+            display: block;
+            background: url("../assets/icon/svg/group.svg") no-repeat center center !important;
+            background-size: 100% !important;
+            }
+          }
+        }
+      }
+    }
+
+    .msgSearchBarWrapper {
+    width: 100%;
+    height: 67px;
+    position: relative;
+    z-index: 10;
+      ion-item.msgSearchBar {}
+      ion-list.msgSearchBarResults {}
+    }
+    
+    ion-item {
+      &.msgSearchBar {
+      padding-left: 16px;
+      padding-right: 16px;
+      margin-right: 0px;
+      padding-bottom: 0px;
+      background: transparent;
+
+        .label-ios, .label-md, .label-wp {
+        margin: 16px 0 0 0;
+        }
+
+        .item-inner {
+        padding-right: 0px;
+        border: none !important;
+        }
+
+        .searchbar-has-value.searchbar-has-focus .searchbar-clear-icon {
+        right: 8px !important;
+        }
+
+        .searchbar-ios, .searchbar-md, .searchbar-wp {
+        padding: 0px;
+        border: none;
+        border-radius: 50px;
+        background: none;
+        // border: 8px solid rgba(0, 0, 0, 0.15);
+        border: 8px solid #3197D2;
+          .searchbar-search-icon {          
+          top: 12px;
+          left: 18px;
+          }          
+          .searchbar-input {
+          height: 36px;
+          border-radius: 50px;
+          padding-left: 40px;
+          padding-right: 30px;
+          }
+        }
+      }
+      &.msgBox {
+      margin: 0;
+      padding: 0;
+        .item-inner {
+        padding: 0;
+        border: none !important;
+        }
+      }
+    }
+
+    ion-list {
+      &.msgSearchBarResults {
+      border-radius: 0px;
+      box-shadow: none  !important;
+
+        ion-item {
+        padding-left: 35px !important;
+        padding-right: 35px !important;
+        box-shadow: none  !important;
+        background: transparent;
+          .item-inner {
+          padding-right: 0px;
+            .input-wrapper {
+            background: #2f87ba;
+            border-radius: 0 0 4px 4px;
+              .label-ios, .label-md, .label-wp {
+              color: #FFF !important;
+              margin: 0;
+              padding: 0;
+                .item-ios, .item-md, .item-wp {
+                padding-left: 16px !important;
+                padding-right: 16px !important;
+                  .input-wrapper {
+                  background: transparent;
+                    .lable-ios, .lable-md, .lable-wp {
+                    color: #FFF !important;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }      
+    }
+
+  }
 }

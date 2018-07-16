@@ -4,44 +4,54 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
+<ion-header class="dashboardUI">
 
   <ion-navbar>
     <ion-title>Create Website</ion-title>
     <ion-buttons end>
-      <button ion-button (click)="createWebsite()" [disabled]="!websiteForm.valid">Save Website</button>
+      <button ion-button (click)="createWebsite()" [disabled]="!websiteForm.valid">
+        <ion-icon name="ios-bookmark"></ion-icon>
+      </button>
     </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
-    <form role="form" data-toggle="validator" #websiteForm="ngForm">
-  <ion-item>
-            <ion-label floating>Identity Name<span [ngClass]="{'error': identity_name==''}" *ngIf="identity_name==''">*</span></ion-label>
-            <ion-input type="text" [(ngModel)]="identity_name" 
-            name="identity_name" id="identity_name" required placeholder="Identity Name"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label floating>Website Domain<span [ngClass]="{'error': website_domain==''}" *ngIf="website_domain==''">*</span></ion-label>
-    <ion-input type="text" [(ngModel)]="website_domain" 
-    name="website_domain" id="website_domain" required ></ion-input>
-  </ion-item>
-  <ion-item>
-      <!--<ion-label floating>Website a Record Location</ion-label>-->
-      <ion-input type="text" [(ngModel)]="website_a_record_location" 
-      name="website_a_record_location" id="website_a_record_location" 
-      placeholder="Please type exactly what your location is for your domain search."></ion-input>
-    </ion-item>
+<ion-content padding class="dashboardUI">
+  <form role="form" data-toggle="validator" #websiteForm="ngForm">
+  
+    <ion-list class="animated lightSpeedIn blk1">
+      <ion-item>
+          <ion-label stacked>Identity Name<span [ngClass]="{'error': identity_name==''}" *ngIf="identity_name==''">*</span></ion-label>
+          <ion-input type="text" [(ngModel)]="identity_name" 
+          name="identity_name" id="identity_name" required placeholder="Identity Name"></ion-input>
+      </ion-item>
+
+      <ion-item>
+          <ion-label stacked>Website Domain<span [ngClass]="{'error': website_domain==''}" *ngIf="website_domain==''">*</span></ion-label>
+          <ion-input type="text" [(ngModel)]="website_domain" 
+          name="website_domain" id="website_domain" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+          <ion-label stacked>Domain Search Location</ion-label>
+          <ion-input type="text" [(ngModel)]="website_a_record_location" 
+          name="website_a_record_location" id="website_a_record_location" 
+          placeholder="Please type exactly what your location is for your domain search."></ion-input>
+      </ion-item>
    
       <ion-item>
-          <ion-label floating>Identity Phone Number</ion-label>
+          <ion-label stacked>Identity Phone Number</ion-label>
           <ion-input type="text" [(ngModel)]="identity_phone_number" 
           name="identity_phone_number" id="identity_phone_number" [brmasker]="{mask:'(000) 000-0000', len:14, type:'num'}"></ion-input>
-    </ion-item>
-    <div class="itemPadding">
-        <ion-label>Home Page Description</ion-label>
+      </ion-item>
+    </ion-list>
+    
+    <div class="animated lightSpeedIn formShadow blk2">
+
+      <div class="itemPadding">
+          <ion-label>Home Page Description</ion-label>
           <ckeditor
           [config]="CkeditorConfig"
           [readonly]="false" [(ngModel)]="homepage_description"
@@ -51,48 +61,62 @@
           (ready)="homepageDescCreated($event)"
           debounce="500" name="editorHomePageDescription">
           </ckeditor>
-        </div>
-        <ion-item>
-            <!--<ion-label floating>HomePage Search Text</ion-label>-->
-            <ion-input type="text" [(ngModel)]="homepage_search_text" 
-            name="homepage_search_text" id="homepage_search_text" 
-            placeholder="Action sentence to draw people to search for listings"></ion-input>
-        </ion-item>
-       <!-- <ion-item>
-            <ion-label floating>Identity Phone Name</ion-label>
-            <ion-input type="text" [(ngModel)]="identity_phone_number" 
-            name="identity_phone_number" id="identity_phone_number" [brmasker]="{mask:'(000) 000-0000', len:14, type:'num'}"></ion-input>
-      </ion-item>-->
+      </div>
+
       <ion-item>
-          <ion-label floating>Home Page Meta Title</ion-label>
-          <ion-input type="text" [(ngModel)]="homepage_meta_title" 
-          name="homepage_meta_title" id="homepage_meta_title" ></ion-input>
-        </ion-item>
-        <div class="itemPadding">
-            <ion-label>Home Page Meta Description</ion-label>
-              <ckeditor
-              [config]="CkeditorConfig"
-              [readonly]="false" [(ngModel)]="homepageMeta_description"
-              (change)="homepageMetaDescChanged($event)"
-              (blur)="homepageMetaDescBlured($event)"
-              (focus)="homepageMetaDescFocused($event)"
-              (ready)="homepageMetaDescCreated($event)"
-              debounce="500" name="editorHomePageDescription">
-              </ckeditor>
-            </div>
-    <ion-item>
-        <ion-label>Intagent Website</ion-label>
+          <ion-label stacked class="labelLarge">Homepage Search Text</ion-label>
+          <ion-textarea type="text" class="expandText" [(ngModel)]="homepage_search_text" 
+          name="homepage_search_text" id="homepage_search_text" 
+          placeholder="Action sentence to draw people to search for listings"></ion-textarea>
+      </ion-item>
+
+      <!-- <ion-item>
+          <ion-label stacked>Identity Phone Name</ion-label>
+          <ion-input type="text" [(ngModel)]="identity_phone_number" 
+          name="identity_phone_number" id="identity_phone_number" [brmasker]="{mask:'(000) 000-0000', len:14, type:'num'}"></ion-input>
+      </ion-item>-->
+
+      <ion-item>
+          <ion-label stacked class="labelLarge">Homepage Meta Title</ion-label>
+          <ion-textarea type="text" class="expandText" [(ngModel)]="homepage_meta_title" 
+          name="homepage_meta_title" id="homepage_meta_title" ></ion-textarea>
+      </ion-item>
+
+      <div class="itemPadding bt16">
+          <ion-label>Home Page Meta Description</ion-label>
+          <ckeditor
+          [config]="CkeditorConfig"
+          [readonly]="false" [(ngModel)]="homepageMeta_description"
+          (change)="homepageMetaDescChanged($event)"
+          (blur)="homepageMetaDescBlured($event)"
+          (focus)="homepageMetaDescFocused($event)"
+          (ready)="homepageMetaDescCreated($event)"
+          debounce="500" name="editorHomePageDescription">
+          </ckeditor>
+      </div>
+    </div>
+
+    <ion-list class="animated lightSpeedIn blk6">
+      
+      <ion-item>
+        <ion-label stacked>Intagent Website</ion-label>
         <!--<ion-checkbox color="royal" checked="true" [(ngModel)]="intagent_website" name="intagent_website" id="intagent_website" 
         required >Intagent Website</ion-checkbox>-->
-        <ion-toggle checked="true" [(ngModel)]="intagent_website" name="intagent_website" id="intagent_website"></ion-toggle>
+        <!-- <ion-toggle checked="true" [(ngModel)]="intagent_website" name="intagent_website" id="intagent_website"></ion-toggle> -->
+        <ion-checkbox color="royal" item-right checked="false" [(ngModel)]="intagent_website" name="intagent_website" id="intagent_website" 
+            required >intagent_website</ion-checkbox>
       </ion-item>
-  <ion-item>
-    <ion-label>Is Active<span [ngClass]="{'error': isActive==false}" *ngIf="isActive==false">*</span></ion-label>
-    <ion-checkbox color="royal" checked="true" [(ngModel)]="isActive" name="isActive" id="isActive" 
-    required >Is Active</ion-checkbox>
-  </ion-item>
-  <div padding>
+
+      <ion-item>
+        <ion-label>Is Active<span [ngClass]="{'error': isActive==false}" *ngIf="isActive==false">*</span></ion-label>
+        <ion-checkbox color="royal" item-right checked="false" [(ngModel)]="isActive" name="isActive" id="isActive" 
+        required >Is Active</ion-checkbox>
+      </ion-item>      
+    </ion-list>
+
+    <div class="dashboardBtn">
       <button ion-button color="primary" block (click)="createWebsite();" [disabled]="!websiteForm.valid">Save Website</button>
     </div>
-    </form>
+
+  </form>
 </ion-content>
