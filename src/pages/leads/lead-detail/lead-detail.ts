@@ -256,6 +256,7 @@ mapWork: any;
    {
     // debugger;
      this.leadDetail=result.result;
+     debugger;
      if(result.result.home_google_place_id!=undefined||result.result.home_google_place_id!=null)
      {
        if(result.result.home_google_place_id!="")

@@ -25,7 +25,7 @@
       <ion-avatar class="imgFull" *ngIf="leadDetail!=undefined">
       <!--<img src={{leadDetail.image_url}} *ngIf="leadDetail.image_url!=null"/>
       <img src={{noImgUrl}} *ngIf="leadDetail.image_url==null"/>-->
-      <img src="{{leadDetail.image_url}}" (error)="imgLead.src = this.sharedServiceObj.noImageUrl" #imgLead/>
+      <img src="{{leadDetail.image_url}}" (error)="imgLead.src = this.sharedServiceObj.profileNoImage" #imgLead/>
       </ion-avatar>
       <h2 class="agentName" *ngIf="leadDetail!=undefined">{{leadDetail.first_name}} {{leadDetail.last_name}}</h2>
       <p class="agentEmail" *ngIf="leadDetail!=undefined">{{leadDetail.email}}</p>      
