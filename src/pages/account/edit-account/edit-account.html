@@ -113,7 +113,11 @@
           </ion-item>
           <div class="customList">
             <ion-label stacked>Description</ion-label>
-            <textarea id="user_description" name="user_description" width="500" cols="110" rows="10" maxLength="500" [(ngModel)]="user_description"></textarea>
+            <!-- <textarea id="user_description" name="user_description" maxLength="500" [(ngModel)]="user_description"></textarea> -->
+
+            <textarea type="text" class="expandText" id="user_description" name="user_description" maxLength="500" [(ngModel)]="user_description"></textarea>
+            
+            
               <!--<ckeditor
               [config]="CkeditorConfig"
               [readonly]="false" [(ngModel)]="user_description"

@@ -211,4 +211,108 @@ page-view-credit-cards {
     }
   }
 
+  ion-item-sliding {
+  max-height: 104px;
+    &:hover {
+      .optionIcon {
+      opacity: .4;
+      }
+    }    
+    .optionIcon {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    display: block;
+    background: url("../assets/icon/svg/edit.svg") no-repeat center center !important;
+    background-size: 100% !important;
+    opacity: .4;
+    @extend %transition;
+    }
+  }
+  
+  ion-item-sliding, ion-item-options, .desktopOption {
+    
+    ion-icon {
+    color: #FFF !important;
+      &:before {
+      font-size: 22px;
+      display: block;
+      padding-bottom: 5px;
+      }
+    }
+
+    .btn-edit, .btn-lead, .btn-status, .btn-del {
+      .button-inner {
+      min-width: 40px !important;
+      font-family: $font-three;
+      font-size: 10px !important;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      color: #FFF !important;
+      }
+    }
+
+    .btn-edit {  
+    background: #1d7bce !important;
+    }
+    .btn-lead {    
+    background: #37467a !important;
+    }
+    .btn-status {    
+    background: #1D79A2 !important;
+    }
+    .btn-del {    
+    background: #F53D3D !important;
+    }
+  
+  }
+
+  // For Desktop Option
+  .desktopOption {  
+  width: auto;
+  display: table;
+  float: right;
+  top: 6px !important;
+  right: -7px !important;
+  position: absolute;
+  background: transparent;  
+    &:hover, &:focus {
+      &:before {
+      opacity: 1;
+      }
+
+      button {
+      opacity: 1;
+      }
+    }
+
+    button {
+    @extend %transition;
+    opacity: 0;
+    }
+
+    ion-icon {
+    color: #FFF !important;
+    margin-right: 6px;
+      &:before {
+      font-size: 16px;
+      display: block;
+      padding-bottom: 5px;
+      }
+    }
+    .btn-edit, .btn-lead, .btn-status, .btn-del {
+    height: 32px;    
+    min-height: 32px;
+      .button-inner {
+      padding: 0 8px;
+      }
+    }
+  }
+  
+  ion-item-options {
+  border-bottom: none !important;
+  }
+
 }

@@ -22,7 +22,7 @@
 </ion-header>
 
 
-<ion-content padding class="dashboardUI noScroll">
+<ion-content padding class="dashboardUI">
     
     <ion-refresher (ionRefresh)="loadAllCreditCards($event)">
       <ion-refresher-content></ion-refresher-content>
@@ -34,7 +34,7 @@
 
     <ion-list *ngIf="defaultCreditCard!=null" (click)="cardDetail(defaultCreditCard.unique_id)" class="animated lightSpeedIn">
       
-      <ion-list-header>Default Credit Card</ion-list-header>
+      <ion-list-header class="animated fadeIn">Default Credit Card</ion-list-header>
       
       <div class="formShadow">
       <ion-item>
@@ -49,8 +49,8 @@
       </div>
 
     </ion-list>
-
-    <h1 class="contentTitle animated bounceInRight">Credit Card List</h1>
+    
+    <ion-list-header class="animated fadeIn">Credit Card List</ion-list-header>
 
       <ion-list class="noShadow">
         
@@ -65,20 +65,23 @@
             </ion-item>
             <ion-item class="desktopOption" side="right" *ngIf="!isApp">
               <div class="optionIcon" *ngIf="!isApp"></div>
-              <button ion-button color="primary" item-right class="btn-edit" *ngIf="isEditCreditCardAccess==true" (click)="editCreditCardDetail(creditCard.unique_id)"><ion-icon name="md-create"></ion-icon>Edit</button>
-  
-              <button ion-button color="danger" item-right class="btn-del" (click)="deleteCreditCard(creditCard)" *ngIf="totalCreditCards>1&&isDeleteCreditCardAccess==true"><ion-icon name="md-close"></ion-icon>Delete</button>
+              <button ion-button color="primary" item-right class="btn-edit" *ngIf="isEditCreditCardAccess==true" (click)="editCreditCardDetail(creditCard.unique_id)">
+                <ion-icon name="md-create"></ion-icon>Edit
+              </button>  
+              <button ion-button color="danger" item-right class="btn-del" (click)="deleteCreditCard(creditCard)" *ngIf="totalCreditCards>1&&isDeleteCreditCardAccess==true">
+                <ion-icon name="md-close"></ion-icon>Delete
+              </button>
           </ion-item>
-            <ion-item-options side="right">
+            <ion-item-options side="right" *ngIf="isApp">
               <!--<button ion-button item-right color="secondary" (click)="editCreditCardDetail(creditCard.unique_id)">
                 <ion-icon name="create"></ion-icon>
               </button>-->
-              <button ion-button item-right color="danger" (click)="deleteCreditCard(creditCard)" *ngIf="totalCreditCards>1&&isDeleteCreditCardAccess==true">
+              <button ion-button item-right color="primary" class="btn-edit" *ngIf="isEditCreditCardAccess==true" (click)="editCreditCardDetail(creditCard.unique_id)">
+                <ion-icon name="ios-brush">Edit</ion-icon>
+              </button>
+              <button ion-button item-right color="danger" class="btn-del" (click)="deleteCreditCard(creditCard)" *ngIf="totalCreditCards>1&&isDeleteCreditCardAccess==true">
                 <ion-icon name="md-trash">Delete</ion-icon>
-              </button>
-              <button ion-button item-right color="secondary" *ngIf="isEditCreditCardAccess==true" (click)="editCreditCardDetail(creditCard.unique_id)">
-              <ion-icon name="ios-brush">Edit</ion-icon>
-              </button>
+              </button>              
             </ion-item-options>
           </ion-item-sliding>
        
