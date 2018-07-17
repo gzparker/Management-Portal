@@ -656,3 +656,5 @@ ion-item-sliding {
     }
   }
 }
+.successToast{.toast-wrapper {opacity: 0.6; border-radius: 5px !important; text-align: center; background: color($colors, primary);}};
+.errorToast{.toast-wrapper {opacity: 0.6; border-radius: 5px !important; text-align: center; background: color($colors, danger);}};

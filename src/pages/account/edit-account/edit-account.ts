@@ -10,7 +10,7 @@ import { GlobalPreferencesPage } from '../../setup/global-preferences/global-pre
 import 'moment';
 import * as moment from 'moment-timezone';
 import { AccountInfoPage } from '../account-info/account-info';
-import { AlertController } from 'ionic-angular';
+import { AlertController,ToastController } from 'ionic-angular';
 import { SharedProvider } from '../../../providers/shared/shared';
 import { UserProvider } from '../../../providers/user/user';
 
@@ -81,7 +81,8 @@ export class EditAccountPage {
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform,
-    public loadingCtrl: LoadingController,private crop: Crop,private camera: Camera,private imagePicker: ImagePicker) {
+    public loadingCtrl: LoadingController,private crop: Crop,private camera: Camera,
+    private imagePicker: ImagePicker,private toastCtrl: ToastController) {
       //debugger;
       this.hideImageCropper=false;
       this.loader = this.loadingCtrl.create({
@@ -657,12 +658,24 @@ if(this.accountInfo.phone_mobile!=this.phone_number)
   {
    // debugger;
     //this.accountInfoUpdateMsg=result.message;
-    let alert = this.alertCtrl.create({
+    /*let alert = this.alertCtrl.create({
       title: 'Notification',
       subTitle: result.message,
       buttons: ['Ok']
     });
-    alert.present();
+    alert.present();*/
+    let toast = this.toastCtrl.create({
+      message: result.message,
+      duration: 3000,
+      position: 'top',
+      cssClass:'successToast'
+    });
+  
+    toast.onDidDismiss(() => {
+      //console.log('Dismissed toast');
+    });
+  
+    toast.present();
   }
   }
 

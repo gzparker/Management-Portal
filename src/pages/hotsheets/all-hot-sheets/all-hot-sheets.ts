@@ -1,5 +1,6 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, Platform, MenuController,LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, Platform, 
+  MenuController,LoadingController,ToastController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 
@@ -38,7 +39,7 @@ export class AllHotSheetsPage {
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController,
-     public platform: Platform,public loadingCtrl: LoadingController) {
+     public platform: Platform,public loadingCtrl: LoadingController,private toastCtrl: ToastController) {
       /*if(this.platform.is('core') || this.platform.is('mobileweb')) {
         this.isApp=false;
       }
@@ -50,12 +51,23 @@ export class AllHotSheetsPage {
       if(this.navParams.get('notificationMsg')!=undefined)
       {
         this.notificationMsg=this.navParams.get('notificationMsg');
-        let alert = this.alertCtrl.create({
+        /*let alert = this.alertCtrl.create({
           title: 'Notification',
           subTitle: this.notificationMsg,
           buttons: ['Ok']
         });
-        alert.present();
+        alert.present();*/
+        let toast = this.toastCtrl.create({
+          message: this.navParams.get('notificationMsg'),
+          duration: 3000,
+          position: 'top',
+          cssClass:'successToast'
+        });
+        
+        toast.onDidDismiss(() => {
+          //console.log('Dismissed toast');
+        });
+        toast.present();
       }
       this.loader = this.loadingCtrl.create({
         content: "Please wait...",
@@ -222,12 +234,23 @@ export class AllHotSheetsPage {
             {
               this.hotsheetFoundMessage="All hotsheets have been deleted.Please add new hotsheet.";
               this.notificationMsg="";
-              let alert = this.alertCtrl.create({
+              /*let alert = this.alertCtrl.create({
                 title: 'Error',
                 subTitle: this.hotsheetFoundMessage,
                 buttons: ['Ok']
               });
-              alert.present();
+              alert.present();*/
+              let toast = this.toastCtrl.create({
+                message: this.hotsheetFoundMessage,
+                duration: 3000,
+                position: 'top',
+                cssClass:'errorToast'
+              });
+              
+              toast.onDidDismiss(() => {
+                //console.log('Dismissed toast');
+              });
+              toast.present();
             }
             this.userServiceObj.deleteHotsheet(this.userId.toString(),hotsheet.id)
             .subscribe((result) => this.deleteHotsheetResp(result));

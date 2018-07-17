@@ -4,7 +4,7 @@ import { IonicPage, NavController, NavParams, ModalController, Platform,
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 import { ISubscription } from "rxjs/Subscription";
-import { AlertController } from 'ionic-angular';
+import { AlertController,ToastController } from 'ionic-angular';
 import { Crop } from '@ionic-native/crop';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { ImagePicker } from '@ionic-native/image-picker';
@@ -69,7 +69,8 @@ public chatWidth:string="";
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, 
-    public platform: Platform,public actionSheetCtrl: ActionSheetController,public loadingCtrl: LoadingController) {
+    public platform: Platform,public actionSheetCtrl: ActionSheetController,
+    public loadingCtrl: LoadingController,private toastCtrl: ToastController) {
       this.isApp = (!document.URL.startsWith("http"));
       if(this.navParams.get('groupId')!=undefined)
    {

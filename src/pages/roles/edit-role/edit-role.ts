@@ -1,6 +1,6 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, Platform, 
-  MenuController,LoadingController } from 'ionic-angular';
+  MenuController,LoadingController,ToastController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 import { Crop } from '@ionic-native/crop';
@@ -46,7 +46,7 @@ export class EditRolePage {
     public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform, 
     public ngZone: NgZone,public menuCtrl: MenuController,public loadingCtrl: LoadingController,
-    private crop: Crop,private camera: Camera,private imagePicker: ImagePicker) {
+    private crop: Crop,private camera: Camera,private imagePicker: ImagePicker,private toastCtrl: ToastController) {
   }
 
   ionViewDidLoad() {
@@ -159,12 +159,23 @@ if(result.status==true)
 else
 {
   this.roleUpdateMsg="Role has not been updated successfully.";
-  let alert = this.alertCtrl.create({
+  /*let alert = this.alertCtrl.create({
     title: 'Error',
     subTitle: this.roleUpdateMsg,
     buttons: ['Ok']
   });
-  alert.present();
+  alert.present();*/
+  let toast = this.toastCtrl.create({
+    message: this.roleUpdateMsg,
+    duration: 3000,
+    position: 'top',
+    cssClass:'errorToast'
+  });
+  
+  toast.onDidDismiss(() => {
+    //console.log('Dismissed toast');
+  });
+  toast.present();
 }
     
   }

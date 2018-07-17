@@ -2,7 +2,7 @@ import { Component, ViewChild, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, Platform, MenuController,LoadingController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
-import { AlertController } from 'ionic-angular';
+import { AlertController,ToastController } from 'ionic-angular';
 
 import { AccountOptionPage } from '../../account/account-option/account-option';
 
@@ -47,16 +47,28 @@ export class ViewCreditCardsPage {
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, 
-    public platform: Platform,public loadingCtrl: LoadingController) {
+    public platform: Platform,public loadingCtrl: LoadingController,private toastCtrl: ToastController) {
       if(this.navParams.get('notificationMsg')!=undefined)
       {
-        this.notificationMsg=this.navParams.get('notificationMsg');
+        let toast = this.toastCtrl.create({
+          message: this.navParams.get('notificationMsg'),
+          duration: 3000,
+          position: 'top',
+          cssClass:'successToast'
+        });
+        
+        toast.onDidDismiss(() => {
+          //console.log('Dismissed toast');
+        });
+        
+        toast.present();
+        /*this.notificationMsg=this.navParams.get('notificationMsg');
         let alert = this.alertCtrl.create({
           title: 'Notification',
           subTitle: this.notificationMsg,
           buttons: ['Ok']
         });
-        alert.present();
+        alert.present();*/
       }
   }
 
@@ -197,12 +209,24 @@ export class ViewCreditCardsPage {
       this.allCreditCards=[];
       this.totalCreditCards=0;
       this.creditCardsFoundMessage="No billing info found.";
-      let alert = this.alertCtrl.create({
+      /*let alert = this.alertCtrl.create({
         title: 'Error',
         subTitle: this.creditCardsFoundMessage,
         buttons: ['Ok']
       });
-      alert.present();
+      alert.present();*/
+      let toast = this.toastCtrl.create({
+        message: this.creditCardsFoundMessage,
+        duration: 3000,
+        position: 'top',
+        cssClass:'errorToast'
+      });
+      
+      toast.onDidDismiss(() => {
+        //console.log('Dismissed toast');
+      });
+      
+      toast.present();
     }
   }
   deleteCreditCard(creditCard:any)
@@ -227,14 +251,26 @@ export class ViewCreditCardsPage {
             }
             if(this.allCreditCards.length<=0)
             {
-              //this.creditCardsFoundMessage="All credit cards have been deleted.Please add new credit card.";
-              //this.notificationMsg="";
-              let alert = this.alertCtrl.create({
+              this.creditCardsFoundMessage="All credit cards have been deleted.Please add new credit card.";
+              this.notificationMsg="";
+              /*let alert = this.alertCtrl.create({
                 title: 'Error',
                 subTitle: this.creditCardsFoundMessage,
                 buttons: ['Ok']
               });
-              alert.present();
+              alert.present();*/
+              let toast = this.toastCtrl.create({
+                message: this.creditCardsFoundMessage,
+                duration: 3000,
+                position: 'top',
+                cssClass:'errorToast'
+              });
+              
+              toast.onDidDismiss(() => {
+                //console.log('Dismissed toast');
+              });
+              
+              toast.present();
             }
             this.userServiceObj.deleteCreditCard(this.userId.toString(),this.sharedServiceObj.service_id,creditCard.unique_id)
             .subscribe((result) => this.deleteCreditCardResp(result));

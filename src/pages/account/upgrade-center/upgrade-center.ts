@@ -1,6 +1,6 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, Platform,
-  MenuController,LoadingController } from 'ionic-angular';
+  MenuController,LoadingController,ToastController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Storage } from '@ionic/storage';
@@ -50,7 +50,7 @@ export class UpgradeCenterPage {
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController,public subscribtionObj:SubscriptionProvider, 
-    public platform: Platform,public loadingCtrl: LoadingController) {
+    public platform: Platform,public loadingCtrl: LoadingController,private toastCtrl: ToastController) {
       this.loader = this.loadingCtrl.create({
         content: "Please wait...",
         duration: 5000
@@ -252,12 +252,24 @@ upgradeDowngradePlan(selectedPlan:any)
     {
 this.notificationError="Plan does not exists.";
 this.notificationMsg="";
-let alert = this.alertCtrl.create({
+let toast = this.toastCtrl.create({
+  message: this.notificationError,
+  duration: 3000,
+  position: 'top',
+  cssClass:'successToast'
+});
+
+toast.onDidDismiss(() => {
+  //console.log('Dismissed toast');
+});
+
+toast.present();
+/*let alert = this.alertCtrl.create({
   title: 'Notification',
   subTitle: this.notificationError,
   buttons: ['Ok']
 });
-alert.present();
+alert.present();*/
     }
 }
 
@@ -267,12 +279,24 @@ upgradeDowngradePlanResp(result:any)
   {
     this.notificationError="";
 this.notificationMsg=result.message;
-let alert = this.alertCtrl.create({
+/*let alert = this.alertCtrl.create({
   title: 'Notification',
   subTitle: this.notificationMsg,
   buttons: ['Ok']
 });
-alert.present();
+alert.present();*/
+let toast = this.toastCtrl.create({
+  message: this.notificationError,
+  duration: 3000,
+  position: 'top',
+  cssClass:'successToast'
+});
+
+toast.onDidDismiss(() => {
+  //console.log('Dismissed toast');
+});
+
+toast.present();
   }
 //debugger;
 }

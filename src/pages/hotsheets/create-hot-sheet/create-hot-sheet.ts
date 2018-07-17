@@ -1,5 +1,5 @@
 import { Component, ViewChild, NgZone, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, Platform, MenuController,LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, Platform, MenuController,LoadingController,ToastController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 import { IMultiSelectOption,IMultiSelectSettings } from 'angular-2-dropdown-multiselect';
@@ -190,7 +190,7 @@ public isWebBrowser=false;
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform
     ,public listinServiceObj:ListingProvider,
     private crop: Crop,private camera: Camera,private imagePicker: ImagePicker,
-    public loadingCtrl: LoadingController) {
+    public loadingCtrl: LoadingController,private toastCtrl: ToastController) {
       /*if(this.platform.is('core') || this.platform.is('mobileweb') || this.platform.is('cordova') || 
       this.platform.is('mobile')) {
         this.isApp=false;
@@ -1209,12 +1209,23 @@ this.allListingTypeChecked=true;
     {
       this.ngZone.run(()=>{ 
       this.hotsheetCreateMsg="Slug already exists.";
-      let alert = this.alertCtrl.create({
+      /*let alert = this.alertCtrl.create({
         title: 'Error',
         subTitle: this.hotsheetCreateMsg,
         buttons: ['Ok']
       });
-      alert.present();
+      alert.present();*/
+      let toast = this.toastCtrl.create({
+        message: this.hotsheetCreateMsg,
+        duration: 3000,
+        position: 'top',
+        cssClass:'errorToast'
+      });
+      
+      toast.onDidDismiss(() => {
+        //console.log('Dismissed toast');
+      });
+      toast.present();
       });
     }
      

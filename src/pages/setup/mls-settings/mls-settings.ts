@@ -1,6 +1,6 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, Platform,
-  MenuController,LoadingController } from 'ionic-angular';
+  MenuController,LoadingController,ToastController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 import { DashboardPage } from '../../dashboard/dashboard';
@@ -32,7 +32,7 @@ export class MlsSettingsPage {
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform,
-    public loadingCtrl: LoadingController) {
+    public loadingCtrl: LoadingController,private toastCtrl: ToastController) {
       if(this.navParams.get('notificationMsg')!=undefined)
       {
         this.notificationMsg=this.navParams.get('notificationMsg');
@@ -78,12 +78,23 @@ loadPaperWorkStatusResp(result:any):void{
   {
     //this.paperWorkFoundMsg=result.message;
 //debugger;
-let alert = this.alertCtrl.create({
+/*let alert = this.alertCtrl.create({
   title: 'Error',
   subTitle: this.paperWorkFoundMsg,
   buttons: ['Ok']
 });
-alert.present();
+alert.present();*/
+let toast = this.toastCtrl.create({
+  message: this.paperWorkFoundMsg,
+  duration: 3000,
+  position: 'top',
+  cssClass:'errorToast'
+});
+
+toast.onDidDismiss(() => {
+  //console.log('Dismissed toast');
+});
+toast.present();
   }
 }
 }

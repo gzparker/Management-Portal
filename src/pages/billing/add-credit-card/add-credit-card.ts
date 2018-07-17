@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams, ModalController, Platform, MenuCon
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import {DatePipe} from '@angular/common';
 import { Storage } from '@ionic/storage';
-import { AlertController } from 'ionic-angular';
+import { AlertController,ToastController } from 'ionic-angular';
 
 import { ViewCreditCardsPage } from '../../billing/view-credit-cards/view-credit-cards';
 
@@ -46,7 +46,7 @@ export class AddCreditCardPage {
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, 
-    public platform: Platform,public loadingCtrl: LoadingController) {
+    public platform: Platform,public loadingCtrl: LoadingController,private toastCtrl: ToastController) {
       this.setYearMonthValues();
      // this.expiryDate=new Date(new Date().getFullYear().toString()+"-"+(new Date().getMonth().toString())).toISOString();
       this.calendarMinDate=new Date();
@@ -138,12 +138,24 @@ export class AddCreditCardPage {
           });
         }
         else {
-          let alert = this.alertCtrl.create({
+          let toast = this.toastCtrl.create({
+            message: this.creditCardMsg,
+            duration: 3000,
+            position: 'top',
+            cssClass:'errorToast'
+          });
+          
+          toast.onDidDismiss(() => {
+            //console.log('Dismissed toast');
+          });
+          
+          toast.present();
+          /*let alert = this.alertCtrl.create({
             title: 'Error',
             subTitle: this.creditCardMsg,
             buttons: ['Ok']
           });
-          alert.present();
+          alert.present();*/
           //this.creditCardMsg=data.message.toUpperCase();
         }
       }

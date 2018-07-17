@@ -1,6 +1,6 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController,LoadingController,Platform,
-  MenuController,ActionSheetController,Tabs } from 'ionic-angular';
+  MenuController,ActionSheetController,Tabs,ToastController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 import { CreateAgentPage } from '../create-agent/create-agent';
@@ -42,16 +42,28 @@ export class ManageAgentsPage {
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, 
-    public platform: Platform,public loadingCtrl: LoadingController,public actionSheetCtrl: ActionSheetController) {
+    public platform: Platform,public loadingCtrl: LoadingController,
+    public actionSheetCtrl: ActionSheetController,private toastCtrl: ToastController) {
       if(this.navParams.get('notificationMsg')!=undefined)
       {
         this.notificationMsg=this.navParams.get('notificationMsg');
-        let alert = this.alertCtrl.create({
+        /*let alert = this.alertCtrl.create({
           title: 'Notification',
           subTitle: this.notificationMsg,
           buttons: ['Ok']
         });
-        alert.present();
+        alert.present();*/
+        let toast = this.toastCtrl.create({
+          message: this.notificationMsg,
+          duration: 3000,
+          position: 'top',
+          cssClass:'successToast'
+        });
+        
+        toast.onDidDismiss(() => {
+          //console.log('Dismissed toast');
+        });
+        toast.present();
       }
       this.loader = this.loadingCtrl.create({
         content: "Please wait...",
@@ -227,12 +239,23 @@ loadAllAgentsResp(result:any)
     this.allAgents=[];
     this.agentServices=[];
     this.agentsFoundMessage="No agents found.";
-    let alert = this.alertCtrl.create({
+    /*let alert = this.alertCtrl.create({
       title: 'Error',
       subTitle: this.agentsFoundMessage,
       buttons: ['Ok']
     });
-    alert.present();
+    alert.present();*/
+    let toast = this.toastCtrl.create({
+      message: this.agentsFoundMessage,
+      duration: 3000,
+      position: 'top',
+      cssClass:'errorToast'
+    });
+    
+    toast.onDidDismiss(() => {
+      //console.log('Dismissed toast');
+    });
+    toast.present();
   }
 }
 deleteAgent(agent:any)

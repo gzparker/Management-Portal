@@ -1,5 +1,5 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, Platform,LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, Platform,LoadingController,ToastController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 import { DashboardPage } from '../dashboard/dashboard';
@@ -60,7 +60,7 @@ export class LoginPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform
-    ,public loadingCtrl: LoadingController,public ngZone: NgZone) {
+    ,public loadingCtrl: LoadingController,public ngZone: NgZone,private toastCtrl: ToastController) {
     userServiceObj.fbLoginDecision.subscribe(item => this.faceBookDecisionMethod(item));
     this.loader = this.loadingCtrl.create({
       content: "Please wait...",
@@ -158,12 +158,23 @@ export class LoginPage {
       this.storage.remove('userType');
       this.storage.remove('loggedInUserInfo');
       this.userLoggedId = false;
-      let alert = this.alertCtrl.create({
+      /*let alert = this.alertCtrl.create({
         title: 'Error',
         subTitle: this.userLogginMsg,
         buttons: ['Ok']
       });
-      alert.present();
+      alert.present();*/
+      let toast = this.toastCtrl.create({
+        message: this.userLogginMsg,
+        duration: 3000,
+        position: 'top',
+        cssClass:'errorToast'
+      });
+      
+      toast.onDidDismiss(() => {
+        //console.log('Dismissed toast');
+      });
+      toast.present();
       // this.loginModal.close();
 
     }

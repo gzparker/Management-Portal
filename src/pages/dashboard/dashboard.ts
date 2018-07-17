@@ -1,6 +1,6 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, Platform,
-   MenuController,ActionSheetController,Tabs } from 'ionic-angular';
+   MenuController,ActionSheetController,Tabs,ToastController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 import { ISubscription } from "rxjs/Subscription";
@@ -89,16 +89,28 @@ private subscription: ISubscription;
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, 
-    public platform: Platform,public actionSheetCtrl: ActionSheetController) {
+    public platform: Platform,public actionSheetCtrl: ActionSheetController,private toastCtrl: ToastController) {
       if(this.navParams.get('notificationMsg')!=undefined&&this.navParams.get('notificationMsg')!='')
       {
         this.notificationMsg=this.navParams.get('notificationMsg');
-        let alert = this.alertCtrl.create({
+        /*let alert = this.alertCtrl.create({
           title: 'Notification',
           subTitle: this.notificationMsg,
           buttons: ['Ok']
         });
-        alert.present();
+        alert.present();*/
+        let toast = this.toastCtrl.create({
+          message: this.navParams.get('notificationMsg'),
+          duration: 3000,
+          position: 'top',
+          cssClass:'successToast'
+        });
+        
+        toast.onDidDismiss(() => {
+          //console.log('Dismissed toast');
+        });
+        
+        toast.present();
       }
       if(this.navParams.get('selectedPage')!=undefined&&this.navParams.get('selectedPage')!='')
       {
