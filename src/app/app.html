@@ -1,19 +1,21 @@
 <ion-split-pane>
 <ion-menu [content]="content" persistent="true">
   <ion-header>
-    <ion-toolbar class="company-logo">
+    <!-- <ion-toolbar class="company-logo">
       <ion-title>Menu</ion-title>
-    </ion-toolbar>
+    </ion-toolbar> -->
   </ion-header>
 
   <ion-content class="noScroll">
     
-    <ion-card text-center class="profileCard" *ngIf="userLoggedIn==true&&userGeneralInfo!=null"  (tap)="openPage('26')" >
-    
-    <img src={{this.sharedServiceObj.imgBucketUrl}}{{userGeneralInfo.photo_company}} 
-    class="custom-avatar" (error)="imgProfile.src = this.sharedServiceObj.profileNoImage" #imgProfile/>
-    <h2 class="username">{{userGeneralInfo.identity_name}}</h2>
-    <p class="tagline">Let your fingers do the walking.</p>
+    <ion-card text-center class="profileCard" *ngIf="userLoggedIn==true&&userGeneralInfo!=null"  (tap)="openPage('26')" > 
+      <div class="profileCardInfo">
+      <img src={{this.sharedServiceObj.imgBucketUrl}}{{userGeneralInfo.photo_company}} 
+      class="custom-avatar" (error)="imgProfile.src = this.sharedServiceObj.profileNoImage" #imgProfile/>
+      <h2 class="username">{{userGeneralInfo.identity_name}}</h2>
+      <p class="tagline">Email Address</p>
+      </div>
+      <div class="profileCardBG"></div>
     </ion-card>
 
     <ion-list id="sidenav" class="app-menu disable-user-behavior">
@@ -44,7 +46,7 @@
       </ion-item>
       <ion-item menuClose ion-item (tap)="openPage('7')" 
       *ngIf="userLoggedIn==true&&paidStatus==true&&isHotSheets==true">      
-        HotSheets
+        Hot Sheets
       </ion-item>
 <ion-item menuClose ion-item (tap)="openPage('27')" 
       *ngIf="userLoggedIn==true&&paidStatus==true&&isChats==true">      

@@ -60,7 +60,7 @@
         </ion-item>
 
         <ion-item>
-          <ion-label stacked>Parent ID</ion-label>
+          <ion-label stacked>Parent City</ion-label>
           <ion-select [(ngModel)]="parent_id"  
           name="parent_id" >
           <ion-option value="">None</ion-option>
@@ -130,7 +130,7 @@
         </ion-item>
 
         <ion-item class="noPadding itemMargin">
-          <ion-label stacked>Assigned Agent IDs</ion-label>
+          <ion-label stacked>Assigned Agent/Broker</ion-label>
           <ion-select placeholder="-----" [(ngModel)]="assigned_agent_id"  
           name="assigned_agent_id" multiple="true">
           <ion-option *ngFor="let agent of allAgents" value= {{agent.id}}>

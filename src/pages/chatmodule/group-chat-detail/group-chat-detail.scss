@@ -42,6 +42,11 @@ page-group-chat-detail {
         max-width: 30px;
         padding: 0 2px;
         }
+
+        .bar-button-menutoggle {
+        display: none !important;
+        }
+
         .bar-buttons {        
           .button-inner {
           font-size: 0px !important;
@@ -118,7 +123,8 @@ page-group-chat-detail {
 
   .scroll-content {
   margin-top: 70px !important;
-  margin-bottom: 120px !important;
+  margin-bottom: 90px !important;
+  // margin-bottom: 120px !important;
   padding: 0px !important;
   }
 
@@ -278,7 +284,7 @@ page-group-chat-detail {
   // background: red;
     .item-wrapper {    
     padding: 0;
-    margin: 0 0 10px 0;
+    margin: 6px 0;
     border-radius: 6px !important;    
     background: transparent;
     // background: red;
@@ -365,6 +371,7 @@ page-group-chat-detail {
           color: $chat-msg-text;
           width: auto;
           margin: 10px 0;
+          // margin: 0;
           padding: 8px 12px;
           display: table;
           text-overflow: unset;
@@ -474,7 +481,7 @@ page-group-chat-detail {
   }
 
   ion-item-sliding {
-  max-height: 104px;
+  // max-height: 104px;
     &:hover {
       .optionIcon {
       opacity: .7;
