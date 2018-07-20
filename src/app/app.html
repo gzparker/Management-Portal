@@ -8,7 +8,7 @@
 
   <ion-content class="noScroll">
     
-    <ion-card text-center class="profileCard" *ngIf="userLoggedIn==true&&userGeneralInfo!=null"  (tap)="openPage('26')" > 
+    <ion-card text-center menuClose class="profileCard" *ngIf="userLoggedIn==true&&userGeneralInfo!=null"  (tap)="openPage('26')" > 
       <div class="profileCardInfo">
       <img src={{this.sharedServiceObj.imgBucketUrl}}{{userGeneralInfo.photo_company}} 
       class="custom-avatar" (error)="imgProfile.src = this.sharedServiceObj.profileNoImage" #imgProfile/>

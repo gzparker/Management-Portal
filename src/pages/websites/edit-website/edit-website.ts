@@ -101,6 +101,7 @@ export class EditWebsitePage {
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform, 
     public ngZone: NgZone,public menuCtrl: MenuController,public loadingCtrl: LoadingController,
     private crop: Crop,private camera: Camera,private imagePicker: ImagePicker) {
+      debugger;
      // this.CkeditorConfig=this.sharedServiceObj.CkeditorConfig;
       /*if(this.platform.is('core') || this.platform.is('mobileweb') || this.platform.is('cordova') || this.platform.is('mobile')) {
         this.isApp=false;
@@ -242,6 +243,7 @@ export class EditWebsitePage {
       });
     }
     websiteFavIconFileChangeListener($event) {
+     // debugger;
       this.crop_favivon_image=true;
       this.hideFavIconCropper=true;
       this.edit_favivon_image=true;
@@ -255,7 +257,7 @@ export class EditWebsitePage {
            
             that.favIconCropperSettings.croppedWidth = this.width;
             that.favIconCropperSettings.croppedHeight = this.height;
-            
+            debugger;
             that.favIconLogoCropper.setImage(image);
         };
         
