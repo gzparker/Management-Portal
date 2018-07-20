@@ -52,6 +52,14 @@ export class SharedProvider {
   public hotsheetNoImage="././assets/imgs/hotsheets-thumbnail.jpg";
   public profileNoImage="././assets/imgs/profile-photo.jpg";
   public groupNoImage="././assets/imgs/profile-group.jpg";
+  public CkeditorConfig = {removeButtons:'Underline,Subscript,Superscript,SpecialChar'
+  ,toolbar: [
+    { name: 'document', groups: [], items: ['Source'] },
+    { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline'] },
+    { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
+    { name: 'links', items: [] },
+    { name: 'styles', items: ['Format', 'FontSize' ] }
+  ]};
   // public FB:any;
 
   constructor(private http: Http,private storage: Storage, public alertCtrl: AlertController) {
@@ -324,7 +332,7 @@ sendMessage(type:string,description:any,redirectUserId:any,firebaseUserId:any,
            if(snapshot.exists()){
             snapshot.forEach((data)=>{
              var returnedGroup=data.val();
-             //debugger;
+            // debugger;
              createDate=returnedGroup.dateCreated;
    
              var fredRef=firebase.database().ref('groups/'+data.key);
@@ -334,7 +342,7 @@ sendMessage(type:string,description:any,redirectUserId:any,firebaseUserId:any,
         }
                           else
                           {
-                            //debugger;
+                         //   debugger;
                         that.saveGroup(groupId,memberId,type,createDate,newChatMember,loggedInUserInfo,firebaseUserId,description,chatImage);
                         that.saveMessage(groupId,memberId,type,newChatMember,loggedInUserInfo,firebaseUserId,description,chatImage,chatDetailArray);
                     }
@@ -342,7 +350,7 @@ sendMessage(type:string,description:any,redirectUserId:any,firebaseUserId:any,
        }
        else
        {
-      //   debugger;
+     // debugger;
        that.saveGroup(groupId,memberId,type,createDate,newChatMember,loggedInUserInfo,firebaseUserId,description,chatImage);      
       that.saveMessage(groupId,memberId,type,newChatMember,loggedInUserInfo,firebaseUserId,description,chatImage,chatDetailArray);
     }
@@ -352,7 +360,8 @@ sendMessage(type:string,description:any,redirectUserId:any,firebaseUserId:any,
       saveGroup(groupId,memberId,type,createDate,newChatMember:any,loggedInUserInfo:any,firebaseUserId:string,
         description:string,chatImage:string){
       let that=this;
-       var deletedFor=["0"];
+       var deletedFor=[];
+       deletedFor.push("0");
        var toUserName="";
        var toUserImage="";
      if(newChatMember)
@@ -393,20 +402,31 @@ sendMessage(type:string,description:any,redirectUserId:any,firebaseUserId:any,
       };
      saveMessage(groupId,memberId,type,newChatMember:any,loggedInUserInfo:any,firebaseUserId:string,
         description:string,chatImage:string,chatDetailArray:any){
-         // debugger;
+         //;
        let that=this;
        let msgResp="";
        var readBy=[];
        readBy.push(firebaseUserId);
-       var deletedFor=["0"];
+       var deletedFor=[];
+       deletedFor.push("0");
        var msgDescription=description;
        var toImageUrl="";
        var toUserName="";
        var toUserImage="";
+       var fromImageUrl="";
+      
      //debugger;
        var chat = firebase.database().ref('chats');
        if(type=="new")
-     { 
+     {
+      if(loggedInUserInfo.memberCredentials.image_url)
+      {
+fromImageUrl=loggedInUserInfo.memberCredentials.image_url;
+      } 
+      else
+      {
+        fromImageUrl="";
+      }
        if(newChatMember)
      {
      if(newChatMember.first_name!=undefined)
@@ -423,7 +443,7 @@ sendMessage(type:string,description:any,redirectUserId:any,firebaseUserId:any,
                                        toUserName:toUserName,
                                          fromFbUserId: firebaseUserId,
                                          toFbUserId: memberId,
-                                         fromUserImage:loggedInUserInfo.memberCredentials.image_url,
+                                         fromUserImage:fromImageUrl,
                                          toUserImage:toImageUrl,
                                          message:msgDescription,
                                         imageData:chatImage,
@@ -444,7 +464,7 @@ sendMessage(type:string,description:any,redirectUserId:any,firebaseUserId:any,
  {
 
   var lastMessage=chatDetailArray[chatDetailArray.length-1].val();
-
+//debugger;
 if(lastMessage.groupId==undefined)
 {
   lastMessage.groupId="";

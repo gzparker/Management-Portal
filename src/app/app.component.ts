@@ -154,11 +154,9 @@ this.sharedServiceObj.getServiceDefaultInfoByUrl(document.URL.toString())
 
 /*if(result.status==false)
 {
-
 }
 if(result.status==true)
 {
-
 }*/
 if(result)
 {

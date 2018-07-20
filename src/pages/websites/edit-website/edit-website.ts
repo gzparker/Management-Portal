@@ -78,12 +78,20 @@ export class EditWebsitePage {
   public homepageMeta_description:string="";
   public homepage_search_text:string="";
   public homepage_meta_title:string="";
-  private CkeditorConfig = {removeButtons:'Underline,Subscript,Superscript,SpecialChar'
+  /*private CkeditorConfig = {removeButtons:'Underline,Subscript,Superscript,SpecialChar'
   ,toolbar: [
-    { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source'] },
+    { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ ] },
     { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', '-', 'RemoveFormat' ] },
     { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
     { name: 'links', items: [ 'Link', 'Unlink'] },
+    { name: 'styles', items: ['Format', 'FontSize' ] }
+  ]};*/
+  public CkeditorConfig = {removeButtons:'Underline,Subscript,Superscript,SpecialChar'
+  ,toolbar: [
+    { name: 'document', groups: [], items: ['Source'] },
+    { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline'] },
+    { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
+    { name: 'links', items: [] },
     { name: 'styles', items: ['Format', 'FontSize' ] }
   ]};
 
@@ -93,6 +101,7 @@ export class EditWebsitePage {
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform, 
     public ngZone: NgZone,public menuCtrl: MenuController,public loadingCtrl: LoadingController,
     private crop: Crop,private camera: Camera,private imagePicker: ImagePicker) {
+     // this.CkeditorConfig=this.sharedServiceObj.CkeditorConfig;
       /*if(this.platform.is('core') || this.platform.is('mobileweb') || this.platform.is('cordova') || this.platform.is('mobile')) {
         this.isApp=false;
       }

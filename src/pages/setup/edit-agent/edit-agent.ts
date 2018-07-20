@@ -57,12 +57,12 @@ export class EditAgentPage {
   public loader:any;
   public cropperWidth:string="";
   public cropperHeight:string="";
-  private CkeditorConfig = {removeButtons:'Underline,Subscript,Superscript,SpecialChar'
+  public CkeditorConfig = {removeButtons:'Underline,Subscript,Superscript,SpecialChar'
   ,toolbar: [
-    { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source'] },
-    { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', '-', 'RemoveFormat' ] },
-    { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
-    { name: 'links', items: [ 'Link', 'Unlink'] },
+    { name: 'document', groups: [], items: ['Source'] },
+    { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline'] },
+    { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
+    { name: 'links', items: [] },
     { name: 'styles', items: ['Format', 'FontSize' ] }
   ]};
   public userId:string="";

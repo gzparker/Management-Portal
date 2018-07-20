@@ -104,12 +104,20 @@ public isWebBrowser=false;
   public statusOptions:any[]=[{id:"all",name:"All"},{id:"for_sale",name:"For Sale"},{id:"for_rent",name:"For Rent"},
   {id:"pending",name:"Pending"},{id:"recently_sold",name:"Recently Sold"},{id:"pre_selling",name:"Pre Selling"},{id:"buy_me_out",name:"Buy Me Out"}
   ,{id:"rent_to_own",name:"Ren to own"}];
-  private CkeditorConfig = {removeButtons:'Underline,Subscript,Superscript,SpecialChar'
+  /*private CkeditorConfig = {removeButtons:'Underline,Subscript,Superscript,SpecialChar'
   ,toolbar: [
     { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source'] },
     { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', '-', 'RemoveFormat' ] },
     { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
     { name: 'links', items: [ 'Link', 'Unlink'] },
+    { name: 'styles', items: ['Format', 'FontSize' ] }
+  ]};*/
+  public CkeditorConfig = {removeButtons:'Underline,Subscript,Superscript,SpecialChar'
+  ,toolbar: [
+    { name: 'document', groups: [], items: ['Source'] },
+    { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline'] },
+    { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
+    { name: 'links', items: [] },
     { name: 'styles', items: ['Format', 'FontSize' ] }
   ]};
   public status_modal:string="all";
@@ -191,6 +199,7 @@ public isWebBrowser=false;
     ,public listinServiceObj:ListingProvider,
     private crop: Crop,private camera: Camera,private imagePicker: ImagePicker,
     public loadingCtrl: LoadingController,private toastCtrl: ToastController) {
+      //this.CkeditorConfig=this.sharedServiceObj.CkeditorConfig;
       /*if(this.platform.is('core') || this.platform.is('mobileweb') || this.platform.is('cordova') || 
       this.platform.is('mobile')) {
         this.isApp=false;

@@ -17,7 +17,39 @@
   
   
 <ion-content padding class="dashboardUI chatUI">
+  <h1 class="contentTitle animated bounceInRight">Group Details</h1>
+  <form role="form" data-toggle="validator" #groupForm="ngForm">
   
+    <div class="customList">
+      <div class="msgBoxWrapper">
+        <ion-item>
+          <ion-label stacked>Subject<span [ngClass]="{'error': groupTitle==''}" *ngIf="groupTitle==''">*</span></ion-label>
+          <ion-input type="text" placeholder="Add Group Name" required [(ngModel)]="groupTitle" name="groupTitle" id="groupTitle"></ion-input>
+        </ion-item>
+
+        <!--<ion-item>
+          <ion-label stacked>Select Group Members</ion-label>
+          <ion-select placeholder="-----" [(ngModel)]="groupMembersData"  
+          name="groupMembersData" multiple="true">
+          <ion-option *ngFor="let availableContact of allAvailableContacts" [value]=availableContact>
+          {{availableContact.first_name}} {{availableContact.last_name}}
+          </ion-option>
+          </ion-select>
+        </ion-item>-->      
+      
+
+        <div class="dashboardBtn">
+          <!-- <button ion-button color="primary" block (click)="createGroup('new')">Create</button> -->
+          <button ion-button icon-start color="primary" block (click)="updateGroup()">
+            <ion-icon name="ios-send"></ion-icon>
+            Update
+          </button>
+        </div>
+
+    </div>
+  </div>
+
+</form>
   <h1 class="contentTitle animated bounceInRight">Group Members</h1>
   
   <ion-list class="noShadow" *ngIf="groupMembersData.length>0">

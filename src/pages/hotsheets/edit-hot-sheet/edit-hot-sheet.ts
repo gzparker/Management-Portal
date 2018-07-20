@@ -119,12 +119,12 @@ public isWebBrowser=false;
   public listingTypeOptions:any[]=[{id:"all",name:"All"},{id:"house",name:"House"},{id:"cnd",name:"Condo"},
         {id:"twnhs",name:"TownHouse"},{id:"land",name:"Land"},{id:"duplx",name:"Duplex"},
         {id:"comm",name:"Commercial"}];
-  private CkeditorConfig = {removeButtons:'Underline,Subscript,Superscript,SpecialChar'
+  public CkeditorConfig = {removeButtons:'Underline,Subscript,Superscript,SpecialChar'
         ,toolbar: [
-          { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source'] },
-          { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', '-', 'RemoveFormat' ] },
-          { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
-          { name: 'links', items: [ 'Link', 'Unlink'] },
+          { name: 'document', groups: [], items: ['Source'] },
+          { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline'] },
+          { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
+          { name: 'links', items: [] },
           { name: 'styles', items: ['Format', 'FontSize' ] }
         ]};
   public listing_type_modal:any[]=["all"];

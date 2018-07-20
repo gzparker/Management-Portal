@@ -5,6 +5,7 @@ import { Storage } from '@ionic/storage';
 import { DashboardPage } from '../../dashboard/dashboard';
 import { ContactusPage } from '../../contactus/contactus';
 import { SetupOptionPage } from '../../setup/setup-option/setup-option';
+import { ChatPage } from '../../chatmodule/chat/chat';
 
 import { AlertController } from 'ionic-angular';
 import { SharedProvider } from '../../../providers/shared/shared';
@@ -27,10 +28,12 @@ export class DashboardTabsPage {
   @ViewChild("idxpaymentTabs") idxpaymentTabs: Tabs;
   public dashboardRoot: any=DashboardPage;
   public setupRoot: any=SetupOptionPage;
+  public chatRoot:any=ChatPage;
   public notificationMsg:string="";
   public dashBoardParams: any;
   public setUpPage: any;
   public userId:string="";
+  public allUnreadMsg:string="";
   public globalSettings:any;
   public showSetupTab:boolean;
   public enableSetup:boolean=true;
@@ -49,6 +52,7 @@ export class DashboardTabsPage {
       this.dashBoardParams.selectedPage=this.navParams.get('selectedPage');
       }
      this.setUpPage = { selectedPage: "8" };
+     sharedServiceObj.unreadMsgCounterEmitter.subscribe(item => this.setUnreadMsgs(item));
   }
 
   ionViewDidLoad() {
@@ -116,6 +120,11 @@ this.showSetupTab=false;
     }
     }
   }
+  selectChat()
+  {
+    //debugger;
+    this.navCtrl.setRoot(ChatPage);
+  }
 setRootPages(option:any)
 {
  if(option=='1')
@@ -130,6 +139,9 @@ setRootPages(option:any)
   
  }
 }
-
+setUnreadMsgs(msgCounter:string)
+  {
+this.allUnreadMsg=msgCounter;
+  }
 
 }

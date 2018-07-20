@@ -499,7 +499,7 @@ if(status==true)
       this.navCtrl.push(UpcomingSubscriptionPage);
     }
     if (pageNumber == "23") {
-      this.navCtrl.setRoot(ViewRolesPage);
+      this.navCtrl.push(ViewRolesPage);
     }
     if (pageNumber == "24") {
       this.navCtrl.push(CreateRolePage);

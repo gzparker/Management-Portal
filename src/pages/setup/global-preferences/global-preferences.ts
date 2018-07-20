@@ -228,7 +228,6 @@ export class GlobalPreferencesPage {
     });
   }
   loadPersonalImage(baseUrl:string,imageUrl:string) {
-   
     const self = this;
     //self.hidePersonalCropper=true;
     var image:any = new Image();
@@ -241,20 +240,13 @@ export class GlobalPreferencesPage {
         reader.readAsDataURL(xhr.response); 
        
         reader.onloadend = function (loadEvent:any) {
-          //debugger;
           image.src = loadEvent.target.result;
           image.onload = function () {
-            //alert (this.width);
-            //debugger;
-            
             self.personalCropperSettings.croppedWidth = this.width;
             self.personalCropperSettings.croppedHeight = this.height;
             self.personalImage=image.src;
-           //self.personalCropper.setImage(image);
            self.createPersonalThumbnail(image.src);
         };
-          
-  
       };
     });
   }

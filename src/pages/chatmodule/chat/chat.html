@@ -155,7 +155,7 @@
               </div>
     </div>
 </ion-list>-->
-<ion-list class="noShadow">
+<ion-list class="noShadow" *ngIf="chatGroups.length>0">
   <div *ngFor="let group of chatGroups">
   <div *ngIf="group.val().deletedFor.indexOf(firebaseUserId) < 0">
  
@@ -164,7 +164,7 @@
             <ion-list class="chatBoxWrapper">
                     <ion-item-sliding>
                     <ion-item class="item item-avatar item-text-wrap chatBoxItem"  *ngIf="firebaseUserId==group.val().fromFbUserId||firebaseUserId==group.val().toFbUserId" 
-                    (click)="chatDetail(group.val().groupId,group.val().fromFbUserId,group.val().fromUserName,group.val().toUserName,2)">
+                    (click)="chatDetail(group.val().groupId,group.val().fromFbUserId,group.val().fromUserName,group.val().toUserName,1)">
                     <div  *ngIf="firebaseUserId==group.val().fromFbUserId">
                     <div  *ngFor="let user of users">
                       <div *ngIf="user.fbId==group.val().toFbUserId && user.isOnline==0">              
@@ -218,13 +218,13 @@
                     
                     <ion-item class="desktopOption" side="right" *ngIf="!isApp">
                         <div class="optionIcon" *ngIf="!isApp"></div>
-                        <button ion-button color="primary" item-right class="btn-edit" (click)="manageGroups(group.val().groupId)" *ngIf="group.val().isGroup==1"><ion-icon name="md-create"></ion-icon>Group Members</button>
+                        <button ion-button color="primary" item-right class="btn-edit" (click)="manageGroups(group.val().groupId,group.key)" *ngIf="group.val().isGroup==1"><ion-icon name="md-create"></ion-icon>Group Members</button>
                         <button ion-button color="danger" item-right class="btn-del" (click)="deleteGroupChat(group.val().groupId,group.key);"  *ngIf="group.val().isGroup==1&&group.val().deletedFor.indexOf(firebaseUserId) < 0"><ion-icon name="md-close"></ion-icon>Delete Chat</button>
                         <button ion-button color="danger" item-right class="btn-del" (click)="deleteGroupChat(group.val().groupId,group.key);"  *ngIf="group.val().isGroup==0&&group.val().deletedFor.indexOf(firebaseUserId) < 0"><ion-icon name="md-close"></ion-icon>Delete Chat</button>
                     </ion-item>
 
                     <ion-item-options side="right" *ngIf="isApp">
-                        <button ion-button color="primary" item-right class="btn-edit" (click)="manageGroups(group.val().groupId)" *ngIf="group.val().isGroup==1"><ion-icon name="md-create"></ion-icon>Group Members</button>
+                        <button ion-button color="primary" item-right class="btn-edit" (click)="manageGroups(group.val().groupId,group.key)" *ngIf="group.val().isGroup==1"><ion-icon name="md-create"></ion-icon>Group Members</button>
                         <button ion-button color="danger" item-right class="btn-del" (click)="deleteGroupChat(group.val().groupId,group.key);"  *ngIf="group.val().isGroup==1&&group.val().deletedFor.indexOf(firebaseUserId) < 0"><ion-icon name="md-close"></ion-icon>Delete Chat</button>
                         <button ion-button color="danger" item-right class="btn-del" (click)="deleteGroupChat(group.val().groupId,group.key);"  *ngIf="group.val().isGroup==0&&group.val().deletedFor.indexOf(firebaseUserId) < 0"><ion-icon name="md-close"></ion-icon>Delete Chat</button>
                     </ion-item-options>
@@ -257,13 +257,13 @@
 
                     <ion-item class="desktopOption" side="right" *ngIf="!isApp">
                       <div class="optionIcon" *ngIf="!isApp"></div>
-                      <button ion-button color="primary" item-right class="btn-edit" (click)="manageGroups(group.val().groupId)" *ngIf="group.val().isGroup==1"><ion-icon name="md-create"></ion-icon>Edit Chat</button>
+                      <button ion-button color="primary" item-right class="btn-edit" (click)="manageGroups(group.val().groupId,group.key)" *ngIf="group.val().isGroup==1"><ion-icon name="md-create"></ion-icon>Edit Chat</button>
                       <button ion-button color="danger" item-right class="btn-del" (click)="deleteGroupChat(group.val().groupId,group.key);"  *ngIf="group.val().isGroup==1&&group.val().deletedFor.indexOf(firebaseUserId) < 0"><ion-icon name="md-close"></ion-icon>Delete Chat</button>
                       <button ion-button color="danger" item-right class="btn-del" (click)="deleteGroupChat(group.val().groupId,group.key);"  *ngIf="group.val().isGroup==0&&group.val().deletedFor.indexOf(firebaseUserId) < 0"><ion-icon name="md-close"></ion-icon>Delete Chat</button>
                     </ion-item>
 
                     <ion-item-options side="right" *ngIf="isApp">
-                      <button ion-button color="primary" item-right class="btn-edit" (click)="manageGroups(group.val().groupId)" *ngIf="group.val().isGroup==1"><ion-icon name="md-create"></ion-icon>Edit Chat</button>
+                      <button ion-button color="primary" item-right class="btn-edit" (click)="manageGroups(group.val().groupId,group.key)" *ngIf="group.val().isGroup==1"><ion-icon name="md-create"></ion-icon>Edit Chat</button>
                       <button ion-button color="danger" item-right class="btn-del" (click)="deleteGroupChat(group.val().groupId,group.key);"  *ngIf="group.val().isGroup==1&&group.val().deletedFor.indexOf(firebaseUserId) < 0"><ion-icon name="md-close"></ion-icon>Delete Chat</button>
                       <button ion-button color="danger" item-right class="btn-del" (click)="deleteGroupChat(group.val().groupId,group.key);"  *ngIf="group.val().isGroup==0&&group.val().deletedFor.indexOf(firebaseUserId) < 0"><ion-icon name="md-close"></ion-icon>Delete Chat</button>
                     </ion-item-options>
