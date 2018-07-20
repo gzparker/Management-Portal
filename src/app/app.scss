@@ -822,5 +822,167 @@ ion-item-sliding {
   }
 }
 
-.successToast{.toast-wrapper {opacity: 0.6; border-radius: 5px !important; text-align: center; background: color($colors, primary);}};
-.errorToast{.toast-wrapper {opacity: 0.6; border-radius: 5px !important; text-align: center; background: color($colors, danger);}};
+ion-content.dashboardUI {
+    .uploadPhoto {    
+      .item-block {
+        &.imageUploaderLabel {
+        padding-right: 0px;
+        margin-right: 0px;
+          .item-inner {
+          width: 100%;
+          max-width: 100%;
+          margin-left: 0px !important;
+          padding-left: 0px !important;
+          margin-right: 0px !important;
+          padding-right: 0px !important;          
+          }
+        }
+      }
+
+      .uploaderBtn {
+      width: 100% !important;
+      padding: 5px !important;
+      height: auto !important;
+      overflow: hidden;
+      display: block;
+      border: 2px dashed #d4d4d4 !important;
+      margin: 16px 0 0 0;      
+      position: relative;
+        &:before {
+        content: "";
+        width: 25px !important;
+        height: 15px !important;        
+        top: 2px;
+        left: 2px;
+        display: block;
+        z-index: 100;
+        position: absolute;
+        background: #FFF;
+        }
+      
+        input[type="file"] {
+        width: 100% !important;
+        height: 110px !important;
+        font-size: 0px !important;
+        line-height: 0px !important;
+        box-sizing: border-box !important;
+        padding: 0px !important;
+        margin: 0 !important;        
+        position: relative !important; 
+        display: block !important;
+        border: none !important;
+        outline: none !important;
+        background-color: #FFF !important;
+          &:before {
+          content: "";
+          width: 50px;
+          height: 40px;
+          top: 10px;
+          left: 0;
+          right: 0;
+          margin: 0 auto;
+          position: absolute;
+          display: block;
+          opacity: .65;
+          background: url("../assets/icon/svg/upload/cloud-upload.png") no-repeat center center;
+          background-size: 100% !important;
+          }
+          &:after {
+          content: "Choose files to Upload";        
+          width: 240px;
+          height: 36px;
+          line-height: 36px;
+          display: table;
+          font-family: $font-three;
+          font-size: 15px;
+          font-weight: 400;
+          letter-spacing: .4px;
+          color: #FFF;
+          text-align: center;
+          padding: 0 25px;
+          position: absolute;        
+          bottom: 10px;
+          left: 0;
+          right: 0;
+          margin: 0 auto;
+          border-radius: 4px;        
+          cursor: pointer;
+          box-sizing: border-box;
+          border: 1px solid #4D8F2F;        
+          background: #77B55D;
+          @extend %transition;            
+          }
+        }
+      }
+
+      .imgCropperPreview {
+      width: 100%;
+      height: auto;
+      padding: 8px 8px 4px 8px !important;
+      margin: 20px 0 30px 0 !important;
+      display: block;
+      position: relative;      
+      border-radius: 2px;
+      background: #cbcccc !important;
+        span.ng2-imgcrop {
+        font-size: 0px;
+        line-height: 0px;
+        }
+        canvas {
+        width: 280px !important;
+        height: 200px !important;
+        }
+        &:after {
+        content: "Image Preview";
+        width: 100%;
+        height: 20px;
+        font-family: $font-four;
+        font-size: 14px;
+        left: 0;
+        bottom: -45px;
+        position: absolute;
+        text-align: center;
+        display: block;
+        }
+      }
+
+      .imgCropperPreviewResult {
+      width: 100%;
+      height: auto;
+      padding: 20px 0 10px 0;
+      margin: 0;
+      position: relative;
+        img {
+        width: auto;
+        height: auto;
+        display: table;
+        margin: 0 auto;
+        padding: 0;
+        }
+      }
+
+    }
+  }
+
+.successToast, .errorToast {
+  .toast-wrapper {
+  text-transform: capitalize !important;
+  font-size: 12px !important;
+  margin-top: 9vh !important;
+  opacity: 0.75;
+  border-radius: 5px !important;
+  text-align: center;  
+  }
+}
+
+.successToast {
+  .toast-wrapper {
+  background: color($colors, secondary) !important;
+  }
+}
+
+.errorToast {
+  .toast-wrapper {  
+  background: color($colors, danger) !important;  
+  }
+}

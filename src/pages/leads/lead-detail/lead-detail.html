@@ -9,28 +9,38 @@
       <!-- <button ion-button menuToggle start>
         <ion-icon name="menu"></ion-icon>
       </button> -->
-      <!-- <ion-title>Lead Detail</ion-title> -->
-      <!-- <ion-buttons end>
+      <ion-title>Contact Profile</ion-title>
+      <ion-buttons end>
         <button ion-button (click)="editLead();" *ngIf="isEditLeadAccess==true">
-          <ion-icon name="ios-bookmark"></ion-icon>
+          <ion-icon name="md-create"></ion-icon>
         </button>
-      </ion-buttons> -->
+      </ion-buttons>
     </ion-navbar>
 </ion-header>
 
 <ion-content padding class="generalInfoUI">
 
-  <ion-list class="animated lightSpeedIn">
-    <ion-item class="leadsProfile">
+  <ion-list class="animated lightSpeedIn leadsProfileWrapper">
+    <ion-item class="leadsProfile">        
       <ion-avatar class="imgFull" *ngIf="leadDetail!=undefined">
       <!--<img src={{leadDetail.image_url}} *ngIf="leadDetail.image_url!=null"/>
       <img src={{noImgUrl}} *ngIf="leadDetail.image_url==null"/>-->
       <img src="{{leadDetail.image_url}}" (error)="imgLead.src = this.sharedServiceObj.profileNoImage" #imgLead/>
+        <div class="userStatus">
+          <div class="userstatus-online">Online</div>
+          <!-- <div class="userstatus-offline">Offline</div> -->
+        </div>
       </ion-avatar>
       <h2 class="agentName" *ngIf="leadDetail!=undefined">{{leadDetail.first_name}} {{leadDetail.last_name}}</h2>
       <p class="agentEmail" *ngIf="leadDetail!=undefined">{{leadDetail.email}}</p>      
     </ion-item>
   </ion-list>
+
+  <div class="animated lightSpeedIn leadsShortcutButtons">
+    <div class="contactPhone"><ion-icon name="md-call"></ion-icon></div>
+    <div class="contactChat"><ion-icon name="chatboxes"></ion-icon></div>
+    <div class="contactEmail"><ion-icon name="ios-mail"></ion-icon></div>
+  </div>
   
   <h1 class="contentTitle animated bounceInRight">Contact Details</h1>
   

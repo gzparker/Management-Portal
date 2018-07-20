@@ -99,7 +99,7 @@
     <ion-textarea type="text" [(ngModel)]="description" name="description"></ion-textarea>
   </ion-item>-->
   
-  <ion-list *ngIf="isApp" class="customList">
+  <ion-list *ngIf="isApp" class="customList uploadPhoto">
     <ion-item>
       <button ion-button color="primary" block (click)="takePicture();" >Select Image</button>
     </ion-item>
@@ -108,22 +108,26 @@
     </ion-item>
   </ion-list>
 
-  <ion-list *ngIf="!isApp" class="customList">
+  <ion-list *ngIf="!isApp" class="customList uploadPhoto">      
       <ion-label stacked>Select Image</ion-label>
-        <ion-item *ngIf="dataAgentImage.image">
-          <ion-label stacked>Edit Image</ion-label>
-          <ion-toggle [(ngModel)]="edit_agent_image" 
-          name="edit_agent_image" (click)="showHideAgentCropper()"></ion-toggle>
-        </ion-item>
-          <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="fileChangeListener($event)">
+      <ion-item class="imageUploaderLabel" *ngIf="dataAgentImage.image">
+        <ion-label stacked>Edit Image</ion-label>
+        <ion-toggle [(ngModel)]="edit_agent_image" 
+        name="edit_agent_image" (click)="showHideAgentCropper()"></ion-toggle>
+      </ion-item>
+
+      <div class="uploaderBtn">
+      <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="fileChangeListener($event)">
+      </div>
      
-      <img-cropper #agentCropper [image]="dataAgentImage" [settings]="cropperSettings"
+      <img-cropper class="imgCropperPreview" #agentCropper [image]="dataAgentImage" [settings]="cropperSettings"
        (onCrop)="agentImageCropped($event)" *ngIf="hideAgentCropper"></img-cropper>
-      <br>
-      <span *ngIf="dataAgentImage.image" >
+      
+
+      <div class="imgCropperPreviewResult" *ngIf="dataAgentImage.image" >
           <img [src]="dataAgentImage.image" [width]="cropperWidth"
            [height]="cropperHeight">
-      </span>
+      </div>
 
   </ion-list>
 

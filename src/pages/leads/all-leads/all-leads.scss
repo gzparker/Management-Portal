@@ -1,5 +1,11 @@
 page-all-leads {
 
+  ion-navbar {
+    .back-button {
+    display: none !important;
+    }
+  }
+
   ion-app.ios [padding] {
   padding: 20px !important;
   }

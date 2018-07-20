@@ -64,20 +64,23 @@
       
         <ion-list *ngIf="!isApp" class="customList uploadPhoto">
           <ion-list-header>Upload personal Photo</ion-list-header>
-          <ion-item *ngIf="dataPersonalImage.image">
+          <ion-item class="imageUploaderLabel" *ngIf="dataPersonalImage.image">
             <ion-label>Edit Image</ion-label>
             <ion-toggle [(ngModel)]="edit_personal_logo" 
             name="edit_personal_logo" (click)="showHidePersonLogoCropper()"></ion-toggle>
           </ion-item>
+
+          <div class="uploaderBtn">
           <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="personalFileChangeListener($event)">
+          </div>
        
-          <img-cropper #personalCropper [image]="dataPersonalImage" [settings]="cropperSettings"
+          <img-cropper class="imgCropperPreview" #personalCropper [image]="dataPersonalImage" [settings]="cropperSettings"
            (onCrop)="personalImageCropped($event)" *ngIf="hideImageCropper"></img-cropper>
-          <br>
-          <span *ngIf="dataPersonalImage.image" >
+          
+          <div class="imgCropperPreviewResult" *ngIf="dataPersonalImage.image" >
               <img [src]="dataPersonalImage.image" [width]="personalWidth"
                [height]="personalHeight">
-          </span>
+          </div>
         </ion-list>
       </div>
       
@@ -130,10 +133,10 @@
             </div>
         </div>
 
-      <div class="dashboardBtn">
-          <button ion-button color="primary" block  (click)="moveGlobalSettings();" *ngIf="isGlobalPreference==true">Global Settings</button>
+      <div class="dashboardBtn">          
           <button ion-button color="primary" block  (click)="updateAccount();"
            [disabled]="!accountForm.valid">Update Account</button>
+           <button ion-button color="primary" block  (click)="moveGlobalSettings();" *ngIf="isGlobalPreference==true">Global Settings</button>
       </div>
   </form>
   <!--<ion-chip *ngIf="accountInfoUpdateMsg!=''">
