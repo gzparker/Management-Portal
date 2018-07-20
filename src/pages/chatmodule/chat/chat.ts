@@ -1,6 +1,6 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, Platform,
-   MenuController,ActionSheetController,Tabs, ViewController,LoadingController } from 'ionic-angular';
+   MenuController,ActionSheetController,Tabs, ViewController,LoadingController,ToastController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 import { ISubscription } from "rxjs/Subscription";
@@ -43,6 +43,7 @@ export class ChatPage {
   public groupMembersDataOld:any[]=[];
   public firebaseUserId:string="";
   public searchText:string="";
+  public notificationMsg:string="";
   public isApp=false;
   public users:any[]=[];
   public usersOld:any[]=[];
@@ -52,10 +53,27 @@ export class ChatPage {
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, 
     public platform: Platform,public actionSheetCtrl: ActionSheetController,
-    public viewCtrl: ViewController,public loadingCtrl: LoadingController) {
+    public viewCtrl: ViewController,public loadingCtrl: LoadingController,private toastCtrl: ToastController) {
       this.isApp = (!document.URL.startsWith("http"));
       sharedServiceObj.chatNewMsgSentEmiter.subscribe(item => this.msgSentResp(item));
       sharedServiceObj.groupCreationEmiter.subscribe(item => this.groupCreationResp(item));
+      if(this.navParams.get('notificationMsg')!=undefined&&this.navParams.get('notificationMsg')!='')
+      {
+        this.notificationMsg=this.navParams.get('notificationMsg');
+        
+        let toast = this.toastCtrl.create({
+          message: this.navParams.get('notificationMsg'),
+          duration: 3000,
+          position: 'top',
+          cssClass:'successToast'
+        });
+        
+        toast.onDidDismiss(() => {
+          //console.log('Dismissed toast');
+        });
+        
+        toast.present();
+      }
   }
   ionViewDidLoad() {
     var that=this;
@@ -78,10 +96,10 @@ this.getMessages(null);
     modalPage.present();
   }
   
-  manageGroups(groupId:string)
+  manageGroups(groupId:string,groupKey:string)
   {
    // debugger;
-    this.navCtrl.push(GroupMembersPage, { groupId: groupId });
+    this.navCtrl.push(GroupMembersPage, { groupId: groupId,groupKey:groupKey });
   }
   searchChat=function()
   {

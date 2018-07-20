@@ -101,7 +101,7 @@ export class EditWebsitePage {
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform, 
     public ngZone: NgZone,public menuCtrl: MenuController,public loadingCtrl: LoadingController,
     private crop: Crop,private camera: Camera,private imagePicker: ImagePicker) {
-      debugger;
+     // debugger;
      // this.CkeditorConfig=this.sharedServiceObj.CkeditorConfig;
       /*if(this.platform.is('core') || this.platform.is('mobileweb') || this.platform.is('cordova') || this.platform.is('mobile')) {
         this.isApp=false;

@@ -84,7 +84,8 @@
 
       <div class="itemPadding bt16">
           <ion-label>Home Page Meta Description</ion-label>
-          <ckeditor
+          <textarea type="text" class="expandText" id="homepageMeta_description" name="homepageMeta_description" maxLength="500" [(ngModel)]="homepageMeta_description"></textarea>
+          <!--<ckeditor
           [config]="CkeditorConfig"
           [readonly]="false" [(ngModel)]="homepageMeta_description"
           (change)="homepageMetaDescChanged($event)"
@@ -92,7 +93,7 @@
           (focus)="homepageMetaDescFocused($event)"
           (ready)="homepageMetaDescCreated($event)"
           debounce="500" name="editorHomePageDescription">
-          </ckeditor>
+          </ckeditor>-->
       </div>
     </div>
 

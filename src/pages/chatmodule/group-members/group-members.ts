@@ -43,6 +43,9 @@ export class GroupMembersPage {
   public loggedInUserInfo:any;
   public firebaseUserId:any;
   public userId:string="";
+  public groupKey:string="";
+  public groupTitle:string="";
+  public notificationMsg:string="";
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, 
@@ -50,10 +53,13 @@ export class GroupMembersPage {
     if(this.navParams.get('groupId')!=undefined)
    {
     this.groupId = this.navParams.get('groupId');
-    
     }
+    if(this.navParams.get('groupKey')!=undefined)
+   {
+    this.groupKey = this.navParams.get('groupKey');
+   }
   }
-
+  
   ionViewDidLoad() {
     var that=this;
     let member_id = this.storage.get('userId');
@@ -65,14 +71,28 @@ export class GroupMembersPage {
       let loggedInUserInfo = this.storage.get('loggedInUserInfo');
       loggedInUserInfo.then((data) => {
 this.loggedInUserInfo=data;
-    this.groupMembers();
+    this.groupDetails();
     });
     });
     });
   }
-  groupMembers() {
+  updateGroup()
+  {
+    var that=this;
+    var groupRef=firebase.database().ref('groups/'+that.groupKey);
+    groupRef.update({groupTitle:that.groupTitle});
+    this.ngZone.run(() => {
+      //debugger;
+      this.navCtrl.push(ChatPage, { notificationMsg: that.notificationMsg});
+    });
+  }
+  groupDetails() {
   var that=this;
   that.groupMembersData=[];
+  firebase.database().ref('groups').orderByChild("groupId").equalTo(that.groupId).on("child_added", function(snapshot) {
+    if(snapshot.val()){
+      that.groupTitle=snapshot.val().groupTitle;
+    }});
   firebase.database().ref('groupMembers').orderByChild("groupId").equalTo(that.groupId).on("child_added", function(snapshot) {
     if(snapshot.val()){
       that.groupMembersData.push(snapshot);
@@ -94,7 +114,7 @@ this.loggedInUserInfo=data;
           text: 'Ok',
           handler: () => {
       var groupForDelete=firebase.database().ref('groupMembers/'+memberId).remove();
-      that.groupMembers();
+      that.groupDetails();
         
     }
   }

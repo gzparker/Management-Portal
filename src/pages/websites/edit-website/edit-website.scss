@@ -96,5 +96,18 @@ page-edit-website {
     border-color: #ebe9f0 !important;
     }
   }
+  .expandText {
+    height: 128px;
+    font-size: 12px;
+    line-height: 20px;
+    text-overflow: unset;
+    border-radius: 2px;
+    white-space: normal;
+    margin: 11px 0px !important;
+    padding: 8px 10px !important;
+    background: #e9eef6;
+    width: 100%;
+    resize: none;
+    }
 
 }

@@ -624,7 +624,7 @@ else
       this.ngZone.run(() => {
      this.storage.set('globalSettings',result.globalSettings);
      this.storage.set('showGlobalPopUp','no');
-      this.settingsCreateMsg="Settings has been updated successfully.";
+      this.settingsCreateMsg="Settings have been updated successfully.";
       this.navCtrl.setRoot(DashboardTabsPage,{notificationMsg:this.settingsCreateMsg.toUpperCase()});
     });
     }

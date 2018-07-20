@@ -206,7 +206,7 @@ var groupId=that.groupId;
 var selectedGroup=snapshot;
 
 var fredRef=firebase.database().ref('groups/'+selectedGroup.key);
-fredRef.update({deletedFor:deletedFor,modifiedDate:Date(),message:that.description});
+fredRef.update({deletedFor:deletedFor,modifiedDate:Date(),message:document.getElementById("chatDescription").innerHTML});
 var chat = firebase.database().ref('chats');
 chat.push({
                                fromUserName:that.loggedInUserInfo.memberCredentials.first_name,

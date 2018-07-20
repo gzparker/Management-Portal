@@ -250,7 +250,7 @@
                       <div class="chat-info mike">                        
                         <span class="msgdate">{{convertToDate(group.val().modifiedDate) | date : "shortTime"}}</span>
                         <h2 class="chatName">{{group.val().groupTitle}}<span class="msgcounter" *ngIf="group['unreadMsgs']">({{group['unreadMsgs']}})</span></h2>
-                        <p class="chatLastMsg" ng-bind-html="group.val().message"></p>                      
+                        <p class="chatLastMsg" [innerHTML]="group.val().message"></p>                      
                       </div>
           
                     </ion-item>
