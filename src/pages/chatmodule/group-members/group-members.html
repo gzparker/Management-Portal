@@ -10,20 +10,20 @@
     <!-- <button ion-button menuToggle start>
       <ion-icon name="menu"></ion-icon>
     </button> -->
-    <ion-title>Edit Chat</ion-title>
+    <ion-title>Edit Group Chat</ion-title>
     
   </ion-navbar>  
 </ion-header>
   
   
 <ion-content padding class="dashboardUI chatUI">
-  <h1 class="contentTitle animated bounceInRight">Group Details</h1>
+  <!-- <h1 class="contentTitle animated bounceInRight">Group Details</h1> -->
   <form role="form" data-toggle="validator" #groupForm="ngForm">
   
     <div class="customList">
       <div class="msgBoxWrapper">
         <ion-item>
-          <ion-label stacked>Subject<span [ngClass]="{'error': groupTitle==''}" *ngIf="groupTitle==''">*</span></ion-label>
+          <ion-label stacked>Edit Group Name<span [ngClass]="{'error': groupTitle==''}" *ngIf="groupTitle==''">*</span></ion-label>
           <ion-input type="text" placeholder="Add Group Name" required [(ngModel)]="groupTitle" name="groupTitle" id="groupTitle"></ion-input>
         </ion-item>
 
@@ -50,7 +50,7 @@
   </div>
 
 </form>
-  <h1 class="contentTitle animated bounceInRight">Group Members</h1>
+  <h1 class="contentTitle animated bounceInRight labelDark">Edit Group Members</h1>
   
   <ion-list class="noShadow" *ngIf="groupMembersData.length>0">
       <div class="chatBoxWrapper">          
