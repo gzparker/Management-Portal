@@ -7,7 +7,7 @@
 <ion-header class="dashboardUI">
 
   <ion-navbar>
-    <ion-title>Create Website</ion-title>
+    <ion-title>Add IDX to your Website</ion-title>
     <ion-buttons end>
       <button ion-button (click)="createWebsite()" [disabled]="!websiteForm.valid">
         <ion-icon name="ios-bookmark"></ion-icon>
@@ -23,28 +23,28 @@
   
     <ion-list class="animated lightSpeedIn blk1">
       <ion-item>
-          <ion-label stacked>Identity Name<span [ngClass]="{'error': identity_name==''}" *ngIf="identity_name==''">*</span></ion-label>
+          <ion-label stacked>Website Name<span [ngClass]="{'error': identity_name==''}" *ngIf="identity_name==''">*</span></ion-label>
           <ion-input type="text" [(ngModel)]="identity_name" 
-          name="identity_name" id="identity_name" required placeholder="Identity Name"></ion-input>
+          name="identity_name" id="identity_name" required placeholder="Website Name"></ion-input>
       </ion-item>
 
       <ion-item>
           <ion-label stacked>Website Domain<span [ngClass]="{'error': website_domain==''}" *ngIf="website_domain==''">*</span></ion-label>
           <ion-input type="text" [(ngModel)]="website_domain" 
-          name="website_domain" id="website_domain" required></ion-input>
+          name="website_domain" id="website_domain" placeholder="http://www.mydomain.com" required></ion-input>
       </ion-item>
 
       <ion-item>
-          <ion-label stacked>Domain Search Location</ion-label>
+          <ion-label stacked>IDX Installed Location</ion-label>
           <ion-input type="text" [(ngModel)]="website_a_record_location" 
           name="website_a_record_location" id="website_a_record_location" 
-          placeholder="Please type exactly what your location is for your domain search."></ion-input>
+          placeholder="Please type a subdomain of where you would like your IDX installed. Ex. http://search.mydomain.com"></ion-input>
       </ion-item>
    
       <ion-item>
           <ion-label stacked>Identity Phone Number</ion-label>
           <ion-input type="text" [(ngModel)]="identity_phone_number" 
-          name="identity_phone_number" id="identity_phone_number" [brmasker]="{mask:'(000) 000-0000', len:14, type:'num'}"></ion-input>
+          name="identity_phone_number" id="identity_phone_number" placeholder="(xxx) xxx-xxxx" [brmasker]="{mask:'(000) 000-0000', len:14, type:'num'}"></ion-input>
       </ion-item>
     </ion-list>
     
@@ -65,9 +65,9 @@
 
       <ion-item>
           <ion-label stacked class="labelLarge">Homepage Search Text</ion-label>
-          <ion-textarea type="text" class="expandText" [(ngModel)]="homepage_search_text" 
+          <ion-input type="text" class="expandInputText" [(ngModel)]="homepage_search_text" 
           name="homepage_search_text" id="homepage_search_text" 
-          placeholder="Action sentence to draw people to search for listings"></ion-textarea>
+          placeholder="Action sentence to draw people to search for listings"></ion-input>
       </ion-item>
 
       <!-- <ion-item>
