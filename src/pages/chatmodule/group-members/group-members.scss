@@ -1,12 +1,48 @@
 page-group-members {
   ion-content.dashboardUI.chatUI {
     &:before {
-    height: 50vh !important;
+    height: 21vh !important;
     z-index: 1;
     }
     &:after {
     height: 100vh;
     // background: #FFF !important;
+    }
+
+    .dashboardBtn {
+    padding-top: 0px !important;
+      .button-ios, .button-md, .button-wp {
+      border-radius: 0 0 6px 6px !important;
+      }
+      .button-inner {      
+      letter-spacing: 1px;
+        ion-icon {
+        font-size: 30px;
+        color: #FFF;
+          &:before {
+          content: "";
+          width: 32px;
+          height: 32px;
+          display: block;
+          background: url("../assets/icon/svg/save.svg") no-repeat center center !important;
+          background-size: 62% !important;
+          }
+        }
+      }
+    }
+
+    .labelDark {
+    padding-top: 30px !important;
+    color: #929090 !important;
+    }
+
+    .msgBoxWrapper {
+      .text-input {
+      min-height: 34px;
+      padding: 0 10px;
+      margin-bottom: 16px;
+      background: #EEE;      
+      }
     }
 
     .scroll-content {
@@ -48,14 +84,14 @@ page-group-members {
       }
 
       .chatAvatar {
-      min-height: 56px;
-      min-width: 56px;
-      margin: 12px 20px 10px 4px;
+      min-height: 40px;
+      min-width: 40px;
+      margin: 12px 20px 8px 4px;
       float: left;
       display: inline-block;
         img {        
-        width: 56px;
-        height: 56px;
+        width: 40px;
+        height: 40px;
         border-radius: 50%;        
         }
       }

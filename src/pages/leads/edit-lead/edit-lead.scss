@@ -58,5 +58,140 @@ page-edit-lead {
     margin-left: 0px !important;
     border-color: #ebe9f0 !important;
     }
-}
+  }
+
+  ion-list.leadsInfo {
+  border-radius: 5px !important;
+  padding: 6px 0 0 0 !important;
+  background: #FFF !important;
+  box-shadow: -1px -1px 8px rgba(41, 81, 123, 0.12) !important;
+
+    .searchbar-ios, .searchbar-md, .searchbar-wp {
+    min-height: 34px;
+    padding: 0px;
+    border: none;
+    background: none;
+      .searchbar-input-container {
+      min-height: 34px;
+      }
+      .searchbar-input {
+      min-height: 34px;
+      border-radius: 1px;
+      margin: 10px 0;
+      background: #F5F5F5;
+      }
+      .searchbar-search-icon {
+      top: 20px;
+      }
+    }
+
+    &.addressBlock {
+    padding: 2px 0 !important;
+      .label-ios, .label-md, .label-wp {
+      padding: 0;
+      margin: 8px 0;
+      }
+      .searchbarLabel {
+      font-size: 12px;
+      color: #696D72;
+      margin-top: 6px;
+      }     
+
+
+    }
+
+    ion-item {
+    position: relative;
+
+      .item-inner {
+      padding-left: 0px !important;
+      }
+
+      ion-icon {
+      padding-top: 8px;
+      padding-left: 20px;
+      padding-right: 5px;
+      color: #CDCDCD;      
+      }
+      
+      .label-ios, .label-md, .label-wp {
+      padding-bottom: 0px;
+      margin-bottom: 8px;
+      }
+
+      h2 {
+      color: #353535;
+      margin: 0 0 1px 0;
+      }
+
+      p {
+      line-height: 21px;
+      letter-spacing: .5px;
+      text-overflow: unset;
+      white-space: normal;        
+      }
+
+      &.leadsName, &.leadsEmail, &.leadsWebURL, &.leadsHomeAddress, &.leadsWorkAddress {
+      padding-left: 16px;      
+        ion-icon {
+        font-size: 26px;
+        margin-top: 2px;
+        }
+      }
+      &.leadsWebURL{
+        ion-icon {
+        margin-top: -30px;
+        }
+      }
+
+      &.leadsPhone1, &.leadsPhone2, &.leadsPhone3 {
+      padding-left: 16px;
+      
+        ion-icon {
+        font-size: 24px;
+        margin-top: 4px;
+        }
+      }
+      
+      &.leadsHomeAddress {
+      padding-left: 16px;      
+        ion-icon {
+        font-size: 28px;
+        margin-top: 24px;
+        }        
+      }
+
+      &.leadsWorkAddress {
+      padding-left: 16px;
+        ion-icon {
+        font-size: 28px;
+        margin-top: 20px;
+        }        
+      }
+
+    }
+
+    .leadsHomeAddressMap {      
+      #mapHome {
+      margin-top: 10px;
+      margin-bottom: 15px;
+      border: 8px solid $color-6;
+        &:empty {
+        display: none;
+        }
+      }
+    }
+
+    .leadsWorkAddressMap {        
+      #mapWork {        
+      margin-top: 10px;
+      border: 8px solid $color-6;
+        &:empty {
+        display: none;
+        }
+      }
+    }
+
+  }
+
 }

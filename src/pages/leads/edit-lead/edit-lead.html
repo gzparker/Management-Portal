@@ -19,7 +19,7 @@
     </ion-navbar>
 </ion-header>
 
-    <ion-content padding class="dashboardUI noScroll">
+    <ion-content padding class="dashboardUI">
         <form role="form" data-toggle="validator" #leadForm="ngForm">
             <!--<ion-item>
               <ion-label stacked>First Name</ion-label>
@@ -99,6 +99,71 @@
                 <ion-input type="text" [(ngModel)]="work_zipcode" 
                 name="work_zipcode" id="work_zipcode"></ion-input>
             </ion-item>-->
+            
+
+
+            <!-- THIS IS ONLY A PLACEHOLDER, PLEASE MAKE THIS DYNAMIC -->
+          
+          <ion-list class="animated lightSpeedIn leadsInfo">
+
+            <ion-item class="leadsName">
+              <ion-icon name="ios-person" item-start></ion-icon>              
+              <ion-input type="text" name="firstName" id="firstName" placeholder="First Name"></ion-input>
+            </ion-item>
+
+            <ion-item class="leadsName">
+              <ion-icon name="ios-person" item-start></ion-icon>              
+              <ion-input type="text" name="lastName" id="lastName" placeholder="Last Name"></ion-input>
+            </ion-item>
+
+            <ion-item class="leadsEmail">
+              <ion-icon name="ios-mail-outline" item-start></ion-icon>              
+              <ion-input type="text" name="email" id="email" placeholder="Email Address"></ion-input>
+            </ion-item>
+
+            <ion-item class="leadsWebURL">
+              <ion-icon name="ios-globe-outline" item-start></ion-icon>              
+              <ion-label stacked>Select Website</ion-label>
+              <ion-select placeholder="-----" [(ngModel)]="selectedWebsite" (ngModelChange)="onWebsiteSelection($event)" 
+              name="selectedWebsite">
+               <ion-option *ngFor="let website of allWebsiteList" value= {{website.id}}>
+                  {{website.website}}
+                </ion-option>
+              </ion-select>
+             </ion-item>
+
+            <ion-item class="leadsPhone1">
+              <ion-icon name="md-call" item-start></ion-icon>
+              <ion-input type="text" name="mobile" id="mobile" placeholder="Mobile #"></ion-input>
+            </ion-item>
+
+            <ion-item class="leadsPhone2">
+              <ion-icon name="md-call" item-start></ion-icon>
+              <ion-input type="text" name="contactOffice" id="contactOffice" placeholder="Office #"></ion-input>
+            </ion-item>
+
+            <ion-item class="leadsPhone3">
+              <ion-icon name="md-call" item-start></ion-icon>
+              <ion-input type="text" name="contactHome" id="contactHome" placeholder="Home #"></ion-input>
+            </ion-item>
+          </ion-list>
+
+
+          <ion-list class="animated lightSpeedIn leadsInfo addressBlock">
+            <ion-item class="leadsHomeAddress">
+              <div class="searchbarLabel">Home Address</div>
+              <ion-icon name="md-home" item-start></ion-icon>
+              <ion-searchbar #searchHomeBar placeholder="Search Home Address"></ion-searchbar>
+            </ion-item>
+
+            <ion-item class="leadsWorkAddress">
+              <div class="searchbarLabel">Work Address</div>
+              <ion-icon name="md-briefcase" item-start></ion-icon>
+              <ion-searchbar #searchHomeBar placeholder="Search Work Address"></ion-searchbar>
+            </ion-item>
+          </ion-list>
+
+
             <ion-item>
                 <ion-label stacked>Assigned Agent/Broker</ion-label>
                 <ion-select placeholder="-----" [(ngModel)]="assigned_agent_id"  

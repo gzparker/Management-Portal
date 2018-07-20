@@ -1,5 +1,11 @@
 page-all-hot-sheets {
 
+  ion-navbar {
+    .back-button {
+    display: none !important;
+    }
+  }
+
   ion-content {
     &.dashboardUI {
 
