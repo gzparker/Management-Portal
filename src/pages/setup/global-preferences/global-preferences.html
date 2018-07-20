@@ -48,25 +48,30 @@
           </ion-item>-->
           </ion-list>
       
-          <ion-list *ngIf="!isApp" class="customList">
+          <ion-list *ngIf="!isApp" class="customList uploadPhoto">
               <ion-list-header>
                   <h2>Select Identity Photo</h2>
                 </ion-list-header>
-                <ion-item *ngIf="dataCompanyLogoImage.image">
+                <ion-item class="imageUploaderLabel" *ngIf="dataCompanyLogoImage.image">
                   <ion-label stacked>Edit Image</ion-label>
                   <ion-toggle [(ngModel)]="edit_company_image" name="edit_company_image" (click)="showHideCompanyCropper()"></ion-toggle>
                 </ion-item>
+
+                <div class="uploaderBtn">
                 <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="companyFileChangeListener($event)">
+                </div>
        
-                <img-cropper #companyCropper [image]="dataCompanyLogoImage" 
+                <img-cropper class="imgCropperPreview" #companyCropper [image]="dataCompanyLogoImage" 
                 [settings]="companyCropperSettings"
                  (onCrop)="companyImageCropped($event)" *ngIf="hideCompanyCropper"></img-cropper>
-                <br>
-                <span *ngIf="dataCompanyLogoImage.image">
+                
+
+                <div class="imgCropperPreviewResult" *ngIf="dataCompanyLogoImage.image">
                     <img [src]="dataCompanyLogoImage.image" [width]="companyWidth"
                      [height]="companyHeight">
                      <!--<img-loader [src]="dataCompanyLogoImage.image" useImg></img-loader>-->
-                </span>  
+                </div>
+                
           <!--<ion-list-header>
             <h2>Select Personal Logo</h2>
           </ion-list-header>

@@ -1,5 +1,11 @@
 page-all-leads {
 
+  ion-navbar {
+    .back-button {
+    display: none !important;
+    }
+  }
+
   ion-app.ios [padding] {
   padding: 20px !important;
   }
@@ -132,10 +138,10 @@ page-all-leads {
 
   .item-ios {
     ion-avatar {
-      ion-img, img {
-      width: 46px !important;
-      height: 46px !important;
-      }
+      // ion-img, img {
+      // width: 46px !important;
+      // height: 46px !important;
+      // }
     }
   }
 
@@ -244,7 +250,7 @@ page-all-leads {
   width: auto;
   display: table;
   float: right;
-  top: 6px !important;
+  top: 2px !important;
   right: 6px !important;
   padding: 0px !important;
   position: absolute;

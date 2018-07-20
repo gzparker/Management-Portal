@@ -124,7 +124,7 @@
 
       
       <div class="animated lightSpeedIn formShadow blk4">
-        <ion-list class="noShadow" *ngIf="!isApp">
+        <ion-list class="uploadPhoto noShadow" *ngIf="!isApp">
 
             <ion-list-header>Upload Company/Brand Logo</ion-list-header>
             <ion-item *ngIf="dataWebsiteLogo.image">
@@ -136,13 +136,13 @@
             <div class="customList">
               <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="websiteLogoFileChangeListener($event)">
        
-              <img-cropper #companyLogoCropper [image]="dataWebsiteLogo" [settings]="logoCropperSettings"
+              <img-cropper class="imgCropperPreview" #companyLogoCropper [image]="dataWebsiteLogo" [settings]="logoCropperSettings"
                (onCrop)="websiteIdentityImageCropped($event)" *ngIf="hideLogoCropper"></img-cropper>
-              <br>
-              <span *ngIf="dataWebsiteLogo.image" >
+              
+              <div class="imgCropperPreviewResult" *ngIf="dataWebsiteLogo.image" >
                   <img [src]="dataWebsiteLogo.image" [width]="logoWidth"
                    [height]="logoHeight">
-              </span>
+              </div>
             </div>
 
             <ion-list-header>Upload Website FavIcon</ion-list-header>            

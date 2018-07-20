@@ -10,11 +10,15 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>All Contacts</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-left (click)="createLead();" *ngIf="isCreateLeadAccess==true">
+        <ion-icon name="md-add"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding class="dashboardUI">
-  <!-- <h1 class="contentTitle animated bounceInRight">All Leads</h1> -->
+<ion-content padding class="dashboardUI">  
 
   <ion-refresher (ionRefresh)="viewAllLeads($event)">
     <ion-refresher-content></ion-refresher-content>
@@ -85,7 +89,7 @@
           <!--<img src="assets/imgs/profile-photo.jpg">-->
         </ion-avatar>
         <h2 class="cName">{{lead.first_name}} <b>{{lead.last_name}}</b> <span><ion-badge color="primary" class="badgeInvite">Invite</ion-badge></span></h2>
-        <p class="cEmail" data-placeholder="N/A">{{lead.email}}</p>
+        <!-- <p class="cEmail" data-placeholder="N/A">{{lead.email}}</p> -->
         
         <!-- <h2>{{lead.first_name}}-{{lead.last_name}}</h2>
         <p>Email:{{lead.email}}</p>
@@ -120,7 +124,7 @@
   </ion-list>
   </div>
 
-  <div>
+  <!-- <div>
     <ion-segment *ngIf="userWebsites.length>0">
       <ion-segment-button (click)="sendToPaperWork();" *ngIf="isLeadSetupAccess==true">
         Where to send leads
@@ -129,7 +133,7 @@
         Create Lead
       </ion-segment-button>
     </ion-segment>
-  </div>
+  </div> -->
 
   <!--<ion-chip *ngIf='searchedLeadsList.length<=0&&leadsFoundMessage!=""'>
     <ion-label color="danger">{{leadsFoundMessage}}</ion-label>
