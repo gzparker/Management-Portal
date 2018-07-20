@@ -156,7 +156,7 @@
               <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="websiteFavIconFileChangeListener($event)">
 
               <img-cropper #favIconLogoCropper [image]="dataWebsiteIcon" [settings]="favIconCropperSettings"
-              onCrop)="websiteFavIconImageCropped($event)" *ngIf="hideFavIconCropper"></img-cropper>
+              (onCrop)="websiteFavIconImageCropped($event)" *ngIf="hideFavIconCropper"></img-cropper>
               <br>
               <span *ngIf="dataWebsiteIcon.image" >
               <img [src]="dataWebsiteIcon.image" [width]="favIconWidth"
