@@ -359,6 +359,8 @@ this.lineChart = new Chart(this.lineCanvas.nativeElement, {
       if (status.result != undefined) {
         if (status.result.subscribed_services!=undefined){
         if (status.result.subscribed_services.length > 0) {
+
+          debugger
           if (status.result.subscribed_services[0].service_status == null) {
          
             this.ngZone.run(() => {
