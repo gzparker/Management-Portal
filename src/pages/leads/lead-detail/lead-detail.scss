@@ -1,6 +1,55 @@
 page-lead-detail {
 
+  .toolbar-title {
+  width: auto;
+  display: table;
+  margin: 0 auto;
+  padding: 0 10px 0 0;
+    .userStatus {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin: 5px 6px 0 0;
+    float: left;
+    display: inline-block;
+    position: relative;    
+      &:before {
+      content: '';
+      width: 100%;
+      height: 100%;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      border-radius: 50%;
+      position: absolute;      
+      }
+      &.userstatus-online {
+        &:before {
+        background-color: #14f637;  
+        }
+      }
+      &.userstatus-offline {       
+        &:before {
+        background-color: #eb4137;
+        }
+      }
+    }
+  }
+
   ion-content.generalInfoUI {
+
+    ion-item {
+      &.item-ios, &.item-md, &.item-wp {
+        ion-icon {
+        color: #777 !important;
+        }
+      }
+    }
+  
+    .scroll-content {
+    padding: 0px !important;
+    }
 
     .contentTitle {
     font-family: $font-three !important;
@@ -18,9 +67,10 @@ page-lead-detail {
     }
 
     ion-list.leadSearchName, ion-list.leadHotsheetName {
-    border-radius: 4px !important;    
+    border-radius: 0px !important;
+    box-shadow: none !important;
     background: #FFF !important;
-    box-shadow: -1px 0px 16px rgba(41, 81, 123, 0.15) !important;
+    margin-bottom: 10px !important;
       
       .contentTitle {
       padding-bottom: 0px !important;
@@ -48,7 +98,7 @@ page-lead-detail {
             font-size: 12px;
             line-height: 19px;
             text-overflow: unset;
-            white-space: normal;              
+            white-space: normal;             
               &:last-child {          
               padding: 8px 0 0 0;
               max-height: 60px;
@@ -61,9 +111,10 @@ page-lead-detail {
     }
 
     ion-list.leadListings {
-    border-radius: 4px !important;    
+    border-radius: 0px !important;
+    box-shadow: none !important;
     background: #FFF !important;
-    box-shadow: -1px 0px 16px rgba(41, 81, 123, 0.15) !important;
+    margin-bottom: 0px !important;
 
       .contentTitle {
       font-family: "Varela Round" !important;
@@ -79,10 +130,12 @@ page-lead-detail {
       }
 
       ion-avatar {
+      // margin-top: -2px !important;
       padding-left: 16px;
         img {
         width: 50px;
         height: 50px;
+        border-radius: 1px !important;
         }
       }
 
@@ -112,19 +165,103 @@ page-lead-detail {
             font-size: 11px;
             font-weight: 400;
             color: #FFF;
-            box-sizing: border-box;
-            background: #3f719c;
+            box-sizing: border-box;            
+            background: #737d8d;            
+              &.forSale {
+              background: #f05756;
+              }
+              &.forRent {
+              background: #3ca1d3;
+              }
             }
 
             p {
             font-size: 12px;
-            line-height: 19px;
+            line-height: 17px;
             text-overflow: unset;
-            white-space: normal;              
-              &:last-child {          
-              padding: 8px 0 0 0;
-              max-height: 60px;
-              overflow: hidden;
+            white-space: normal;        
+            color: #3c3d3f !important;
+              // &:last-child {          
+              // padding: 8px 0 0 0;
+              // max-height: 60px;
+              // overflow: hidden;
+              // }
+            }
+
+            .streetAddress {}
+
+            .lsPrice {
+            font-size: 13px;
+            letter-spacing: .5px;
+            // top: 0;
+            // right: 0;
+            // text-align: right;
+            // position: absolute;
+            // border-radius: 10px;
+            // padding: 0 12px;
+            // height: 20px;
+            // line-height: 22px;
+            // text-align: center;
+            // font-size: 1.3rem;
+            // font-weight: bold;
+            // white-space: nowrap;
+            // vertical-align: baseline;
+            // font-family: $font-three;
+            // font-size: 11px;
+            // font-weight: 400;
+            // color: #FFF !important;
+            // -webkit-box-sizing: border-box;
+            // box-sizing: border-box;
+            // background: #737d8d;
+            }
+
+            .lsInfo {
+            // margin-top: -4px;
+              span {
+              height: 16px;
+              line-height: 18px;
+              color: #3c3d3f !important;
+              width: auto;
+              float: left;              
+              display: inline-block;
+              font-family: $font-three;
+              font-size: 12px !important;
+              letter-spacing: .5px;
+              margin: 2px 15px 0 0;
+              padding-left: 20px;
+              position: relative;
+                &:before {
+                content: "";
+                width: 16px;
+                height: 16px;
+                top: 0;
+                left: 0;
+                position: absolute;
+                display: block;
+                opacity: .65;
+                }
+
+                &.bed {
+                  &:before {
+                  background: url("../assets/icon/svg/listing/020.svg") no-repeat center center !important;
+                  background-size: 90% !important;
+                  }
+                }
+
+                &.bath {
+                  &:before {
+                  background: url("../assets/icon/svg/listing/012.svg") no-repeat center center !important;
+                  background-size: 80% !important;
+                  }
+                }
+
+                &.sqft {
+                  &:before {
+                  background: url("../assets/icon/svg/listing/004.svg") no-repeat center center !important;
+                  background-size: 90% !important;
+                  }
+                }
+
               }
             }
           }
@@ -132,10 +269,21 @@ page-lead-detail {
       }
     }
 
-    ion-list.leadNotes {
+    ion-list.leadNotes, ion-list.leadsSavedInfo, ion-list.leadAddress {
     border-radius: 4px !important;    
     background: #FFF !important;
-    box-shadow: -1px 0px 16px rgba(41, 81, 123, 0.15) !important;
+    // box-shadow: -1px 0px 16px rgba(41, 81, 123, 0.15) !important;
+    box-shadow: none !important;
+    margin-bottom: 2px !important;
+    border-bottom: 1px solid #ebe9f0 !important;
+
+
+      h2 {
+      font-size: 12px !important;
+      // color: #b0b1b2 !important;
+      color: #777 !important;
+      }
+
       .item-inner {
       padding-right: 0px !important;      
         .input-wrapper {
@@ -159,8 +307,36 @@ page-lead-detail {
             white-space: normal;
             -webkit-box-sizing: border-box;
             box-sizing: border-box;            
-            border: 1px dashed #c4c6c8;
+            border: 1px dashed #e6e6e7;
             background: #f3f4f6;
+            }
+          }
+        }
+      }
+    }
+
+    ion-list.leadsSavedInfo {    
+    border-bottom: none !important;
+      .item-inner {
+        .input-wrapper {
+          .label-ios, .label-md, .label-wp {
+          margin-bottom: 0px !important;
+          padding-bottom: 0px !important;
+          }
+        }
+      }
+    }
+
+    ion-list.leadAddress {
+      .item-inner {
+        .input-wrapper {
+          .label-ios, .label-md, .label-wp {
+            p {
+            width: 100%;
+            max-width: 60%;
+            padding: 0px;
+            border: none;
+            background: pink;
             }
           }
         }
@@ -169,16 +345,19 @@ page-lead-detail {
 
     ion-list.leadsInfo {
     border-radius: 5px !important;
-    padding: 6px 0 0 0 !important;
+    padding: 6px 0 0 0 !important;    
     background: #FFF !important;
-    box-shadow: -1px -1px 8px rgba(41, 81, 123, 0.12) !important;
+    // box-shadow: -1px -1px 8px rgba(41, 81, 123, 0.12) !important;    
+    box-shadow: none !important;
+    margin-bottom: 0px !important;
+    // border-bottom: 1px solid #ebe9f0 !important;
 
       ion-item {
       position: relative;
         
         .label-ios, .label-md, .label-wp {
         padding-bottom: 0px;
-        margin-bottom: 8px;
+        // margin-bottom: 8px;
         }
 
         h2 {
@@ -187,74 +366,74 @@ page-lead-detail {
         }
 
         p {
-        line-height: 21px;
+        font-size: 14px !important;
+        // color: #3c3d3f !important;
+        color: $flatblue !important;
+        line-height: 22px;
         letter-spacing: .5px;
         text-overflow: unset;
         white-space: normal;        
         }
 
-        &.leadsWebURL {
+        &.leadsEmail {
         padding-left: 16px;
-        // border-bottom: 1px solid #ebe9f0 !important;
-          ion-icon {
-          font-size: 26px;
-          margin-top: 2px;
-          }
+        border-bottom: 1px solid #ebe9f0 !important;
+          // ion-icon {
+          // font-size: 30px;
+          // margin-top: -2px;
+          // }
+        }
+
+        &.leadsWebURL  {
+        padding-left: 16px;
+        border-bottom: 1px solid #ebe9f0 !important;
+          // ion-icon {
+          // font-size: 26px;
+          // margin-top: 2px;
+          // }
         }
         &.leadsPhone1, &.leadsPhone2, &.leadsPhone3 {
         padding-left: 16px;
-        // border-bottom: 1px solid #ebe9f0 !important;
+        border-bottom: 1px solid #ebe9f0 !important;
           ion-icon {
-          font-size: 24px;
-          margin-top: 4px;
+          font-size: 24px;          
           }
         }
         
         &.leadsHomeAddress {
         padding-left: 16px;        
-        // border-bottom: 1px solid #ebe9f0 !important;
+        border-bottom: 1px solid #ebe9f0 !important;
           ion-icon {
-          font-size: 28px;
-          margin-top: -12px;
+          font-size: 26px;
+          // margin-top: -12px;
           }          
           p {
-          min-height: 42px;
+          // min-height: 42px;
           }
         }
 
         &.leadsWorkAddress {
         padding-left: 16px;
           ion-icon {
-          font-size: 28px;
-          margin-top: -12px;
+          font-size: 24px;
+          // margin-top: -12px;
           }          
           p {
-          min-height: 42px;
+          // min-height: 42px;
           }
         }
 
-      }
+      }     
 
-      .leadsHomeAddressMap {      
-        #mapHome {
-        margin-top: 10px;
-        margin-bottom: 15px;
-        border: 8px solid $color-6;
-          &:empty {
-          display: none;
-          }
-        }
-      }
-
-      .leadsWorkAddressMap {        
-        #mapWork {        
-        margin-top: 10px;
-        border: 8px solid $color-6;
-          &:empty {
-          display: none;
-          }
-        }
-      }
+      // .leadsWorkAddressMap {
+      //   #mapWork {        
+      //   margin-top: 10px;
+      //   border: 8px solid $color-6;
+      //     &:empty {
+      //     display: none;
+      //     }
+      //   }
+      // }
 
     }
     
@@ -265,6 +444,7 @@ page-lead-detail {
       box-shadow: none !important;
       // background: #FFF !important;
       // box-shadow: -1px -1px 16px rgba(41, 81, 123, 0.15) !important;
+      box-shadow: none !important;
         
         ion-list {
         border-radius: 2px !important;
@@ -294,39 +474,63 @@ page-lead-detail {
     ion-avatar {      
       &.imgFull {
       width: 100%;
-      max-width: 110px;
+      // max-width: 110px;
       height: auto;
       display: block;
       margin: 0 auto;
       position: relative;
+      background: #F6F6F6;
+
         img {
-        width: 110px;
-        height: 110px;
-        margin: 0 auto;
+        width: 100%;
+        min-height: 220px;
+        height: auto;
+        // margin: -6vh auto -11vh auto;
+        margin: -6vh auto -7vh auto;
         display: block;
+        border-radius: 0px;
         }
+
         .userStatus {
-        font-size: 0;
-        width: 14px;
-        height: 14px;
-        position: absolute;
-        border-radius: 50%;
-        overflow: hidden;
-        bottom: 7px;
-        right: 9px;
-        box-shadow: 0 0 0 2px #EBF0F5;
+        font-family: $font-three;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: .2px;
+        color: #747373;    
+        height: 12px;
+        line-height: 12px;
+        position: absolute;        
+        text-align: right;        
+        bottom: 9vh;
+        right: 15px;
         // display: none;
           .userstatus-online {
-          width: 100%;
-          height: 100%;
-          display: block;
-          background: #27dc81;
+          width: auto;
+          position: relative;
+            &:before {
+            content: "";
+            width: 10px;
+            height: 10px;
+            float: left;
+            margin: 0px 4px 0 0;
+            display: inline-block;
+            border-radius: 50%;
+            background: #27dc81;
+            }
           }
           .userstatus-offline {
-          width: 100%;
-          height: 100%;
-          display: block;          
-          background: #f6776f;
+          width: auto;
+          position: relative;
+            &:before {
+            content: "";
+            width: 10px;
+            height: 10px;
+            float: left;
+            margin: 0px 4px 0 0;
+            display: inline-block;
+            border-radius: 50%;
+            background: #f6776f;
+            }
           }
         }
       }
@@ -337,18 +541,22 @@ page-lead-detail {
   }
 
   .leadsProfileWrapper {
-  margin-bottom: 12px !important;
+  margin-bottom: 0px !important;
   background: none !important;
   }
 
   .leadsShortcutButtons {
-  width: auto;
-  display: table;
-  padding: 5px 0 0 0;
-  margin: 0 auto 30px auto;
+  // display: none !important;
+  width: 100%;
+  display: block;
+  padding: 14px 0;
+  text-align: center;
+  margin: 0 auto 1px auto;
+  // border-top: 1px solid #ebe9f0 !important;
+  border-bottom: 1px solid #ebe9f0 !important;
     .contactPhone, .contactChat, .contactEmail {
-    width: 58px;
-    height: 58px;    
+    width: 50px;
+    height: 50px;    
     color: #fff;
     text-align: center;
     border-radius: 50%;    
@@ -357,53 +565,66 @@ page-lead-detail {
     cursor: pointer;
     text-align: center;
     position: relative;
-    overflow: hidden;
+    // overflow: hidden;
     background: #46E686;
-    box-shadow: 2px 2px 1px #c6ccd0;
+    // box-shadow: 2px 2px 1px #c6ccd0;
       .icon-ios, .icon-md, .icon-wp {
-      font-size: 34px;
+      font-size: 28px;
       text-align: center;
       color: #FFF;
       display: block;
       position: relative;
-      margin: 12px auto 0 auto;
+      margin: 11px auto 0 auto;
         &:before {
-        width: 30px;
-        height: 30px;
+        width: 26px;
+        height: 26px;
         margin: 0 auto;        
         display: block;        
         }
       }
+
+      span {
+      font-family: $font-three;
+      font-weight: 500;
+      letter-spacing: .4px;
+      font-size: 12px;
+      color: darken($flatblue, 5%);
+      display: block;
+      margin-top: 20px;
+      }
     }
     .contactPhone {
-    background: #a955cf;
-    background: -webkit-linear-gradient(to right, #56d388, #46E686);
-    background: linear-gradient(to right, #56d388, #46E686);
+    // background: #a955cf;
+    // background: -webkit-linear-gradient(to right, #56d388, #46E686);
+    // background: linear-gradient(to right, #56d388, #46E686);
+    background: $flatblue;
     }
     .contactChat {
-    background: #8f70f8;
-    background: -webkit-linear-gradient(to right, #8f70f8, #b184e3);
-    background: linear-gradient(to right, #8f70f8, #b184e3);
+    // background: #8f70f8;
+    // background: -webkit-linear-gradient(to right, #8f70f8, #b184e3);
+    // background: linear-gradient(to right, #8f70f8, #b184e3);
+    background: $flatblue;
       .icon-ios, .icon-md, .icon-wp {
         &:before {
         content: "";
-        width: 34px;
-        height: 34px;
+        width: 28px;
+        height: 28px;
         background: url(../assets/icon/svg/chat/015.svg) no-repeat center center !important;
         background-size: 100% !important;
         }
       }
     }
     .contactEmail {
-    background: #FE965B;
-    background: -webkit-linear-gradient(to right, #f6ac65, #ee8841);
-    background: linear-gradient(to right, #f6ac65, #ee8841);    
+    // background: #FE965B;
+    // background: -webkit-linear-gradient(to right, #f6ac65, #ee8841);
+    // background: linear-gradient(to right, #f6ac65, #ee8841);    
+    background: $flatblue;
       .icon-ios, .icon-md, .icon-wp {
-      margin-top: 12px;
+      margin-top: 11px;
         &:before {
         content: "";
-        width: 35px;
-        height: 35px;
+        width: 28px;
+        height: 28px;
         background: url(../assets/icon/svg/email/005.svg) no-repeat center center !important;
         background-size: 100% !important;
         }
@@ -442,12 +663,14 @@ page-lead-detail {
   ion-content {
     &.generalInfoUI {
       &:before {
-      height: 140px !important;
+      // height: 140px !important;
+      height: 64px !important;
       z-index: 1;
       }
       &:after {
       height: 100vh;
-      background: #EBF0F5;
+      // background: #EBF0F5;
+      background: #FFF;
       }
       ion-item:first-child {
       border-radius: 0px;
@@ -455,17 +678,95 @@ page-lead-detail {
     }
   }
 
-  .segment-button {
-  min-height: 40px !important;
-  line-height: 38px !important;
-  color: darken($color-1, 5%) !important;
-  border-color: darken($color-1, 5%) !important;
-  @extend %transition;
-    &.segment-activated, &:hover {
-    color: #FFF !important;
-    border-color: darken($color-1, 5%) !important;
-    background-color: darken($color-1, 5%) !important;
+  // .segment-button {
+  // font-size: 14px !important;
+  // min-height: 40px !important;
+  // line-height: 38px !important;
+  // border-radius: 4px 4px 0 0 !important;
+  // color: #929292 !important;
+  // border-color: #d3d3d3 !important;
+  // background-color: #e7e6e6 !important;
+  // border-bottom: none !important;
+  // @extend %transition;
+  //   &.segment-activated {
+  //   color: #353535 !important;
+  //   border-color: #FFF !important;
+  //   background-color: #FFF !important;
+  //   border-bottom: none !important;
+  //   }
+  //   &:hover {
+  //   color: #353535 !important;
+  //   border-color: #EEE !important;
+  //   background-color: #F8FAFB !important;
+  //   }
+  // }
+
+  .leadsHomeAddressMap, .leadsWorkAddressMap {
+  // display: none;
+  }        
+
+  .leadMapAddress {
+  width: 100%;
+  height: auto;
+  padding: 16px;
+  border-bottom: 1px solid #ebe9f0 !important;
+  margin-bottom: 1px;
+  overflow: hidden;  
+    .addressBlock {
+    width: 100%;
+    max-width: 60%;
+    float: left;
+    display: block;          
+      h2 {
+      font-size: 12px !important;
+      // color: #b0b1b2 !important;
+      color: #777 !important;
+      margin-bottom: 6px !important;
+      padding-bottom: 0px !important;
+      }
+      p {
+      font-size: 14px !important;
+      // color: #3c3d3f !important;
+      color: $flatblue !important;
+      line-height: 22px;
+      padding: 0;
+      margin: 0;
+      }
     }
+    .leadsHomeAddressMap, .leadsWorkAddressMap {
+    width: 100%;
+    max-width: 40%;
+    float: right;    
+    padding: 3px 0 0 15px;
+    position: relative;
+      &:before {
+      content: "";
+      width: 100%;
+      height: 100%;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 10;
+      position: absolute;
+      display: block;
+      }
+
+      #mapHome, #mapWork {      
+      margin: 0;
+      height: 110px !important; 
+      // border: 1px solid #DDD;
+        &:empty {
+        display: none;
+        }
+      }
+    } 
+  }
+
+  .btmSeparator {
+  width: 100%;
+  height: 20px;
+  display: block;
   }
 
 }

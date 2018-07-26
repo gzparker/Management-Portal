@@ -1,3 +1,90 @@
 page-websites-website-links {
 
+  ion-content {
+    &.dashboardUI {
+      &:before {
+      height: 63px;
+      z-index: 1;
+      }
+      &:after {
+      height: 100vh;
+      }
+    }
+  }
+
+
+  ion-list {
+    .item-ios, .item-md, .item-wp {
+      
+      .item-inner {
+      padding-right: 0px !important;
+      }
+      .label-ios, .label-md, .label-wp {
+      width: 100% !important;
+      margin-right: 0px !important;
+
+        &:focus, &:hover {          
+          .copyText {
+          opacity: 1;
+          }
+        }
+
+        .linkLabel {
+          a {
+          font-family: $font-three;
+          font-size: 12px !important;
+          color: #777 !important;
+          letter-spacing: .5px;
+          margin-bottom: 4px;
+          display: inline-block;
+          }
+        }
+        
+        .infoLabel {
+        font-family: $font-three;
+        font-size: 12px !important;
+        color: #777 !important;
+        letter-spacing: .5px;
+        margin: 2px 0 6px 0;
+        display: block;
+        }
+
+        .clipboard {
+        font-family: $font-three;
+        font-size: 13px;
+        line-height: 18px;
+        height: auto;
+        letter-spacing: .5px;
+        border-radius: 2px;
+        padding: 11px 10px;
+        margin: 0px;
+        text-overflow: unset;
+        white-space: normal;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        border: 1px dashed #e6e6e7;
+        background: #f3f4f6;
+        word-break: break-all;
+        position: relative;
+        @extend %transition;    
+        }
+        
+        .copyText {
+        font-size: 10px;
+        letter-spacing: 1px;
+        font-weight: 400;
+        color: #FFF;
+        top: 14px;
+        right: 17px;
+        position: absolute;
+        cursor: cell;
+        background: #d8d8d8;
+        text-shadow: -1px 0px 2px #8e8e8e;
+        opacity: 0;
+        }
+        
+      }
+    }
+  }
+  
 }
