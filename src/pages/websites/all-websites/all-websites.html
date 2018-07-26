@@ -25,11 +25,11 @@
       </button>
     </ion-buttons>
 
-    <ion-buttons end *ngIf="showCreateButton">
+    <!--<ion-buttons end *ngIf="showCreateButton">
       <button ion-button icon-left (click)="createWebsite();">
         <ion-icon name="md-add"></ion-icon>
       </button>
-    </ion-buttons>
+    </ion-buttons>-->
 
   </ion-navbar>  
 </ion-header>
@@ -122,5 +122,6 @@
   <ion-chip *ngIf='allWebsiteList.length<=0&&websiteFoundMessage!=""'>
     <ion-label color="danger">{{websiteFoundMessage}}</ion-label>
   </ion-chip>
- 
+  <button ion-button color="primary" (click)="createWebsite();" item-right class="btn-edit" 
+  *ngIf="allWebsiteList.length<=0&&showCreateButton">Link your first website to IDX!</button>
 </ion-content>

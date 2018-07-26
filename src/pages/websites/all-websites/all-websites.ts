@@ -70,7 +70,7 @@ export class AllWebsitesPage {
           buttons: ['Ok']
         });
         alert.present();*/
-        let toast = this.toastCtrl.create({
+        /*let toast = this.toastCtrl.create({
           message: this.notificationMsg,
           duration: 3000,
           position: 'top',
@@ -78,9 +78,9 @@ export class AllWebsitesPage {
         });
         
         toast.onDidDismiss(() => {
-          //console.log('Dismissed toast');
+          
         });
-        toast.present();
+        toast.present();*/
       }
       //debugger;
   }
@@ -251,7 +251,7 @@ export class AllWebsitesPage {
         buttons: ['Ok']
       });
       alert.present();*/
-      let toast = this.toastCtrl.create({
+      /*let toast = this.toastCtrl.create({
         message: this.websiteFoundMessage,
         duration: 3000,
         position: 'top',
@@ -259,9 +259,9 @@ export class AllWebsitesPage {
       });
       
       toast.onDidDismiss(() => {
-        //console.log('Dismissed toast');
+      
       });
-      toast.present();
+      toast.present();*/
     }
     //debugger;
   }

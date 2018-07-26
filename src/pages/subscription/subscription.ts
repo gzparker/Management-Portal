@@ -192,14 +192,13 @@ for(let i=0;i<this.selectedPackagesList.length;i++)
   dataObj.exp_month = this.expiryDate.split("-")[1];
   dataObj.exp_year = this.expiryDate.split("-")[0];
   dataObj.cvc = this.cvc;
-  //dataObj.service_plans_array = this.selectedPackagesList;
-  //dataObj.service_plans_array=this.selectedPlanStringListString;
+ 
   dataObj.mls_service_id=this.mls_server_id;
   dataObj.stripe_coupon_code=this.selectedCoupon;
-  //debugger;
+
   let member_id = this.storage.get('userId');
   member_id.then((memberResp) => {
-    //debugger;
+  
     dataObj.member_id = memberResp;
 
    this.subscriptionObj.saveUserSubscription(dataObj).
