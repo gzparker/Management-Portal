@@ -964,6 +964,24 @@ ion-content.dashboardUI {
     }
   }
 
+.segment-button {  
+color: $flatblue !important;
+border-color: $flatblue !important;
+@extend %transition;
+  &.segment-activated {
+  color: #FFF !important;
+  border-color: $flatblue !important;
+  background-color: $flatblue !important;
+    &:hover {
+    color: #FFF !important;
+    }
+  }
+  &:hover {
+  color: #FFF !important;
+  color: $flatblue !important;
+  }
+}
+
 .successToast, .errorToast {
   .toast-wrapper {
   text-transform: capitalize !important;
