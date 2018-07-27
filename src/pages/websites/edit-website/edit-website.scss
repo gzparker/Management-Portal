@@ -60,7 +60,11 @@ page-edit-website {
       }
     }
     .customList {
-    border-bottom: 1px solid #ebe9f0 !important;      
+    border-bottom: 1px solid #ebe9f0 !important;
+    }
+
+    .bottom16 {
+    margin-bottom: 16px;
     }
   }
 
@@ -97,17 +101,46 @@ page-edit-website {
     }
   }
   .expandText {
-    height: 128px;
-    font-size: 12px;
-    line-height: 20px;
-    text-overflow: unset;
-    border-radius: 2px;
-    white-space: normal;
-    margin: 11px 0px !important;
-    padding: 8px 10px !important;
-    background: #e9eef6;
+  height: 128px;
+  font-size: 12px;
+  line-height: 20px;
+  text-overflow: unset;
+  border-radius: 2px;
+  white-space: normal;
+  margin: 11px 0px !important;
+  padding: 8px 10px !important;
+  background: #e9eef6;
+  width: 100%;
+  resize: none;
+  }
+
+  .uploadPhoto {
+    .HotSheetImageUploader {
     width: 100%;
-    resize: none;
+    min-height: 210px;
+    position: relative;
+      &:before {
+      content: "";
+      width: 100%;
+      height: 210px;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      position: absolute;
+      background: url("../assets/imgs/noImageAvailable.jpg") no-repeat center center;
+      background-size: cover;
+      }    
     }
+
+    .imgCropperPreview {
+    display: block !important;
+    }
+  }
+
+  .customList.cropFavicon {
+  border-bottom: 0px !important;
+  padding-bottom: 6px !important;
+  }
 
 }

@@ -174,7 +174,6 @@
       }
     }
 
-
     .item-inner {
     border-bottom: 0.55px solid rgba(255, 255, 255, 0.41);
     // border: none !important;
@@ -273,6 +272,18 @@
 .tabs {
   .tabbar {
   background: #F4F5F7;
+    .tab-button-icon {
+      &.ion-ios-chatboxes-outline, &.ion-md-chatboxes-outline, &.ion-wp-chatboxes-outline {
+        &:before {
+        content: "";
+        width: 50px;
+        height: 32px;
+        display: block;
+        background: url("../assets/icon/svg/chat-dashboard/011.svg") no-repeat center center !important;
+        background-size: 72% !important;
+        }
+      }
+    }
   }
 }
 
@@ -736,8 +747,12 @@ ion-content {
     }
 
     .tab-button-text {
-    font-family: $font-three;
-    display: none;
+    font-family: $font-two !important;
+    font-size: 10px !important;
+    letter-spacing: .5px;
+    color: #7F7F7F;
+    opacity: .9;
+    // display: none !important;
     }
   }
 
@@ -917,13 +932,7 @@ ion-content.dashboardUI {
 
       .imgCropperPreview {
       width: 100%;
-      height: auto;
-      padding: 8px 8px 4px 8px !important;
-      margin: 20px 0 30px 0 !important;
-      display: block;
-      position: relative;      
-      border-radius: 2px;
-      background: #cbcccc !important;
+      height: auto;      
         span.ng2-imgcrop {
         font-size: 0px;
         line-height: 0px;
@@ -931,19 +940,9 @@ ion-content.dashboardUI {
         canvas {
         width: 280px !important;
         height: 200px !important;
-        }
-        &:after {
-        content: "Image Preview";
-        width: 100%;
-        height: 20px;
-        font-family: $font-four;
-        font-size: 14px;
-        left: 0;
-        bottom: -45px;
-        position: absolute;
-        text-align: center;
+        margin: 10px auto 0 auto;
         display: block;
-        }
+        }        
       }
 
       .imgCropperPreviewResult {
@@ -963,6 +962,147 @@ ion-content.dashboardUI {
 
     }
   }
+
+.additionalOption {
+padding: 0 16px;
+  
+  .list-header {
+  padding: 0;
+  margin: 2px 0 16px 0;
+  }
+
+  .item-toggle {
+  font-size: 14px;
+  padding: 0;
+  margin: 0 0 16px 0;
+    .item-inner {
+    padding-right: 0px;
+    margin: 0px;
+    }
+  }
+
+  .imgCropper {
+  margin: 15px 0;
+  display: block;    
+  }
+
+  .cropPreview {
+    .cropPreviewLabel {    
+    text-transform: uppercase;    
+    font-size: 13px;
+    letter-spacing: .8px;    
+    color: #000;
+    padding: 5px 8px;
+    display: table;
+    border-radius: 2px;
+    margin: 25px auto 0 auto;
+    background: #e2e2e2;
+    }
+    img {
+    border: 1px solid #DDD;
+    padding: 5px;
+    margin: 10px auto;
+    display: table;
+    background: #FFF;
+    }
+  }  
+}
+
+.toggleImageEdit {
+display: none !important;
+}
+
+.uploadPhoto {
+  .HotSheetImageUploader {
+  width: 100%;
+  min-height: 210px;
+  position: relative;
+    &:before {
+    content: "";
+    width: 100%;
+    height: 210px;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    background: url("../assets/imgs/noImageAvailable.jpg") no-repeat center center;
+    background-size: cover;
+    }    
+  }
+
+  .imgCropperPreview {
+  display: none !important;
+  }
+
+  .ImageCropperOption {
+  padding: 10px 16px 0 16px !important;  
+    &.last {
+    padding: 0 0 10px 0 !important;  
+    border-radius: 0 0 6px 6px !important;
+      .item-inner {
+      border-bottom: none !important;
+      }
+    }
+
+    .item-toggle {
+    margin-top: 10px;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    border-radius: 0px !important;
+    border: none !important;
+      .item-inner {
+      padding-right: 0px !important;
+      }
+    }
+  }
+
+  .imgCropperPreviewResult {
+  padding: 0px !important;
+  }
+
+  .btnUpload {    
+  width: 100px;
+  height: 32px;
+  z-index: 10;
+  font-size: 0px;
+  padding: 4px;
+  border-radius: 4px;
+  bottom: 10px;
+  right: 10px;
+  position: absolute;
+  cursor: pointer;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  // border: 1px solid #4D8F2F;
+  background: #77B55D;
+    &:before {
+    content: "";
+    width: 18px;
+    height: 8px;
+    display: block;
+    top: 3px;
+    left: 3px;
+    z-index: 20;
+    position: absolute;
+    background: #77B55D;
+    }
+    &:after {
+    content: "Upload";
+    width: auto;
+    heigh: 32px;
+    font-family: $font-three;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: .8px;
+    color: #FFF;
+    text-align: center;
+    padding: 3px 0 0 5px;
+    position: absolute;
+    }
+  }
+
+}
 
 .segment-button {  
 color: $flatblue !important;
@@ -1004,3 +1144,4 @@ border-color: $flatblue !important;
   background: color($colors, danger) !important;  
   }
 }
+

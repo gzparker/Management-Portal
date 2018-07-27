@@ -107,7 +107,7 @@
       </ion-item>
       
       <div class="briefDescription">
-        <ion-label stacked>Brief Description</ion-label>
+        <ion-label stacked>Overview</ion-label>
         <ckeditor
         [config]="CkeditorConfig"
         [readonly]="false" [(ngModel)]="brief_description"
@@ -198,7 +198,7 @@
 
     <ion-list class="customList" *ngIf="isApp">
       <ion-item>
-        <button ion-button color="primary" block (click)="takeHeaderPicture();" >Select Header Image</button>
+        <button ion-button color="primary" block (click)="takeHeaderPicture();" >Select Main Image</button>
       </ion-item>
 
       <ion-item *ngIf="headerImage!=''">
@@ -206,7 +206,7 @@
       </ion-item>
 
       <ion-item>
-        <button ion-button color="primary" block (click)="takeCommunityPicture();">Select Community Image</button>
+        <button ion-button color="primary" block (click)="takeCommunityPicture();">Select Community/Gallery Images</button>
       </ion-item>
 
       <ion-item *ngIf="communityImage!=''">
@@ -217,27 +217,56 @@
 
     <ion-list class="additionalOption uploadPhoto" *ngIf="!isApp">
         
-        <ion-label stacked>Header Image</ion-label>
-
-        <ion-item *ngIf="dataHeaderImage.image">
+        <ion-label stacked>Main Image</ion-label>
+        
+        <!-- Edit Image Toggle Button -->
+        <ion-item class="toggleImageEdit" *ngIf="dataHeaderImage.image">
           <ion-label>Edit Image</ion-label>
           <ion-toggle [(ngModel)]="edit_header_image" 
           name="edit_header_image" (click)="showHideHeaderCropper()"></ion-toggle>
         </ion-item>
 
-        <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="headerFileChangeListener($event)">
-           
-        <img-cropper class="imgCropperPreview" #headerImageCropper [image]="dataHeaderImage" [settings]="headerCropperSettings"
-        (onCrop)="headerImageCropped($event)" *ngIf="hideHeaderCropper"></img-cropper>            
-        
-        <div class="imgCropperPreviewResult" *ngIf="dataHeaderImage.image">
-          <!-- <span class="cropPreviewLabel">Header Image Preview</span> -->
+
+        <!-- Main Image Uploader -->
+        <div class="HotSheetImageUploader">
+          
+          <!-- Image Cropper -->
+          <img-cropper class="imgCropperPreview" #headerImageCropper [image]="dataHeaderImage" [settings]="headerCropperSettings"
+          (onCrop)="headerImageCropped($event)" *ngIf="hideHeaderCropper"></img-cropper>
+
+          <!-- Image Cropper Result -->
+          <div class="imgCropperPreviewResult" *ngIf="dataHeaderImage.image">          
           <img [src]="dataHeaderImage.image" [width]="headerWidth"
           [height]="headerHeight">
+          </div>
+
+          <!-- Image Upload Button -->
+          <input id="custom-input" class="btnUpload" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="headerFileChangeListener($event)">
+
         </div>
-    
+
+
         <div class="customItem">
-            <ion-label stacked>Community Image</ion-label>
+        <ion-label stacked>Community/Gallery Images</ion-label>
+
+        <!-- Main Image Uploader -->
+        <div class="HotSheetImageUploader">
+          
+          <!-- Image Cropper -->
+          <img-cropper class="imgCropperPreview"  #communityImageCropper [image]="dataCommunityImage" [settings]="communityCropperSettings"
+             (onCrop)="communtiyImageCropped($event)" *ngIf="hideCommunityCropper"></img-cropper>
+
+          
+
+          <!-- Image Upload Button -->          
+          <input id="custom-input" class="btnUpload" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="communityFileChangeListener($event)">
+
+        </div>
+        </div>
+
+    
+        <!-- <div class="customItem">
+            <ion-label stacked>Community/Gallery Images</ion-label>
 
             <ion-item *ngIf="dataCommunityImage.image">
               <ion-label>Edit Image</ion-label>
@@ -250,12 +279,12 @@
             <img-cropper class="imgCropperPreview"  #communityImageCropper [image]="dataCommunityImage" [settings]="communityCropperSettings"
              (onCrop)="communtiyImageCropped($event)" *ngIf="hideCommunityCropper"></img-cropper>
             
-            <div class="imgCropperPreviewResult" *ngIf="dataCommunityImage.image" >
-              <!-- <span class="cropPreviewLabel">Community Image Preview</span> -->
+            <div class="imgCropperPreviewResult" *ngIf="dataCommunityImage.image" >              
               <img [src]="dataCommunityImage.image" [width]="communityWidth"
               [height]="communityHeight">
             </div>
-        </div>
+        </div> -->
+
       </ion-list>
 
     <!-- <ion-item>
