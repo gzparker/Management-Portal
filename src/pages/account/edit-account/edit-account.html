@@ -27,16 +27,51 @@
 <ion-content padding class="generalInfoUI">
   <form role="form" data-toggle="validator" #accountForm="ngForm">
 
-    <ion-list class="animated fadeIn leadsProfileWrapper">
-      <ion-item class="leadsProfile" sticky>        
+    <!-- <ion-list class="animated fadeIn leadsProfileWrapper">
+      <ion-item class="leadsProfile">
         <ion-avatar class="imgFull">
         
         <img src="../assets/imgs/profile-photo.jpg">
-        <!-- <img src="{{leadDetail.image_url}}" (error)="imgLead.src = this.sharedServiceObj.profileNoImage" #imgLead/> -->
+        <img src="{{leadDetail.image_url}}" (error)="imgLead.src = this.sharedServiceObj.profileNoImage" #imgLead/>
 
         </ion-avatar>        
       </ion-item>
+    </ion-list> -->
+
+    <ion-list *ngIf="!isApp" class="animated fadeIn leadsProfileWrapper uploadPhoto">
+
+      <!-- Main Image Uploader -->
+      <div class="AccountImageUploader">
+
+          <!-- Image Cropper Result -->
+          <div class="imgCropperPreviewResult" *ngIf="dataPersonalImage.image" >
+          <img [src]="dataPersonalImage.image" [width]="personalWidth"
+          [height]="personalHeight">
+          </div>
+
+          <!-- Image Upload Button -->
+          <input id="custom-input" class="btnUpload" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="personalFileChangeListener($event)">
+
+      </div>
+
+      <div class="ImageCropperOption">
+        
+        <ion-item *ngIf="dataPersonalImage.image">
+          <ion-label>Edit Image</ion-label>
+          <ion-toggle [(ngModel)]="edit_personal_logo" 
+          name="edit_personal_logo" (click)="showHidePersonLogoCropper()"></ion-toggle>
+        </ion-item>
+
+        <!-- Image Cropper -->
+        <img-cropper class="imgCropperPreview" #personalCropper [image]="dataPersonalImage" [settings]="cropperSettings"
+        (onCrop)="personalImageCropped($event)" *ngIf="hideImageCropper"></img-cropper>
+
+      </div>
+
+
     </ion-list>
+
+
 
     <ion-list class="animated fadeIn leadsInfo">
       
@@ -60,14 +95,14 @@
 
       <ion-item class="userInfoBlock ReqField">
         <ion-label stacked><span [ngClass]="{'error': passwordUpdated==''}" *ngIf="passwordUpdated==''">*</span></ion-label>
-        <ion-icon name="ios-mail-outline" item-start></ion-icon>
+        <ion-icon name="md-lock" item-start></ion-icon>
         <ion-input type="password" required [(ngModel)]="passwordUpdated" name="passwordUpdated" placeholder="Password"></ion-input>
       </ion-item>
 
       <ion-item class="userInfoBlock ReqField">
-        <ion-label stacked><span [ngClass]="{'error': phone_number==null}" *ngIf="phone_number==null">*</span></ion-label>
-        <ion-icon name="ios-mail-outline" item-start></ion-icon>
-        <ion-input type="text" name="phone_number" [(ngModel)]="phone_number" placeholder="Phone Number" [brmasker]="{phone: true}"></ion-input>
+        <ion-icon name="md-call" item-start></ion-icon>
+        <ion-label stacked><span [ngClass]="{'error': phone_number==null}" *ngIf="phone_number==null">*</span></ion-label>        
+        <ion-input type="text" name="phone_number" [(ngModel)]="phone_number" placeholder="Cell Number" [brmasker]="{phone: true}"></ion-input>
       </ion-item>
 
       <ion-item class="userInfoBlock ReqField">
