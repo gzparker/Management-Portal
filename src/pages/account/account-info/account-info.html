@@ -4,13 +4,13 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header class="dashboardUI">
+<ion-header no-border class="dashboardUI">
 
   <ion-navbar>
-    <!-- <button ion-button menuToggle start>
-      <ion-icon name="menu"></ion-icon>
-    </button> -->
+    
     <ion-title>General Info</ion-title>
+    <!-- <ion-title *ngIf="accountInfo!=null">{{accountInfo.first_name}} {{accountInfo.last_name}}</ion-title> -->
+
     <ion-buttons end>
       <button ion-button (click)="editAccount();">
         <ion-icon name="md-create"></ion-icon>
@@ -21,66 +21,72 @@
 </ion-header>
 
 
-<ion-content padding class="generalInfoUI noScroll">
-  
-  <!--<ion-chip *ngIf="notificationMsg!=''">
-    <ion-label color="secondary">{{notificationMsg}}</ion-label>
-  </ion-chip>-->
+<ion-content padding class="generalInfoUI">
+    
+  <ion-list class="animated fadeIn leadsProfileWrapper" *ngIf="accountInfo!=null">
+    <ion-item class="leadsProfile">
 
-  <ion-list class="animated bounceInUp"  *ngIf="accountInfo!=null">
-
-    <ion-item class="profileAvatar" *ngIf="accountInfo!=null" (click)="editAccount();">      
-      <ion-avatar item-start *ngIf="globalSettings!=null">
-        <!--<img src={{imgBaseUrl}}{{globalSettings.photo_personal}} *ngIf="globalSettings.photo_personal!=''"/>
-        <img src={{noImgUrl}} *ngIf="globalSettings.photo_personal==''"/>-->
-        <ion-thumbnail><img src={{this.sharedServiceObj.imgBucketUrl}}{{globalSettings.photo_personal}} (error)="imgAccount.src = this.sharedServiceObj.profileNoImage" #imgAccount/></ion-thumbnail>
+      <ion-avatar class="imgFull" *ngIf="globalSettings!=null">
+        <img src={{this.sharedServiceObj.imgBucketUrl}}{{globalSettings.photo_personal}} (error)="imgAccount.src = this.sharedServiceObj.profileNoImage" #imgAccount/>          
       </ion-avatar>
-      <h2>{{accountInfo.first_name}} {{accountInfo.last_name}}</h2>
-      <p data-placeholder="N/A">{{accountInfo.email}}</p>
-      <!--<p *ngIf="accountInfo.company!=null&&accountInfo.company!=undefined">{{accountInfo.company}}</p>-->
-      <!-- <p>{{accountInfo.phone_number}}</p> -->
+
     </ion-item>
-
-    <div class="broker-agent-id">
-      <div class="col3">
-        <h2 *ngIf="accountInfo.mls_id!=null&&accountInfo.mls_id!=undefined">{{accountInfo.mls_id}}</h2>
-        <p>MLS ID</p>
-      </div>
-      <div class="col3">
-        <h2 *ngIf="accountInfo.broker_id!=null&&accountInfo.broker_id!=undefined">{{accountInfo.broker_id}}</h2>
-        <p>Broker ID</p>        
-      </div>
-      <div class="col3">
-        <h2 *ngIf="accountInfo.office_id!=null&&accountInfo.office_id!=undefined">{{accountInfo.office_id}}</h2>
-        <p>Office ID</p>        
-      </div>
-    </div>
-
-    <h1 class="contentTitle">Account Details</h1>
-
-    <ion-item *ngIf="accountInfo!=null" (click)="editAccount();">
-      <ion-icon name="ios-mail-outline" item-start></ion-icon>
-        <h2>Email</h2>
-        <p data-placeholder="N/A">{{accountInfo.email}}</p>
-    </ion-item>
-
-    <ion-item *ngIf="accountInfo!=null" (click)="editAccount();">
-      <ion-icon name="md-call" item-start></ion-icon>
-        <h2 *ngIf="accountInfo.phone_mobile!=null&&accountInfo.phone_mobile!=undefined">Phone</h2>
-        <p data-placeholder="N/A">{{accountInfo.phone_mobile}}</p>
-    </ion-item>
-
-    <ion-item *ngIf="accountInfo!=null" (click)="editAccount();">
-      <ion-icon name="ios-globe-outline" item-start></ion-icon>
-        <h2>Country</h2>
-        <p data-placeholder="N/A">{{accountInfo.country_abbv}}</p>
-    </ion-item>
-
-    <ion-item *ngIf="accountInfo!=null" (click)="editAccount();">
-      <ion-icon name="ios-person" item-start></ion-icon>
-        <h2 *ngIf="accountInfo.description!=null&&accountInfo.description!=undefined">About</h2>
-        <p data-placeholder="N/A">{{accountInfo.description}}</p>
-    </ion-item>
-  
   </ion-list>
+
+  <ion-list class="animated fadeIn leadsInfo" *ngIf="accountInfo!=null">
+
+    <ion-item class="userInfoBlock userAccountName">
+      <!-- <ion-icon name="ios-person" item-start></ion-icon> -->
+      <p>{{accountInfo.first_name}} {{accountInfo.last_name}}</p>
+    </ion-item>
+    
+    <ion-item class="userInfoBlock">
+      <ion-icon name="ios-mail-outline" item-start></ion-icon>
+      <p>{{accountInfo.email}}</p>
+    </ion-item>
+
+    <ion-item class="userInfoBlock">
+      <ion-icon name="md-call" item-start></ion-icon>
+      <p>{{accountInfo.phone_mobile}}</p>
+    </ion-item>
+
+    <!-- <ion-item class="userInfoBlock">
+      <ion-icon name="md-call" item-start></ion-icon>
+      <p>{{accountInfo.phone_office}}</p>
+    </ion-item> -->
+
+    <!-- <ion-item class="userInfoBlock">
+      <ion-icon name="md-call" item-start></ion-icon>
+      <p>{{accountInfo.phone_home}}</p>
+    </ion-item> -->
+    
+    <ion-item class="userInfoBlock">
+      <ion-icon name="md-briefcase" item-start></ion-icon>      
+      <p *ngIf="accountInfo.mls_id!=null&&accountInfo.mls_id!=undefined">MLS ID: {{accountInfo.mls_id}}</p>
+    </ion-item>
+
+    <ion-item class="userInfoBlock">
+      <ion-icon name="md-briefcase" item-start></ion-icon>      
+      <p *ngIf="accountInfo.broker_id!=null&&accountInfo.broker_id!=undefined">Broker ID: {{accountInfo.broker_id}}</p>
+    </ion-item>
+
+    <ion-item class="userInfoBlock">
+      <ion-icon name="md-briefcase" item-start></ion-icon>      
+      <p *ngIf="accountInfo.office_id!=null&&accountInfo.office_id!=undefined">Office ID: {{accountInfo.office_id}}</p>
+    </ion-item>
+
+    <ion-item class="userInfoBlock">
+      <ion-icon name="ios-globe-outline" item-start></ion-icon>
+      <p>{{accountInfo.country_abbv}}</p>
+    </ion-item>
+
+  </ion-list>
+
+  <ion-list class="leadNotes">
+      <ion-item *ngIf="accountInfo!=null">
+        <h2 class="contentTitle">Description</h2>
+        <p>{{accountInfo.description}}</p>
+      </ion-item>
+  </ion-list>
+
 </ion-content>

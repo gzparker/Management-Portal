@@ -24,136 +24,95 @@
 </ion-header>
 
 
-<ion-content padding class="dashboardUI">
-    <!--<ion-chip *ngIf="accountInfoUpdateMsg!=''">
-        <ion-label color="danger">{{accountInfoUpdateMsg}}</ion-label>
-      </ion-chip>-->
+<ion-content padding class="generalInfoUI">
   <form role="form" data-toggle="validator" #accountForm="ngForm">
 
-    <div class="formShadow">
-      <ion-item>
-          <ion-label stacked>First Name<span [ngClass]="{'error': first_name==''}" *ngIf="first_name==''">*</span></ion-label>
-          <ion-input type="text" required [(ngModel)]="first_name" name="first_name"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label stacked>Last Name<span [ngClass]="{'error': last_name==''}" *ngIf="last_name==''">*</span></ion-label>
-          <ion-input type="text" required [(ngModel)]="last_name" name="last_name" ></ion-input>
-        </ion-item>
-        <!--<ion-item>
-          <ion-label stacked>Company</ion-label>
-          <ion-input type="text" [(ngModel)]="company" name="company" ></ion-input>
-        </ion-item>-->
-      <ion-item>
-          <ion-label stacked>Email Address<span [ngClass]="{'error': email==''}" *ngIf="email==''">*</span></ion-label>
-          <ion-input type="email" [(ngModel)]="email" name="email" [email]="true" required></ion-input>
-        </ion-item>
+    <ion-list class="animated fadeIn leadsProfileWrapper">
+      <ion-item class="leadsProfile" sticky>        
+        <ion-avatar class="imgFull">
+        
+        <img src="../assets/imgs/profile-photo.jpg">
+        <!-- <img src="{{leadDetail.image_url}}" (error)="imgLead.src = this.sharedServiceObj.profileNoImage" #imgLead/> -->
+
+        </ion-avatar>        
+      </ion-item>
+    </ion-list>
+
+    <ion-list class="animated fadeIn leadsInfo">
       
-        <ion-item>
-          <ion-label stacked>Password<span [ngClass]="{'error': passwordUpdated==''}" *ngIf="passwordUpdated==''">*</span></ion-label>
-          <ion-input type="password" required [(ngModel)]="passwordUpdated" name="passwordUpdated" 
-          ></ion-input>
-        </ion-item>
-        <ion-list *ngIf="isApp">
-          <ion-item>
-            <button ion-button color="primary" block (click)="takePersonalPicture();" >Select Personal Image</button>
-          </ion-item>
-          <ion-item *ngIf="personalImage!=''">
-            <img [src]="personalImage" />
-          </ion-item>
-        </ion-list>
-      
-        <ion-list *ngIf="!isApp" class="customList uploadPhoto">
-          
-          <ion-list-header>Upload personal Photo</ion-list-header>
+      <ion-item class="userInfoBlock ReqField">
+        <ion-label stacked><span [ngClass]="{'error': first_name==''}" *ngIf="first_name==''">*</span></ion-label>
+        <ion-icon name="ios-person" item-start></ion-icon>        
+        <ion-input type="text" required [(ngModel)]="first_name" name="first_name" placeholder="First Name"></ion-input>
+      </ion-item>
 
-          <!-- Main Image Uploader -->
-          <div class="AccountImageUploader">
+      <ion-item class="userInfoBlock ReqField">
+        <ion-label stacked><span [ngClass]="{'error': last_name==''}" *ngIf="last_name==''">*</span></ion-label>
+        <ion-icon name="ios-person" item-start></ion-icon>                
+        <ion-input type="text" required [(ngModel)]="last_name" name="last_name" placeholder="Last Name"></ion-input>
+      </ion-item>
 
-              <!-- Image Cropper Result -->
-              <div class="imgCropperPreviewResult" *ngIf="dataPersonalImage.image" >
-              <img [src]="dataPersonalImage.image" [width]="personalWidth"
-              [height]="personalHeight">
-              </div>
+      <ion-item class="userInfoBlock ReqField">
+        <ion-label stacked><span [ngClass]="{'error': email==''}" *ngIf="email==''">*</span></ion-label>
+        <ion-icon name="ios-mail-outline" item-start></ion-icon>
+        <ion-input type="email" [(ngModel)]="email" name="email" [email]="true" required placeholder="Email"></ion-input>
+      </ion-item>
 
-              <!-- Image Upload Button -->
-              <input id="custom-input" class="btnUpload" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="personalFileChangeListener($event)">
+      <ion-item class="userInfoBlock ReqField">
+        <ion-label stacked><span [ngClass]="{'error': passwordUpdated==''}" *ngIf="passwordUpdated==''">*</span></ion-label>
+        <ion-icon name="ios-mail-outline" item-start></ion-icon>
+        <ion-input type="password" required [(ngModel)]="passwordUpdated" name="passwordUpdated" placeholder="Password"></ion-input>
+      </ion-item>
 
-          </div>
+      <ion-item class="userInfoBlock ReqField">
+        <ion-label stacked><span [ngClass]="{'error': phone_number==null}" *ngIf="phone_number==null">*</span></ion-label>
+        <ion-icon name="ios-mail-outline" item-start></ion-icon>
+        <ion-input type="text" name="phone_number" [(ngModel)]="phone_number" placeholder="Phone Number" [brmasker]="{phone: true}"></ion-input>
+      </ion-item>
 
-          <div class="ImageCropperOption">
-            
-            <ion-item *ngIf="dataPersonalImage.image">
-              <ion-label>Edit Image</ion-label>
-              <ion-toggle [(ngModel)]="edit_personal_logo" 
-              name="edit_personal_logo" (click)="showHidePersonLogoCropper()"></ion-toggle>
-            </ion-item>
+      <ion-item class="userInfoBlock ReqField">
+        <ion-icon name="md-briefcase" item-start></ion-icon>
+        <ion-label stacked><span [ngClass]="{'error': agent_id==''}" *ngIf="agent_id==''">*</span></ion-label>        
+        <ion-input type="text" required [(ngModel)]="agent_id" name="agent_id" placeholder="MLS ID"></ion-input>
+      </ion-item>
 
-            <!-- Image Cropper -->
-            <img-cropper class="imgCropperPreview" #personalCropper [image]="dataPersonalImage" [settings]="cropperSettings"
-            (onCrop)="personalImageCropped($event)" *ngIf="hideImageCropper"></img-cropper>
+      <ion-item class="userInfoBlock ReqField">
+        <ion-icon name="md-briefcase" item-start></ion-icon>
+        <ion-label stacked><span [ngClass]="{'error': broker_id==''}" *ngIf="broker_id==''">*</span></ion-label>
+        <ion-input type="text" required [(ngModel)]="broker_id" name="broker_id" placeholder="Broker ID" ></ion-input>
+      </ion-item>
 
-          </div>
+      <ion-item class="userInfoBlock ReqField">
+        <ion-icon name="md-briefcase" item-start></ion-icon>
+        <ion-label stacked><span [ngClass]="{'error': office_id==''}" *ngIf="office_id==''">*</span></ion-label>
+        <ion-input type="text" required [(ngModel)]="office_id" name="office_id" placeholder="Office ID" ></ion-input>
+      </ion-item>
 
+      <ion-item class="userInfoBlock">
+        <ion-label stacked>Select Country<span [ngClass]="{'error': selectedCountryAbbv==''}" *ngIf="selectedCountryAbbv==''">*</span></ion-label>
+        <ion-select [(ngModel)]="selectedCountryAbbv" name="selectedCountryAbbv" 
+        (ngModelChange)="onCountryCodeSelection($event);" required >
+          <ion-option value="">--- Select Country Code ---</ion-option>
+          <ion-option *ngFor="let countryCode of allCountryCodes" value={{countryCode.country_abbv}}>
+            {{countryCode.name}}
+          </ion-option>
+        </ion-select>
+      </ion-item>
 
-        </ion-list>
-      </div>
-      
-      <div class="formShadow"> 
-        <ion-item>
-            <ion-label stacked>MLS Agent ID<span [ngClass]="{'error': agent_id==''}" *ngIf="agent_id==''">*</span></ion-label>
-            <ion-input type="text" required [(ngModel)]="agent_id" name="agent_id"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label stacked>Broker ID<span [ngClass]="{'error': broker_id==''}" *ngIf="broker_id==''">*</span></ion-label>
-            <ion-input type="text" required [(ngModel)]="broker_id" name="broker_id" ></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label stacked>Office ID<span [ngClass]="{'error': office_id==''}" *ngIf="office_id==''">*</span></ion-label>
-            <ion-input type="text" required [(ngModel)]="office_id" name="office_id" ></ion-input>
-          </ion-item>
-        <ion-item>
-            <ion-label stacked>Select Country<span [ngClass]="{'error': selectedCountryAbbv==''}" *ngIf="selectedCountryAbbv==''">*</span></ion-label>
-            <ion-select [(ngModel)]="selectedCountryAbbv" name="selectedCountryAbbv" 
-            (ngModelChange)="onCountryCodeSelection($event);" required >
-              <ion-option value="">--- Select Country Code ---</ion-option>
-              <ion-option *ngFor="let countryCode of allCountryCodes" value={{countryCode.country_abbv}}>
-                {{countryCode.name}}
-              </ion-option>
-            </ion-select>
-          </ion-item>
-        <ion-item>
-            <ion-label stacked>Cell Number<span [ngClass]="{'error': phone_number==null}" *ngIf="phone_number==null">*</span></ion-label>
-            <ion-input type="text" name="phone_number" [(ngModel)]="phone_number" placeholder="Phone Number" 
-            [brmasker]="{phone: true}"></ion-input>
-            <!--<ion-input type="tel" [(ngModel)]="phone_number" name="phone_number" 
-            required pattern="^[0-9]*$"></ion-input>-->
-          </ion-item>
-          <div class="customList">
-            <ion-label stacked>Description</ion-label>
-            <!-- <textarea id="user_description" name="user_description" maxLength="500" [(ngModel)]="user_description"></textarea> -->
+    </ion-list>
 
-            <textarea type="text" class="expandText" id="user_description" name="user_description" maxLength="500" [(ngModel)]="user_description"></textarea>
-            
-            
-              <!--<ckeditor
-              [config]="CkeditorConfig"
-              [readonly]="false" [(ngModel)]="user_description"
-              (change)="userDescChanged($event)"
-              (blur)="userDescBlured($event)"
-              (focus)="userDescFocused($event)"
-              (ready)="userDescCreated($event)"
-              debounce="500" name="user_description">
-              </ckeditor>-->
-            </div>
-        </div>
+    <ion-list class="leadNotes">
+      <ion-item *ngIf="accountInfo!=null">
+        <h2 class="contentTitle">Description</h2>
+        <textarea type="text" class="expandText" id="user_description" name="user_description" maxLength="500" [(ngModel)]="user_description"></textarea>
+      </ion-item>
+    </ion-list>
 
-      <div class="dashboardBtn">          
-          <button ion-button color="primary" block  (click)="updateAccount();"
-           [disabled]="!accountForm.valid">Update Account</button>
-           <button ion-button color="primary" block  (click)="moveGlobalSettings();" *ngIf="isGlobalPreference==true">Global Settings</button>
-      </div>
-  </form>
-  <!--<ion-chip *ngIf="accountInfoUpdateMsg!=''">
-      <ion-label color="danger">{{accountInfoUpdateMsg}}</ion-label>
-    </ion-chip>-->
+    <div class="dashboardBtn">
+        <button ion-button color="primary" block  (click)="updateAccount();"
+         [disabled]="!accountForm.valid">Update Account</button>
+         <button ion-button color="primary" block  (click)="moveGlobalSettings();" *ngIf="isGlobalPreference==true">Global Settings</button>
+    </div>
+
+  </form>  
 </ion-content>
