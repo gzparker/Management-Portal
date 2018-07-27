@@ -23,20 +23,20 @@ page-view-roles {
   box-shadow: -1px 0px 8px rgba(214, 220, 226, 0.51) !important;  
   }
 
-  ion-icon {
-  font-family: $font-three !important;
-  font-size: 11px !important;
-  text-transform: uppercase;
-  letter-spacing: .5px;
-  color: #FFF !important;  
-    &:before {
-    font-size: 22px;
-    display: block;
-    padding-bottom: 5px;
-    }    
-  }
-
   ion-item-sliding {
+
+    ion-icon {
+    font-family: $font-three !important;
+    font-size: 11px !important;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    color: #FFF !important;  
+      &:before {
+      font-size: 22px;
+      display: block;
+      padding-bottom: 5px;
+      }
+    }
 
     &:hover {
       .optionIcon {

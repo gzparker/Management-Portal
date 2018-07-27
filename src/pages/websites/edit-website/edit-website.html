@@ -128,43 +128,70 @@
         <ion-list class="uploadPhoto noShadow" *ngIf="!isApp">
 
             <ion-list-header>Upload Company/Brand Logo</ion-list-header>
-            <ion-item *ngIf="dataWebsiteLogo.image">
-                <ion-label>Edit Image</ion-label>
+
+            <!-- Main Image Uploader -->
+            <div class="customList bottomRadius0">
+              
+              <div class="HotSheetImageUploader">
+
+                <!-- Image Cropper Result -->
+                <div class="imgCropperPreviewResult" *ngIf="dataWebsiteLogo.image" >
+                <img [src]="dataWebsiteLogo.image" [width]="logoWidth"
+                [height]="logoHeight">
+                </div>
+
+                <!-- Image Upload Button -->              
+                <input id="custom-input" class="btnUpload" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="websiteLogoFileChangeListener($event)">
+                
+              </div>
+
+            </div>
+
+            <div class="ImageCropperOption">
+              
+              <ion-item *ngIf="dataWebsiteLogo.image">
+                <ion-label>Edit Logo</ion-label>
                 <ion-toggle [(ngModel)]="edit_identity_logo" 
                 name="edit_identity_logo" (click)="showHideLogoCropper()"></ion-toggle>
-            </ion-item>
-            
-            <div class="customList">
-              <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="websiteLogoFileChangeListener($event)">
-       
+              </ion-item>
+
+              <!-- Image Cropper -->              
               <img-cropper class="imgCropperPreview" #companyLogoCropper [image]="dataWebsiteLogo" [settings]="logoCropperSettings"
                (onCrop)="websiteIdentityImageCropped($event)" *ngIf="hideLogoCropper"></img-cropper>
-              
-              <div class="imgCropperPreviewResult" *ngIf="dataWebsiteLogo.image" >
-                  <img [src]="dataWebsiteLogo.image" [width]="logoWidth"
-                   [height]="logoHeight">
-              </div>
+
             </div>
 
-            <ion-list-header>Upload Website FavIcon</ion-list-header>            
-            <ion-item *ngIf="dataWebsiteIcon.image">
-                <ion-label>Edit Image</ion-label>
-                <ion-toggle [(ngModel)]="edit_favivon_image" 
-                name="edit_favivon_image" (click)="showHideFavIconCropper()"></ion-toggle>
-            </ion-item>
 
-            <div class="customList">
-              <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="websiteFavIconFileChangeListener($event)">
 
-              <img-cropper #favIconLogoCropper [image]="dataWebsiteIcon" [settings]="favIconCropperSettings"
-              (onCrop)="websiteFavIconImageCropped($event)" *ngIf="hideFavIconCropper"></img-cropper>
-              <br>
-              <span *ngIf="dataWebsiteIcon.image" >
+            <ion-list-header>Upload Website FavIcon</ion-list-header>
+
+            <div class="customList cropFavicon">
+              <div class="HotSheetImageUploader">
+
+              <!-- Image Cropper Result -->
+              <div class="imgCropperPreviewResult" *ngIf="dataWebsiteIcon.image" >
               <img [src]="dataWebsiteIcon.image" [width]="favIconWidth"
               [height]="favIconHeight">
-              </span>
-            </div>
+              </div>
+              
+              <!-- Image Upload Button -->
+              <input id="custom-input" class="btnUpload" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="websiteFavIconFileChangeListener($event)">
+              </div>
 
+              <div class="ImageCropperOption last">
+                <ion-item *ngIf="dataWebsiteIcon.image">
+                  <ion-label>Edit Favicon</ion-label>
+                  <ion-toggle [(ngModel)]="edit_favivon_image" 
+                  name="edit_favivon_image" (click)="showHideFavIconCropper()"></ion-toggle>
+                </ion-item>
+
+                <!-- Image Cropper -->              
+                <img-cropper class="imgCropperPreview" #favIconLogoCropper [image]="dataWebsiteIcon" [settings]="favIconCropperSettings" 
+                (onCrop)="websiteFavIconImageCropped($event)" *ngIf="hideFavIconCropper"></img-cropper>
+              </div>
+
+            </div>
+            
         </ion-list>
       </div>
 

@@ -7,6 +7,6 @@
 <ion-tabs>
   <!-- <ion-tab [root]="dashboardRoot" tabTitle="Dashboard" tabIcon="home" [rootParams]="dashBoardParams"></ion-tab> -->
   <ion-tab [root]="dashboardRoot" tabTitle="Dashboard" tabIcon="ios-home-outline" class="tabs-positive tabs-icon-top" [rootParams]="dashBoardParams"></ion-tab>
-  <ion-tab tabTitle="Chat" (ionSelect)="selectChat()" class="tabs-positive tabs-icon-top">Chat</ion-tab>
+  <ion-tab tabTitle="Chat" (ionSelect)="selectChat()" tabIcon="ios-chatboxes-outline" class="tabs-positive tabs-icon-top">Chat</ion-tab>
   <ion-tab [root]="setupRoot" tabTitle="SetUp" tabIcon="settings" [rootParams]="setUpPage" *ngIf="showSetupTab" class="tabs-positive tabs-icon-top"></ion-tab>
 </ion-tabs>

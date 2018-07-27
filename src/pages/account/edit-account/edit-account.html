@@ -7,9 +7,9 @@
 <ion-header no-border class="dashboardUI">
 
   <ion-navbar>
-    <button ion-button menuToggle start>
+    <!-- <button ion-button menuToggle start>
       <ion-icon name="menu"></ion-icon>
-    </button>
+    </button> -->
     <ion-title>Edit Account</ion-title>
     <!-- <ion-buttons end>
       <button ion-button (click)="updateAccount();" [disabled]="!accountForm.valid">Update Account</button>
@@ -63,24 +63,38 @@
         </ion-list>
       
         <ion-list *ngIf="!isApp" class="customList uploadPhoto">
-          <ion-list-header>Upload personal Photo</ion-list-header>
-          <ion-item class="imageUploaderLabel" *ngIf="dataPersonalImage.image">
-            <ion-label>Edit Image</ion-label>
-            <ion-toggle [(ngModel)]="edit_personal_logo" 
-            name="edit_personal_logo" (click)="showHidePersonLogoCropper()"></ion-toggle>
-          </ion-item>
-
-          <div class="uploaderBtn">
-          <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="personalFileChangeListener($event)">
-          </div>
-       
-          <img-cropper class="imgCropperPreview" #personalCropper [image]="dataPersonalImage" [settings]="cropperSettings"
-           (onCrop)="personalImageCropped($event)" *ngIf="hideImageCropper"></img-cropper>
           
-          <div class="imgCropperPreviewResult" *ngIf="dataPersonalImage.image" >
+          <ion-list-header>Upload personal Photo</ion-list-header>
+
+          <!-- Main Image Uploader -->
+          <div class="AccountImageUploader">
+
+              <!-- Image Cropper Result -->
+              <div class="imgCropperPreviewResult" *ngIf="dataPersonalImage.image" >
               <img [src]="dataPersonalImage.image" [width]="personalWidth"
-               [height]="personalHeight">
+              [height]="personalHeight">
+              </div>
+
+              <!-- Image Upload Button -->
+              <input id="custom-input" class="btnUpload" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="personalFileChangeListener($event)">
+
           </div>
+
+          <div class="ImageCropperOption">
+            
+            <ion-item *ngIf="dataPersonalImage.image">
+              <ion-label>Edit Image</ion-label>
+              <ion-toggle [(ngModel)]="edit_personal_logo" 
+              name="edit_personal_logo" (click)="showHidePersonLogoCropper()"></ion-toggle>
+            </ion-item>
+
+            <!-- Image Cropper -->
+            <img-cropper class="imgCropperPreview" #personalCropper [image]="dataPersonalImage" [settings]="cropperSettings"
+            (onCrop)="personalImageCropped($event)" *ngIf="hideImageCropper"></img-cropper>
+
+          </div>
+
+
         </ion-list>
       </div>
       
