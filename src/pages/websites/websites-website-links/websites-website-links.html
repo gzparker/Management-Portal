@@ -34,24 +34,23 @@
 
   <ion-list *ngIf="selectedSegment=='1'">
     <ion-item *ngFor="let website_link of website_links">
-     <p class="linkLabel"><a (click)="openInAppBrowser(website_link.url)">{{website_link.name}}</a></p>     
-     <!-- ADD ABILITY TO COPY THE TEXT BY CLICKING THE COPY BUTTON -->
-     <ion-badge color="primary" class="copyText">copy</ion-badge>
-     <div class="clipboard" contenteditable="true">{{website_link.url}}</div>
+      <p class="linkLabel"><a (click)="openInAppBrowser(website_link.url)">{{website_link.name}}</a></p>
+     <ion-badge color="primary" class="copyText" ngxClipboard [cbContent]="website_link.url">copy</ion-badge>
+     <div class="clipboard" (click)="openInAppBrowser(website_link.url)">{{website_link.url}}</div>
     </ion-item>
   </ion-list>
   <ion-list *ngIf="selectedSegment=='2'">
     <ion-item *ngFor="let hotsheet_link of hotsheet_links">
       <p class="linkLabel"><a (click)="openInAppBrowser(hotsheet_link.url)">{{hotsheet_link.name}}</a></p>
-      <ion-badge color="primary" class="copyText">copy</ion-badge>
-      <div class="clipboard" contenteditable="true">{{hotsheet_link.url}}</div>
+      <ion-badge color="primary" class="copyText"  ngxClipboard [cbContent]="hotsheet_link.url">copy</ion-badge>
+      <div class="clipboard" (click)="openInAppBrowser(hotsheet_link.url)">{{hotsheet_link.url}}</div>
     </ion-item>
   </ion-list>
   <ion-list *ngIf="selectedSegment=='3'">
     <ion-item *ngFor="let widget of widgets">
       <h2 class="infoLabel">{{widget.name}}</h2>
-      <ion-badge color="primary" class="copyText">copy</ion-badge>
-      <div class="clipboard" contenteditable="true">{{widget.value}}</div>
+      <ion-badge color="primary" class="copyText" ngxClipboard [cbContent]="widget.value">copy</ion-badge>
+      <div class="clipboard">{{widget.value}}</div>
     </ion-item>
   </ion-list>
 

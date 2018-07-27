@@ -61,8 +61,13 @@ export class WebsitesWebsiteLinksPage {
   }
   openInAppBrowser(redirectUrl:string)
   {
+    //debugger;
     window.open(redirectUrl, '_black');
     
+  }
+  copyLink(redirectUrl:string)
+  {
+    debugger;
   }
 loadAllWebsiteLinks()
 {
