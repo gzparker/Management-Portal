@@ -53,7 +53,10 @@
         
         <div class="itemPadding">
             <ion-label>Homepage Description</ion-label>
-            <ckeditor
+            <div id="homepage_description" contenteditable="true" class="expandText">
+                Home Page Description
+              </div>
+            <!--<ckeditor
             [config]="CkeditorConfig"
             [readonly]="false" [(ngModel)]="homepage_description"
             (change)="homepageDescChanged($event)"
@@ -61,7 +64,7 @@
             (focus)="homepageDescFocused($event)"
             (ready)="homepageDescCreated($event)"
             debounce="500" name="editorHomePageDescription">
-            </ckeditor>
+            </ckeditor>-->
         </div>
           
         <ion-item>

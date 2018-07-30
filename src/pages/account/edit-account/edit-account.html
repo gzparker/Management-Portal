@@ -26,17 +26,19 @@
 
 <ion-content padding class="generalInfoUI">
   <form role="form" data-toggle="validator" #accountForm="ngForm">
-<<<<<<< HEAD
-    <div id="inline-editor1" contenteditable="true">
-      Click here to see the inline editor
-    </div>
-    <ion-list class="animated fadeIn leadsProfileWrapper">
+    
+   <!-- <ion-list class="animated fadeIn leadsProfileWrapper">
       <ion-item class="leadsProfile" sticky>        
-=======
-
+        <ion-avatar class="imgFull">
+        
+          <img src="../assets/imgs/profile-photo.jpg">
+          <img src="{{leadDetail.image_url}}" (error)="imgLead.src = this.sharedServiceObj.profileNoImage" #imgLead/>
+  
+          </ion-avatar>        
+        </ion-item>
+      </ion-list>-->
     <!-- <ion-list class="animated fadeIn leadsProfileWrapper">
       <ion-item class="leadsProfile">
->>>>>>> 4d9e523fdac04133e0dbbef2f3f30a1404d84491
         <ion-avatar class="imgFull">
         
         <img src="../assets/imgs/profile-photo.jpg">
@@ -94,7 +96,9 @@
         <ion-icon name="ios-person" item-start></ion-icon>                
         <ion-input type="text" required [(ngModel)]="last_name" name="last_name" placeholder="Last Name"></ion-input>
       </ion-item>
-
+      <!--<div id="inline-editor1" contenteditable="true">
+        Click here to see the inline editor
+      </div>-->
       <ion-item class="userInfoBlock ReqField">
         <ion-label stacked><span [ngClass]="{'error': email==''}" *ngIf="email==''">*</span></ion-label>
         <ion-icon name="ios-mail-outline" item-start></ion-icon>

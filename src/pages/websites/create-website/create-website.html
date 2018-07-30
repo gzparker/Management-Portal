@@ -21,7 +21,8 @@
 <ion-content padding class="dashboardUI">
   <form role="form" data-toggle="validator" #websiteForm="ngForm">
   
-    <ion-list class="animated lightSpeedIn blk1">
+    <ion-list>
+        
       <ion-item>
           <ion-label stacked>Website Name<span [ngClass]="{'error': identity_name==''}" *ngIf="identity_name==''">*</span></ion-label>
           <ion-input type="text" [(ngModel)]="identity_name" 
@@ -46,12 +47,18 @@
           <ion-input type="text" [(ngModel)]="identity_phone_number" 
           name="identity_phone_number" id="identity_phone_number" placeholder="(xxx) xxx-xxxx" [brmasker]="{mask:'(000) 000-0000', len:14, type:'num'}"></ion-input>
       </ion-item>
+      
     </ion-list>
-    
+   
     <div class="animated lightSpeedIn formShadow blk2">
 
       <div class="itemPadding">
           <ion-label>Home Page Description</ion-label>
+          <div id="homepage_description" contenteditable="true" class="expandText">
+              Home Page Description
+            </div>
+          <!--<ion-label>Home Page Description</ion-label>
+          
           <ckeditor
           [config]="CkeditorConfig"
           [readonly]="false" [(ngModel)]="homepage_description"
@@ -60,7 +67,7 @@
           (focus)="homepageDescFocused($event)"
           (ready)="homepageDescCreated($event)"
           debounce="500" name="editorHomePageDescription">
-          </ckeditor>
+          </ckeditor>-->
       </div>
 
       <ion-item>

@@ -95,7 +95,10 @@
 
         <div class="briefDescription">
           <ion-label>Overview</ion-label>
-          <ckeditor
+          <div id="brief_description" contenteditable="true" class="expandText">
+              Overview
+            </div>
+          <!--<ckeditor
           [config]="CkeditorConfig"
           [readonly]="false" [(ngModel)]="brief_description"
           (change)="onHotSheetBreifDescChanged($event)"
@@ -103,11 +106,15 @@
           (focus)="onHotSheetBreifDescFocused($event)"
           (ready)="onHotSheetBreifDescCreated($event)"
           debounce="500" name="editorMainDescription">
-          </ckeditor>
+          </ckeditor>-->
         </div>
 
         <div class="mainDescription">
-          <ion-label>Main Description</ion-label>
+            <ion-label>Main Description</ion-label>
+            <div id="main_description" contenteditable="true" class="expandText">
+                Main Description
+              </div>
+          <!--<ion-label>Main Description</ion-label>
           <ckeditor [(ngModel)]="main_description"
           [config]="CkeditorConfig"
           [readonly]="false"
@@ -116,7 +123,7 @@
           (focus)="onHotSheetDescFocused($event)"
           (ready)="onHotSheetDescCreated($event)"
           debounce="500" name="editorMainDescription">
-          </ckeditor>  
+          </ckeditor>-->
         </div>
 
         <ion-item class="noPadding">

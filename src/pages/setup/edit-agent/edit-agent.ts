@@ -21,7 +21,7 @@ import { SubscriptionProvider } from '../../../providers/subscription/subscripti
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-
+declare var CKEDITOR: any;
 @IonicPage()
 @Component({
   selector: 'page-edit-agent',
@@ -105,6 +105,15 @@ export class EditAgentPage {
   }
 
   ionViewDidLoad() {
+    CKEDITOR.disableAutoInline = true;
+    CKEDITOR.inline('description', {removeButtons:'Underline,Subscript,Superscript,SpecialChar'
+    ,toolbar: [
+      { name: 'document', groups: [], items: ['Source'] },
+      { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline'] },
+      { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
+      { name: 'links', items: [] },
+      { name: 'styles', items: ['Format', 'FontSize' ] }
+    ]});
     let member_id = this.storage.get('userId');
     member_id.then((data) => {
       this.userId=data;
@@ -191,7 +200,8 @@ loadAgentDetailsResp(result:any)
       }
       
       this.password=this.agentDetail.password;
-      this.description=this.agentDetail.description;
+      //this.description=this.agentDetail.description;
+      document.getElementById("description").innerHTML=this.agentDetail.description;
       if(this.agentDetail.image_url!=undefined)
       {
       this.loadImage(this.sharedServiceObj.imgBucketUrl,this.agentDetail.image_url);
@@ -328,9 +338,9 @@ updateAgent()
   {
         dataObj.mls_id = this.mls_id;
   }
-  if(this.agentDetail.description!=this.description)
+  if(this.agentDetail.description!=document.getElementById("description").innerHTML)
   {
-        dataObj.description = this.description;
+        dataObj.description = document.getElementById("description").innerHTML;
   }
   dataObj.access_level=this.access_level;
   dataObj.country_abbv=this.selectedCountryAbbv;
@@ -343,9 +353,10 @@ updateAgent()
   updateAgentResp(result:any)
   {
     this.agentUpdateMsg="Agent has been updated successfully.";
+    CKEDITOR.instances['description'].destroy(true);
 //debugger;
     this.ngZone.run(() => {
-      this.navCtrl.push(ManageAgentsPage,{notificationMsg:this.agentUpdateMsg.toUpperCase()});
+      this.navCtrl.setRoot(ManageAgentsPage,{notificationMsg:this.agentUpdateMsg.toUpperCase()});
     });
   }
   fileChangeListener($event) {

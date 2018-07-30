@@ -20,7 +20,7 @@ import { SubscriptionProvider } from '../../../providers/subscription/subscripti
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-
+declare var CKEDITOR: any;
 @IonicPage()
 @Component({
   selector: 'page-create-agent',
@@ -102,7 +102,15 @@ export class CreateAgentPage {
   }
   
   ionViewDidLoad() {
-    //this.getAllCountryCodes();
+    CKEDITOR.disableAutoInline = true;
+    CKEDITOR.inline('description', {removeButtons:'Underline,Subscript,Superscript,SpecialChar'
+    ,toolbar: [
+      { name: 'document', groups: [], items: ['Source'] },
+      { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline'] },
+      { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
+      { name: 'links', items: [] },
+      { name: 'styles', items: ['Format', 'FontSize' ] }
+    ]});
     let member_id = this.storage.get('userId');
     member_id.then((data) => {
       this.userId=data;
@@ -154,7 +162,7 @@ this.description=html;
     {
     //debugger;  
   this.userServiceObj.createAgent(this.userId,this.firstName,this.lastName,this.email,this.selectedCountryCode,this.phone_mobile.toString(),this.access_level,
-    this.password,this.agentImage,this.description,this.mls_id,this.selectedCountryAbbv)
+    this.password,this.agentImage,document.getElementById("description").innerHTML,this.mls_id,this.selectedCountryAbbv)
     .subscribe((result) => this.createAgentResp(result));
  
     }
@@ -165,7 +173,7 @@ this.description=html;
     if(result.status==true)
     {
       this.agentCreateMsg="Agent has been created successfully.";
-
+      CKEDITOR.instances['description'].destroy(true);
       this.ngZone.run(() => {
         this.navCtrl.push(ManageAgentsPage,{notificationMsg:this.agentCreateMsg.toUpperCase()});
       });

@@ -23,6 +23,7 @@ import { ListingProvider } from '../../../providers/listing/listing';
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
+declare var CKEDITOR: any;
 declare var google: any;
 declare var latitudeSimplifier;
 @IonicPage()
@@ -252,6 +253,23 @@ public isWebBrowser=false;
     }
 
   ionViewDidLoad() {
+    CKEDITOR.disableAutoInline = true;
+    CKEDITOR.inline( 'brief_description', {removeButtons:'Underline,Subscript,Superscript,SpecialChar'
+    ,toolbar: [
+      { name: 'document', groups: [], items: ['Source'] },
+      { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline'] },
+      { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
+      { name: 'links', items: [] },
+      { name: 'styles', items: ['Format', 'FontSize' ] }
+    ]});
+    CKEDITOR.inline( 'main_description', {removeButtons:'Underline,Subscript,Superscript,SpecialChar'
+    ,toolbar: [
+      { name: 'document', groups: [], items: ['Source'] },
+      { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline'] },
+      { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
+      { name: 'links', items: [] },
+      { name: 'styles', items: ['Format', 'FontSize' ] }
+    ]});
     let member_id = this.storage.get('userId');
     member_id.then((data) => {
       this.userId=data;
@@ -1205,8 +1223,8 @@ this.allListingTypeChecked=true;
          //{
           
           this.userServiceObj.createHotSheet(this.userId.toString(),this.selectedWebsite,
-          this.sharedServiceObj.mlsServerId,this.name,this.hotsheet_Title,this.slug,JSON.stringify(this.searchListObject),this.brief_description,
-          this.main_description,this.virtual_tour_url,this.video_url,this.sub_city,
+          this.sharedServiceObj.mlsServerId,this.name,this.hotsheet_Title,this.slug,JSON.stringify(this.searchListObject),document.getElementById("brief_description").innerHTML,
+          document.getElementById("main_description").innerHTML,this.virtual_tour_url,this.video_url,this.sub_city,
           this.communityImage,this.headerImage,this.city,this.administrative_area_level_1,
           this.community,this.assigned_agent_id,this.polygon_search,this.meta_description,this.meta_title,this.parent_id)
           .subscribe((result) => this.createHotSheetResp(result));
@@ -1242,9 +1260,11 @@ this.allListingTypeChecked=true;
     createHotSheetResp(result:any):void{
     this.storage.remove('searchFilterObj');
     //this.loader.dismiss();
+    CKEDITOR.instances['brief_description'].destroy(true);
+    CKEDITOR.instances['main_description'].destroy(true);
     this.hotsheetCreateMsg="HotSheet has been created successfully.";
     this.ngZone.run(()=>{
-      this.navCtrl.push(AllHotSheetsPage,{notificationMsg:this.hotsheetCreateMsg.toString()});
+      this.navCtrl.setRoot(AllHotSheetsPage,{notificationMsg:this.hotsheetCreateMsg.toString()});
     });
     
     }

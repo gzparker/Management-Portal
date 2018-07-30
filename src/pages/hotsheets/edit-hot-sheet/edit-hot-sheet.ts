@@ -26,6 +26,7 @@ import { ListingProvider } from '../../../providers/listing/listing';
  * Ionic pages and navigation.
  */
 declare var google: any;
+declare var CKEDITOR: any;
 declare var latitudeSimplifier;
 @IonicPage()
 @Component({
@@ -244,6 +245,23 @@ public isWebBrowser=false;
     }
 
   ionViewDidLoad() {
+    CKEDITOR.disableAutoInline = true;
+    CKEDITOR.inline( 'brief_description', {removeButtons:'Underline,Subscript,Superscript,SpecialChar'
+    ,toolbar: [
+      { name: 'document', groups: [], items: ['Source'] },
+      { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline'] },
+      { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
+      { name: 'links', items: [] },
+      { name: 'styles', items: ['Format', 'FontSize' ] }
+    ]});
+    CKEDITOR.inline( 'main_description', {removeButtons:'Underline,Subscript,Superscript,SpecialChar'
+    ,toolbar: [
+      { name: 'document', groups: [], items: ['Source'] },
+      { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline'] },
+      { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
+      { name: 'links', items: [] },
+      { name: 'styles', items: ['Format', 'FontSize' ] }
+    ]});
     let member_id = this.storage.get('userId');
     member_id.then((data) => {
      
@@ -1290,8 +1308,10 @@ else
             this.assigned_agent_id=result.result.assigned_agent_ids.split(',');
           }
           //debugger;
-          this.main_description=result.result.main_description;
-          this.brief_description=result.result.brief_description;
+          document.getElementById("brief_description").innerHTML=result.result.brief_description;
+          document.getElementById("main_description").innerHTML=result.result.main_description;
+          //this.main_description=result.result.main_description;
+          //this.brief_description=result.result.brief_description;
           this.meta_description=result.result.meta_description;
           this.meta_title=result.result.meta_title;
           //debugger;
@@ -1465,8 +1485,8 @@ else
             //if(data!=null)
             //{
       this.userServiceObj.updateHotSheet(this.hotSheetId,this.userId.toString(),this.selectedWebsite,
-      this.sharedServiceObj.mlsServerId,this.name,this.hotsheet_Title,this.slug,JSON.stringify(this.searchListObject),this.brief_description,
-      this.main_description,this.virtual_tour_url,this.video_url,this.sub_city,
+      this.sharedServiceObj.mlsServerId,this.name,this.hotsheet_Title,this.slug,JSON.stringify(this.searchListObject),document.getElementById("brief_description").innerHTML,
+      document.getElementById("main_description").innerHTML,this.virtual_tour_url,this.video_url,this.sub_city,
       this.communityImage,this.headerImage,this.city,this.administrative_area_level_1,
       this.community,this.assigned_agent_id,this.polygon_search,this.meta_description,this.meta_title,this.parent_id)
         .subscribe((result) => this.updateHotSheetResp(result));
@@ -1504,6 +1524,8 @@ else
       this.storage.remove('searchFilterObj');
       //debugger;
       //this.loader.dismiss();
+      CKEDITOR.instances['brief_description'].destroy(true);
+    CKEDITOR.instances['main_description'].destroy(true);
       this.hotsheetUpdateMsg="HotSheet has been updated successfully.";
       this.ngZone.run(()=>{
         this.navCtrl.push(AllHotSheetsPage,{notificationMsg:this.hotsheetUpdateMsg.toString()});

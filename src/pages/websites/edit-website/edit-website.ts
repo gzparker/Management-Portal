@@ -25,7 +25,7 @@ import { SubscriptionProvider } from '../../../providers/subscription/subscripti
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-
+declare var CKEDITOR: any;
 @IonicPage()
 @Component({
   selector: 'page-edit-website',
@@ -151,6 +151,15 @@ export class EditWebsitePage {
   }
 
   ionViewDidLoad() {
+    CKEDITOR.disableAutoInline = true;
+    CKEDITOR.inline( 'homepage_description', {removeButtons:'Underline,Subscript,Superscript,SpecialChar'
+    ,toolbar: [
+      { name: 'document', groups: [], items: ['Source'] },
+      { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline'] },
+      { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
+      { name: 'links', items: [] },
+      { name: 'styles', items: ['Format', 'FontSize' ] }
+    ]});
     let member_id = this.storage.get('userId');
     member_id.then((data) => {
       this.userId=data;
@@ -333,7 +342,8 @@ export class EditWebsitePage {
 this.identity_name=result.result.identity_name;
 this.website_a_record_location=result.result.website_a_record_location;
 this.identity_phone_number=result.result.identity_phone_number;
-this.homepage_description=result.result.homepage_description;
+//this.homepage_description=result.result.homepage_description;
+document.getElementById("homepage_description").innerHTML=result.result.homepage_description;
 this.homepageMeta_description=result.result.homepage_meta_description;
 this.homepage_search_text=result.result.homepage_search_text;
 this.homepage_meta_title=result.result.homepage_meta_title;
@@ -741,7 +751,7 @@ else
     this.contact_email,this.header_wrapper,this.footer_wrapper,intagent_website_dummy,this.custom_css,
     show_new_listing_dummy,show_open_houses_dummy,feature_agent_listings_dummy,
     feature_broker_listings_dummy,feature_office_listings_dummy,this.identity_name,this.identity_logo,
-    this.identity_icon,this.website_a_record_location,this.identity_phone_number,this.homepage_description,
+    this.identity_icon,this.website_a_record_location,this.identity_phone_number,document.getElementById("homepage_description").innerHTML,
     this.homepageMeta_description,this.homepage_search_text,this.homepage_meta_title)
     .subscribe((result) => this.updateWebsiteResp(result));
      //}
@@ -751,9 +761,9 @@ else
   
   updateWebsiteResp(result:any):void{
   this.websiteUpdateMsg="Website has been updated successfully.";
-  //debugger;
+  CKEDITOR.instances['homepage_description'].destroy(true);
   this.ngZone.run(() => {
-    this.navCtrl.push(AllWebsitesPage,{notificationMsg:this.websiteUpdateMsg.toUpperCase()});
+    this.navCtrl.setRoot(AllWebsitesPage,{notificationMsg:this.websiteUpdateMsg.toUpperCase()});
     });
   }
   

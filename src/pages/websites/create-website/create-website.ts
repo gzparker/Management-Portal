@@ -20,7 +20,7 @@ import { SubscriptionProvider } from '../../../providers/subscription/subscripti
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-
+declare var CKEDITOR: any;
 @IonicPage()
 @Component({
   selector: 'page-create-website',
@@ -56,6 +56,15 @@ export class CreateWebsitePage {
   }
 
   ionViewDidLoad() {
+    CKEDITOR.disableAutoInline = true;
+    CKEDITOR.inline('homepage_description', {removeButtons:'Underline,Subscript,Superscript,SpecialChar'
+    ,toolbar: [
+      { name: 'document', groups: [], items: ['Source'] },
+      { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline'] },
+      { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
+      { name: 'links', items: [] },
+      { name: 'styles', items: ['Format', 'FontSize' ] }
+    ]});
     let member_id = this.storage.get('userId');
     //debugger;
     member_id.then((data) => {
@@ -132,7 +141,7 @@ intagentWebsiteFinal=0;
          this.website_domain=this.website_domain;
        }
   this.userServiceObj.createWebsite(this.userId,isActiveFinal,this.website_domain,this.identity_name,
-    intagentWebsiteFinal,this.website_a_record_location,this.identity_phone_number,this.homepage_description,
+    intagentWebsiteFinal,this.website_a_record_location,this.identity_phone_number,document.getElementById("homepage_description").innerHTML,
     this.homepageMeta_description,this.homepage_search_text,this.homepage_meta_title)
     .subscribe((result) => this.createWebsiteResp(result));
     // }
@@ -141,8 +150,9 @@ intagentWebsiteFinal=0;
   createWebsiteResp(result:any):void{
  //debugger;
   this.websiteCreateMsg="Website has been created successfully.";
+  CKEDITOR.instances['homepage_description'].destroy(true);
   this.ngZone.run(() => {
-  this.navCtrl.push(EditLeadRoutingPage,{websiteId:result.website_id});
+  this.navCtrl.setRoot(EditLeadRoutingPage,{websiteId:result.website_id});
   });
   }
 }

@@ -84,7 +84,10 @@
   
   <div class="customList">
     <ion-label stacked>Brief Description</ion-label>
-      <ckeditor
+    <div id="description" contenteditable="true" class="expandText">
+        Brief Description
+      </div>
+      <!--<ckeditor
       [config]="CkeditorConfig"
       [readonly]="false" [(ngModel)]="description"
       (change)="onAgentBreifDescChanged($event)"
@@ -92,7 +95,7 @@
       (focus)="onAgentBreifDescFocused($event)"
       (ready)="onAgentBreifDescCreated($event)"
       debounce="500" name="editorMainDescription">
-    </ckeditor>
+    </ckeditor>-->
   </div>
   <!--<ion-item>
     <ion-label stacked>Brief Description</ion-label>
