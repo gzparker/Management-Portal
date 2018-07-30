@@ -34,7 +34,14 @@ export class AccountInfoPage {
 
   public imgBaseUrl=this.sharedServiceObj.imgBucketUrl;
   public noImgUrl=this.sharedServiceObj.noImageUrl;
-
+  public CkeditorConfig = {removeButtons:'Underline,Subscript,Superscript,SpecialChar'
+  ,toolbar: [
+    { name: 'document', groups: [], items: ['Source'] },
+    { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline'] },
+    { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
+    { name: 'links', items: [] },
+    { name: 'styles', items: ['Format', 'FontSize' ] }
+  ]};
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform,
@@ -67,6 +74,7 @@ export class AccountInfoPage {
   }
 
   ionViewDidLoad() {
+    
     let member_id = this.storage.get('userId');
     member_id.then((data) => {
       this.userId=data;

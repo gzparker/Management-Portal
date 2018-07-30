@@ -20,7 +20,7 @@ import { UserProvider } from '../../../providers/user/user';
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-
+declare var CKEDITOR: any;
 @IonicPage()
 @Component({
   selector: 'page-edit-account',
@@ -123,6 +123,18 @@ export class EditAccountPage {
   }
 
   ionViewDidLoad() {
+    
+    //debugger;
+    CKEDITOR.replace( 'inline-editor1', {removeButtons:'Underline,Subscript,Superscript,SpecialChar'
+    ,toolbar: [
+      { name: 'document', groups: [], items: ['Source'] },
+      { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline'] },
+      { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
+      { name: 'links', items: [] },
+      { name: 'styles', items: ['Format', 'FontSize' ] }
+    ]});
+    CKEDITOR.disableAutoInline = true;
+    CKEDITOR.inline( 'inline-editor1' );
     let member_id = this.storage.get('userId');
    // debugger;
     member_id.then((data) => {

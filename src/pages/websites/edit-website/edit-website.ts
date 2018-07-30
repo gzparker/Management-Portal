@@ -257,7 +257,7 @@ export class EditWebsitePage {
            
             that.favIconCropperSettings.croppedWidth = this.width;
             that.favIconCropperSettings.croppedHeight = this.height;
-            debugger;
+            //debugger;
             that.favIconLogoCropper.setImage(image);
         };
         
