@@ -22,7 +22,8 @@
 <ion-content padding class="dashboardUI noScroll">
   
   <ion-chip *ngIf="isItCrmLead" class="notification">
-    <div class="contentTitle animated bounceInRight">Leads are being sent to Intagent CRM</div>
+    <!-- <div class="contentTitle animated bounceInRight">Leads are being sent to Intagent CRM</div> -->
+    <div class="contentTitle animated bounceInRight">Leads are sent to your Contacts</div>
   </ion-chip>
 
       <ion-list class="animated bounceInDown">
@@ -38,14 +39,16 @@
             id="send_to_email_addresses" placeholder="Add Email Address"></ion-input>
           </ion-item>
         
-          <ion-item>
+          <!-- <ion-item>
             <ion-label>Send to Zillow CRM</ion-label>
             <ion-toggle [(ngModel)]="send_to_zillow_crm" name="send_to_zillow_crm"></ion-toggle>
-          </ion-item>
-          <ion-item>
+          </ion-item> -->
+
+          <!-- <ion-item>
               <ion-label>Send to Intagent CRM</ion-label>
               <ion-toggle [(ngModel)]="send_to_intagent_crm" name="send_to_intagent_crm"></ion-toggle>
-          </ion-item>
+          </ion-item> -->
+
           <ion-item>
               <ion-label>Send to Zapier</ion-label>
               <ion-toggle [(ngModel)]="send_to_zapier" name="send_to_zapier"></ion-toggle>
