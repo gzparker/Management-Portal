@@ -40,6 +40,7 @@ export class GroupMembersPage {
   public noImgUrl="../assets/imgs/profile-photo.jpg";
   public groupId:string="";
   public groupMembersData:any[]=[];
+  public allAvailableContacts:any[]=[];
   public loggedInUserInfo:any;
   public firebaseUserId:any;
   public userId:string="";
@@ -72,9 +73,33 @@ export class GroupMembersPage {
       loggedInUserInfo.then((data) => {
 this.loggedInUserInfo=data;
     this.groupDetails();
+    this.loadAllContacts();
     });
     });
     });
+  }
+  loadAllContacts()
+  {
+    let that=this;
+    let firebaseUserId = this.storage.get('firebaseUserId');
+    firebaseUserId.then((data) => {
+    var fredRef=firebase.database().ref('users').on('child_added', function(snapshot) {
+      //debugger;
+      if(data!=snapshot.val().fbId)
+      {
+        if(snapshot.val().fbId!=undefined&&snapshot.val().fbId!=null)
+        {
+          if(!that.groupMembersData.find(groupMember => groupMember.val().userId === snapshot.val().fbId.toString()))
+          {
+            that.allAvailableContacts.push(snapshot.val());
+          }
+        }
+        
+        
+      }
+  });
+    });
+   // debugger;
   }
   updateGroup()
   {
@@ -115,7 +140,7 @@ this.loggedInUserInfo=data;
           handler: () => {
       var groupForDelete=firebase.database().ref('groupMembers/'+memberId).remove();
       that.groupDetails();
-        
+      that.loadAllContacts();
     }
   }
 ]

@@ -26,7 +26,15 @@
           <ion-label stacked>Edit Group Name<span [ngClass]="{'error': groupTitle==''}" *ngIf="groupTitle==''">*</span></ion-label>
           <ion-input type="text" placeholder="Add Group Name" required [(ngModel)]="groupTitle" name="groupTitle" id="groupTitle"></ion-input>
         </ion-item>
-
+        <ion-item>
+          <ion-label stacked>Select Group Members</ion-label>
+          <ion-select placeholder="-----" [(ngModel)]="groupMembersData"  
+          name="groupMembersData" multiple="true">
+          <ion-option *ngFor="let availableContact of allAvailableContacts" [value]=availableContact>
+          {{availableContact.first_name}} {{availableContact.last_name}}
+          </ion-option>
+          </ion-select>
+        </ion-item>
         <!--<ion-item>
           <ion-label stacked>Select Group Members</ion-label>
           <ion-select placeholder="-----" [(ngModel)]="groupMembersData"  
