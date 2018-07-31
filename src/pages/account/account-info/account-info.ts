@@ -100,9 +100,13 @@ this.navCtrl.push(EditAccountPage,{userId:this.userId});
   
     if(result.status==true)
     {
-//debugger;
+debugger;
       this.accountInfo=result.result;
       this.globalSettings=result.globalSettings;
+      let firebaseUserId = this.storage.get('firebaseUserId');
+      firebaseUserId.then((data) => {
+        this.userServiceObj.updateFirebaseUserInfo(result.result,data);
+    });
       /*if(this.localStorageService.get('fbAuthResp'))
       {
   this.fbAuthResp=this.localStorageService.get('fbAuthResp');

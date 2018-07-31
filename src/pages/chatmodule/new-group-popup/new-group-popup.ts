@@ -80,7 +80,10 @@ this.loggedInUserInfo=data;
       //debugger;
       if(data!=snapshot.val().fbId)
       {
+        if(snapshot.val().fbId!=undefined&&snapshot.val().fbId!=null)
+          {
         that.allAvailableContacts.push(snapshot.val());
+          }
       }
   });
 

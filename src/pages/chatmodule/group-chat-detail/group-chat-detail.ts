@@ -274,7 +274,10 @@ openEmoji()
      //debugger;
      if(that.content!=undefined&&that.content!=null)
      {
+      if(this.content._scroll)
+      {
       that.content.scrollToBottom();
+      }
      }
      //;
    }

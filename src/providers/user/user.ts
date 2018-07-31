@@ -175,6 +175,16 @@ email:result.email,fbId:currentUser.uid});
     });
   });
   }
+  updateFirebaseUserInfo(result:any,userId:string)
+  {
+    var fredRef=firebase.database().ref('users/'+userId);
+    //debugger;
+    fredRef.update({isOnline:'1',first_name: result.first_name,
+    last_name:result.last_name,
+    image_url: result.image_url,
+    email:result.email});
+       
+  }
   statusChangeCallback(resp) {
 
     if (resp != 0) {

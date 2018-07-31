@@ -129,7 +129,7 @@ this.loggedInUserInfo=data;
    //debugger;
    setTimeout(() => {
     
-    that.scrollToBottom();
+    that.scrollChatToBottom();
   }, 400);
   }
   messageDetail(refresher:any){
@@ -209,12 +209,18 @@ if(i==snapshot.numChildren()){
      this.description=this.sharedServiceObj.selectEmoji(emojiCode,document.getElementById("chatDescription").innerHTML);
      
    }
-   scrollToBottom()
+   scrollChatToBottom()
    {
      var that=this;
      if(that.content!=undefined&&that.content!=null)
      {
-      that.content.scrollToBottom();
+       
+      if(this.content._scroll)
+      {
+       // debugger;
+        that.content.scrollToBottom();
+       }
+      
      }
    }
    setUserTyping(groupId:any,description:any){
@@ -252,7 +258,7 @@ if(resp=="1")
     document.getElementById("chatDescription").innerHTML="";
     //this.description="";
     //document.getElementById("chatDescription").innerHTML="";
-    that.scrollToBottom();
+    that.scrollChatToBottom();
     //this.navCtrl.push(ChatPage);
   });
 }

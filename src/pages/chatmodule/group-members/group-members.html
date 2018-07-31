@@ -28,8 +28,8 @@
         </ion-item>
         <ion-item>
           <ion-label stacked>Select Group Members</ion-label>
-          <ion-select placeholder="-----" [(ngModel)]="groupMembersData"  
-          name="groupMembersData" multiple="true">
+          <ion-select placeholder="-----" [(ngModel)]="groupMembersItem"  
+          name="groupMembersItem" multiple="true">
           <ion-option *ngFor="let availableContact of allAvailableContacts" [value]=availableContact>
           {{availableContact.first_name}} {{availableContact.last_name}}
           </ion-option>

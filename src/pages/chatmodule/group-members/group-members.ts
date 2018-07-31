@@ -40,6 +40,7 @@ export class GroupMembersPage {
   public noImgUrl="../assets/imgs/profile-photo.jpg";
   public groupId:string="";
   public groupMembersData:any[]=[];
+  public groupMembersItem:any[]=[];
   public allAvailableContacts:any[]=[];
   public loggedInUserInfo:any;
   public firebaseUserId:any;
@@ -80,19 +81,30 @@ this.loggedInUserInfo=data;
   }
   loadAllContacts()
   {
+    //debugger;
     let that=this;
+    that.allAvailableContacts=[];
     let firebaseUserId = this.storage.get('firebaseUserId');
     firebaseUserId.then((data) => {
     var fredRef=firebase.database().ref('users').on('child_added', function(snapshot) {
       //debugger;
       if(data!=snapshot.val().fbId)
       {
-        if(snapshot.val().fbId!=undefined&&snapshot.val().fbId!=null)
+        if(that.groupMembersData.length>0)
         {
-          if(!that.groupMembersData.find(groupMember => groupMember.val().userId === snapshot.val().fbId.toString()))
+          //debugger;
+          if(snapshot.val().fbId!=undefined&&snapshot.val().fbId!=null)
           {
-            that.allAvailableContacts.push(snapshot.val());
+
+            if(!that.groupMembersData.find(groupMember => groupMember.val().userId === snapshot.val().fbId.toString()))
+            {
+              that.allAvailableContacts.push(snapshot.val());
+            }
           }
+        }
+        else
+        {
+          that.allAvailableContacts.push(snapshot.val());
         }
         
         
@@ -103,12 +115,51 @@ this.loggedInUserInfo=data;
   }
   updateGroup()
   {
+
     var that=this;
+    var createDate=Date();
     var groupRef=firebase.database().ref('groups/'+that.groupKey);
     groupRef.update({groupTitle:that.groupTitle});
+    let i=0;
+    var groupMembers=firebase.database().ref('groupMembers');
+    that.groupMembersItem.forEach(function(memberData) {
+      var name="";
+      //debugger;
+      var fbId="";
+      var image_url="";
+if(memberData.first_name!=undefined)
+{
+name=memberData.first_name;
+}
+if(memberData.last_name!=undefined)
+{
+name=name+" "+memberData.last_name;
+}
+if(memberData.fbId)
+{
+fbId=memberData.fbId;
+}
+if(memberData.image_url)
+{
+image_url=memberData.image_url;
+}                                   //debugger;
+groupMembers.push({
+memberName:name,
+userId:fbId,
+image:image_url,
+dateCreated:createDate,
+groupId:that.groupId,
+provider: 'Firebase'
+});
+
+i=i+1;
+i=i;
+//debugger;
+
+    });
     this.ngZone.run(() => {
       //debugger;
-      this.navCtrl.push(ChatPage, { notificationMsg: that.notificationMsg});
+      this.navCtrl.push(ChatPage, { notificationMsg: "Group updated successfully."});
     });
   }
   groupDetails() {
