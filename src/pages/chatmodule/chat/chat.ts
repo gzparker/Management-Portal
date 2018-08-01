@@ -55,7 +55,7 @@ export class ChatPage {
     public platform: Platform,public actionSheetCtrl: ActionSheetController,
     public viewCtrl: ViewController,public loadingCtrl: LoadingController,private toastCtrl: ToastController) {
       this.isApp = (!document.URL.startsWith("http"));
-      sharedServiceObj.chatNewMsgSentEmiter.subscribe(item => this.msgSentResp(item));
+      //sharedServiceObj.chatNewMsgSentEmiter.subscribe(item => this.msgSentResp(item));
       sharedServiceObj.groupCreationEmiter.subscribe(item => this.groupCreationResp(item));
       if(this.navParams.get('notificationMsg')!=undefined&&this.navParams.get('notificationMsg')!='')
       {
@@ -76,12 +76,20 @@ export class ChatPage {
       }
   }
   ionViewDidLoad() {
+   
+  }
+  ionViewDidEnter()
+  {
     var that=this;
     let firebaseUserIdData = this.storage.get('firebaseUserId');
     firebaseUserIdData.then((data) => {
     this.firebaseUserId=data;
-    //let abc="dfdf";
-    //debugger;
+    let loader = this.loadingCtrl.create({
+      content: "Please wait...",
+      duration: 700
+    });
+    loader.present();
+    
 this.getMessages(null);
     });
   }
@@ -133,15 +141,7 @@ if(chat.val().groupTitle.toLowerCase().indexOf(searchText.toLowerCase()) !== -1 
   }
   getMessages(refresher:any) {
     var that=this;
-    let loader = this.loadingCtrl.create({
-      content: "Please wait...",
-      duration: 700
-    });
-    loader.present();
-    if(refresher!=null)
-  {
-    refresher.complete();
-  }
+   
     this.chatGroups=[];
     this.chatGroupsOld=[];
   var fredRef=firebase.database().ref('users').on('value', function(snapshot) {
@@ -167,7 +167,7 @@ if(resp=="1")
   this.ngZone.run(() => {
     //this.navCtrl.push(ChatPage);
     //this.closePopUp();
-    this.getMessages(null);
+    //this.getMessages(null);
   });
 }
 }
@@ -199,9 +199,16 @@ loadAllChatGroups()
   var that=this;
   //that.chatGroups=[];
   //that.chatGroupsOld=[];
-  var fredRef=firebase.database().ref('groups').on('child_added', function(snapshot) {
-    that.chatGroups.push(snapshot);
-    that.chatGroupsOld.push(snapshot);
+  var fredRef=firebase.database().ref('groups').on('value', function(snapshot) {
+    if(snapshot.exists())
+    {
+      that.chatGroups=[];
+  that.chatGroupsOld=[];
+      snapshot.forEach(element => {
+    that.chatGroups.push(element);
+    that.chatGroupsOld.push(element);
+      });
+  }
     //let abc="ssd";
     //debugger;
     //debugger;
