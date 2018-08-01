@@ -48,6 +48,10 @@ export class ChatPage {
   public users:any[]=[];
   public usersOld:any[]=[];
   public noImgUrl="../assets/imgs/profile-photo.jpg";
+  public groupRef:any;
+  public groupMemberRef:any;
+  public chatRef:any;
+  public userRef:any;
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, 
     public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
@@ -76,7 +80,10 @@ export class ChatPage {
       }
   }
   ionViewDidLoad() {
-   
+  this.groupRef=firebase.database().ref('groups');
+  this.userRef=firebase.database().ref('users');
+  this.chatRef=firebase.database().ref('chats');
+  this.groupMemberRef=firebase.database().ref('groupMembers');
   }
   ionViewDidEnter()
   {
@@ -145,6 +152,7 @@ if(chat.val().groupTitle.toLowerCase().indexOf(searchText.toLowerCase()) !== -1 
     this.chatGroups=[];
     this.chatGroupsOld=[];
   var fredRef=firebase.database().ref('users').on('value', function(snapshot) {
+    //var fredRef=that.userRef.on('value', function(snapshot) {
     //debugger;
     that.users=[];
     that.usersOld=[];
@@ -188,6 +196,7 @@ loadAllGroupMembers()
   that.groupMembersData=[];
   that.groupMembersDataOld=[];
   var fredRef=firebase.database().ref('groupMembers').on('child_added', function(snapshot) {
+    //var fredRef=that.groupMemberRef.on('child_added', function(snapshot) {
     //debugger;
     that.groupMembersData.push(snapshot.val());
     that.groupMembersDataOld.push(snapshot.val());
@@ -200,6 +209,7 @@ loadAllChatGroups()
   //that.chatGroups=[];
   //that.chatGroupsOld=[];
   var fredRef=firebase.database().ref('groups').on('value', function(snapshot) {
+    //var fredRef=that.groupRef.on('value', function(snapshot) {
     if(snapshot.exists())
     {
       that.chatGroups=[];
@@ -214,7 +224,7 @@ loadAllChatGroups()
     //debugger;
 });
 var chatsObjRef=firebase.database().ref('chats').on('value', function(chatsObjRefVal) {
-
+  //var chatsObjRef=that.chatRef.on('value', function(chatsObjRefVal) {
  if(chatsObjRefVal.exists())
  {
    //debugger;
@@ -269,6 +279,7 @@ totalUnreadMessages(groupData:any,arrIndex:any)
   var unreadCounter=0;
   let i=0;
     firebase.database().ref('chats').orderByChild("groupId").equalTo(groupData.val().groupId).on("value", function(snapshot) {
+      //that.chatRef.orderByChild("groupId").equalTo(groupData.val().groupId).on("value", function(snapshot) {
       i=0;
       snapshot.forEach(element => {
         //debugger;
@@ -337,8 +348,11 @@ var deleteGroupObjRef=firebase.database().ref('groups/'+id).once('value', functi
   groupRef.update({deletedFor:deletedGroupArray});
 
  }
- firebase.database().ref('chats').orderByChild("groupId").equalTo(groupId).on("child_added", function(chatForDelete) {
+ var chatDummyRef=firebase.database().ref('chats');
+ chatDummyRef.orderByChild("groupId").equalTo(groupId).on("child_added", function(chatForDelete) {
+  //that.chatRef.orderByChild("groupId").equalTo(groupId).on("child_added", function(chatForDelete) {
   if(chatForDelete.val()){
+    var chatIdRef=firebase.database().ref('chats/'+chatForDelete.key);
     firebase.database().ref('chats/'+chatForDelete.key).once('value', function(deleteChatRefVal) {
 if(deleteChatRefVal.exists())
 {
@@ -351,13 +365,13 @@ if(deleteChatRefVal.exists())
  let fredRef=firebase.database().ref('chats/'+chatForDelete.key)
   fredRef.update({deletedFor:deletedChatingArray});
 }
-  
-  
     });
-  }});
- 
+    chatIdRef.off('value');
+  }
 });
-
+chatDummyRef.off("child_added");
+});
+deleteGroupObjRef.off("value");
 that.getMessages(null);              
    
 }

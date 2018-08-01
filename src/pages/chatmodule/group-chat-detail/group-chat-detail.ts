@@ -66,6 +66,10 @@ public chatWidth:string="";
   public chatHeight:string="";
 
   public chatImageChangedEvent:any='';
+  public groupRef:any;
+  public groupMemberRef:any;
+  public chatRef:any;
+  public userRef:any;
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, 
@@ -121,6 +125,36 @@ this.loggedInUserInfo=data;
       that.scrollToBottom();
     }, 400);
   }
+  ionViewDidLeave()
+  {
+    if(this.groupRef!=undefined)
+    {
+      this.groupRef.off("value");
+    }
+if(this.userRef!=undefined)
+{
+  this.userRef.off("value");
+}
+if(this.chatRef!=undefined)
+{
+this.chatRef.off("value");
+}
+  }
+  ionViewWillLeave()
+  {
+    if(this.groupRef!=undefined)
+    {
+      this.groupRef.off("value");
+    }
+if(this.userRef!=undefined)
+{
+  this.userRef.off("value");
+}
+if(this.chatRef!=undefined)
+{
+this.chatRef.off("value");
+}
+  }
   setUserTyping(groupId){
 let that=this;
   that.sharedServiceObj.setUserTyping(groupId,that.firebaseUserId);
@@ -142,7 +176,8 @@ that.sharedServiceObj.setUserNotTyping(groupId);
   }
     that.chatDetailArray=[];
         var chatDetailArrayExist=[];
-        firebase.database().ref('groups').orderByChild("groupId").equalTo(that.groupId).on("value", function(snapshot) {
+        that.groupRef=firebase.database().ref('groups');
+        that.groupRef.orderByChild("groupId").equalTo(that.groupId).on("value", function(snapshot) {
           snapshot.forEach(element=>{
         that.returnedGroup=element;
       // debugger;
@@ -150,7 +185,8 @@ that.sharedServiceObj.setUserNotTyping(groupId);
         //debugger;
      //let test="ddf";
      //debugger;
-        var fredRef=firebase.database().ref('users').on('value', function(snapshot) {
+     that.userRef=firebase.database().ref('users');
+     that.userRef.on('value', function(snapshot) {
           that.users=[];
         snapshot.forEach(element=>{
           that.users.push(element.val());
@@ -158,8 +194,8 @@ that.sharedServiceObj.setUserNotTyping(groupId);
             
        
       });
-      
-      firebase.database().ref('chats').orderByChild("groupId").equalTo(that.groupId).on("value", function(snapshot) {
+      that.chatRef=firebase.database().ref('chats');
+      that.chatRef.orderByChild("groupId").equalTo(that.groupId).on("value", function(snapshot) {
         that.chatDetailArray=[];
        let i=0;
      //debugger;
@@ -201,7 +237,8 @@ var groupId=that.groupId;
 //debugger;
 //var group =Firebase.get('groups','groupId',groupId);
 //group.$loaded().then(function (){
-  firebase.database().ref('groups').orderByChild("groupId").equalTo(groupId).on("child_added", function(snapshot) {
+  var groupDummyRef=firebase.database().ref('groups');
+  groupDummyRef.orderByChild("groupId").equalTo(groupId).on("child_added", function(snapshot) {
     if(snapshot.val()){
 var selectedGroup=snapshot;
 
@@ -242,6 +279,7 @@ that.chatImage="";
 //});
                             }
                           });
+                          groupDummyRef.off("child_added");
 };
 openEmoji()
    {
@@ -300,7 +338,8 @@ openEmoji()
         {
           text: 'Ok',
           handler: () => {
-   firebase.database().ref('groupMembers').orderByChild("groupId").equalTo(that.groupId).on("value", function(snapshot) {
+            var groupMemberRef=firebase.database().ref('groupMembers');
+            groupMemberRef.orderByChild("groupId").equalTo(that.groupId).on("value", function(snapshot) {
     snapshot.forEach(element => {
       if(element.val().userId==that.firebaseUserId)
     {
@@ -308,7 +347,8 @@ openEmoji()
     that.navCtrl.setRoot(ChatPage);
     }
     });
-   })
+   });
+   groupMemberRef.off("value");
   }
 }
 ]
@@ -329,7 +369,8 @@ confirm.present();
       {
         text: 'Ok',
         handler: () => {
-    firebase.database().ref('groups').orderByChild("groupId").equalTo(groupId).once("value", function(snapshot) {
+          var groupDummyRef=firebase.database().ref('groups');
+          groupDummyRef.orderByChild("groupId").equalTo(groupId).once("value", function(snapshot) {
       snapshot.forEach((data)=>{
     
    // debugger;
@@ -337,6 +378,7 @@ confirm.present();
      that.navCtrl.setRoot(ChatPage);
                 })
               });
+              groupDummyRef.off("value");
             }
           }
         ]
@@ -359,8 +401,8 @@ confirm.present();
           {
             text: 'Ok',
             handler: () => {
-          var fredRefChat=firebase.database().ref('chats/'+chatId);
-          firebase.database().ref('chats/'+chatId).once('value', function(snapshot) {
+          var chatIdRef=firebase.database().ref('chats/'+chatId);
+          chatIdRef.once('value', function(snapshot) {
             
             if(snapshot.exists())
             {
@@ -371,8 +413,9 @@ confirm.present();
                                       deletedChatingArray=deleteChating.deletedFor;
                                       
                                       deletedChatingArray.push(that.firebaseUserId);
-                                      fredRefChat.update({deletedFor:deletedChatingArray});
-                                      firebase.database().ref('chats').orderByChild("groupId").equalTo(groupId).on("value", function(chatDetailObj) {
+                                      chatIdRef.update({deletedFor:deletedChatingArray});
+                                      var chatDummyRef=firebase.database().ref('chats');
+                                      chatDummyRef.orderByChild("groupId").equalTo(groupId).on("value", function(chatDetailObj) {
                                             var messageExist="0";
                                             chatDetailObj.forEach(function(chatDetail) {
         if(chatDetail.val().deletedFor.indexOf(that.firebaseUserId)<0)
@@ -384,8 +427,8 @@ confirm.present();
         }
         
                                             });
-        
-          firebase.database().ref('groups').orderByChild("groupId").equalTo(groupId).on("value", function(groupObj) {
+        var groupDummyRef=firebase.database().ref('groups');
+        groupDummyRef.orderByChild("groupId").equalTo(groupId).on("value", function(groupObj) {
             groupObj.forEach(function(group) {
           var selectedGroup=group;
           var fredRefGroup=firebase.database().ref('groups/'+selectedGroup.key);
@@ -406,9 +449,10 @@ confirm.present();
         });
       
                                           });
+chatDummyRef.off("value");
                                         }
                                         });
-        
+                                        chatIdRef.off("value");
            }
         }
       ]

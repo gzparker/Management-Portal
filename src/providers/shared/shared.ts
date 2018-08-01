@@ -320,19 +320,23 @@ sendMessage(type:string,description:any,redirectUserId:any,firebaseUserId:any,
       {
      groupId=redirectedGroupId;   
       }
-       var groups=firebase.database().ref('groups');
+     // var groupsDummyRef:any;
+      var groupsDummyRef=firebase.database().ref('groups');
        description=description;
-       var groups=firebase.database().ref('groups').once('value', function(groupsVal) {
+       //debugger;
+      groupsDummyRef.once('value', function(groupsVal) {
+       //var groups=firebase.database().ref('groups').once('value', function(groupsVal) {
  //debugger;
        if(groupsVal.exists())
        {
-        
-         firebase.database().ref('groups').orderByChild("groupId").equalTo(groupId).once("value", function(snapshot) {
-           //debugger;
+         debugger;
+        var specificGroupRef=firebase.database().ref('groups');
+        specificGroupRef.orderByChild("groupId").equalTo(groupId).once("value", function(snapshot) {
+           debugger;
            if(snapshot.exists()){
             snapshot.forEach((data)=>{
              var returnedGroup=data.val();
-            // debugger;
+            //debugger;
              createDate=returnedGroup.dateCreated;
    
              var fredRef=firebase.database().ref('groups/'+data.key);
@@ -346,16 +350,20 @@ sendMessage(type:string,description:any,redirectUserId:any,firebaseUserId:any,
                         that.saveGroup(groupId,memberId,type,createDate,newChatMember,loggedInUserInfo,firebaseUserId,description,chatImage);
                         that.saveMessage(groupId,memberId,type,newChatMember,loggedInUserInfo,firebaseUserId,description,chatImage,chatDetailArray);
                     }
+                    specificGroupRef.off("value");
          });
+         
        }
        else
        {
-     // debugger;
+    // debugger;
        that.saveGroup(groupId,memberId,type,createDate,newChatMember,loggedInUserInfo,firebaseUserId,description,chatImage);      
       that.saveMessage(groupId,memberId,type,newChatMember,loggedInUserInfo,firebaseUserId,description,chatImage,chatDetailArray);
     }
+    groupsDummyRef.off('value');
      });
-    
+    //
+   // debugger;
       }
       saveGroup(groupId,memberId,type,createDate,newChatMember:any,loggedInUserInfo:any,firebaseUserId:string,
         description:string,chatImage:string){
