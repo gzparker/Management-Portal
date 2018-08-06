@@ -333,7 +333,7 @@ deleteGroupChat(groupId,id) {
       handler: () => {
  var groupRef=firebase.database().ref('groups/'+id);
 
-var deleteGroupObjRef=firebase.database().ref('groups/'+id).once('value', function(deleteGroupRefVal) {
+ groupRef.once('value', function(deleteGroupRefVal) {
 
   if(deleteGroupRefVal.exists())
  {
@@ -346,10 +346,13 @@ var deleteGroupObjRef=firebase.database().ref('groups/'+id).once('value', functi
   deletedGroupArray.push(that.firebaseUserId);
  
   groupRef.update({deletedFor:deletedGroupArray});
-
+ // debugger;
+  groupRef.off("value");
  }
  var chatDummyRef=firebase.database().ref('chats');
  chatDummyRef.orderByChild("groupId").equalTo(groupId).on("child_added", function(chatForDelete) {
+   if(chatForDelete.exists())
+   {
   //that.chatRef.orderByChild("groupId").equalTo(groupId).on("child_added", function(chatForDelete) {
   if(chatForDelete.val()){
     var chatIdRef=firebase.database().ref('chats/'+chatForDelete.key);
@@ -364,14 +367,17 @@ if(deleteChatRefVal.exists())
   deletedChatingArray.push(that.firebaseUserId);
  let fredRef=firebase.database().ref('chats/'+chatForDelete.key)
   fredRef.update({deletedFor:deletedChatingArray});
+  chatIdRef.off("value");
 }
     });
-    chatIdRef.off('value');
+    
   }
+  chatDummyRef.off("child_added");
+}
 });
-chatDummyRef.off("child_added");
+
 });
-deleteGroupObjRef.off("value");
+
 that.getMessages(null);              
    
 }

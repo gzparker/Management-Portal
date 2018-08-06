@@ -51,15 +51,15 @@
        </ion-item>
         <ion-item>
             <ion-label stacked>Mobile Number</ion-label>
-            <ion-input type="text" [(ngModel)]="mobileNumber" name="mobileNumber" id="mobileNumber" pattern="^[0-9]*$"></ion-input>
+            <ion-input type="text" [(ngModel)]="mobileNumber" name="mobileNumber" id="mobileNumber"  [brmasker]="{mask:'(000) 000-0000', len:14, type:'num'}"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label stacked>Office Number</ion-label>
-            <ion-input type="text" [(ngModel)]="officeNumber" name="officeNumber" id="officeNumber" pattern="^[0-9]*$"></ion-input>
+            <ion-input type="text" [(ngModel)]="officeNumber" name="officeNumber" id="officeNumber"  [brmasker]="{mask:'(000) 000-0000', len:14, type:'num'}"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label stacked>Home Number</ion-label>
-            <ion-input type="text" [(ngModel)]="homeNumber" name="homeNumber" id="homeNumber" pattern="^[0-9]*$"></ion-input>
+            <ion-input type="text" [(ngModel)]="homeNumber" name="homeNumber" id="homeNumber"  [brmasker]="{mask:'(000) 000-0000', len:14, type:'num'}"></ion-input>
         </ion-item>
         <ion-item>
             <div class="searchbarLabel">Home Address</div>

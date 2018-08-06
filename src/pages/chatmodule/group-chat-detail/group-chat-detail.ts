@@ -182,9 +182,7 @@ that.sharedServiceObj.setUserNotTyping(groupId);
         that.returnedGroup=element;
       // debugger;
           });
-        //debugger;
-     //let test="ddf";
-     //debugger;
+      
      that.userRef=firebase.database().ref('users');
      that.userRef.on('value', function(snapshot) {
           that.users=[];
@@ -239,10 +237,11 @@ var groupId=that.groupId;
 //group.$loaded().then(function (){
   var groupDummyRef=firebase.database().ref('groups');
   groupDummyRef.orderByChild("groupId").equalTo(groupId).on("child_added", function(snapshot) {
-    if(snapshot.val()){
-var selectedGroup=snapshot;
+    if(snapshot.exists()){
+      
+var selectedGroup=snapshot.val();
 
-var fredRef=firebase.database().ref('groups/'+selectedGroup.key);
+var fredRef=firebase.database().ref('groups/'+snapshot.key);
 fredRef.update({deletedFor:deletedFor,modifiedDate:Date(),message:document.getElementById("chatDescription").innerHTML});
 var chat = firebase.database().ref('chats');
 chat.push({
@@ -277,9 +276,11 @@ that.chatImage="";
 
 
 //});
-                            }
+                            
+                            groupDummyRef.off("child_added");
+                          }
                           });
-                          groupDummyRef.off("child_added");
+                          //groupDummyRef.off("child_added");
 };
 openEmoji()
    {
@@ -340,6 +341,8 @@ openEmoji()
           handler: () => {
             var groupMemberRef=firebase.database().ref('groupMembers');
             groupMemberRef.orderByChild("groupId").equalTo(that.groupId).on("value", function(snapshot) {
+if(snapshot.exists())
+{
     snapshot.forEach(element => {
       if(element.val().userId==that.firebaseUserId)
     {
@@ -347,8 +350,10 @@ openEmoji()
     that.navCtrl.setRoot(ChatPage);
     }
     });
+    groupMemberRef.off("value");
+  }
    });
-   groupMemberRef.off("value");
+   
   }
 }
 ]
@@ -371,14 +376,18 @@ confirm.present();
         handler: () => {
           var groupDummyRef=firebase.database().ref('groups');
           groupDummyRef.orderByChild("groupId").equalTo(groupId).once("value", function(snapshot) {
+if(snapshot.exists())
+{
       snapshot.forEach((data)=>{
     
    // debugger;
      var groupForDelete=firebase.database().ref('groups/'+data.key).remove();
      that.navCtrl.setRoot(ChatPage);
-                })
+                });
+                groupDummyRef.off("value");
+              } 
               });
-              groupDummyRef.off("value");
+              
             }
           }
         ]
@@ -415,7 +424,7 @@ confirm.present();
                                       deletedChatingArray.push(that.firebaseUserId);
                                       chatIdRef.update({deletedFor:deletedChatingArray});
                                       var chatDummyRef=firebase.database().ref('chats');
-                                      chatDummyRef.orderByChild("groupId").equalTo(groupId).on("value", function(chatDetailObj) {
+                                      chatDummyRef.orderByChild("groupId").equalTo(groupId).once("value", function(chatDetailObj) {
                                             var messageExist="0";
                                             chatDetailObj.forEach(function(chatDetail) {
         if(chatDetail.val().deletedFor.indexOf(that.firebaseUserId)<0)
@@ -428,7 +437,8 @@ confirm.present();
         
                                             });
         var groupDummyRef=firebase.database().ref('groups');
-        groupDummyRef.orderByChild("groupId").equalTo(groupId).on("value", function(groupObj) {
+        groupDummyRef.orderByChild("groupId").equalTo(groupId).once("value", function(groupObj) {
+if(groupObj.exists()){
             groupObj.forEach(function(group) {
           var selectedGroup=group;
           var fredRefGroup=firebase.database().ref('groups/'+selectedGroup.key);
@@ -446,13 +456,15 @@ confirm.present();
             
           }
         });
+       // groupDummyRef.off("value");
+      }
         });
       
                                           });
-chatDummyRef.off("value");
+//chatDummyRef.off("value");
                                         }
                                         });
-                                        chatIdRef.off("value");
+                                        //chatIdRef.off("value");
            }
         }
       ]

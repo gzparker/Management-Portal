@@ -273,7 +273,7 @@ if(i==snapshot.numChildren()){
   }
   sendMessage(type:string)
   {
-   //debugger;
+   debugger;
     this.sharedServiceObj.sendMessage(type,document.getElementById("chatDescription").innerHTML,undefined,this.firebaseUserId,
       undefined,this.groupId,this.loggedInUserInfo,this.chatImage,this.chatDetailArray);
   }
@@ -318,6 +318,7 @@ let confirm = this.alertCtrl.create({
       chatIdRef.once('value', function(snapshot) {
       if(snapshot.exists())
       {
+        debugger;
                                 var deleteChating=snapshot.val();
                                 
                                 var deletedChatingArray=[];
@@ -327,8 +328,11 @@ let confirm = this.alertCtrl.create({
                                 deletedChatingArray.push(that.firebaseUserId);
                                 chatIdRef.update({deletedFor:deletedChatingArray});
                                 var chatDummyRef=firebase.database().ref('chats');
-                                chatDummyRef.orderByChild("groupId").equalTo(groupId).on("value", function(chatDetailObj) {
+                                chatDummyRef.orderByChild("groupId").equalTo(groupId).once("value", function(chatDetailObj) {
+                                  if(chatDetailObj.exists())
+                                  {
                                       var messageExist="0";
+                                      debugger;
                                       chatDetailObj.forEach(function(chatDetail) {
   if(chatDetail.val().deletedFor.indexOf(that.firebaseUserId)<0)
   {
@@ -340,7 +344,9 @@ let confirm = this.alertCtrl.create({
   
                                       });
   var groupDummyRef=firebase.database().ref('groups');
-  groupDummyRef.orderByChild("groupId").equalTo(groupId).on("value", function(groupObj) {
+  groupDummyRef.orderByChild("groupId").equalTo(groupId).once("value", function(groupObj) {
+    if(groupObj.exists())
+    {
       groupObj.forEach(function(group) {
     var selectedGroup=group;
     var fredRefGroup=firebase.database().ref('groups/'+selectedGroup.key);
@@ -358,13 +364,16 @@ let confirm = this.alertCtrl.create({
       
     }
   });
+  //groupDummyRef.off("value");
+}
   });
-  groupDummyRef.off("value");
+  //chatDummyRef.off("value");
+}
                                     });
-                                    chatDummyRef.off("value");
+                                    //chatIdRef.off("value");
                                   }
                                   });
-                                  chatIdRef.off("value");  
+                                    
 
   
      }
