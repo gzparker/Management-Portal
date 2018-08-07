@@ -3,6 +3,12 @@ import { IonicPage, NavController, NavParams, ModalController, Platform,
   MenuController,LoadingController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
+
+import { IMultiSelectOption,IMultiSelectSettings } from 'angular-2-dropdown-multiselect';
+import { Crop } from '@ionic-native/crop';
+import { Camera, CameraOptions } from '@ionic-native/camera';
+import { ImagePicker } from '@ionic-native/image-picker';
+import { ImageCropperComponent, CropperSettings } from "ngx-img-cropper";
 import { DashboardPage } from '../../dashboard/dashboard';
 import { FbConfirmPage } from '../../fb-confirm/fb-confirm';
 
@@ -32,6 +38,10 @@ import { SubscriptionProvider } from '../../../providers/subscription/subscripti
   templateUrl: 'edit-lead.html',
 })
 export class EditLeadPage {
+  @ViewChild('leadImageCropper', undefined)
+  leadImageCropper:ImageCropperComponent;
+  public isApp=false;
+  public isWebBrowser=false;
   public leadId:string="";
   public userId:string="";
  
@@ -59,6 +69,22 @@ public leadUpdateMsg:string="";
 public allWebsiteList:any[]=[];
 public allAgents:any[]=[];
 public selectedWebsite:string="";
+public hideLeadCropper:boolean=true;
+  public edit_lead_image:boolean=false;
+  public crop_lead_image:boolean=false;
+  public leadCropperSettings;
+  public croppedWidth:Number;
+  public croppedHeight:Number;
+  public dataLeadImage:any;
+  public leadWidth:string="";
+  public leadHeight:string="";
+  public leadImage:string="";
+  public home_lat_lng:string="";
+  public home_address:string="";
+  public home_google_place_id:string="";
+  public work_lat_lng:string="";
+  public work_address:string="";
+  public work_google_place_id:string="";
 public loader:any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,
@@ -192,7 +218,8 @@ public loader:any;
     this.home_address_street,this.home_address_city,
     this.home_address_state_or_province,this.home_address_zipcode,
     this.work_address_street,this.work_address_city,this.work_address_state_or_province,this.work_zipcode,
-  this.assigned_agent_id,this.category,this.internal_notes)
+  this.assigned_agent_id,this.category,this.internal_notes,this.home_address,
+  this.home_lat_lng,this.home_google_place_id,this.work_address,this.work_lat_lng,this.work_google_place_id,this.leadImage)
     .subscribe((result) => this.updateLeadResp(result));
     }
   }

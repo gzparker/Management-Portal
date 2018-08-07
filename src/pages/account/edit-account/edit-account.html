@@ -48,7 +48,7 @@
       </ion-item>
     </ion-list> -->
 
-    <ion-list *ngIf="!isApp" class="animated fadeIn leadsProfileWrapper uploadPhoto">
+    <ion-list class="animated fadeIn leadsProfileWrapper uploadPhoto">
 
       <!-- Main Image Uploader -->
       <div class="AccountImageUploader">
@@ -58,14 +58,9 @@
           <img [src]="dataPersonalImage.image" [width]="personalWidth"
           [height]="personalHeight">
           </div>
-
-          <!-- Image Upload Button -->
-          <input id="custom-input" class="btnUpload" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="personalFileChangeListener($event)">
-
       </div>
-
-      <div class="ImageCropperOption">
-        
+    </ion-list>
+    <ion-list class="animated fadeIn leadsProfileWrapper uploadPhoto">
         <ion-item *ngIf="dataPersonalImage.image">
           <ion-label>Edit Image</ion-label>
           <ion-toggle [(ngModel)]="edit_personal_logo" 
@@ -73,13 +68,14 @@
         </ion-item>
 
         <!-- Image Cropper -->
-        <img-cropper class="imgCropperPreview" #personalCropper [image]="dataPersonalImage" [settings]="cropperSettings"
+        <img-cropper #personalCropper [image]="dataPersonalImage" [settings]="cropperSettings"
         (onCrop)="personalImageCropped($event)" *ngIf="hideImageCropper"></img-cropper>
+        <input id="custom-input" class="btnUpload" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="personalFileChangeListener($event)">
 
-      </div>
+      </ion-list>
 
 
-    </ion-list>
+    
 
 
 

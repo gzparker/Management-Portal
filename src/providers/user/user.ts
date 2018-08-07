@@ -563,7 +563,7 @@ createLead(member_id:string,website_id:string,email:string,password:string,first
   home_address_city:string,home_address_state_or_province:string,home_address_zipcode:string,work_address_street:string,
   work_address_city:string,work_address_state_or_province:string,work_zipcode:string,assigned_agent_id:string,
   category:string,internal_notes:string,home_address:string,home_lat_lng:string,home_google_place_id:string,
-  work_address:string,work_lat_lng:string,work_google_place_id:string){
+  work_address:string,work_lat_lng:string,work_google_place_id:string,leadImage:string){
 let phone_office_num="";
 let phone_mobile_num="";
 let phone_home_num="";
@@ -611,6 +611,8 @@ data.append('home_google_place_id',home_google_place_id);
 data.append('work_address',work_address);
 data.append('work_lat_lng',work_lat_lng);
 data.append('work_google_place_id',work_google_place_id);
+data.append('image_url',leadImage);
+//data.append('image_url',leadImage);
 //debugger;
   let searchedListing=this.http
     .post(this.sharedServiceObj.apiBaseUrl+'members/createLead', data, this.headerOptionsIDX)
@@ -621,7 +623,8 @@ updateLead(member_id:string,website_id:string,lead_id:string,email:string,passwo
   first_name:string,last_name:string,phone_office:number,phone_mobile:number,phone_home:number,home_address_street:string,
   home_address_city:string,home_address_state_or_province:string,home_address_zipcode:string,work_address_street:string,
   work_address_city:string,work_address_state_or_province:string,work_zipcode:string,assigned_agent_id:string,
-  category:string,internal_notes:string){
+  category:string,internal_notes:string,home_address:string,home_lat_lng:string,home_google_place_id:string,
+  work_address:string,work_lat_lng:string,work_google_place_id:string,leadImage:string){
 let phone_office_num="";
 let phone_mobile_num="";
 let phone_home_num="";
@@ -663,6 +666,7 @@ data.append('work_zipcode',work_zipcode);
 data.append('assigned_agent_id',assigned_agent_id);
 data.append('category',category);
 data.append('internal_notes',internal_notes);
+data.append('image_url',leadImage);
 //debugger;
   let searchedListing=this.http
     .post(this.sharedServiceObj.apiBaseUrl+'members/updateLead', data, this.headerOptionsIDX)

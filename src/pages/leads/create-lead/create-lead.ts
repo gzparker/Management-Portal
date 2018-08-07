@@ -5,6 +5,11 @@ import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 import { DashboardPage } from '../../dashboard/dashboard';
 import { FbConfirmPage } from '../../fb-confirm/fb-confirm';
+import { IMultiSelectOption,IMultiSelectSettings } from 'angular-2-dropdown-multiselect';
+import { Crop } from '@ionic-native/crop';
+import { Camera, CameraOptions } from '@ionic-native/camera';
+import { ImagePicker } from '@ionic-native/image-picker';
+import { ImageCropperComponent, CropperSettings } from "ngx-img-cropper";
 
 import { Observable } from 'rxjs/Observable';
 import { AllLeadsPage } from '../../leads/all-leads/all-leads';
@@ -36,6 +41,10 @@ export class CreateLeadPage {
   addressHomeElement: HTMLInputElement = null;
   @ViewChild('searchWorkBar', { read: ElementRef }) searchWorkBar: ElementRef;
   addressWorkElement: HTMLInputElement = null;
+  @ViewChild('leadImageCropper', undefined)
+  leadImageCropper:ImageCropperComponent;
+  public isApp=false;
+  public isWebBrowser=false;
   public userLoggedId:boolean=false;
   public userType:string="1";
   public firstName:string="";
@@ -70,12 +79,46 @@ export class CreateLeadPage {
   public work_lat_lng:string="";
   public work_address:string="";
   public work_google_place_id:string="";
+  public hideLeadCropper:boolean=true;
+  public edit_lead_image:boolean=false;
+  public crop_lead_image:boolean=false;
+  public leadCropperSettings;
+  public croppedWidth:Number;
+  public croppedHeight:Number;
+  public dataLeadImage:any;
+  public leadWidth:string="";
+  public leadHeight:string="";
+  public leadImage:string="";
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,
     public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform, 
-    public ngZone: NgZone,public menuCtrl: MenuController,public loadingCtrl: LoadingController) {
+    public ngZone: NgZone,public menuCtrl: MenuController,private crop: Crop,
+    private camera: Camera,private imagePicker: ImagePicker,public loadingCtrl: LoadingController) {
+      this.isApp = (!document.URL.startsWith("http"));
+      
+      this.hideLeadCropper=false;
+      if(this.platform.is('core')) {
+        this.isWebBrowser=true;
+      }
+      this.leadCropperSettings = new CropperSettings();
+      this.leadCropperSettings.width = 100;
+      this.leadCropperSettings.height = 100;
+      this.leadCropperSettings.croppedWidth = 1280;
+      this.leadCropperSettings.croppedHeight = 1000;
+      this.leadCropperSettings.canvasWidth = 500;
+      this.leadCropperSettings.canvasHeight = 300;
+      this.leadCropperSettings.minWidth = 10;
+      this.leadCropperSettings.minHeight = 10;
+  
+      this.leadCropperSettings.rounded = false;
+      this.leadCropperSettings.keepAspect = false;
+  
+      this.leadCropperSettings.noFileInput = true;
+
+      this.dataLeadImage= {};
+      
       this.loader = this.loadingCtrl.create({
         content: "Please wait...",
         duration: 5000
@@ -212,7 +255,8 @@ export class CreateLeadPage {
   this.officeNumber,this.mobileNumber,this.homeNumber,this.home_address_street,this.home_address_city,
   this.home_address_state_or_province,this.home_address_zipcode,
   this.work_address_street,this.work_address_city,this.work_address_state_or_province,this.work_zipcode,
-this.assigned_agent_id,this.category,this.internal_notes,this.home_address,this.home_lat_lng,this.home_google_place_id,this.work_address,this.work_lat_lng,this.work_google_place_id)
+this.assigned_agent_id,this.category,this.internal_notes,this.home_address,
+this.home_lat_lng,this.home_google_place_id,this.work_address,this.work_lat_lng,this.work_google_place_id,this.leadImage)
     .subscribe((result) => this.createLeadResp(result));
  
     }
@@ -225,6 +269,186 @@ this.assigned_agent_id,this.category,this.internal_notes,this.home_address,this.
     this.navCtrl.push(AllLeadsPage,{notificationMsg:this.leadCreateMsg.toUpperCase()});
   });
   }
+  leadFileChangeListener($event) {
+    this.hideLeadCropper=true;
+    this.edit_lead_image=true;
+    this.crop_lead_image=true;
+    var image:any = new Image();
+    var file:File = $event.target.files[0];
+    var myReader:FileReader = new FileReader();
+    var that = this;
+    myReader.onloadend = function (loadEvent:any) {
+        image.src = loadEvent.target.result;
+        //that.headerImageCropper.setImage(image);
+        image.onload = function () {
+          that.leadCropperSettings.croppedWidth=this.width;
+          that.leadCropperSettings.croppedHeight=this.height;
+          that.leadImageCropper.setImage(image);
+        }
+    };
+
+    myReader.readAsDataURL(file);
+}
+showHideLeadCropper(){
+  this.crop_lead_image=false;
+  const self = this;
+if(this.edit_lead_image)
+{
+this.hideLeadCropper=true;
+if(this.leadImage!="")
+{
+ // this.companyCropperLoaded=true;
+  var image:any = new Image();
+  image.src = this.leadImage;
+          image.onload = function () {
+            self.leadImageCropper.setImage(image); 
+          }
+}
+
+}
+else
+{
+this.hideLeadCropper=false;
+}
+}
+leadImageCropped(image:any)
+  {
+    if(this.crop_lead_image)
+    {
+      this.leadCropperSettings.croppedWidth=image.width;
+      this.leadCropperSettings.croppedHeight=image.height;
+      
+      let that=this;
+      this.resizeLeadImage(this.dataLeadImage.image, data => {
+      
+        that.leadImage=data;
+        this.createLeadImageThumbnail(that.leadImage);
+          });
+    }
+   else
+   {
+     this.crop_lead_image=true;
+   } 
+   
+  }
+ 
+  takeHeaderPicture(){
+    let options =
+    {
+      quality: 100,
+      correctOrientation: true
+    };
+    this.camera.getPicture(options)
+    .then((data) => {
+      this.leadImage="data:image/jpeg;base64," +data;
+      let image : any= new Image();
+       image.src = this.leadImage;
+     
+      if(this.isApp)
+      {
+     this.crop
+     .crop(this.leadImage, {quality: 75,targetHeight:100,targetWidth:100})
+    .then((newImage) => {
+   
+        alert(newImage);
+        this.leadImage=newImage;
+      }, error => {
+       
+        alert(error)});
+      }
+    }, function(error) {
+
+      console.log(error);
+    });
+  }
+  selectHeaderPicture()
+  {
+    let options= {
+      maximumImagesCount: 1
+    }
+  
+    this.imagePicker.getPictures(options)
+    .then((results) => {
+    }, (err) => { console.log(err) });
+  }
+  
+ /////////////////////Generate Thumbnail//////////////////////
+
+  createLeadImageThumbnail(bigMatch:any) {
+    let that=this;
+    //debugger;
+      this.generateLeadImageFromImage(bigMatch, 500, 500, 0.5, data => {
+        
+    that.dataLeadImage.image=data;
+      });
+    }
+    generateLeadImageFromImage(img, MAX_WIDTH: number = 700, MAX_HEIGHT: number = 700, quality: number = 1, callback) {
+      var canvas: any = document.createElement("canvas");
+      var image:any = new Image();
+      //image.width=this.companyCropperSettings.croppedWidth;
+      //image.height=this.companyCropperSettings.croppedHeight;
+      var that=this;
+   //debugger;
+      image.src = img;
+      image.onload = function () {
+       
+        var width=that.leadCropperSettings.croppedWidth;
+        var height=that.leadCropperSettings.croppedHeight;
+       //debugger;
+        if (width > height) {
+          if (width > MAX_WIDTH) {
+            height *= MAX_WIDTH / width;
+            width = MAX_WIDTH;
+          }
+        } else {
+          if (height > MAX_HEIGHT) {
+            width *= MAX_HEIGHT / height;
+            height = MAX_HEIGHT;
+          }
+        }
+        //debugger;
+        canvas.width = width;
+        canvas.height = height;
+        that.leadWidth = width;
+        that.leadHeight = height;
+        //debugger;
+        var ctx = canvas.getContext("2d");
+   
+        ctx.drawImage(image, 0, 0, width, height);
+   
+        // IMPORTANT: 'jpeg' NOT 'jpg'
+        var dataUrl = canvas.toDataURL('image/jpeg', quality);
+   
+        callback(dataUrl)
+      }
+      
+    }
+    resizeLeadImage(img:any,callback)
+    {
+      var canvas: any = document.createElement("canvas");
+      var image:any = new Image();
+     
+      var that=this;
+  
+      image.src = img;
+      image.onload = function () {
+       
+        var width=that.leadCropperSettings.croppedWidth;
+        var height=that.leadCropperSettings.croppedHeight;
+      
+        canvas.width = width;
+        canvas.height = height;
+  
+        var ctx = canvas.getContext("2d");
+   
+        ctx.drawImage(image, 0, 0, width, height);
+  
+        var dataUrl = canvas.toDataURL('image/jpeg', 1);
+  
+       callback(dataUrl)
+      }
+    }
+ ////////////////////////////////////////////////////////////////////////
   clearLeadForm():void{
     this.firstName="";
     this.lastName="";

@@ -123,11 +123,11 @@
       <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="fileChangeListener($event)">
       </div>
      
-      <img-cropper class="imgCropperPreview" #agentCropper [image]="dataAgentImage" [settings]="cropperSettings"
+      <img-cropper #agentCropper [image]="dataAgentImage" [settings]="cropperSettings"
        (onCrop)="agentImageCropped($event)" *ngIf="hideAgentCropper"></img-cropper>
       
 
-      <div class="imgCropperPreviewResult" *ngIf="dataAgentImage.image" >
+      <div *ngIf="dataAgentImage.image" >
           <img [src]="dataAgentImage.image" [width]="cropperWidth"
            [height]="cropperHeight">
       </div>

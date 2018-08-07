@@ -273,7 +273,7 @@ filterItemsByCategory()
       this.searchedLeadsList=[];
       this.leadsFoundMessage="No leads found.";
       let toast = this.toastCtrl.create({
-        message: this.notificationMsg,
+        message: this.leadsFoundMessage,
         duration: 3000,
         position: 'top',
         cssClass:'errorToast'

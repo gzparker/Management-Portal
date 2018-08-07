@@ -223,7 +223,7 @@
     </ion-list>
 
 
-    <ion-list class="additionalOption uploadPhoto" *ngIf="!isApp">
+    <ion-list *ngIf="!isApp">
         
         <ion-label stacked>Main Image</ion-label>
         
@@ -235,42 +235,41 @@
         </ion-item>
 
 
-        <!-- Main Image Uploader -->
-        <div class="HotSheetImageUploader">
-          
           <!-- Image Cropper -->
-          <img-cropper class="imgCropperPreview" #headerImageCropper [image]="dataHeaderImage" [settings]="headerCropperSettings"
+          <img-cropper #headerImageCropper [image]="dataHeaderImage" [settings]="headerCropperSettings"
           (onCrop)="headerImageCropped($event)" *ngIf="hideHeaderCropper"></img-cropper>
 
           <!-- Image Cropper Result -->
-          <div class="imgCropperPreviewResult" *ngIf="dataHeaderImage.image">          
+          <div *ngIf="dataHeaderImage.image">          
           <img [src]="dataHeaderImage.image" [width]="headerWidth"
           [height]="headerHeight">
           </div>
 
           <!-- Image Upload Button -->
-          <input id="custom-input" class="btnUpload" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="headerFileChangeListener($event)">
-
-        </div>
+          <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="headerFileChangeListener($event)">
 
 
-        <div class="customItem">
+      </ion-list>  
+      <ion-list *ngIf="!isApp">
+       
         <ion-label stacked>Community/Gallery Images</ion-label>
 
         <!-- Main Image Uploader -->
-        <div class="HotSheetImageUploader">
-          
+      
+          <ion-item *ngIf="dataCommunityImage.image">
+            <ion-label>Edit Image</ion-label>
+            <ion-toggle [(ngModel)]="edit_community_image" 
+            name="edit_community_image" (click)="showHideCommunityCropper()"></ion-toggle>
+          </ion-item>
           <!-- Image Cropper -->
-          <img-cropper class="imgCropperPreview"  #communityImageCropper [image]="dataCommunityImage" [settings]="communityCropperSettings"
+          <img-cropper  #communityImageCropper [image]="dataCommunityImage" [settings]="communityCropperSettings"
              (onCrop)="communtiyImageCropped($event)" *ngIf="hideCommunityCropper"></img-cropper>
 
           
 
           <!-- Image Upload Button -->          
-          <input id="custom-input" class="btnUpload" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="communityFileChangeListener($event)">
+          <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="communityFileChangeListener($event)">
 
-        </div>
-        </div>
 
     
         <!-- <div class="customItem">

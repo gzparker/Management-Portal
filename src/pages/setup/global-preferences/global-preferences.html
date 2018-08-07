@@ -75,7 +75,7 @@
               </ion-item>
 
               <!-- Image Cropper -->
-              <img-cropper class="imgCropperPreview" #companyCropper [image]="dataCompanyLogoImage" 
+              <img-cropper #companyCropper [image]="dataCompanyLogoImage" 
               [settings]="companyCropperSettings"
                (onCrop)="companyImageCropped($event)" *ngIf="hideCompanyCropper"></img-cropper>
 

@@ -137,7 +137,25 @@
             <ion-label stacked>Internal Notes</ion-label>
             <ion-textarea type="text" [(ngModel)]="internal_notes" name="internal_notes"></ion-textarea>
           </ion-item>
-
+          <ion-list class="additionalOption uploadPhoto" *ngIf="!isApp">
+        
+            <ion-label stacked>Main Image</ion-label>
+    
+            <!-- Edit Image Toggle Button -->
+            <ion-item class="toggleImageEdit" *ngIf="dataLeadImage.image">
+              <ion-label>Edit Image</ion-label>
+              <ion-toggle [(ngModel)]="edit_lead_image" 
+              name="edit_lead_image" (click)="showHideLeadCropper()"></ion-toggle>
+            </ion-item>  
+              <img-cropper #leadImageCropper [image]="dataLeadImage" [settings]="leadCropperSettings" 
+              (onCrop)="leadImageCropped($event)" *ngIf="hideLeadCropper"></img-cropper>
+              <span *ngIf="dataLeadImage.image" >
+              <img [src]="dataLeadImage.image" [width]="leadWidth"
+              [height]="leadHeight">
+              </span> 
+              <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple 
+              (change)="leadFileChangeListener($event)">
+        </ion-list>
         </ion-list>
         <div class="dashboardBtn">
             <button ion-button color="primary" block (click)="createLead();" [disabled]="!leadForm.valid">Create Contact</button>

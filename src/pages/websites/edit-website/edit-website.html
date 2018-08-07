@@ -159,7 +159,7 @@
               </ion-item>
 
               <!-- Image Cropper -->              
-              <img-cropper class="imgCropperPreview" #companyLogoCropper [image]="dataWebsiteLogo" [settings]="logoCropperSettings"
+              <img-cropper #companyLogoCropper [image]="dataWebsiteLogo" [settings]="logoCropperSettings"
                (onCrop)="websiteIdentityImageCropped($event)" *ngIf="hideLogoCropper"></img-cropper>
 
             </div>
@@ -189,7 +189,7 @@
                 </ion-item>
 
                 <!-- Image Cropper -->              
-                <img-cropper class="imgCropperPreview" #favIconLogoCropper [image]="dataWebsiteIcon" [settings]="favIconCropperSettings" 
+                <img-cropper #favIconLogoCropper [image]="dataWebsiteIcon" [settings]="favIconCropperSettings" 
                 (onCrop)="websiteFavIconImageCropped($event)" *ngIf="hideFavIconCropper"></img-cropper>
               </div>
 
