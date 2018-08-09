@@ -673,9 +673,19 @@ data.append('image_url',leadImage);
     .map(this.extractData)
     return searchedListing;
 }
-
+updateLeadNotes(lead_id:string,internal_notes:string){
+    let data = new URLSearchParams();
+//debugger;
+ data.append('lead_id',lead_id);
+data.append('internal_notes',internal_notes);
+//debugger;
+  let updateNotes=this.http
+    .post(this.sharedServiceObj.apiBaseUrl+'members/updateLeadNotes', data, this.headerOptionsIDX)
+    .map(this.extractData)
+    return updateNotes;
+}
 allLeads(user_id:string,category:string){
-
+//debugger;
     let data = new URLSearchParams();
  data.append('member_id',user_id);
 data.append('category',category);

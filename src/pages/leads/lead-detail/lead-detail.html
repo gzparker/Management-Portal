@@ -58,31 +58,31 @@
         <p>{{leadDetail.email}}</p>
       </ion-item> -->
 
-      <ion-item class="leadsWebURL" *ngIf="leadDetail!=undefined">
+      <ion-item class="leadsWebURL" *ngIf="leadDetail!=undefined&&leadDetail.website!=undefined&&leadDetail.website!=''">
         <ion-icon name="ios-globe-outline" item-start></ion-icon>
         <!-- <h2>Website</h2> -->
-        <p>{{leadDetail.website}}</p>
+        <a (click)="openInAppBrowser(leadDetail.website)">{{leadDetail.website}}</a>
       </ion-item>
 
-      <ion-item class="leadsEmail" *ngIf="leadDetail!=undefined">
+      <ion-item class="leadsEmail" *ngIf="leadDetail!=undefined&&leadDetail.email!=undefined&&leadDetail.email!=''">
         <ion-icon name="ios-mail-outline" item-start></ion-icon>
         <!-- <h2>Email</h2> -->
         <p>{{leadDetail.email}}</p>
       </ion-item>
 
-      <ion-item class="leadsPhone1" *ngIf="leadDetail!=undefined">
+      <ion-item class="leadsPhone1" *ngIf="leadDetail!=undefined&&leadDetail.phone_mobile!=undefined&&leadDetail.phone_mobile!=''">
         <ion-icon name="md-call" item-start></ion-icon>
         <!-- <h2>Mobile #</h2> -->
         <p>{{leadDetail.phone_mobile}}</p>
       </ion-item>
 
-      <ion-item class="leadsPhone2" *ngIf="leadDetail!=undefined">
+      <ion-item class="leadsPhone2" *ngIf="leadDetail!=undefined&&leadDetail.phone_office!=undefined&&leadDetail.phone_office!=''">
         <ion-icon name="md-call" item-start></ion-icon>
         <!-- <h2>Office #</h2> -->
         <p>{{leadDetail.phone_office}}</p>
       </ion-item>
 
-      <ion-item class="leadsPhone3" *ngIf="leadDetail!=undefined">
+      <ion-item class="leadsPhone3" *ngIf="leadDetail!=undefined&&leadDetail.phone_home!=undefined&&leadDetail.phone_home!=''">
         <ion-icon name="md-call" item-start></ion-icon>
         <!-- <h2>Home #</h2> -->
         <p>{{leadDetail.phone_home}}</p>
@@ -94,10 +94,12 @@
       </ion-item> -->
 
       <div class="leadMapAddress">
-          <div class="addressBlock" *ngIf="leadDetail!=undefined">
+          <div class="addressBlock" *ngIf="leadDetail!=undefined&&leadDetail.home_address!=undefined&&leadDetail.home_address!=''">
           <h2 class="contentTitle">Home Address</h2>
           <!-- <p>27 Renata,<br/> Newport Coast, CA 92657,<br/> USA</p> -->
-          <p>{{leadDetail.home_address}}</p>
+          
+          <ion-item (click)="openGoogleMapBrowser(leadDetail.home_address)" 
+          *ngFor="let address_part of home_address_parts">{{address_part}}</ion-item>
           </div>
 
           <div class="leadsHomeAddressMap">
@@ -111,10 +113,12 @@
       </ion-item> -->
 
       <div class="leadMapAddress">
-          <div class="addressBlock"  *ngIf="leadDetail!=undefined">
+          <div class="addressBlock"  *ngIf="leadDetail!=undefined&&leadDetail.work_address!=undefined&&leadDetail.work_address!=''">
           <h2 class="contentTitle">Work Address</h2>
           <!-- <p>27 Renata,<br/> Newport Coast, CA 92657,<br/> USA</p> -->
-          <p>{{leadDetail.work_address}}</p>
+          <!--<p>{{leadDetail.work_address}}</p>-->
+          <ion-item (click)="openGoogleMapBrowser(leadDetail.work_address)" 
+          *ngFor="let address_part of work_address_parts">{{address_part}}</ion-item>
           </div>
 
           <div class="leadsWorkAddressMap">
@@ -128,9 +132,16 @@
   
   <ion-list class="leadNotes">
       <ion-item *ngIf="leadDetail!=undefined">
-        <h2 class="contentTitle">Private notes about {{leadDetail.first_name}}</h2>
-        <p>{{leadDetail.internal_notes}}</p>        
+          <ion-label stacked class="contentTitle">Private notes about {{leadDetail.first_name}}</ion-label>
+        <!--<h2 class="contentTitle">Private notes about {{leadDetail.first_name}}</h2>-->
+       <!-- <p>{{leadDetail.internal_notes}}</p>-->
+       
+        <ion-textarea type="text" [(ngModel)]="internal_notes" name="internal_notes"></ion-textarea>
+        
       </ion-item>
+      <div class="dashboardBtn">
+        <button ion-button color="primary" block (click)="updateLeadNotes();">Update</button>
+    </div>
   </ion-list>
 
 

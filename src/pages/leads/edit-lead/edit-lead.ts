@@ -90,11 +90,34 @@ public loader:any;
     public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,
     public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform, 
-    public ngZone: NgZone,public menuCtrl: MenuController,public loadingCtrl: LoadingController) {
+    public ngZone: NgZone,public menuCtrl: MenuController,public loadingCtrl: LoadingController,private crop: Crop,
+    private camera: Camera,private imagePicker: ImagePicker) {
       this.loader = this.loadingCtrl.create({
         content: "Please wait...",
         duration: 5000
       });
+      this.isApp = (!document.URL.startsWith("http"));
+      
+      this.hideLeadCropper=false;
+      if(this.platform.is('core')) {
+        this.isWebBrowser=true;
+      }
+      this.leadCropperSettings = new CropperSettings();
+      this.leadCropperSettings.width = 100;
+      this.leadCropperSettings.height = 100;
+      this.leadCropperSettings.croppedWidth = 1280;
+      this.leadCropperSettings.croppedHeight = 1000;
+      this.leadCropperSettings.canvasWidth = 500;
+      this.leadCropperSettings.canvasHeight = 300;
+      this.leadCropperSettings.minWidth = 10;
+      this.leadCropperSettings.minHeight = 10;
+  
+      this.leadCropperSettings.rounded = false;
+      this.leadCropperSettings.keepAspect = false;
+  
+      this.leadCropperSettings.noFileInput = true;
+
+      this.dataLeadImage= {};
   }
 
   ionViewDidLoad() {
@@ -193,6 +216,12 @@ public loader:any;
      this.work_address_state_or_province=result.result.work_address_state_or_province;
      this.work_zipcode=result.result.work_zipcode;
      this.category=result.result.category;
+    // debugger;
+     if(result.result.image_url!=undefined)
+      {
+        //debugger;
+        this.loadLeadImage(this.sharedServiceObj.imgBucketUrl,result.result.image_url);
+      }
      //debugger;
      if(result.result.assigned_agent_id!=undefined&&result.result.assigned_agent_id!='')
      {
@@ -238,6 +267,202 @@ public loader:any;
       this.navCtrl.push(ManageAgentsPage);
     });
   }
+  loadLeadImage(baseUrl:string,imageUrl:string) {
+    //debugger;
+    const self = this;
+    var image:any = new Image();
+    const xhr = new XMLHttpRequest()
+    xhr.open("GET", baseUrl+imageUrl);
+    xhr.responseType = "blob";
+    xhr.send();
+    xhr.addEventListener("load", function() {
+        var reader = new FileReader();
+        reader.readAsDataURL(xhr.response); 
+       
+        reader.onloadend = function (loadEvent:any) {
+         // self.hideImageCropper=true;
+          image.src = loadEvent.target.result;
+          image.onload = function () {
+            //alert (this.width);
+            //debugger;
+            self.leadCropperSettings.croppedWidth = this.width;
+            self.leadCropperSettings.croppedHeight = this.height;
+            self.leadImage=image.src;
+            //debugger;
+            //self.personalCropper.setImage(image);
+            self.createLeadImageThumbnail(image.src);
+        };
+          // 
+  
+      };
+    });
+  }
+  leadFileChangeListener($event) {
+    this.hideLeadCropper=true;
+    this.edit_lead_image=true;
+    this.crop_lead_image=true;
+    var image:any = new Image();
+    var file:File = $event.target.files[0];
+    var myReader:FileReader = new FileReader();
+    var that = this;
+    myReader.onloadend = function (loadEvent:any) {
+        image.src = loadEvent.target.result;
+        image.onload = function () {
+
+          that.leadCropperSettings.croppedWidth = this.width;
+          that.leadCropperSettings.croppedHeight = this.height;
+          
+          that.leadImageCropper.setImage(image);  
+      };
+    };
+    myReader.readAsDataURL(file);
+}
+leadImageCropped(image:any)
+  {
+    if(this.crop_lead_image)
+    {
+      this.leadCropperSettings.croppedWidth = image.width;
+      this.leadCropperSettings.croppedHeight = image.height;
+   
+    let that=this;
+      this.resizeLeadImage(this.dataLeadImage.image, data => {
+        that.leadImage=data;
+        this.createLeadImageThumbnail(that.leadImage);
+          });
+    }
+    else
+    {
+      this.crop_lead_image=true;
+    }
+    
+  }
+  takeHeaderPicture(){
+      let options =
+      {
+        quality: 100,
+        correctOrientation: true
+      };
+      this.camera.getPicture(options)
+      .then((data) => {
+        this.leadImage="data:image/jpeg;base64," +data;
+        let image : any= new Image();
+         image.src = this.leadImage;
+        //this.personalImageCropper.setImage(image);
+        if(this.isApp)
+        {
+       this.crop
+       .crop(this.leadImage, {quality: 75,targetHeight:100,targetWidth:100})
+      .then((newImage) => {
+          this.leadImage=newImage;
+        }, error => {
+          alert(error)});
+        }
+      }, function(error) {
+ 
+        console.log(error);
+      });
+    }
+    showHideLeadCropper(){
+    const self = this;
+    this.crop_lead_image=false;
+if(this.edit_lead_image)
+{
+  this.hideLeadCropper=true;
+  if(this.leadImage!="")
+  {
+   // this.companyCropperLoaded=true;
+    var image:any = new Image();
+    image.src = this.leadImage;
+            image.onload = function () {
+              self.leadImageCropper.setImage(image); 
+            }
+ }
+  //this.crop_personal_image=false;
+}
+else
+{
+  //this.crop_personal_image=false;
+  this.hideLeadCropper=false;
+}
+  }
+   /////////////////////Generate Thumbnail//////////////////////
+
+   createLeadImageThumbnail(bigMatch:any) {
+    let that=this;
+    //debugger;
+      this.generateLeadImageFromImage(bigMatch, 500, 500, 0.5, data => {
+        
+    that.dataLeadImage.image=data;
+      });
+    }
+    generateLeadImageFromImage(img, MAX_WIDTH: number = 700, MAX_HEIGHT: number = 700, quality: number = 1, callback) {
+      var canvas: any = document.createElement("canvas");
+      var image:any = new Image();
+      //image.width=this.companyCropperSettings.croppedWidth;
+      //image.height=this.companyCropperSettings.croppedHeight;
+      var that=this;
+   //debugger;
+      image.src = img;
+      image.onload = function () {
+       
+        var width=that.leadCropperSettings.croppedWidth;
+        var height=that.leadCropperSettings.croppedHeight;
+       //debugger;
+        if (width > height) {
+          if (width > MAX_WIDTH) {
+            height *= MAX_WIDTH / width;
+            width = MAX_WIDTH;
+          }
+        } else {
+          if (height > MAX_HEIGHT) {
+            width *= MAX_HEIGHT / height;
+            height = MAX_HEIGHT;
+          }
+        }
+        //debugger;
+        canvas.width = width;
+        canvas.height = height;
+        that.leadWidth = width;
+        that.leadHeight = height;
+        //debugger;
+        var ctx = canvas.getContext("2d");
+   
+        ctx.drawImage(image, 0, 0, width, height);
+   
+        // IMPORTANT: 'jpeg' NOT 'jpg'
+        var dataUrl = canvas.toDataURL('image/jpeg', quality);
+   
+        callback(dataUrl)
+      }
+      
+    }
+    resizeLeadImage(img:any,callback)
+    {
+      var canvas: any = document.createElement("canvas");
+      var image:any = new Image();
+     
+      var that=this;
+  
+      image.src = img;
+      image.onload = function () {
+       
+        var width=that.leadCropperSettings.croppedWidth;
+        var height=that.leadCropperSettings.croppedHeight;
+      
+        canvas.width = width;
+        canvas.height = height;
+  
+        var ctx = canvas.getContext("2d");
+   
+        ctx.drawImage(image, 0, 0, width, height);
+  
+        var dataUrl = canvas.toDataURL('image/jpeg', 1);
+  
+       callback(dataUrl)
+      }
+    }
+    
+   ////////////////////////////////////////////////////////////////////////
   clearLeadForm():void{
     this.firstName="";
     this.lastName="";

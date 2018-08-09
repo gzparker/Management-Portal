@@ -103,16 +103,40 @@
     
     <!-- THIS IS ONLY A PLACEHOLDER, PLEASE MAKE THIS DYNAMIC -->
     
-    <ion-list class="animated fadeIn leadsProfileWrapper">
+    <!--<ion-list class="animated fadeIn leadsProfileWrapper">
       <ion-item class="leadsProfile" sticky>        
         <ion-avatar class="imgFull">
         
         <img src="../assets/imgs/profile-photo.jpg">
-        <!-- <img src="{{leadDetail.image_url}}" (error)="imgLead.src = this.sharedServiceObj.profileNoImage" #imgLead/> -->
-
+      
         </ion-avatar>        
       </ion-item>
-    </ion-list>
+    </ion-list>-->
+    <ion-list class="animated fadeIn leadsProfileWrapper uploadPhoto">
+
+        <!-- Main Image Uploader -->
+        <div class="AccountImageUploader">
+  
+            <!-- Image Cropper Result -->
+            <div class="imgCropperPreviewResult" *ngIf="dataLeadImage.image" >
+            <img [src]="dataLeadImage.image" [width]="leadWidth"
+            [height]="leadHeight">
+            </div>
+        </div>
+      </ion-list>
+    <ion-list class="animated fadeIn leadsProfileWrapper uploadPhoto">
+        <ion-item *ngIf="dataLeadImage.image">
+          <ion-label>Edit Image</ion-label>
+          <ion-toggle [(ngModel)]="edit_lead_image" 
+          name="edit_lead_image" (click)="showHideLeadCropper()"></ion-toggle>
+        </ion-item>
+
+        <!-- Image Cropper -->
+        <img-cropper #leadImageCropper [image]="dataLeadImage" [settings]="leadCropperSettings" 
+              (onCrop)="leadImageCropped($event)" *ngIf="hideLeadCropper"></img-cropper>
+        <input id="custom-input" class="btnUpload" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="leadFileChangeListener($event)">
+
+      </ion-list>
 
     <ion-list class="animated fadeIn leadsInfo">
 

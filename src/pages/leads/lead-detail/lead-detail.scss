@@ -436,6 +436,94 @@ page-lead-detail {
       // }
 
     }
+    .chatBoxSection {
+      width:100%;
+      z-index: 5;
+      position: relative;
+      // padding: 1.5em .9em;
+      padding: 1.5em .9em 1.5em 0;
+      overflow:hidden;
+      display:flex;
+      // max-height: 56px;
+      // background: red;
+      background: #FFF;
+        .chatbox-container {
+        flex: 1 1 auto;
+          .chatbox-box {
+          height: auto;
+          min-height: 31px;
+          max-height: 47px;
+          font-family: $font-three;
+          font-size: 13px;
+          line-height: 17px;
+          padding: 6px 18px 5px 18px;
+          overflow: hidden;
+          text-overflow: unset;
+          white-space: normal;
+          box-sizing: border-box;
+          border-radius: 50px;      
+          border: 1px solid #B4B4B4;
+          // border: 1px solid #E6E7E9;
+          // background: green;
+          word-break: break-word;
+          word-wrap: break-word;
+          box-sizing: border-box;
+            
+            .emoji {
+            width: 100%;
+            max-width: 22px;
+            margin: 0 4px -5px 4px;
+            height: auto;
+            }
+    
+          }
+          .chatbox-box:empty:not(:focus):before{
+          font-family: $font-three;
+          font-size: 13px;
+          line-height: 17px;
+          color: $chat-msg-text;
+          opacity: .4;
+          content:attr(data-text)
+          }      
+        }
+        .chatbox-options, .chatbox-options-upload {
+        height: 30px;
+        flex: 0 0 auto;
+        padding-left:10px;   
+        // background: pink;
+          .btn-add, .btn-chat, .btn-gallery, .btn-camera, .btn-emoji {
+          width: 24px;
+          height: 24px;
+          font-size: 0;
+          text-align: center;
+          // border-radius: 50%;
+          margin: 1px 2px 0 2px;
+          opacity: .55;
+          }
+          .btn-add {
+          margin: 4px 12px 0 0;
+          background: url("../assets/icon/svg/plus/015.svg") no-repeat center center !important;
+          background-size: 92% !important;
+          opacity: .5;
+          }
+          .btn-chat {
+          background: url("../assets/icon/svg/chatbox/008.svg") no-repeat center center !important;
+          background-size: 100% !important;
+          }
+          .btn-gallery {
+          background: url("../assets/icon/svg/chatbox/003.svg") no-repeat center center !important;
+          background-size: 98% !important;
+          }
+          .btn-camera {
+          background: url("../assets/icon/svg/chatbox/024.svg") no-repeat center center !important;
+          background-size: 100% !important;
+          }
+          .btn-emoji {
+          background: url("../assets/icon/svg/chatbox/011.svg") no-repeat center center !important;
+          background-size: 98% !important;
+          }
+        }
+      }
     
     ion-item {    
       &.leadsProfile {

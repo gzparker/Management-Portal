@@ -11,7 +11,7 @@ import { LeadHotsheetSubscribedPage } from '../lead-hotsheet-subscribed/lead-hot
 import { LeadSavedListingPage } from '../lead-saved-listing/lead-saved-listing';
 import { LeadSavedSearchesPage } from '../lead-saved-searches/lead-saved-searches';
 
-import { AlertController } from 'ionic-angular';
+import { AlertController,ToastController } from 'ionic-angular';
 
 import { UserVerificationPage } from '../../user-verification/user-verification';
 
@@ -44,11 +44,15 @@ export class LeadDetailPage {
  public map_home_height:number;
  public selectedSegment:any="1";
  public leadsDetailSegment:string="1";
+ public internal_notes:string="";
  public noImgUrl=this.sharedServiceObj.noImageUrl;
  public isOpen: boolean = false;
  public parentId:string="";
  public isOwner:boolean=false;
  public isEditLeadAccess:boolean=false;
+ public googleMapUrl:string="http://maps.google.com/maps?q=";
+ public home_address_parts:string[]=[];
+ public work_address_parts:string[]=[];
 
 public loader:any;
 @ViewChild('mapHome') mapHomeElement: ElementRef;
@@ -59,7 +63,7 @@ mapWork: any;
     public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,
     public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform, 
-    public ngZone: NgZone,public menuCtrl: MenuController,public loadingCtrl: LoadingController) {
+    public ngZone: NgZone,public menuCtrl: MenuController,public loadingCtrl: LoadingController,private toastCtrl: ToastController) {
       this.loader = this.loadingCtrl.create({
         content: "Please wait...",
         duration: 5000
@@ -256,7 +260,8 @@ mapWork: any;
    {
     // debugger;
      this.leadDetail=result.result;
-     debugger;
+     this.internal_notes=this.leadDetail.internal_notes;
+    // debugger;
      if(result.result.home_google_place_id!=undefined||result.result.home_google_place_id!=null)
      {
        if(result.result.home_google_place_id!="")
@@ -302,13 +307,61 @@ mapWork: any;
      {
       this.subscribed_hotsheets=result.subscribed_hotsheets;
      }
-     
-    // debugger;
+     if(this.leadDetail.home_address)
+     {
+this.home_address_parts=this.leadDetail.home_address.split(",");
+     }
+     if(this.leadDetail.work_address)
+     {
+this.work_address_parts=this.leadDetail.work_address.split(",");
+     }
+    //debugger;
   //this.editLeadModal.open();
    }
   
     }
    
+  }
+  updateLeadNotes()
+  {
+   //debugger;
+   //this.loader.present();
+    this.userServiceObj.updateLeadNotes(this.leadId,this.internal_notes).
+    subscribe((result) => this.updateLeadNotesResp(result));
+  }
+  updateLeadNotesResp(result:any):void{
+   // debugger;
+  // this.loader.dismiss();
+    if(result.status==true)
+    {
+      let toast = this.toastCtrl.create({
+        message: result.message,
+        duration: 3000,
+        position: 'top',
+        cssClass:'successToast'
+      });
+      
+      toast.onDidDismiss(() => {
+        //console.log('Dismissed toast');
+      });
+      toast.present();
+    }
+  }
+  openInAppBrowser(websiteUrl:string)
+  {
+    //debugger;
+    if(websiteUrl.indexOf("http")>0)
+    {
+      window.open(websiteUrl, '_black');
+    }
+    else
+    {
+      window.open("http://"+websiteUrl, '_black');
+    }
+  }
+  openGoogleMapBrowser(address:string)
+  {
+    window.open(this.googleMapUrl+address, '_black');
   }
   segmentChanged(event:any)
   {
