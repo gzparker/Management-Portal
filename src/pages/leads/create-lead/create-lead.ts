@@ -263,11 +263,20 @@ this.home_lat_lng,this.home_google_place_id,this.work_address,this.work_lat_lng,
   }
   createLeadResp(result:any):void{
     //this.loader.dismiss();
-  this.leadCreateMsg="Lead has been created successfully.";
+    if(result.status)
+    {
+      this.leadCreateMsg="Lead has been created successfully.";
+      //debugger;
+      let leadInfo=result.leadInfo;
+      this.userServiceObj.createFirebaseLead(leadInfo.email,leadInfo.password,
+        leadInfo.lead_Id,leadInfo.first_name,leadInfo.last_name,
+        leadInfo.image_url,"0","0","1",leadInfo.user_website_id);
 
-  this.ngZone.run(() => {
-    this.navCtrl.push(AllLeadsPage,{notificationMsg:this.leadCreateMsg.toUpperCase()});
-  });
+       this.ngZone.run(() => {
+         this.navCtrl.push(AllLeadsPage,{notificationMsg:this.leadCreateMsg.toUpperCase()});
+        });
+    }
+  
   }
   leadFileChangeListener($event) {
     this.hideLeadCropper=true;

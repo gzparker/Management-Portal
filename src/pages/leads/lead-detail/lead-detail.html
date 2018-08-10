@@ -98,8 +98,8 @@
           <h2 class="contentTitle">Home Address</h2>
           <!-- <p>27 Renata,<br/> Newport Coast, CA 92657,<br/> USA</p> -->
           
-          <ion-item (click)="openGoogleMapBrowser(leadDetail.home_address)" 
-          *ngFor="let address_part of home_address_parts">{{address_part}}</ion-item>
+          <ion-item 
+          *ngFor="let address_part of home_address_parts"><a (click)="openGoogleMapBrowser(leadDetail.home_address)">{{address_part}}</a></ion-item>
           </div>
 
           <div class="leadsHomeAddressMap">
@@ -117,8 +117,8 @@
           <h2 class="contentTitle">Work Address</h2>
           <!-- <p>27 Renata,<br/> Newport Coast, CA 92657,<br/> USA</p> -->
           <!--<p>{{leadDetail.work_address}}</p>-->
-          <ion-item (click)="openGoogleMapBrowser(leadDetail.work_address)" 
-          *ngFor="let address_part of work_address_parts">{{address_part}}</ion-item>
+          <ion-item 
+          *ngFor="let address_part of work_address_parts"><a (click)="openGoogleMapBrowser(leadDetail.work_address)">{{address_part}}</a></ion-item>
           </div>
 
           <div class="leadsWorkAddressMap">
@@ -168,7 +168,7 @@
 
     <!-- <h2 class="contentTitle">Saved Listings</h2> -->
 
-    <ion-item *ngFor="let saved_listing of savedListings">
+    <ion-item *ngFor="let saved_listing of savedListings" (click)="showListingDetail(saved_listing)">
         
         <ion-avatar item-start>
           <img src="{{saved_listing.url}}"
@@ -179,11 +179,11 @@
         <h2 class="forSale" *ngIf="saved_listing.listing_type=='for_sale'">For Sale</h2>
         <h2 class="forRent" *ngIf="saved_listing.listing_type=='for_rent'">For Rent</h2>
         <p class="lsPrice">${{saved_listing.price}}</p>
-        <p class="streetAddress">906 N Main St, Ann Arbor,</p>
+        <p class="streetAddress">{{saved_listing.address_street_num}} {{saved_listing.address_street_name}}, {{saved_listing.address_city}}, {{saved_listing.address_state_or_province}}</p>
         <div class="lsInfo">          
-          <span class="bed">2</span>
-          <span class="bath">1</span>
-          <span class="sqft">123</span>
+          <span class="bed">{{saved_listing.bedrooms}}</span>
+          <span class="bath">{{saved_listing.bath_total}}</span>
+          <span class="sqft">{{saved_listing.listing_size}}</span>
         </div>
         <!-- <p>Description: {{saved_listing.description}}</p> -->
         </ion-item>
@@ -191,7 +191,7 @@
   </ion-list>
   
   <ion-list class="leadHotsheetName" *ngIf="selectedSegment=='3'">
-      <ion-item *ngFor="let subscribed_hotsheet of subscribed_hotsheets">
+      <ion-item *ngFor="let subscribed_hotsheet of subscribed_hotsheets" (click)="showHotsheetDetail(subscribed_hotsheet)">
       <h2 class="contentTitle">{{subscribed_hotsheet.name}}</h2>
       </ion-item>
   </ion-list>

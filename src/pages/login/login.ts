@@ -52,6 +52,7 @@ export class LoginPage {
   public allCountryCodes: any[] = [];
   public verify_by: string = "email";
   public master_id: string = "";
+  public website_id:string="";
   public verification_code: string = "";
   public loader:any;
 
@@ -69,7 +70,10 @@ export class LoginPage {
   }
 
   ionViewDidLoad() {
-
+    let websiteInfo = this.storage.get('websiteInfo');
+    websiteInfo.then((data) => {
+      this.website_id=data.id;
+    });
   }
   back() {
     //public back = (url) => this.navCtrl.pop();
@@ -80,7 +84,8 @@ export class LoginPage {
   }
   userLoginResponse(result: any): void {
     //this.loader.dismiss();
-
+let is_submember:string="0";
+let is_lead:string="0";
     if (result.status == true) {
       if (result.memberCredentials) {
 
@@ -116,14 +121,24 @@ export class LoginPage {
         if(result.memberCredentials.parent_id!=undefined)
         {
           this.storage.set('is_submember', "1");
+          is_submember="1";
           this.setAllAccessOptions(result.userAssignedRoles);
+          this.userServiceObj.setFireBaseInfo(result.memberCredentials.email,result.memberCredentials.password,
+            result.memberCredentials.id,result.memberCredentials.first_name,result.memberCredentials.last_name,
+            result.memberCredentials.image_url,result.memberCredentials.parent_id,is_submember,is_lead,this.website_id);
           //this.storage.set('allowed_access_options', result.memberAllowedOptions);
         }
         else
         {
           this.storage.set('is_submember', "0");
-          this.userServiceObj.setFireBaseInfo(result.memberCredentials);
+          is_submember="0";
+          //this.userServiceObj.setFireBaseInfo(result.memberCredentials);
+         debugger;
+          this.userServiceObj.setFireBaseInfo(result.memberCredentials.email,result.memberCredentials.password,
+          result.memberCredentials.id,result.memberCredentials.first_name,result.memberCredentials.last_name,
+          result.memberCredentials.image_url,result.memberCredentials.parent_id,is_submember,is_lead,this.website_id);
           this.navCtrl.setRoot(DashboardTabsPage);
+   
         }
         //  debugger;
          //debugger;

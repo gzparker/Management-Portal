@@ -83,6 +83,7 @@ export class MyApp {
   public imgBaseUrl=this.sharedServiceObj.imgBucketUrl;
   public noImgUrl="../assets/imgs/profile-photo.jpg";
   public allUnreadMsg:string="";
+  public loadedWebsite:string="";
   pages: Array<{ title: string, component: any }>;
   public geoCoderData={
     country:"",
@@ -110,8 +111,9 @@ export class MyApp {
     ];
     this.setLoginInitialStatus();
    
-
+//debugger;
     this.isApp = (!document.URL.startsWith("http"));
+    this.loadedWebsite=document.URL.toString();
    sharedServiceObj.signOutEmitter.subscribe(item => {
      this.logOut();
  });
@@ -143,11 +145,21 @@ export class MyApp {
   }
   loadGeneralWebsiteSettings()
   {
-    //debugger;
-this.sharedServiceObj.getServiceDefaultInfoByUrl(document.URL.toString())
+    if(this.loadedWebsite.indexOf("localhost")>0)
+    {
+      //debugger;
+      this.sharedServiceObj.getServiceDefaultInfoByUrl("https://idx.configuration.menu")
+      .subscribe((result) => this.loadGeneralWebsiteSettingsResp(result));
+    }
+    else
+    {
+      this.sharedServiceObj.getServiceDefaultInfoByUrl(document.URL.toString())
 .subscribe((result) => this.loadGeneralWebsiteSettingsResp(result));
-//this.sharedServiceObj.getServiceDefaultInfoByUrl("https://idx.configuration.menu")
+    }
+    //debugger;
+//this.sharedServiceObj.getServiceDefaultInfoByUrl(document.URL.toString())
 //.subscribe((result) => this.loadGeneralWebsiteSettingsResp(result));
+
   }
   loadGeneralWebsiteSettingsResp(result:any)
   {
@@ -158,6 +170,7 @@ this.sharedServiceObj.getServiceDefaultInfoByUrl(document.URL.toString())
 if(result.status==true)
 {
 }*/
+//debugger;
 if(result)
 {
 this.storage.set("generalWebsiteSettings",result);
@@ -168,8 +181,28 @@ this.storage.set("generalWebsiteSettings",result);
     //debugger
     //this.userServiceObj.loadAllWebsiteInfoByDomain(document.URL.toString())
     //.subscribe((result) => this.loadWebsiteInfoByDomainResp(result));
-    this.userServiceObj.loadAllWebsiteInfoByDomain("cotierproperties.com")
+    let dummyWebsiteUrl="";
+    if(this.loadedWebsite[this.loadedWebsite.length-1]=="/")
+    {
+dummyWebsiteUrl=this.loadedWebsite.substr(0,this.loadedWebsite.length-1)
+    }
+    else
+    {
+      dummyWebsiteUrl=this.loadedWebsite;
+    }
+    //debugger;
+    if(dummyWebsiteUrl.indexOf("localhost")>0)
+    {
+     // debugger;
+     this.userServiceObj.loadAllWebsiteInfoByDomain("cotierproperties.com")
     .subscribe((result) => this.loadWebsiteInfoByDomainResp(result));
+    }
+    else
+    {
+      this.userServiceObj.loadAllWebsiteInfoByDomain(dummyWebsiteUrl)
+      .subscribe((result) => this.loadWebsiteInfoByDomainResp(result));
+    }
+    
   }
   loadWebsiteInfoByDomainResp(result:any)
   {
@@ -577,6 +610,7 @@ else if(option=='6')
  //debugger;
 //The following 2 function calls are equivalent
 fredRef.update({isOnline:'0'});
+
     });
     
    // debugger;

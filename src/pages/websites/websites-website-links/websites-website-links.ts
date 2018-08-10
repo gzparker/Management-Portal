@@ -67,7 +67,7 @@ export class WebsitesWebsiteLinksPage {
   }
   copyLink(redirectUrl:string)
   {
-    debugger;
+    //debugger;
   }
 loadAllWebsiteLinks()
 {

@@ -85,6 +85,8 @@ import { UpgradeCenterPage } from '../pages/account/upgrade-center/upgrade-cente
 import { BillingHistoryPage } from '../pages/account/billing-history/billing-history';
 import { UpcomingSubscriptionPage } from '../pages/account/upcoming-subscription/upcoming-subscription';
 import { GlobalSettingsPopupPage } from '../pages/modal-popup/global-settings-popup/global-settings-popup';
+import { HotsheetDetailPopupPage } from '../pages/modal-popup/hotsheet-detail-popup/hotsheet-detail-popup';
+import { ListingDetailPopupPage } from '../pages/modal-popup/listing-detail-popup/listing-detail-popup';
 
 import { CreateRolePage } from '../pages/roles/create-role/create-role';
 import { EditRolePage } from '../pages/roles/edit-role/edit-role';
@@ -135,7 +137,7 @@ var firebaseConfig = {
     ImageCropperComponent,AddCreditCardPage,CreateRolePage,EditRolePage,ViewRolesPage,ChatPage,ChatAccountPage,
     ChatActivitiesPage,ChatDetailPage,ChatEmojiPopupoverPage,ChatFriendsActivePage,ChatFriendsActivePage,
     ChatFriendsMessengerPage,ChatGroupsPage,ChatsPage,ChatingImagePopUpPage,NewGroupPopupPage,
-    NewMessagePopupPage,GroupChatDetailPage,GroupMembersPage,ChatFriendsPage
+    NewMessagePopupPage,GroupChatDetailPage,GroupMembersPage,ChatFriendsPage,ListingDetailPopupPage,HotsheetDetailPopupPage
   ],
   imports: [
     BrowserModule, HttpModule,CKEditorModule,
@@ -163,7 +165,7 @@ var firebaseConfig = {
     ChatPage,ChatAccountPage,
     ChatActivitiesPage,ChatDetailPage,ChatEmojiPopupoverPage,ChatFriendsActivePage,ChatFriendsActivePage,
     ChatFriendsMessengerPage,ChatGroupsPage,ChatsPage,ChatingImagePopUpPage,NewGroupPopupPage,NewMessagePopupPage,
-    NewMessagePopupPage,GroupChatDetailPage,GroupMembersPage,ChatFriendsPage
+    NewMessagePopupPage,GroupChatDetailPage,GroupMembersPage,ChatFriendsPage,ListingDetailPopupPage,HotsheetDetailPopupPage
   ],
   providers: [
     StatusBar,

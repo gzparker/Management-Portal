@@ -126,54 +126,108 @@ this.headerOptions= new RequestOptions({ headers: this.headers });
     }
 
   }
-  setFireBaseInfo(result:any)
+  setFireBaseInfo(email:string,password:string,webUserId:string,first_name:string,last_name:string,
+    image_url:string,parent_id:string,is_submember:string,is_lead:string,website_id:string)
   {
-    //debugger;
-    let that=this;
-    let websiteInfo = this.storage.get('websiteInfo');
-    websiteInfo.then((data) => {
+   //debugger;
+   let that=this;
+ 
 //debugger;
-    firebase.auth().createUserWithEmailAndPassword(result.email,result.password)
-                  .then(function (currentUser) {
-           //  debugger;
+   firebase.auth().createUserWithEmailAndPassword(email,password)
+                 .then(function (currentUser) {
+                  // debugger;
+                  firebase.auth().signInWithEmailAndPassword(email, password)
+                  .then(function(currentUser) {
+               //debugger;
+               that.storage.set('firebaseUserId',currentUser.uid);
+               that.saveFireBaseUserInfo(email,password,webUserId,first_name,last_name,
+                image_url,parent_id,is_submember,is_lead,website_id,currentUser);
                   }).catch(function(error) {
-  
+                    
+                    console.log("Authentication failed:", error);
+                   
+                  });
+                 }).catch(function(error) {
+                 //  debugger;
+                  firebase.auth().signInWithEmailAndPassword(email, password)
+                  .then(function(currentUser) {
+              // debugger;
+               that.storage.set('firebaseUserId',currentUser.uid);
+               that.saveFireBaseUserInfo(email,password,webUserId,first_name,last_name,
+                image_url,parent_id,is_submember,is_lead,website_id,currentUser);
+                  }).catch(function(error) {
+                    
+                    console.log("Authentication failed:", error);
+                   
+                  });
+     
+     });
       
-      });
-         firebase.auth().signInWithEmailAndPassword(result.email, result.password)
-    .then(function(currentUser) {
-//debugger;
-that.storage.set('firebaseUserId',currentUser.uid);
+
+  }
+  saveFireBaseUserInfo(email:string,password:string,webUserId:string,first_name:string,last_name:string,
+    image_url:string,parent_id:string,is_submember:string,is_lead:string,website_id:string,currentUser:any)
+  {
+  let is_online="0";
+    if(is_lead=="0")
+    {
+is_online="1";
+    }
+    else
+    {
+      is_online="0";
+    }
+   // debugger;
+    var fredRef=firebase.database().ref('users/'+currentUser.uid);
+    fredRef.update({isOnline:is_online,webUserId:webUserId,first_name: first_name,
+    last_name:last_name,
+    user_type:"1",
+    is_lead:is_lead,
+    is_submember:is_submember,
+    website_id:website_id,
+    image_url: image_url,
+    parent_id: parent_id,
+    verified: "1",
+    email:email,fbId:currentUser.uid}).then(function() {
+     // debugger;
+      currentUser.updateProfile({
+        displayName: first_name+" "+last_name
    
-     
-       var fredRef=firebase.database().ref('users/'+currentUser.uid);
+   }).then(function() {
+   //debugger;
+   // Update successful.
+   }, function(error) {
+   //debugger;
+   // An error happened.
+   });
+      // Update successful.
+      }, function(error) {
+      //debugger;
+      // An error happened.
+      });
+       
+  }
+  createFirebaseLead(email:string,password:string,webUserId:string,first_name:string,last_name:string,
+    image_url:string,parent_id:string,is_submember:string,is_lead:string,website_id:string)
+  {
 //debugger;
-fredRef.update({isOnline:'1',webUserId:result.id,first_name: result.first_name,
-last_name:result.last_name,
-user_type:"1",
-website_id:data.id,
-image_url: result.image_url,
-parent_id: result.parent_id,
-verified: "1",
-email:result.email,fbId:currentUser.uid});
-    
-     currentUser.updateProfile({
-      displayName: result.first_name+" "+result.last_name
-
-}).then(function() {
-
-// Update successful.
-}, function(error) {
-
-// An error happened.
-});
-      
-    }).catch(function(error) {
-      
-      console.log("Authentication failed:", error);
+let that=this;
+ 
+//debugger;
+   firebase.auth().createUserWithEmailAndPassword(email,password)
+                 .then(function (currentUser) {
+                   debugger;
+                  that.saveFireBaseUserInfo(email,password,webUserId,first_name,last_name,
+                    image_url,parent_id,is_submember,is_lead,website_id,currentUser);
+                 }).catch(function(error) {
+ 
      
-    });
-  });
+     });
+
+    
+     
+     
+  
   }
   updateFirebaseUserInfo(result:any,userId:string)
   {

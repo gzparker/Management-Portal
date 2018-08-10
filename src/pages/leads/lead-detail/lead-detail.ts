@@ -1,6 +1,6 @@
 import { Component, ViewChild, NgZone, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, Platform,
-  MenuController,LoadingController } from 'ionic-angular';
+  MenuController,LoadingController, ViewController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 import { DashboardPage } from '../../dashboard/dashboard';
@@ -10,6 +10,8 @@ import { EditLeadPage } from '../edit-lead/edit-lead';
 import { LeadHotsheetSubscribedPage } from '../lead-hotsheet-subscribed/lead-hotsheet-subscribed';
 import { LeadSavedListingPage } from '../lead-saved-listing/lead-saved-listing';
 import { LeadSavedSearchesPage } from '../lead-saved-searches/lead-saved-searches';
+import { HotsheetDetailPopupPage } from '../../modal-popup/hotsheet-detail-popup/hotsheet-detail-popup';
+import { ListingDetailPopupPage } from '../../modal-popup/listing-detail-popup/listing-detail-popup';
 
 import { AlertController,ToastController } from 'ionic-angular';
 
@@ -63,7 +65,8 @@ mapWork: any;
     public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,
     public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform, 
-    public ngZone: NgZone,public menuCtrl: MenuController,public loadingCtrl: LoadingController,private toastCtrl: ToastController) {
+    public ngZone: NgZone,public menuCtrl: MenuController,public loadingCtrl: LoadingController,
+    private toastCtrl: ToastController,public viewCtrl: ViewController) {
       this.loader = this.loadingCtrl.create({
         content: "Please wait...",
         duration: 5000
@@ -311,6 +314,7 @@ mapWork: any;
      {
 this.home_address_parts=this.leadDetail.home_address.split(",");
      }
+    //debugger;
      if(this.leadDetail.work_address)
      {
 this.work_address_parts=this.leadDetail.work_address.split(",");
@@ -358,6 +362,17 @@ this.work_address_parts=this.leadDetail.work_address.split(",");
     {
       window.open("http://"+websiteUrl, '_black');
     }
+  }
+  showHotsheetDetail(hotsheetObj:any)
+  {
+    var modalPage = this.modalCtrl.create(HotsheetDetailPopupPage,{hotsheetSelectedObj:hotsheetObj});
+    modalPage.present();
+  }
+  showListingDetail(listingObj:any)
+  {
+    //debugger;
+    var modalPage = this.modalCtrl.create(ListingDetailPopupPage,{listingSelectedObj:listingObj});
+    modalPage.present();
   }
   openGoogleMapBrowser(address:string)
   {

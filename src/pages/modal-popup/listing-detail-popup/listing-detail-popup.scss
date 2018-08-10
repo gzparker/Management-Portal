@@ -1,0 +1,158 @@
+ion-list.leadListings {
+    border-radius: 0px !important;
+    box-shadow: none !important;
+    background: #FFF !important;
+    margin-bottom: 0px !important;
+
+      .contentTitle {
+      font-family: "Varela Round" !important;
+      font-size: 16px;
+      color: #787c82;
+      text-transform: none;
+      padding: 14px 16px !important;
+      border-bottom: 2px solid $color-6;
+      }
+      
+      .item-block {
+      border-bottom: 1px solid #ebe9f0 !important;
+      }
+
+      ion-avatar {
+      // margin-top: -2px !important;
+      padding-left: 16px;
+        img {
+        width: 50px;
+        height: 50px;
+        border-radius: 1px !important;
+        }
+      }
+
+      .item-inner {      
+      padding-right: 0px;
+        .input-wrapper {
+        padding: 0 16px 0 0;
+          .label-ios, .label-md, .label-wp {
+          margin:  16px 0 10px 0;
+          position: relative;
+          overflow: visible;
+            h2 {
+            top: 0;
+            right: 0;
+            text-align: right;
+            position: absolute;
+            border-radius: 10px;
+            padding: 0 12px;
+            height: 20px;
+            line-height: 22px;            
+            text-align: center;            
+            font-size: 1.3rem;
+            font-weight: bold;            
+            white-space: nowrap;
+            vertical-align: baseline;
+            font-family: $font-three;
+            font-size: 11px;
+            font-weight: 400;
+            color: #FFF;
+            box-sizing: border-box;            
+            background: #737d8d;            
+              &.forSale {
+              background: #f05756;
+              }
+              &.forRent {
+              background: #3ca1d3;
+              }
+            }
+
+            p {
+            font-size: 12px;
+            line-height: 17px;
+            text-overflow: unset;
+            white-space: normal;        
+            color: #3c3d3f !important;
+              // &:last-child {          
+              // padding: 8px 0 0 0;
+              // max-height: 60px;
+              // overflow: hidden;
+              // }
+            }
+
+            .streetAddress {}
+
+            .lsPrice {
+            font-size: 13px;
+            letter-spacing: .5px;
+            // top: 0;
+            // right: 0;
+            // text-align: right;
+            // position: absolute;
+            // border-radius: 10px;
+            // padding: 0 12px;
+            // height: 20px;
+            // line-height: 22px;
+            // text-align: center;
+            // font-size: 1.3rem;
+            // font-weight: bold;
+            // white-space: nowrap;
+            // vertical-align: baseline;
+            // font-family: $font-three;
+            // font-size: 11px;
+            // font-weight: 400;
+            // color: #FFF !important;
+            // -webkit-box-sizing: border-box;
+            // box-sizing: border-box;
+            // background: #737d8d;
+            }
+
+            .lsInfo {
+            // margin-top: -4px;
+              span {
+              height: 16px;
+              line-height: 18px;
+              color: #3c3d3f !important;
+              width: auto;
+              float: left;              
+              display: inline-block;
+              font-family: $font-three;
+              font-size: 12px !important;
+              letter-spacing: .5px;
+              margin: 2px 15px 0 0;
+              padding-left: 20px;
+              position: relative;
+                &:before {
+                content: "";
+                width: 16px;
+                height: 16px;
+                top: 0;
+                left: 0;
+                position: absolute;
+                display: block;
+                opacity: .65;
+                }
+
+                &.bed {
+                  &:before {
+                  background: url("../assets/icon/svg/listing/020.svg") no-repeat center center !important;
+                  background-size: 90% !important;
+                  }
+                }
+
+                &.bath {
+                  &:before {
+                  background: url("../assets/icon/svg/listing/012.svg") no-repeat center center !important;
+                  background-size: 80% !important;
+                  }
+                }
+
+                &.sqft {
+                  &:before {
+                  background: url("../assets/icon/svg/listing/004.svg") no-repeat center center !important;
+                  background-size: 90% !important;
+                  }
+                }
+
+              }
+            }
+          }
+        }
+      }
+    }

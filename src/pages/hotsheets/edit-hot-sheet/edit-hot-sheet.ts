@@ -266,7 +266,7 @@ public isWebBrowser=false;
     member_id.then((data) => {
      
       this.userId=data;
-      this.viewAllHotSheets();
+      //this.viewAllHotSheets();
       this.getAllWebsite();
       this.loadAllAgents();
       if(this.navParams.get('id')!=undefined)
