@@ -46,7 +46,7 @@
   <ion-list class="leadNotes">
       <ion-item *ngIf="hotsheetSelectedObj!=null">
         <h2 class="contentTitle">Brief Description</h2>
-        <p>{{hotsheetSelectedObj.brief_description}}</p>
+        <p [innerHTML]="hotsheetSelectedObj.brief_description"></p>
       </ion-item>
   </ion-list>
 

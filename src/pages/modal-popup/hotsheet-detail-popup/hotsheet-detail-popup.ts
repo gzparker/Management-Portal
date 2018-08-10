@@ -30,12 +30,12 @@ public hotsheetSelectedObj:any;
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, 
     public platform: Platform,public actionSheetCtrl: ActionSheetController,public viewCtrl: ViewController) {
-      debugger;
+      //debugger;
       if(this.navParams.get('hotsheetSelectedObj')!=undefined)
       {
-        debugger;
+        //debugger;
         this.hotsheetSelectedObj=this.navParams.get('hotsheetSelectedObj');
-        debugger;
+        //debugger;
       }
   }
 
