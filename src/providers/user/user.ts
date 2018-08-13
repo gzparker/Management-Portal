@@ -38,8 +38,7 @@ export class UserProvider {
   private device_name="Browser";
   constructor(public sharedServiceObj: SharedProvider,public platform: Platform,private http: Http,
     private storage: Storage, public modalCtrl: ModalController,private fb: Facebook) {
-      
-   
+
     this.fbLoginDecision = new EventEmitter();
     this.headersIDX.append("IDXKEY",this.sharedServiceObj.idxapiKey);
 this.headerOptionsIDX= new RequestOptions({ headers: this.headersIDX });
@@ -82,7 +81,6 @@ this.headerOptions= new RequestOptions({ headers: this.headers });
     FB.init({
       appId: '701598080041539',
       cookie: false,
-
       xfbml: true,
       version: 'v2.9',
       status: true
@@ -720,6 +718,13 @@ data.append('work_zipcode',work_zipcode);
 data.append('assigned_agent_id',assigned_agent_id);
 data.append('category',category);
 data.append('internal_notes',internal_notes);
+
+data.append('home_address',home_address);
+data.append('home_lat_lng',home_lat_lng);
+data.append('home_google_place_id',home_google_place_id);
+data.append('work_address',work_address);
+data.append('work_lat_lng',work_lat_lng);
+data.append('work_google_place_id',work_google_place_id);
 data.append('image_url',leadImage);
 //debugger;
   let searchedListing=this.http
@@ -1264,7 +1269,7 @@ getUsersChartsData(member_id:string)
        return userChartsResp;
 }
 private extractData(res: Response) {
-  //debugger;
+  debugger;
     return res.json();
 }
   private handleErrorObservable(error: Response | any) {

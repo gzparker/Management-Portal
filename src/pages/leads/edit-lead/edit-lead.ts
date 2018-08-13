@@ -1,9 +1,10 @@
-import { Component, ViewChild, NgZone } from '@angular/core';
+import { Component, ViewChild, NgZone,ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, Platform,
   MenuController,LoadingController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 
+import { Observable } from 'rxjs/Observable';
 import { IMultiSelectOption,IMultiSelectSettings } from 'angular-2-dropdown-multiselect';
 import { Crop } from '@ionic-native/crop';
 import { Camera, CameraOptions } from '@ionic-native/camera';
@@ -31,13 +32,17 @@ import { SubscriptionProvider } from '../../../providers/subscription/subscripti
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-
+declare var google: any;
 @IonicPage()
 @Component({
   selector: 'page-edit-lead',
   templateUrl: 'edit-lead.html',
 })
 export class EditLeadPage {
+  @ViewChild('searchHomeBar', { read: ElementRef }) searchHomeBar: ElementRef;
+  addressHomeElement: HTMLInputElement = null;
+  @ViewChild('searchWorkBar', { read: ElementRef }) searchWorkBar: ElementRef;
+  addressWorkElement: HTMLInputElement = null;
   @ViewChild('leadImageCropper', undefined)
   leadImageCropper:ImageCropperComponent;
   public isApp=false;
@@ -81,9 +86,11 @@ public hideLeadCropper:boolean=true;
   public leadImage:string="";
   public home_lat_lng:string="";
   public home_address:string="";
+  public homeAddressDummy:string="";
   public home_google_place_id:string="";
   public work_lat_lng:string="";
   public work_address:string="";
+  public workAddressDummy:string="";
   public work_google_place_id:string="";
 public loader:any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
@@ -131,6 +138,8 @@ public loader:any;
        this.leadId = this.navParams.get('leadId');
        this.getAllWebsite();
        this.loadAllAgents();
+       this.initHomeAutocomplete();
+      this.initWorkAutocomplete();
        this.editLead(this.leadId);
        }
       
@@ -148,6 +157,71 @@ public loader:any;
     this.selectedWebsite=$event;
     //debugger;
  }
+ initHomeAutocomplete(): void {
+   
+  this.addressHomeElement = this.searchHomeBar.nativeElement.querySelector('.searchbar-input');
+  this.createHomeAutocomplete(this.addressHomeElement).subscribe((location) => {
+    
+  });
+}
+createHomeAutocomplete(addressEl: HTMLInputElement): Observable<any> {
+  const autocomplete = new google.maps.places.Autocomplete(addressEl);
+  
+  return new Observable((sub: any) => {
+    google.maps.event.addListener(autocomplete, 'place_changed', () => {
+      const place = autocomplete.getPlace();
+      if (!place.geometry) {
+        sub.error({
+          message: 'Autocomplete returned place with no geometry'
+        });
+      } else {
+        
+        sub.next(place.geometry.location);
+        this.getHomeAddress(place);
+        
+      }
+    });
+  });
+}
+getHomeAddress(data) {
+  this.home_address=data.formatted_address;
+  this.home_lat_lng=data.geometry.location.lat().toString()+","+data.geometry.location.lng().toString();
+  this.home_google_place_id=data.place_id;
+   }
+   initWorkAutocomplete(): void {
+ 
+    this.addressWorkElement = this.searchWorkBar.nativeElement.querySelector('.searchbar-input');
+    this.createWorkAutocomplete(this.addressWorkElement).subscribe((location) => {
+      
+    });
+  }
+  createWorkAutocomplete(addressEl: HTMLInputElement): Observable<any> {
+    const autocomplete = new google.maps.places.Autocomplete(addressEl);
+    
+    return new Observable((sub: any) => {
+      google.maps.event.addListener(autocomplete, 'place_changed', () => {
+        const place = autocomplete.getPlace();
+        if (!place.geometry) {
+          sub.error({
+            message: 'Autocomplete returned place with no geometry'
+          });
+        } else {
+          
+          sub.next(place.geometry.location);
+          this.getWorkAddress(place);
+          
+        }
+      });
+    });
+  }
+  getWorkAddress(data) {
+   // debugger;
+    this.work_address=data.formatted_address;
+    this.work_lat_lng=data.geometry.location.lat().toString()+","+data.geometry.location.lng().toString();
+    this.work_google_place_id=data.place_id;
+    //this.selectedLong=data.geometry.location.lng();
+    
+     }
  loadAllAgents()
     {
       if(this.userId.toString())
@@ -216,7 +290,15 @@ public loader:any;
      this.work_address_state_or_province=result.result.work_address_state_or_province;
      this.work_zipcode=result.result.work_zipcode;
      this.category=result.result.category;
-    // debugger;
+     this.home_address=result.result.home_address;
+     this.homeAddressDummy=result.result.home_address;
+     this.home_lat_lng=result.result.home_lat_lng;
+     this.home_google_place_id=result.result.home_google_place_id;
+     this.work_address=result.result.work_address;
+     this.workAddressDummy=result.result.work_address;
+     this.work_google_place_id=result.result.work_google_place_id;
+     this.work_lat_lng=result.result.work_lat_lng;
+    //debugger;
      if(result.result.image_url!=undefined)
       {
         //debugger;
@@ -225,7 +307,9 @@ public loader:any;
      //debugger;
      if(result.result.assigned_agent_id!=undefined&&result.result.assigned_agent_id!='')
      {
+       //debugger;
       this.assigned_agent_id=result.result.assigned_agent_id.split(',');
+      //debugger;
      }
      
      this.internal_notes=result.result.internal_notes;
