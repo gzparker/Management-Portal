@@ -18,7 +18,7 @@ import { AllLeadsPage } from '../../leads/all-leads/all-leads';
 
 import { ManageAgentsPage } from '../../setup/manage-agents/manage-agents';
 
-import { AlertController } from 'ionic-angular';
+import { AlertController,ToastController } from 'ionic-angular';
 
 import { UserVerificationPage } from '../../user-verification/user-verification';
 
@@ -33,6 +33,7 @@ import { SubscriptionProvider } from '../../../providers/subscription/subscripti
  * Ionic pages and navigation.
  */
 declare var google: any;
+declare var firebase:any;
 @IonicPage()
 @Component({
   selector: 'page-edit-lead',
@@ -92,13 +93,17 @@ public hideLeadCropper:boolean=true;
   public work_address:string="";
   public workAddressDummy:string="";
   public work_google_place_id:string="";
+  public groupRef:any;
+  public groupMemberRef:any;
+  public chatRef:any;
+  public userRef:any;
 public loader:any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,
     public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform, 
     public ngZone: NgZone,public menuCtrl: MenuController,public loadingCtrl: LoadingController,private crop: Crop,
-    private camera: Camera,private imagePicker: ImagePicker) {
+    private camera: Camera,private imagePicker: ImagePicker,private toastCtrl: ToastController) {
       this.loader = this.loadingCtrl.create({
         content: "Please wait...",
         duration: 5000
@@ -144,6 +149,21 @@ public loader:any;
        }
       
     });
+  }
+  ionViewDidLeave()
+  {
+    if(this.groupRef!=undefined)
+    {
+      this.groupRef.off("value");
+    }
+if(this.userRef!=undefined)
+{
+  this.userRef.off("value");
+}
+if(this.chatRef!=undefined)
+{
+this.chatRef.off("value");
+}
   }
   editLead(leadId:string):void{
     if(this.userId!="")
@@ -339,11 +359,32 @@ getHomeAddress(data) {
   updateLeadResp(result:any):void{
     //this.loader.dismiss();
   this.leadUpdateMsg="Lead has been updated successfully.";
-
-  this.ngZone.run(() => {
-    this.navCtrl.push(AllLeadsPage,{notificationMsg:this.leadUpdateMsg.toUpperCase()});
+  let toast = this.toastCtrl.create({
+    message: this.leadUpdateMsg,
+    duration: 3000,
+    position: 'top',
+    cssClass:'successToast'
   });
   
+  toast.onDidDismiss(() => {
+    //console.log('Dismissed toast');
+  });
+  toast.present();
+  let leadInfo=result.leadInfo;
+  //debugger;
+  this.chatRef=firebase.database().ref('users');
+    this.chatRef.orderByChild("webUserId").equalTo(leadInfo.lead_id).on("value", function(snapshot) {
+      snapshot.forEach(element => {
+      var fredRef=firebase.database().ref('users/'+element.key);
+ //debugger;
+fredRef.update({email:leadInfo.email,first_name:leadInfo.first_name,image_url:leadInfo.image_url
+  ,last_name:leadInfo.last_name,website_id:leadInfo.user_website_id});
+//debugger;
+      });
+    });
+    //this.ngZone.run(() => {
+      //this.navCtrl.push(AllLeadsPage,{notificationMsg:this.leadUpdateMsg.toUpperCase()});
+   // });
   }
   editAgents()
   {
@@ -352,7 +393,7 @@ getHomeAddress(data) {
     });
   }
   loadLeadImage(baseUrl:string,imageUrl:string) {
-    //debugger;
+   // debugger;
     const self = this;
     var image:any = new Image();
     const xhr = new XMLHttpRequest()

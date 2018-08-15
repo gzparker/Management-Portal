@@ -27,7 +27,7 @@
       <ion-avatar class="imgFull" *ngIf="leadDetail!=undefined">
       <!--<img src={{leadDetail.image_url}} *ngIf="leadDetail.image_url!=null"/>
       <img src={{noImgUrl}} *ngIf="leadDetail.image_url==null"/>-->
-      <img src="{{leadDetail.image_url}}" (error)="imgLead.src = this.sharedServiceObj.profileNoImage" #imgLead/>
+      <img src="{{this.sharedServiceObj.imgBucketUrl}}{{leadDetail.image_url}}" (error)="imgLead.src = this.sharedServiceObj.profileNoImage" #imgLead/>
         <!-- <div class="userStatus">
           <div class="userstatus-online">Online</div>
           <div class="userstatus-offline">Offline</div>

@@ -70,6 +70,7 @@ export class AllLeadsPage {
       {
         this.isApp=true;
       }*/
+      //debugger;
       this.isApp = (!document.URL.startsWith("http"));
       if(this.navParams.get('notificationMsg')!=undefined)
       {
@@ -91,6 +92,17 @@ export class AllLeadsPage {
           //console.log('Dismissed toast');
         });
         toast.present();
+      }
+      if(this.navParams.get('leadInfo')!=undefined)
+      {
+let leadInfo=this.navParams.get('leadInfo');
+if(this.navParams.get('currentUser')!=undefined)
+      {
+        let currentUser=this.navParams.get('currentUser');
+        this.userServiceObj.saveFireBaseUserInfo(leadInfo.email,leadInfo.password,leadInfo.webUserId,leadInfo.first_name,leadInfo.last_name,
+          leadInfo.image_url,leadInfo.parent_id,leadInfo.is_submember,leadInfo.is_lead,leadInfo.website_id,currentUser);
+      }
+      
       }
       this.loader = this.loadingCtrl.create({
         content: "Please wait...",

@@ -31,6 +31,7 @@ import { SubscriptionProvider } from '../../../providers/subscription/subscripti
  * Ionic pages and navigation.
  */
 declare var google: any;
+declare var firebase:any;
 @IonicPage()
 @Component({
   selector: 'page-create-lead',
@@ -268,15 +269,47 @@ this.home_lat_lng,this.home_google_place_id,this.work_address,this.work_lat_lng,
       this.leadCreateMsg="Lead has been created successfully.";
       //debugger;
       let leadInfo=result.leadInfo;
-      this.userServiceObj.createFirebaseLead(leadInfo.email,leadInfo.password,
-        leadInfo.lead_Id,leadInfo.first_name,leadInfo.last_name,
-        leadInfo.image_url,"0","0","1",leadInfo.user_website_id);
-
-       this.ngZone.run(() => {
-         this.navCtrl.push(AllLeadsPage,{notificationMsg:this.leadCreateMsg.toUpperCase()});
-        });
+      this.createFirebaseLead(leadInfo.email,leadInfo.password,
+        leadInfo.lead_id,leadInfo.first_name,leadInfo.last_name,
+        leadInfo.image_url,"0","0","1",leadInfo.user_website_id,this.leadCreateMsg.toUpperCase(),leadInfo);
+  
+      
     }
   
+  }
+  createFirebaseLead(email:string,password:string,webUserId:string,first_name:string,last_name:string,
+    image_url:string,parent_id:string,is_submember:string,is_lead:string,website_id:string,leadCreationResp:string,leadInfo:any)
+  {
+
+let that=this;
+//debugger;
+   firebase.auth().createUserWithEmailAndPassword(email,password)
+                 .then(function (currentUser) {
+                  // debugger;
+                  firebase.auth().signInWithEmailAndPassword(email, password)
+                  .then(function(currentUser) {
+                   // debugger;
+                    that.userServiceObj.saveFireBaseUserInfo(email,password,webUserId,first_name,last_name,
+                    image_url,parent_id,is_submember,is_lead,website_id,currentUser);
+                  }).catch(function(error) {
+ 
+                   //debugger;
+                  });
+                   //debugger;
+               // that.ngZone.run(() => {
+                  // debugger;
+        // that.navCtrl.setRoot(AllLeadsPage,{notificationMsg:this.leadCreateMsg.toUpperCase(),leadInfo:leadInfo,currentUser:currentUser});
+        //});
+                  //that.userServiceObj.saveFireBaseUserInfo(email,password,webUserId,first_name,last_name,
+                    //image_url,parent_id,is_submember,is_lead,website_id,currentUser);
+                 }).catch(function(error) {
+ 
+     
+     });
+     this.ngZone.run(() => {
+      // debugger;
+       this.navCtrl.push(AllLeadsPage,{notificationMsg:this.leadCreateMsg.toUpperCase()});
+       });
   }
   leadFileChangeListener($event) {
     this.hideLeadCropper=true;

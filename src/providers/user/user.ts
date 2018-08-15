@@ -10,6 +10,7 @@ import { Subject } from "rxjs/Subject";
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { DashboardPage } from '../../pages/dashboard/dashboard';
+import { AllLeadsPage } from '../../pages/leads/all-leads/all-leads';
 import { FbConfirmPage } from '../../pages/fb-confirm/fb-confirm';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
@@ -175,8 +176,9 @@ is_online="1";
     {
       is_online="0";
     }
-   // debugger;
+   //debugger;
     var fredRef=firebase.database().ref('users/'+currentUser.uid);
+    
     fredRef.update({isOnline:is_online,webUserId:webUserId,first_name: first_name,
     last_name:last_name,
     user_type:"1",
@@ -187,7 +189,7 @@ is_online="1";
     parent_id: parent_id,
     verified: "1",
     email:email,fbId:currentUser.uid}).then(function() {
-     // debugger;
+    // debugger;
       currentUser.updateProfile({
         displayName: first_name+" "+last_name
    
@@ -200,33 +202,12 @@ is_online="1";
    });
       // Update successful.
       }, function(error) {
-      //debugger;
+     // debugger;
       // An error happened.
       });
        
   }
-  createFirebaseLead(email:string,password:string,webUserId:string,first_name:string,last_name:string,
-    image_url:string,parent_id:string,is_submember:string,is_lead:string,website_id:string)
-  {
-//debugger;
-let that=this;
- 
-//debugger;
-   firebase.auth().createUserWithEmailAndPassword(email,password)
-                 .then(function (currentUser) {
-                   debugger;
-                  that.saveFireBaseUserInfo(email,password,webUserId,first_name,last_name,
-                    image_url,parent_id,is_submember,is_lead,website_id,currentUser);
-                 }).catch(function(error) {
- 
-     
-     });
-
-    
-     
-     
   
-  }
   updateFirebaseUserInfo(result:any,userId:string)
   {
     var fredRef=firebase.database().ref('users/'+userId);
@@ -1269,7 +1250,7 @@ getUsersChartsData(member_id:string)
        return userChartsResp;
 }
 private extractData(res: Response) {
-  debugger;
+  //debugger;
     return res.json();
 }
   private handleErrorObservable(error: Response | any) {

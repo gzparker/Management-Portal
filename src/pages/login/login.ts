@@ -133,7 +133,7 @@ let is_lead:string="0";
           this.storage.set('is_submember', "0");
           is_submember="0";
           //this.userServiceObj.setFireBaseInfo(result.memberCredentials);
-         debugger;
+         //debugger;
           this.userServiceObj.setFireBaseInfo(result.memberCredentials.email,result.memberCredentials.password,
           result.memberCredentials.id,result.memberCredentials.first_name,result.memberCredentials.last_name,
           result.memberCredentials.image_url,result.memberCredentials.parent_id,is_submember,is_lead,this.website_id);

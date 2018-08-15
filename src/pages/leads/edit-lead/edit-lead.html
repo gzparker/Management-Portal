@@ -114,15 +114,18 @@
     </ion-list>-->
     <ion-list class="animated fadeIn leadsProfileWrapper uploadPhoto">
 
-        <!-- Main Image Uploader -->
-        <div class="AccountImageUploader">
-  
-            <!-- Image Cropper Result -->
-            <div class="imgCropperPreviewResult" *ngIf="dataLeadImage.image" >
-            <img [src]="dataLeadImage.image" [width]="leadWidth"
-            [height]="leadHeight">
-            </div>
-        </div>
+        <ion-list class="animated fadeIn leadsProfileWrapper">
+            <ion-item class="leadsProfile">        
+              <ion-avatar class="imgFull">
+              <!--<img src={{leadDetail.image_url}} *ngIf="leadDetail.image_url!=null"/>
+              <img src={{noImgUrl}} *ngIf="leadDetail.image_url==null"/>-->
+              <img [src]="dataLeadImage.image" [width]="leadWidth"
+              [height]="leadHeight"/>
+               
+              </ion-avatar>
+              <!-- <h2 class="agentName" *ngIf="leadDetail!=undefined">{{leadDetail.first_name}} {{leadDetail.last_name}}</h2> -->
+            </ion-item>
+          </ion-list>
       </ion-list>
     <ion-list class="animated fadeIn leadsProfileWrapper uploadPhoto">
         <ion-item *ngIf="dataLeadImage.image">
@@ -134,7 +137,7 @@
         <!-- Image Cropper -->
         <img-cropper #leadImageCropper [image]="dataLeadImage" [settings]="leadCropperSettings" 
               (onCrop)="leadImageCropped($event)" *ngIf="hideLeadCropper"></img-cropper>
-        <input id="custom-input" class="btnUpload" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="leadFileChangeListener($event)">
+        <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="leadFileChangeListener($event)">
 
       </ion-list>
 
