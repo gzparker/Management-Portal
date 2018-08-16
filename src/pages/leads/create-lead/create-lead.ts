@@ -250,7 +250,7 @@ export class CreateLeadPage {
     //this.domainAccess=this.localStorageService.get('domainAccess');
     if(this.userId!="")
     {
-      //this.loader.present();
+    //  this.loader.present();
   this.userServiceObj.createLead(this.userId.toString(),this.selectedWebsite,this.email,
   this.password,this.firstName,this.lastName,
   this.officeNumber,this.mobileNumber,this.homeNumber,this.home_address_street,this.home_address_city,

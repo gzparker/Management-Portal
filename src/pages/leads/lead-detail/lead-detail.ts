@@ -27,6 +27,7 @@ import { SubscriptionProvider } from '../../../providers/subscription/subscripti
  * Ionic pages and navigation.
  */
 declare var google: any;
+declare var firebase:any;
 @IonicPage()
 @Component({
   selector: 'page-lead-detail',
@@ -36,6 +37,7 @@ export class LeadDetailPage {
   public leadId:string="";
   public userId:string="";
  public leadDetail:any;
+ public firebaseLeadDetail:any;
  public savedListings:any[]=[];
  public saved_searches:any[]=[];
  public subscribed_hotsheets:any[]=[];
@@ -55,7 +57,10 @@ export class LeadDetailPage {
  public googleMapUrl:string="http://maps.google.com/maps?q=";
  public home_address_parts:string[]=[];
  public work_address_parts:string[]=[];
-
+ public groupRef:any;
+ public groupMemberRef:any;
+ public chatRef:any;
+ public userRef:any;
 public loader:any;
 @ViewChild('mapHome') mapHomeElement: ElementRef;
 mapHome: any;
@@ -89,6 +94,21 @@ mapWork: any;
         this.setAccessLevels();
       }
     });
+  }
+  ionViewDidLeave()
+  {
+    if(this.groupRef!=undefined)
+    {
+      this.groupRef.off("value");
+    }
+if(this.userRef!=undefined)
+{
+  this.userRef.off("value");
+}
+if(this.chatRef!=undefined)
+{
+this.chatRef.off("value");
+}
   }
   setAccessLevels()
   {
@@ -248,11 +268,32 @@ mapWork: any;
   loadLeadDetail(){
     if(this.userId!="")
     {
-      //debugger;
+     // debugger;
       this.loader.present();
+      this.loadFirebaseLeadDetail();
   this.userServiceObj.leadDetail(this.leadId,this.userId.toString())
     .subscribe((result) => this.editLeadResp(result));
     }
+  }
+  loadFirebaseLeadDetail()
+  {
+    var that=this;
+    if(this.userId!="")
+    {
+     //debugger;
+    this.userRef=firebase.database().ref('users');
+    this.userRef.orderByChild("webUserId").equalTo(this.leadId).on("value", function(snapshot) {
+      snapshot.forEach(element => {
+        //debugger;
+        if(element.val().is_lead=="1")
+        {
+          that.firebaseLeadDetail=element.val();
+        }
+      
+//debugger;
+      });
+    });
+  }
   }
   editLeadResp(result:any):void{
     this.loader.dismiss();

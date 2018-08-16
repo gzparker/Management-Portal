@@ -372,13 +372,16 @@ getHomeAddress(data) {
   toast.present();
   let leadInfo=result.leadInfo;
   //debugger;
-  this.chatRef=firebase.database().ref('users');
-    this.chatRef.orderByChild("webUserId").equalTo(leadInfo.lead_id).on("value", function(snapshot) {
+  this.userRef=firebase.database().ref('users');
+    this.userRef.orderByChild("webUserId").equalTo(leadInfo.lead_id).on("value", function(snapshot) {
       snapshot.forEach(element => {
+        if(element.val().is_lead=="1")
+        {
       var fredRef=firebase.database().ref('users/'+element.key);
  //debugger;
 fredRef.update({email:leadInfo.email,first_name:leadInfo.first_name,image_url:leadInfo.image_url
   ,last_name:leadInfo.last_name,website_id:leadInfo.user_website_id});
+}
 //debugger;
       });
     });

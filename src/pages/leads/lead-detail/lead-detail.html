@@ -11,7 +11,9 @@
         <ion-icon name="menu"></ion-icon>
       </button> -->
       <!-- <ion-title>Contact Profile</ion-title> -->
-      <ion-title *ngIf="leadDetail!=undefined"><span class="userStatus userstatus-online"></span><!-- <span class="userStatus userstatus-offline"></span> --> {{leadDetail.first_name}} {{leadDetail.last_name}}</ion-title>
+      <ion-title *ngIf="leadDetail!=undefined"><span *ngIf="firebaseLeadDetail!=undefined" [ngClass]="{
+        'userStatus userstatus-online':firebaseLeadDetail.isOnline === '1',
+        'userStatus userstatus-offline':firebaseLeadDetail.isOnline === '0'}"></span><!-- <span class="userStatus userstatus-offline"></span> --> {{leadDetail.first_name}} {{leadDetail.last_name}}</ion-title>
       <ion-buttons end>
         <button ion-button (click)="editLead();" *ngIf="isEditLeadAccess==true">
           <ion-icon name="md-create"></ion-icon>

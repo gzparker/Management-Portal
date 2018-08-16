@@ -25,7 +25,7 @@ import { AllWebsitesPage } from '../../websites/all-websites/all-websites';
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-
+declare var firebase:any;
 @IonicPage()
 @Component({
   selector: 'page-all-leads',
@@ -55,7 +55,11 @@ export class AllLeadsPage {
   public isLeadDetailAccess:boolean=false;
   public isDeleteLeadAccess:boolean=false;
   public isLeadSetupAccess:boolean=false;
-  
+  public groupRef:any;
+  public groupMemberRef:any;
+  public chatRef:any;
+  public userRef:any;
+
   public loader:any;
   public isApp=false;
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
@@ -119,6 +123,21 @@ if(this.navParams.get('currentUser')!=undefined)
       this.viewAllLeads(null);
       this.setAccessLevels();
     });
+  }
+  ionViewDidLeave()
+  {
+    if(this.groupRef!=undefined)
+    {
+      this.groupRef.off("value");
+    }
+if(this.userRef!=undefined)
+{
+  this.userRef.off("value");
+}
+if(this.chatRef!=undefined)
+{
+this.chatRef.off("value");
+}
   }
   setAccessLevels()
   {
@@ -381,6 +400,18 @@ this.navCtrl.push(EditLeadPage,{leadId:leadId});
               });
               alert.present();*/
             }
+            this.userRef=firebase.database().ref('users');
+    this.userRef.orderByChild("webUserId").equalTo(lead.lead_id).on("value", function(snapshot) {
+      snapshot.forEach(element => {
+        if(element.val().is_lead=="1")
+        {
+      var fredRef=firebase.database().ref('users/'+element.key);
+ //debugger;
+fredRef.remove();
+        }
+//debugger;
+      });
+    });
             this.userServiceObj.deleteLead(lead.lead_id,this.userId)
             .subscribe((result) => this.deleteLeadResp(result));
           }
