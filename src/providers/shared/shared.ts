@@ -344,7 +344,7 @@ sendMessage(type:string,description:any,redirectUserId:any,firebaseUserId:any,
            fredRef.update({message:description,deletedFor:deletedFor,modifiedDate:Date()});
           respMsg=that.saveMessage(groupId,memberId,type,newChatMember,loggedInUserInfo,firebaseUserId,description,chatImage,chatDetailArray);
             });
-            specificGroupRef.off("value");            
+            //specificGroupRef.off("value");            
         }
                           else
                           {
@@ -353,7 +353,7 @@ sendMessage(type:string,description:any,redirectUserId:any,firebaseUserId:any,
                     }
                     //
          });
-         groupsDummyRef.off('value');
+         //groupsDummyRef.off('value');
        }
        else
        {

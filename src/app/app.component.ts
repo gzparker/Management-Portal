@@ -84,6 +84,13 @@ export class MyApp {
   public noImgUrl="../assets/imgs/profile-photo.jpg";
   public allUnreadMsg:string="";
   public loadedWebsite:string="";
+  public groupRef:any;
+  public groupMemberRef:any;
+  public chatRef:any;
+  public userRef:any;
+  public groupMembersData:any[]=[];
+  public chatGroups:any[]=[];
+  public firebaseUserId:string="";
   pages: Array<{ title: string, component: any }>;
   public geoCoderData={
     country:"",
@@ -102,7 +109,7 @@ export class MyApp {
     this.initializeApp();
     sharedServiceObj.isLoggedInEmitter.subscribe(item => this.setLoginStatus(item));
     sharedServiceObj.isPaidEmitter.subscribe(item => this.setPaidStatus(item));
-    sharedServiceObj.unreadMsgCounterEmitter.subscribe(item => this.setUnreadMsgs(item));
+    //sharedServiceObj.unreadMsgCounterEmitter.subscribe(item => this.setUnreadMsgs(item));
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Home', component: HomePage },
@@ -133,10 +140,11 @@ export class MyApp {
       this.loadWebsiteInfoByDomain();
       this.loadAvailableCountries();
       this.setUserCurrentGeoLocation();
-      let allUnreadMessage = this.storage.get('allUnreadMessage');
+     // this.loadAllMsgCounter();
+      /*let allUnreadMessage = this.storage.get('allUnreadMessage');
     allUnreadMessage.then((data) => {
       this.setUnreadMsgs(data);
-    });
+    });*/
     });
   }
   ionViewDidLoad() {
@@ -290,6 +298,119 @@ this.geolocation.getCurrentPosition().then((resp) => {
   AfterViewInit(){
    // debugger;
   }
+  loadAllMsgCounter()
+{
+  var that=this;
+ // debugger;
+  let firebaseUserIdData = this.storage.get('firebaseUserId');
+  firebaseUserIdData.then((data) => {
+  this.firebaseUserId=data;
+ 
+  var fredRef=firebase.database().ref('groups').on('value', function(snapshot) {
+    //debugger;
+    if(snapshot.exists())
+    {
+      that.chatGroups=[];
+  
+      snapshot.forEach(element => {
+    that.chatGroups.push(element);
+    
+      });
+  }
+ 
+});
+
+var chatsObjRef=firebase.database().ref('chats').on('value', function(chatsObjRefVal) {
+ if(chatsObjRefVal.exists())
+ {
+   //debugger;
+   that.countUnreadMessages();
+ }
+});
+  });
+}
+countUnreadMessages()
+{
+ // debugger;
+var that=this;
+let i=0;
+  that.chatGroups.forEach(function(groupData) {
+if(groupData.val().deletedFor!=undefined)
+{
+if(groupData.val().deletedFor.indexOf(that.firebaseUserId)<0)
+{
+ if(groupData.val().isGroup==0)
+ {
+  if(groupData.val().fromFbUserId==that.firebaseUserId||groupData.val().toFbUserId==that.firebaseUserId)
+  {
+    that.totalUnreadMessages(groupData,i);
+
+  }
+ }
+ else if(groupData.val().isGroup==1)
+ {
+   debugger;
+if(that.groupMembersData)
+{
+  that.groupMembersData.forEach(function(groupMember) {
+  if(groupMember.userId==that.firebaseUserId&&groupMember.groupId==groupData.val().groupId)
+  {
+    debugger;
+    that.totalUnreadMessages(groupData,i);
+   
+  }
+  });
+}
+ }
+}
+}
+i=i+1;
+});
+
+}
+totalUnreadMessages(groupData:any,arrIndex:any)
+{
+//debugger;
+  var that=this;
+  let totalUnreadMessage=0;
+  var unreadCounter=0;
+  let i=0;
+    firebase.database().ref('chats').orderByChild("groupId").equalTo(groupData.val().groupId).on("value", function(snapshot) {
+      //that.chatRef.orderByChild("groupId").equalTo(groupData.val().groupId).on("value", function(snapshot) {
+      i=0;
+      snapshot.forEach(element => {
+        //debugger;
+        i=i+1;
+if(element.val().readBy.indexOf(that.firebaseUserId)<0)
+{
+  unreadCounter=unreadCounter+1;
+}
+if(i==snapshot.numChildren())
+{
+  //debugger;
+  if(unreadCounter>0)
+  {
+  // debugger;
+   totalUnreadMessage=totalUnreadMessage+unreadCounter;
+  that.allUnreadMsg=totalUnreadMessage.toString();
+    that.sharedServiceObj.setUnreadMsgs(totalUnreadMessage.toString());
+    that.storage.set("allUnreadMessage",totalUnreadMessage.toString());
+    //debugger;
+  }
+  else
+  {
+   // debugger;
+    that.allUnreadMsg="0";
+    that.sharedServiceObj.setUnreadMsgs(that.allUnreadMsg);
+    that.storage.set("allUnreadMessage",that.allUnreadMsg);
+  }
+}
+
+});
+});
+      
+
+}
   setUnreadMsgs(msgCounter:string)
   {
 this.allUnreadMsg=msgCounter;
@@ -367,9 +488,9 @@ this.storage.set("userCountryInfo", this.geoCoderData);
 
   }
   setLoginStatus(item: any): void {
-
+//debugger;
     this.userLoggedIn = item;
-    //debugger;
+    this.loadAllMsgCounter();
     this.setAccessLevels();
     this.setUserGeneralInfo();
     // debugger;

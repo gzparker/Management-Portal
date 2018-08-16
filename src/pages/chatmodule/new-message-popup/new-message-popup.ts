@@ -100,7 +100,6 @@ this.loggedInUserInfo=data;
       if(data!=snapshot.val().fbId)
       {
         that.allAvailableContacts.push(snapshot.val());
-
       }
     
     
