@@ -51,7 +51,7 @@
       </ion-item>
 <ion-item menuClose ion-item (tap)="openPage('27')" 
       *ngIf="userLoggedIn==true&&paidStatus==true&&isChats==true">      
-        Chats <span class="msgcounter" *ngIf="allUnreadMsg">{{allUnreadMsg}}</span>
+        Chats <span class="msgcounter" *ngIf="allUnreadMsg!=undefined">{{allUnreadMsg}}</span>
       </ion-item>
       <!--<ion-item menuClose ion-item (tap)="openPage('23')" 
       *ngIf="userLoggedIn==true&&paidStatus==true&&isRoles==true">      

@@ -82,7 +82,8 @@ export class MyApp {
   public userGeneralInfo:any;
   public imgBaseUrl=this.sharedServiceObj.imgBucketUrl;
   public noImgUrl="../assets/imgs/profile-photo.jpg";
-  public allUnreadMsg:string="";
+  public allUnreadMsg:number=0;
+  //public totalUnreadMessage:number=0;
   public loadedWebsite:string="";
   public groupRef:any;
   public groupMemberRef:any;
@@ -90,6 +91,7 @@ export class MyApp {
   public userRef:any;
   public groupMembersData:any[]=[];
   public chatGroups:any[]=[];
+  public chatData:any[]=[];
   public firebaseUserId:string="";
   pages: Array<{ title: string, component: any }>;
   public geoCoderData={
@@ -140,6 +142,12 @@ export class MyApp {
       this.loadWebsiteInfoByDomain();
       this.loadAvailableCountries();
       this.setUserCurrentGeoLocation();
+      var that=this;
+     
+    firebase.database().ref('chats').on("child_added", function(snapshot) {
+      //debugger;
+      that.loadAllMsgCounter();
+    });
      // this.loadAllMsgCounter();
       /*let allUnreadMessage = this.storage.get('allUnreadMessage');
     allUnreadMessage.then((data) => {
@@ -148,7 +156,6 @@ export class MyApp {
     });
   }
   ionViewDidLoad() {
-    //debugger;
     
   }
   loadGeneralWebsiteSettings()
@@ -301,37 +308,55 @@ this.geolocation.getCurrentPosition().then((resp) => {
   loadAllMsgCounter()
 {
   var that=this;
+  let i=0;
  // debugger;
   let firebaseUserIdData = this.storage.get('firebaseUserId');
   firebaseUserIdData.then((data) => {
   this.firebaseUserId=data;
  
   var fredRef=firebase.database().ref('groups').on('value', function(snapshot) {
-    //debugger;
     if(snapshot.exists())
     {
       that.chatGroups=[];
-  
       snapshot.forEach(element => {
+        i=i+1;
     that.chatGroups.push(element);
-    
+    if(i==snapshot.numChildren())
+    {
+      firebase.database().ref('chats').on("value", function(snapshot) {
+        let j=0;
+       // debugger;
+        //that.chatRef.orderByChild("groupId").equalTo(groupData.val().groupId).on("value", function(snapshot) {
+       if(snapshot.exists()){
+        that.chatData=[];
+        snapshot.forEach(element => {
+          j=j+1;
+          that.chatData.push(element);
+          if(j==snapshot.numChildren())
+          {
+            that.allUnreadMsg=0;
+            //debugger;
+            that.countUnreadMessages();
+          }
+      
+        });
+       }});
+    }
       });
   }
- 
 });
 
-var chatsObjRef=firebase.database().ref('chats').on('value', function(chatsObjRefVal) {
+/*var chatsObjRef=firebase.database().ref('chats').on('value', function(chatsObjRefVal) {
  if(chatsObjRefVal.exists())
  {
-   //debugger;
    that.countUnreadMessages();
  }
-});
+});*/
   });
 }
 countUnreadMessages()
 {
- // debugger;
+ //debugger;
 var that=this;
 let i=0;
   that.chatGroups.forEach(function(groupData) {
@@ -344,7 +369,6 @@ if(groupData.val().deletedFor.indexOf(that.firebaseUserId)<0)
   if(groupData.val().fromFbUserId==that.firebaseUserId||groupData.val().toFbUserId==that.firebaseUserId)
   {
     that.totalUnreadMessages(groupData,i);
-
   }
  }
  else if(groupData.val().isGroup==1)
@@ -377,9 +401,43 @@ totalUnreadMessages(groupData:any,arrIndex:any)
   let totalUnreadMessage=0;
   var unreadCounter=0;
   let i=0;
-    firebase.database().ref('chats').orderByChild("groupId").equalTo(groupData.val().groupId).on("value", function(snapshot) {
-      //that.chatRef.orderByChild("groupId").equalTo(groupData.val().groupId).on("value", function(snapshot) {
+  that.chatData.forEach(function(chatDataItem) {
+    i=i+1;
+    if(chatDataItem.val().groupId==groupData.val().groupId)
+{
+  if(chatDataItem.val().readBy.indexOf(that.firebaseUserId)<0)
+{
+  unreadCounter=unreadCounter+1;
+  //debugger;
+}
+}
+if(i==that.chatData.length)
+{
+  if(unreadCounter>0)
+  {
+  //debugger;
+  //totalUnreadMessage=totalUnreadMessage+unreadCounter;
+  that.allUnreadMsg=that.allUnreadMsg+unreadCounter;
+  //debugger;
+    
+    //debugger;
+  }
+  else
+  {
+   // debugger;
+    //that.allUnreadMsg=0;
+    //that.sharedServiceObj.setUnreadMsgs(that.allUnreadMsg.toString());
+    //that.storage.set("allUnreadMessage",that.allUnreadMsg.toString());
+  }
+  that.sharedServiceObj.setUnreadMsgs(that.allUnreadMsg.toString());
+  //that.storage.set("allUnreadMessage",that.allUnreadMsg.toString());
+}
+  });
+    /*firebase.database().ref('chats').orderByChild("groupId").equalTo(groupData.val().groupId).on("value", function(snapshot) {
+     if(snapshot.exists()){
       i=0;
+      let totalUnreadMessage=0;
+  var unreadCounter=0;
       snapshot.forEach(element => {
         //debugger;
         i=i+1;
@@ -393,29 +451,30 @@ if(i==snapshot.numChildren())
   if(unreadCounter>0)
   {
   // debugger;
-   totalUnreadMessage=totalUnreadMessage+unreadCounter;
-  that.allUnreadMsg=totalUnreadMessage.toString();
-    that.sharedServiceObj.setUnreadMsgs(totalUnreadMessage.toString());
-    that.storage.set("allUnreadMessage",totalUnreadMessage.toString());
+  totalUnreadMessage=totalUnreadMessage+unreadCounter;
+  that.allUnreadMsg=that.allUnreadMsg+totalUnreadMessage;
+  debugger;
+    that.sharedServiceObj.setUnreadMsgs(that.allUnreadMsg.toString());
+    that.storage.set("allUnreadMessage",that.allUnreadMsg.toString());
     //debugger;
   }
   else
   {
    // debugger;
-    that.allUnreadMsg="0";
-    that.sharedServiceObj.setUnreadMsgs(that.allUnreadMsg);
-    that.storage.set("allUnreadMessage",that.allUnreadMsg);
+    that.allUnreadMsg=0;
+    that.sharedServiceObj.setUnreadMsgs(that.allUnreadMsg.toString());
+    that.storage.set("allUnreadMessage",that.allUnreadMsg.toString());
   }
 }
 
 });
-});
-      
+    }
+});*/
+}    
 
-}
   setUnreadMsgs(msgCounter:string)
   {
-this.allUnreadMsg=msgCounter;
+//this.allUnreadMsg=msgCounter;
   }
   setUserCountry(latitude: any, longitude: any) {
  
