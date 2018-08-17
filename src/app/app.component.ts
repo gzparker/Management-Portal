@@ -349,18 +349,20 @@ if(groupData.val().deletedFor.indexOf(that.firebaseUserId)<0)
  }
  else if(groupData.val().isGroup==1)
  {
-   debugger;
-if(that.groupMembersData)
-{
-  that.groupMembersData.forEach(function(groupMember) {
-  if(groupMember.userId==that.firebaseUserId&&groupMember.groupId==groupData.val().groupId)
+   //debugger;
+//if(that.groupMembersData)
+//{
+  //that.groupMembersData.forEach(function(groupMember) {
+    var fredRef=firebase.database().ref('groupMembers').on('child_added', function(snapshot) {
+  if(snapshot.val().userId==that.firebaseUserId&&snapshot.val().groupId==groupData.val().groupId)
   {
-    debugger;
+    //debugger;
     that.totalUnreadMessages(groupData,i);
    
   }
-  });
-}
+});
+ // });
+//}
  }
 }
 }
