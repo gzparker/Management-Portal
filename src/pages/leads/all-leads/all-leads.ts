@@ -45,6 +45,8 @@ export class AllLeadsPage {
   
   public title: string = 'Delete Lead';
   public message: string = 'Are you sure to delete this lead!';
+  public first_name:string="";
+  public last_name:string="";
   public confirmClicked: boolean = false;
   public cancelClicked: boolean = false;
   public isOpen: boolean = false;
@@ -116,12 +118,19 @@ if(this.navParams.get('currentUser')!=undefined)
 
   ionViewDidLoad() {
     let member_id = this.storage.get('userId');
-    //debugger;
     member_id.then((data) => {
       this.userId=data;
       this.viewAllWebsite();
       this.viewAllLeads(null);
       this.setAccessLevels();
+    });
+    let first_name_dummy=this.storage.get('first_name');
+    first_name_dummy.then((data) => {
+      this.first_name=data;
+    });
+    let last_name_dummy=this.storage.get('last_name');
+    last_name_dummy.then((data) => {
+      this.last_name=data;
     });
   }
   ionViewDidLeave()
@@ -137,6 +146,32 @@ if(this.userRef!=undefined)
 if(this.chatRef!=undefined)
 {
 this.chatRef.off("value");
+}
+  }
+  sendAppInvitation(lead:any)
+  {
+   // debugger;
+    let message="Hi "+lead.first_name+" "+lead.last_name+", "+this.first_name+" "+this.last_name+" is requesting you download the Top Dweller App to search for homes with him. Please go here "+this.sharedServiceObj.idxChatAppLink.toString();
+    this.userServiceObj.sendAppInvitation(lead.phone_mobile.toString(),message)
+    .subscribe((result) => this.sendAppInvitationResp(result));
+  }
+  sendAppInvitationResp(result:any)
+  {
+   // debugger;
+if(result.status)
+{
+  let toast = this.toastCtrl.create({
+    message: result.message,
+    duration: 3000,
+    position: 'top',
+    cssClass:'successToast'
+  });
+  
+  toast.onDidDismiss(() => {
+    //console.log('Dismissed toast');
+  });
+  toast.present();
+
 }
   }
   setAccessLevels()
@@ -291,7 +326,7 @@ filterItemsByCategory()
       //debugger;
       this.allLeadsList=result.results;
       this.searchedLeadsList=result.results;
-      
+     // debugger;
       if(this.category!="")
       {
         this.setLeadFilteredItems();

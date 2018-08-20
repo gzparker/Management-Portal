@@ -734,6 +734,7 @@ data.append('category',category);
     .map(this.extractData)
     return savedListing;
 }
+
 viewLeadRouting(website_id:string){
 
   let data = new URLSearchParams();
@@ -759,6 +760,16 @@ updateLeadRouting(website_id:string,send_to_email_addresses:string,
   .map(this.extractData)
   return leadRouting;
 }
+sendAppInvitation(phone_number:string,message:string){
+  //debugger;
+      let data = new URLSearchParams();
+   data.append('phone_number',phone_number);
+  data.append('message',message);
+    let leadInvitation=this.http
+      .post(this.sharedServiceObj.registerationApiBaseUrl+'members/sendAppInvitation', data, this.headerOptions)
+      .map(this.extractData)
+      return leadInvitation;
+  }
 allUserWebsites(user_id:string){
     let data = new URLSearchParams();
  data.append('member_id',user_id);

@@ -97,7 +97,6 @@ let is_lead:string="0";
           this.storage.set('first_name', result.memberCredentials.first_name);
           this.storage.set('last_name', result.memberCredentials.last_name);
           this.storage.set('userType', "1");
-          this.storage.set('last_name', result.memberCredentials.last_name);
         
           this.storage.set('country_abbv', result.memberCredentials.country_abbv);
           this.storage.set('country_code', result.memberCredentials.country_code);

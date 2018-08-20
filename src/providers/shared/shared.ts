@@ -36,6 +36,7 @@ export class SharedProvider {
   public registerationApiKey="mf8fXFYtl3DqRpxzu1XZWTD1GNHtUSqQ";
   public idxFirebasePublicKey="BFLnyRGk5TlJYMkX6X-H7xZWikEdVZL9tE5t3x_q2mh4P3OM-kHkOmhlmYUGSxSV6BYdCbuSpwcBCQ3Oc0Gb3t4";
   public defaultNoImage="assets/imgs/noImage.png";
+  public idxChatAppLink="http://www.cotierproperties.com/";
  
   private headers: Headers = new Headers();
   private headerOptions: RequestOptions = new RequestOptions();
