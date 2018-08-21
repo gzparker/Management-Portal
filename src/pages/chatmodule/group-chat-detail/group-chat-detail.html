@@ -170,8 +170,7 @@
           </ion-list>
           </div>
           <ion-list class="chat-img-upload-tool" *ngIf="!isApp">
-              <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple 
-              (change)="chatFileChangeListener($event)">
+            
                
               <img-cropper class="imgCropper" #chatImageCropper [image]="dataChatImage" [settings]="chatCropperSettings"
                  (onCrop)="chatImageCropped($event)" *ngIf="hideChatCropper"></img-cropper>
@@ -196,7 +195,7 @@
   <form role="form" data-toggle="validator" #replyMessageForm="ngForm">
     
     <div class="chatBoxSection">
-      <div class="chatbox-options-upload"><button class="button button-clear btn-add">Upload</button></div>
+      <div class="chatbox-options-upload"><button class="button button-clear btn-add" (click)="openImageOptions();">Upload</button></div>
       <div class="chatbox-container" data-tap-disabled="true">
       <div contenteditable="true" class="chatbox-box input-chat" id="chatDescription" name="chatDescription" type="text" 
       placeholder="Type something..." data-text="Type something..." (keydown)="setUserTyping(returnedGroup.key)" 
@@ -208,6 +207,8 @@
       <button class="button button-clear btn-gallery" (click)="takeListingPhoto('gallery');" *ngIf="isApp">Select Image</button>
       <button class="button button-clear btn-camera" (click)="takeListingPhoto('new');" *ngIf="isApp">Take Image</button>
       <button class="button button-clear btn-emoji" (click)="openEmoji()">Select Emoji</button>
+      <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple 
+      (change)="chatFileChangeListener($event)" *ngIf="hideChatImageSelect&&!isApp">
     </div>
 
     </div>

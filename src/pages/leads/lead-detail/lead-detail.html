@@ -39,10 +39,13 @@
     </ion-item>
   </ion-list>
 
-  <div class="animated fadeIn leadsShortcutButtons">
-    <div class="contactPhone"><ion-icon name="md-call"></ion-icon><span>Call</span></div>
-    <div class="contactChat"><ion-icon name="chatboxes"></ion-icon><span>Chat</span></div>
-    <div class="contactEmail"><ion-icon name="ios-mail"></ion-icon><span>Mail</span></div>
+  <div class="animated fadeIn leadsShortcutButtons" *ngIf="leadDetail!=undefined">
+    <a class="contactPhone" href="tel:{{leadDetail.phone_mobile}}"><ion-icon name="md-call"></ion-icon><span>Call</span></a>
+    <div class="contactChat" (click)="chatContact(leadDetail);"><ion-icon name="chatboxes"></ion-icon><span>Chat</span></div>
+    <div class="contactEmail" (click)="emailContact(leadDetail);"><ion-icon name="ios-mail"></ion-icon><span>Mail</span></div>
+    <div class="contactEmail" *ngIf="leadDetail.app_installed!=undefined&&leadDetail.app_installed=='0'" 
+    (click)="sendAppInvitation(leadDetail);"><ion-icon name="ios-mail"></ion-icon>
+      <span>Invite</span></div>
   </div>
   
   <!-- <h1 class="contentTitle animated bounceInRight">Contact Details</h1> -->

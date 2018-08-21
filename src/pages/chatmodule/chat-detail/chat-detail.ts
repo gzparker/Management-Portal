@@ -57,6 +57,7 @@ export class ChatDetailPage {
 public messageSent:string="0";
 
 public hideChatCropper:boolean=true;
+public hideChatImageSelect:boolean=false;
 public edit_chat_image:boolean=false;
 public crop_chat_image:boolean=false;
 public chatCropperSettings;
@@ -218,7 +219,60 @@ if(i==snapshot.numChildren()){
   });
   });
    }
-
+   openImageOptions() {
+     let buttonsArray=[];
+     if(this.isApp)
+     {
+       buttonsArray=[
+        {
+          text: 'Select Image',
+          
+          handler: () => {
+            this.takeUserPhoto('gallery');
+          }
+        },{
+          text: 'Take Image',
+          handler: () => {
+            this.takeUserPhoto('gallery');
+          }
+        }
+        ,
+        {
+          text: 'Cancel',
+          
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ];
+     }
+     else
+     {
+      buttonsArray=[
+        {
+          text: 'Upload Image',
+          handler: () => {
+            this.hideChatImageSelect=true;
+            //this.scrollChatToBottom();
+            //this.uploadImage();
+          }
+        },
+        {
+          text: 'Cancel',
+          
+          handler: () => {
+            this.hideChatImageSelect=false;
+          }
+        }
+      ]
+     }
+    let actionSheet = this.actionSheetCtrl.create({
+      buttons: buttonsArray
+    });
+ 
+    actionSheet.present();
+  }
+ 
    openEmoji()
    {
      var that=this;
@@ -244,6 +298,11 @@ if(i==snapshot.numChildren()){
      this.description=this.sharedServiceObj.selectEmoji(emojiCode,document.getElementById("chatDescription").innerHTML);
      
    }
+   takeUserPhoto(option:string)
+{
+//debugger;
+}
+
    scrollChatToBottom()
    {
      var that=this;
@@ -273,7 +332,7 @@ if(i==snapshot.numChildren()){
   }
   sendMessage(type:string)
   {
-   debugger;
+   //debugger;
     this.sharedServiceObj.sendMessage(type,document.getElementById("chatDescription").innerHTML,undefined,this.firebaseUserId,
       undefined,this.groupId,this.loggedInUserInfo,this.chatImage,this.chatDetailArray);
   }
@@ -283,6 +342,7 @@ if(i==snapshot.numChildren()){
 if(resp=="1")
 {
   this.ngZone.run(() => {
+    this.hideChatImageSelect=false;
     this.hideChatCropper=false;
       this.edit_chat_image=false;
       this.crop_chat_image=false;
@@ -318,7 +378,7 @@ let confirm = this.alertCtrl.create({
       chatIdRef.once('value', function(snapshot) {
       if(snapshot.exists())
       {
-        debugger;
+       // debugger;
                                 var deleteChating=snapshot.val();
                                 
                                 var deletedChatingArray=[];
@@ -332,7 +392,7 @@ let confirm = this.alertCtrl.create({
                                   if(chatDetailObj.exists())
                                   {
                                       var messageExist="0";
-                                      debugger;
+                                     // debugger;
                                       chatDetailObj.forEach(function(chatDetail) {
   if(chatDetail.val().deletedFor.indexOf(that.firebaseUserId)<0)
   {

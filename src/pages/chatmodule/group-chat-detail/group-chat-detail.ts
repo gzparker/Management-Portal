@@ -57,6 +57,7 @@ export class GroupChatDetailPage {
   public loggedInUserInfo:any;
 public messageSent:string="0";
 public chatImage:string="";
+public hideChatImageSelect:boolean=false;
 public hideChatCropper:boolean=true;
 public edit_chat_image:boolean=false;
 public crop_chat_image:boolean=false;
@@ -155,6 +156,63 @@ if(this.chatRef!=undefined)
 this.chatRef.off("value");
 }
   }
+  openImageOptions() {
+    let buttonsArray=[];
+    if(this.isApp)
+    {
+      buttonsArray=[
+       {
+         text: 'Select Image',
+         
+         handler: () => {
+           this.takeUserPhoto('gallery');
+         }
+       },{
+         text: 'Take Image',
+         handler: () => {
+           this.takeUserPhoto('gallery');
+         }
+       }
+       ,
+       {
+         text: 'Cancel',
+         
+         handler: () => {
+           console.log('Cancel clicked');
+         }
+       }
+     ];
+    }
+    else
+    {
+     buttonsArray=[
+       {
+         text: 'Upload Image',
+         handler: () => {
+           this.hideChatImageSelect=true;
+           //this.scrollChatToBottom();
+           //this.uploadImage();
+         }
+       },
+       {
+         text: 'Cancel',
+         
+         handler: () => {
+          this.hideChatImageSelect=false;
+         }
+       }
+     ]
+    }
+   let actionSheet = this.actionSheetCtrl.create({
+     buttons: buttonsArray
+   });
+
+   actionSheet.present();
+ }
+ takeUserPhoto(option:string)
+{
+//debugger;
+}
   setUserTyping(groupId){
 let that=this;
   that.sharedServiceObj.setUserTyping(groupId,that.firebaseUserId);
@@ -263,6 +321,7 @@ chat.push({
                               document.getElementById("chatDescription").innerHTML="";
                               //debugger;
                                that.scrollToBottom();
+                               that.hideChatImageSelect=false;
 that.chatImage="";
 that.hideChatCropper=false;
 that.edit_chat_image=false;

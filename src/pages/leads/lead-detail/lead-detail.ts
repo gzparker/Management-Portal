@@ -12,6 +12,8 @@ import { LeadSavedListingPage } from '../lead-saved-listing/lead-saved-listing';
 import { LeadSavedSearchesPage } from '../lead-saved-searches/lead-saved-searches';
 import { HotsheetDetailPopupPage } from '../../modal-popup/hotsheet-detail-popup/hotsheet-detail-popup';
 import { ListingDetailPopupPage } from '../../modal-popup/listing-detail-popup/listing-detail-popup';
+import { EmailContactModalPage } from '../../modal-popup/email-contact-modal/email-contact-modal';
+import { NewMessagePopupPage } from '../../chatmodule/new-message-popup/new-message-popup';
 
 import { AlertController,ToastController } from 'ionic-angular';
 
@@ -49,6 +51,7 @@ export class LeadDetailPage {
  public selectedSegment:any="1";
  public leadsDetailSegment:string="1";
  public internal_notes:string="";
+ public emailMessage:string="";
  public noImgUrl=this.sharedServiceObj.noImageUrl;
  public isOpen: boolean = false;
  public parentId:string="";
@@ -57,6 +60,8 @@ export class LeadDetailPage {
  public googleMapUrl:string="http://maps.google.com/maps?q=";
  public home_address_parts:string[]=[];
  public work_address_parts:string[]=[];
+ public first_name:string="";
+ public last_name:string="";
  public groupRef:any;
  public groupMemberRef:any;
  public chatRef:any;
@@ -93,6 +98,14 @@ mapWork: any;
         this.loadLeadDetail();
         this.setAccessLevels();
       }
+    });
+    let first_name_dummy=this.storage.get('first_name');
+    first_name_dummy.then((data) => {
+      this.first_name=data;
+    });
+    let last_name_dummy=this.storage.get('last_name');
+    last_name_dummy.then((data) => {
+      this.last_name=data;
     });
   }
   ionViewDidLeave()
@@ -288,6 +301,7 @@ this.chatRef.off("value");
         if(element.val().is_lead=="1")
         {
           that.firebaseLeadDetail=element.val();
+          //debugger;
         }
       
 //debugger;
@@ -391,6 +405,47 @@ this.work_address_parts=this.leadDetail.work_address.split(",");
       });
       toast.present();
     }
+  }
+  callContact(lead:any)
+  {
+    window.open('tel:'+lead.phone_mobile);
+  }
+  emailContact(lead:any)
+  {
+  
+    var modalPage = this.modalCtrl.create(EmailContactModalPage,{lead:lead});
+    modalPage.present();
+  }
+  
+  chatContact(lead:any)
+  {
+    var modalPage = this.modalCtrl.create(NewMessagePopupPage, { isContact: "1",redirectUserId:this.firebaseLeadDetail.fbId });
+    modalPage.present();
+  }
+  sendAppInvitation(lead:any)
+  {
+    let message="Hi "+lead.first_name+" "+lead.last_name+", "+this.first_name+" "+this.last_name+" is requesting you download the Top Dweller App to search for homes with him. Please go here "+this.sharedServiceObj.idxChatAppLink.toString();
+    //debugger;
+    this.userServiceObj.sendAppInvitation(lead.phone_mobile.toString(),message)
+    .subscribe((result) => this.sendAppInvitationResp(result));
+  }
+  sendAppInvitationResp(result:any)
+  {
+if(result.status)
+{
+  let toast = this.toastCtrl.create({
+    message: result.message,
+    duration: 3000,
+    position: 'top',
+    cssClass:'successToast'
+  });
+  
+  toast.onDidDismiss(() => {
+    //console.log('Dismissed toast');
+  });
+  toast.present();
+
+}
   }
   openInAppBrowser(websiteUrl:string)
   {

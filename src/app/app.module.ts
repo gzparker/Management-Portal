@@ -87,6 +87,7 @@ import { UpcomingSubscriptionPage } from '../pages/account/upcoming-subscription
 import { GlobalSettingsPopupPage } from '../pages/modal-popup/global-settings-popup/global-settings-popup';
 import { HotsheetDetailPopupPage } from '../pages/modal-popup/hotsheet-detail-popup/hotsheet-detail-popup';
 import { ListingDetailPopupPage } from '../pages/modal-popup/listing-detail-popup/listing-detail-popup';
+import { EmailContactModalPage } from '../pages/modal-popup/email-contact-modal/email-contact-modal';
 
 import { CreateRolePage } from '../pages/roles/create-role/create-role';
 import { EditRolePage } from '../pages/roles/edit-role/edit-role';
@@ -137,7 +138,8 @@ var firebaseConfig = {
     ImageCropperComponent,AddCreditCardPage,CreateRolePage,EditRolePage,ViewRolesPage,ChatPage,ChatAccountPage,
     ChatActivitiesPage,ChatDetailPage,ChatEmojiPopupoverPage,ChatFriendsActivePage,ChatFriendsActivePage,
     ChatFriendsMessengerPage,ChatGroupsPage,ChatsPage,ChatingImagePopUpPage,NewGroupPopupPage,
-    NewMessagePopupPage,GroupChatDetailPage,GroupMembersPage,ChatFriendsPage,ListingDetailPopupPage,HotsheetDetailPopupPage
+    NewMessagePopupPage,GroupChatDetailPage,GroupMembersPage,ChatFriendsPage,ListingDetailPopupPage,
+    HotsheetDetailPopupPage,EmailContactModalPage
   ],
   imports: [
     BrowserModule, HttpModule,CKEditorModule,
@@ -162,7 +164,7 @@ var firebaseConfig = {
     ChangePasswordPage,EditCreditCardPage,CreditCardDetailPage,UpgradeCenterPage,EditAccountPage,CreateHotSheetPage,EditHotSheetPage,
     EditLeadRoutingPage,UpcomingSubscriptionPage,BillingHistoryPage,AgentDetailPage,
     EditAgentPage,GlobalSettingsPopupPage,AddCreditCardPage,CreateRolePage,EditRolePage,ViewRolesPage,
-    ChatPage,ChatAccountPage,
+    ChatPage,ChatAccountPage,EmailContactModalPage,
     ChatActivitiesPage,ChatDetailPage,ChatEmojiPopupoverPage,ChatFriendsActivePage,ChatFriendsActivePage,
     ChatFriendsMessengerPage,ChatGroupsPage,ChatsPage,ChatingImagePopUpPage,NewGroupPopupPage,NewMessagePopupPage,
     NewMessagePopupPage,GroupChatDetailPage,GroupMembersPage,ChatFriendsPage,ListingDetailPopupPage,HotsheetDetailPopupPage

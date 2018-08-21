@@ -770,6 +770,19 @@ sendAppInvitation(phone_number:string,message:string){
       .map(this.extractData)
       return leadInvitation;
   }
+  sendEmailToContact(email:string,subject:string,message:string,service_id:string){
+    //debugger;
+        let data = new URLSearchParams();
+     data.append('email',email);
+    data.append('message',message);
+    data.append('subject',subject);
+    data.append('service_id',service_id);
+    debugger;
+      let contactEmail=this.http
+        .post(this.sharedServiceObj.registerationApiBaseUrl+'members/sendContactEmail', data, this.headerOptions)
+        .map(this.extractData)
+        return contactEmail;
+    }
 allUserWebsites(user_id:string){
     let data = new URLSearchParams();
  data.append('member_id',user_id);

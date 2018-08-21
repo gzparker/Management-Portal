@@ -294,6 +294,7 @@ sendMessage(type:string,description:any,redirectUserId:any,firebaseUserId:any,
      }
        if(redirectUserId)
        {
+         debugger;
        memberId=redirectUserId;
            if(memberId<firebaseUserId)
            {
