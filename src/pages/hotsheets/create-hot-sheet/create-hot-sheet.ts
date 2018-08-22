@@ -1205,11 +1205,7 @@ this.allListingTypeChecked=true;
       
     if(this.userId!="")
       {
-      
-         
         this.userServiceObj.checkHotSheetSlug(this.slug,this.userId.toString()).subscribe((result) => this.createHotSheetFinal(result));
-      
-        
       }
     }
     createHotSheetFinal(result:any):void{

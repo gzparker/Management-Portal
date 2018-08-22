@@ -45,7 +45,32 @@
             <ion-label stacked>Identity Phone Number</ion-label>
             <ion-input type="text" [(ngModel)]="identity_phone_number" 
             name="identity_phone_number" id="identity_phone_number" [brmasker]="{mask:'(000) 000-0000', len:14, type:'num'}"></ion-input>
-        </ion-item>      
+        </ion-item>
+        <ion-item class="OptMLS noShadow">
+          <ion-label stacked>Select your MLS</ion-label>
+          <ion-select placeholder="-----" [(ngModel)]="mls_server_id"  
+          name="mls_server_id" multiple="true" required>
+            <ion-option *ngFor="let mls of allMls" value= {{mls.mls_server_id}}>{{mls.name}}
+             </ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-item class="userInfoBlock ReqField">
+          <ion-icon name="md-briefcase" item-start></ion-icon>
+          <ion-label stacked><span [ngClass]="{'error': agent_id==''}" *ngIf="agent_id==''">*</span></ion-label>        
+          <ion-input type="text" required [(ngModel)]="agent_id" name="agent_id" placeholder="Agent ID"></ion-input>
+        </ion-item>
+  
+        <ion-item class="userInfoBlock ReqField">
+          <ion-icon name="md-briefcase" item-start></ion-icon>
+          <ion-label stacked><span [ngClass]="{'error': broker_id==''}" *ngIf="broker_id==''">*</span></ion-label>
+          <ion-input type="text" required [(ngModel)]="broker_id" name="broker_id" placeholder="Broker ID" ></ion-input>
+        </ion-item>
+  
+        <ion-item class="userInfoBlock ReqField">
+          <ion-icon name="md-briefcase" item-start></ion-icon>
+          <ion-label stacked><span [ngClass]="{'error': office_id==''}" *ngIf="office_id==''">*</span></ion-label>
+          <ion-input type="text" required [(ngModel)]="office_id" name="office_id" placeholder="Office ID" ></ion-input>
+        </ion-item>   
       </ion-list>
 
         

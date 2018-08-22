@@ -794,14 +794,15 @@ allUserWebsites(user_id:string){
 }
 createWebsite(user_id:string,isActive:string,website_domain:string,identity_name:string,
   intagent_website:number,website_a_record_location:string,identity_phone_number:string,homepage_description:string,
-  homepageMeta_description:string,homepage_search_text:string,homepage_meta_title:string){
+  homepageMeta_description:string,homepage_search_text:string,homepage_meta_title:string,
+  mls_server_id:any,agent_id:string,office_id:string,broker_id:string){
 //debugger;
     let data = new URLSearchParams();
     data.append('website_domain',website_domain);
     data.append('identity_name',identity_name);
  data.append('member_id',user_id);
  data.append('active',isActive);
- data.append('mls_server_id',this.sharedServiceObj.mlsServerId);
+ data.append('mls_server_id',mls_server_id);
 
  data.append('intagent_website',intagent_website.toString());
  data.append('website_a_record_location',website_a_record_location);
@@ -810,6 +811,9 @@ data.append('homepage_description',homepage_description);
 data.append('homepageMeta_description',homepageMeta_description);
 data.append('homepage_search_text',homepage_search_text);
 data.append('homepage_meta_title',homepage_meta_title);
+data.append('agent_id',agent_id);
+data.append('office_id',office_id);
+data.append('broker_id',broker_id);
 //debugger;
   let websiteListing=this.http
     .post(this.sharedServiceObj.registerationApiBaseUrl+'members/createWebsite', data, this.headerOptions)
@@ -833,14 +837,15 @@ updateWebsite(user_id:string,isActive:string,website_domain:string,website_id:st
   feature_broker_listings:string,
   feature_office_listings:string,identity_name:string,identity_logo:string,
   identity_icon:string,website_a_record_location:string,identity_phone_number:string,homepage_description:string,
-  homepageMeta_description:string,homepage_search_text:string,homepage_meta_title:string){
+  homepageMeta_description:string,homepage_search_text:string,homepage_meta_title:string,
+  agent_id:string,office_id:string,broker_id:string,mls_server_id:any){
 
 let data = new URLSearchParams();
  data.append('website_domain',website_domain);
  data.append('member_id',user_id);
  data.append('active',isActive);
  data.append('id',website_id);
- data.append('mls_server_id',this.sharedServiceObj.mlsServerId);
+ data.append('mls_server_id',mls_server_id);
  data.append('contact_email',contact_email);
  data.append('identity_name',identity_name);
  data.append('identity_logo',identity_logo);
@@ -861,6 +866,9 @@ data.append('homepage_description',homepage_description);
 data.append('homepageMeta_description',homepageMeta_description);
 data.append('homepage_search_text',homepage_search_text);
 data.append('homepage_meta_title',homepage_meta_title);
+data.append('agent_id',agent_id);
+data.append('office_id',office_id);
+data.append('broker_id',broker_id);
 //debugger;
   let websiteListing=this.http
     .post(this.sharedServiceObj.registerationApiBaseUrl+'members/updateWebsite', data, this.headerOptions)
@@ -990,7 +998,7 @@ createHotSheet(user_id:string,website_id:string,mlsServerId:string,name:string,h
  data.append('title',hotsheet_Title);
  data.append('member_id',user_id);
  data.append('slug',slug);
- data.append('mls_server_id',mlsServerId);
+ //data.append('mls_server_id',mlsServerId);
  data.append('website_id',website_id);
  data.append('search_results_json',json_search);
  data.append('polygon_search',polygon_search);
@@ -1044,7 +1052,7 @@ updateHotSheet(id:string,user_id:string,website_id:string,mlsServerId:string,nam
  data.append('title',hotsheet_Title);
  data.append('member_id',user_id);
  data.append('slug',slug);
- data.append('mls_server_id',mlsServerId);
+ //data.append('mls_server_id',mlsServerId);
  data.append('website_id',website_id);
  data.append('search_results_json',json_search);
  data.append('polygon_search',polygon_search);

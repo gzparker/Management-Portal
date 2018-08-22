@@ -100,7 +100,7 @@ this.navCtrl.push(EditAccountPage,{userId:this.userId});
   
     if(result.status==true)
     {
-debugger;
+//debugger;
       this.accountInfo=result.result;
       this.globalSettings=result.globalSettings;
       let firebaseUserId = this.storage.get('firebaseUserId');

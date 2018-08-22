@@ -78,6 +78,11 @@ export class EditWebsitePage {
   public homepageMeta_description:string="";
   public homepage_search_text:string="";
   public homepage_meta_title:string="";
+  public office_id:string="";
+  public broker_id:string="";
+  public agent_id:string="";
+  public allMls:any[]=[];
+  public mls_server_id:any[]=[];
   /*private CkeditorConfig = {removeButtons:'Underline,Subscript,Superscript,SpecialChar'
   ,toolbar: [
     { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ ] },
@@ -160,6 +165,7 @@ export class EditWebsitePage {
       { name: 'links', items: [] },
       { name: 'styles', items: ['Format', 'FontSize' ] }
     ]});
+    this.loadAllAvailableMLS();
     let member_id = this.storage.get('userId');
     member_id.then((data) => {
       this.userId=data;
@@ -171,6 +177,22 @@ export class EditWebsitePage {
        this.editWebsite();
        } 
     });
+  }
+  loadAllAvailableMLS()
+  {
+    this.subscriptionObj.loadAllAvailableMLS()
+    .subscribe((result) => this.allAvailableMLSResp(result)); 
+  }
+  allAvailableMLSResp(resp: any)
+  {
+if(resp.status==true)
+{
+  this.allMls=resp.available_mls;
+}
+else
+{
+  this.allMls=[];
+}
   }
   websiteLogoFileChangeListener($event) {
     this.crop_identity_logo=true;
@@ -347,6 +369,14 @@ document.getElementById("homepage_description").innerHTML=result.result.homepage
 this.homepageMeta_description=result.result.homepage_meta_description;
 this.homepage_search_text=result.result.homepage_search_text;
 this.homepage_meta_title=result.result.homepage_meta_title;
+this.agent_id=result.result.agent_id;
+this.office_id=result.result.office_id;
+this.broker_id=result.result.broker_id;
+//debugger;
+if(result.result.mls_server_id!=null)
+          {
+            this.mls_server_id=result.result.mls_server_id.split(',');
+          }
 if(result.result.identity_logo!=undefined)
       {
       
@@ -752,7 +782,7 @@ else
     show_new_listing_dummy,show_open_houses_dummy,feature_agent_listings_dummy,
     feature_broker_listings_dummy,feature_office_listings_dummy,this.identity_name,this.identity_logo,
     this.identity_icon,this.website_a_record_location,this.identity_phone_number,document.getElementById("homepage_description").innerHTML,
-    this.homepageMeta_description,this.homepage_search_text,this.homepage_meta_title)
+    this.homepageMeta_description,this.homepage_search_text,this.homepage_meta_title,this.agent_id,this.office_id,this.broker_id,this.mls_server_id)
     .subscribe((result) => this.updateWebsiteResp(result));
      //}
       

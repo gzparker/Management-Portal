@@ -39,6 +39,11 @@ export class CreateWebsitePage {
   public homepageMeta_description:string="";
   public homepage_search_text:string="";
   public homepage_meta_title:string="";
+  public allMls:any[]=[];
+  public mls_server_id:any[]=[];
+  public office_id:string="";
+  public broker_id:string="";
+  public agent_id:string="";
   public CkeditorConfig = {removeButtons:'Underline,Subscript,Superscript,SpecialChar'
   ,toolbar: [
     { name: 'document', groups: [], items: ['Source'] },
@@ -70,8 +75,24 @@ export class CreateWebsitePage {
     member_id.then((data) => {
       this.userId=data;
     });
+    this.loadAllAvailableMLS();
   }
-  
+  loadAllAvailableMLS()
+  {
+    this.subscriptionObj.loadAllAvailableMLS()
+    .subscribe((result) => this.allAvailableMLSResp(result)); 
+  }
+  allAvailableMLSResp(resp: any)
+  {
+if(resp.status==true)
+{
+  this.allMls=resp.available_mls;
+}
+else
+{
+  this.allMls=[];
+}
+  }
   homepageDescBlured(quill) {
     //console.log('editor blur!', quill);
   }
@@ -142,7 +163,7 @@ intagentWebsiteFinal=0;
        }
   this.userServiceObj.createWebsite(this.userId,isActiveFinal,this.website_domain,this.identity_name,
     intagentWebsiteFinal,this.website_a_record_location,this.identity_phone_number,document.getElementById("homepage_description").innerHTML,
-    this.homepageMeta_description,this.homepage_search_text,this.homepage_meta_title)
+    this.homepageMeta_description,this.homepage_search_text,this.homepage_meta_title,this.mls_server_id,this.agent_id,this.office_id,this.broker_id)
     .subscribe((result) => this.createWebsiteResp(result));
     // }
       }
