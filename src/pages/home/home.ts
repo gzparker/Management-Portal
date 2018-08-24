@@ -14,12 +14,12 @@ import { UserProvider } from '../../providers/user/user';
   templateUrl: 'home.html'
 })
 export class HomePage {
-
+  public isApp=false;
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, 
     public platform: Platform,public actionSheetCtrl: ActionSheetController) {
-
+      this.isApp = (!document.URL.startsWith("http"));
   }
 openPage(pagenumber:string){
   if(pagenumber=='2')
@@ -31,4 +31,5 @@ openPage(pagenumber:string){
     this.navCtrl.setRoot(RegisterPage);
   }
 }
+
 }

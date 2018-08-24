@@ -123,7 +123,7 @@
     <ion-list *ngIf="selectedRoute==''" class="customList">
     <label>Color Scheme</label>
     <div *ngIf="colorBase!=''">
-      <ion-label stacked>Color Base</ion-label>
+      <ion-label stacked>Base Color</ion-label>
     
         <button ion-button color="secondary" outline [colorPicker]="colorBase" 
         (colorPickerChange)="colorBase=$event"
@@ -136,7 +136,7 @@
          [cpOutputFormat]="'rgba'" >Select Color</div>-->
     </div>
     <div *ngIf="secondColor!=''">
-        <ion-label stacked>Second Color</ion-label>
+        <ion-label stacked>Secondary Color</ion-label>
         <button ion-button color="secondary" outline [colorPicker]="secondColor" 
         (colorPickerChange)="secondColor=$event"
         [ngStyle]="{'background-color': secondColor}" [cpPosition]="'bottom'" [cpCancelButton]="true" 
@@ -148,7 +148,7 @@
           [value]="secondColor" [cpOutputFormat]="'rgba'"></ion-input>-->
     </div>
     <div *ngIf="thirdColor!=''">
-          <ion-label stacked>Third Color</ion-label>
+          <ion-label stacked>Tertiary Color</ion-label>
           <button ion-button color="secondary" outline [colorPicker]="thirdColor" 
           (colorPickerChange)="thirdColor=$event"
           [ngStyle]="{'background-color': thirdColor}" [cpPosition]="'bottom'" [cpCancelButton]="true" [cpCancelButtonClass]="'btn btn-primary btn-xs'"
@@ -158,6 +158,48 @@
           [style.background]="thirdColor" [cpPosition]="'bottom'" [cpCancelButton]="true" [cpCancelButtonClass]="'btn btn-primary btn-xs'"
             [value]="thirdColor" [cpOutputFormat]="'rgba'"></ion-input>-->
     </div>
+    <ion-item class="filterLabel">
+      <ion-label> Use Custom Color</ion-label>
+      <ion-toggle checked="false" (click)="toggleCustomColor()"></ion-toggle>
+    </ion-item>
+    <ion-list *ngIf="customColorOption">
+    <ion-item>
+      <ion-label>Header Color</ion-label>
+      <ion-select [(ngModel)]="headerColor" name="headerColor" id="headerColor">
+        <ion-option *ngFor="let colorOption of colorOptions" value= {{colorOption.id}}>
+          {{colorOption.name}}
+          </ion-option>
+       </ion-select>
+      
+    </ion-item>
+    <ion-item>
+      <ion-label>Side-Bar Menu Color</ion-label>
+      <ion-select [(ngModel)]="sideBarMenuColor" name="sideBarMenuColor" id="sideBarMenuColor">
+        <ion-option *ngFor="let colorOption of colorOptions" value= {{colorOption.id}}>
+          {{colorOption.name}}
+          </ion-option>
+       </ion-select>
+      
+    </ion-item>
+    <ion-item>
+      <ion-label>Text Color</ion-label>
+      <ion-select [(ngModel)]="textColor" name="textColor" id="textColor">
+        <ion-option *ngFor="let colorOption of colorOptions" value= {{colorOption.id}}>
+          {{colorOption.name}}
+          </ion-option>
+       </ion-select>
+      
+    </ion-item>
+    <ion-item>
+      <ion-label>Button Color</ion-label>
+      <ion-select [(ngModel)]="buttonColor" name="buttonColor" id="buttonColor">
+        <ion-option *ngFor="let colorOption of colorOptions" value= {{colorOption.id}}>
+          {{colorOption.name}}
+          </ion-option>
+       </ion-select>
+      
+    </ion-item>
+  </ion-list>
   </ion-list>
   </div>
   

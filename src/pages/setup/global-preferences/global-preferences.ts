@@ -51,6 +51,12 @@ export class GlobalPreferencesPage {
   public colorBase:string="";
   public secondColor:string="";
   public thirdColor:string="";
+  public headerColor:string="";
+  public textColor:string="";
+  public buttonColor:string="";
+  public sideBarMenuColor:string="";
+  public customColorOption:boolean=false;
+
   public timezone:string="";
 
   public settingsCreateMsg:string="";
@@ -75,7 +81,7 @@ export class GlobalPreferencesPage {
 
   public user = {timezone:'America/New_York'};
   public placeholderString = 'Select timezone';
-  
+  public colorOptions:any[]=[{id:"base_color",name:"Base Color"},{id:"secondary_color",name:"Secondary Color"},{id:"tertiary_color",name:"Tertiary Color"}];
 
   public userId:string="";
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
@@ -199,6 +205,9 @@ export class GlobalPreferencesPage {
       //debugger;
     }
   }
+  toggleCustomColor(){
+    this.customColorOption=!this.customColorOption;
+      }
   loadCompanyImage(baseUrl:string,imageUrl:string) {
    
     const self = this;
@@ -611,7 +620,7 @@ else
     {
     //debugger;
     this.userServiceObj.updateGlobalSettings(this.userId,this.personalImage,this.companyLogoImage,this.user.timezone,
-      this.colorBase,this.secondColor,this.thirdColor,this.identity_name)
+      this.colorBase,this.secondColor,this.thirdColor,this.identity_name,this.headerColor,this.sideBarMenuColor,this.buttonColor,this.textColor)
     .subscribe((result) => this.updateGlobalSettingsResp(result));
  
     }

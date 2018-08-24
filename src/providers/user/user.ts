@@ -1245,7 +1245,8 @@ getAllMemberAllowedOptions(allowedOptions)
        return allowedOptionsResp;
 }
 updateGlobalSettings(member_id:string,personalImage:string,companyImage:string,
-  timezone:string,colorBase:string,secondColor:string,thirdColor:string,identity_name:string){
+  timezone:string,colorBase:string,secondColor:string,thirdColor:string,identity_name:string,headerColor:string,
+  sideBarMenuColor:string,buttonColor:string,textColor:string){
   //  debugger;
     let data = new URLSearchParams();
     data.append('master_id',member_id);
@@ -1256,6 +1257,10 @@ updateGlobalSettings(member_id:string,personalImage:string,companyImage:string,
     data.append('color_second',secondColor);
     data.append('color_third',thirdColor);
     data.append('identity_name',identity_name);
+    data.append('header_color',headerColor);
+    data.append('side_bar_menu_color',sideBarMenuColor);
+    data.append('button_color',buttonColor);
+    data.append('text_color',textColor);
  //debugger;
    let updateSettingsResp=this.http
        .post(this.sharedServiceObj.registerationApiBaseUrl+'members/updateGlobalSettings', data, this.headerOptions)

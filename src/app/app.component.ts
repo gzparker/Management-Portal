@@ -188,6 +188,7 @@ if(result.status==true)
 //debugger;
 if(result)
 {
+  //debugger;
 this.storage.set("generalWebsiteSettings",result);
 }
   }

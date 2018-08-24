@@ -58,10 +58,10 @@
         </ion-item>
            
       </ion-list>-->
-      <ion-item class="OptMLS noShadow">
+      <ion-item class="OptMLS noShadow" *ngIf="service_id=='2'||service_id=='1'">
         <ion-label stacked>Select your MLS</ion-label>
         <ion-select placeholder="-----" [(ngModel)]="mls_server_id"  
-        name="mls_server_id" multiple="true" required>
+        name="mls_server_id" multiple="true">
           <ion-option *ngFor="let mls of allMls" value= {{mls.mls_server_id}}>{{mls.name}}
            </ion-option>
         </ion-select>

@@ -46,7 +46,7 @@
             <ion-input type="text" [(ngModel)]="identity_phone_number" 
             name="identity_phone_number" id="identity_phone_number" [brmasker]="{mask:'(000) 000-0000', len:14, type:'num'}"></ion-input>
         </ion-item>
-        <ion-item class="OptMLS noShadow">
+        <ion-item class="OptMLS noShadow" *ngIf="service_id=='2'||service_id=='1'">
           <ion-label stacked>Select your MLS</ion-label>
           <ion-select placeholder="-----" [(ngModel)]="mls_server_id"  
           name="mls_server_id" multiple="true" required>

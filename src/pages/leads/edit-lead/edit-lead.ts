@@ -281,7 +281,6 @@ getHomeAddress(data) {
    {
     // debugger;
      this.allWebsiteList=result.result;
-     
    }
    
  }
@@ -352,7 +351,8 @@ getHomeAddress(data) {
     this.home_address_state_or_province,this.home_address_zipcode,
     this.work_address_street,this.work_address_city,this.work_address_state_or_province,this.work_zipcode,
   this.assigned_agent_id,this.category,this.internal_notes,this.home_address,
-  this.home_lat_lng,this.home_google_place_id,this.work_address,this.work_lat_lng,this.work_google_place_id,this.leadImage)
+  this.home_lat_lng,this.home_google_place_id,this.work_address,this.work_lat_lng,
+  this.work_google_place_id,this.leadImage)
     .subscribe((result) => this.updateLeadResp(result));
     }
   }

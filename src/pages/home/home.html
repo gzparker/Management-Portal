@@ -9,7 +9,7 @@
 
 <ion-content padding>
 
-  <ion-slides pager>
+  <ion-slides pager *ngIf="isApp">
     <ion-slide *ngFor="let slide of slides">
       <img [src]="slide.image" class="slide-image"/>
       <h2 class="slide-title" [innerHTML]="slide.title"></h2>
@@ -29,6 +29,13 @@
       <img src="assets/imgs/ica-slidebox-img-2.png" class="slide-image"/>
       <h2 class="slide-title">Why use IDX?</h2>
       <p>These are the benefits of IDX Integration on website, Catch Audience’s Attention, Capture Leads, Search Engine Friendly, interact with your client directly.</p>
+    </ion-slide>
+  </ion-slides>
+  <ion-slides pager *ngIf="!isApp">
+    <ion-slide class="animated fadeInDown">
+      <img src="assets/imgs/idx-main-logo-white.png" class="slide-image"/>
+      <h2 class="slide-title">IDX COMPANY&reg; App</h2>
+      <p>IDX is an industry standard that enables a real estate professional to display all of an MLS’s property listings on their website, provided they in turn permit other MLS members to display their listings.</p>
     </ion-slide>
   </ion-slides>
 
