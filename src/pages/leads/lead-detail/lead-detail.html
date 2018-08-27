@@ -44,7 +44,7 @@
     <div class="contactChat" (click)="chatContact(leadDetail);"><ion-icon name="chatboxes"></ion-icon><span>Chat</span></div>
     <div class="contactEmail" (click)="emailContact(leadDetail);"><ion-icon name="ios-mail"></ion-icon><span>Mail</span></div>
     <div class="contactEmail" *ngIf="leadDetail.app_installed!=undefined&&leadDetail.app_installed=='0'" 
-    (click)="sendAppInvitation(leadDetail);"><ion-icon name="ios-mail"></ion-icon>
+    (click)="invitationPopUp(leadDetail);"><ion-icon name="ios-mail"></ion-icon>
       <span>Invite</span></div>
   </div>
   

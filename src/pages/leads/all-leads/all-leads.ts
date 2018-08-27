@@ -148,9 +148,35 @@ if(this.chatRef!=undefined)
 this.chatRef.off("value");
 }
   }
+  invitationPopUp(lead:any)
+  {
+    let message="Hi "+lead.first_name+" "+lead.last_name+", "+this.first_name+" "+this.last_name+" is requesting you download the Top Dweller App to search for homes with him. Please go here "+this.sharedServiceObj.idxChatAppLink.toString();
+    let alert = this.alertCtrl.create({
+      title: 'Send Invitation',
+      message: message,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            //console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Send',
+          handler: () => {
+            this.sendAppInvitation(lead);
+            //console.log('Buy clicked');
+          }
+        }
+      ]
+    });
+    alert.present();
+
+  }
   sendAppInvitation(lead:any)
   {
-   // debugger;
+   //debugger;
     let message="Hi "+lead.first_name+" "+lead.last_name+", "+this.first_name+" "+this.last_name+" is requesting you download the Top Dweller App to search for homes with him. Please go here "+this.sharedServiceObj.idxChatAppLink.toString();
     this.userServiceObj.sendAppInvitation(lead.phone_mobile.toString(),message)
     .subscribe((result) => this.sendAppInvitationResp(result));

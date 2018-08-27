@@ -422,6 +422,32 @@ this.work_address_parts=this.leadDetail.work_address.split(",");
     var modalPage = this.modalCtrl.create(NewMessagePopupPage, { isContact: "1",redirectUserId:this.firebaseLeadDetail.fbId });
     modalPage.present();
   }
+  invitationPopUp(lead:any)
+  {
+    let message="Hi "+lead.first_name+" "+lead.last_name+", "+this.first_name+" "+this.last_name+" is requesting you download the Top Dweller App to search for homes with him. Please go here "+this.sharedServiceObj.idxChatAppLink.toString();
+    let alert = this.alertCtrl.create({
+      title: 'Send Invitation',
+      message: message,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            //console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Send',
+          handler: () => {
+            this.sendAppInvitation(lead);
+            //console.log('Buy clicked');
+          }
+        }
+      ]
+    });
+    alert.present();
+
+  }
   sendAppInvitation(lead:any)
   {
     let message="Hi "+lead.first_name+" "+lead.last_name+", "+this.first_name+" "+this.last_name+" is requesting you download the Top Dweller App to search for homes with him. Please go here "+this.sharedServiceObj.idxChatAppLink.toString();

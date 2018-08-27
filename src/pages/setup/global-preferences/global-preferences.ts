@@ -191,6 +191,11 @@ export class GlobalPreferencesPage {
     this.secondColor=this.globalSettings.color_second;
      this.thirdColor=this.globalSettings.color_third;
      this.identity_name=this.globalSettings.identity_name;
+     this.headerColor=this.globalSettings.header_color;
+     this.sideBarMenuColor=this.globalSettings.sidebar_menu_color;
+     this.textColor=this.globalSettings.text_color;
+     this.buttonColor=this.globalSettings.button_color;
+     //debugger;
         if(this.globalSettings.photo_company!=undefined)
       {
         this.loadCompanyImage(this.sharedServiceObj.imgBucketUrl,this.globalSettings.photo_company);

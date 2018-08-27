@@ -58,6 +58,11 @@ export class RegisterPage {
   public modalType: number;
   public fbLoginStatus: any;
   public appId: number = 701598080041539;
+  public websiteBackgroundInfo:any;
+  public headerColor:string="";
+  public sideBarMenuColor:string="";
+  public buttonColor:string="";
+  public textColor:string="";
   public loader:any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider,
@@ -215,6 +220,86 @@ this.navCtrl.setRoot(LoginPage);
       this.setCountryInfo();
     }
 
+  }
+  setBackgroundInfo()
+  {
+    var that=this;
+    let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
+    generalWebsiteSettings.then((data) => {
+        if(data!=null)
+        {
+          that.websiteBackgroundInfo=data;
+          if(data.header_color)
+          {
+            if(data.header_color=="base_color")
+            {
+              that.headerColor=data.color_base;
+          }
+          if(data.header_color=="secondary_color")
+          {
+            that.headerColor=data.color_secondary;
+        }
+          if(data.header_color=="tertiary_color")
+            {
+              that.headerColor=data.color_tertiary;
+          }
+         
+         // debugger;
+        }
+        if(data.sidebar_menu_color)
+        {
+          if(data.sidebar_menu_color=="base_color")
+          {
+            that.sideBarMenuColor=data.color_base;
+        }
+        if(data.sidebar_menu_color=="secondary_color")
+          {
+            that.sideBarMenuColor=data.color_secondary;
+        }
+        if(data.sidebar_menu_color=="tertiary_color")
+          {
+            that.sideBarMenuColor=data.color_tertiary;
+        }
+        
+       // debugger;
+      }
+      if(data.button_color)
+      {
+        if(data.button_color=="base_color")
+        {
+          that.buttonColor=data.color_base;
+      }
+      if(data.button_color=="secondary_color")
+        {
+          that.buttonColor=data.color_secondary;
+      }
+      if(data.button_color=="tertiary_color")
+        {
+          that.buttonColor=data.color_tertiary;
+      }
+      
+     // debugger;
+    }
+    if(data.text_color)
+    {
+      if(data.text_color=="base_color")
+      {
+        that.textColor=data.color_base;
+    }
+    if(data.text_color=="secondary_color")
+      {
+        that.textColor=data.color_secondary;
+    }
+    if(data.text_color=="tertiary_color")
+      {
+        that.textColor=data.color_tertiary;
+    }
+    
+  
+  }
+  //debugger;
+      }
+      });
   }
   setCountryInfo() {
 
