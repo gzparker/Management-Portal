@@ -162,6 +162,8 @@ public isWebBrowser=false;
   public polygon_search:any="";
   public headerImage:string="";
   public communityImage:string="";
+  public communityImageArray:string[]=[];
+  public dataCommunityImageArray:any[]=[];
   public allAgents:any[]=[];
   public assigned_agent_id:any[]=[];
   public listing_size_min:string="";
@@ -1219,9 +1221,10 @@ this.allListingTypeChecked=true;
          //{
           
           this.userServiceObj.createHotSheet(this.userId.toString(),this.selectedWebsite,
-          this.sharedServiceObj.mlsServerId,this.name,this.hotsheet_Title,this.slug,JSON.stringify(this.searchListObject),document.getElementById("brief_description").innerHTML,
+          this.sharedServiceObj.mlsServerId,this.name,this.hotsheet_Title,this.slug,
+          JSON.stringify(this.searchListObject),document.getElementById("brief_description").innerHTML,
           document.getElementById("main_description").innerHTML,this.virtual_tour_url,this.video_url,this.sub_city,
-          this.communityImage,this.headerImage,this.city,this.administrative_area_level_1,
+          this.dataCommunityImageArray,this.headerImage,this.city,this.administrative_area_level_1,
           this.community,this.assigned_agent_id,this.polygon_search,this.meta_description,this.meta_title,this.parent_id)
           .subscribe((result) => this.createHotSheetResp(result));
         // }
@@ -1255,13 +1258,13 @@ this.allListingTypeChecked=true;
     }
     createHotSheetResp(result:any):void{
     this.storage.remove('searchFilterObj');
-    //this.loader.dismiss();
-    CKEDITOR.instances['brief_description'].destroy(true);
+    debugger;
+    /*CKEDITOR.instances['brief_description'].destroy(true);
     CKEDITOR.instances['main_description'].destroy(true);
     this.hotsheetCreateMsg="HotSheet has been created successfully.";
     this.ngZone.run(()=>{
       this.navCtrl.setRoot(AllHotSheetsPage,{notificationMsg:this.hotsheetCreateMsg.toString()});
-    });
+    });*/
     
     }
     headerFileChangeListener($event) {
@@ -1378,6 +1381,7 @@ else
               this.resizeCommunityImage(this.dataCommunityImage.image, data => {
               
                 that.communityImage=data;
+                
                 this.createCommunityImageThumbnail(that.communityImage);
                   });
       }
@@ -1386,27 +1390,50 @@ else
   this.crop_community_image=true;
 }
     }
-   
+  addMoreCommunityImage()
+  {
+    let commObj={imageData:"",imageDataDummy:"",imageWidth:"",imageHeight:""};
+    //commObj.imageId=this.dataCommunityImageArray.length.toString();
+        commObj.imageDataDummy=this.dataCommunityImage.image;
+        commObj.imageData=this.communityImage;
+        commObj.imageWidth=this.communityWidth;
+        commObj.imageHeight=this.communityHeight;
+        this.dataCommunityImageArray.push(commObj);
+
+    //this.communityImageArray.push(this.communityImage);
+    this.hideCommunityCropper=false;
+    this.dataCommunityImage={};
+
+    //debugger;
+  }
+  deleteCommunityImage(imageObj)
+  {
+    let selectedIndex = this.dataCommunityImageArray.indexOf(imageObj);
+            if (selectedIndex >= 0) {
+            this.dataCommunityImageArray.splice(selectedIndex, 1);
+            }
+  }
     takeHeaderPicture(){
+      var that=this;
       let options =
       {
         quality: 100,
         correctOrientation: true
       };
-      this.camera.getPicture(options)
+      that.camera.getPicture(options)
       .then((data) => {
-        this.headerImage="data:image/jpeg;base64," +data;
+        that.headerImage="data:image/jpeg;base64," +data;
         let image : any= new Image();
-         image.src = this.headerImage;
+         image.src = that.headerImage;
        
-        if(this.isApp)
+        if(that.isApp)
         {
-       this.crop
-       .crop(this.headerImage, {quality: 75,targetHeight:100,targetWidth:100})
+          that.crop
+       .crop(that.headerImage, {quality: 75,targetHeight:100,targetWidth:100})
       .then((newImage) => {
      
-          alert(newImage);
-          this.headerImage=newImage;
+         // alert(newImage);
+          that.headerImage=newImage;
         }, error => {
          
           alert(error)});
@@ -1427,24 +1454,25 @@ else
       }, (err) => { console.log(err) });
     }
     takeCommunityPicture(){
+      var that=this;
       let options =
       {
         quality: 100,
         correctOrientation: true
       };
-      this.camera.getPicture(options)
+      that.camera.getPicture(options)
       .then((data) => {
-        this.communityImage="data:image/jpeg;base64," +data;
+        that.communityImage="data:image/jpeg;base64," +data;
         let image : any= new Image();
-         image.src = this.communityImage;
+         image.src = that.communityImage;
       
-        if(this.isApp)
+        if(that.isApp)
         {
-          this.crop
-          .crop(this.communityImage, {quality: 75,targetHeight:100,targetWidth:100})
+          that.crop
+          .crop(that.communityImage, {quality: 75,targetHeight:100,targetWidth:100})
           .then((newImage) => {
-            alert(newImage);
-            this.communityImage=newImage;
+            //alert(newImage);
+            that.communityImage=newImage;
             
           }, error => {alert(error)});
         }
@@ -1457,10 +1485,12 @@ else
 
   createCommunityImageThumbnail(bigMatch:any) {
     let that=this;
+   
     //debugger;
       this.generateCommunityImageFromImage(bigMatch, 500, 500, 0.5, data => {
         
     that.dataCommunityImage.image=data;
+    //debugger;
       });
     }
     generateCommunityImageFromImage(img, MAX_WIDTH: number = 700, MAX_HEIGHT: number = 700, quality: number = 1, callback) {
@@ -1531,10 +1561,11 @@ else
     }
     createHeaderImageThumbnail(bigMatch:any) {
       let that=this;
-      //debugger;
+      
         this.generateHeaderImageFromImage(bigMatch, 500, 500, 0.5, data => {
-          
+          //that.dataCommunityImageArray.push(commObj);
       that.dataHeaderImage.image=data;
+      //debugger;
         });
       }
       generateHeaderImageFromImage(img, MAX_WIDTH: number = 700, MAX_HEIGHT: number = 700, quality: number = 1, callback) {

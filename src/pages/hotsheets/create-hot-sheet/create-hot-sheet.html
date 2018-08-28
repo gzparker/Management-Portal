@@ -229,14 +229,16 @@
           (onCrop)="communtiyImageCropped($event)" *ngIf="hideCommunityCropper"></img-cropper>
 
           <!-- Image Cropper Result -->          
-          <span *ngIf="dataCommunityImage.image">          
-          <img [src]="dataCommunityImage.image" [width]="communityWidth"
-          [height]="communityHeight">
+          <span *ngFor="let communityImage of dataCommunityImageArray">          
+          <img [src]="communityImage.imageDataDummy" [width]="communityImage.imageWidth"
+          [height]="communityImage.imageHeight">
+          <button ion-button color="danger" item-right class="btn-del" (click)="deleteCommunityImage(communityImage)"><ion-icon name="md-close"></ion-icon>Delete</button>
           </span>
 
           <!-- Image Upload Button -->
           <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="communityFileChangeListener($event)">
-               
+          <button ion-button color="primary" block (click)="addMoreCommunityImage();" 
+          *ngIf="dataCommunityImage.image">Add More</button>      
           
            
     </ion-list>

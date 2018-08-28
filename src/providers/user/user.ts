@@ -1287,7 +1287,7 @@ getUsersChartsData(member_id:string)
        return userChartsResp;
 }
 private extractData(res: Response) {
-  //debugger;
+  debugger;
     return res.json();
 }
   private handleErrorObservable(error: Response | any) {
