@@ -671,10 +671,26 @@ this.meta_description=html;
  
   }
   toggleAdvanceSearch(){
-this.advanceSearchOption=!this.advanceSearchOption;
+//this.advanceSearchOption=!this.advanceSearchOption;
+if(this.advanceSearchOption==true)
+    {
+      this.advanceSearchOption=false;
+    }
+    else
+    {
+      this.advanceSearchOption=true;
+    }
   }
   toggleAdditionalInfo(){
-    this.additionalInfoOption=!this.additionalInfoOption;
+    if(this.additionalInfoOption==true)
+    {
+      this.additionalInfoOption=false;
+    }
+    else
+    {
+      this.additionalInfoOption=true;
+    }
+    //this.additionalInfoOption=!this.additionalInfoOption;
       }
   loadSearchedField():void{
     //if(this.localStorageService.get("searchFieldsLocal")==undefined)
@@ -1202,9 +1218,35 @@ this.allListingTypeChecked=true;
     }
     //this.storage.set('searchFilterObj',JSON.stringify(this.searchListObject));
     }
+    addMoreCommunityImage()
+  {
+    let commObj={imageData:"",imageDataDummy:"",imageWidth:"",imageHeight:""};
+        commObj.imageDataDummy=this.dataCommunityImage.image;
+        commObj.imageData=this.communityImage;
+        commObj.imageWidth=this.communityWidth;
+        commObj.imageHeight=this.communityHeight;
+        this.dataCommunityImageArray.push(commObj);
+
+    //this.communityImageArray.push(this.communityImage);
+    this.hideCommunityCropper=false;
+    this.dataCommunityImage={};
+
+    //debugger;
+  }
     createHotSheet():void{
       //this.domainAccess=this.localStorageService.get('domainAccess');
-      
+      if(this.dataCommunityImage.image!=undefined&&this.dataCommunityImage.image!='')
+      {
+        let commObj={imageData:"",imageDataDummy:"",imageWidth:"",imageHeight:""};
+        commObj.imageDataDummy=this.dataCommunityImage.image;
+        commObj.imageData=this.communityImage;
+        commObj.imageWidth=this.communityWidth;
+        commObj.imageHeight=this.communityHeight;
+        this.dataCommunityImageArray.push(commObj);
+        this.hideCommunityCropper=false;
+        this.dataCommunityImage={};
+       //debugger;
+      }
     if(this.userId!="")
       {
         this.userServiceObj.checkHotSheetSlug(this.slug,this.userId.toString()).subscribe((result) => this.createHotSheetFinal(result));
@@ -1219,7 +1261,7 @@ this.allListingTypeChecked=true;
 
          //if(data!=null)
          //{
-          
+          //debugger;
           this.userServiceObj.createHotSheet(this.userId.toString(),this.selectedWebsite,
           this.sharedServiceObj.mlsServerId,this.name,this.hotsheet_Title,this.slug,
           JSON.stringify(this.searchListObject),document.getElementById("brief_description").innerHTML,
@@ -1258,13 +1300,13 @@ this.allListingTypeChecked=true;
     }
     createHotSheetResp(result:any):void{
     this.storage.remove('searchFilterObj');
-    debugger;
-    /*CKEDITOR.instances['brief_description'].destroy(true);
+    //debugger;
+    CKEDITOR.instances['brief_description'].destroy(true);
     CKEDITOR.instances['main_description'].destroy(true);
     this.hotsheetCreateMsg="HotSheet has been created successfully.";
     this.ngZone.run(()=>{
       this.navCtrl.setRoot(AllHotSheetsPage,{notificationMsg:this.hotsheetCreateMsg.toString()});
-    });*/
+    });
     
     }
     headerFileChangeListener($event) {
@@ -1390,22 +1432,7 @@ else
   this.crop_community_image=true;
 }
     }
-  addMoreCommunityImage()
-  {
-    let commObj={imageData:"",imageDataDummy:"",imageWidth:"",imageHeight:""};
-    //commObj.imageId=this.dataCommunityImageArray.length.toString();
-        commObj.imageDataDummy=this.dataCommunityImage.image;
-        commObj.imageData=this.communityImage;
-        commObj.imageWidth=this.communityWidth;
-        commObj.imageHeight=this.communityHeight;
-        this.dataCommunityImageArray.push(commObj);
-
-    //this.communityImageArray.push(this.communityImage);
-    this.hideCommunityCropper=false;
-    this.dataCommunityImage={};
-
-    //debugger;
-  }
+  
   deleteCommunityImage(imageObj)
   {
     let selectedIndex = this.dataCommunityImageArray.indexOf(imageObj);

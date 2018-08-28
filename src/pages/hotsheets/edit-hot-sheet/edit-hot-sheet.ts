@@ -57,7 +57,7 @@ export class EditHotSheetPage {
   public headerHeight:string="";
   public communityWidth:string="";
   public communityHeight:string="";
-
+  public dataCommunityImageArray:any[]=[];
   public multiSelect:IMultiSelectSettings = {
     enableSearch: true,
     checkedStyle: 'fontawesome',
@@ -714,12 +714,28 @@ this.main_description=html;
 this.meta_description=html;
  
   }
-   toggleAdvanceSearch(){
-    this.advanceSearchOption=!this.advanceSearchOption;
-    }
-    toggleAdditionalInfo(){
-      this.additionalInfoOption=!this.additionalInfoOption;
+  toggleAdvanceSearch(){
+    //this.advanceSearchOption=!this.advanceSearchOption;
+    if(this.advanceSearchOption==true)
+        {
+          this.advanceSearchOption=false;
         }
+        else
+        {
+          this.advanceSearchOption=true;
+        }
+      }
+    toggleAdditionalInfo(){
+        if(this.additionalInfoOption==true)
+        {
+          this.additionalInfoOption=false;
+        }
+        else
+        {
+          this.additionalInfoOption=true;
+        }
+        //this.additionalInfoOption=!this.additionalInfoOption;
+          }
    ////////////////////////////////
   loadSearchedField():void{
     //if(this.localStorageService.get("searchFieldsLocal")==undefined)
@@ -1334,7 +1350,15 @@ else
          if(result.result.community_image_url!=undefined)
       {
         this.additionalInfoOption=true;
-      this.loadCommunityImage(this.sharedServiceObj.imgBucketUrl,result.result.community_image_url);
+        //debugger;
+        let communityImagesArray=result.result.community_image_url.split(",");
+        communityImagesArray.forEach(element=>{
+          //that.returnedGroup=element;
+          //debugger;
+          this.loadCommunityImage(this.sharedServiceObj.imgBucketUrl,element);
+        //debugger;
+            });
+      //this.loadCommunityImage(this.sharedServiceObj.imgBucketUrl,result.result.community_image_url);
         
       }
       if(result.result.header_image_url!=undefined)
@@ -1368,17 +1392,40 @@ else
               image.src = loadEvent.target.result;
               
               image.onload = function () {
-                
                 //debugger;
                 self.communityCropperSettings.croppedWidth=this.width;
                 self.communityCropperSettings.croppedHeight=this.height;
                 self.communityImage=image.src;
-                self.createCommunityImageThumbnail(image.src);
+                //debugger;
+                self.createCommunityImageThumbnail(image.src,"1");
+                
                 //self.communityImageCropper.setImage(image);
               }
           };
         });
       }
+      addMoreCommunityImage()
+  {
+    let commObj={imageData:"",imageDataDummy:"",imageWidth:"",imageHeight:""};
+        commObj.imageDataDummy=this.dataCommunityImage.image;
+        commObj.imageData=this.communityImage;
+        commObj.imageWidth=this.communityWidth;
+        commObj.imageHeight=this.communityHeight;
+        this.dataCommunityImageArray.push(commObj);
+//debugger;
+    //this.communityImageArray.push(this.communityImage);
+    this.hideCommunityCropper=false;
+    this.dataCommunityImage={};
+
+    //debugger;
+  }
+  deleteCommunityImage(imageObj)
+  {
+    let selectedIndex = this.dataCommunityImageArray.indexOf(imageObj);
+            if (selectedIndex >= 0) {
+            this.dataCommunityImageArray.splice(selectedIndex, 1);
+            }
+  }
       loadHeaderImage(baseUrl:string,imageUrl:string) {
        // debugger;
         const self = this;
@@ -1454,7 +1501,18 @@ else
       }
       updateHotSheet():void{
         //this.domainAccess=this.localStorageService.get('domainAccess');
-       
+        if(this.dataCommunityImage.image!=undefined&&this.dataCommunityImage.image!='')
+        {
+          let commObj={imageData:"",imageDataDummy:"",imageWidth:"",imageHeight:""};
+          commObj.imageDataDummy=this.dataCommunityImage.image;
+          commObj.imageData=this.communityImage;
+          commObj.imageWidth=this.communityWidth;
+          commObj.imageHeight=this.communityHeight;
+          this.dataCommunityImageArray.push(commObj);
+          this.hideCommunityCropper=false;
+          this.dataCommunityImage={};
+         //debugger;
+        }
       if(this.userId!="")
         {
          //if(this.domainAccess)
@@ -1479,7 +1537,7 @@ else
         {
         if(result.status!=false)
         {
-      //debugger;
+      debugger;
           //let json_search=this.storage.get("searchFilterObj");
           //json_search.then((data) => {
             //if(data!=null)
@@ -1487,7 +1545,7 @@ else
       this.userServiceObj.updateHotSheet(this.hotSheetId,this.userId.toString(),this.selectedWebsite,
       this.sharedServiceObj.mlsServerId,this.name,this.hotsheet_Title,this.slug,JSON.stringify(this.searchListObject),document.getElementById("brief_description").innerHTML,
       document.getElementById("main_description").innerHTML,this.virtual_tour_url,this.video_url,this.sub_city,
-      this.communityImage,this.headerImage,this.city,this.administrative_area_level_1,
+      this.dataCommunityImageArray,this.headerImage,this.city,this.administrative_area_level_1,
       this.community,this.assigned_agent_id,this.polygon_search,this.meta_description,this.meta_title,this.parent_id)
         .subscribe((result) => this.updateHotSheetResp(result));
             //}
@@ -1509,11 +1567,11 @@ else
         else
         {
          
-      //debugger;
+      debugger;
         this.userServiceObj.updateHotSheet(this.hotSheetId,this.userId.toString(),this.selectedWebsite,
         this.sharedServiceObj.mlsServerId,this.name,this.hotsheet_Title,this.slug,JSON.stringify(this.searchListObject),this.brief_description,
         this.main_description,this.virtual_tour_url,this.video_url,this.sub_city,
-        this.communityImage,this.headerImage,this.city,this.administrative_area_level_1,
+        this.dataCommunityImageArray,this.headerImage,this.city,this.administrative_area_level_1,
         this.community,this.assigned_agent_id,this.polygon_search,this.meta_description,this.meta_title,this.parent_id)
         .subscribe((result) => this.updateHotSheetResp(result));
    
@@ -1602,7 +1660,7 @@ else
                this.resizeCommunityImage(this.dataCommunityImage.image, data => {
                
                  that.communityImage=data;
-                 this.createCommunityImageThumbnail(that.communityImage);
+                 this.createCommunityImageThumbnail(that.communityImage,"0");
                    });
         }
        else
@@ -1679,15 +1737,20 @@ else
        }
        /////////////////////Generate Thumbnail//////////////////////
 
-  createCommunityImageThumbnail(bigMatch:any) {
+  createCommunityImageThumbnail(bigMatch:any,editMode:string) {
     let that=this;
     //debugger;
-      this.generateCommunityImageFromImage(bigMatch, 500, 500, 0.5, data => {
+      this.generateCommunityImageFromImage(bigMatch, 500, 500, 0.5,editMode, data => {
         
     that.dataCommunityImage.image=data;
+    if(editMode=="1")
+   {
+     //debugger;
+     that.addMoreCommunityImage();
+   }
       });
     }
-    generateCommunityImageFromImage(img, MAX_WIDTH: number = 700, MAX_HEIGHT: number = 700, quality: number = 1, callback) {
+    generateCommunityImageFromImage(img, MAX_WIDTH: number = 700, MAX_HEIGHT: number = 700, quality: number = 1,editMode:string, callback) {
       var canvas: any = document.createElement("canvas");
       var image:any = new Image();
       //image.width=this.companyCropperSettings.croppedWidth;

@@ -993,6 +993,7 @@ createHotSheet(user_id:string,website_id:string,mlsServerId:string,name:string,h
   sub_city:any,communityImage:any,headerImage:any,local:any,
   administrative_area_level_1:any,community:any,agent_ids:any,polygon_search:any,
   meta_description:any,meta_title:any,parent_id:any){
+    //debugger;
  let data = new URLSearchParams();
  data.append('name',name);
  data.append('title',hotsheet_Title);
@@ -1014,7 +1015,7 @@ createHotSheet(user_id:string,website_id:string,mlsServerId:string,name:string,h
  data.append('video_url',video_url);
  data.append('virtual_tour_url',virtual_tour_url);
  data.append('header_image',headerImage);
- data.append('community_image',communityImage);
+ data.append('community_image',JSON.stringify(communityImage));
  data.append('assigned_agent_ids',agent_ids);
 //debugger;
   let hotSheetCreatingResp=this.http
@@ -1068,7 +1069,7 @@ updateHotSheet(id:string,user_id:string,website_id:string,mlsServerId:string,nam
  data.append('video_url',video_url);
  data.append('virtual_tour_url',virtual_tour_url);
  data.append('header_image',headerImage);
- data.append('community_image',communityImage);
+ data.append('community_image',JSON.stringify(communityImage));
  data.append('assigned_agent_ids',agent_ids);
 //debugger;
   let hotSheetUpdatingResp=this.http
@@ -1287,7 +1288,7 @@ getUsersChartsData(member_id:string)
        return userChartsResp;
 }
 private extractData(res: Response) {
-  debugger;
+  //debugger;
     return res.json();
 }
   private handleErrorObservable(error: Response | any) {
