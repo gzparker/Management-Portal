@@ -56,20 +56,20 @@
         </ion-item>
         <ion-item class="userInfoBlock ReqField">
           <ion-icon name="md-briefcase" item-start></ion-icon>
-          <ion-label stacked><span [ngClass]="{'error': agent_id==''}" *ngIf="agent_id==''">*</span></ion-label>        
-          <ion-input type="text" required [(ngModel)]="agent_id" name="agent_id" placeholder="Agent ID"></ion-input>
+          <!--<ion-label stacked><span [ngClass]="{'error': agent_id==''}" *ngIf="agent_id==''">*</span></ion-label>-->       
+          <ion-input type="text" [(ngModel)]="agent_id" name="agent_id" placeholder="Agent ID"></ion-input>
         </ion-item>
   
         <ion-item class="userInfoBlock ReqField">
           <ion-icon name="md-briefcase" item-start></ion-icon>
-          <ion-label stacked><span [ngClass]="{'error': broker_id==''}" *ngIf="broker_id==''">*</span></ion-label>
-          <ion-input type="text" required [(ngModel)]="broker_id" name="broker_id" placeholder="Broker ID" ></ion-input>
+          <!--<ion-label stacked><span [ngClass]="{'error': broker_id==''}" *ngIf="broker_id==''">*</span></ion-label>-->
+          <ion-input type="text" [(ngModel)]="broker_id" name="broker_id" placeholder="Broker ID" ></ion-input>
         </ion-item>
   
         <ion-item class="userInfoBlock ReqField">
           <ion-icon name="md-briefcase" item-start></ion-icon>
-          <ion-label stacked><span [ngClass]="{'error': office_id==''}" *ngIf="office_id==''">*</span></ion-label>
-          <ion-input type="text" required [(ngModel)]="office_id" name="office_id" placeholder="Office ID" ></ion-input>
+          <!--<ion-label stacked><span [ngClass]="{'error': office_id==''}" *ngIf="office_id==''">*</span></ion-label>-->
+          <ion-input type="text" [(ngModel)]="office_id" name="office_id" placeholder="Office ID" ></ion-input>
         </ion-item>   
       </ion-list>
 
@@ -235,11 +235,11 @@
             <ion-textarea type="text" class="expandText" [(ngModel)]="footer_wrapper" name="footer_wrapper"></ion-textarea>
           </ion-item>
 
-          <ion-item>
+          <!--<ion-item>
             <ion-label stacked>Intagent Website</ion-label>
             <ion-checkbox color="royal" item-right checked="false" [(ngModel)]="intagent_website" name="intagent_website" id="intagent_website" 
             required >intagent_website</ion-checkbox>
-          </ion-item>
+          </ion-item>-->
 
           <!--<ion-item>
             <ion-label stacked>Intagent Website</ion-label>
@@ -279,11 +279,11 @@
             <ion-toggle [(ngModel)]="feature_office_listings" name="feature_office_listings"></ion-toggle>
           </ion-item>
 
-          <ion-item>
+          <!--<ion-item>
             <ion-label>Is Active<span [ngClass]="{'error': isActive==false}" *ngIf="isActive==false">*</span></ion-label>
             <ion-checkbox color="royal" item-right checked="false" [(ngModel)]="isActive" name="isActive" id="isActive" 
             required >Is Active</ion-checkbox>
-          </ion-item>
+          </ion-item>-->
       </ion-list>
       
       <div class="dashboardBtn">

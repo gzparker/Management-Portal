@@ -83,6 +83,7 @@ export class EditWebsitePage {
   public agent_id:string="";
   public allMls:any[]=[];
   public mls_server_id:any[]=[];
+  public service_id:string="";
   /*private CkeditorConfig = {removeButtons:'Underline,Subscript,Superscript,SpecialChar'
   ,toolbar: [
     { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ ] },
@@ -153,6 +154,7 @@ export class EditWebsitePage {
           content: "Please wait...",
           duration: 5000
         });
+        this.service_id=this.sharedServiceObj.service_id;
   }
 
   ionViewDidLoad() {
@@ -437,24 +439,24 @@ else
 {
   this.feature_office_listings=true;
 }
-if(result.result.intagent_website==null||result.result.intagent_website=="0")
+/*if(result.result.intagent_website==null||result.result.intagent_website=="0")
 {
  this.intagent_website=false;
 }
 else
 {
   this.intagent_website=true;
-}
+}*/
 this.header_wrapper=result.result.header_wrapper;
 this.footer_wrapper=result.result.footer_wrapper;
-      if(result.result.status=="1")
+      /*if(result.result.status=="1")
       {
         this.isActive=true;
       }
       else
       {
         this.isActive=false;
-      }
+      }*/
     }
   }
   loadLogo(baseUrl:string,imageUrl:string) {

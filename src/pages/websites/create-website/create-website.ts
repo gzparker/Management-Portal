@@ -44,6 +44,7 @@ export class CreateWebsitePage {
   public office_id:string="";
   public broker_id:string="";
   public agent_id:string="";
+  public service_id:string="";
   public CkeditorConfig = {removeButtons:'Underline,Subscript,Superscript,SpecialChar'
   ,toolbar: [
     { name: 'document', groups: [], items: ['Source'] },
@@ -57,7 +58,7 @@ export class CreateWebsitePage {
     public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform, 
     public ngZone: NgZone,public menuCtrl: MenuController,public loadingCtrl: LoadingController) {
-      
+      this.service_id=this.sharedServiceObj.service_id; 
   }
 
   ionViewDidLoad() {
@@ -136,7 +137,7 @@ this.homepageMeta_description=html;
     let intagentWebsiteFinal:number=1;
      //if(this.domainAccess)
      //{
-       if(this.isActive==true)
+       /*if(this.isActive==true)
        {
          isActiveFinal="1";
        }
@@ -151,7 +152,7 @@ intagentWebsiteFinal=1
        else
        {
 intagentWebsiteFinal=0;
-       }
+       }*/
        if(this.website_domain.indexOf("http://www")<0 && this.website_domain.indexOf("https://www")<0)
        {
          //debugger;
