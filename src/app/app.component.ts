@@ -178,17 +178,8 @@ export class MyApp {
   }
   loadGeneralWebsiteSettingsResp(result:any)
   {
-
-/*if(result.status==false)
-{
-}
-if(result.status==true)
-{
-}*/
-//debugger;
 if(result)
 {
-  //debugger;
 this.storage.set("generalWebsiteSettings",result);
 }
   }

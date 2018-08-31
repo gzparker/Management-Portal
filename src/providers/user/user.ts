@@ -1247,7 +1247,7 @@ getAllMemberAllowedOptions(allowedOptions)
 }
 updateGlobalSettings(member_id:string,personalImage:string,companyImage:string,
   timezone:string,colorBase:string,secondColor:string,thirdColor:string,identity_name:string,headerColor:string,
-  sideBarMenuColor:string,buttonColor:string,textColor:string){
+  sideBarMenuColor:string,buttonColor:string,textColor:string,backgroundColor:string){
   //  debugger;
     let data = new URLSearchParams();
     data.append('master_id',member_id);
@@ -1262,6 +1262,7 @@ updateGlobalSettings(member_id:string,personalImage:string,companyImage:string,
     data.append('side_bar_menu_color',sideBarMenuColor);
     data.append('button_color',buttonColor);
     data.append('text_color',textColor);
+    data.append('content_background',backgroundColor);
  //debugger;
    let updateSettingsResp=this.http
        .post(this.sharedServiceObj.registerationApiBaseUrl+'members/updateGlobalSettings', data, this.headerOptions)

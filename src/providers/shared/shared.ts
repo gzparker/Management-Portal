@@ -49,7 +49,7 @@ export class SharedProvider {
   public apiBaseUrl = "https://api.idx.company/api/";
   //public imgBucketUrl="https://cdn.published.website/";
   public imgBucketUrl="https://s3-us-west-2.amazonaws.com/central-system/usr/";
-  public noImageUrl="././assets/imgs/noImage.png";
+  public noImageUrl="././assets/imgs/noImageAvailable.jpg";
   public hotsheetNoImage="././assets/imgs/hotsheets-thumbnail.jpg";
   public profileNoImage="././assets/imgs/profile-photo.jpg";
   public groupNoImage="././assets/imgs/profile-group.jpg";

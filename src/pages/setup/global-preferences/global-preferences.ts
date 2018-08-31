@@ -54,6 +54,7 @@ export class GlobalPreferencesPage {
   public headerColor:string="";
   public textColor:string="";
   public buttonColor:string="";
+  public backgroundColor:string="";
   public sideBarMenuColor:string="";
   public customColorOption:boolean=false;
 
@@ -81,7 +82,8 @@ export class GlobalPreferencesPage {
 
   public user = {timezone:'America/New_York'};
   public placeholderString = 'Select timezone';
-  public colorOptions:any[]=[{id:"base_color",name:"Base Color"},{id:"secondary_color",name:"Secondary Color"},{id:"tertiary_color",name:"Tertiary Color"}];
+  public colorOptions:any[]=[{id:"base_color",name:"1st Color"},
+  {id:"secondary_color",name:"2nd Color"},{id:"tertiary_color",name:"3rd Color"},{id:"default",name:"Default Color"}];
 
   public userId:string="";
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
@@ -625,7 +627,8 @@ else
     {
     //debugger;
     this.userServiceObj.updateGlobalSettings(this.userId,this.personalImage,this.companyLogoImage,this.user.timezone,
-      this.colorBase,this.secondColor,this.thirdColor,this.identity_name,this.headerColor,this.sideBarMenuColor,this.buttonColor,this.textColor)
+      this.colorBase,this.secondColor,this.thirdColor,this.identity_name,this.headerColor,this.sideBarMenuColor,
+      this.buttonColor,this.textColor,this.backgroundColor)
     .subscribe((result) => this.updateGlobalSettingsResp(result));
  
     }

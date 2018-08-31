@@ -123,7 +123,7 @@
     <ion-list *ngIf="selectedRoute==''" class="customList">
     <label>Color Scheme</label>
     <div *ngIf="colorBase!=''">
-      <ion-label stacked>Base Color</ion-label>
+      <ion-label stacked>1st Color</ion-label>
     
         <button ion-button color="secondary" outline [colorPicker]="colorBase" 
         (colorPickerChange)="colorBase=$event"
@@ -136,7 +136,7 @@
          [cpOutputFormat]="'rgba'" >Select Color</div>-->
     </div>
     <div *ngIf="secondColor!=''">
-        <ion-label stacked>Secondary Color</ion-label>
+        <ion-label stacked>2nd Color</ion-label>
         <button ion-button color="secondary" outline [colorPicker]="secondColor" 
         (colorPickerChange)="secondColor=$event"
         [ngStyle]="{'background-color': secondColor}" [cpPosition]="'bottom'" [cpCancelButton]="true" 
@@ -148,7 +148,7 @@
           [value]="secondColor" [cpOutputFormat]="'rgba'"></ion-input>-->
     </div>
     <div *ngIf="thirdColor!=''">
-          <ion-label stacked>Tertiary Color</ion-label>
+          <ion-label stacked>3rd Color</ion-label>
           <button ion-button color="secondary" outline [colorPicker]="thirdColor" 
           (colorPickerChange)="thirdColor=$event"
           [ngStyle]="{'background-color': thirdColor}" [cpPosition]="'bottom'" [cpCancelButton]="true" [cpCancelButtonClass]="'btn btn-primary btn-xs'"
@@ -181,9 +181,18 @@
        </ion-select>
       
     </ion-item>
-    <ion-item>
+    <!--<ion-item>
       <ion-label>Text Color</ion-label>
       <ion-select [(ngModel)]="textColor" name="textColor" id="textColor">
+        <ion-option *ngFor="let colorOption of colorOptions" value= {{colorOption.id}}>
+          {{colorOption.name}}
+          </ion-option>
+       </ion-select>
+      
+    </ion-item>-->
+    <ion-item>
+      <ion-label>Content Background Color</ion-label>
+      <ion-select [(ngModel)]="backgroundColor" name="backgroundColor" id="backgroundColor">
         <ion-option *ngFor="let colorOption of colorOptions" value= {{colorOption.id}}>
           {{colorOption.name}}
           </ion-option>
