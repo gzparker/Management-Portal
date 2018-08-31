@@ -75,6 +75,17 @@ page-all-leads {
   box-shadow: -1px 0px 8px rgba(214, 220, 226, 0.51) !important;  
   }
 
+  ion-badge.badgeInvite {
+  font-size: 11px;
+  font-weight: 400;
+  color: #FFF;
+  width: 52px;  
+  border-radius: 20px;
+  border: 1px solid lighten($color-6, 20%) !important;
+  background: lighten($color-6, 25%) !important;
+  cursor: pointer;
+  }
+
   ion-icon {
   font-family: $font-three !important;
   font-size: 11px !important;

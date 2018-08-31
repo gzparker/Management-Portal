@@ -10,13 +10,12 @@
     
     <ion-card text-center menuClose class="profileCard" *ngIf="userLoggedIn==true&&userGeneralInfo!=null"  
     (tap)="openPage('26')" > 
-      <div class="profileCardInfo" [ngStyle]="{'background-image':userGeneralInfo.photo_company != null ?'url(' + this.sharedServiceObj.imgBucketUrl+userGeneralInfo.photo_company + ')': 'url(' + this.sharedServiceObj.profileNoImage + ')' }">
+      <div class="profileCardInfo">
+      <div class="profileCardBG" [ngStyle]="{'background-image':userGeneralInfo.photo_company != null ?'url(' + this.sharedServiceObj.imgBucketUrl+userGeneralInfo.photo_company + ')': 'url(' + this.sharedServiceObj.profileNoImage + ')' }"></div>
       <img src={{this.sharedServiceObj.imgBucketUrl}}{{userGeneralInfo.photo_company}} 
       class="custom-avatar" (error)="imgProfile.src = this.sharedServiceObj.profileNoImage" #imgProfile/>
-      <h2 class="username">{{userGeneralInfo.identity_name}}</h2>
-      <p class="tagline">Email Address</p>
-      </div>
-      <div class="profileCardBG"></div>
+      <h2 class="username">{{userGeneralInfo.identity_name}}</h2>      
+      </div>      
     </ion-card>
 
     <ion-list id="sidenav" class="app-menu disable-user-behavior">

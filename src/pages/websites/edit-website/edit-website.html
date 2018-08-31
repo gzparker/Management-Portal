@@ -54,19 +54,19 @@
              </ion-option>
           </ion-select>
         </ion-item>
-        <ion-item class="userInfoBlock ReqField">
+        <ion-item class="userInfoBlock medIcon">
           <ion-icon name="md-briefcase" item-start></ion-icon>
           <!--<ion-label stacked><span [ngClass]="{'error': agent_id==''}" *ngIf="agent_id==''">*</span></ion-label>-->       
           <ion-input type="text" [(ngModel)]="agent_id" name="agent_id" placeholder="Agent ID"></ion-input>
         </ion-item>
   
-        <ion-item class="userInfoBlock ReqField">
+        <ion-item class="userInfoBlock medIcon">
           <ion-icon name="md-briefcase" item-start></ion-icon>
           <!--<ion-label stacked><span [ngClass]="{'error': broker_id==''}" *ngIf="broker_id==''">*</span></ion-label>-->
           <ion-input type="text" [(ngModel)]="broker_id" name="broker_id" placeholder="Broker ID" ></ion-input>
         </ion-item>
   
-        <ion-item class="userInfoBlock ReqField">
+        <ion-item class="userInfoBlock medIcon">
           <ion-icon name="md-briefcase" item-start></ion-icon>
           <!--<ion-label stacked><span [ngClass]="{'error': office_id==''}" *ngIf="office_id==''">*</span></ion-label>-->
           <ion-input type="text" [(ngModel)]="office_id" name="office_id" placeholder="Office ID" ></ion-input>
@@ -206,17 +206,17 @@
               <input id="custom-input" class="btnUpload" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="websiteFavIconFileChangeListener($event)">
               </div>
 
-              <div class="ImageCropperOption last">
+              <!-- <div class="ImageCropperOption last">
                 <ion-item *ngIf="dataWebsiteIcon.image">
                   <ion-label>Edit Favicon</ion-label>
                   <ion-toggle [(ngModel)]="edit_favivon_image" 
                   name="edit_favivon_image" (click)="showHideFavIconCropper()"></ion-toggle>
                 </ion-item>
 
-                <!-- Image Cropper -->              
+                Image Cropper
                 <img-cropper #favIconLogoCropper [image]="dataWebsiteIcon" [settings]="favIconCropperSettings" 
                 (onCrop)="websiteFavIconImageCropped($event)" *ngIf="hideFavIconCropper"></img-cropper>
-              </div>
+              </div> -->
 
             </div>
             

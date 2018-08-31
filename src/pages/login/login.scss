@@ -61,10 +61,10 @@ page-login {
     height: 45vh;    
       img {
       width: 100%;
-      max-width: 50%;
+      max-width: 220px;
       display: block;
-      padding-top: 20%;
-      margin: 0 auto;      
+      padding-top: 35px;
+      margin: 0 auto;    
       }
       .newAccount {
       width: 100%;
@@ -231,4 +231,18 @@ page-login {
 .button-md, .button-wp {
 min-height: 45px;
 box-shadow: none;
+}
+
+
+
+/*GLOBAL MOBILE PORTRAIT*/
+@media (max-width: 480px) {
+  page-login ion-content {
+    .loginLogo {
+      img {      
+      max-width: 50%;      
+      padding-top: 20%;      
+      }
+    }
+  }
 }
