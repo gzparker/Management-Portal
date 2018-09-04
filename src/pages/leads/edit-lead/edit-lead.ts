@@ -357,6 +357,7 @@ getHomeAddress(data) {
     }
   }
   updateLeadResp(result:any):void{
+    var that=this;
     //this.loader.dismiss();
   this.leadUpdateMsg="Lead has been updated successfully.";
   let toast = this.toastCtrl.create({
@@ -372,9 +373,14 @@ getHomeAddress(data) {
   toast.present();
   let leadInfo=result.leadInfo;
   //debugger;
+  var i=0;
   this.userRef=firebase.database().ref('users');
     this.userRef.orderByChild("webUserId").equalTo(leadInfo.lead_id).on("value", function(snapshot) {
+      //i=0;
+      if(snapshot.exists())
+      {
       snapshot.forEach(element => {
+        //i=i+1;
         if(element.val().is_lead=="1")
         {
       var fredRef=firebase.database().ref('users/'+element.key);
@@ -382,8 +388,21 @@ getHomeAddress(data) {
 fredRef.update({email:leadInfo.email,first_name:leadInfo.first_name,image_url:leadInfo.image_url
   ,last_name:leadInfo.last_name,website_id:leadInfo.user_website_id});
 }
+      else
+      {
+        debugger;
+        that.userServiceObj.setFireBaseInfo(leadInfo.email,leadInfo.password,leadInfo.lead_id,leadInfo.first_name,leadInfo.last_name,
+          leadInfo.image_url,"0","0","1",leadInfo.user_website_id);
+      }
 //debugger;
       });
+    }
+    else
+    {
+    debugger;
+      that.userServiceObj.setFireBaseInfo(leadInfo.email,leadInfo.password,leadInfo.lead_id,leadInfo.first_name,leadInfo.last_name,
+        leadInfo.image_url,"0","0","1",leadInfo.user_website_id);
+    }
     });
     //this.ngZone.run(() => {
       //this.navCtrl.push(AllLeadsPage,{notificationMsg:this.leadUpdateMsg.toUpperCase()});

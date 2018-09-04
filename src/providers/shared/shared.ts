@@ -294,7 +294,7 @@ sendMessage(type:string,description:any,redirectUserId:any,firebaseUserId:any,
      }
        if(redirectUserId)
        {
-         debugger;
+         //debugger;
        memberId=redirectUserId;
            if(memberId<firebaseUserId)
            {
@@ -370,7 +370,7 @@ sendMessage(type:string,description:any,redirectUserId:any,firebaseUserId:any,
       }
       saveGroup(groupId,memberId,type,createDate,newChatMember:any,loggedInUserInfo:any,firebaseUserId:string,
         description:string,chatImage:string){
-          debugger;
+          //debugger;
       let that=this;
        var deletedFor=[];
        deletedFor.push("0");

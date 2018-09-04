@@ -282,8 +282,10 @@ this.home_lat_lng,this.home_google_place_id,this.work_address,this.work_lat_lng,
   {
 
 let that=this;
+that.userServiceObj.setFireBaseInfo(email,password,webUserId,first_name,last_name,
+  image_url,parent_id,is_submember,is_lead,website_id);
 //debugger;
-   firebase.auth().createUserWithEmailAndPassword(email,password)
+   /*firebase.auth().createUserWithEmailAndPassword(email,password)
                  .then(function (currentUser) {
                   // debugger;
                   firebase.auth().signInWithEmailAndPassword(email, password)
@@ -305,7 +307,7 @@ let that=this;
                  }).catch(function(error) {
  
      
-     });
+     });*/
      this.ngZone.run(() => {
       // debugger;
        this.navCtrl.push(AllLeadsPage,{notificationMsg:this.leadCreateMsg.toUpperCase()});

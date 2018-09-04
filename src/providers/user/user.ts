@@ -128,16 +128,122 @@ this.headerOptions= new RequestOptions({ headers: this.headers });
   setFireBaseInfo(email:string,password:string,webUserId:string,first_name:string,last_name:string,
     image_url:string,parent_id:string,is_submember:string,is_lead:string,website_id:string)
   {
-   //debugger;
+  
    let that=this;
- 
+ //debugger;
+ let is_online="0";
+ if(is_lead=="0")
+ {
+is_online="1";
+ }
+ else
+ {
+   is_online="0";
+ }
+var i=0;
+var userExists="0";
 //debugger;
-   firebase.auth().createUserWithEmailAndPassword(email,password)
+    firebase.database().ref('users').orderByChild("email").equalTo(email).once("value", function(snapshot) {
+     
+      i=0;
+
+      if(snapshot.exists())
+      {
+        snapshot.forEach(element => {
+i=i+1;
+if(element.val().is_lead=="0"&&element.val().website_id==website_id)
+{
+  
+  userExists="1";
+}
+if(i==snapshot.numChildren())
+{
+  if(userExists=="1")
+  {
+    that.storage.set('firebaseUserId',element.key);
+    //window.localStorage.setItem("firebaseKey", element.key);
+    //debugger;
+    var fredRef=firebase.database().ref('users/'+element.key);
+    fredRef.update({isOnline:is_online,webUserId:webUserId,first_name: first_name,
+    last_name:last_name,
+    user_type:"1",
+    is_lead:is_lead,
+    is_submember:is_submember,
+    website_id:website_id,
+    image_url: image_url,
+    parent_id: parent_id,
+    fbId:element.key,
+    verified: "1",
+    email:email}).then(function(ref) {
+      //location.reload();
+      }, function(error) {
+    
+     //location.reload();
+      });
+  }
+  else
+  {
+    
+    var fredRefUser=firebase.database().ref('users');
+    fredRefUser.push({isOnline:is_online,webUserId:webUserId,first_name: first_name,
+    last_name:last_name,
+    user_type:"1",
+    is_lead:is_lead,
+    is_submember:is_submember,
+    website_id:website_id,
+    image_url: image_url,
+    parent_id: parent_id,
+    verified: "1",
+    email:email}).then(function(ref) {
+      //debugger;
+      that.storage.set('firebaseUserId',ref.getKey());
+      //debugger;
+      //window.localStorage.setItem("firebaseKey", ref.getkey());
+      var fredRefUpdate=firebase.database().ref('users/'+ref.getKey());
+      fredRefUpdate.update({fbId:ref.getKey()});
+    //location.reload();
+      
+      }, function(error) {
+    
+     //location.reload();
+      });
+  }
+}
+        });
+      }
+      else
+      {
+      
+    var fredRefUser1=firebase.database().ref('users');
+    fredRefUser1.push({isOnline:is_online,webUserId:webUserId,first_name: first_name,
+    last_name:last_name,
+    user_type:"1",
+    is_lead:is_lead,
+    is_submember:is_submember,
+    website_id:website_id,
+    image_url: image_url,
+    parent_id: parent_id,
+    verified: "1",
+    email:email}).then(function(ref) {
+      //debugger;
+      that.storage.set('firebaseUserId',ref.getKey());
+     
+      var fredRefUser1Update=firebase.database().ref('users/'+ref.getKey());
+      fredRefUser1Update.update({fbId:ref.getKey()});
+    
+      
+      }, function(error) {
+     //debugger;
+   
+      });
+      }
+    });
+   /*firebase.auth().createUserWithEmailAndPassword(email,password)
                  .then(function (currentUser) {
                   // debugger;
                   firebase.auth().signInWithEmailAndPassword(email, password)
                   .then(function(currentUser) {
-               //debugger;
+
                that.storage.set('firebaseUserId',currentUser.uid);
                that.saveFireBaseUserInfo(email,password,webUserId,first_name,last_name,
                 image_url,parent_id,is_submember,is_lead,website_id,currentUser);
@@ -147,10 +253,10 @@ this.headerOptions= new RequestOptions({ headers: this.headers });
                    
                   });
                  }).catch(function(error) {
-                 //  debugger;
+
                   firebase.auth().signInWithEmailAndPassword(email, password)
                   .then(function(currentUser) {
-              // debugger;
+
                that.storage.set('firebaseUserId',currentUser.uid);
                that.saveFireBaseUserInfo(email,password,webUserId,first_name,last_name,
                 image_url,parent_id,is_submember,is_lead,website_id,currentUser);
@@ -160,11 +266,11 @@ this.headerOptions= new RequestOptions({ headers: this.headers });
                    
                   });
      
-     });
+     });*/
       
 
   }
-  saveFireBaseUserInfo(email:string,password:string,webUserId:string,first_name:string,last_name:string,
+  /*saveFireBaseUserInfo(email:string,password:string,webUserId:string,first_name:string,last_name:string,
     image_url:string,parent_id:string,is_submember:string,is_lead:string,website_id:string,currentUser:any)
   {
   let is_online="0";
@@ -206,7 +312,7 @@ is_online="1";
       // An error happened.
       });
        
-  }
+  }*/
   
   updateFirebaseUserInfo(result:any,userId:string)
   {

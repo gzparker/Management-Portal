@@ -168,8 +168,10 @@ export class MyApp {
     }
     else
     {
-      this.sharedServiceObj.getServiceDefaultInfoByUrl(document.URL.toString())
-.subscribe((result) => this.loadGeneralWebsiteSettingsResp(result));
+      this.sharedServiceObj.getServiceDefaultInfoByUrl("https://idx.configuration.menu")
+      .subscribe((result) => this.loadGeneralWebsiteSettingsResp(result));
+     // this.sharedServiceObj.getServiceDefaultInfoByUrl(document.URL.toString())
+//.subscribe((result) => this.loadGeneralWebsiteSettingsResp(result));
     }
     //debugger;
 //this.sharedServiceObj.getServiceDefaultInfoByUrl(document.URL.toString())
@@ -765,6 +767,7 @@ else if(option=='6')
   //debugger;
   }
   logOut() {
+    let that=this;
     this.storage.remove('userId');
     this.storage.remove('email');
     this.storage.remove('first_name');
@@ -781,9 +784,16 @@ else if(option=='6')
     let firebaseUserId = this.storage.get('firebaseUserId');
     firebaseUserId.then((data) => {
     var fredRef=firebase.database().ref('users/'+data);
- //debugger;
+ debugger;
 //The following 2 function calls are equivalent
-fredRef.update({isOnline:'0'});
+fredRef.update({isOnline:'0'}).then(function() {
+  //debugger;
+  // Update successful.
+  that.storage.remove('firebaseUserId');
+  }, function(error) {
+  //debugger;
+  // An error happened.
+  });
 
     });
     

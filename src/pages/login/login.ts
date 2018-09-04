@@ -130,7 +130,8 @@ let is_lead:string="0";
           this.userServiceObj.setFireBaseInfo(result.memberCredentials.email,result.memberCredentials.password,
             result.memberCredentials.id,result.memberCredentials.first_name,result.memberCredentials.last_name,
             result.memberCredentials.image_url,result.memberCredentials.parent_id,is_submember,is_lead,this.website_id);
-          //this.storage.set('allowed_access_options', result.memberAllowedOptions);
+            this.navCtrl.setRoot(DashboardTabsPage);
+            //this.storage.set('allowed_access_options', result.memberAllowedOptions);
         }
         else
         {
