@@ -576,9 +576,10 @@ page-edit-account {
 
         img {
         width: 100%;
+        max-width: 400px;
         min-height: 220px;
         height: auto;
-        margin: -6vh auto -6.5vh auto;
+        margin: 0 auto;
         display: block;
         border-radius: 0px;
         }
@@ -624,32 +625,35 @@ page-edit-account {
     width: 100%;
     height: auto;
     position: relative;
-      &:before {
-      content: "";
-      width: 100%;
-      height: 100%;
-      z-index: 2;
-      position: absolute;
-      top: 0px;
-      right: 0px;
-      bottom: 0px;
-      left: 0px;
-      display: block;
-      opacity: 0.25;
-      background: rgb(0, 0, 0);
-      }
+      // &:before {
+      // content: "";
+      // width: 100%;
+      // height: 100%;
+      // z-index: 2;
+      // position: absolute;
+      // top: 0px;
+      // right: 0px;
+      // bottom: 0px;
+      // left: 0px;
+      // display: block;
+      // opacity: 0.25;
+      // background: rgb(0, 0, 0);
+      // }
 
       .imgCropperPreviewResult {
+      background: #F5F5F5;
+      position: relative;
         img {
         width: 100%;
+        max-width: 350px;
         height: auto;
         display: block;
-        margin: -6vh auto -6.5vh auto;
+        margin: 0 auto;
         }
       }
       .btnUpload {
-      right: 16px;
-      bottom: 9vh;
+      // right: 16px;
+      // bottom: 9vh;
       }
     }
 
@@ -931,4 +935,21 @@ page-edit-account {
   resize: none;
   }
 
+}
+
+
+/*GLOBAL MOBILE PORTRAIT*/
+@media (max-width: 480px) {
+  page-edit-account {
+    .leadsProfileWrapper {
+      .AccountImageUploader {
+        .imgCropperPreviewResult {
+          img {
+          max-width: 100%;
+          margin: -6vh auto -6.5vh auto;
+          }
+        }
+      }
+    }
+  }
 }

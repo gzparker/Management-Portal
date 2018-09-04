@@ -48,31 +48,34 @@
       </ion-item>
     </ion-list> -->
 
+
+    
     <ion-list class="animated fadeIn leadsProfileWrapper uploadPhoto">
-
-      <!-- Main Image Uploader -->
       <div class="AccountImageUploader">
-
-          <!-- Image Cropper Result -->
+          
           <div class="imgCropperPreviewResult" *ngIf="dataPersonalImage.image" >
           <img [src]="dataPersonalImage.image" [width]="personalWidth"
           [height]="personalHeight">
           </div>
+
+          <input id="custom-input" class="btnUpload" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="personalFileChangeListener($event)">
+
       </div>
     </ion-list>
-    <ion-list class="animated fadeIn leadsProfileWrapper uploadPhoto">
-        <ion-item *ngIf="dataPersonalImage.image">
+
+    <ion-list class="animated fadeIn leadsProfileWrapper uploadPhoto">        
+        
+        <!-- <ion-item *ngIf="dataPersonalImage.image">
           <ion-label>Edit Image</ion-label>
           <ion-toggle [(ngModel)]="edit_personal_logo" 
           name="edit_personal_logo" (click)="showHidePersonLogoCropper()"></ion-toggle>
-        </ion-item>
+        </ion-item> -->
 
         <!-- Image Cropper -->
         <img-cropper #personalCropper [image]="dataPersonalImage" [settings]="cropperSettings"
         (onCrop)="personalImageCropped($event)" *ngIf="hideImageCropper"></img-cropper>
-        <input id="custom-input" class="btnUpload" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="personalFileChangeListener($event)">
-
-      </ion-list>
+        
+    </ion-list>
 
 
     
@@ -109,25 +112,25 @@
 
       <ion-item class="userInfoBlock ReqField">
         <ion-icon name="md-call" item-start></ion-icon>
-        <ion-label stacked><span [ngClass]="{'error': phone_number==null}" *ngIf="phone_number==null">*</span></ion-label>        
+        <!-- <ion-label stacked><span [ngClass]="{'error': phone_number==null}" *ngIf="phone_number==null">*</span></ion-label>         -->
         <ion-input type="text" name="phone_number" [(ngModel)]="phone_number" placeholder="Cell Number" [brmasker]="{phone: true}"></ion-input>
       </ion-item>
 
       <ion-item class="userInfoBlock ReqField">
         <ion-icon name="md-briefcase" item-start></ion-icon>
-        <ion-label stacked><span [ngClass]="{'error': agent_id==''}" *ngIf="agent_id==''">*</span></ion-label>        
+        <!-- <ion-label stacked><span [ngClass]="{'error': agent_id==''}" *ngIf="agent_id==''">*</span></ion-label>         -->
         <ion-input type="text" [(ngModel)]="agent_id" name="agent_id" placeholder="MLS ID"></ion-input>
       </ion-item>
 
       <ion-item class="userInfoBlock ReqField">
         <ion-icon name="md-briefcase" item-start></ion-icon>
-        <ion-label stacked><span [ngClass]="{'error': broker_id==''}" *ngIf="broker_id==''">*</span></ion-label>
+        <!-- <ion-label stacked><span [ngClass]="{'error': broker_id==''}" *ngIf="broker_id==''">*</span></ion-label> -->
         <ion-input type="text" [(ngModel)]="broker_id" name="broker_id" placeholder="Broker ID" ></ion-input>
       </ion-item>
 
       <ion-item class="userInfoBlock ReqField">
         <ion-icon name="md-briefcase" item-start></ion-icon>
-        <ion-label stacked><span [ngClass]="{'error': office_id==''}" *ngIf="office_id==''">*</span></ion-label>
+        <!-- <ion-label stacked><span [ngClass]="{'error': office_id==''}" *ngIf="office_id==''">*</span></ion-label> -->
         <ion-input type="text" [(ngModel)]="office_id" name="office_id" placeholder="Office ID" ></ion-input>
       </ion-item>
 

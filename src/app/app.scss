@@ -18,7 +18,7 @@
   .profileCard {
   width: 100%;
   display: block;
-  padding: 35px 0 20px 0 !important;
+  padding: 0;
   margin: 0px !important;
   padding-bottom: 0px;
   box-shadow: none !important;
@@ -27,48 +27,55 @@
   position: relative;
 
     .profileCardInfo {
+    padding: 35px 0 20px 0 !important;
     z-index: 2;
     position: relative;
     }
     .profileCardBG {
-    width: 100%;
-    height: 95px;
-    top: 0;
-    right: 0;
-    left: 0;
+    width: 114%;
+    height: 114%;
+    top: -4%;
+    right: -7%;
+    left: -7%;
     position: absolute;
     display: block;
-    overflow: hidden;
-    // background-color: #555;
-      &:before {
-      content: "";
-      width: 100%;
-      height: 105px;
-      top: 0;
-      right: 0;
-      left: 0;
-      z-index: -2;
-      position: absolute;
-      display: block;
-      background: url("https://s3-us-west-2.amazonaws.com/central-system/usr/e6395e5f5d11ac7a/assets/static/people/company_photoqNzP.jpg") no-repeat center center;
-      -webkit-background-size: cover;
-      -moz-background-size: cover;
-      -o-background-size: cover;
-      background-size: cover;
-      filter: grayscale(0%) blur(4px) brightness(100%) contrast(100%) hue-rotate(0deg) opacity(100%) invert(0%) saturate(100%) sepia(0%); 
-      }
-      &:after {
-      content: "";
-      width: 100%;
-      height: 105px;
-      top: 0;
-      right: 0;
-      left: 0;
-      z-index: -1;
-      position: absolute;
-      display: block;
-      background: rgba(0, 160, 255, 0.45);
-      }
+    overflow: hidden;    
+    z-index: -2;
+    background-position: center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    filter: grayscale(0%) blur(4px) brightness(100%) contrast(100%) hue-rotate(0deg) opacity(100%) invert(0%) saturate(100%) sepia(0%); 
+      // &:before {
+      // content: "";
+      // width: 100%;
+      // height: 105px;
+      // top: 0;
+      // right: 0;
+      // left: 0;
+      // z-index: -2;
+      // position: absolute;
+      // display: block;
+      // background: url("https://s3-us-west-2.amazonaws.com/central-system/usr/e6395e5f5d11ac7a/assets/static/people/company_photoqNzP.jpg") no-repeat center center;
+      // -webkit-background-size: cover;
+      // -moz-background-size: cover;
+      // -o-background-size: cover;
+      // background-size: cover;
+      // filter: grayscale(0%) blur(4px) brightness(100%) contrast(100%) hue-rotate(0deg) opacity(100%) invert(0%) saturate(100%) sepia(0%); 
+      // }
+      // &:after {
+      // content: "";
+      // width: 100%;
+      // height: 105px;
+      // top: 0;
+      // right: 0;
+      // left: 0;
+      // z-index: -1;
+      // position: absolute;
+      // display: block;
+      // background: rgba(0, 160, 255, 0.45);
+      // }
     }
 
     .username {
@@ -1020,14 +1027,13 @@ display: none !important;
     &:before {
     content: "";
     width: 100%;
-    height: 210px;
+    height: 100%;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
     position: absolute;
-    background: url("../assets/imgs/noImageAvailable.jpg") no-repeat center center;
-    background-size: cover;
+    background: url("../assets/imgs/noImageAvailable.jpg") no-repeat center center #F5F5F5;    
     }    
   }
 

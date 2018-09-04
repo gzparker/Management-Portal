@@ -498,14 +498,15 @@ page-account-info {
       display: block;
       margin: 0 auto;
       position: relative;
-      background: #F6F6F6;
+      background: #646262;
 
         img {
         width: 100%;
+        max-width: 350px;
         min-height: 220px;
         height: auto;
         // margin: -6vh auto -11vh auto;
-        margin: -6vh auto -7vh auto;
+        margin: 0 auto;
         display: block;
         border-radius: 0px;
         }
@@ -788,4 +789,19 @@ page-account-info {
   display: block;
   }
 
+}
+
+
+
+/*GLOBAL MOBILE PORTRAIT*/
+@media (max-width: 480px) {
+  page-account-info {
+    ion-item {
+      ion-avatar.imgFull {
+        img {
+        margin: -6vh auto -7vh auto;
+        }
+      }
+    }
+  }
 }
