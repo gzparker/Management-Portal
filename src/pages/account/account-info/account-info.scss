@@ -820,3 +820,24 @@ page-account-info {
 }
 
 
+
+/*GLOBAL MOBILE PORTRAIT*/
+@media (max-width: 480px) {
+  page-account-info {
+    ion-item {
+      ion-avatar.imgFull {
+        img {
+        max-width: 100%;
+        margin: -4vh auto -4vh auto;
+        }
+      }
+    }
+    ion-content {
+      &.generalInfoUI {
+        &:before {    
+        height: 66px !important;
+        }
+      }
+    }
+  }
+}

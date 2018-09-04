@@ -627,56 +627,46 @@ page-edit-account {
   }
 
   .leadsProfileWrapper {
-  margin-bottom: 0px !important;
-  background: none !important;
-    
-    .AccountImageUploader {
-    width: 100%;
-    height: auto;
-    position: relative;
+      margin-bottom: 0px !important;
+      background: none !important;
+      height: auto;
+      background: #F5F5F5 !important;
 
-
-      .imgCropperPreviewResult {
-      background: #F5F5F5;
-      position: relative;
-      overflow: hidden;
         
-        &:before {
-        content: "";
-        width: 120%;
-        height: 120%;
-        top: -10%;
-        right: -10%;
-        bottom: -10%;
-        left: -10%;
-        display: block;
-        z-index: 0;
-        position: absolute;
-        filter: grayscale(0%) blur(2px) brightness(100%) contrast(100%) hue-rotate(0deg) opacity(100%) invert(0%) saturate(100%) sepia(0%); 
-        background: url("../assets/imgs/profile_bg2.jpg") repeat center center #F6F6F6;
-        }
-
-        img {
+        .AccountImageUploader {
         width: 100%;
-        max-width: 350px;
         height: auto;
-        display: block;
-        margin: 0 auto;
-        z-index: 5;
+        min-height: 260px;
         position: relative;
+        background: url("../assets/imgs/noImageAvailable.jpg") no-repeat center center #F5F5F5;
+
+          img-cropper {
+          display: table;
+          margin: 0 auto;
+          }
+
+          .imgCropperPreviewResult {
+          background: #F5F5F5;
+          position: relative;
+            img {
+            width: 100%;
+            max-width: 350px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            }
+          }
+          .btnUpload {
+          // right: 16px;
+          // bottom: 9vh;
+          }
         }
-      }
-      .btnUpload {
-      // right: 16px;
-      // bottom: 9vh;
-      }
-    }
 
-    .ImageCropperOption {
-    display: none;    
-    }
+        .ImageCropperOption {
+        display: none;    
+        }
 
-  }
+      }
 
   .leadsShortcutButtons {
   // display: none !important;
@@ -963,8 +953,8 @@ page-edit-account {
       .AccountImageUploader {
         .imgCropperPreviewResult {
           img {
-          max-width: 100%;
-          margin: -6vh auto -6.5vh auto;
+          max-width: 100%;        
+          margin: -4vh auto -4vh auto;
           }
         }
       }

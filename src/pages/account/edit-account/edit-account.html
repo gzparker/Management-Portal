@@ -27,7 +27,7 @@
 <ion-content padding class="generalInfoUI">
   <form role="form" data-toggle="validator" #accountForm="ngForm">
     
-   <!-- <ion-list class="animated fadeIn leadsProfileWrapper">
+    <!-- <ion-list class="animated fadeIn leadsProfileWrapper">
       <ion-item class="leadsProfile" sticky>        
         <ion-avatar class="imgFull">
         
@@ -36,7 +36,8 @@
   
           </ion-avatar>        
         </ion-item>
-      </ion-list>-->
+    </ion-list> -->
+
     <!-- <ion-list class="animated fadeIn leadsProfileWrapper">
       <ion-item class="leadsProfile">
         <ion-avatar class="imgFull">
@@ -52,6 +53,9 @@
     
     <ion-list class="animated fadeIn leadsProfileWrapper uploadPhoto">
       <div class="AccountImageUploader">
+
+          <img-cropper #personalCropper [image]="dataPersonalImage" [settings]="cropperSettings"
+          (onCrop)="personalImageCropped($event)" *ngIf="hideImageCropper"></img-cropper>
           
           <div class="imgCropperPreviewResult" *ngIf="dataPersonalImage.image" >
           <img [src]="dataPersonalImage.image" [width]="personalWidth"
@@ -63,19 +67,15 @@
       </div>
     </ion-list>
 
-    <ion-list class="animated fadeIn leadsProfileWrapper uploadPhoto">        
+    <!-- <ion-list class="animated fadeIn leadsProfileWrapper uploadPhoto">        
         
-        <!-- <ion-item *ngIf="dataPersonalImage.image">
+        <ion-item *ngIf="dataPersonalImage.image">
           <ion-label>Edit Image</ion-label>
           <ion-toggle [(ngModel)]="edit_personal_logo" 
           name="edit_personal_logo" (click)="showHidePersonLogoCropper()"></ion-toggle>
-        </ion-item> -->
-
-        <!-- Image Cropper -->
-        <img-cropper #personalCropper [image]="dataPersonalImage" [settings]="cropperSettings"
-        (onCrop)="personalImageCropped($event)" *ngIf="hideImageCropper"></img-cropper>
+        </ion-item>
         
-    </ion-list>
+    </ion-list> -->
 
 
     

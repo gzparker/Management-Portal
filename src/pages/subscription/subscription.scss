@@ -35,6 +35,9 @@ page-subscription {
   ion-content {
     &.dashboardUI {
       .contentTitle {
+      width: 100%;
+      max-width: 1000px;
+      margin: 0 auto;
       font-family: $font-four;
       font-size: 16px !important;
       letter-spacing: .5px;

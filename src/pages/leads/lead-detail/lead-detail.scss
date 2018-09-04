@@ -970,7 +970,14 @@ page-lead-detail {
       ion-avatar.imgFull {
         img {
         max-width: 100%;        
-        margin: -6vh auto -7vh auto;
+        margin: -4vh auto -4vh auto;
+        }
+      }
+    }
+    ion-content {
+      &.generalInfoUI {
+        &:before {    
+        height: 66px !important;
         }
       }
     }
