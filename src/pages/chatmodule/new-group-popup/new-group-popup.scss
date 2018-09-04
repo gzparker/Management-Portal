@@ -156,3 +156,14 @@ page-new-group-popup {
 
   }
 }
+
+
+
+/*CUSTOM DESKTOP */
+@media (min-width: 768px) and (max-width: 2560px) {
+  page-new-group-popup {
+    ion-content.dashboardUI:after {
+    height: 45vh !important;
+    }
+  }
+}

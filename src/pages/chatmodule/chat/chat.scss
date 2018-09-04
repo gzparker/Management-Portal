@@ -5,6 +5,10 @@ page-chat {
     min-height: 70px;
     
       ion-navbar {
+      width: 100%;
+      max-width: 750px;
+      margin: 0 auto;
+
         .bar-button-ios, .bar-button-md, .bar-button-wp {
         max-width: 30px;        
         }
@@ -557,3 +561,4 @@ page-chat {
   }
   
 }
+

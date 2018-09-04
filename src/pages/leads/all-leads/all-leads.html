@@ -28,7 +28,7 @@
     <ion-label color="secondary">{{notificationMsg}}</ion-label>
   </ion-chip>-->
   
-  <div class="animated lightSpeedIn">
+  <div class="centerStage animated lightSpeedIn">
   <ion-searchbar [(ngModel)]="searchLeadTerm" (ionInput)="setLeadFilteredItems()"></ion-searchbar>
 
   <ion-list class="noShadow">
@@ -53,7 +53,7 @@
   </ion-list>
   </div>
   
-  <ion-list-header>Contact Name</ion-list-header>
+  <ion-list-header class="centerStage centerStage animated lightSpeedIn contactList">Contact Name</ion-list-header>
 
   <!--<div class="formShadow">
   <ion-list class="animated lightSpeedIn noShadow">
@@ -76,7 +76,7 @@
   </ion-list>
   </div>-->
 
-  <div class="formShadow">
+  <div class="centerStage formShadow">
   <ion-list class="animated lightSpeedIn noShadow">
     
     <ion-item-sliding *ngFor="let lead of searchedLeadsList">

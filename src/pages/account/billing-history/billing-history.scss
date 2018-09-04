@@ -1,5 +1,9 @@
 page-billing-history {
 
+  ion-content.dashboardUI:after {
+  height: 72vh;
+  }
+
   ion-content.dashboardUI * {
   font-size: 13px;
   }

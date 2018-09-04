@@ -21,12 +21,12 @@
 
 <ion-content padding class="dashboardUI noScroll">
   
-  <ion-chip *ngIf="isItCrmLead" class="notification">
+  <ion-chip *ngIf="isItCrmLead" class="centerStage notification">
     <!-- <div class="contentTitle animated bounceInRight">Leads are being sent to Intagent CRM</div> -->
-    <div class="contentTitle animated bounceInRight">Leads are sent to your Contacts</div>
+    <div class="contentTitle animated fadeIn">Leads are sent to your Contacts</div>
   </ion-chip>
 
-      <ion-list class="animated bounceInDown">
+      <ion-list class="centerStage animated bounceInDown">
 
           <!--<ion-item>
             <ion-label>Send to Email</ion-label>
@@ -54,7 +54,7 @@
               <ion-toggle [(ngModel)]="send_to_zapier" name="send_to_zapier"></ion-toggle>
             </ion-item>
         </ion-list>
-        <div class="dashboardBtn">
+        <div class="centerStage dashboardBtn">
             <button ion-button color="primary" block (click)="updateLeadRouting();">Save</button>
         </div>
 </ion-content>

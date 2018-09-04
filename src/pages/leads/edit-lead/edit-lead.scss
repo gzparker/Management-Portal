@@ -46,7 +46,7 @@ page-edit-lead {
     }
   }
 
-  ion-content.generalInfoUI {
+   ion-content.generalInfoUI {
 
     ion-item {
       &.item-ios, &.item-md, &.item-wp {
@@ -77,6 +77,10 @@ page-edit-lead {
     }
 
     ion-list.leadSearchName, ion-list.leadHotsheetName, ion-list.customList {
+    width: 100%;
+    max-width: 750px;
+    margin-left: auto;
+    margin-right: auto;
     border-radius: 0px !important;
     box-shadow: none !important;
     background: #FFF !important;
@@ -368,7 +372,54 @@ page-edit-lead {
       }
     }
 
+    ion-list {
+      .leadsIconSelect {
+      padding-left: 30px;
+          
+          &.selectCategory {
+            ion-icon {
+            font-size: 24px;
+            margin-top: -17px;
+            left: 19px;
+            }
+          }
+
+        ion-icon {
+        font-size: 26px;
+        margin-top: -22px;
+        left: 18px;
+        position: absolute;
+        }
+      }
+
+      .leadsNotes {
+      padding-top: 8px;
+      padding-left: 30px;
+        ion-icon {
+        font-size: 24px;
+        margin-top: 2px;
+        left: 19px;
+        position: absolute;
+        }
+        textarea {
+        font-size: 14px;
+        line-height: 22px;
+        letter-spacing: .5px;        
+        height: auto;
+        min-height: 150px;
+        padding: 15px;
+        background: #F5F5F5;        
+        padding: 10px;        
+        resize: none;
+        border-radius: 2px;
+        }
+      }
+    }
+
     ion-list.leadsInfo {
+    width: 100%;
+    max-width: 750px;
+    margin: 0 auto;
     border-radius: 0 !important;
     padding: 6px 0 0 0 !important;    
     background: #FFF !important;
@@ -405,16 +456,16 @@ page-edit-lead {
         color: $flatblue !important;
         }
 
-        &.leadsEmail {
+        &.leadsEmail, &.leadsPass {
         padding-left: 16px;
         border-bottom: 1px solid #ebe9f0 !important;
           // ion-icon {
           // font-size: 30px;
           // margin-top: -2px;
           // }
-        }
+        }        
 
-        &.leadsWebURL  {
+        &.leadsWebURL {
         padding-left: 16px;
         border-bottom: 1px solid #ebe9f0 !important;
           .select-text {
@@ -433,7 +484,8 @@ page-edit-lead {
         padding-left: 16px;
         border-bottom: 1px solid #ebe9f0 !important;
           ion-icon {
-          font-size: 24px;          
+          font-size: 24px;     
+          margin-top: -8px;
           }
         }
         
@@ -714,7 +766,7 @@ page-edit-lead {
     &.generalInfoUI {
       &:before {
       // height: 140px !important;
-      height: 64px !important;
+      height: 55px !important;
       z-index: 1;
       }
       &:after {
@@ -725,6 +777,50 @@ page-edit-lead {
       ion-item:first-child {
       border-radius: 0px;
       }
+
+      .leadsProfileWrapper {
+      margin-bottom: 0px !important;
+      background: none !important;
+      height: auto;
+      background: #F5F5F5 !important;
+
+        
+        .AccountImageUploader {
+        width: 100%;
+        height: auto;
+        min-height: 260px;
+        position: relative;
+        background: url("../assets/imgs/noImageAvailable.jpg") no-repeat center center #F5F5F5;
+
+          img-cropper {
+          display: table;
+          margin: 0 auto;
+          }
+
+          .imgCropperPreviewResult {
+          background: #F5F5F5;
+          position: relative;
+            img {
+            width: 100%;
+            max-width: 350px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            }
+          }
+          .btnUpload {
+          // right: 16px;
+          // bottom: 9vh;
+          }
+        }
+
+        .ImageCropperOption {
+        display: none;    
+        }
+
+      }
+
+
     }
   }
 
@@ -777,11 +873,26 @@ page-edit-lead {
   border-bottom: 1px solid #ebe9f0 !important;
   margin-bottom: 1px;
   overflow: hidden;  
-    .addressBlock {
+    .addressBlock {    
     width: 100%;
     max-width: 100%;
     float: left;
-    display: block;          
+    display: block;
+    padding-left: 55px;
+    position: relative; 
+
+      .searchbar-ios, .searchbar-md, .searchbar-wp {
+      padding: 8px 0;
+      }
+      
+      ion-icon {
+      font-size: 24px;
+      position: absolute;
+      left: 6px;
+      top: -4px;
+      color: #777;
+      }
+
       h2 {
       font-size: 12px !important;      
       color: #777 !important;
@@ -833,7 +944,10 @@ page-edit-lead {
   }
 
   .dashboardBtn {
-  padding: 20px 16px 40px 16px;
+  width: 100%;
+  max-width: 750px;
+  margin: 0 auto;
+  padding: 20px 20px 40px 70px;
   }
 
   ion-item.selectCategory {    
@@ -847,4 +961,32 @@ page-edit-lead {
     }
   }
 
+  // .uploadPhoto {
+  //   .AccountImageUploader {
+  //   width: 100%;
+  //   height: auto;
+  //   min-height: 210px;
+  //   position: relative;
+  //   background: #F7F7F7;
+  //     &:before {
+  //     content: "";
+  //     width: 100%;
+  //     height: 100%;
+  //     top: 0;
+  //     right: 0;
+  //     bottom: 0;
+  //     left: 0;
+  //     position: absolute;
+  //     background: url("../assets/imgs/noImageAvailable.jpg") no-repeat center center #F5F5F5;      
+  //     }    
+  //   }
+  // }
+
+}
+
+/*GLOBAL MOBILE PORTRAIT*/
+@media (max-width: 480px) {
+  page-edit-lead .dashboardBtn {  
+  padding: 20px 16px 40px 16px;
+  }
 }

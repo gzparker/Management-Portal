@@ -60,13 +60,22 @@ page-lead-detail {
     padding: 0px 0 12px 0 !important;    
     }
 
+
     ion-list.leadHotsheetName {
+    width: 100%;
+    max-width: 750px;
+    margin-left: auto;
+    margin-right: auto;
       .contentTitle {
       padding-bottom: 0px !important;
       }
     }
 
     ion-list.leadSearchName, ion-list.leadHotsheetName {
+    width: 100%;
+    max-width: 750px;
+    margin-left: auto;
+    margin-right: auto;
     border-radius: 0px !important;
     box-shadow: none !important;
     background: #FFF !important;
@@ -111,6 +120,10 @@ page-lead-detail {
     }
 
     ion-list.leadListings {
+    width: 100%;
+    max-width: 750px;
+    margin-left: auto;
+    margin-right: auto;
     border-radius: 0px !important;
     box-shadow: none !important;
     background: #FFF !important;
@@ -133,8 +146,8 @@ page-lead-detail {
       // margin-top: -2px !important;
       padding-left: 16px;
         img {
-        width: 50px;
-        height: 50px;
+        width: 80px;
+        height: 60px;
         border-radius: 1px !important;
         }
       }
@@ -270,6 +283,9 @@ page-lead-detail {
     }
 
     ion-list.leadNotes, ion-list.leadsSavedInfo, ion-list.leadAddress {
+    width: 100%;
+    max-width: 750px;
+    margin: 0 auto;
     border-radius: 4px !important;    
     background: #FFF !important;
     // box-shadow: -1px 0px 16px rgba(41, 81, 123, 0.15) !important;
@@ -344,6 +360,9 @@ page-lead-detail {
     }
 
     ion-list.leadsInfo {
+    width: 100%;
+    max-width: 750px;
+    margin: 0 auto;
     border-radius: 5px !important;
     padding: 6px 0 0 0 !important;    
     background: #FFF !important;
@@ -373,6 +392,10 @@ page-lead-detail {
         letter-spacing: .5px;
         text-overflow: unset;
         white-space: normal;        
+        }
+
+        a {
+        color: $flatblue !important;
         }
 
         &.leadsEmail {
@@ -567,15 +590,32 @@ page-lead-detail {
       display: block;
       margin: 0 auto;
       position: relative;
-      background: #F6F6F6;
+      background: #F6F6F6;    
+
+        &:before {
+        content: "";
+        width: 120%;
+        height: 120%;
+        top: -10%;
+        right: -10%;
+        bottom: -10%;
+        left: -10%;
+        display: block;
+        z-index: 0;
+        position: absolute;
+        filter: grayscale(0%) blur(2px) brightness(100%) contrast(100%) hue-rotate(0deg) opacity(100%) invert(0%) saturate(100%) sepia(0%); 
+        background: url("../assets/imgs/profile_bg2.jpg") repeat center center #F6F6F6;
+        }
 
         img {
         width: 100%;
+        max-width: 350px;
         min-height: 220px;
         height: auto;
-        // margin: -6vh auto -11vh auto;
-        margin: -6vh auto -7vh auto;
+        margin: 0 auto;
         display: block;
+        z-index: 5;
+        position: relative;
         border-radius: 0px;
         }
 
@@ -642,6 +682,11 @@ page-lead-detail {
   margin: 0 auto 1px auto;
   // border-top: 1px solid #ebe9f0 !important;
   border-bottom: 1px solid #ebe9f0 !important;
+    
+    a {
+    text-decoration: none !important;
+    }
+
     .contactPhone, .contactChat, .contactEmail {
     width: 50px;
     height: 50px;    
@@ -752,7 +797,7 @@ page-lead-detail {
     &.generalInfoUI {
       &:before {
       // height: 140px !important;
-      height: 64px !important;
+      height: 56px !important;
       z-index: 1;
       }
       &:after {
@@ -804,7 +849,31 @@ page-lead-detail {
     width: 100%;
     max-width: 60%;
     float: left;
-    display: block;          
+    display: block;
+    padding-left: 55px;
+    position: relative;
+
+      .item-block, .item-inner, .item-inner, .input-wrapper {
+      max-height: 24px;
+      display: contents;
+      }
+
+      .label-ios, .label-md, .label-wp {
+      padding: 0px !important;
+      margin: 0px !important;
+        // a {
+        // color: red  !important;
+        // }
+      }
+    
+      ion-icon {
+      font-size: 24px;
+      position: absolute;
+      left: 6px;
+      top: -4px;
+      color: #777;
+      }
+
       h2 {
       font-size: 12px !important;
       // color: #b0b1b2 !important;
@@ -857,4 +926,53 @@ page-lead-detail {
   display: block;
   }
 
+  .leadNotes {    
+  width: 100%;
+  max-width: 750px;
+  margin: 0 auto;
+    textarea.text-input {
+    height: auto;
+    min-height: 150px;
+    padding: 15px;
+    background: #F5F5F5;
+    margin: -5px 0 20px 0;
+    }
+  }
+
+  ion-content .dashboardBtn {
+  padding: 20px 16px 16px 16px;
+  }  
+
+}
+
+
+/*CUSTOM DESKTOP */
+@media (min-width: 1101px) and (max-width: 2560px) {
+  page-lead-detail {
+    ion-content.generalInfoUI {
+      ion-list.leadListings {
+        ion-avatar {
+          img {
+          width: 150px;
+          height: 100px;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+/*GLOBAL MOBILE PORTRAIT*/
+@media (max-width: 480px) {
+  page-lead-detail {
+    ion-item {
+      ion-avatar.imgFull {
+        img {
+        max-width: 100%;        
+        margin: -6vh auto -7vh auto;
+        }
+      }
+    }
+  }
 }

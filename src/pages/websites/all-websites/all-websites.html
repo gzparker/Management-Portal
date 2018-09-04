@@ -50,9 +50,10 @@
     <ion-label class="notification" color="secondary">{{notificationMsg}}</ion-label>
   </ion-chip>
  -->
-  <h1 class="contentTitle animated bounceInRight">All Websites</h1>
+  
+  <h1 class="centerStage contentTitle animated bounceInRight">All Websites</h1>
 
-  <ion-list class="noShadow">
+  <ion-list class="centerStage noShadow">
     <ion-item-sliding class="animated lightSpeedIn" *ngFor="let website of allWebsiteList">
 
         <ion-item class="websiteThumb">
@@ -129,4 +130,6 @@
   </ion-chip>
   <button ion-button color="primary" (click)="createWebsite();" item-right class="btn-edit" 
   *ngIf="allWebsiteList.length<=0&&showCreateButton">Link your first website to IDX!</button>
+  
 </ion-content>
+

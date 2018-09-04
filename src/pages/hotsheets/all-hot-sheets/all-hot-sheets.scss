@@ -6,6 +6,15 @@ page-all-hot-sheets {
     }
   }
 
+  .item-md {
+    ion-thumbnail {
+      img {
+      width: 80px;
+      height: 80px;
+      }
+    }
+  }
+
   ion-content {
     &.dashboardUI {
 
@@ -227,4 +236,18 @@ page-all-hot-sheets {
     }
   }
 
+}
+
+/*CUSTOM DESKTOP */
+@media (min-width: 1101px) and (max-width: 2560px) {
+  page-all-hot-sheets {
+    .item-md {
+      ion-thumbnail {
+        img {
+        width: 130px;
+        height: 90px;
+        }
+      }
+    }
+  }
 }

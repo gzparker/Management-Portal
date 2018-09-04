@@ -40,6 +40,7 @@
       <p>{{accountInfo.first_name}} {{accountInfo.last_name}}</p>
     </ion-item>
     
+    <div class="centerStage">
     <ion-item class="userInfoBlock">
       <ion-icon name="ios-mail-outline" item-start></ion-icon>
       <p>{{accountInfo.email}}</p>
@@ -70,7 +71,7 @@
       <p *ngIf="accountInfo.broker_id!=null&&accountInfo.broker_id!=undefined">Broker ID: {{accountInfo.broker_id}}</p>
     </ion-item>
 
-    <ion-item class="userInfoBlock">
+    <ion-item class="userInfoBlock">  
       <ion-icon name="md-briefcase" item-start></ion-icon>      
       <p *ngIf="accountInfo.office_id!=null&&accountInfo.office_id!=undefined">Office ID: {{accountInfo.office_id}}</p>
     </ion-item>
@@ -79,10 +80,11 @@
       <ion-icon name="ios-globe-outline" item-start></ion-icon>
       <p>{{accountInfo.country_abbv}}</p>
     </ion-item>
+    </div>
 
   </ion-list>
 
-  <ion-list class="leadNotes">
+  <ion-list class="centerStage leadNotes">
       <ion-item *ngIf="accountInfo!=null">
         <h2 class="contentTitle">Description</h2>
         <p>{{accountInfo.description}}</p>

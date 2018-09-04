@@ -24,8 +24,10 @@
 
     <ion-list *ngIf="cardDetail!=undefined">
 
-      <ion-list-header>Card Info</ion-list-header>
-      <div class="animated lightSpeedIn formShadow">
+      <div class="centerStage noShadow animated lightSpeedIn formShadow">
+      
+      <ion-list-header class="centerStage animated lightSpeedIn">Card Info</ion-list-header>
+
       <ion-item>
         <h2 class="cardDetail"><strong>Name:</strong> {{cardDetail.name}}</h2>
         <div class="cardbrand {{cardDetail.brand}}">Brand</div>

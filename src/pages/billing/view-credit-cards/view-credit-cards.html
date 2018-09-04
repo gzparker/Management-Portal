@@ -32,9 +32,9 @@
       <ion-label color="secondary">{{notificationMsg}}</ion-label>
     </ion-chip>-->
 
-    <ion-list *ngIf="defaultCreditCard!=null" (click)="cardDetail(defaultCreditCard.unique_id)" class="animated lightSpeedIn">
+    <ion-list *ngIf="defaultCreditCard!=null" (click)="cardDetail(defaultCreditCard.unique_id)" class="centerStage animated lightSpeedIn">
       
-      <ion-list-header class="animated fadeIn">Default Credit Card</ion-list-header>
+      <ion-list-header class="animated lightSpeedIn">Default Credit Card</ion-list-header>
       
       <div class="formShadow">
       <ion-item>
@@ -50,9 +50,9 @@
 
     </ion-list>
     
-    <ion-list-header class="animated fadeIn">Credit Card List</ion-list-header>
+    <ion-list-header class="centerStage animated lightSpeedIn">Credit Card List</ion-list-header>
 
-      <ion-list class="noShadow">
+      <ion-list class="centerStage noShadow">
         
           <ion-item-sliding class="animated lightSpeedIn" *ngFor="let creditCard of allCreditCards">
             <ion-item (click)="cardDetail(creditCard.unique_id)">
