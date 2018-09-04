@@ -23,7 +23,7 @@
       <!--<ion-chip *ngIf="notificationMsg!=''">
           <ion-label color="secondary">{{notificationMsg}}</ion-label>
       </ion-chip>-->
-      <ion-list>
+      <ion-list class="centerStage">
         <accordion *ngFor="let subscription of allUpcomingSubscription">
           <accordion-group>
               <accordion-heading>
@@ -36,8 +36,9 @@
                 </ion-card>
               </accordion-heading>
         
-              <ion-card>
+              <ion-card class="accordionContent animated fadeIn">
                 <ion-item *ngFor="let subscriptionItem of subscription.items">
+                <ion-icon name="ios-arrow-forward" item-start></ion-icon>
                 <h2>Item Amount:{{subscriptionItem.item_amount}}</h2>
                 <p>Currency:{{subscriptionItem.item_currency}}</p>
                 <p>Description:{{subscriptionItem.item_description}}</p>

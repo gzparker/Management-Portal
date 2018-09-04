@@ -1151,3 +1151,80 @@ border-color: $flatblue !important;
   }
 }
 
+ion-app.md [padding] .scroll-content {
+overflow: auto !important;
+}
+
+
+  .list-header {
+    .item-inner {
+      .input-wrapper {
+        .label {
+        padding-left: 16px !important;
+        }
+      }
+    }
+  }
+
+
+/*CUSTOM DESKTOP */
+@media (min-width: 1101px) and (max-width: 2560px) {
+  
+  ion-content.dashboardUI {  
+    .scroll-content {
+    // width: 100%;
+    // max-width: 1000px;
+    // margin: 0 auto;
+    // overflow: auto;      
+      form, .centerStage {
+      width: 100%;
+      max-width: 1000px;
+      margin-left: auto !important;
+      margin-right: auto !important;
+      // overflow: auto;
+      }      
+    }
+  }
+
+  .split-pane-md.split-pane-visible > .split-pane-side {
+  min-width: 100px;
+  max-width: 100px;  
+  }
+
+  .menu-inner {
+    .profileCard {
+      .profileCardInfo {
+        .username {
+        opacity: 0;
+        }
+        .custom-avatar {
+        width: 70px;
+        height: 70px;
+        box-shadow: 0 0 0 4px #FFF;
+        }
+      }
+    }
+    .list-ios, .list-md, .list-wp {
+      .item-inner {
+        .input-wrapper {
+          .label-ios, .label-md, .label-wp {
+          font-size: 0px;
+          min-height: 35px;
+          margin-left: 10px;
+          }
+        }
+      }
+    }
+  }
+
+  #sidenav {
+    .msgcounter {
+    opacity: 0;
+    }
+  }
+
+  ion-app.md [padding] .scroll-content {
+  overflow: auto;
+  }
+
+}

@@ -2,7 +2,7 @@
 
 page-account-info {
 
-  $flatblue: #0e0e0e;
+  // $flatblue: #0e0e0e;
 
   .toolbar-title {
   width: auto;
@@ -46,7 +46,7 @@ page-account-info {
     ion-item {
       &.item-ios, &.item-md, &.item-wp {
         ion-icon {
-        color: #c5c5c5 !important;
+        color: #777 !important;
         }
       }
     }
@@ -274,7 +274,11 @@ page-account-info {
     }
 
     ion-list.leadNotes {
+    width: 100%;
+    max-width: 750px;
+    margin: 0 auto;
     padding-bottom: 20px;
+    border-top: 1px solid #ebe9f0 !important;
     }
 
     ion-list.leadNotes, ion-list.leadsSavedInfo, ion-list.leadAddress {
@@ -351,14 +355,20 @@ page-account-info {
       }
     }
 
-    ion-list.leadsInfo {
+    .centerStage {
+    width: 100%;
+    max-width: 750px;
+    margin: 0 auto;
+    }
+
+    ion-list.leadsInfo {    
     border-radius: 0 !important;
     padding: 0 !important;    
     background: #FFF !important;
     // box-shadow: -1px -1px 8px rgba(41, 81, 123, 0.12) !important;    
     box-shadow: none !important;
     margin-bottom: 0px !important;
-    border-bottom: 1px solid #ebe9f0 !important;
+    // border-bottom: 1px solid #ebe9f0 !important;
 
       ion-item {
       position: relative;
@@ -498,7 +508,23 @@ page-account-info {
       display: block;
       margin: 0 auto;
       position: relative;
-      background: #646262;
+      // background: #646262;
+      background: #F6F6F6; 
+
+        &:before {
+        content: "";
+        width: 120%;
+        height: 120%;
+        top: -10%;
+        right: -10%;
+        bottom: -10%;
+        left: -10%;
+        display: block;
+        z-index: 0;
+        position: absolute;
+        filter: grayscale(0%) blur(2px) brightness(100%) contrast(100%) hue-rotate(0deg) opacity(100%) invert(0%) saturate(100%) sepia(0%); 
+        background: url("../assets/imgs/profile_bg2.jpg") repeat center center #F6F6F6;
+        }
 
         img {
         width: 100%;
@@ -508,6 +534,8 @@ page-account-info {
         // margin: -6vh auto -11vh auto;
         margin: 0 auto;
         display: block;
+        z-index: 5;
+        position: relative;
         border-radius: 0px;
         }
 
@@ -792,16 +820,3 @@ page-account-info {
 }
 
 
-
-/*GLOBAL MOBILE PORTRAIT*/
-@media (max-width: 480px) {
-  page-account-info {
-    ion-item {
-      ion-avatar.imgFull {
-        img {
-        margin: -6vh auto -7vh auto;
-        }
-      }
-    }
-  }
-}

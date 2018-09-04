@@ -1,5 +1,15 @@
 page-all-leads {
 
+  ion-list-header.contactList {
+    .item-inner {
+      .input-wrapper {
+        .label-ios, .label-md, .label-wp {
+        padding-left: 16px;
+        }
+      }
+    }
+  }
+
   ion-navbar {
     .back-button {
     display: none !important;

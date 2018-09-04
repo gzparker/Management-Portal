@@ -100,6 +100,7 @@
 
       <div class="leadMapAddress">
           <div class="addressBlock" *ngIf="leadDetail!=undefined&&leadDetail.home_address!=undefined&&leadDetail.home_address!=''">
+          <ion-icon name="md-pin" item-start></ion-icon>
           <h2 class="contentTitle">Home Address</h2>
           <!-- <p>27 Renata,<br/> Newport Coast, CA 92657,<br/> USA</p> -->
           
@@ -119,6 +120,7 @@
 
       <div class="leadMapAddress">
           <div class="addressBlock"  *ngIf="leadDetail!=undefined&&leadDetail.work_address!=undefined&&leadDetail.work_address!=''">
+          <ion-icon name="md-pin" item-start></ion-icon>
           <h2 class="contentTitle">Work Address</h2>
           <!-- <p>27 Renata,<br/> Newport Coast, CA 92657,<br/> USA</p> -->
           <!--<p>{{leadDetail.work_address}}</p>-->
@@ -150,7 +152,7 @@
   </ion-list>
 
 
-  <ion-list class="leadsSavedInfo">
+  <ion-list class="centerStage leadsSavedInfo">
     <ion-item>
     <h2 class="contentTitle" *ngIf="leadDetail!=undefined">{{leadDetail.first_name}}'s Saved</h2>
     
@@ -169,7 +171,7 @@
     </ion-item>
   </ion-list>
 
-  <ion-list class="leadListings" *ngIf="selectedSegment=='2'">
+  <ion-list class="centerStage leadListings" *ngIf="selectedSegment=='2'">
 
     <!-- <h2 class="contentTitle">Saved Listings</h2> -->
 
@@ -195,13 +197,13 @@
 
   </ion-list>
   
-  <ion-list class="leadHotsheetName" *ngIf="selectedSegment=='3'">
+  <ion-list class="centerStage leadHotsheetName" *ngIf="selectedSegment=='3'">
       <ion-item *ngFor="let subscribed_hotsheet of subscribed_hotsheets" (click)="showHotsheetDetail(subscribed_hotsheet)">
       <h2 class="contentTitle">{{subscribed_hotsheet.name}}</h2>
       </ion-item>
   </ion-list>
   
-  <ion-list class="leadSearchName" *ngIf="selectedSegment=='1'">
+  <ion-list class="centerStage leadSearchName" *ngIf="selectedSegment=='1'">
     <ion-item *ngFor="let saved_search of saved_searches">      
       <h2 class="contentTitle">{{saved_search.search_name}}</h2>
     </ion-item>

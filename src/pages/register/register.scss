@@ -68,6 +68,9 @@ page-register {
     .signupForm {
 
       .registerformBlock {
+      width: 100%;
+      max-width: 400px;
+      margin: 0 auto;
       padding: 12px 8px 30px 8px;
       border-radius: 3px;      
       background: rgba(34, 52, 79, 0.3);
@@ -188,6 +191,8 @@ page-register {
     }
 
     .loginButtons {
+    max-width: 400px;
+    margin: 0 auto;
     padding-top: 15px;
     }
 

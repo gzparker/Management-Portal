@@ -302,6 +302,10 @@ page-edit-account {
     }
 
     ion-list.leadNotes, ion-list.leadsSavedInfo, ion-list.leadAddress {
+    width: 100%;
+    max-width: 750px;
+    margin-left: auto;
+    margin-right: auto;
     border-radius: 4px !important;    
     background: #FFF !important;
     // box-shadow: -1px 0px 16px rgba(41, 81, 123, 0.15) !important;
@@ -376,6 +380,10 @@ page-edit-account {
     }
 
     ion-list.leadsInfo {
+    width: 100%;
+    max-width: 750px;
+    margin-left: auto;
+    margin-right: auto;
     border-radius: 0 !important;
     padding: 6px 0 0 0 !important;    
     background: #FFF !important;
@@ -556,6 +564,7 @@ page-edit-account {
         opacity: .25;
         background: #000;
         }
+
         &:after {
         content: "";
         width: 90px;
@@ -625,30 +634,36 @@ page-edit-account {
     width: 100%;
     height: auto;
     position: relative;
-      // &:before {
-      // content: "";
-      // width: 100%;
-      // height: 100%;
-      // z-index: 2;
-      // position: absolute;
-      // top: 0px;
-      // right: 0px;
-      // bottom: 0px;
-      // left: 0px;
-      // display: block;
-      // opacity: 0.25;
-      // background: rgb(0, 0, 0);
-      // }
+
 
       .imgCropperPreviewResult {
       background: #F5F5F5;
       position: relative;
+      overflow: hidden;
+        
+        &:before {
+        content: "";
+        width: 120%;
+        height: 120%;
+        top: -10%;
+        right: -10%;
+        bottom: -10%;
+        left: -10%;
+        display: block;
+        z-index: 0;
+        position: absolute;
+        filter: grayscale(0%) blur(2px) brightness(100%) contrast(100%) hue-rotate(0deg) opacity(100%) invert(0%) saturate(100%) sepia(0%); 
+        background: url("../assets/imgs/profile_bg2.jpg") repeat center center #F6F6F6;
+        }
+
         img {
         width: 100%;
         max-width: 350px;
         height: auto;
         display: block;
         margin: 0 auto;
+        z-index: 5;
+        position: relative;
         }
       }
       .btnUpload {
@@ -782,7 +797,7 @@ page-edit-account {
     &.generalInfoUI {
       &:before {
       // height: 140px !important;
-      height: 64px !important;
+      height: 56px !important;
       z-index: 1;
       }
       &:after {
@@ -901,6 +916,9 @@ page-edit-account {
   }
 
   .dashboardBtn {
+  width: 100%;
+  max-width: 780px;
+  margin: 0 auto;
   padding: 20px 16px 40px 16px;
   }
 

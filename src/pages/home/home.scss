@@ -1,5 +1,5 @@
 page-home {
-  
+
   [padding] .scroll-content {
   padding: 30px 20px !important;
   }
@@ -44,7 +44,7 @@ page-home {
   .swiper-slide {
   height: 75vh;
     img {
-    max-width: 220px;
+    max-width: 200px;
     // max-width: 50%;
     }
   }
@@ -56,8 +56,11 @@ page-home {
   }
 
   .formBlock {
-  height: 20vh;
-  margin-top: -20vh;  
+  width: 100%;
+  max-width: 400px;  
+  height: 15vh;
+  margin: -15vh auto 0 auto;
+  // margin-top: -20vh;  
   z-index: 10;
   position: relative;
     .colBlock {
