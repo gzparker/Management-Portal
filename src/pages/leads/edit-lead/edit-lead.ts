@@ -390,7 +390,7 @@ fredRef.update({email:leadInfo.email,first_name:leadInfo.first_name,image_url:le
 }
       else
       {
-        debugger;
+        //debugger;
         that.userServiceObj.setFireBaseInfo(leadInfo.email,leadInfo.password,leadInfo.lead_id,leadInfo.first_name,leadInfo.last_name,
           leadInfo.image_url,"0","0","1",leadInfo.user_website_id);
       }
@@ -399,7 +399,7 @@ fredRef.update({email:leadInfo.email,first_name:leadInfo.first_name,image_url:le
     }
     else
     {
-    debugger;
+    //debugger;
       that.userServiceObj.setFireBaseInfo(leadInfo.email,leadInfo.password,leadInfo.lead_id,leadInfo.first_name,leadInfo.last_name,
         leadInfo.image_url,"0","0","1",leadInfo.user_website_id);
     }
