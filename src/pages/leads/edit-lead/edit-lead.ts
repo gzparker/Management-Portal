@@ -15,6 +15,7 @@ import { FbConfirmPage } from '../../fb-confirm/fb-confirm';
 
 import { CreateLeadPage } from '../../leads/create-lead/create-lead';
 import { AllLeadsPage } from '../../leads/all-leads/all-leads';
+import { LeadDetailPage } from '../../leads/lead-detail/lead-detail';
 
 import { ManageAgentsPage } from '../../setup/manage-agents/manage-agents';
 
@@ -97,6 +98,7 @@ public hideLeadCropper:boolean=true;
   public groupMemberRef:any;
   public chatRef:any;
   public userRef:any;
+  public notificationMsg:string="";
 public loader:any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,
@@ -358,8 +360,9 @@ getHomeAddress(data) {
   }
   updateLeadResp(result:any):void{
     var that=this;
+    this.notificationMsg="Lead has been updated successfully.";
     //this.loader.dismiss();
-  this.leadUpdateMsg="Lead has been updated successfully.";
+  /*this.leadUpdateMsg="Lead has been updated successfully.";
   let toast = this.toastCtrl.create({
     message: this.leadUpdateMsg,
     duration: 3000,
@@ -370,7 +373,7 @@ getHomeAddress(data) {
   toast.onDidDismiss(() => {
     //console.log('Dismissed toast');
   });
-  toast.present();
+  toast.present();*/
   let leadInfo=result.leadInfo;
   //debugger;
   var i=0;
@@ -396,12 +399,22 @@ fredRef.update({email:leadInfo.email,first_name:leadInfo.first_name,image_url:le
       }
 //debugger;
       });
+      that.ngZone.run(() => {
+        // debugger;
+        
+        that.navCtrl.push(LeadDetailPage,{notificationMsg:that.notificationMsg.toUpperCase(),leadId:that.leadId});
+         });
     }
     else
     {
     //debugger;
       that.userServiceObj.setFireBaseInfo(leadInfo.email,leadInfo.password,leadInfo.lead_id,leadInfo.first_name,leadInfo.last_name,
         leadInfo.image_url,"0","0","1",leadInfo.user_website_id);
+        that.ngZone.run(() => {
+          // debugger;
+           
+          that.navCtrl.push(LeadDetailPage,{notificationMsg:that.notificationMsg.toUpperCase(),leadId:that.leadId});
+           });
     }
     });
     //this.ngZone.run(() => {

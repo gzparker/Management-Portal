@@ -633,6 +633,14 @@ is_online="1";
     {
       data.append('country_code', dataObj.country_code);
     }
+    if(dataObj.country_abbv!="")
+    {
+      data.append('country_abbv', dataObj.country_abbv);
+    }
+    if(dataObj.mls_server_id!="")
+    {
+      data.append('mls_server_id', dataObj.mls_server_id);
+    }
     //if(dataObj.timezone!="")
    // {
    //   data.append('timezone', dataObj.timezone);

@@ -311,6 +311,7 @@ that.userServiceObj.setFireBaseInfo(email,password,webUserId,first_name,last_nam
      this.ngZone.run(() => {
       // debugger;
        this.navCtrl.push(AllLeadsPage,{notificationMsg:this.leadCreateMsg.toUpperCase()});
+      // this.navCtrl.push(LeadDetailPage,{notificationMsg:this.leadCreateMsg.toUpperCase(),leadId:leadInfo.lead_id});
        });
   }
   leadFileChangeListener($event) {

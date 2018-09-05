@@ -115,11 +115,18 @@
         <!-- <ion-label stacked><span [ngClass]="{'error': phone_number==null}" *ngIf="phone_number==null">*</span></ion-label>         -->
         <ion-input type="text" name="phone_number" [(ngModel)]="phone_number" placeholder="Cell Number" [brmasker]="{phone: true}"></ion-input>
       </ion-item>
-
+      <ion-item class="OptMLS noShadow" *ngIf="service_id=='2'||service_id=='1'">
+        <ion-label stacked>Select your MLS</ion-label>
+        <ion-select placeholder="-----" [(ngModel)]="mls_server_id"  
+        name="mls_server_id" multiple="true">
+          <ion-option *ngFor="let mls of allMls" value= {{mls.mls_server_id}}>{{mls.name}}
+           </ion-option>
+        </ion-select>
+      </ion-item>
       <ion-item class="userInfoBlock ReqField">
         <ion-icon name="md-briefcase" item-start></ion-icon>
         <!-- <ion-label stacked><span [ngClass]="{'error': agent_id==''}" *ngIf="agent_id==''">*</span></ion-label>         -->
-        <ion-input type="text" [(ngModel)]="agent_id" name="agent_id" placeholder="MLS ID"></ion-input>
+        <ion-input type="text" [(ngModel)]="agent_id" name="agent_id" placeholder="Agent ID"></ion-input>
       </ion-item>
 
       <ion-item class="userInfoBlock ReqField">

@@ -13,7 +13,7 @@ import { AccountInfoPage } from '../account-info/account-info';
 import { AlertController,ToastController } from 'ionic-angular';
 import { SharedProvider } from '../../../providers/shared/shared';
 import { UserProvider } from '../../../providers/user/user';
-
+import { SubscriptionProvider } from '../../../providers/subscription/subscription';
 /**
  * Generated class for the EditAccountPage page.
  *
@@ -63,11 +63,13 @@ export class EditAccountPage {
   public isGlobalPreference:boolean=false;
   public isOwner:boolean=false;
   public parentId:string="";
+  public allMls:any[]=[];
+  public mls_server_id:any[]=[];
   public loader:any;
 
   public dataPersonalImage:any;
   public personalImage:string="";
-
+  public service_id:string="";
   public imgBaseUrl=this.sharedServiceObj.imgBucketUrl;
   public noImgUrl=this.sharedServiceObj.noImageUrl;
   public CkeditorConfig = {removeButtons:'Underline,Subscript,Superscript,SpecialChar'
@@ -90,7 +92,7 @@ export class EditAccountPage {
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform,
     public loadingCtrl: LoadingController,private crop: Crop,private camera: Camera,
-    private imagePicker: ImagePicker,private toastCtrl: ToastController) {
+    private imagePicker: ImagePicker,private toastCtrl: ToastController, public subscriptionObj: SubscriptionProvider) {
       //this.CkeditorConfig=this.sharedServiceObj.CkeditorConfig;
       this.hideImageCropper=false;
       this.loader = this.loadingCtrl.create({
@@ -120,6 +122,8 @@ export class EditAccountPage {
   
       this.cropperSettings.noFileInput = true;
         this.dataPersonalImage={};
+        this.service_id=this.sharedServiceObj.service_id;
+        this.loadAllAvailableMLS();
   }
 
   ionViewDidLoad() {
@@ -144,6 +148,22 @@ export class EditAccountPage {
       this.getAllCountryCodes();
       this.setAccessLevels();
     });
+  }
+  loadAllAvailableMLS()
+  {
+    this.subscriptionObj.loadAllAvailableMLS()
+    .subscribe((result) => this.allAvailableMLSResp(result)); 
+  }
+  allAvailableMLSResp(resp: any)
+  {
+if(resp.status==true)
+{
+  this.allMls=resp.available_mls;
+}
+else
+{
+  this.allMls=[];
+}
   }
   setAccessLevels()
   {
@@ -240,7 +260,12 @@ export class EditAccountPage {
    // debugger;
      this.passwordUpdated=this.accountInfo.password;
      this.phone_number=this.accountInfo.phone_mobile;
-     debugger;
+      if(this.accountInfo.mls_server_id!=null)
+          {
+      this.mls_server_id=this.accountInfo.mls_server_id.split(',');
+          }
+     //this.mls_server_id=this.accountInfo.mls_server_id;
+     //debugger;
      this.selectedCountryAbbv=this.accountInfo.country_abbv;
     }
     
@@ -601,6 +626,7 @@ else
       description:"",
       company:"",
       office_id:"",
+      mls_server_id:"",
       agent_id:"",
       broker_id:"",
       country_code: "",
@@ -650,7 +676,7 @@ if(this.accountInfo.agent_id!=this.agent_id)
 {
   dataObj.agent_id = this.agent_id;
 }
-debugger;
+//debugger;
 if(this.accountInfo.office_id!=this.office_id)
 {
   dataObj.office_id = this.office_id;
@@ -662,6 +688,11 @@ if(this.accountInfo.broker_id!=this.broker_id)
 if(this.accountInfo.phone_mobile!=this.phone_number)
 {
       dataObj.phone_number = this.phone_number.toString();
+}
+if(this.accountInfo.mls_server_id!=this.mls_server_id)
+{
+ 
+      dataObj.mls_server_id = this.mls_server_id.toString();
 }
 //debugger;
 //this.loader.present();

@@ -66,6 +66,7 @@ export class LeadDetailPage {
  public groupMemberRef:any;
  public chatRef:any;
  public userRef:any;
+ public notificationMsg:string="";
 public loader:any;
 @ViewChild('mapHome') mapHomeElement: ElementRef;
 mapHome: any;
@@ -81,6 +82,22 @@ mapWork: any;
         content: "Please wait...",
         duration: 5000
       });
+      if(this.navParams.get('notificationMsg')!=undefined)
+      {
+        this.notificationMsg=this.navParams.get('notificationMsg');
+        
+        let toast = this.toastCtrl.create({
+          message: this.notificationMsg,
+          duration: 3000,
+          position: 'top',
+          cssClass:'successToast'
+        });
+        
+        toast.onDidDismiss(() => {
+          //console.log('Dismissed toast');
+        });
+        toast.present();
+      }
       this.savedListingPage=LeadSavedListingPage;
       this.savedSearchesPage=LeadSavedSearchesPage;
       this.subscribedHotsheetPage=LeadHotsheetSubscribedPage;
