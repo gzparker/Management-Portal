@@ -240,6 +240,7 @@ export class EditAccountPage {
    // debugger;
      this.passwordUpdated=this.accountInfo.password;
      this.phone_number=this.accountInfo.phone_mobile;
+     debugger;
      this.selectedCountryAbbv=this.accountInfo.country_abbv;
     }
     
@@ -649,6 +650,7 @@ if(this.accountInfo.agent_id!=this.agent_id)
 {
   dataObj.agent_id = this.agent_id;
 }
+debugger;
 if(this.accountInfo.office_id!=this.office_id)
 {
   dataObj.office_id = this.office_id;
