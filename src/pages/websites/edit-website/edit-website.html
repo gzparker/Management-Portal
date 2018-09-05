@@ -206,17 +206,15 @@
               <input id="custom-input" class="btnUpload" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="websiteFavIconFileChangeListener($event)">
               </div>
 
-              <!-- <div class="ImageCropperOption last">
+              <div class="ImageCropperOption last">
                 <ion-item *ngIf="dataWebsiteIcon.image">
                   <ion-label>Edit Favicon</ion-label>
                   <ion-toggle [(ngModel)]="edit_favivon_image" 
                   name="edit_favivon_image" (click)="showHideFavIconCropper()"></ion-toggle>
                 </ion-item>
-
-                Image Cropper
                 <img-cropper #favIconLogoCropper [image]="dataWebsiteIcon" [settings]="favIconCropperSettings" 
                 (onCrop)="websiteFavIconImageCropped($event)" *ngIf="hideFavIconCropper"></img-cropper>
-              </div> -->
+              </div>
 
             </div>
             
