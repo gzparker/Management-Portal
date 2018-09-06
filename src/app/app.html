@@ -1,4 +1,4 @@
-<ion-split-pane>
+<ion-split-pane [when]="showSideMenue">
 <ion-menu [content]="content" persistent="true">
   <ion-header>
     <!-- <ion-toolbar class="company-logo">
@@ -20,7 +20,7 @@
 
     <ion-list id="sidenav" class="app-menu disable-user-behavior">
    
-      <ion-item menuClose ion-item (tap)="openPage('1')" 
+      <!--<ion-item menuClose ion-item (tap)="openPage('1')" 
       *ngIf="userLoggedIn==false">
         Home
       </ion-item>
@@ -31,7 +31,7 @@
       <ion-item menuClose ion-item (tap)="openPage('3')" 
       *ngIf="userLoggedIn==false">
         Register
-      </ion-item>
+      </ion-item>-->
       <ion-item menuClose ion-item (tap)="openPage('4')" 
       *ngIf="userLoggedIn==true&&paidStatus==true&&isDashboard==true">      
         Dashboard

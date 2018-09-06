@@ -100,6 +100,7 @@ export class MyApp {
   }
   public userId:string="";
   public parentId:string="";
+  public showSideMenue:boolean=false;
   constructor(public platform: Platform,
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
@@ -126,7 +127,7 @@ export class MyApp {
    sharedServiceObj.signOutEmitter.subscribe(item => {
      this.logOut();
  });
- //debugger;
+ 
   }
   ionViewWillEnter() { 
    //debugger;
@@ -156,7 +157,7 @@ export class MyApp {
     });
   }
   ionViewDidLoad() {
-    
+    //this.menuController.enable(false);
   }
   loadGeneralWebsiteSettings()
   {
@@ -528,9 +529,10 @@ this.storage.set("userCountryInfo", this.geoCoderData);
 
       if (data == null) {
         this.userLoggedIn = false;
-
+this.showSideMenue=false;
       }
       else {
+        this.showSideMenue=true;
         this.setAccessLevels();
         this.setUserGeneralInfo();
         //debugger;
@@ -545,6 +547,14 @@ this.storage.set("userCountryInfo", this.geoCoderData);
   setLoginStatus(item: any): void {
 //debugger;
     this.userLoggedIn = item;
+    if(item==true)
+    {
+      this.showSideMenue=true;
+    }
+    else
+    {
+      this.showSideMenue=false;
+    }
     this.loadAllMsgCounter();
     this.setAccessLevels();
     this.setUserGeneralInfo();
@@ -768,6 +778,7 @@ else if(option=='6')
   }
   logOut() {
     let that=this;
+    this.showSideMenue=false;
     this.storage.remove('userId');
     this.storage.remove('email');
     this.storage.remove('first_name');
@@ -784,7 +795,7 @@ else if(option=='6')
     let firebaseUserId = this.storage.get('firebaseUserId');
     firebaseUserId.then((data) => {
     var fredRef=firebase.database().ref('users/'+data);
- debugger;
+ //debugger;
 //The following 2 function calls are equivalent
 fredRef.update({isOnline:'0'}).then(function() {
   //debugger;
