@@ -228,11 +228,11 @@
         <ion-label stacked>Main Image</ion-label>
         
         <!-- Edit Image Toggle Button -->
-        <ion-item class="toggleImageEdit" *ngIf="dataHeaderImage.image">
+        <!--<ion-item class="toggleImageEdit" *ngIf="dataHeaderImage.image">
           <ion-label>Edit Image</ion-label>
           <ion-toggle [(ngModel)]="edit_header_image" 
           name="edit_header_image" (click)="showHideHeaderCropper()"></ion-toggle>
-        </ion-item>
+        </ion-item>-->
 
 
           <!-- Image Cropper -->
@@ -256,11 +256,11 @@
 
         <!-- Main Image Uploader -->
       
-          <ion-item *ngIf="dataCommunityImage.image">
+          <!--<ion-item *ngIf="dataCommunityImage.image">
             <ion-label>Edit Image</ion-label>
             <ion-toggle [(ngModel)]="edit_community_image" 
             name="edit_community_image" (click)="showHideCommunityCropper()"></ion-toggle>
-          </ion-item>
+          </ion-item>-->
           <!-- Image Cropper -->
           <img-cropper  #communityImageCropper [image]="dataCommunityImage" [settings]="communityCropperSettings"
              (onCrop)="communtiyImageCropped($event)" *ngIf="hideCommunityCropper"></img-cropper>

@@ -319,7 +319,7 @@ getHomeAddress(data) {
      this.workAddressDummy=result.result.work_address;
      this.work_google_place_id=result.result.work_google_place_id;
      this.work_lat_lng=result.result.work_lat_lng;
-    //debugger;
+   // debugger;
      if(result.result.image_url!=undefined)
       {
         //debugger;
@@ -346,7 +346,7 @@ getHomeAddress(data) {
     {
      
       //this.loader.present();
-      //debugger;
+      
   this.userServiceObj.updateLead(this.userId,this.selectedWebsite,this.leadId,this.email,this.password,
     this.firstName,this.lastName,this.officeNumber,this.mobileNumber,this.homeNumber,
     this.home_address_street,this.home_address_city,
@@ -361,65 +361,50 @@ getHomeAddress(data) {
   updateLeadResp(result:any):void{
     var that=this;
     this.notificationMsg="Lead has been updated successfully.";
-    //this.loader.dismiss();
-  /*this.leadUpdateMsg="Lead has been updated successfully.";
-  let toast = this.toastCtrl.create({
-    message: this.leadUpdateMsg,
-    duration: 3000,
-    position: 'top',
-    cssClass:'successToast'
-  });
   
-  toast.onDidDismiss(() => {
-    //console.log('Dismissed toast');
-  });
-  toast.present();*/
   let leadInfo=result.leadInfo;
-  //debugger;
+ // debugger;
   var i=0;
   this.userRef=firebase.database().ref('users');
     this.userRef.orderByChild("webUserId").equalTo(leadInfo.lead_id).on("value", function(snapshot) {
-      //i=0;
+      
       if(snapshot.exists())
       {
       snapshot.forEach(element => {
-        //i=i+1;
+        
         if(element.val().is_lead=="1")
         {
       var fredRef=firebase.database().ref('users/'+element.key);
- //debugger;
+ 
 fredRef.update({email:leadInfo.email,first_name:leadInfo.first_name,image_url:leadInfo.image_url
   ,last_name:leadInfo.last_name,website_id:leadInfo.user_website_id});
 }
       else
       {
-        //debugger;
+        
         that.userServiceObj.setFireBaseInfo(leadInfo.email,leadInfo.password,leadInfo.lead_id,leadInfo.first_name,leadInfo.last_name,
           leadInfo.image_url,"0","0","1",leadInfo.user_website_id);
       }
-//debugger;
+
       });
       that.ngZone.run(() => {
-        // debugger;
+        
         
         that.navCtrl.push(LeadDetailPage,{notificationMsg:that.notificationMsg.toUpperCase(),leadId:that.leadId});
          });
     }
     else
     {
-    //debugger;
+    
       that.userServiceObj.setFireBaseInfo(leadInfo.email,leadInfo.password,leadInfo.lead_id,leadInfo.first_name,leadInfo.last_name,
         leadInfo.image_url,"0","0","1",leadInfo.user_website_id);
         that.ngZone.run(() => {
-          // debugger;
-           
+         
           that.navCtrl.push(LeadDetailPage,{notificationMsg:that.notificationMsg.toUpperCase(),leadId:that.leadId});
            });
     }
     });
-    //this.ngZone.run(() => {
-      //this.navCtrl.push(AllLeadsPage,{notificationMsg:this.leadUpdateMsg.toUpperCase()});
-   // });
+   
   }
   editAgents()
   {

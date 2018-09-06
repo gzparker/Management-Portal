@@ -142,11 +142,11 @@
             <ion-label stacked>Main Image</ion-label>
     
             <!-- Edit Image Toggle Button -->
-            <ion-item class="toggleImageEdit" *ngIf="dataLeadImage.image">
+            <!--<ion-item class="toggleImageEdit" *ngIf="dataLeadImage.image">
               <ion-label>Edit Image</ion-label>
               <ion-toggle [(ngModel)]="edit_lead_image" 
               name="edit_lead_image" (click)="showHideLeadCropper()"></ion-toggle>
-            </ion-item>  
+            </ion-item>-->
               <img-cropper #leadImageCropper [image]="dataLeadImage" [settings]="leadCropperSettings" 
               (onCrop)="leadImageCropped($event)" *ngIf="hideLeadCropper"></img-cropper>
               <span *ngIf="dataLeadImage.image" >

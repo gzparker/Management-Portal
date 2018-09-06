@@ -68,10 +68,10 @@ export class LeadDetailPage {
  public userRef:any;
  public notificationMsg:string="";
 public loader:any;
-@ViewChild('mapHome') mapHomeElement: ElementRef;
+/*@ViewChild('mapHome') mapHomeElement: ElementRef;
 mapHome: any;
 @ViewChild('mapWork') mapWorkElement: ElementRef;
-mapWork: any;
+mapWork: any;*/
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,
     public sharedServiceObj: SharedProvider, private storage: Storage,
@@ -196,14 +196,11 @@ this.chatRef.off("value");
     
   }
   }
-  loadHomeMap(placeId:any){
+  /*loadHomeMap(placeId:any){
     this.map_home_height=400;
-    //debugger;
-      // this.geolocation.getCurrentPosition().then((position) => {
-    //debugger;
-         //let latLng = new google.maps.LatLng(37.4419, -122.1419);
+    
          let mapOptions = {
-         // center: latLng,
+        
            zoom: 14,
            mapTypeId: google.maps.MapTypeId.MAP,
            mapTypeControl: true,
@@ -222,19 +219,19 @@ this.chatRef.off("value");
              position: google.maps.ControlPosition.LEFT_TOP
            }
          };
-    //debugger;
+    
          this.mapHome = new google.maps.Map(this.mapHomeElement.nativeElement, mapOptions);
          var request = {
           placeId: placeId
         };
-      //debugger;
+      
         var infowindow = new google.maps.InfoWindow();
         var service = new google.maps.places.PlacesService(this.mapHome);
       var that=this;
-     // debugger;
+     
         service.getDetails(request, (place, status)=> {
           if (status == google.maps.places.PlacesServiceStatus.OK) {
-            //debugger;
+           
             var marker = new google.maps.Marker({
               map: that.mapHome,
               position: place.geometry.location
@@ -248,7 +245,7 @@ this.chatRef.off("value");
   loadWorkMap(placeId:any){
     this.map_work_height=400;
     let mapOptions = {
-      // center: latLng,
+     
         zoom: 14,
         mapTypeId: google.maps.MapTypeId.MAP,
         mapTypeControl: true,
@@ -267,19 +264,19 @@ this.chatRef.off("value");
           position: google.maps.ControlPosition.LEFT_TOP
         }
       };
- //debugger;
+ 
       this.mapWork = new google.maps.Map(this.mapWorkElement.nativeElement, mapOptions);
       var request = {
        placeId: placeId
      };
-   //debugger;
+  
      var infowindow = new google.maps.InfoWindow();
      var service = new google.maps.places.PlacesService(this.mapWork);
    var that=this;
-  // debugger;
+  
      service.getDetails(request, (place, status)=> {
        if (status == google.maps.places.PlacesServiceStatus.OK) {
-         //debugger;
+        
          var marker = new google.maps.Marker({
            map: that.mapWork,
            position: place.geometry.location
@@ -288,7 +285,7 @@ this.chatRef.off("value");
        }
      });
    
-  }
+  }*/
   editLead(){
     if(this.leadId!="")
     {
@@ -333,8 +330,9 @@ this.chatRef.off("value");
     {
    if(result.result)
    {
-    // debugger;
+   // debugger;
      this.leadDetail=result.result;
+   //  debugger;
      this.internal_notes=this.leadDetail.internal_notes;
     // debugger;
      if(result.result.home_google_place_id!=undefined||result.result.home_google_place_id!=null)
@@ -342,7 +340,7 @@ this.chatRef.off("value");
        if(result.result.home_google_place_id!="")
        {
         this.map_home_height=400;
-        this.loadHomeMap(result.result.home_google_place_id);
+       // this.loadHomeMap(result.result.home_google_place_id);
        }
      else{
       this.map_home_height=0;
@@ -357,7 +355,7 @@ this.chatRef.off("value");
        if(result.result.work_google_place_id!="")
        {
         this.map_work_height=400;
-        this.loadWorkMap(result.result.work_google_place_id);
+        //this.loadWorkMap(result.result.work_google_place_id);
        }
      else{
       this.map_work_height=0;

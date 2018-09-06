@@ -113,11 +113,11 @@
 
   <ion-list *ngIf="!isApp" class="customList uploadPhoto">      
       <ion-label stacked>Select Image</ion-label>
-      <ion-item class="imageUploaderLabel" *ngIf="dataAgentImage.image">
+      <!--<ion-item class="imageUploaderLabel" *ngIf="dataAgentImage.image">
         <ion-label stacked>Edit Image</ion-label>
         <ion-toggle [(ngModel)]="edit_agent_image" 
         name="edit_agent_image" (click)="showHideAgentCropper()"></ion-toggle>
-      </ion-item>
+      </ion-item>-->
 
       <div class="uploaderBtn">
       <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="fileChangeListener($event)">
