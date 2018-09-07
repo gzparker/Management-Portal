@@ -163,22 +163,22 @@
       <ion-toggle checked="false" (click)="toggleCustomColor()"></ion-toggle>
     </ion-item>
     <ion-list *ngIf="customColorOption">
-    <ion-item>
+    <ion-item (click)="showColorPopUp('header_color')">
       <ion-label>Header Color</ion-label>
-      <ion-select [(ngModel)]="headerColor" name="headerColor" id="headerColor">
+      <!--<ion-select [(ngModel)]="headerColor" name="headerColor" id="headerColor">
         <ion-option *ngFor="let colorOption of colorOptions" value= {{colorOption.id}}>
           {{colorOption.name}}
           </ion-option>
-       </ion-select>
+       </ion-select>-->
       
     </ion-item>
-    <ion-item>
+    <ion-item (click)="showColorPopUp('side_bar_menu_color')">
       <ion-label>Side-Bar Menu Color</ion-label>
-      <ion-select [(ngModel)]="sideBarMenuColor" name="sideBarMenuColor" id="sideBarMenuColor">
+      <!--<ion-select [(ngModel)]="sideBarMenuColor" name="sideBarMenuColor" id="sideBarMenuColor">
         <ion-option *ngFor="let colorOption of colorOptions" value= {{colorOption.id}}>
           {{colorOption.name}}
           </ion-option>
-       </ion-select>
+       </ion-select>-->
       
     </ion-item>
     <!--<ion-item>
@@ -190,22 +190,22 @@
        </ion-select>
       
     </ion-item>-->
-    <ion-item>
+    <ion-item (click)="showColorPopUp('content_background_color')">
       <ion-label>Content Background Color</ion-label>
-      <ion-select [(ngModel)]="backgroundColor" name="backgroundColor" id="backgroundColor">
+      <!--<ion-select [(ngModel)]="backgroundColor" name="backgroundColor" id="backgroundColor">
         <ion-option *ngFor="let colorOption of colorOptions" value= {{colorOption.id}}>
           {{colorOption.name}}
           </ion-option>
-       </ion-select>
+       </ion-select>-->
       
     </ion-item>
-    <ion-item>
+    <ion-item (click)="showColorPopUp('button_color')">
       <ion-label>Button Color</ion-label>
-      <ion-select [(ngModel)]="buttonColor" name="buttonColor" id="buttonColor">
+      <!--<ion-select [(ngModel)]="buttonColor" name="buttonColor" id="buttonColor">
         <ion-option *ngFor="let colorOption of colorOptions" value= {{colorOption.id}}>
           {{colorOption.name}}
           </ion-option>
-       </ion-select>
+       </ion-select>-->
       
     </ion-item>
   </ion-list>

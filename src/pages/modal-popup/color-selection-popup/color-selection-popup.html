@@ -4,15 +4,21 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
-
+<ion-header class="dashboardUI">
   <ion-navbar>
-    <ion-title>color-selection-popup</ion-title>
-  </ion-navbar>
+    
+    <ion-title>Select Color</ion-title>
+    <!-- <button ion-button end class="button button-clear" (click)="closePopUp();">Cancel</button> -->
 
+    <ion-buttons end>
+      <button ion-button end icon-left (click)="closePopUp();">Cancel</button>
+    </ion-buttons>
+
+  </ion-navbar>
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding class="dashboardUI newMessage noScroll">
+  
 
 </ion-content>

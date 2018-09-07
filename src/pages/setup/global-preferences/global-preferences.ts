@@ -15,6 +15,7 @@ import { AlertController } from 'ionic-angular';
 import { SharedProvider } from '../../../providers/shared/shared';
 import { UserProvider } from '../../../providers/user/user';
 import { SubscriptionProvider } from '../../../providers/subscription/subscription';
+import { ColorSelectionPopupPage } from '../../modal-popup/color-selection-popup/color-selection-popup';
 import { DashboardPage } from '../../dashboard/dashboard';
 import { DashboardTabsPage } from '../../tabs/dashboard-tabs/dashboard-tabs';
 
@@ -211,6 +212,14 @@ export class GlobalPreferencesPage {
       this.storage.set('globalSettings',this.globalSettings);
       //debugger;
     }
+  }
+  showColorPopUp(option:string){
+    var modalColor = this.modalCtrl.create(ColorSelectionPopupPage,{option:option});
+    modalColor.onDidDismiss(data => {
+     // console.log(data);
+      debugger;
+ });
+    modalColor.present();
   }
   toggleCustomColor(){
     this.customColorOption=!this.customColorOption;

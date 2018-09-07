@@ -27,11 +27,16 @@ import { UserProvider } from '../../../providers/user/user';
 export class ColorSelectionPopupPage {
   public colorOptions:any[]=[{id:"base_color",name:"1st Color"},{id:"secondary_color",name:"2nd Color"},
   {id:"tertiary_color",name:"3rd Color"}];
+  public option:string="";
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, 
     public platform: Platform,public actionSheetCtrl: ActionSheetController,
     public viewCtrl: ViewController,private toastCtrl: ToastController) {
+      if(this.navParams.get('option')!=undefined)
+   {
+    this.option = this.navParams.get('option');
+    }
   }
 
   ionViewDidLoad() {
@@ -39,6 +44,10 @@ export class ColorSelectionPopupPage {
   }
   closePopUp()
   {
-    this.viewCtrl.dismiss();
+    var selectedColor={
+      option:this.option,
+      selectedColor:"cdd"
+    }
+    this.viewCtrl.dismiss(selectedColor);
   }
 }
