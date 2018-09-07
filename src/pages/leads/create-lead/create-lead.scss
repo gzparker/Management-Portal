@@ -10,6 +10,16 @@ page-create-lead {
     }
   }
 
+  ion-content.dashboardUI {
+    ion-list.uploadPhoto {    
+    padding-bottom: 20px;
+    margin-bottom: 0px;
+    border-radius: 0px;
+    box-shadow: none;
+    background: #FFF; 
+    }
+  }
+
   .label-ios, .label-md, .label-wp {
   opacity: .68;
   }
@@ -76,6 +86,7 @@ page-create-lead {
     text-overflow: unset;
     white-space: normal;    
     box-sizing: border-box;
+    resize: none;
     }  
   }
 

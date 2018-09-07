@@ -203,8 +203,9 @@
       </ion-item>
     </div>
 
+    <div class="customList hotsheetImages">
 
-    <ion-list class="customList" *ngIf="isApp">
+    <ion-list *ngIf="isApp">
       <ion-item>
         <button ion-button color="primary" block (click)="takeHeaderPicture();" >Select Main Image</button>
       </ion-item>
@@ -220,8 +221,7 @@
       <ion-item *ngIf="communityImage!=''">
         <img [src]="communityImage" />
       </ion-item>
-    </ion-list>
-
+    </ion-list>    
 
     <ion-list *ngIf="!isApp">
         
@@ -249,7 +249,8 @@
           <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="headerFileChangeListener($event)">
 
 
-      </ion-list>  
+      </ion-list>
+
       <ion-list *ngIf="!isApp">
        
         <ion-label stacked>Community/Gallery Images</ion-label>
@@ -298,6 +299,7 @@
         </div> -->
 
       </ion-list>
+    </div>
 
     <!-- <ion-item>
       <button ion-button style="text-transform:lowercase !important;" color="secondary" outline (click)="toggleAdvanceSearch()" full small>filter</button>

@@ -162,7 +162,8 @@
       <ion-label> Use Custom Color</ion-label>
       <ion-toggle checked="false" (click)="toggleCustomColor()"></ion-toggle>
     </ion-item>
-    <ion-list *ngIf="customColorOption">
+    
+    <ion-list class="customColorOption" *ngIf="customColorOption">
     <ion-item (click)="showColorPopUp('header_color')">
       <ion-label>Header Color</ion-label>
       <!--<ion-select [(ngModel)]="headerColor" name="headerColor" id="headerColor">

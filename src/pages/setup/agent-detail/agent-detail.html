@@ -22,7 +22,7 @@
 
 
 <ion-content padding class="dashboardUI">
-  <ion-item class="animated fadeIn" *ngIf="agentDetail!=undefined">
+  <ion-item class="centerStage animated fadeIn" *ngIf="agentDetail!=undefined">
       <ion-avatar class="imgFull">
           <img src="{{this.sharedServiceObj.imgBucketUrl}}{{agentDetail.image_url}}" 
           (error)="imgAgent.src = this.sharedServiceObj.noImageUrl" #imgAgent/>
