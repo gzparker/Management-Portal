@@ -189,7 +189,7 @@
 
       <ion-item class="noPadding itemLast">
         <ion-label stacked>Additional Options</ion-label>
-        <ion-toggle checked="true" (click)="toggleAdditionalInfo()"></ion-toggle>
+        <ion-toggle checked="true" (ionChange)="toggleAdditionalInfo()"></ion-toggle>
       </ion-item>
       
       <ion-item class="noPadding vidTour" *ngIf="additionalInfoOption">
@@ -308,7 +308,7 @@
         
         <ion-item class="filterLabel">
           <ion-label>Filter</ion-label>
-          <ion-toggle checked="false" (click)="toggleAdvanceSearch()"></ion-toggle>
+          <ion-toggle checked="false" (ionChange)="toggleAdvanceSearch()"></ion-toggle>
         </ion-item>
 
         <div class="filterOptions" *ngIf="advanceSearchOption">     

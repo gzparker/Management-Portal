@@ -19,6 +19,57 @@
 
 
 <ion-content padding class="dashboardUI newMessage noScroll">
-  
+  <ion-list radio-group [(ngModel)]="selectedColorOption" (ionChange)="selectColor()">
 
+    <ion-list-header>
+      Select Color Option
+    </ion-list-header>
+  
+    <ion-item>
+      <ion-label>1st Color</ion-label>
+      <ion-radio value="base_color"></ion-radio>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label>2nd Color</ion-label>
+      <ion-radio value="secondary_color"></ion-radio>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label>3rd Color</ion-label>
+      <ion-radio value="tertiary_color"></ion-radio>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label>Default Color</ion-label>
+      <ion-radio value="default"></ion-radio>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label>Custom Color</ion-label>
+      <ion-radio value="custom"></ion-radio>
+    </ion-item>
+  
+  </ion-list>
+  <ion-list *ngIf="showCustomColor">
+
+    <ion-list-header>
+      Select Custom Color
+    </ion-list-header>
+    <div>
+     
+        <button ion-button color="secondary" outline [colorPicker]="customColor" 
+        (colorPickerChange)="customColor=$event"
+        [ngStyle]="{'background-color': customColor}" [cpPosition]="'bottom'" 
+           [cpOutputFormat]="'rgb'" full small>Select Color</button>
+           
+      <!--<div [colorPicker]="colorBase" 
+      (colorPickerChange)="colorBase=$event"
+        [style.background]="colorBase" [cpPosition]="'bottom'" 
+         [cpOutputFormat]="'rgba'" >Select Color</div>-->
+    </div>
+    </ion-list>
+    <div class="dashboardBtn">
+      <button ion-button color="primary" block (click)="saveColor();">Save</button>
+    </div>
 </ion-content>

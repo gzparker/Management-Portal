@@ -269,6 +269,7 @@ public isWebBrowser=false;
       //this.viewAllHotSheets();
       this.getAllWebsite();
       this.loadAllAgents();
+      this.viewAllHotSheets();
       if(this.navParams.get('id')!=undefined)
       {
         this.hotSheetId=this.navParams.get('id');
@@ -356,13 +357,13 @@ else
     if(result.status==true)
     {
       
-     //debugger;
+    // debugger;
       this.allHotSheetList=result.result;
       
     }
     else
     {
-      //debugger;
+     // debugger;
       this.allHotSheetList=[];
   
     }
@@ -1569,8 +1570,8 @@ else
          
       debugger;
         this.userServiceObj.updateHotSheet(this.hotSheetId,this.userId.toString(),this.selectedWebsite,
-        this.sharedServiceObj.mlsServerId,this.name,this.hotsheet_Title,this.slug,JSON.stringify(this.searchListObject),this.brief_description,
-        this.main_description,this.virtual_tour_url,this.video_url,this.sub_city,
+        this.sharedServiceObj.mlsServerId,this.name,this.hotsheet_Title,this.slug,JSON.stringify(this.searchListObject),document.getElementById("brief_description").innerHTML,
+        document.getElementById("main_description").innerHTML,this.virtual_tour_url,this.video_url,this.sub_city,
         this.dataCommunityImageArray,this.headerImage,this.city,this.administrative_area_level_1,
         this.community,this.assigned_agent_id,this.polygon_search,this.meta_description,this.meta_title,this.parent_id)
         .subscribe((result) => this.updateHotSheetResp(result));

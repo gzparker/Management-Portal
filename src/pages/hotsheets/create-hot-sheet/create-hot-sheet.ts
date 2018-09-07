@@ -332,7 +332,7 @@ else
     {
       
       this.allHotSheetList=[];
-    
+    debugger;
   this.userServiceObj.allUserHotSheets(this.userId.toString())
     .subscribe((result) => this.viewAllHotSheetResp(result));
     }
@@ -343,13 +343,13 @@ else
     if(result.status==true)
     {
       
-     //debugger;
+     debugger;
       this.allHotSheetList=result.result;
       
     }
     else
     {
-      //debugger;
+      debugger;
       this.allHotSheetList=[];
   
     }

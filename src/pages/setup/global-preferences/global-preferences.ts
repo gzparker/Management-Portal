@@ -222,7 +222,15 @@ export class GlobalPreferencesPage {
     modalColor.present();
   }
   toggleCustomColor(){
-    this.customColorOption=!this.customColorOption;
+    //this.customColorOption=!this.customColorOption;
+    if(this.customColorOption==true)
+    {
+      this.customColorOption=false;
+    }
+    else
+    {
+      this.customColorOption=true;
+    }
       }
   loadCompanyImage(baseUrl:string,imageUrl:string) {
    

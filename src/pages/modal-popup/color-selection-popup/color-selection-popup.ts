@@ -27,14 +27,17 @@ import { UserProvider } from '../../../providers/user/user';
 export class ColorSelectionPopupPage {
   public colorOptions:any[]=[{id:"base_color",name:"1st Color"},{id:"secondary_color",name:"2nd Color"},
   {id:"tertiary_color",name:"3rd Color"}];
+  public selectedColorOption:string="";
+  public customColor:string="";
   public option:string="";
+  public showCustomColor:boolean=false;
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, 
     public platform: Platform,public actionSheetCtrl: ActionSheetController,
     public viewCtrl: ViewController,private toastCtrl: ToastController) {
-      if(this.navParams.get('option')!=undefined)
-   {
+    if(this.navParams.get('option')!=undefined)
+    {
     this.option = this.navParams.get('option');
     }
   }
@@ -42,11 +45,31 @@ export class ColorSelectionPopupPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad ColorSelectionPopupPage');
   }
+  selectColor(){
+    if(this.selectedColorOption=="custom")
+    {
+this.showCustomColor=true;
+    }
+    else
+    {
+      this.showCustomColor=false;
+    }
+  }
   closePopUp()
   {
     var selectedColor={
+      option:this.selectedColorOption,
+      selectedColor:this.customColor
+    }
+    this.viewCtrl.dismiss(selectedColor);
+  }
+  saveColor()
+  {
+    //debugger;
+    var selectedColor={
       option:this.option,
-      selectedColor:"cdd"
+      selectedColorOption:this.selectedColorOption,
+      selectedColor:this.customColor
     }
     this.viewCtrl.dismiss(selectedColor);
   }
