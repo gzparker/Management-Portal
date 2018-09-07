@@ -27,7 +27,7 @@
     <ion-label color="danger">{{agentCreateMsg}}</ion-label>
   </ion-chip>-->
 
-  <h1 class="contentTitle animated bounceInRight">Create Agent</h1>
+  <h1 class="centerStage contentTitle animated bounceInRight">Create Agent</h1>
 
   <form role="form" data-toggle="validator" #createAgentForm="ngForm">
 
@@ -111,26 +111,32 @@
     </ion-item>
   </ion-list>
 
-  <ion-list *ngIf="!isApp" class="customList uploadPhoto">      
+  <ion-list *ngIf="!isApp" class="customList uploadPhoto">
+      
       <ion-label stacked>Select Image</ion-label>
+      <!-- <ion-list-header><h2>Select Image</h2></ion-list-header> -->
+
       <!--<ion-item class="imageUploaderLabel" *ngIf="dataAgentImage.image">
         <ion-label stacked>Edit Image</ion-label>
         <ion-toggle [(ngModel)]="edit_agent_image" 
         name="edit_agent_image" (click)="showHideAgentCropper()"></ion-toggle>
       </ion-item>-->
 
-      <div class="uploaderBtn">
-      <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="fileChangeListener($event)">
-      </div>
-     
-      <img-cropper #agentCropper [image]="dataAgentImage" [settings]="cropperSettings"
-       (onCrop)="agentImageCropped($event)" *ngIf="hideAgentCropper"></img-cropper>
-      
+      <div class="AccountImageUploader">
 
-      <div *ngIf="dataAgentImage.image" >
+        <div class="imgCropperPreviewResult" *ngIf="dataAgentImage.image" >
           <img [src]="dataAgentImage.image" [width]="cropperWidth"
            [height]="cropperHeight">
+        </div>
+        
+        <img-cropper #agentCropper [image]="dataAgentImage" [settings]="cropperSettings"
+       (onCrop)="agentImageCropped($event)" *ngIf="hideAgentCropper"></img-cropper>
+        
+        
+        <input id="custom-input" class="btnUpload" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="fileChangeListener($event)">
+
       </div>
+      
 
   </ion-list>
 

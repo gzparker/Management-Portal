@@ -23,7 +23,7 @@
 
 <ion-content padding class="dashboardUI">  
   <!-- <h1 class="contentTitle animated bounceInRight">Roles Management</h1> -->
-  <ion-list-header class="animated bounceInRight">Roles Management</ion-list-header>
+  <ion-list-header class="centerStage animated bounceInRight">Roles Management</ion-list-header>
 
   <ion-refresher (ionRefresh)="getAllRoles($event)">
     <ion-refresher-content></ion-refresher-content>
@@ -56,7 +56,7 @@
   </ion-list>
   </div>-->
   
-  <div class="formShadow">
+  <div class="centerStage formShadow">
   <ion-list class="noShadow">
     <ion-item-sliding *ngFor="let role of allRoles">    
       

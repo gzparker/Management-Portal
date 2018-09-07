@@ -43,4 +43,48 @@ page-edit-agent {
       }
     }
   }
+
+  .uploadPhoto {
+    .AccountImageUploader {
+    width: 100%;
+    height: auto;
+    min-height: 210px;
+    position: relative;
+    background: #F5F5F5;
+      &:before {
+      content: "";
+      width: 100%;
+      height: 210px;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      position: absolute;
+      background: url("../assets/imgs/noImageAvailable.jpg") no-repeat center top #F5F5F5;
+      }    
+    }
+
+    .imgCropperPreview {
+    display: block !important;
+    }
+
+    img-cropper {
+    margin: 16px auto 0 auto;
+    display: block;
+    background: #626262;
+      canvas {
+      display: table;
+      margin: 0 auto;
+      }
+    }
+  
+    .ImageCropperOption {
+    padding: 10px 0 0 0 !important;
+      .item-inner {
+      padding: 0px !important;
+      border: none !important;
+      }
+    }
+
+  }
 }

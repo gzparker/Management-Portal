@@ -143,11 +143,11 @@ page-edit-hot-sheet {
           margin-top: 14px !important;
           }
           ion-textarea {
-          height: 62px !important;
+          height: auto;
           margin: 0px !important;
             .text-input {
             margin: 0px !important;
-            height: 62px !important;
+            height: 76px;
             }
           }
         }
@@ -190,17 +190,18 @@ page-edit-hot-sheet {
     ion-textarea {
       .text-input {
       font-family: $font-three;
-      font-size: 13px;
-      line-height: 19px;
-      height: 120px;
+      font-size: 14px;
+      line-height: 21px;
+      height: 118px;
       letter-spacing: .3px;
       border-radius: 2px;
-      padding: 12px;
+      padding: 10px 12px;
       margin-bottom: 16px !important;
       background: #f0f3f6;
       text-overflow: unset;
       white-space: normal;    
       box-sizing: border-box;
+      resize: none;
       }
     }
   }
@@ -234,6 +235,24 @@ page-edit-hot-sheet {
     }
   }  
 
+  .expandText {
+  line-height: 22px;
+  }
+
+  .customList.hotsheetImages {
+  margin: 16px 0;
+    ion-list {    
+    padding-bottom: 16px;
+    border-radius: 0px;
+    box-shadow: none;
+    border-bottom: 1px solid #dedede;
+      &:last-child {
+      border-bottom: 0px;
+      padding-bottom: 2px;      
+      margin-bottom: 0px;
+      }
+    }
+  }
   
   .uploadPhoto {
     .AccountImageUploader {
@@ -259,6 +278,22 @@ page-edit-hot-sheet {
     // display: block !important;
     // }
   }
+}
 
-
+/*CUSTOM DESKTOP */
+@media (min-width: 1101px) and (max-width: 2560px) {
+  page-edit-hot-sheet {
+    .metaSettings {
+      ion-item.noPadding.vidTour {
+        .item-inner {
+          ion-textarea {
+          height: 35px;
+            .text-input {
+            height: 35px;
+            }
+          }
+        }
+      }
+    }
+  }
 }

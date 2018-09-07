@@ -235,6 +235,25 @@ page-create-hot-sheet {
   }
 }
 
+.expandText {
+  line-height: 22px;
+  }
+
+  .customList.hotsheetImages {
+  margin: 16px 0;
+    ion-list {    
+    padding-bottom: 16px;
+    border-radius: 0px;
+    box-shadow: none;
+    border-bottom: 1px solid #dedede;
+      &:last-child {
+      border-bottom: 0px;
+      padding-bottom: 2px;      
+      margin-bottom: 0px;
+      }
+    }
+  }
+
 .selectWebsite {
 margin-bottom: 16px;
 margin-top: 10px;

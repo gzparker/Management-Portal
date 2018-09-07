@@ -24,7 +24,7 @@
         <ion-label color="danger">{{notificationError}}</ion-label>
       </ion-chip>-->
 
-    <div class="animated bounceInUp formShadow">
+    <div class="centerStage animated bounceInUp formShadow">
     <ion-item>
         <ion-label stacked>Interval</ion-label>
         <ion-select [(ngModel)]="interval" 
@@ -62,9 +62,9 @@
     </ion-card>
   </ion-list> -->
 
-  <h1 class="contentTitle animated fadeInLeft">Account Details</h1>
+  <h1 class="centerStage contentTitle animated fadeInLeft">Account Details</h1>
 
-  <ion-list class="animated bounceInUp">
+  <ion-list class="centerStage animated bounceInUp">
     <ion-item *ngIf="current_upgrade!=null" (click)="editAccount();">
       <ion-icon name="ios-home-outline" item-start></ion-icon>
         <h2>Name</h2>

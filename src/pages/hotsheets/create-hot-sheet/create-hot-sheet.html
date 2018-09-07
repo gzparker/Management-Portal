@@ -162,8 +162,10 @@
         </ion-item>
     </div>
 
-
-    <ion-list class="customList" *ngIf="isApp">
+    
+    <div class="customList hotsheetImages">
+  
+    <ion-list *ngIf="isApp">
       <ion-item>
         <button ion-button color="primary" block (click)="takeHeaderPicture();" >Select Header Image</button>
       </ion-item>
@@ -212,6 +214,7 @@
 
       
       </ion-list>  
+
       <ion-list *ngIf="!isApp">
           <ion-label stacked>Community/Gallery Images</ion-label>
         <!--<ion-item class="toggleImageEdit" *ngIf="dataCommunityImage.image">
@@ -242,7 +245,7 @@
           
            
     </ion-list>
-
+    </div>
 
     <!-- <ion-item>
       <button ion-button style="text-transform:lowercase !important;" color="secondary" outline (click)="toggleAdvanceSearch()" full small>filter</button>
