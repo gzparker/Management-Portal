@@ -1264,8 +1264,8 @@ this.allListingTypeChecked=true;
           //debugger;
           this.userServiceObj.createHotSheet(this.userId.toString(),this.selectedWebsite,
           this.sharedServiceObj.mlsServerId,this.name,this.hotsheet_Title,this.slug,
-          JSON.stringify(this.searchListObject),document.getElementById("brief_description").innerHTML,
-          document.getElementById("main_description").innerHTML,this.virtual_tour_url,this.video_url,this.sub_city,
+          JSON.stringify(this.searchListObject),CKEDITOR.instances['brief_description'].getData(),
+          CKEDITOR.instances['main_description'].getData(),this.virtual_tour_url,this.video_url,this.sub_city,
           this.dataCommunityImageArray,this.headerImage,this.city,this.administrative_area_level_1,
           this.community,this.assigned_agent_id,this.polygon_search,this.meta_description,this.meta_title,this.parent_id)
           .subscribe((result) => this.createHotSheetResp(result));
@@ -1301,10 +1301,15 @@ this.allListingTypeChecked=true;
     createHotSheetResp(result:any):void{
     this.storage.remove('searchFilterObj');
     //debugger;
-    CKEDITOR.instances['brief_description'].destroy(true);
-    CKEDITOR.instances['main_description'].destroy(true);
+  
     this.hotsheetCreateMsg="HotSheet has been created successfully.";
     this.ngZone.run(()=>{
+      CKEDITOR.instances['brief_description'].destroy(true);
+      CKEDITOR.instances['main_description'].destroy(true);
+      //$('#txt_postMsg').remove();
+      //$('#cke_txt_postMsg').remove();
+      document.getElementById('brief_description').remove();
+      document.getElementById('main_description').remove();
       this.navCtrl.setRoot(AllHotSheetsPage,{notificationMsg:this.hotsheetCreateMsg.toString()});
     });
     

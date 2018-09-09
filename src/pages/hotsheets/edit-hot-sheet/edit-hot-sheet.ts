@@ -246,14 +246,20 @@ public isWebBrowser=false;
 
   ionViewDidLoad() {
     CKEDITOR.disableAutoInline = true;
-    CKEDITOR.inline( 'brief_description', {removeButtons:'Underline,Subscript,Superscript,SpecialChar'
-    ,toolbar: [
-      { name: 'document', groups: [], items: ['Source'] },
-      { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline'] },
-      { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
-      { name: 'links', items: [] },
-      { name: 'styles', items: ['Format', 'FontSize' ] }
-    ]});
+    if(!CKEDITOR.instances['brief_description'])
+    {
+      CKEDITOR.inline( 'brief_description', {removeButtons:'Underline,Subscript,Superscript,SpecialChar'
+      ,toolbar: [
+        { name: 'document', groups: [], items: ['Source'] },
+        { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline'] },
+        { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
+        { name: 'links', items: [] },
+        { name: 'styles', items: ['Format', 'FontSize' ] }
+      ]});
+      //debugger;
+    }
+    if(!CKEDITOR.instances['main_description'])
+    {
     CKEDITOR.inline( 'main_description', {removeButtons:'Underline,Subscript,Superscript,SpecialChar'
     ,toolbar: [
       { name: 'document', groups: [], items: ['Source'] },
@@ -262,6 +268,8 @@ public isWebBrowser=false;
       { name: 'links', items: [] },
       { name: 'styles', items: ['Format', 'FontSize' ] }
     ]});
+    //debugger;
+  }
     let member_id = this.storage.get('userId');
     member_id.then((data) => {
      
@@ -1325,8 +1333,13 @@ else
             this.assigned_agent_id=result.result.assigned_agent_ids.split(',');
           }
           //debugger;
-          document.getElementById("brief_description").innerHTML=result.result.brief_description;
-          document.getElementById("main_description").innerHTML=result.result.main_description;
+          //document.getElementById("brief_description").innerHTML=result.result.brief_description;
+          //document.getElementById("main_description").innerHTML=result.result.main_description;
+          CKEDITOR.instances['brief_description'].setData(result.result.brief_description);
+          CKEDITOR.instances['main_description'].setData(result.result.main_description);
+          //CKEDITOR.instances['brief_description'].updateElement();
+        //CKEDITOR.instances['main_description'].updateElement();
+         //debugger;
           //this.main_description=result.result.main_description;
           //this.brief_description=result.result.brief_description;
           this.meta_description=result.result.meta_description;
@@ -1538,14 +1551,14 @@ else
         {
         if(result.status!=false)
         {
-      debugger;
+     // debugger;
           //let json_search=this.storage.get("searchFilterObj");
           //json_search.then((data) => {
             //if(data!=null)
             //{
       this.userServiceObj.updateHotSheet(this.hotSheetId,this.userId.toString(),this.selectedWebsite,
-      this.sharedServiceObj.mlsServerId,this.name,this.hotsheet_Title,this.slug,JSON.stringify(this.searchListObject),document.getElementById("brief_description").innerHTML,
-      document.getElementById("main_description").innerHTML,this.virtual_tour_url,this.video_url,this.sub_city,
+      this.sharedServiceObj.mlsServerId,this.name,this.hotsheet_Title,this.slug,JSON.stringify(this.searchListObject),CKEDITOR.instances['brief_description'].getData(),
+      CKEDITOR.instances['main_description'].getData(),this.virtual_tour_url,this.video_url,this.sub_city,
       this.dataCommunityImageArray,this.headerImage,this.city,this.administrative_area_level_1,
       this.community,this.assigned_agent_id,this.polygon_search,this.meta_description,this.meta_title,this.parent_id)
         .subscribe((result) => this.updateHotSheetResp(result));
@@ -1568,10 +1581,10 @@ else
         else
         {
          
-      debugger;
+     // debugger;
         this.userServiceObj.updateHotSheet(this.hotSheetId,this.userId.toString(),this.selectedWebsite,
-        this.sharedServiceObj.mlsServerId,this.name,this.hotsheet_Title,this.slug,JSON.stringify(this.searchListObject),document.getElementById("brief_description").innerHTML,
-        document.getElementById("main_description").innerHTML,this.virtual_tour_url,this.video_url,this.sub_city,
+        this.sharedServiceObj.mlsServerId,this.name,this.hotsheet_Title,this.slug,JSON.stringify(this.searchListObject),CKEDITOR.instances['brief_description'].getData(),
+        CKEDITOR.instances['main_description'].getData(),this.virtual_tour_url,this.video_url,this.sub_city,
         this.dataCommunityImageArray,this.headerImage,this.city,this.administrative_area_level_1,
         this.community,this.assigned_agent_id,this.polygon_search,this.meta_description,this.meta_title,this.parent_id)
         .subscribe((result) => this.updateHotSheetResp(result));
@@ -1583,10 +1596,18 @@ else
       this.storage.remove('searchFilterObj');
       //debugger;
       //this.loader.dismiss();
-      CKEDITOR.instances['brief_description'].destroy(true);
-    CKEDITOR.instances['main_description'].destroy(true);
+     
       this.hotsheetUpdateMsg="HotSheet has been updated successfully.";
       this.ngZone.run(()=>{
+        
+       CKEDITOR.instances['brief_description'].destroy(true);
+    CKEDITOR.instances['main_description'].destroy(true);
+    //$('#txt_postMsg').remove();
+    //$('#cke_txt_postMsg').remove();
+    document.getElementById('brief_description').remove();
+    document.getElementById('main_description').remove();
+    //CKEDITOR.replaceAll();
+   // debugger;
         this.navCtrl.push(AllHotSheetsPage,{notificationMsg:this.hotsheetUpdateMsg.toString()});
       });
       }

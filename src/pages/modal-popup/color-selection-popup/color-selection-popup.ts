@@ -30,15 +30,25 @@ export class ColorSelectionPopupPage {
   public selectedColorOption:string="";
   public customColor:string="";
   public option:string="";
+  public selectedColorObj:any;
   public showCustomColor:boolean=false;
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, 
     public platform: Platform,public actionSheetCtrl: ActionSheetController,
     public viewCtrl: ViewController,private toastCtrl: ToastController) {
-    if(this.navParams.get('option')!=undefined)
+    if(this.navParams.get('selectedColor')!=undefined)
     {
-    this.option = this.navParams.get('option');
+      this.selectedColorObj=this.navParams.get('selectedColor');
+      this.selectedColorOption=this.selectedColorObj.selectedColorOption;
+      if(this.selectedColorOption=='custom')
+      {
+        this.customColor=this.selectedColorObj.selectedColor;
+      }
+      
+      this.option=this.selectedColorObj.option;
+      debugger;
+    //this.option = this.navParams.get('option');
     }
   }
 
@@ -58,7 +68,8 @@ this.showCustomColor=true;
   closePopUp()
   {
     var selectedColor={
-      option:this.selectedColorOption,
+      option:this.option,
+      selectedColorOption:this.selectedColorOption,
       selectedColor:this.customColor
     }
     this.viewCtrl.dismiss(selectedColor);
