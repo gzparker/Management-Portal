@@ -12,6 +12,7 @@ import { WebsitesWebsiteLinksPage } from '../../websites/websites-website-links/
 import { FbConfirmPage } from '../../fb-confirm/fb-confirm';
 import { AlertController } from 'ionic-angular';
 import { ImageCropperComponent, CropperSettings } from "ngx-img-cropper";
+import { ColorSelectionPopupPage } from '../../modal-popup/color-selection-popup/color-selection-popup';
 
 import { UserVerificationPage } from '../../user-verification/user-verification';
 
@@ -84,6 +85,24 @@ export class EditWebsitePage {
   public allMls:any[]=[];
   public mls_server_id:any[]=[];
   public service_id:string="";
+
+  public colorBase:string="";
+  public secondColor:string="";
+  public thirdColor:string="";
+  public headerColor:string="";
+  public headerColorOption:string="";
+  public textColor:string="";
+  public textColorOption:string="";
+  public buttonColor:string="";
+  public buttonColorOption:string="";
+  public backgroundColor:string="";
+  public backgroundColorOption:string="";
+  public sideBarMenuColor:string="";
+  public sideBarMenuColorOption:string="";
+  public isCustomColor:string="0";
+  public customColorOption:boolean=false;
+  public customColorOptionModal:boolean=false;
+
   /*private CkeditorConfig = {removeButtons:'Underline,Subscript,Superscript,SpecialChar'
   ,toolbar: [
     { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ ] },
@@ -374,6 +393,29 @@ this.homepage_meta_title=result.result.homepage_meta_title;
 this.agent_id=result.result.agent_id;
 this.office_id=result.result.office_id;
 this.broker_id=result.result.broker_id;
+
+////////////////////////////////////////////////////////////////
+if(result.result.isCustomColor=="false")
+{
+  this.customColorOptionModal=false;
+}
+else
+{
+  this.customColorOptionModal=true;
+}
+this.colorBase=result.result.color_base;
+this.secondColor=result.result.color_second;
+this.thirdColor=result.result.color_third;
+this.identity_name=result.result.identity_name;
+this.headerColor=result.result.header_color;
+this.headerColorOption=result.result.header_color_option;
+this.sideBarMenuColor=result.result.sidebar_menu_color;
+this.sideBarMenuColorOption=result.result.sidebar_menu_color_option;
+this.textColor=result.result.text_color;
+this.textColor=result.result.text_color_option;
+this.buttonColor=result.result.button_color;
+this.buttonColorOption=result.result.button_color_option;
+///////////////////////////////////////////////////////////////
 //debugger;
 if(result.result.mls_server_id!=null)
           {
@@ -381,7 +423,6 @@ if(result.result.mls_server_id!=null)
           }
 if(result.result.identity_logo!=undefined)
       {
-      
         this.loadLogo(this.sharedServiceObj.imgBucketUrl,result.result.identity_logo);
       }
       if(result.result.identity_icon!=undefined)
@@ -784,7 +825,11 @@ else
     show_new_listing_dummy,show_open_houses_dummy,feature_agent_listings_dummy,
     feature_broker_listings_dummy,feature_office_listings_dummy,this.identity_name,this.identity_logo,
     this.identity_icon,this.website_a_record_location,this.identity_phone_number,document.getElementById("homepage_description").innerHTML,
-    this.homepageMeta_description,this.homepage_search_text,this.homepage_meta_title,this.agent_id,this.office_id,this.broker_id,this.mls_server_id)
+    this.homepageMeta_description,this.homepage_search_text,this.homepage_meta_title,this.agent_id,
+    this.office_id,this.broker_id,this.mls_server_id,this.colorBase,this.secondColor,this.thirdColor,
+    this.headerColor,this.sideBarMenuColor,
+    this.buttonColor,this.textColor,this.backgroundColor,this.headerColorOption,this.sideBarMenuColorOption,
+    this.buttonColorOption,this.textColorOption,this.backgroundColorOption,this.customColorOptionModal)
     .subscribe((result) => this.updateWebsiteResp(result));
      //}
       
@@ -835,4 +880,178 @@ this.homepage_description=html;
 this.homepageMeta_description=html;
  
   }
+  /////////////////////////////////////////////////////////////////////////////////
+  toggleCustomColor(){
+    //this.customColorOption=!this.customColorOption;
+   // debugger;
+    if(this.customColorOption==true)
+    {
+      //this.customColorOption=false;
+      //this.isCustomColor="0";
+    }
+    else
+    {
+      //this.customColorOption=true;
+      //this.isCustomColor="1";
+    }
+      }
+  showColorPopUp(option:string){
+    var that=this;
+    var selectedColor={
+      option:"",
+      selectedColorOption:"",
+      selectedColor:""
+    }
+    if(option=='header_color')
+    {
+selectedColor.option=option;
+selectedColor.selectedColorOption=this.headerColorOption;
+selectedColor.selectedColor=this.headerColor;
+    }
+    if(option=='side_bar_menu_color')
+    {
+selectedColor.option=option;
+selectedColor.selectedColorOption=this.sideBarMenuColorOption;
+selectedColor.selectedColor=this.sideBarMenuColor;
+    }
+    if(option=='content_background_color')
+    {
+selectedColor.option=option;
+selectedColor.selectedColorOption=this.backgroundColorOption;
+selectedColor.selectedColor=this.backgroundColor;
+    }
+    if(option=='button_color')
+    {
+selectedColor.option=option;
+selectedColor.selectedColorOption=this.buttonColorOption;
+selectedColor.selectedColor=this.buttonColor;
+    }
+    var modalColor = this.modalCtrl.create(ColorSelectionPopupPage,{selectedColor:selectedColor});
+    modalColor.onDidDismiss(data => {
+     // console.log(data);
+      //debugger;
+      that.setColorProperties(data);
+ });
+    modalColor.present();
+  }
+  setColorProperties(options:any)
+  {
+//debugger;
+if(options.option=='header_color')
+{
+this.headerColorOption=options.selectedColorOption;
+if(options.selectedColor!='')
+{
+  this.headerColor=options.selectedColor;
+ // debugger;
+}
+else
+{
+if(this.headerColorOption=="base_color")
+{
+this.headerColor=this.colorBase;
+}
+else if(this.headerColorOption=="secondary_color")
+{
+this.headerColor=this.secondColor;
+}
+else if(this.headerColorOption=="tertiary_color")
+{
+this.headerColor=this.thirdColor;
+//debugger;
+}
+else if(this.headerColorOption=="default")
+{
+this.headerColorOption="";
+this.headerColor="";
+}
+}
+//debugger;
+}
+else if(options.option=='side_bar_menu_color')
+{
+  this.sideBarMenuColorOption=options.selectedColorOption;
+  if(options.selectedColor!='')
+{
+  this.sideBarMenuColor=options.selectedColor;
+}
+else
+{
+if(this.sideBarMenuColorOption=="base_color")
+{
+this.sideBarMenuColor=this.colorBase;
+}
+else if(this.sideBarMenuColorOption=="secondary_color")
+{
+this.sideBarMenuColor=this.secondColor;
+}
+else if(this.sideBarMenuColorOption=="tertiary_color")
+{
+this.sideBarMenuColor=this.thirdColor;
+}
+else if(this.sideBarMenuColorOption=="default")
+{
+this.sideBarMenuColorOption="";
+this.sideBarMenuColor="";
+}
+}
+}
+else if(options.option=='content_background_color')
+{
+  this.backgroundColorOption=options.selectedColorOption;
+  if(options.selectedColor!='')
+{
+  this.backgroundColor=options.selectedColor;
+}
+else
+{
+if(this.backgroundColorOption=="base_color")
+{
+this.backgroundColor=this.colorBase;
+}
+else if(this.backgroundColorOption=="secondary_color")
+{
+this.backgroundColor=this.secondColor;
+}
+else if(this.backgroundColorOption=="tertiary_color")
+{
+this.backgroundColor=this.thirdColor;
+}
+else if(this.backgroundColorOption=="default")
+{
+this.backgroundColorOption="";
+this.backgroundColor="";
+}
+}
+}
+else if(options.option=='button_color')
+{
+  this.buttonColorOption=options.selectedColorOption;
+  if(options.selectedColor!='')
+{
+  this.buttonColorOption=options.selectedColor;
+}
+else
+{
+if(this.buttonColorOption=="base_color")
+{
+this.buttonColor=this.colorBase;
+}
+else if(this.buttonColorOption=="secondary_color")
+{
+this.buttonColor=this.secondColor;
+}
+else if(this.buttonColorOption=="tertiary_color")
+{
+this.backgroundColor=this.thirdColor;
+}
+else if(this.buttonColorOption=="default")
+{
+this.buttonColorOption="";
+this.buttonColor="";
+}
+}
+}
+  }
+  ////////////////////////////////////////////////////////////////////////////////
 }

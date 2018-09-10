@@ -64,6 +64,7 @@ export class GlobalPreferencesPage {
   public sideBarMenuColorOption:string="";
   public isCustomColor:string="0";
   public customColorOption:boolean=false;
+  public customColorOptionModal:boolean=false;
 
   public timezone:string="";
 
@@ -194,17 +195,30 @@ export class GlobalPreferencesPage {
         {
           this.user.timezone = this.globalSettings.timezone;
         }
-        
-     
+        if(this.globalSettings.isCustomColor=="false")
+        {
+          this.customColorOptionModal=false;
+        }
+        else
+        {
+          this.customColorOptionModal=true;
+        }
+       //this.customColorOptionModal=this.globalSettings.isCustomColor;
+      //this.customColorOption=this.globalSettings.isCustomColor;
      this.colorBase=this.globalSettings.color_base;
     this.secondColor=this.globalSettings.color_second;
      this.thirdColor=this.globalSettings.color_third;
      this.identity_name=this.globalSettings.identity_name;
      this.headerColor=this.globalSettings.header_color;
+     this.headerColorOption=this.globalSettings.header_color_option;
      this.sideBarMenuColor=this.globalSettings.sidebar_menu_color;
+     this.sideBarMenuColorOption=this.globalSettings.sidebar_menu_color_option;
      this.textColor=this.globalSettings.text_color;
+     this.textColor=this.globalSettings.text_color_option;
      this.buttonColor=this.globalSettings.button_color;
-     //debugger;
+     this.buttonColorOption=this.globalSettings.button_color_option;
+    // debugger;
+     
         if(this.globalSettings.photo_company!=undefined)
       {
         this.loadCompanyImage(this.sharedServiceObj.imgBucketUrl,this.globalSettings.photo_company);
@@ -267,7 +281,7 @@ this.headerColorOption=options.selectedColorOption;
 if(options.selectedColor!='')
 {
   this.headerColor=options.selectedColor;
-  debugger;
+ // debugger;
 }
 else
 {
@@ -282,7 +296,7 @@ this.headerColor=this.secondColor;
 else if(this.headerColorOption=="tertiary_color")
 {
 this.headerColor=this.thirdColor;
-debugger;
+//debugger;
 }
 else if(this.headerColorOption=="default")
 {
@@ -290,7 +304,7 @@ this.headerColorOption="";
 this.headerColor="";
 }
 }
-debugger;
+//debugger;
 }
 else if(options.option=='side_bar_menu_color')
 {
@@ -379,15 +393,16 @@ this.buttonColor="";
   }
   toggleCustomColor(){
     //this.customColorOption=!this.customColorOption;
+   // debugger;
     if(this.customColorOption==true)
     {
-      this.customColorOption=false;
-      this.isCustomColor="0";
+      //this.customColorOption=false;
+      //this.isCustomColor="0";
     }
     else
     {
-      this.customColorOption=true;
-      this.isCustomColor="1";
+      //this.customColorOption=true;
+      //this.isCustomColor="1";
     }
       }
   loadCompanyImage(baseUrl:string,imageUrl:string) {
@@ -803,7 +818,8 @@ else
     //debugger;
     this.userServiceObj.updateGlobalSettings(this.userId,this.personalImage,this.companyLogoImage,this.user.timezone,
       this.colorBase,this.secondColor,this.thirdColor,this.identity_name,this.headerColor,this.sideBarMenuColor,
-      this.buttonColor,this.textColor,this.backgroundColor)
+      this.buttonColor,this.textColor,this.backgroundColor,this.headerColorOption,this.sideBarMenuColorOption,
+      this.buttonColorOption,this.textColorOption,this.backgroundColorOption,this.customColorOptionModal)
     .subscribe((result) => this.updateGlobalSettingsResp(result));
  
     }

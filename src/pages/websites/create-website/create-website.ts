@@ -10,6 +10,7 @@ import { AlertController } from 'ionic-angular';
 import { ImageCropperComponent, CropperSettings } from "ngx-img-cropper";
 
 import { UserVerificationPage } from '../../user-verification/user-verification';
+import { ColorSelectionPopupPage } from '../../modal-popup/color-selection-popup/color-selection-popup';
 
 import { SharedProvider } from '../../../providers/shared/shared';
 import { UserProvider } from '../../../providers/user/user';
@@ -45,6 +46,22 @@ export class CreateWebsitePage {
   public broker_id:string="";
   public agent_id:string="";
   public service_id:string="";
+  public colorBase:string="";
+  public secondColor:string="";
+  public thirdColor:string="";
+  public headerColor:string="";
+  public headerColorOption:string="";
+  public textColor:string="";
+  public textColorOption:string="";
+  public buttonColor:string="";
+  public buttonColorOption:string="";
+  public backgroundColor:string="";
+  public backgroundColorOption:string="";
+  public sideBarMenuColor:string="";
+  public sideBarMenuColorOption:string="";
+  public isCustomColor:string="0";
+  public customColorOption:boolean=false;
+  public customColorOptionModal:boolean=false;
   public CkeditorConfig = {removeButtons:'Underline,Subscript,Superscript,SpecialChar'
   ,toolbar: [
     { name: 'document', groups: [], items: ['Source'] },
@@ -164,7 +181,11 @@ intagentWebsiteFinal=0;
        }
   this.userServiceObj.createWebsite(this.userId,isActiveFinal,this.website_domain,this.identity_name,
     intagentWebsiteFinal,this.website_a_record_location,this.identity_phone_number,document.getElementById("homepage_description").innerHTML,
-    this.homepageMeta_description,this.homepage_search_text,this.homepage_meta_title,this.mls_server_id,this.agent_id,this.office_id,this.broker_id)
+    this.homepageMeta_description,this.homepage_search_text,this.homepage_meta_title,this.mls_server_id,
+    this.agent_id,this.office_id,this.broker_id,this.headerColor,this.sideBarMenuColor,
+    this.colorBase,this.secondColor,this.thirdColor,
+    this.buttonColor,this.textColor,this.backgroundColor,this.headerColorOption,this.sideBarMenuColorOption,
+    this.buttonColorOption,this.textColorOption,this.backgroundColorOption,this.customColorOptionModal)
     .subscribe((result) => this.createWebsiteResp(result));
     // }
       }
@@ -177,4 +198,178 @@ intagentWebsiteFinal=0;
   this.navCtrl.setRoot(EditLeadRoutingPage,{websiteId:result.website_id});
   });
   }
+  ////////////////////////////////////////////////////////////////////////
+  toggleCustomColor(){
+    //this.customColorOption=!this.customColorOption;
+   // debugger;
+    if(this.customColorOption==true)
+    {
+      //this.customColorOption=false;
+      //this.isCustomColor="0";
+    }
+    else
+    {
+      //this.customColorOption=true;
+      //this.isCustomColor="1";
+    }
+      }
+  showColorPopUp(option:string){
+    var that=this;
+    var selectedColor={
+      option:"",
+      selectedColorOption:"",
+      selectedColor:""
+    }
+    if(option=='header_color')
+    {
+selectedColor.option=option;
+selectedColor.selectedColorOption=this.headerColorOption;
+selectedColor.selectedColor=this.headerColor;
+    }
+    if(option=='side_bar_menu_color')
+    {
+selectedColor.option=option;
+selectedColor.selectedColorOption=this.sideBarMenuColorOption;
+selectedColor.selectedColor=this.sideBarMenuColor;
+    }
+    if(option=='content_background_color')
+    {
+selectedColor.option=option;
+selectedColor.selectedColorOption=this.backgroundColorOption;
+selectedColor.selectedColor=this.backgroundColor;
+    }
+    if(option=='button_color')
+    {
+selectedColor.option=option;
+selectedColor.selectedColorOption=this.buttonColorOption;
+selectedColor.selectedColor=this.buttonColor;
+    }
+    var modalColor = this.modalCtrl.create(ColorSelectionPopupPage,{selectedColor:selectedColor});
+    modalColor.onDidDismiss(data => {
+     // console.log(data);
+      //debugger;
+      that.setColorProperties(data);
+ });
+    modalColor.present();
+  }
+  setColorProperties(options:any)
+  {
+//debugger;
+if(options.option=='header_color')
+{
+this.headerColorOption=options.selectedColorOption;
+if(options.selectedColor!='')
+{
+  this.headerColor=options.selectedColor;
+ // debugger;
+}
+else
+{
+if(this.headerColorOption=="base_color")
+{
+this.headerColor=this.colorBase;
+}
+else if(this.headerColorOption=="secondary_color")
+{
+this.headerColor=this.secondColor;
+}
+else if(this.headerColorOption=="tertiary_color")
+{
+this.headerColor=this.thirdColor;
+//debugger;
+}
+else if(this.headerColorOption=="default")
+{
+this.headerColorOption="";
+this.headerColor="";
+}
+}
+//debugger;
+}
+else if(options.option=='side_bar_menu_color')
+{
+  this.sideBarMenuColorOption=options.selectedColorOption;
+  if(options.selectedColor!='')
+{
+  this.sideBarMenuColor=options.selectedColor;
+}
+else
+{
+if(this.sideBarMenuColorOption=="base_color")
+{
+this.sideBarMenuColor=this.colorBase;
+}
+else if(this.sideBarMenuColorOption=="secondary_color")
+{
+this.sideBarMenuColor=this.secondColor;
+}
+else if(this.sideBarMenuColorOption=="tertiary_color")
+{
+this.sideBarMenuColor=this.thirdColor;
+}
+else if(this.sideBarMenuColorOption=="default")
+{
+this.sideBarMenuColorOption="";
+this.sideBarMenuColor="";
+}
+}
+}
+else if(options.option=='content_background_color')
+{
+  this.backgroundColorOption=options.selectedColorOption;
+  if(options.selectedColor!='')
+{
+  this.backgroundColor=options.selectedColor;
+}
+else
+{
+if(this.backgroundColorOption=="base_color")
+{
+this.backgroundColor=this.colorBase;
+}
+else if(this.backgroundColorOption=="secondary_color")
+{
+this.backgroundColor=this.secondColor;
+}
+else if(this.backgroundColorOption=="tertiary_color")
+{
+this.backgroundColor=this.thirdColor;
+}
+else if(this.backgroundColorOption=="default")
+{
+this.backgroundColorOption="";
+this.backgroundColor="";
+}
+}
+}
+else if(options.option=='button_color')
+{
+  this.buttonColorOption=options.selectedColorOption;
+  if(options.selectedColor!='')
+{
+  this.buttonColorOption=options.selectedColor;
+}
+else
+{
+if(this.buttonColorOption=="base_color")
+{
+this.buttonColor=this.colorBase;
+}
+else if(this.buttonColorOption=="secondary_color")
+{
+this.buttonColor=this.secondColor;
+}
+else if(this.buttonColorOption=="tertiary_color")
+{
+this.backgroundColor=this.thirdColor;
+}
+else if(this.buttonColorOption=="default")
+{
+this.buttonColorOption="";
+this.buttonColor="";
+}
+}
+}
+  }
+  ///////////////////////////////////////////////////////////////////////
 }

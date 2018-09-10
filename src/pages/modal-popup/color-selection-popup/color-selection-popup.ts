@@ -41,13 +41,13 @@ export class ColorSelectionPopupPage {
     {
       this.selectedColorObj=this.navParams.get('selectedColor');
       this.selectedColorOption=this.selectedColorObj.selectedColorOption;
-      if(this.selectedColorOption=='custom')
-      {
+      //if(this.selectedColorOption=='custom')
+     // {
         this.customColor=this.selectedColorObj.selectedColor;
-      }
+     // }
       
       this.option=this.selectedColorObj.option;
-      debugger;
+     // debugger;
     //this.option = this.navParams.get('option');
     }
   }
@@ -67,21 +67,41 @@ this.showCustomColor=true;
   }
   closePopUp()
   {
-    var selectedColor={
+    
+    /*else
+    {
+      this.selectColor.
+    }*/
+   // debugger;
+    /*selectedColor={
       option:this.option,
       selectedColorOption:this.selectedColorOption,
       selectedColor:this.customColor
-    }
+    }*/
+    let selectedColor=this.selectedColorMethod();
     this.viewCtrl.dismiss(selectedColor);
   }
   saveColor()
   {
     //debugger;
-    var selectedColor={
-      option:this.option,
-      selectedColorOption:this.selectedColorOption,
-      selectedColor:this.customColor
-    }
+    let selectedColor=this.selectedColorMethod();
     this.viewCtrl.dismiss(selectedColor);
+  }
+  selectedColorMethod()
+  {
+    let selectedColor={option:"",
+      selectedColorOption:"",
+      selectedColor:""};
+    selectedColor.option=this.option;
+    selectedColor.selectedColorOption=this.selectedColorOption;
+    if(this.selectedColorOption=="custom")
+    {
+      selectedColor.selectedColor=this.customColor;
+    }
+    else
+    {
+      selectedColor.selectedColor='';
+    }
+    return selectedColor;
   }
 }
