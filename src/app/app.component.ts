@@ -135,7 +135,7 @@ export class MyApp {
   }
   initializeApp() {
     this.platform.ready().then(() => {
-      this.loadGeneralWebsiteSettings();
+      //this.loadGeneralWebsiteSettings();
      this.setDeviceToken();
       this.statusBar.styleDefault();
       this.splashScreen.hide();
@@ -159,33 +159,7 @@ export class MyApp {
   ionViewDidLoad() {
     //this.menuController.enable(false);
   }
-  loadGeneralWebsiteSettings()
-  {
-    if(this.loadedWebsite.indexOf("localhost")>0)
-    {
-      //debugger;
-      this.sharedServiceObj.getServiceDefaultInfoByUrl("https://idx.configuration.menu")
-      .subscribe((result) => this.loadGeneralWebsiteSettingsResp(result));
-    }
-    else
-    {
-      this.sharedServiceObj.getServiceDefaultInfoByUrl("https://idx.configuration.menu")
-      .subscribe((result) => this.loadGeneralWebsiteSettingsResp(result));
-     // this.sharedServiceObj.getServiceDefaultInfoByUrl(document.URL.toString())
-//.subscribe((result) => this.loadGeneralWebsiteSettingsResp(result));
-    }
-    //debugger;
-//this.sharedServiceObj.getServiceDefaultInfoByUrl(document.URL.toString())
-//.subscribe((result) => this.loadGeneralWebsiteSettingsResp(result));
-
-  }
-  loadGeneralWebsiteSettingsResp(result:any)
-  {
-if(result)
-{
-this.storage.set("generalWebsiteSettings",result);
-}
-  }
+ 
   loadWebsiteInfoByDomain()
   {
     //debugger

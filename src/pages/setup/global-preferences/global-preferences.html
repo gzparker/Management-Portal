@@ -200,8 +200,36 @@
        </ion-select>-->
       
     </ion-item>
+    <ion-item (click)="showColorPopUp('content_title_color')">
+      <ion-label>Content Title Color</ion-label>
+      <!--<ion-select [(ngModel)]="buttonColor" name="buttonColor" id="buttonColor">
+        <ion-option *ngFor="let colorOption of colorOptions" value= {{colorOption.id}}>
+          {{colorOption.name}}
+          </ion-option>
+       </ion-select>-->
+      
+    </ion-item>
     <ion-item (click)="showColorPopUp('button_color')">
       <ion-label>Button Color</ion-label>
+      <!--<ion-select [(ngModel)]="buttonColor" name="buttonColor" id="buttonColor">
+        <ion-option *ngFor="let colorOption of colorOptions" value= {{colorOption.id}}>
+          {{colorOption.name}}
+          </ion-option>
+       </ion-select>-->
+      
+    </ion-item>
+    <ion-item (click)="showColorPopUp('pagination_color')">
+      <ion-label>Pagination Color</ion-label>
+      <!--<ion-select [(ngModel)]="buttonColor" name="buttonColor" id="buttonColor">
+        <ion-option *ngFor="let colorOption of colorOptions" value= {{colorOption.id}}>
+          {{colorOption.name}}
+          </ion-option>
+       </ion-select>-->
+      
+    </ion-item>
+   
+    <ion-item (click)="showColorPopUp('modal_background_color')">
+      <ion-label>Modal Background Color</ion-label>
       <!--<ion-select [(ngModel)]="buttonColor" name="buttonColor" id="buttonColor">
         <ion-option *ngFor="let colorOption of colorOptions" value= {{colorOption.id}}>
           {{colorOption.name}}

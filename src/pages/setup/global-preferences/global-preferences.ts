@@ -62,6 +62,12 @@ export class GlobalPreferencesPage {
   public backgroundColorOption:string="";
   public sideBarMenuColor:string="";
   public sideBarMenuColorOption:string="";
+  public contentTitleColor:string="";
+  public contentTitleColorOption:string="";
+  public paginationColor:string="";
+  public paginationColorOption:string="";
+  public modalBackgroundColor:string="";
+  public modalBackgroundColorOption:string="";
   public isCustomColor:string="0";
   public customColorOption:boolean=false;
   public customColorOptionModal:boolean=false;
@@ -217,6 +223,12 @@ export class GlobalPreferencesPage {
      this.textColor=this.globalSettings.text_color_option;
      this.buttonColor=this.globalSettings.button_color;
      this.buttonColorOption=this.globalSettings.button_color_option;
+     this.contentTitleColor=this.globalSettings.content_title_color;
+     this.contentTitleColorOption=this.globalSettings.content_title_color_option;
+     this.paginationColor=this.globalSettings.pagination_color;
+     this.paginationColorOption=this.globalSettings.pagination_color_option;
+     this.modalBackgroundColor=this.globalSettings.modal_background_color;
+     this.modalBackgroundColorOption=this.globalSettings.modal_background_color_option;
     // debugger;
      
         if(this.globalSettings.photo_company!=undefined)
@@ -263,6 +275,24 @@ selectedColor.selectedColor=this.backgroundColor;
 selectedColor.option=option;
 selectedColor.selectedColorOption=this.buttonColorOption;
 selectedColor.selectedColor=this.buttonColor;
+    }
+    if(option=='content_title_color')
+    {
+selectedColor.option=option;
+selectedColor.selectedColorOption=this.contentTitleColorOption;
+selectedColor.selectedColor=this.contentTitleColor;
+    }
+    if(option=='pagination_color')
+    {
+selectedColor.option=option;
+selectedColor.selectedColorOption=this.paginationColorOption;
+selectedColor.selectedColor=this.paginationColor;
+    }
+    if(option=='modal_background_color')
+    {
+selectedColor.option=option;
+selectedColor.selectedColorOption=this.modalBackgroundColorOption;
+selectedColor.selectedColor=this.modalBackgroundColor;
     }
     var modalColor = this.modalCtrl.create(ColorSelectionPopupPage,{selectedColor:selectedColor});
     modalColor.onDidDismiss(data => {
@@ -367,7 +397,7 @@ else if(options.option=='button_color')
   this.buttonColorOption=options.selectedColorOption;
   if(options.selectedColor!='')
 {
-  this.buttonColorOption=options.selectedColor;
+  this.buttonColor=options.selectedColor;
 }
 else
 {
@@ -387,6 +417,90 @@ else if(this.buttonColorOption=="default")
 {
 this.buttonColorOption="";
 this.buttonColor="";
+}
+}
+}
+else if(options.option=='content_title_color')
+{
+  this.contentTitleColorOption=options.selectedColorOption;
+  if(options.selectedColor!='')
+{
+  this.contentTitleColor=options.selectedColor;
+}
+else
+{
+if(this.contentTitleColorOption=="base_color")
+{
+this.contentTitleColor=this.colorBase;
+}
+else if(this.contentTitleColorOption=="secondary_color")
+{
+this.contentTitleColor=this.secondColor;
+}
+else if(this.contentTitleColorOption=="tertiary_color")
+{
+this.contentTitleColor=this.thirdColor;
+}
+else if(this.contentTitleColorOption=="default")
+{
+this.contentTitleColorOption="";
+this.contentTitleColor="";
+}
+}
+}
+else if(options.option=='pagination_color')
+{
+  this.paginationColorOption=options.selectedColorOption;
+  if(options.selectedColor!='')
+{
+  this.paginationColor=options.selectedColor;
+}
+else
+{
+if(this.paginationColorOption=="base_color")
+{
+this.paginationColor=this.colorBase;
+}
+else if(this.paginationColorOption=="secondary_color")
+{
+this.paginationColor=this.secondColor;
+}
+else if(this.paginationColorOption=="tertiary_color")
+{
+this.paginationColor=this.thirdColor;
+}
+else if(this.paginationColorOption=="default")
+{
+this.paginationColorOption="";
+this.paginationColor="";
+}
+}
+}
+else if(options.option=='modal_background_color')
+{
+  this.modalBackgroundColorOption=options.selectedColorOption;
+  if(options.selectedColor!='')
+{
+  this.modalBackgroundColor=options.selectedColor;
+}
+else
+{
+if(this.modalBackgroundColorOption=="base_color")
+{
+this.modalBackgroundColor=this.colorBase;
+}
+else if(this.modalBackgroundColorOption=="secondary_color")
+{
+this.modalBackgroundColor=this.secondColor;
+}
+else if(this.modalBackgroundColorOption=="tertiary_color")
+{
+this.modalBackgroundColor=this.thirdColor;
+}
+else if(this.modalBackgroundColorOption=="default")
+{
+this.modalBackgroundColorOption="";
+this.modalBackgroundColor="";
 }
 }
 }
@@ -819,7 +933,9 @@ else
     this.userServiceObj.updateGlobalSettings(this.userId,this.personalImage,this.companyLogoImage,this.user.timezone,
       this.colorBase,this.secondColor,this.thirdColor,this.identity_name,this.headerColor,this.sideBarMenuColor,
       this.buttonColor,this.textColor,this.backgroundColor,this.headerColorOption,this.sideBarMenuColorOption,
-      this.buttonColorOption,this.textColorOption,this.backgroundColorOption,this.customColorOptionModal)
+      this.buttonColorOption,this.textColorOption,this.backgroundColorOption,this.customColorOptionModal,
+      this.contentTitleColor,this.contentTitleColorOption,this.paginationColor,
+      this.paginationColorOption,this.modalBackgroundColor,this.modalBackgroundColorOption)
     .subscribe((result) => this.updateGlobalSettingsResp(result));
  
     }

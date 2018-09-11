@@ -913,7 +913,9 @@ createWebsite(user_id:string,isActive:string,website_domain:string,identity_name
   colorBase:string,secondColor:string,thirdColor:string,headerColor:string,
   sideBarMenuColor:string,buttonColor:string,textColor:string,backgroundColor:string,
   headerColorOption:string,sideBarMenuColorOption:string,
-  buttonColorOption:string,textColorOption:string,backgroundColorOption:string,customColorOption:boolean){
+  buttonColorOption:string,textColorOption:string,backgroundColorOption:string,customColorOption:boolean,
+  contentTitleColor:string,contentTitleColorOption:string,paginationColor:string,paginationColorOption:string,
+  modalBackgroundColor:string,modalBackgroundColorOption:string){
 //debugger;
     let data = new URLSearchParams();
     data.append('website_domain',website_domain);
@@ -947,6 +949,12 @@ data.append('button_color_option',buttonColorOption);
 data.append('text_color_option',textColorOption);
 data.append('content_background_option',backgroundColorOption);
 data.append('isCustomColor',customColorOption.toString());
+data.append('content_title_color',contentTitleColor);
+    data.append('content_title_color_option',contentTitleColorOption);
+    data.append('pagination_color',paginationColor);
+    data.append('pagination_color_option',paginationColorOption);
+    data.append('modal_background_color',modalBackgroundColor);
+    data.append('modal_background_color_option',modalBackgroundColorOption);
 //debugger;
   let websiteListing=this.http
     .post(this.sharedServiceObj.registerationApiBaseUrl+'members/createWebsite', data, this.headerOptions)
@@ -975,7 +983,9 @@ updateWebsite(user_id:string,isActive:string,website_domain:string,website_id:st
   colorBase:string,secondColor:string,thirdColor:string,headerColor:string,
   sideBarMenuColor:string,buttonColor:string,textColor:string,backgroundColor:string,
   headerColorOption:string,sideBarMenuColorOption:string,
-  buttonColorOption:string,textColorOption:string,backgroundColorOption:string,customColorOption:boolean){
+  buttonColorOption:string,textColorOption:string,backgroundColorOption:string,customColorOption:boolean,
+  contentTitleColor:string,contentTitleColorOption:string,paginationColor:string,paginationColorOption:string,
+  modalBackgroundColor:string,modalBackgroundColorOption:string){
 
 let data = new URLSearchParams();
  data.append('website_domain',website_domain);
@@ -1021,6 +1031,12 @@ data.append('button_color_option',buttonColorOption);
 data.append('text_color_option',textColorOption);
 data.append('content_background_option',backgroundColorOption);
 data.append('isCustomColor',customColorOption.toString());
+data.append('content_title_color',contentTitleColor);
+    data.append('content_title_color_option',contentTitleColorOption);
+    data.append('pagination_color',paginationColor);
+    data.append('pagination_color_option',paginationColorOption);
+    data.append('modal_background_color',modalBackgroundColor);
+    data.append('modal_background_color_option',modalBackgroundColorOption);
 //debugger;
   let websiteListing=this.http
     .post(this.sharedServiceObj.registerationApiBaseUrl+'members/updateWebsite', data, this.headerOptions)
@@ -1400,7 +1416,9 @@ getAllMemberAllowedOptions(allowedOptions)
 updateGlobalSettings(member_id:string,personalImage:string,companyImage:string,
   timezone:string,colorBase:string,secondColor:string,thirdColor:string,identity_name:string,headerColor:string,
   sideBarMenuColor:string,buttonColor:string,textColor:string,backgroundColor:string,headerColorOption:string,sideBarMenuColorOption:string,
-  buttonColorOption:string,textColorOption:string,backgroundColorOption:string,customColorOption:boolean){
+  buttonColorOption:string,textColorOption:string,backgroundColorOption:string,customColorOption:boolean,
+  contentTitleColor:string,contentTitleColorOption:string,paginationColor:string,paginationColorOption:string,
+  modalBackgroundColor:string,modalBackgroundColorOption:string){
   //  debugger;
     let data = new URLSearchParams();
     data.append('master_id',member_id);
@@ -1422,6 +1440,13 @@ updateGlobalSettings(member_id:string,personalImage:string,companyImage:string,
     data.append('text_color_option',textColorOption);
     data.append('content_background_option',backgroundColorOption);
     data.append('isCustomColor',customColorOption.toString());
+
+    data.append('content_title_color',contentTitleColor);
+    data.append('content_title_color_option',contentTitleColorOption);
+    data.append('pagination_color',paginationColor);
+    data.append('pagination_color_option',paginationColorOption);
+    data.append('modal_background_color',modalBackgroundColor);
+    data.append('modal_background_color_option',modalBackgroundColorOption);
  //debugger;
    let updateSettingsResp=this.http
        .post(this.sharedServiceObj.registerationApiBaseUrl+'members/updateGlobalSettings', data, this.headerOptions)

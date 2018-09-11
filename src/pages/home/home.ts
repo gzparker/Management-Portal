@@ -1,5 +1,6 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, Platform, MenuController,ActionSheetController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, Platform, MenuController,
+  ActionSheetController,App } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 import { ISubscription } from "rxjs/Subscription";
@@ -20,93 +21,97 @@ export class HomePage {
   public sideBarMenuColor:string="";
   public buttonColor:string="";
   public textColor:string="";
+  public contentBackgrounColor:string="";
+  public contentTitleColor:string="";
+  public paginationColor:string="";
+  public modalBackgroundColor:string="";
+
+  public loadedWebsite:string="";
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, 
-    public platform: Platform,public actionSheetCtrl: ActionSheetController) {
+    public platform: Platform,public actionSheetCtrl: ActionSheetController,private _app: App) {
+      this._app.setTitle(" - App Name");
+      this.loadedWebsite=document.URL.toString();
       this.isApp = (!document.URL.startsWith("http"));
-      this.setBackgroundInfo();
+     // this.setBackgroundInfo();
+     this.loadGeneralWebsiteSettings();
   }
-  setBackgroundInfo()
+  loadGeneralWebsiteSettings()
+  {
+    if(this.loadedWebsite.indexOf("localhost")>0)
+    {
+      this.sharedServiceObj.getServiceDefaultInfoByUrl("https://intagent.configuration.menu")
+      .subscribe((result) => this.loadGeneralWebsiteSettingsResp(result));
+    }
+    else
+    {
+     this.sharedServiceObj.getServiceDefaultInfoByUrl(this.loadedWebsite.toString())
+     .subscribe((result) => this.loadGeneralWebsiteSettingsResp(result));
+    }
+
+  }
+  loadGeneralWebsiteSettingsResp(result:any)
   {
     var that=this;
-    let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
-    generalWebsiteSettings.then((data) => {
-        if(data!=null)
-        {
-          that.websiteBackgroundInfo=data;
-          if(data.header_color)
-          {
-            if(data.header_color=="base_color")
-            {
-              that.headerColor=data.color_base;
-          }
-          if(data.header_color=="secondary_color")
-          {
-            that.headerColor=data.color_secondary;
-        }
-          if(data.header_color=="tertiary_color")
-            {
-              that.headerColor=data.color_tertiary;
-          }
-         
-         // debugger;
-        }
-        if(data.sidebar_menu_color)
-        {
-          if(data.sidebar_menu_color=="base_color")
-          {
-            that.sideBarMenuColor=data.color_base;
-        }
-        if(data.sidebar_menu_color=="secondary_color")
-          {
-            that.sideBarMenuColor=data.color_secondary;
-        }
-        if(data.sidebar_menu_color=="tertiary_color")
-          {
-            that.sideBarMenuColor=data.color_tertiary;
-        }
-        
-       // debugger;
-      }
-      if(data.button_color)
-      {
-        if(data.button_color=="base_color")
-        {
-          that.buttonColor=data.color_base;
-      }
-      if(data.button_color=="secondary_color")
-        {
-          that.buttonColor=data.color_secondary;
-      }
-      if(data.button_color=="tertiary_color")
-        {
-          that.buttonColor=data.color_tertiary;
-      }
-      
-     // debugger;
-    }
-    if(data.text_color)
-    {
-      if(data.text_color=="base_color")
-      {
-        that.textColor=data.color_base;
-    }
-    if(data.text_color=="secondary_color")
-      {
-        that.textColor=data.color_secondary;
-    }
-    if(data.text_color=="tertiary_color")
-      {
-        that.textColor=data.color_tertiary;
-    }
-    
-  
-  }
+if(result)
+{
+  this.storage.set("generalWebsiteSettings",result);
+  that.websiteBackgroundInfo=result;
+ // this._app.setTitle(that.websiteBackgroundInfo.service_name + " - App Name");
+  document.getElementById("appPageTitle").innerText=that.websiteBackgroundInfo.service_name;
   //debugger;
-      }
-      });
+  if(result.header_color)
+  {
+    
+      that.headerColor=result.header_color;
+ 
+ // debugger;
+}
+if(result.sidebar_menu_color)
+{
+ 
+    that.sideBarMenuColor=result.sidebar_menu_color;
+
+
+// debugger;
+}
+if(result.button_color)
+{
+  that.buttonColor=result.button_color;
+}
+if(result.text_color)
+{
+that.textColor=result.text_color;
+}
+if(result.text_color)
+{
+that.textColor=result.text_color;
+}
+if(result.text_color)
+{
+that.textColor=result.text_color;
+}
+if(result.content_background)
+{
+that.contentBackgrounColor=result.content_background;
+}
+if(result.content_title_color)
+{
+that.contentTitleColor=result.content_title_color;
+}
+if(result.pagination_color)
+{
+that.paginationColor=result.pagination_color;
+}
+if(result.modal_background_color)
+{
+that.modalBackgroundColor=result.modal_background_color;
+}
+//debugger;
+}
   }
+  
 openPage(pagenumber:string){
   if(pagenumber=='2')
   {

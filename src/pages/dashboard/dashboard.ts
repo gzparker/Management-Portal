@@ -1,6 +1,6 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, Platform,
-   MenuController,ActionSheetController,Tabs,ToastController } from 'ionic-angular';
+   MenuController,ActionSheetController,Tabs,ToastController,App } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 import { ISubscription } from "rxjs/Subscription";
