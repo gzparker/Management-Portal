@@ -389,7 +389,8 @@ else
     {
      // debugger;
 this.identity_name=result.result.identity_name;
-this.website_a_record_location=result.result.website_a_record_location;
+//this.website_a_record_location=result.result.website_a_record_location;
+this.website_a_record_location=result.result.idx_search_subdomain;
 this.identity_phone_number=result.result.identity_phone_number;
 //this.homepage_description=result.result.homepage_description;
 document.getElementById("homepage_description").innerHTML=result.result.homepage_description;
