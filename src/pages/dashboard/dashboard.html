@@ -5,7 +5,7 @@
   Ionic pages and navigation.
 -->
 
-<ion-header class="dashboardUI">
+<ion-header class="noHeader dashboardUI">
   <ion-navbar hide-nav-bar="true" hideBackButton="true">
     <button ion-button menuToggle start>
       <ion-icon name="menu"></ion-icon>
@@ -15,8 +15,12 @@
 </ion-header>
 
 
-<!-- <ion-content class="card-background-page"> -->
-<ion-content padding class="dashboardUI">
+<!-- Background color options -->
+<!-- add class ("colorEnabled") to enable color overrides -->
+<!-- add class ("custom-color-1, custom-color-2, or custom-color-3") to apply color overrides -->
+<!-- ex. <ion-content class="noHeader dashboardUI colorEnabled custom-color-1"> -->
+
+<ion-content padding class="noHeader dashboardUI">
   <div class="centerStage">
   <!--<ion-chip *ngIf="notificationMsg!=''">
     <ion-label color="secondary">{{notificationMsg}}</ion-label>

@@ -1,4 +1,9 @@
-<ion-split-pane [when]="showSideMenue">
+<!-- sidebar display option = (default, IconOnly, noSidebar) -->
+
+<ion-split-pane [when]="showSideMenue" class="default">
+
+<div id="SidebarResetToggle"></div>
+
 <ion-menu [content]="content" persistent="true">
   <ion-header>
     <!-- <ion-toolbar class="company-logo">
@@ -6,8 +11,16 @@
     </ion-toolbar> -->
   </ion-header>
 
+
+  <!-- sidebar color options -->
+  <!-- add class ("colorEnabled") to enable color overrides -->
+  <!-- add class ("custom-color-1, custom-color-2, or custom-color-3") to apply color overrides -->
+  <!-- ex. <ion-content class="noScroll colorEnabled custom-color-1"> -->
+    
   <ion-content class="noScroll">
     
+    <div id="SidebarDisplayToggle"></div>
+
     <ion-card text-center menuClose class="profileCard" *ngIf="userLoggedIn==true&&userGeneralInfo!=null"  
     (tap)="openPage('26')" > 
       <div class="profileCardInfo">

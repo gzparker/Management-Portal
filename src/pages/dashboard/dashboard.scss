@@ -1,4 +1,22 @@
 page-dashboard {
+  
+  ion-header {
+    &.noHeader {
+    display: none;
+    }
+  }
+
+  ion-content {
+    &.noHeader {      
+      .fixed-content, .scroll-content {
+      margin-top: 0px !important;
+      }
+      .scroll-content {
+      padding-top: 56px !important;
+      }
+    }
+  }  
+
   .card-ios, .card-md, .card-wp {
   width: 100%;
   margin: 0;
