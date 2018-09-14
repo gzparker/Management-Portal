@@ -21,7 +21,7 @@
 </ion-header>
 
 
-<ion-content padding class="dashboardUI">
+<ion-content padding class="dashboardUI colorEnabled background_color">
   
   <!--<ion-chip *ngIf="agentCreateMsg!=''">
     <ion-label color="danger">{{agentCreateMsg}}</ion-label>
@@ -133,7 +133,7 @@
        (onCrop)="agentImageCropped($event)" *ngIf="hideAgentCropper"></img-cropper>
         
         
-        <input id="custom-input" class="btnUpload" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="fileChangeListener($event)">
+        <input id="custom-input" class="btnUpload colorEnabled button_color" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="fileChangeListener($event)">
 
       </div>
       
@@ -142,7 +142,7 @@
 
 
     <div class="dashboardBtn">
-        <button ion-button color="primary" block (click)="createAgent();" [disabled]="!createAgentForm.valid">Create Agent</button>
+        <button ion-button color="primary" class="colorEnabled button_color" block (click)="createAgent();" [disabled]="!createAgentForm.valid">Create Agent</button>
     </div>
 
 </form>

@@ -21,7 +21,7 @@
 </ion-header>
 
 
-<ion-content padding class="dashboardUI">
+<ion-content padding class="dashboardUI colorEnabled background_color">
   <!-- <h1 class="contentTitle animated bounceInRight">Global Preferences</h1> -->
 
   <form role="form" data-toggle="validator" #globalSettingsForm="ngForm" class="animated fadeIn">
@@ -62,7 +62,7 @@
               </div>
 
               <!-- Image Upload Button -->
-              <input id="custom-input" class="btnUpload" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="companyFileChangeListener($event)">
+              <input id="custom-input" class="btnUpload colorEnabled button_color" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="companyFileChangeListener($event)">
 
             </div>
 
@@ -242,7 +242,7 @@
   </div>
   
     <div class="dashboardBtn">
-      <button ion-button color="primary" block (click)="updateGlobalSettings();" [disabled]="!globalSettingsForm.valid">Save</button>
+      <button ion-button color="primary" class="colorEnabled button_color" block (click)="updateGlobalSettings();" [disabled]="!globalSettingsForm.valid">Save</button>
     </div>
     
 </form>

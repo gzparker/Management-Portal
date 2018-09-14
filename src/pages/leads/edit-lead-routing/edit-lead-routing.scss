@@ -17,20 +17,6 @@ page-edit-lead-routing {
     }
   }
 
-
-  ion-content {
-    &.dashboardUI {
-
-      &:before {
-      height: 28vh;
-      z-index: 1;
-      }
-      &:after {
-      height: 100vh;      
-      }
-    }
-  }
-
   .notification {
   border-radius: 0;
   height: auto;

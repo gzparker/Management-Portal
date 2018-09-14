@@ -16,7 +16,7 @@
 </ion-header>
   
   
-<ion-content padding class="dashboardUI chatUI">
+<ion-content padding class="dashboardUI chatUI colorEnabled background_color">
   <!-- <h1 class="contentTitle animated bounceInRight">Group Details</h1> -->
   <form role="form" data-toggle="validator" #groupForm="ngForm">
   
@@ -48,7 +48,7 @@
 
         <div class="dashboardBtn">
           <!-- <button ion-button color="primary" block (click)="createGroup('new')">Create</button> -->
-          <button ion-button icon-start color="primary" block (click)="updateGroup()">
+          <button ion-button icon-start color="primary" class="colorEnabled button_color" block (click)="updateGroup()">
             <ion-icon name="ios-send"></ion-icon>
             Update
           </button>
@@ -58,9 +58,9 @@
   </div>
 
 </form>
-  <h1 class="contentTitle animated bounceInRight labelDark">Edit Group Members</h1>
+  <h1 class="centerStage contentTitle animated bounceInRight labelDark">Edit Group Members</h1>
   
-  <ion-list class="noShadow" *ngIf="groupMembersData.length>0">
+  <ion-list class="centerStage noShadow" *ngIf="groupMembersData.length>0">
       <div class="chatBoxWrapper">          
           <div class="chatBoxItem">
           <div  *ngFor="let groupMember of groupMembersData">

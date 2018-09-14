@@ -21,7 +21,7 @@
   </ion-header>
   
   
-  <ion-content padding class="noShadow dashboardUI">
+  <ion-content padding class="noShadow dashboardUI colorEnabled background_color">
     <form role="form" data-toggle="validator" #editAgentForm="ngForm">
       
     <ion-list>
@@ -116,7 +116,7 @@
             <img-cropper #agentCropper [image]="dataAgentImage" [settings]="cropperSettings"
            (onCrop)="agentImageCropped($event)" *ngIf="hideAgentCropper"></img-cropper>
 
-           <input id="custom-input" class="btnUpload" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="fileChangeListener($event)">
+           <input id="custom-input" class="btnUpload colorEnabled button_color" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="fileChangeListener($event)">
         
         </div>
       
@@ -124,7 +124,7 @@
     </ion-list>
     
   <div class="dashboardBtn">
-    <button ion-button color="primary" block (click)="updateAgent();" [disabled]="!editAgentForm.valid">Update Agent</button>
+    <button ion-button color="primary" class="colorEnabled button_color" block (click)="updateAgent();" [disabled]="!editAgentForm.valid">Update Agent</button>
   </div>
 
   </form>

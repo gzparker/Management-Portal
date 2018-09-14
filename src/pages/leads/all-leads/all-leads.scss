@@ -56,6 +56,17 @@ page-all-leads {
   
   ion-content {
     &.dashboardUI {
+        
+        &.colorEnabled {
+          &:before {
+          opacity: 1;
+          z-index: 1;
+          }
+          &:after {
+          background: #EBF0F5 !important;
+          }
+        }
+
       &:before {
       height: 63px;
       z-index: 1;
@@ -205,6 +216,9 @@ page-all-leads {
       ion-item:first-child {
       border-radius: 0px;
       }
+    }
+    &.colorEnabled {
+    background: #EBF0F5 !important;
     }
   }
 

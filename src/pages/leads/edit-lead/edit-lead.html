@@ -19,7 +19,7 @@
     </ion-navbar>
 </ion-header>
 
-    <ion-content padding class="generalInfoUI">
+    <ion-content padding class="generalInfoUI colorEnabled background_color">
         <form role="form" data-toggle="validator" #leadForm="ngForm">
             <!--<ion-item>
               <ion-label stacked>First Name</ion-label>
@@ -124,7 +124,7 @@
             [height]="leadHeight"/>
           </div>
           
-          <input id="custom-input" class="btnUpload" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="leadFileChangeListener($event)">
+          <input id="custom-input" class="btnUpload colorEnabled button_color" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="leadFileChangeListener($event)">
 
       </div>
     </ion-list>
@@ -276,7 +276,7 @@
   </ion-list>
       
   <div class="dashboardBtn">
-      <button ion-button color="primary" block (click)="updateLead();" [disabled]="!leadForm.valid">Update Contact</button>
+      <button ion-button color="primary" class="colorEnabled button_color" block (click)="updateLead();" [disabled]="!leadForm.valid">Update Contact</button>
   </div>
 
   </form>

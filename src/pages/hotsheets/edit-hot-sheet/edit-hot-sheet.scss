@@ -1,10 +1,22 @@
 page-edit-hot-sheet {
-  
   ion-content {
     &.dashboardUI {
 
+      &.colorEnabled {
+        &.background_color {
+        background: #EBF0F5;
+          &:before {          
+          opacity: 1;
+          z-index: 1;          
+          }
+          .scroll-content {
+          background: none;
+          }
+        }
+      }
+
         &:before {
-        height: 53.5vh;
+        height: 45vh;
         z-index: 1;        
         }
         &:after {

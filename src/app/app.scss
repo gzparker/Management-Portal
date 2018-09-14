@@ -19,90 +19,180 @@
 // ------------------------------------------------------------
 // DYNAMIC COLOR SETTINGS
 // ------------------------------------------------------------
-$first-color: #20B6AD;
-$second-color: #394263;
-$third-color: #7F8CE9;
+$sidebar_color: #20B6AD;
+$background_color: #20B6AD;
+$button_color: #20B6AD;
 
 // ------------------------------------------------------------
-// COLOR SETTINGS - SIDEBAR
+// SIDEBAR - COLOR SETTINGS
 // ------------------------------------------------------------
 ion-menu {
   ion-content {
     &.colorEnabled {
-      &.custom-color-1 {
-      background: $first-color;
-      }
-      &.custom-color-2 {
-      background: $second-color;
-      }
-      &.custom-color-3 {
-      background: $third-color;
+      &.sidebar_color {
+      background: $sidebar_color;
+        
+        #sidenav {
+          .msgcounter {
+          background: #2b2b2b;
+          }          
+        }
+
+        #SidebarDisplayToggle, #SidebarResetToggle {
+        background: #2b2b2b;
+        }
+
       }
     }
   }
 }
 
+
 // ------------------------------------------------------------
-// COLOR SETTINGS - BACKGROUND
+// BACKGROUND- COLOR SETTINGS
 // ------------------------------------------------------------
+ion-header {
+  &.dashboardUI {
+    &.chatUI {
+      &.colorEnabled {
+        &.background_color {
+        background: $background_color;
+        }
+      }
+    }    
+  }
+}
+
 ion-content {
   &.dashboardUI {
-    &.colorEnabled {      
+    &.colorEnabled {
       &:before {
-      display: none;
+      opacity: 0;
+      background: $background_color;
       }
-      &.custom-color-1 {
-      background: $first-color;
-      }
-      &.custom-color-2 {
-      background: $second-color;
-      }
-      &.custom-color-3 {
-      background: $third-color;
+      &.background_color {
+      background: $background_color;
+        .msgSearchBar {
+          .searchbar-ios, .searchbar-md, .searchbar-wp {
+          border-color: darken($background_color, 4%);
+          }
+        }
+      }      
+    }
+    &.chatMsgUI {
+      &.colorEnabled {
+        &.background_color {
+        background: none;
+          &:before {
+          opacity: 1;
+          }
+        }
       }
     }
   }
   &.generalInfoUI {
     &.colorEnabled {      
-      &.custom-color-1 {
+      &.background_color {
         &:before {
-        background: $first-color;
+        background: $background_color;
         }      
-      }
-      &.custom-color-2 {
-        &:before {
-        background: $second-color;
-        }      
-      }
-      &.custom-color-3 {
-        &:before {
-        background: $third-color;
-        }      
+      }      
+    }
+  }
+}
+
+page-all-leads {
+  ion-content {
+    &.dashboardUI {
+      &.colorEnabled {
+        &.background_color {
+          ion-badge.badgeInvite {
+          border-color: #2b2b2b !important;
+          background: #2b2b2b !important;
+          opacity: .45;
+          @extend %transition;
+            &:hover {
+            opacity: .65;
+            }
+          }
+        }        
       }
     }
   }
 }
+
+
 
 // ------------------------------------------------------------
 // COLOR SETTINGS - BUTTONS
 // ------------------------------------------------------------
 ion-content {  
   .dashboardBtn {
-
     .button-default {
       &.colorEnabled {
-        &.custom-color-1 {
-        background: $first-color;
-        }
-        &.custom-color-2 {
-        background: $second-color;
-        }
-        &.custom-color-3 {
-        background: $third-color;
+        &.button_color {
+        background: $button_color;
+        }        
+      }
+    }
+  }
+  .uploadPhoto {
+    .btnUpload {
+      &.colorEnabled {
+        &.button_color {
+        background: $button_color;
+          &:before {
+          background: $button_color;
+          }
         }
       }
     }
+  }
+  .leadsShortcutButtons {
+    &.colorEnabled {
+      &.button_color {
+        .contactPhone, .contactChat, .contactEmail, .contactInvite {
+        background: $button_color;
+        }
+      }
+    }
+  }
+  .leadsSavedInfo, .leadListings, .leadHotsheetName {
+    &.colorEnabled {
+      &.button_color {
+        
+        .segment-button {  
+        color: $button_color;
+        border-color: $button_color;
+          &.segment-activated {
+          color: #FFF;
+          border-color: $button_color;
+          background-color: $button_color;
+            &:hover {
+            color: #FFF !important;
+            }
+          }
+          &:hover {          
+          color: $button_color;
+          }
+        }
 
+      }
+    }
+  }
+}
+
+page-manage-agents {
+  ion-item-sliding {
+    &.colorEnabled {
+      &.button_color {
+        ion-item {
+          &:before {
+          background: $button_color;
+          }
+        }
+      }
+    }  
   }
 }
 
@@ -231,6 +321,26 @@ display: none;
 
 
 // ------------------------------------------------------------
+// OVERRIDE SETTINGS
+// ------------------------------------------------------------
+ion-header {
+  &.noHeader {
+  display: none;
+  }
+}
+
+ion-content {
+  &.noHeader {      
+    .fixed-content, .scroll-content {
+    margin-top: 0px !important;
+    }
+    .scroll-content {
+    padding-top: 56px !important;
+    }
+  }
+} 
+
+// ------------------------------------------------------------
 // DEFAULT SETTINGS
 // ------------------------------------------------------------
 .menu-inner {
@@ -246,7 +356,8 @@ display: none;
   position: relative;
 
     .profileCardInfo {
-    padding: 35px 0 20px 0 !important;
+    height: 207px;
+    padding: 25px 0 0px 0 !important;
     z-index: 2;
     position: relative;
     }
@@ -657,7 +768,7 @@ ion-content {
     &:before {
     content: "";
     width: auto;
-    height: 35vh;
+    height: 32vh;
     left: 0;
     right: 0;
     top: 0;
@@ -670,10 +781,10 @@ ion-content {
     &:after {
     content: "";
     width: auto;
-    height: 65vh;
+    height: 68vh;
     left: 0;
     right: 0;
-    bottom: 0;
+    bottom: 0;    
     display: block;
     position: absolute;
     background: #EBF0F5;
@@ -1283,8 +1394,7 @@ display: none !important;
   position: absolute;
   cursor: pointer;
   -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  // border: 1px solid #4D8F2F;
+  box-sizing: border-box;  
   background: #77B55D;
     &:before {
     content: "";
@@ -1314,23 +1424,27 @@ display: none !important;
 
 }
 
-.segment-button {  
-color: $flatblue !important;
-border-color: $flatblue !important;
-@extend %transition;
-  &.segment-activated {
-  color: #FFF !important;
-  border-color: $flatblue !important;
-  background-color: $flatblue !important;
+
+.leadsSavedInfo, .leadListings, .leadHotsheetName {
+  .segment-button {  
+  color: $flatblue;
+  border-color: $flatblue;
+  @extend %transition;
+    &.segment-activated {
+    color: #FFF;
+    border-color: $flatblue;
+    background-color: $flatblue ;
+      &:hover {
+      color: #FFF !important;
+      }
+    }
     &:hover {
-    color: #FFF !important;
+    color: #FFF;
+    color: $flatblue;
     }
   }
-  &:hover {
-  color: #FFF !important;
-  color: $flatblue !important;
-  }
 }
+
 
 .successToast, .errorToast {
   .toast-wrapper {
@@ -1356,7 +1470,9 @@ border-color: $flatblue !important;
 }
 
 ion-app.md [padding] .scroll-content {
-overflow: auto !important;
+overflow-x: hidden !important;
+overflow-y: auto !important;
+// overflow: auto !important;
 }
 
 
@@ -1424,7 +1540,9 @@ overflow: auto !important;
   // }
 
   ion-app.md [padding] .scroll-content {
-  overflow: auto;
+  // overflow: auto;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
   }
 
 }

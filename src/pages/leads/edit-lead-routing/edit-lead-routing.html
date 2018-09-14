@@ -19,7 +19,7 @@
 </ion-header>
 
 
-<ion-content padding class="dashboardUI noScroll">
+<ion-content padding class="dashboardUI noScroll colorEnabled background_color">
   
   <ion-chip *ngIf="isItCrmLead" class="centerStage notification">
     <!-- <div class="contentTitle animated bounceInRight">Leads are being sent to Intagent CRM</div> -->
@@ -55,6 +55,6 @@
             </ion-item>
         </ion-list>
         <div class="centerStage dashboardBtn">
-            <button ion-button color="primary" block (click)="updateLeadRouting();">Save</button>
+            <button ion-button color="primary" class="colorEnabled button_color" block (click)="updateLeadRouting();">Save</button>
         </div>
 </ion-content>

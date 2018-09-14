@@ -9,14 +9,38 @@ page-all-websites {
   ion-content {
     &.dashboardUI {
 
-      &:before {
-        height: 45.5vh;
-        z-index: 1;        
+      &.colorEnabled {
+        &.background_color {
+        background: none;
+          &:before {
+          opacity: 1;
+          }
         }
-        &:after {
-        height: 100vh;
-        // background: #FEFEFE;
-        }
+      }
+
+      
+      .chip-ios, .chip-md, .chip-wp {
+      width: 100%;
+      max-width: 1000px;
+      margin: 0 auto;
+      }
+
+      // .btn-edit {
+      // width: 100%;
+      // max-width: 1000px;
+      // height: 60px;
+      // margin: 20px auto 0 auto;
+      // display: block;
+      // background-color: #f96c6c;
+      // box-shadow: 0 0 0 2px #ec6868;
+      //   &:focus, &:hover {
+      //   background-color: #f96c6c;
+      //   }
+      //   .button-inner {
+      //   color: #FFF !important;
+      //   }
+      // }
+      
 
       .item-wrapper {
       overflow: hidden !important;

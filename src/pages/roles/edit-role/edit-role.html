@@ -16,7 +16,7 @@
 </ion-header>
 
 
-<ion-content padding class="dashboardUI">  
+<ion-content padding class="dashboardUI colorEnabled background_color">  
   <!-- <h1 class="contentTitle animated bounceInRight">Edit Role</h1> -->
 
   <!--<ion-chip *ngIf="roleUpdateMsg!=''">
@@ -61,7 +61,7 @@
    </ion-list>
 
   <div class="dashboardBtn">
-    <button ion-button color="primary" block (click)="updateRole();" [disabled]="!roleForm.valid">Update</button>
+    <button ion-button color="primary" class="colorEnabled button_color" block (click)="updateRole();" [disabled]="!roleForm.valid">Update</button>
   </div>
 
   </form>

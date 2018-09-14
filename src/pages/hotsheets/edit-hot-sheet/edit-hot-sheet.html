@@ -21,7 +21,7 @@
 </ion-header>
 
 
-<ion-content padding class="dashboardUI">
+<ion-content padding class="dashboardUI colorEnabled background_color">
     
   <!--<ion-chip *ngIf='hotsheetUpdateMsg!=""'>
     <ion-label color="danger">{{hotsheetUpdateMsg}}</ion-label>
@@ -561,7 +561,7 @@
     </ion-list>
   
       <div class="dashboardBtn">
-        <button ion-button color="primary" block (click)="updateHotSheet();" 
+        <button ion-button color="primary" class="colorEnabled button_color" block (click)="updateHotSheet();" 
         [disabled]="!hotSheetForm.valid||polygon_search==''">Update HotSheet</button>
       </div>
 

@@ -41,7 +41,7 @@
 
 </ion-header>
 
-<ion-content padding class="dashboardUI chatMsgUI" #content>
+<ion-content padding class="dashboardUI chatMsgUI colorEnabled background_color" #content>
   <div class="chatWindowTop"></div>
   
   <ion-refresher (ionRefresh)="groupMessageDetail($event)">
@@ -106,7 +106,7 @@
         </div>
     </ion-list>-->
 
-    <ion-list class="chatBoxList" *ngIf="chatDetailArray.length>0">
+    <ion-list class="centerStage chatBoxList" *ngIf="chatDetailArray.length>0">
       <div *ngFor="let chat of chatDetailArray">
         <ion-item-sliding *ngIf="chat.val().deletedFor.indexOf(firebaseUserId) < 0">
           <ion-item>

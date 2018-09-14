@@ -1,4 +1,19 @@
 page-edit-credit-card {
+
+  ion-content {
+    &.dashboardUI {
+      &.colorEnabled {
+        &.background_color {
+        background: none;
+          &:before {
+          opacity: 1;
+          }
+        }
+      }
+    }
+  }
+  
+
   ion-navbar {
     .bar-buttons {
       .button-inner {

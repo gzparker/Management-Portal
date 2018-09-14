@@ -18,7 +18,7 @@
 </ion-header>
 
 
-<ion-content padding class="dashboardUI">
+<ion-content padding class="dashboardUI colorEnabled background_color">
   <form role="form" data-toggle="validator" #websiteForm="ngForm">
   
     <ion-list>
@@ -274,7 +274,7 @@
     </ion-list>
 
     <div class="dashboardBtn">
-      <button ion-button color="primary" block (click)="createWebsite();" [disabled]="!websiteForm.valid">Save Website</button>
+      <button ion-button color="primary" class="colorEnabled button_color" block (click)="createWebsite();" [disabled]="!websiteForm.valid">Save Website</button>
     </div>
 
   </form>

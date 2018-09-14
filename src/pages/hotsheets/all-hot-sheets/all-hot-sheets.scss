@@ -18,14 +18,19 @@ page-all-hot-sheets {
   ion-content {
     &.dashboardUI {
 
-        &:before {
-        height: 53.5vh;
-        z-index: 1;        
+      &.colorEnabled {
+        &.background_color {
+        background: #EBF0F5;
+          &:before {          
+          opacity: 1;
+          z-index: 1;          
+          }
+          .scroll-content {
+          background: none;
+          }          
         }
-        &:after {
-        height: 100vh;
-        // background: #FEFEFE;
-        }
+      }
+
 
       .item-wrapper {
       overflow: hidden !important;

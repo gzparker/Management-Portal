@@ -1,4 +1,16 @@
 page-group-members {
+  
+  ion-content {
+    &.dashboardUI {
+      &.colorEnabled {
+        &:before {
+        opacity: 1;
+        }
+      }
+    }
+  }
+
+
   ion-content.dashboardUI.chatUI {
     &:before {
     height: 21vh !important;

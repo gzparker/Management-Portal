@@ -19,7 +19,7 @@
 </ion-header>
 
 
-<ion-content padding class="dashboardUI">
+<ion-content padding class="dashboardUI colorEnabled background_color">
   
   <ion-refresher (ionRefresh)="loadAllAgents($event)">
     <ion-refresher-content></ion-refresher-content>
@@ -34,7 +34,7 @@
   <div class="centerStage formShadow">
   <ion-list *ngIf="!isApp" class="animated lightSpeedIn noShadow">
    
-    <ion-item-sliding *ngFor="let agent of allAgents">
+    <ion-item-sliding *ngFor="let agent of allAgents" class="colorEnabled button_color">
       <ion-item (click)="agentDetail(agent.id)">
         <ion-avatar class="imgFull">
         <img src="{{this.sharedServiceObj.imgBucketUrl}}{{agent.image_url}}" (error)="imgAgent.src = this.sharedServiceObj.noImageUrl" #imgAgent/>
@@ -97,7 +97,7 @@
 <div class="centerStage formShadow">
 <ion-list class="animated lightSpeedIn noShadow">
 
-  <ion-item-sliding *ngFor="let agent of allAgents">
+  <ion-item-sliding *ngFor="let agent of allAgents" class="colorEnabled button_color">
     <ion-item (click)="agentDetail(agent.id)">
         
         <ion-avatar class="imgFull">
