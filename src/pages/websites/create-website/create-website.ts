@@ -8,6 +8,7 @@ import { AllWebsitesPage } from '../../websites/all-websites/all-websites';
 import { EditLeadRoutingPage } from '../../leads/edit-lead-routing/edit-lead-routing';
 import { AlertController } from 'ionic-angular';
 import { ImageCropperComponent, CropperSettings } from "ngx-img-cropper";
+import { PicturePopupPage } from '../../../pages/modal-popup/picture-popup/picture-popup';
 
 import { UserVerificationPage } from '../../user-verification/user-verification';
 import { ColorSelectionPopupPage } from '../../modal-popup/color-selection-popup/color-selection-popup';

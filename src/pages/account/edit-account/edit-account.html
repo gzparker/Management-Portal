@@ -49,21 +49,38 @@
       </ion-item>
     </ion-list> -->
 
+    <!--<ion-list class="animated fadeIn leadsProfileWrapper" *ngIf="accountInfo!=null">
+      <ion-item class="leadsProfile">
+  
+        <ion-avatar class="imgFull" *ngIf="globalSettings!=null&&!loadNewPersonalImage">
+          <img src={{this.sharedServiceObj.imgBucketUrl}}{{globalSettings.photo_personal}} (error)="imgAccount.src = this.sharedServiceObj.profileNoImage" #imgAccount/>          
+        </ion-avatar>
+        <ion-avatar class="imgFull" *ngIf="loadNewPersonalImage">
+          <img [src]="dataPersonalImage.image" [width]="personalWidth"
+          [height]="personalHeight">        
+        </ion-avatar>
+        <button ion-button (click)="editImage(globalSettings.photo_personal,'personal');">
+          <ion-icon name="md-create"></ion-icon>
+        </button>
+      </ion-item>
+    </ion-list>-->
 
-    
     <ion-list class="animated fadeIn leadsProfileWrapper uploadPhoto">
       <div class="AccountImageUploader">
 
-          <img-cropper #personalCropper [image]="dataPersonalImage" [settings]="cropperSettings"
-          (onCrop)="personalImageCropped($event)" *ngIf="hideImageCropper"></img-cropper>
+          <!--<img-cropper #personalCropper [image]="dataPersonalImage" [settings]="cropperSettings"
+          (onCrop)="personalImageCropped($event)" *ngIf="hideImageCropper"></img-cropper>-->
           
           <div class="imgCropperPreviewResult" *ngIf="dataPersonalImage.image" >
           <img [src]="dataPersonalImage.image" [width]="personalWidth"
           [height]="personalHeight">
           </div>
 
-          <input id="custom-input" class="btnUpload" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="personalFileChangeListener($event)">
-
+          <input id="custom-input" class="btnUpload" type="file" accept=".png, .jpg, .jpeg" 
+          capture="camera" multiple (change)="personalFileChangeListener($event)">
+          <button ion-button (click)="editImage(globalSettings.photo_personal,'personal');" *ngIf="isImageExist">
+            <ion-icon name="md-create"></ion-icon>
+          </button>
       </div>
     </ion-list>
 

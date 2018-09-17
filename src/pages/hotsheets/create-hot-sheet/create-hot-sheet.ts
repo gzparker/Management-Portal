@@ -11,7 +11,7 @@ import { ImageCropperComponent, CropperSettings } from "ngx-img-cropper";
 import { Observable } from 'rxjs/Observable';
 
 import { Geolocation } from '@ionic-native/geolocation';
-
+import { PicturePopupPage } from '../../../pages/modal-popup/picture-popup/picture-popup';
 import { AllHotSheetsPage } from '../all-hot-sheets/all-hot-sheets';
 import { AlertController } from 'ionic-angular';
 import { SharedProvider } from '../../../providers/shared/shared';

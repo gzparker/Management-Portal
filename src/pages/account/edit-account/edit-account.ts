@@ -9,6 +9,7 @@ import { ImageCropperComponent, CropperSettings } from "ngx-img-cropper";
 import { GlobalPreferencesPage } from '../../setup/global-preferences/global-preferences';
 import 'moment';
 import * as moment from 'moment-timezone';
+import { PicturePopupPage } from '../../../pages/modal-popup/picture-popup/picture-popup';
 import { AccountInfoPage } from '../account-info/account-info';
 import { AlertController,ToastController } from 'ionic-angular';
 import { SharedProvider } from '../../../providers/shared/shared';
@@ -30,6 +31,7 @@ export class EditAccountPage {
   @ViewChild('personalCropper', undefined)
   personalCropper:ImageCropperComponent;
   public hideImageCropper:boolean=true;
+  public isImageExist:boolean=false;
   public edit_personal_logo:boolean=false;
   public crop_personal_image:boolean=false;
   public isApp=false;
@@ -72,6 +74,7 @@ export class EditAccountPage {
   public service_id:string="";
   public imgBaseUrl=this.sharedServiceObj.imgBucketUrl;
   public noImgUrl=this.sharedServiceObj.noImageUrl;
+  public loadNewPersonalImage:boolean=false;
   public CkeditorConfig = {removeButtons:'Underline,Subscript,Superscript,SpecialChar'
   ,toolbar: [
     { name: 'document', groups: [], items: ['Source'] },
@@ -288,6 +291,51 @@ else
 this.user_description=html;
  
   }
+  editImage(imageUrl:string,imageType:string){
+    var that=this;
+    this.loadNewPersonalImage=true;
+    
+    let selectedImageOption={
+      mode:"edit",
+      croppedWidth:this.croppedWidth,
+      croppedHeight:this.croppedHeight,
+      websiteWidth:this.personalWidth,
+      websiteHeight:this.personalHeight,
+      datawebsiteImage:this.dataPersonalImage,
+      websiteImage:this.personalImage,
+      imageType:imageType
+    };
+    ///debugger;
+   var modalColor = this.modalCtrl.create(PicturePopupPage,{selectedImageOption:selectedImageOption});
+    modalColor.onDidDismiss(data => {
+      if(data)
+      {
+        that.setWebsiteImage(data);
+      }
+      
+ });
+   modalColor.present();
+  }
+  setWebsiteImage(imageObject:any)
+  {
+//debugger;
+this.loadNewPersonalImage=true;
+if(imageObject.isCancel=='no')
+{
+  //debugger;
+  if(imageObject.imageType=="personal")
+  {
+    this.croppedWidth=imageObject.croppedWidth;
+    this.croppedHeight=imageObject.croppedHeight;
+    this.personalWidth=imageObject.websiteWidth;
+    this.personalHeight=imageObject.websiteHeight;
+    this.dataPersonalImage=imageObject.datawebsiteImage;
+   // debugger;
+    this.personalImage=imageObject.websiteImage;
+  }
+}
+
+  }
   loadPersonalImage(baseUrl:string,imageUrl:string) {
     //debugger;
     const self = this;
@@ -302,6 +350,7 @@ this.user_description=html;
        
         reader.onloadend = function (loadEvent:any) {
          // self.hideImageCropper=true;
+         //self.isImageExist=true;
           image.src = loadEvent.target.result;
           image.onload = function () {
             //alert (this.width);
@@ -321,7 +370,8 @@ this.user_description=html;
   personalFileChangeListener($event) {
     this.crop_personal_image=true;
     this.edit_personal_logo=true;
-    this.hideImageCropper=true;
+    //this.hideImageCropper=true;
+    this.isImageExist=true;
     var image:any = new Image();
     var file:File = $event.target.files[0];
     var myReader:FileReader = new FileReader();
@@ -330,10 +380,15 @@ this.user_description=html;
         image.src = loadEvent.target.result;
         image.onload = function () {
 
-          that.cropperSettings.croppedWidth = this.width;
-          that.cropperSettings.croppedHeight = this.height;
-          
-          that.personalCropper.setImage(image);  
+          //that.cropperSettings.croppedWidth = this.width;
+          //that.cropperSettings.croppedHeight = this.height;
+          that.cropperSettings.croppedWidth = image.width;
+          that.cropperSettings.croppedHeight = image.height;
+       that.personalImage=image.src;
+        //let that=this;
+       
+         that.createPersonalImageThumbnail(image.src);
+          //that.personalCropper.setImage(image);  
       };
     };
     myReader.readAsDataURL(file);
@@ -344,10 +399,11 @@ this.user_description=html;
     {
       this.cropperSettings.croppedWidth = image.width;
       this.cropperSettings.croppedHeight = image.height;
-   
+   //debugger;
     let that=this;
       this.resizePersonalImage(this.dataPersonalImage.image, data => {
         that.personalImage=data;
+        debugger;
         this.createPersonalImageThumbnail(that.personalImage);
           });
     }
@@ -518,7 +574,7 @@ this.updatedValue=true;
     this.crop_personal_image=false;
 if(this.edit_personal_logo)
 {
-  this.hideImageCropper=true;
+  //this.hideImageCropper=true;
   if(this.personalImage!="")
   {
    // this.companyCropperLoaded=true;
@@ -546,8 +602,9 @@ else
   let that=this;
   //debugger;
     this.generatePersonalImageFromImage(bigMatch, 500, 500, 0.5, data => {
-      
+      //debugger
   that.dataPersonalImage.image=data;
+  debugger;
     });
   }
   generatePersonalImageFromImage(img, MAX_WIDTH: number = 700, MAX_HEIGHT: number = 700, quality: number = 1, callback) {

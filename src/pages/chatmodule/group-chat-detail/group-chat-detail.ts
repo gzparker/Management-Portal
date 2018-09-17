@@ -23,6 +23,7 @@ import { ChatGroupsPage } from '../chat-groups/chat-groups';
 import { GroupMembersPage } from '../group-members/group-members';
 
 import { ChatingImagePopUpPage } from '../chating-image-pop-up/chating-image-pop-up';
+import { PicturePopupPage } from '../../../pages/modal-popup/picture-popup/picture-popup';
 import { NewGroupPopupPage } from '../new-group-popup/new-group-popup';
 import { NewMessagePopupPage } from '../new-message-popup/new-message-popup';
 

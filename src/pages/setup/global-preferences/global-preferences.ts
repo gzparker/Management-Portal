@@ -8,6 +8,7 @@ import { Crop } from '@ionic-native/crop';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { ImageCropperComponent, CropperSettings } from "ngx-img-cropper";
+import { PicturePopupPage } from '../../../pages/modal-popup/picture-popup/picture-popup';
 
 import 'moment';
 import * as moment from 'moment-timezone';

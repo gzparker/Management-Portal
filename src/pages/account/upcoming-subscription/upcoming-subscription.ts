@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, ModalController, Platform,
   MenuController,LoadingController,ToastController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
+import { PicturePopupPage } from '../../../pages/modal-popup/picture-popup/picture-popup';
 import { DashboardPage } from '../../dashboard/dashboard';
 import { FbConfirmPage } from '../../fb-confirm/fb-confirm';
 import { AlertController } from 'ionic-angular';

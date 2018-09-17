@@ -89,6 +89,8 @@ import { HotsheetDetailPopupPage } from '../pages/modal-popup/hotsheet-detail-po
 import { ListingDetailPopupPage } from '../pages/modal-popup/listing-detail-popup/listing-detail-popup';
 import { EmailContactModalPage } from '../pages/modal-popup/email-contact-modal/email-contact-modal';
 import { ColorSelectionPopupPage } from '../pages/modal-popup/color-selection-popup/color-selection-popup';
+import { PicturePopupPage } from '../pages/modal-popup/picture-popup/picture-popup';
+
 
 import { CreateRolePage } from '../pages/roles/create-role/create-role';
 import { EditRolePage } from '../pages/roles/edit-role/edit-role';
@@ -140,7 +142,7 @@ var firebaseConfig = {
     ChatActivitiesPage,ChatDetailPage,ChatEmojiPopupoverPage,ChatFriendsActivePage,ChatFriendsActivePage,
     ChatFriendsMessengerPage,ChatGroupsPage,ChatsPage,ChatingImagePopUpPage,NewGroupPopupPage,
     NewMessagePopupPage,GroupChatDetailPage,GroupMembersPage,ChatFriendsPage,ListingDetailPopupPage,
-    HotsheetDetailPopupPage,EmailContactModalPage,ColorSelectionPopupPage
+    HotsheetDetailPopupPage,EmailContactModalPage,ColorSelectionPopupPage,PicturePopupPage
   ],
   imports: [
     BrowserModule, HttpModule,CKEditorModule,
@@ -168,7 +170,8 @@ var firebaseConfig = {
     ChatPage,ChatAccountPage,EmailContactModalPage,ColorSelectionPopupPage,
     ChatActivitiesPage,ChatDetailPage,ChatEmojiPopupoverPage,ChatFriendsActivePage,ChatFriendsActivePage,
     ChatFriendsMessengerPage,ChatGroupsPage,ChatsPage,ChatingImagePopUpPage,NewGroupPopupPage,NewMessagePopupPage,
-    NewMessagePopupPage,GroupChatDetailPage,GroupMembersPage,ChatFriendsPage,ListingDetailPopupPage,HotsheetDetailPopupPage
+    NewMessagePopupPage,GroupChatDetailPage,GroupMembersPage,ChatFriendsPage,
+    ListingDetailPopupPage,HotsheetDetailPopupPage,PicturePopupPage
   ],
   providers: [
     StatusBar,

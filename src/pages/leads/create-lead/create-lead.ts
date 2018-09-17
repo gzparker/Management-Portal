@@ -12,6 +12,7 @@ import { ImagePicker } from '@ionic-native/image-picker';
 import { ImageCropperComponent, CropperSettings } from "ngx-img-cropper";
 
 import { Observable } from 'rxjs/Observable';
+import { PicturePopupPage } from '../../../pages/modal-popup/picture-popup/picture-popup';
 import { AllLeadsPage } from '../../leads/all-leads/all-leads';
 import { LeadDetailPage } from '../../leads/lead-detail/lead-detail';
 import { EditLeadPage } from '../../leads/edit-lead/edit-lead';

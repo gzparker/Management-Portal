@@ -9,6 +9,7 @@ import { ImagePicker } from '@ionic-native/image-picker';
 import { ImageCropperComponent, CropperSettings } from "ngx-img-cropper";
 
 import { ViewRolesPage } from '../view-roles/view-roles';
+import { PicturePopupPage } from '../../../pages/modal-popup/picture-popup/picture-popup';
 
 import { AlertController } from 'ionic-angular';
 import { SharedProvider } from '../../../providers/shared/shared';

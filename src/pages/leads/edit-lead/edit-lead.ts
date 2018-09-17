@@ -13,6 +13,7 @@ import { ImageCropperComponent, CropperSettings } from "ngx-img-cropper";
 import { DashboardPage } from '../../dashboard/dashboard';
 import { FbConfirmPage } from '../../fb-confirm/fb-confirm';
 
+import { PicturePopupPage } from '../../../pages/modal-popup/picture-popup/picture-popup';
 import { CreateLeadPage } from '../../leads/create-lead/create-lead';
 import { AllLeadsPage } from '../../leads/all-leads/all-leads';
 import { LeadDetailPage } from '../../leads/lead-detail/lead-detail';

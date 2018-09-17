@@ -19,6 +19,7 @@ import { ChatFriendsMessengerPage } from '../chat-friends-messenger/chat-friends
 import { ChatGroupsPage } from '../chat-groups/chat-groups';
 import { ChatsPage } from '../chats/chats';
 import { ChatingImagePopUpPage } from '../chating-image-pop-up/chating-image-pop-up';
+import { PicturePopupPage } from '../../../pages/modal-popup/picture-popup/picture-popup';
 import { NewGroupPopupPage } from '../new-group-popup/new-group-popup';
 import { NewMessagePopupPage } from '../new-message-popup/new-message-popup';
 import { GroupChatDetailPage } from '../group-chat-detail/group-chat-detail';

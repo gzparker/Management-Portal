@@ -12,6 +12,7 @@ import { ImagePicker } from '@ionic-native/image-picker';
 import { FbConfirmPage } from '../../fb-confirm/fb-confirm';
 import { AlertController } from 'ionic-angular';
 import { ImageCropperComponent, CropperSettings } from "ngx-img-cropper";
+import { PicturePopupPage } from '../../../pages/modal-popup/picture-popup/picture-popup';
 
 import { UserVerificationPage } from '../../user-verification/user-verification';
 

@@ -109,7 +109,7 @@
           </div>
 
           <div class="leadsHomeAddressMap">
-              <img src="{{this.sharedServiceObj.imgBucketUrl}}{{leadDetail.uploaded_home_map_image}}" (error)="imgLead.src = this.sharedServiceObj.noImageUrl" #imgHomeAddress/>
+              <img src="{{this.sharedServiceObj.imgBucketUrl}}{{leadDetail.uploaded_home_map_image}}" (error)="imgHomeAddress.src = this.sharedServiceObj.noImageUrl" #imgHomeAddress/>
             <!--<div #mapHome id="mapHome" style="width:100%;" [style.height]="map_home_height+'px'"></div>-->
           </div>
       </div>
@@ -130,7 +130,7 @@
           </div>
 
           <div class="leadsWorkAddressMap">
-              <img src="{{this.sharedServiceObj.imgBucketUrl}}{{leadDetail.uploaded_work_map_image}}" (error)="imgLead.src = this.sharedServiceObj.noImageUrl" #imgWorkImage/>
+              <img src="{{this.sharedServiceObj.imgBucketUrl}}{{leadDetail.uploaded_work_map_image}}" (error)="imgWorkImage.src = this.sharedServiceObj.noImageUrl" #imgWorkImage/>
             <!--<div #mapWork id="mapWork" style="width:100%;" [style.height]="map_work_height+'px'"></div>-->
           </div>
       </div>
