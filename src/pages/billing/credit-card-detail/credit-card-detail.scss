@@ -1,4 +1,18 @@
-page-credit-card-detail {  
+page-credit-card-detail {
+
+  ion-content {
+    &.dashboardUI {
+      &.colorEnabled {
+        &.background_color {
+        background: none;
+          &:before {
+          opacity: 1;
+          }
+        }
+      }
+    }
+  }
+  
 
   .scroll-content {
   margin-top: 75px  !important;

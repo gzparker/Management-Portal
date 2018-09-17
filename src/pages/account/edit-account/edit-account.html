@@ -24,7 +24,12 @@
 </ion-header>
 
 
-<ion-content padding class="generalInfoUI">
+<!-- Background color options -->
+<!-- add class ("colorEnabled") to enable color overrides -->
+<!-- add class ("custom-color-1, custom-color-2, or custom-color-3") to apply color overrides -->
+<!-- ex. <ion-content class="generalInfoUI colorEnabled custom-color-1"> -->
+
+<ion-content padding class="generalInfoUI colorEnabled background_color">
   <form role="form" data-toggle="validator" #accountForm="ngForm">
     
     <!-- <ion-list class="animated fadeIn leadsProfileWrapper">
@@ -81,6 +86,8 @@
           <button ion-button (click)="editImage(globalSettings.photo_personal,'personal');" *ngIf="isImageExist">
             <ion-icon name="md-create"></ion-icon>
           </button>
+          <!--<input id="custom-input" class="btnUpload colorEnabled button_color" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="personalFileChangeListener($event)">-->
+
       </div>
     </ion-list>
 
@@ -179,9 +186,9 @@
     </ion-list>
 
     <div class="dashboardBtn">
-        <button ion-button color="primary" block  (click)="updateAccount();"
+        <button ion-button color="primary" class="colorEnabled button_color" block  (click)="updateAccount();"
          [disabled]="!accountForm.valid">Update Account</button>
-         <button ion-button color="primary" block  (click)="moveGlobalSettings();" *ngIf="isGlobalPreference==true">Global Settings</button>
+         <button ion-button color="primary" class="colorEnabled button_color" block  (click)="moveGlobalSettings();" *ngIf="isGlobalPreference==true">Global Settings</button>
     </div>
 
   </form>  

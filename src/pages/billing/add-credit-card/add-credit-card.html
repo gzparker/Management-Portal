@@ -18,7 +18,7 @@
 </ion-header>
 
 
-<ion-content padding class="dashboardUI noScroll">
+<ion-content padding class="dashboardUI noScroll colorEnabled background_color">
   
       <!--<ion-chip *ngIf="creditCardMsg!=''">
           <ion-label color="danger">{{creditCardMsg}}</ion-label>
@@ -57,7 +57,7 @@
     </ion-list>
 
     <div class="dashboardBtn">
-      <button ion-button color="primary" block (click)="saveCreditCard();" [disabled]="!creditCardForm.valid">Save</button>
+      <button ion-button color="primary" class="colorEnabled button_color" block (click)="saveCreditCard();" [disabled]="!creditCardForm.valid">Save</button>
     </div>
   
   </form>

@@ -25,10 +25,10 @@
         <img-cropper #websiteCropper [image]="datawebsiteImage" [settings]="cropperSettings"
         (onCrop)="websiteImageCropped($event)"></img-cropper>
         
-        <div class="imgCropperPreviewResult" *ngIf="datawebsiteImage.image" >
+        <!--<div class="imgCropperPreviewResult" *ngIf="datawebsiteImage.image" >
         <img [src]="datawebsiteImage.image" [width]="websiteWidth"
         [height]="websiteHeight">
-        </div>
+        </div>-->
 
         <!--<input id="custom-input" class="btnUpload" type="file" accept=".png, .jpg, .jpeg" 
         capture="camera" multiple (change)="websiteFileChangeListener($event)">-->

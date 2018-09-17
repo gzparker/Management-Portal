@@ -297,15 +297,17 @@ this.user_description=html;
     
     let selectedImageOption={
       mode:"edit",
-      croppedWidth:this.croppedWidth,
-      croppedHeight:this.croppedHeight,
-      websiteWidth:this.personalWidth,
-      websiteHeight:this.personalHeight,
-      datawebsiteImage:this.dataPersonalImage,
+      croppedWidth:this.cropperSettings.croppedWidth,
+      croppedHeight:this.cropperSettings.croppedHeight,
+      //websiteWidth:this.personalWidth,
+      //websiteHeight:this.personalHeight,
+      //datawebsiteImage:this.dataPersonalImage,
       websiteImage:this.personalImage,
       imageType:imageType
     };
-    ///debugger;
+    //debugger;
+    //document.remo
+    //document.getElementById("canvas").remove();
    var modalColor = this.modalCtrl.create(PicturePopupPage,{selectedImageOption:selectedImageOption});
     modalColor.onDidDismiss(data => {
       if(data)
@@ -325,22 +327,52 @@ if(imageObject.isCancel=='no')
   //debugger;
   if(imageObject.imageType=="personal")
   {
-    this.croppedWidth=imageObject.croppedWidth;
-    this.croppedHeight=imageObject.croppedHeight;
-    this.personalWidth=imageObject.websiteWidth;
-    this.personalHeight=imageObject.websiteHeight;
-    this.dataPersonalImage=imageObject.datawebsiteImage;
+   
    // debugger;
-    this.personalImage=imageObject.websiteImage;
+    //this.personalImage=imageObject.websiteImage;
+    this.loadEditedImage(imageObject);
+    //this.createPersonalImageThumbnail(this.personalImage);
   }
 }
 
+  }
+  loadEditedImage(imageObject:any)
+  {
+    const self = this;
+    this.personalImage=imageObject.websiteImage;
+
+    var image:any = new Image();
+  
+        var reader = new FileReader();
+       
+         // self.hideImageCropper=true;
+         //self.isImageExist=true;
+          image.src = self.personalImage;
+          image.onload = function () {
+            //alert (this.width);
+           // debugger;
+            self.cropperSettings.croppedWidth = imageObject.croppedWidth;
+            self.cropperSettings.croppedHeight = imageObject.croppedHeight;
+            //self.personalImage=image.src;
+            //debugger;
+            //self.personalCropper.setImage(image);
+            self.resizePersonalImage(image.src, data => {
+              self.personalImage=image.src;
+             // debugger;
+              self.createPersonalImageThumbnail(self.personalImage);
+                });
+            //self.createPersonalImageThumbnail(image.src);
+        };
+          // 
+  
+  
   }
   loadPersonalImage(baseUrl:string,imageUrl:string) {
     //debugger;
     const self = this;
     var image:any = new Image();
-    const xhr = new XMLHttpRequest()
+    const xhr = new XMLHttpRequest();
+    debugger;
     xhr.open("GET", baseUrl+imageUrl);
     xhr.responseType = "blob";
     xhr.send();
@@ -360,6 +392,7 @@ if(imageObject.isCancel=='no')
             self.personalImage=image.src;
             //debugger;
             //self.personalCropper.setImage(image);
+           
             self.createPersonalImageThumbnail(image.src);
         };
           // 
@@ -386,9 +419,13 @@ if(imageObject.isCancel=='no')
           that.cropperSettings.croppedHeight = image.height;
        that.personalImage=image.src;
         //let that=this;
-       
-         that.createPersonalImageThumbnail(image.src);
-          //that.personalCropper.setImage(image);  
+       //debugger;
+      // let that=this;
+     // that.resizePersonalImage(that.personalImage, data => {
+       // that.personalImage=data;
+        that.createPersonalImageThumbnail(that.personalImage);
+       //  });
+         
       };
     };
     myReader.readAsDataURL(file);
@@ -403,7 +440,7 @@ if(imageObject.isCancel=='no')
     let that=this;
       this.resizePersonalImage(this.dataPersonalImage.image, data => {
         that.personalImage=data;
-        debugger;
+      //  debugger;
         this.createPersonalImageThumbnail(that.personalImage);
           });
     }
@@ -604,7 +641,7 @@ else
     this.generatePersonalImageFromImage(bigMatch, 500, 500, 0.5, data => {
       //debugger
   that.dataPersonalImage.image=data;
-  debugger;
+  //debugger;
     });
   }
   generatePersonalImageFromImage(img, MAX_WIDTH: number = 700, MAX_HEIGHT: number = 700, quality: number = 1, callback) {
@@ -663,7 +700,7 @@ else
     
       canvas.width = width;
       canvas.height = height;
-
+//debugger;
       var ctx = canvas.getContext("2d");
  
       ctx.drawImage(image, 0, 0, width, height);

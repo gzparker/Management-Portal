@@ -22,7 +22,7 @@
     </ion-navbar>
 </ion-header>
 
-<ion-content padding class="generalInfoUI">
+<ion-content padding class="generalInfoUI colorEnabled background_color">
 
   <ion-list class="animated fadeIn leadsProfileWrapper">
     <ion-item class="leadsProfile">        
@@ -39,11 +39,11 @@
     </ion-item>
   </ion-list>
 
-  <div class="animated fadeIn leadsShortcutButtons" *ngIf="leadDetail!=undefined">
+  <div class="animated fadeIn leadsShortcutButtons colorEnabled button_color" *ngIf="leadDetail!=undefined">
     <a class="contactPhone" href="tel:{{leadDetail.phone_mobile}}"><ion-icon name="md-call"></ion-icon><span>Call</span></a>
     <div class="contactChat" (click)="chatContact(leadDetail);"><ion-icon name="chatboxes"></ion-icon><span>Chat</span></div>
     <div class="contactEmail" (click)="emailContact(leadDetail);"><ion-icon name="ios-mail"></ion-icon><span>Mail</span></div>
-    <div class="contactEmail" *ngIf="leadDetail.app_installed!=undefined&&leadDetail.app_installed=='0'" 
+    <div class="contactInvite" *ngIf="leadDetail.app_installed!=undefined&&leadDetail.app_installed=='0'" 
     (click)="invitationPopUp(leadDetail);"><ion-icon name="ios-mail"></ion-icon>
       <span>Invite</span></div>
   </div>
@@ -149,12 +149,12 @@
         
       </ion-item>
       <div class="dashboardBtn">
-        <button ion-button color="primary" block (click)="updateLeadNotes();">Update</button>
+        <button ion-button color="primary" class="colorEnabled button_color" block (click)="updateLeadNotes();">Update</button>
     </div>
   </ion-list>
 
 
-  <ion-list class="centerStage leadsSavedInfo">
+  <ion-list class="centerStage leadsSavedInfo colorEnabled button_color">
     <ion-item>
     <h2 class="contentTitle" *ngIf="leadDetail!=undefined">{{leadDetail.first_name}}'s Saved</h2>
     

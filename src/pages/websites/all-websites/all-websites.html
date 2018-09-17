@@ -4,7 +4,7 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header class="dashboardUI">
+<ion-header class="noHeader dashboardUI">
 
   <ion-navbar>
     <button ion-button menuToggle start>
@@ -40,7 +40,7 @@
 </ion-header>
 
 
-<ion-content padding class="dashboardUI">
+<ion-content padding class="noHeader dashboardUI colorEnabled background_color">
 
   <ion-refresher (ionRefresh)="viewAllWebsite($event)">
     <ion-refresher-content></ion-refresher-content>
@@ -53,8 +53,8 @@
   
   <h1 class="centerStage contentTitle animated bounceInRight">All Websites</h1>
 
-  <ion-list class="centerStage noShadow">
-    <ion-item-sliding class="animated lightSpeedIn" *ngFor="let website of allWebsiteList">
+  <ion-list class="centerStage noShadow animated lightSpeedIn">
+    <ion-item-sliding *ngFor="let website of allWebsiteList">
 
         <ion-item class="websiteThumb">
             <ion-thumbnail item-start  (click)="websiteLinks(website.id)">

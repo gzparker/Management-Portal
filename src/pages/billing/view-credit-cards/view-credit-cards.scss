@@ -1,5 +1,18 @@
 page-view-credit-cards {  
 
+ion-content {
+  &.dashboardUI {
+    &.colorEnabled {
+      &.background_color {
+      background: none;
+        &:before {
+        opacity: 1;
+        }
+      }
+    }
+  }
+}
+
   .chip-ios, .chip-md, .chip-wp {
   color: #FFF !important;
   border-radius: 50px !important;

@@ -1,4 +1,17 @@
 page-view-roles {
+
+  ion-content {
+    &.dashboardUI {
+      &.colorEnabled {
+        &.background_color {
+        background: none;
+          &:before {
+          opacity: 1;
+          }
+        }
+      }
+    }
+  }  
   
   ion-app.ios [padding] {
   padding: 20px !important;

@@ -74,15 +74,11 @@ export class PicturePopupPage {
         if(this.navParams.get('selectedImageOption')!=undefined)
         {
           this.selectedImageOption=this.navParams.get('selectedImageOption');
-          this.croppedWidth=this.selectedImageOption.croppedWidth;
-          this.croppedHeight=this.selectedImageOption.croppedHeight;
-          this.websiteWidth=this.selectedImageOption.websiteWidth;
-          this.websiteHeight=this.selectedImageOption.websiteHeight;
-          this.datawebsiteImage=this.selectedImageOption.datawebsiteImage;
+        
           this.websiteImage=this.selectedImageOption.websiteImage;
 
-          //this.croppedHeightOld=this.selectedImageOption.croppedHeight;
-          //this.croppedWidthOld=this.selectedImageOption.croppedWidth;
+        this.cropperSettings.croppedHeight=this.selectedImageOption.croppedHeight;
+         this.cropperSettings.croppedWidth=this.selectedImageOption.croppedWidth;
           //this.websiteWidthOld=this.selectedImageOption.websiteWidth;
           //this.websiteHeightOld=this.selectedImageOption.websiteHeight;
           //this.datawebsiteImageOld=this.selectedImageOption.datawebsiteImage;
@@ -110,8 +106,9 @@ export class PicturePopupPage {
           image.src = this.websiteImage;
           image.onload = function () {
   
-            that.cropperSettings.croppedWidth = this.width;
-            that.cropperSettings.croppedHeight = this.height;
+            //that.cropperSettings.croppedWidth = this.width;
+            //that.cropperSettings.croppedHeight = this.height;
+            //debugger;
             //that.createPersonalImageThumbnail(image.src);
             that.websiteCropper.setImage(image);  
         };
@@ -142,168 +139,39 @@ export class PicturePopupPage {
   getFinalImage(){
     //debugger;
     let websiteImageObj={
-      croppedWidth:this.croppedWidth,
-      croppedHeight:this.croppedHeight,
-      websiteWidth:this.websiteWidth,
-      websiteHeight:this.websiteHeight,
-      datawebsiteImage:this.datawebsiteImage,
+     croppedWidth:this.cropperSettings.croppedWidth,
+     croppedHeight:this.cropperSettings.croppedHeight,
       websiteImage:this.websiteImage,
       imageType:this.selectedImageOption.imageType,
       isCancel:'no'
     };
+   // debugger;
     return websiteImageObj;
   }
   saveImage()
   {
     let websiteImageObj=this.getFinalImage();
-    debugger;
+  //  debugger;
     this.viewCtrl.dismiss(websiteImageObj);
   }
-  loadwebsiteImage(baseUrl:string,imageUrl:string) {
-   
-    const self = this;
-    var image:any = new Image();
-    const xhr = new XMLHttpRequest()
-    xhr.open("GET", baseUrl+imageUrl);
-    xhr.responseType = "blob";
-    xhr.send();
-    xhr.addEventListener("load", function() {
-        var reader = new FileReader();
-        reader.readAsDataURL(xhr.response); 
-       
-        reader.onloadend = function (loadEvent:any) {
-         // self.hideImageCropper=true;
-          image.src = loadEvent.target.result;
-          image.onload = function () {
-            //alert (this.width);
-            //debugger;
-            self.cropperSettings.croppedWidth = this.width;
-            self.cropperSettings.croppedHeight = this.height;
-            self.websiteImage=image.src;
-            //debugger;
-            //self.websiteCropper.setImage(image);
-            self.createwebsiteImageThumbnail(image.src);
-        };
-          // 
-  
-      };
-    });
-  }
-  websiteFileChangeListener($event) {
-    this.crop_website_image=true;
-    this.edit_website_logo=true;
-    this.hideImageCropper=true;
-    var image:any = new Image();
-    var file:File = $event.target.files[0];
-    var myReader:FileReader = new FileReader();
-    var that = this;
-    myReader.onloadend = function (loadEvent:any) {
-        image.src = loadEvent.target.result;
-        image.onload = function () {
 
-          that.cropperSettings.croppedWidth = this.width;
-          that.cropperSettings.croppedHeight = this.height;
-          
-          that.websiteCropper.setImage(image);  
-      };
-    };
-    myReader.readAsDataURL(file);
-}
   websiteImageCropped(image:any)
   {
-    if(this.crop_website_image)
-    {
+    //debugger;
+    //if(this.crop_website_image)
+    //{
       this.cropperSettings.croppedWidth = image.width;
       this.cropperSettings.croppedHeight = image.height;
-   
+   //debugger;
     let that=this;
-      this.resizewebsiteImage(this.datawebsiteImage.image, data => {
-        that.websiteImage=data;
-        this.createwebsiteImageThumbnail(that.websiteImage);
-          });
-    }
-    else
-    {
-      this.crop_website_image=true;
-    }
+    that.websiteImage=this.datawebsiteImage.image;
+      
+    //}
+    //else
+    //{
+     // this.crop_website_image=true;
+    //}
     
   }
-  /////////////////////Generate Thumbnail//////////////////////
-
-  createwebsiteImageThumbnail(bigMatch:any) {
-    let that=this;
-    //debugger;
-      this.generatewebsiteImageFromImage(bigMatch, 500, 500, 0.5, data => {
-        
-    that.datawebsiteImage.image=data;
-      });
-    }
-    generatewebsiteImageFromImage(img, MAX_WIDTH: number = 700, MAX_HEIGHT: number = 700, quality: number = 1, callback) {
-      var canvas: any = document.createElement("canvas");
-      var image:any = new Image();
-      //image.width=this.companyCropperSettings.croppedWidth;
-      //image.height=this.companyCropperSettings.croppedHeight;
-      var that=this;
-   //debugger;
-      image.src = img;
-      image.onload = function () {
-       
-        var width=that.cropperSettings.croppedWidth;
-        var height=that.cropperSettings.croppedHeight;
-       //debugger;
-        if (width > height) {
-          if (width > MAX_WIDTH) {
-            height *= MAX_WIDTH / width;
-            width = MAX_WIDTH;
-          }
-        } else {
-          if (height > MAX_HEIGHT) {
-            width *= MAX_HEIGHT / height;
-            height = MAX_HEIGHT;
-          }
-        }
-        //debugger;
-        canvas.width = width;
-        canvas.height = height;
-        that.websiteWidth = width;
-        that.websiteHeight = height;
-        //debugger;
-        var ctx = canvas.getContext("2d");
-   
-        ctx.drawImage(image, 0, 0, width, height);
-   
-        // IMPORTANT: 'jpeg' NOT 'jpg'
-        var dataUrl = canvas.toDataURL('image/jpeg', quality);
-   
-        callback(dataUrl)
-      }
-      
-    }
-    resizewebsiteImage(img:any,callback)
-    {
-      var canvas: any = document.createElement("canvas");
-      var image:any = new Image();
-     
-      var that=this;
   
-      image.src = img;
-      image.onload = function () {
-       
-        var width=that.cropperSettings.croppedWidth;
-        var height=that.cropperSettings.croppedHeight;
-      
-        canvas.width = width;
-        canvas.height = height;
-  
-        var ctx = canvas.getContext("2d");
-   
-        ctx.drawImage(image, 0, 0, width, height);
-  
-        var dataUrl = canvas.toDataURL('image/jpeg', 1);
-  
-       callback(dataUrl)
-      }
-    }
-    
-   ////////////////////////////////////////////////////////////////////////
 }

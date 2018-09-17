@@ -1,4 +1,5 @@
 page-manage-agents {
+
   ion-navbar {
     .bar-buttons {
       .button-inner {
@@ -8,6 +9,19 @@ page-manage-agents {
       }
     }
   }
+
+  ion-content {
+    &.dashboardUI {
+      &.colorEnabled {
+        &.background_color {
+        background: none;
+          &:before {
+          opacity: 1;
+          }
+        }
+      }
+    }
+  }  
 
   ion-content {
     &.dashboardUI {      
@@ -127,7 +141,18 @@ page-manage-agents {
       .optionIcon {
       opacity: .7;
       }
-    }    
+    }
+  
+    // &.colorEnabled {
+    //   &.button_color {
+    //     ion-item {
+    //       &:before {
+    //       background: $button_color;
+    //       }
+    //     }
+    //   }
+    // }
+
     .optionIcon {
     width: 20px;
     height: 20px;

@@ -21,7 +21,7 @@
 </ion-header>
 
 
-<ion-content padding class="dashboardUI">
+<ion-content padding class="dashboardUI colorEnabled background_color">
     <form role="form" data-toggle="validator" #leadForm="ngForm">
       <ion-list>
         <ion-item>
@@ -158,7 +158,7 @@
         </ion-list>
         </ion-list>
         <div class="dashboardBtn">
-            <button ion-button color="primary" block (click)="createLead();" [disabled]="!leadForm.valid">Create Contact</button>
+            <button ion-button color="primary" class="colorEnabled button_color" block (click)="createLead();" [disabled]="!leadForm.valid">Create Contact</button>
         </div>
     </form>
 </ion-content>

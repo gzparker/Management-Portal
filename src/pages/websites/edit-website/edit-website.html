@@ -18,7 +18,7 @@
 </ion-header>
 
 
-<ion-content padding class="dashboardUI">
+<ion-content padding class="dashboardUI colorEnabled background_color">
     <form role="form" data-toggle="validator" #websiteForm="ngForm" >
 
       <ion-list class="animated lightSpeedIn blk1">
@@ -169,7 +169,7 @@
                 </div>
 
                 <!-- Image Upload Button -->              
-                <input id="custom-input" class="btnUpload" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="websiteLogoFileChangeListener($event)">
+                <input id="custom-input" class="btnUpload colorEnabled button_color" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="websiteLogoFileChangeListener($event)">
                 
               </div>
 
@@ -203,7 +203,7 @@
               </div>
               
               <!-- Image Upload Button -->
-              <input id="custom-input" class="btnUpload" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="websiteFavIconFileChangeListener($event)">
+              <input id="custom-input" class="btnUpload colorEnabled button_color" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="websiteFavIconFileChangeListener($event)">
               </div>
 
               <div class="ImageCropperOption last">
@@ -403,7 +403,7 @@
       </ion-list>
       </ion-list>
       <div class="dashboardBtn">
-          <button ion-button color="primary" block (click)="updateWebsite();" [disabled]="!websiteForm.valid">Update Website</button>
+          <button ion-button color="primary" class="colorEnabled button_color" block (click)="updateWebsite();" [disabled]="!websiteForm.valid">Update Website</button>
       </div>
 
     </form>

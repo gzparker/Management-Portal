@@ -1,5 +1,18 @@
 page-create-role {
   
+  ion-content {
+    &.dashboardUI {
+      &.colorEnabled {
+        &.background_color {
+        background: none;
+          &:before {
+          opacity: 1;
+          }
+        }
+      }
+    }
+  }  
+
   .contentTitle {
     span {
     color: #F44336;

@@ -687,7 +687,7 @@ page-lead-detail {
     text-decoration: none !important;
     }
 
-    .contactPhone, .contactChat, .contactEmail {
+    .contactPhone, .contactChat, .contactEmail, .contactInvite {
     width: 50px;
     height: 50px;    
     color: #fff;
@@ -698,9 +698,13 @@ page-lead-detail {
     cursor: pointer;
     text-align: center;
     position: relative;
-    // overflow: hidden;
     background: #46E686;
-    // box-shadow: 2px 2px 1px #c6ccd0;
+    @extend %transition;
+      
+      &:hover {
+      opacity: .85;
+      }
+
       .icon-ios, .icon-md, .icon-wp {
       font-size: 28px;
       text-align: center;
@@ -726,16 +730,10 @@ page-lead-detail {
       margin-top: 20px;
       }
     }
-    .contactPhone {
-    // background: #a955cf;
-    // background: -webkit-linear-gradient(to right, #56d388, #46E686);
-    // background: linear-gradient(to right, #56d388, #46E686);
+    .contactPhone {    
     background: $flatblue;
     }
-    .contactChat {
-    // background: #8f70f8;
-    // background: -webkit-linear-gradient(to right, #8f70f8, #b184e3);
-    // background: linear-gradient(to right, #8f70f8, #b184e3);
+    .contactChat {    
     background: $flatblue;
       .icon-ios, .icon-md, .icon-wp {
         &:before {
@@ -748,9 +746,6 @@ page-lead-detail {
       }
     }
     .contactEmail {
-    // background: #FE965B;
-    // background: -webkit-linear-gradient(to right, #f6ac65, #ee8841);
-    // background: linear-gradient(to right, #f6ac65, #ee8841);    
     background: $flatblue;
       .icon-ios, .icon-md, .icon-wp {
       margin-top: 11px;
@@ -759,6 +754,19 @@ page-lead-detail {
         width: 28px;
         height: 28px;
         background: url(../assets/icon/svg/email/005.svg) no-repeat center center !important;
+        background-size: 100% !important;
+        }
+      }
+    }
+    .contactInvite {
+    background: $flatblue;
+      .icon-ios, .icon-md, .icon-wp {
+      margin-top: 11px;
+        &:before {
+        content: "";
+        width: 28px;
+        height: 28px;
+        background: url(../assets/icon/svg/invite/001.svg) no-repeat center center !important;
         background-size: 100% !important;
         }
       }

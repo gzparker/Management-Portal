@@ -18,7 +18,7 @@
 
 </ion-header>
 
-<ion-content padding class="dashboardUI">  
+<ion-content padding class="dashboardUI colorEnabled background_color">
 
   <!--<ion-chip *ngIf='hotsheetCreateMsg!=""'>
     <ion-label color="danger">{{hotsheetCreateMsg}}</ion-label>
@@ -517,7 +517,7 @@
     </ion-list>
 
     <div class="dashboardBtn">
-      <button ion-button color="primary" block (click)="createHotSheet();" 
+      <button ion-button color="primary" class="colorEnabled button_color" block (click)="createHotSheet();" 
       [disabled]="!hotSheetForm.valid||polygon_search==''">Create HotSheet</button>
     </div>
 
