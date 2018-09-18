@@ -79,6 +79,9 @@ export class PicturePopupPage {
 
         this.cropperSettings.croppedHeight=this.selectedImageOption.croppedHeight;
          this.cropperSettings.croppedWidth=this.selectedImageOption.croppedWidth;
+         this.cropperSettings.width=this.selectedImageOption.croppedWidth;
+         this.cropperSettings.height=this.selectedImageOption.croppedHeight;
+         //debugger;
           //this.websiteWidthOld=this.selectedImageOption.websiteWidth;
           //this.websiteHeightOld=this.selectedImageOption.websiteHeight;
           //this.datawebsiteImageOld=this.selectedImageOption.datawebsiteImage;

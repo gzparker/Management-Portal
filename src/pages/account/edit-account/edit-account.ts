@@ -291,10 +291,40 @@ else
 this.user_description=html;
  
   }
+  personalFileChangeListener($event) {
+    this.crop_personal_image=true;
+    this.edit_personal_logo=true;
+    //this.hideImageCropper=true;
+    this.isImageExist=true;
+    var image:any = new Image();
+    var file:File = $event.target.files[0];
+    var myReader:FileReader = new FileReader();
+    var that = this;
+    myReader.onloadend = function (loadEvent:any) {
+        image.src = loadEvent.target.result;
+        image.onload = function () {
+
+          //that.cropperSettings.croppedWidth = this.width;
+          //that.cropperSettings.croppedHeight = this.height;
+          that.cropperSettings.croppedWidth = image.width;
+          that.cropperSettings.croppedHeight = image.height;
+       that.personalImage=image.src;
+        //let that=this;
+       //debugger;
+      // let that=this;
+     // that.resizePersonalImage(that.personalImage, data => {
+       // that.personalImage=data;
+      that.createPersonalImageThumbnail(that.personalImage);
+       //  });
+         
+      };
+    };
+    myReader.readAsDataURL(file);
+}
   editImage(imageUrl:string,imageType:string){
     var that=this;
     this.loadNewPersonalImage=true;
-    
+    //debugger;
     let selectedImageOption={
       mode:"edit",
       croppedWidth:this.cropperSettings.croppedWidth,
@@ -339,30 +369,30 @@ if(imageObject.isCancel=='no')
   loadEditedImage(imageObject:any)
   {
     const self = this;
-    this.personalImage=imageObject.websiteImage;
-
+    //this.personalImage=imageObject.websiteImage;
+//debugger;
     var image:any = new Image();
   
         var reader = new FileReader();
        
          // self.hideImageCropper=true;
          //self.isImageExist=true;
-          image.src = self.personalImage;
-          image.onload = function () {
+          //image.src = self.personalImage;
+          //image.onload = function () {
             //alert (this.width);
-           // debugger;
+           //debugger;
             self.cropperSettings.croppedWidth = imageObject.croppedWidth;
             self.cropperSettings.croppedHeight = imageObject.croppedHeight;
-            //self.personalImage=image.src;
+            //self.personalImage=imageObject.websiteImage;
             //debugger;
             //self.personalCropper.setImage(image);
-            self.resizePersonalImage(image.src, data => {
-              self.personalImage=image.src;
-             // debugger;
+           self.resizePersonalImage(imageObject.websiteImage, data => {
+            self.personalImage=data;
+            // debugger;
               self.createPersonalImageThumbnail(self.personalImage);
-                });
+            });
             //self.createPersonalImageThumbnail(image.src);
-        };
+        //};
           // 
   
   
@@ -372,7 +402,7 @@ if(imageObject.isCancel=='no')
     const self = this;
     var image:any = new Image();
     const xhr = new XMLHttpRequest();
-    debugger;
+    //debugger;
     xhr.open("GET", baseUrl+imageUrl);
     xhr.responseType = "blob";
     xhr.send();
@@ -400,36 +430,7 @@ if(imageObject.isCancel=='no')
       };
     });
   }
-  personalFileChangeListener($event) {
-    this.crop_personal_image=true;
-    this.edit_personal_logo=true;
-    //this.hideImageCropper=true;
-    this.isImageExist=true;
-    var image:any = new Image();
-    var file:File = $event.target.files[0];
-    var myReader:FileReader = new FileReader();
-    var that = this;
-    myReader.onloadend = function (loadEvent:any) {
-        image.src = loadEvent.target.result;
-        image.onload = function () {
-
-          //that.cropperSettings.croppedWidth = this.width;
-          //that.cropperSettings.croppedHeight = this.height;
-          that.cropperSettings.croppedWidth = image.width;
-          that.cropperSettings.croppedHeight = image.height;
-       that.personalImage=image.src;
-        //let that=this;
-       //debugger;
-      // let that=this;
-     // that.resizePersonalImage(that.personalImage, data => {
-       // that.personalImage=data;
-        that.createPersonalImageThumbnail(that.personalImage);
-       //  });
-         
-      };
-    };
-    myReader.readAsDataURL(file);
-}
+  
   personalImageCropped(image:any)
   {
     if(this.crop_personal_image)
