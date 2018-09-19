@@ -93,6 +93,7 @@ export class MyApp {
   public chatGroups:any[]=[];
   public chatData:any[]=[];
   public firebaseUserId:string="";
+  public sideBarOption:string="1";
   pages: Array<{ title: string, component: any }>;
   public geoCoderData={
     country:"",
@@ -159,7 +160,21 @@ export class MyApp {
   ionViewDidLoad() {
     //this.menuController.enable(false);
   }
- 
+  toggleSideBar(){
+   // debugger;
+if(this.sideBarOption=="1")
+{
+  this.sideBarOption="2";
+}
+else if(this.sideBarOption=="2")
+{
+  this.sideBarOption="3";
+}
+else if(this.sideBarOption=="3")
+{
+  this.sideBarOption="1";
+}
+  }
   loadWebsiteInfoByDomain()
   {
     //debugger

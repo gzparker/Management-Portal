@@ -1,8 +1,10 @@
 <!-- sidebar display option = (default, IconOnly, noSidebar) -->
 
-<ion-split-pane [when]="showSideMenue" class="default">
+<ion-split-pane [when]="showSideMenue"  [ngClass]="{
+  'default':sideBarOption === '1',
+  'IconOnly':sideBarOption === '2','noSidebar':sideBarOption === '3'}">
 
-<div id="SidebarResetToggle"></div>
+<div id="SidebarResetToggle" (click)="toggleSideBar()"></div>
 
 <ion-menu [content]="content" persistent="true">
   <ion-header>
@@ -13,7 +15,7 @@
 
   <ion-content class="noScroll colorEnabled sidebar_color">
     
-    <div id="SidebarDisplayToggle"></div>
+    <div id="SidebarDisplayToggle" (click)="toggleSideBar()"></div>
 
     <ion-card text-center menuClose class="profileCard" *ngIf="userLoggedIn==true&&userGeneralInfo!=null"  
     (tap)="openPage('26')" > 

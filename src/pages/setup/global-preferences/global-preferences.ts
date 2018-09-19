@@ -765,7 +765,7 @@ else
           that.personalCropperSettings.croppedWidth = this.width;
           that.personalCropperSettings.croppedHeight = this.height;
        //  
-          that.personalCropper.setImage(image);   
+          //that.personalCropper.setImage(image);   
       };
     };
 
