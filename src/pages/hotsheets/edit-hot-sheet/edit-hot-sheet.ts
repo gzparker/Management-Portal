@@ -37,16 +37,17 @@ export class EditHotSheetPage {
 
   @ViewChild('searchbar', { read: ElementRef }) searchbar: ElementRef;
   addressElement: HTMLInputElement = null;
-  @ViewChild('headerImageCropper', undefined)
+  /*@ViewChild('headerImageCropper', undefined)
   headerImageCropper:ImageCropperComponent;
   @ViewChild('communityImageCropper', undefined)
-  communityImageCropper:ImageCropperComponent;
+  communityImageCropper:ImageCropperComponent;*/
   public hideHeaderCropper:boolean=true;
   public hideCommunityCropper:boolean=true;
   public edit_header_image:boolean=false;
   public edit_community_image:boolean=false;
   public crop_header_image:boolean=false;
   public crop_community_image:boolean=false;
+  public isHeaderExist:boolean=false;
   public headerCropperSettings;
   public communityCropperSettings;
   public croppedWidth:Number;
@@ -1469,7 +1470,7 @@ else
           };
         });
       }
-      showHideHeaderCropper(){
+     /* showHideHeaderCropper(){
         this.crop_header_image=false;
         const self = this;
     if(this.edit_header_image)
@@ -1512,7 +1513,7 @@ else
     {
       this.hideCommunityCropper=false;
     }
-      }
+      }*/
       updateHotSheet():void{
         //this.domainAccess=this.localStorageService.get('domainAccess');
         if(this.dataCommunityImage.image!=undefined&&this.dataCommunityImage.image!='')
@@ -1611,10 +1612,59 @@ else
         this.navCtrl.push(AllHotSheetsPage,{notificationMsg:this.hotsheetUpdateMsg.toString()});
       });
       }
+      editImage(imageType:string){
+        var that=this;
+       
+        //debugger;
+        let selectedImageOption={
+          mode:"edit",
+          croppedWidth:this.headerCropperSettings.croppedWidth,
+          croppedHeight:this.headerCropperSettings.croppedHeight,
+          //websiteWidth:this.personalWidth,
+          //websiteHeight:this.personalHeight,
+          //datawebsiteImage:this.dataPersonalImage,
+          websiteImage:this.headerImage,
+          imageType:imageType
+        };
+        //debugger;
+        //document.remo
+        //document.getElementById("canvas").remove();
+       var modalColor = this.modalCtrl.create(PicturePopupPage,{selectedImageOption:selectedImageOption});
+        modalColor.onDidDismiss(data => {
+          if(data)
+          {
+            that.setWebsiteImage(data);
+          }
+          
+     });
+       modalColor.present();
+      }
+      setWebsiteImage(imageObject:any)
+      {
+    //debugger;
+        this.loadEditedImage(imageObject,imageObject.imageType);
+      }
+      loadEditedImage(imageObject:any,imageType:any)
+      {
+        const self = this;
+       
+           if(imageType=="header")
+           {
+            self.headerCropperSettings.croppedWidth = imageObject.croppedWidth;
+            self.headerCropperSettings.croppedHeight = imageObject.croppedHeight;
+            
+           self.resizeHeaderImage(imageObject.websiteImage, data => {
+            self.headerImage=data;
+              self.createHeaderImageThumbnail(self.headerImage);
+            });
+           }
+  
+      }
       headerFileChangeListener($event) {
         this.crop_header_image=true;
         this.edit_header_image=true;
         this.hideHeaderCropper=true;
+        this.isHeaderExist=true;
         var image:any = new Image();
         var file:File = $event.target.files[0];
         var myReader:FileReader = new FileReader();
@@ -1624,7 +1674,9 @@ else
             image.onload = function () {
               that.headerCropperSettings.croppedWidth=this.width;
               that.headerCropperSettings.croppedHeight=this.height;
-              that.headerImageCropper.setImage(image);
+              that.headerImage=this.src;
+            that.createHeaderImageThumbnail(that.headerImage);
+              //that.headerImageCropper.setImage(image);
             }
     
         };
@@ -1664,7 +1716,9 @@ else
             image.onload = function () {
               that.communityCropperSettings.croppedWidth=this.width;
               that.communityCropperSettings.croppedHeight=this.height;
-            that.communityImageCropper.setImage(image);
+              that.communityImage=this.src;
+            that.createCommunityImageThumbnail(that.communityImage,'0');
+            //that.communityImageCropper.setImage(image);
             }
     
         };

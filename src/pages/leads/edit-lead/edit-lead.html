@@ -116,8 +116,8 @@
     <ion-list class="animated fadeIn leadsProfileWrapper uploadPhoto">
       <div class="AccountImageUploader">
 
-          <img-cropper #leadImageCropper [image]="dataLeadImage" [settings]="leadCropperSettings" 
-              (onCrop)="leadImageCropped($event)" *ngIf="hideLeadCropper"></img-cropper>
+          <!--<img-cropper #leadImageCropper [image]="dataLeadImage" [settings]="leadCropperSettings" 
+              (onCrop)="leadImageCropped($event)" *ngIf="hideLeadCropper"></img-cropper>-->
           
           <div class="imgCropperPreviewResult" *ngIf="dataLeadImage.image" >
             <img [src]="dataLeadImage.image" [width]="leadWidth"
@@ -125,7 +125,9 @@
           </div>
           
           <input id="custom-input" class="btnUpload colorEnabled button_color" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="leadFileChangeListener($event)">
-
+          <button ion-button (click)="editImage('leadImage');" *ngIf="isLeadImageExist">
+            <ion-icon name="md-create"></ion-icon>
+          </button>
       </div>
     </ion-list>
     

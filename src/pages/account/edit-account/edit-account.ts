@@ -304,24 +304,18 @@ this.user_description=html;
         image.src = loadEvent.target.result;
         image.onload = function () {
 
-          //that.cropperSettings.croppedWidth = this.width;
-          //that.cropperSettings.croppedHeight = this.height;
           that.cropperSettings.croppedWidth = image.width;
           that.cropperSettings.croppedHeight = image.height;
        that.personalImage=image.src;
-        //let that=this;
-       //debugger;
-      // let that=this;
-     // that.resizePersonalImage(that.personalImage, data => {
-       // that.personalImage=data;
+    
       that.createPersonalImageThumbnail(that.personalImage);
-       //  });
+   
          
       };
     };
     myReader.readAsDataURL(file);
 }
-  editImage(imageUrl:string,imageType:string){
+  editImage(imageType:string){
     var that=this;
     this.loadNewPersonalImage=true;
     //debugger;
@@ -352,48 +346,32 @@ this.user_description=html;
   {
 //debugger;
 this.loadNewPersonalImage=true;
-if(imageObject.isCancel=='no')
-{
-  //debugger;
+
   if(imageObject.imageType=="personal")
   {
    
-   // debugger;
-    //this.personalImage=imageObject.websiteImage;
     this.loadEditedImage(imageObject);
-    //this.createPersonalImageThumbnail(this.personalImage);
+    
   }
-}
 
   }
   loadEditedImage(imageObject:any)
   {
     const self = this;
-    //this.personalImage=imageObject.websiteImage;
-//debugger;
+   
     var image:any = new Image();
   
         var reader = new FileReader();
        
-         // self.hideImageCropper=true;
-         //self.isImageExist=true;
-          //image.src = self.personalImage;
-          //image.onload = function () {
-            //alert (this.width);
-           //debugger;
             self.cropperSettings.croppedWidth = imageObject.croppedWidth;
             self.cropperSettings.croppedHeight = imageObject.croppedHeight;
-            //self.personalImage=imageObject.websiteImage;
-            //debugger;
-            //self.personalCropper.setImage(image);
+            
            self.resizePersonalImage(imageObject.websiteImage, data => {
             self.personalImage=data;
-            // debugger;
+            
               self.createPersonalImageThumbnail(self.personalImage);
             });
-            //self.createPersonalImageThumbnail(image.src);
-        //};
-          // 
+           
   
   
   }

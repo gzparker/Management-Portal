@@ -129,12 +129,14 @@
            [height]="cropperHeight">
         </div>
         
-        <img-cropper #agentCropper [image]="dataAgentImage" [settings]="cropperSettings"
-       (onCrop)="agentImageCropped($event)" *ngIf="hideAgentCropper"></img-cropper>
+        <!--<img-cropper #agentCropper [image]="dataAgentImage" [settings]="cropperSettings"
+       (onCrop)="agentImageCropped($event)" *ngIf="hideAgentCropper"></img-cropper>-->
         
         
         <input id="custom-input" class="btnUpload colorEnabled button_color" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="fileChangeListener($event)">
-
+        <button ion-button (click)="editImage('agentImage');" *ngIf="isAgentImageExist">
+          <ion-icon name="md-create"></ion-icon>
+        </button>
       </div>
       
 

@@ -63,7 +63,9 @@
 
               <!-- Image Upload Button -->
               <input id="custom-input" class="btnUpload colorEnabled button_color" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="companyFileChangeListener($event)">
-
+              <button ion-button (click)="editImage('companyImage');" *ngIf="isCompanyImageExist">
+                <ion-icon name="md-create"></ion-icon>
+              </button>
             </div>
 
 
@@ -75,9 +77,9 @@
               </ion-item>-->
 
               <!-- Image Cropper -->
-              <img-cropper #companyCropper [image]="dataCompanyLogoImage" 
+              <!--<img-cropper #companyCropper [image]="dataCompanyLogoImage" 
               [settings]="companyCropperSettings"
-               (onCrop)="companyImageCropped($event)" *ngIf="hideCompanyCropper"></img-cropper>
+               (onCrop)="companyImageCropped($event)" *ngIf="hideCompanyCropper"></img-cropper>-->
 
             </div>
                 

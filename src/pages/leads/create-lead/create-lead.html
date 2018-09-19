@@ -147,14 +147,17 @@
               <ion-toggle [(ngModel)]="edit_lead_image" 
               name="edit_lead_image" (click)="showHideLeadCropper()"></ion-toggle>
             </ion-item>-->
-              <img-cropper #leadImageCropper [image]="dataLeadImage" [settings]="leadCropperSettings" 
-              (onCrop)="leadImageCropped($event)" *ngIf="hideLeadCropper"></img-cropper>
+              <!--<img-cropper #leadImageCropper [image]="dataLeadImage" [settings]="leadCropperSettings" 
+              (onCrop)="leadImageCropped($event)" *ngIf="hideLeadCropper"></img-cropper>-->
               <span *ngIf="dataLeadImage.image" >
               <img [src]="dataLeadImage.image" [width]="leadWidth"
               [height]="leadHeight">
               </span> 
               <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple 
               (change)="leadFileChangeListener($event)">
+              <button ion-button (click)="editImage('leadImage');" *ngIf="isLeadImageExist">
+                <ion-icon name="md-create"></ion-icon>
+              </button>
         </ion-list>
         </ion-list>
         <div class="dashboardBtn">

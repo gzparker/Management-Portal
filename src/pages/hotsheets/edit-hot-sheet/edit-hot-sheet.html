@@ -222,8 +222,8 @@
 
 
           <!-- Image Cropper -->
-          <img-cropper #headerImageCropper [image]="dataHeaderImage" [settings]="headerCropperSettings"
-          (onCrop)="headerImageCropped($event)" *ngIf="hideHeaderCropper"></img-cropper>
+          <!--<img-cropper #headerImageCropper [image]="dataHeaderImage" [settings]="headerCropperSettings"
+          (onCrop)="headerImageCropped($event)" *ngIf="hideHeaderCropper"></img-cropper>-->
 
           <!-- Image Cropper Result -->
           <div *ngIf="dataHeaderImage.image">          
@@ -233,7 +233,9 @@
 
           <!-- Image Upload Button -->
           <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="headerFileChangeListener($event)">
-
+          <button ion-button (click)="editImage('header');" *ngIf="isHeaderExist">
+            <ion-icon name="md-create"></ion-icon>
+          </button>
 
       </ion-list>
 
@@ -249,8 +251,8 @@
             name="edit_community_image" (click)="showHideCommunityCropper()"></ion-toggle>
           </ion-item>-->
           <!-- Image Cropper -->
-          <img-cropper  #communityImageCropper [image]="dataCommunityImage" [settings]="communityCropperSettings"
-             (onCrop)="communtiyImageCropped($event)" *ngIf="hideCommunityCropper"></img-cropper>
+          <!--<img-cropper  #communityImageCropper [image]="dataCommunityImage" [settings]="communityCropperSettings"
+             (onCrop)="communtiyImageCropped($event)" *ngIf="hideCommunityCropper"></img-cropper>-->
              <span *ngFor="let communityImage of dataCommunityImageArray">          
               <img [src]="communityImage.imageDataDummy" [width]="communityImage.imageWidth"
               [height]="communityImage.imageHeight">

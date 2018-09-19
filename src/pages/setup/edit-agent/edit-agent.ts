@@ -29,13 +29,14 @@ declare var CKEDITOR: any;
   templateUrl: 'edit-agent.html',
 })
 export class EditAgentPage {
-  @ViewChild('agentCropper', undefined)
-  agentCropper:ImageCropperComponent;
+  /*@ViewChild('agentCropper', undefined)
+  agentCropper:ImageCropperComponent;*/
   public hideAgentCropper:boolean=true;
   public isApp=false;
   public edit_agent_image:boolean=false;
   public crop_agent_image:boolean=false;
   public userLoggedId:boolean=false;
+  public isAgentImageExist:boolean=false;
   public mls_id:string="";
   public firstName:string="";
   public lastName:string="";
@@ -271,7 +272,7 @@ loadImage(baseUrl:string,imageUrl:string) {
     };
   });
 }
-showHideAgentCropper(){
+/*showHideAgentCropper(){
   this.crop_agent_image=false;
   const self = this;
 if(this.edit_agent_image)
@@ -292,7 +293,7 @@ else
 {
 this.hideAgentCropper=false;
 }
-}
+}*/
 updateAgent()
   {
     if(this.agent_id!="")
@@ -360,10 +361,59 @@ updateAgent()
       this.navCtrl.setRoot(ManageAgentsPage,{notificationMsg:this.agentUpdateMsg.toUpperCase()});
     });
   }
+  editImage(imageType:string){
+    var that=this;
+   
+    //debugger;
+    let selectedImageOption={
+      mode:"edit",
+      croppedWidth:this.cropperSettings.croppedWidth,
+      croppedHeight:this.cropperSettings.croppedHeight,
+      //websiteWidth:this.personalWidth,
+      //websiteHeight:this.personalHeight,
+      //datawebsiteImage:this.dataPersonalImage,
+      websiteImage:this.agentImage,
+      imageType:imageType
+    };
+    //debugger;
+    //document.remo
+    //document.getElementById("canvas").remove();
+   var modalColor = this.modalCtrl.create(PicturePopupPage,{selectedImageOption:selectedImageOption});
+    modalColor.onDidDismiss(data => {
+      if(data)
+      {
+        that.setWebsiteImage(data);
+      }
+      
+ });
+   modalColor.present();
+  }
+  setWebsiteImage(imageObject:any)
+  {
+//debugger;
+    this.loadEditedImage(imageObject,imageObject.imageType);
+  }
+  loadEditedImage(imageObject:any,imageType:any)
+  {
+    const self = this;
+   
+       if(imageType=="agentImage")
+       {
+        self.cropperSettings.croppedWidth = imageObject.croppedWidth;
+        self.cropperSettings.croppedHeight = imageObject.croppedHeight;
+        
+       self.resizePersonalImage(imageObject.websiteImage, data => {
+        self.agentImage=data;
+          self.createPersonalImageThumbnail(self.agentImage);
+        });
+       }
+
+  }
   fileChangeListener($event) {
     this.crop_agent_image=true;
     this.hideAgentCropper=true;
     this.edit_agent_image=true;
+    this.isAgentImageExist=true;
     var image:any = new Image();
     var file:File = $event.target.files[0];
     var myReader:FileReader = new FileReader();
@@ -375,8 +425,9 @@ updateAgent()
           //debugger;
           that.cropperSettings.croppedWidth = this.width;
           that.cropperSettings.croppedHeight = this.height;
-          
-          that.agentCropper.setImage(image);  
+          that.agentImage=this.src;
+          that.createPersonalImageThumbnail(that.agentImage);
+          //that.agentCropper.setImage(image);  
       };
 
     };

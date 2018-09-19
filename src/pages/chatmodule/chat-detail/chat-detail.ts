@@ -40,8 +40,8 @@ declare var firebase:any;
   templateUrl: 'chat-detail.html',
 })
 export class ChatDetailPage {
-  @ViewChild('chatImageCropper', undefined)
-  chatImageCropper:ImageCropperComponent;
+  /*@ViewChild('chatImageCropper', undefined)
+  chatImageCropper:ImageCropperComponent;*/
   @ViewChild(Content) content: Content;
   public groupId:string="";
   public chatingUserName:string="";
@@ -50,6 +50,7 @@ export class ChatDetailPage {
   public users:any[]=[];
   public chatDetailArray:any[]=[];
   public isApp=false;
+ 
   public chatImage:string="";
   public description:string="";
   public userId:string="";
@@ -458,13 +459,15 @@ confirm.present();
           image.onload = function () {
             that.chatCropperSettings.croppedWidth=this.width;
             that.chatCropperSettings.croppedHeight=this.height;
-            that.chatImageCropper.setImage(image);
+            that.chatImage=this.src;
+            that.createChatImageThumbnail(that.chatImage);
+            //that.chatImageCropper.setImage(image);
           }
       };
   
       myReader.readAsDataURL(file);
   }
-  showHideChatCropper(){
+  /*showHideChatCropper(){
     this.crop_chat_image=false;
     const self = this;
 if(this.edit_chat_image)
@@ -485,7 +488,7 @@ else
 {
   this.hideChatCropper=false;
 }
-  }
+  }*/
   chatImageCropped(image:any)
     {
       if(this.crop_chat_image)

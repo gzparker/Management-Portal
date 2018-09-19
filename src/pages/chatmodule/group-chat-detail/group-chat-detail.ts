@@ -42,8 +42,8 @@ declare var firebase:any;
   templateUrl: 'group-chat-detail.html',
 })
 export class GroupChatDetailPage {
-  @ViewChild('chatImageCropper', undefined)
-  chatImageCropper:ImageCropperComponent;
+  /*@ViewChild('chatImageCropper', undefined)
+  chatImageCropper:ImageCropperComponent;*/
   @ViewChild(Content) content: Content;
   public groupId:string="";
   public chatingUserName:string="";
@@ -62,6 +62,7 @@ public hideChatImageSelect:boolean=false;
 public hideChatCropper:boolean=true;
 public edit_chat_image:boolean=false;
 public crop_chat_image:boolean=false;
+
 public chatCropperSettings;
 public dataChatImage:any;
 public chatWidth:string="";
@@ -114,7 +115,7 @@ public chatWidth:string="";
       this.firebaseUserId=data;
       let loggedInUserInfo = this.storage.get('loggedInUserInfo');
       loggedInUserInfo.then((data) => {
-this.loggedInUserInfo=data;
+      this.loggedInUserInfo=data;
     this.groupMessageDetail(null);
     });
     });
@@ -546,13 +547,15 @@ if(groupObj.exists()){
           image.onload = function () {
             that.chatCropperSettings.croppedWidth=this.width;
             that.chatCropperSettings.croppedHeight=this.height;
-            that.chatImageCropper.setImage(image);
+            that.chatImage=this.src;
+            that.createChatImageThumbnail(that.chatImage);
+            //that.chatImageCropper.setImage(image);
           }
       };
   
       myReader.readAsDataURL(file);
   }
-  showHideChatCropper(){
+  /*showHideChatCropper(){
     this.crop_chat_image=false;
     const self = this;
 if(this.edit_chat_image)
@@ -573,7 +576,7 @@ else
 {
   this.hideChatCropper=false;
 }
-  }
+  }*/
   chatImageCropped(image:any)
     {
       if(this.crop_chat_image)

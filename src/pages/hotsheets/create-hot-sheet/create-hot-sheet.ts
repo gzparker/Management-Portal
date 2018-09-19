@@ -35,10 +35,10 @@ export class CreateHotSheetPage {
  
   @ViewChild('searchbar', { read: ElementRef }) searchbar: ElementRef;
   addressElement: HTMLInputElement = null;
-  @ViewChild('headerImageCropper', undefined)
-  headerImageCropper:ImageCropperComponent;
-  @ViewChild('communityImageCropper', undefined)
-  communityImageCropper:ImageCropperComponent;
+  //@ViewChild('headerImageCropper', undefined)
+  //headerImageCropper:ImageCropperComponent;
+  //@ViewChild('communityImageCropper', undefined)
+  //communityImageCropper:ImageCropperComponent;
 
   listSearch: string = '';
   public hideHeaderCropper:boolean=true;
@@ -47,6 +47,8 @@ export class CreateHotSheetPage {
   public edit_community_image:boolean=false;
   public crop_header_image:boolean=false;
   public crop_community_image:boolean=false;
+  public isHeaderExist:boolean=false;
+ 
   public headerCropperSettings;
   public communityCropperSettings;
   public croppedWidth:Number;
@@ -332,7 +334,7 @@ else
     {
       
       this.allHotSheetList=[];
-    debugger;
+    //debugger;
   this.userServiceObj.allUserHotSheets(this.userId.toString())
     .subscribe((result) => this.viewAllHotSheetResp(result));
     }
@@ -343,13 +345,13 @@ else
     if(result.status==true)
     {
       
-     debugger;
+     //debugger;
       this.allHotSheetList=result.result;
       
     }
     else
     {
-      debugger;
+      //debugger;
       this.allHotSheetList=[];
   
     }
@@ -1314,11 +1316,60 @@ this.allListingTypeChecked=true;
     });
     
     }
+    editImage(imageType:string){
+      var that=this;
+     
+      //debugger;
+      let selectedImageOption={
+        mode:"edit",
+        croppedWidth:this.headerCropperSettings.croppedWidth,
+        croppedHeight:this.headerCropperSettings.croppedHeight,
+        //websiteWidth:this.personalWidth,
+        //websiteHeight:this.personalHeight,
+        //datawebsiteImage:this.dataPersonalImage,
+        websiteImage:this.headerImage,
+        imageType:imageType
+      };
+      //debugger;
+      //document.remo
+      //document.getElementById("canvas").remove();
+     var modalColor = this.modalCtrl.create(PicturePopupPage,{selectedImageOption:selectedImageOption});
+      modalColor.onDidDismiss(data => {
+        if(data)
+        {
+          that.setWebsiteImage(data);
+        }
+        
+   });
+     modalColor.present();
+    }
+    setWebsiteImage(imageObject:any)
+    {
+  //debugger;
+      this.loadEditedImage(imageObject,imageObject.imageType);
+    }
+    loadEditedImage(imageObject:any,imageType:any)
+    {
+      const self = this;
+     
+         if(imageType=="header")
+         {
+          self.headerCropperSettings.croppedWidth = imageObject.croppedWidth;
+          self.headerCropperSettings.croppedHeight = imageObject.croppedHeight;
+          
+         self.resizeHeaderImage(imageObject.websiteImage, data => {
+          self.headerImage=data;
+            self.createHeaderImageThumbnail(self.headerImage);
+          });
+         }
+
+    }
     headerFileChangeListener($event) {
       this.hideHeaderCropper=true;
       this.edit_header_image=true;
       this.crop_header_image=true;
       var image:any = new Image();
+      this.isHeaderExist=true;
       var file:File = $event.target.files[0];
       var myReader:FileReader = new FileReader();
       var that = this;
@@ -1328,13 +1379,15 @@ this.allListingTypeChecked=true;
           image.onload = function () {
             that.headerCropperSettings.croppedWidth=this.width;
             that.headerCropperSettings.croppedHeight=this.height;
-            that.headerImageCropper.setImage(image);
+            that.headerImage=this.src;
+            that.createHeaderImageThumbnail(that.headerImage);
+            //that.headerImageCropper.setImage(image);
           }
       };
   
       myReader.readAsDataURL(file);
   }
-  showHideHeaderCropper(){
+  /*showHideHeaderCropper(){
     this.crop_header_image=false;
     const self = this;
 if(this.edit_header_image)
@@ -1355,8 +1408,8 @@ else
 {
   this.hideHeaderCropper=false;
 }
-  }
-  showHideCommunityCropper(){
+  }*/
+  /*showHideCommunityCropper(){
     this.crop_community_image=false;
     const self = this;
 if(this.edit_community_image)
@@ -1377,7 +1430,7 @@ else
 {
   this.hideCommunityCropper=false;
 }
-  }
+  }*/
     headerImageCropped(image:any)
     {
       if(this.crop_header_image)
@@ -1411,7 +1464,10 @@ else
           image.onload = function () {
             that.communityCropperSettings.croppedWidth=this.width;
             that.communityCropperSettings.croppedHeight=this.height;
-          that.communityImageCropper.setImage(image);
+            that.communityImage=this.src;
+            that.createCommunityImageThumbnail(that.communityImage);
+            //that.commun
+          //that.communityImageCropper.setImage(image);
           }
       };
   

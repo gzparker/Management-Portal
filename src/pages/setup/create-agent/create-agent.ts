@@ -28,14 +28,15 @@ declare var CKEDITOR: any;
   templateUrl: 'create-agent.html'
 })
 export class CreateAgentPage {
-  @ViewChild('agentCropper', undefined)
-  agentCropper:ImageCropperComponent;
+  /*@ViewChild('agentCropper', undefined)
+  agentCropper:ImageCropperComponent;*/
   public hideAgentCropper:boolean=true;
   cropperSettings: CropperSettings;
   public isApp=false;
   public userLoggedId:boolean=false;
   public edit_agent_image:boolean=false;
   public crop_agent_image:boolean=false;
+  public isAgentImageExist:boolean=false;
   public userType:string="1";
   public firstName:string="";
   public lastName:string="";
@@ -290,10 +291,59 @@ this.allRoles=[];
     this.selectedCountryCode = selectedCountryCodeData[0].country_code;
     // debugger;
   }
+  editImage(imageType:string){
+    var that=this;
+   
+    //debugger;
+    let selectedImageOption={
+      mode:"edit",
+      croppedWidth:this.cropperSettings.croppedWidth,
+      croppedHeight:this.cropperSettings.croppedHeight,
+      //websiteWidth:this.personalWidth,
+      //websiteHeight:this.personalHeight,
+      //datawebsiteImage:this.dataPersonalImage,
+      websiteImage:this.agentImage,
+      imageType:imageType
+    };
+    //debugger;
+    //document.remo
+    //document.getElementById("canvas").remove();
+   var modalColor = this.modalCtrl.create(PicturePopupPage,{selectedImageOption:selectedImageOption});
+    modalColor.onDidDismiss(data => {
+      if(data)
+      {
+        that.setWebsiteImage(data);
+      }
+      
+ });
+   modalColor.present();
+  }
+  setWebsiteImage(imageObject:any)
+  {
+//debugger;
+    this.loadEditedImage(imageObject,imageObject.imageType);
+  }
+  loadEditedImage(imageObject:any,imageType:any)
+  {
+    const self = this;
+   
+       if(imageType=="agentImage")
+       {
+        self.cropperSettings.croppedWidth = imageObject.croppedWidth;
+        self.cropperSettings.croppedHeight = imageObject.croppedHeight;
+        
+       self.resizePersonalImage(imageObject.websiteImage, data => {
+        self.agentImage=data;
+          self.createPersonalImageThumbnail(self.agentImage);
+        });
+       }
+
+  }
   fileChangeListener($event) {
     this.crop_agent_image=true;
     this.edit_agent_image=true;
     this.hideAgentCropper=true;
+    this.isAgentImageExist=true;
     var image:any = new Image();
     var file:File = $event.target.files[0];
     var myReader:FileReader = new FileReader();
@@ -305,8 +355,9 @@ this.allRoles=[];
           //debugger;
           that.cropperSettings.croppedWidth = this.width;
           that.cropperSettings.croppedHeight = this.height;
-          
-          that.agentCropper.setImage(image);  
+          that.agentImage=this.src;
+          that.createPersonalImageThumbnail(that.agentImage);
+          //that.agentCropper.setImage(image);  
       };
 
     };
@@ -359,7 +410,7 @@ this.allRoles=[];
         console.log(error);
       });
     }
-    showHideAgentCropper(){
+   /*showHideAgentCropper(){
       this.crop_agent_image=false;
       const self = this;
   if(this.edit_agent_image)
@@ -380,7 +431,7 @@ this.allRoles=[];
   {
     this.hideAgentCropper=false;
   }
-    }
+    }*/
 /////////////////////Generate Thumbnail//////////////////////
 
 createPersonalImageThumbnail(bigMatch:any) {

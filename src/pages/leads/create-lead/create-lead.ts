@@ -43,11 +43,12 @@ export class CreateLeadPage {
   addressHomeElement: HTMLInputElement = null;
   @ViewChild('searchWorkBar', { read: ElementRef }) searchWorkBar: ElementRef;
   addressWorkElement: HTMLInputElement = null;
-  @ViewChild('leadImageCropper', undefined)
-  leadImageCropper:ImageCropperComponent;
+  /*@ViewChild('leadImageCropper', undefined)
+  leadImageCropper:ImageCropperComponent;*/
   public isApp=false;
   public isWebBrowser=false;
   public userLoggedId:boolean=false;
+  public isLeadImageExist=false;
   public userType:string="1";
   public firstName:string="";
   public lastName:string="";
@@ -315,11 +316,61 @@ that.userServiceObj.setFireBaseInfo(email,password,webUserId,first_name,last_nam
       // this.navCtrl.push(LeadDetailPage,{notificationMsg:this.leadCreateMsg.toUpperCase(),leadId:leadInfo.lead_id});
        });
   }
+  editImage(imageType:string){
+    var that=this;
+   
+    //debugger;
+    let selectedImageOption={
+      mode:"edit",
+      croppedWidth:this.leadCropperSettings.croppedWidth,
+      croppedHeight:this.leadCropperSettings.croppedHeight,
+      //websiteWidth:this.personalWidth,
+      //websiteHeight:this.personalHeight,
+      //datawebsiteImage:this.dataPersonalImage,
+      websiteImage:this.leadImage,
+      imageType:imageType
+    };
+    //debugger;
+    //document.remo
+    //document.getElementById("canvas").remove();
+   var modalColor = this.modalCtrl.create(PicturePopupPage,{selectedImageOption:selectedImageOption});
+    modalColor.onDidDismiss(data => {
+      if(data)
+      {
+        that.setWebsiteImage(data);
+      }
+      
+ });
+   modalColor.present();
+  }
+  setWebsiteImage(imageObject:any)
+  {
+//debugger;
+    this.loadEditedImage(imageObject,imageObject.imageType);
+  }
+  loadEditedImage(imageObject:any,imageType:any)
+  {
+    const self = this;
+   
+       if(imageType=="leadImage")
+       {
+        self.leadCropperSettings.croppedWidth = imageObject.croppedWidth;
+        self.leadCropperSettings.croppedHeight = imageObject.croppedHeight;
+        
+       self.resizeLeadImage(imageObject.websiteImage, data => {
+        self.leadImage=data;
+          self.createLeadImageThumbnail(self.leadImage);
+        });
+       }
+
+  }
   leadFileChangeListener($event) {
     this.hideLeadCropper=true;
     this.edit_lead_image=true;
     this.crop_lead_image=true;
+    this.isLeadImageExist=true;
     var image:any = new Image();
+    
     var file:File = $event.target.files[0];
     var myReader:FileReader = new FileReader();
     var that = this;
@@ -329,13 +380,15 @@ that.userServiceObj.setFireBaseInfo(email,password,webUserId,first_name,last_nam
         image.onload = function () {
           that.leadCropperSettings.croppedWidth=this.width;
           that.leadCropperSettings.croppedHeight=this.height;
-          that.leadImageCropper.setImage(image);
+          that.leadImage=this.src;
+          that.createLeadImageThumbnail(that.leadImage);
+          //that.leadImageCropper.setImage(image);
         }
     };
 
     myReader.readAsDataURL(file);
 }
-showHideLeadCropper(){
+/*showHideLeadCropper(){
   this.crop_lead_image=false;
   const self = this;
 if(this.edit_lead_image)
@@ -356,7 +409,7 @@ else
 {
 this.hideLeadCropper=false;
 }
-}
+}*/
 leadImageCropped(image:any)
   {
     if(this.crop_lead_image)

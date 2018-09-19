@@ -19,6 +19,7 @@ import { SubscriptionProvider } from '../../../providers/subscription/subscripti
 import { ColorSelectionPopupPage } from '../../modal-popup/color-selection-popup/color-selection-popup';
 import { DashboardPage } from '../../dashboard/dashboard';
 import { DashboardTabsPage } from '../../tabs/dashboard-tabs/dashboard-tabs';
+import { trigger } from '@angular/core/src/animation/dsl';
 
 /**
  * Generated class for the GlobalPreferencesPage page.
@@ -32,10 +33,10 @@ import { DashboardTabsPage } from '../../tabs/dashboard-tabs/dashboard-tabs';
   templateUrl: 'global-preferences.html',
 })
 export class GlobalPreferencesPage {
-  @ViewChild('companyCropper', undefined)
+  /*@ViewChild('companyCropper', undefined)
   companyCropper:ImageCropperComponent;
   @ViewChild('personalCropper', undefined)
-  personalCropper:ImageCropperComponent;
+  personalCropper:ImageCropperComponent;*/
   public ngxCropperConfig: object;
  
   // config 
@@ -46,6 +47,7 @@ export class GlobalPreferencesPage {
   public crop_company_image:boolean=false;
   public crop_personal_image:boolean=false;
   public companyCropperLoaded:boolean=false;
+  public isCompanyImageExist:boolean=false;
   public cropperJsConfig: object;
   public isApp=false;
   public userLoggedId:boolean=false;
@@ -523,6 +525,7 @@ this.modalBackgroundColor="";
   loadCompanyImage(baseUrl:string,imageUrl:string) {
    
     const self = this;
+    
     //self.hideCompanyCropper=true;
     var image:any = new Image();
     const xhr = new XMLHttpRequest()
@@ -571,7 +574,7 @@ this.modalBackgroundColor="";
       };
     });
   }
-  showHideCompanyCropper(){
+  /*showHideCompanyCropper(){
     this.crop_company_image=false;
     const self = this;
 if(this.edit_company_image)
@@ -592,8 +595,8 @@ else
 {
   this.hideCompanyCropper=false;
 }
-  }
-  showHidePersonalCropper(){
+  }*/
+  /*showHidePersonalCropper(){
     this.crop_personal_image=false;
     const self = this;
 if(this.edit_personal_image)
@@ -614,11 +617,60 @@ else
 {
   this.hidePersonalCropper=false;
 }
+  }*/
+  editImage(imageType:string){
+    var that=this;
+   
+    //debugger;
+    let selectedImageOption={
+      mode:"edit",
+      croppedWidth:this.companyCropperSettings.croppedWidth,
+      croppedHeight:this.companyCropperSettings.croppedHeight,
+      //websiteWidth:this.personalWidth,
+      //websiteHeight:this.personalHeight,
+      //datawebsiteImage:this.dataPersonalImage,
+      websiteImage:this.companyLogoImage,
+      imageType:imageType
+    };
+    //debugger;
+    //document.remo
+    //document.getElementById("canvas").remove();
+   var modalColor = this.modalCtrl.create(PicturePopupPage,{selectedImageOption:selectedImageOption});
+    modalColor.onDidDismiss(data => {
+      if(data)
+      {
+        that.setWebsiteImage(data);
+      }
+      
+ });
+   modalColor.present();
+  }
+  setWebsiteImage(imageObject:any)
+  {
+//debugger;
+    this.loadEditedImage(imageObject,imageObject.imageType);
+  }
+  loadEditedImage(imageObject:any,imageType:any)
+  {
+    const self = this;
+   
+       if(imageType=="companyImage")
+       {
+        self.companyCropperSettings.croppedWidth = imageObject.croppedWidth;
+        self.companyCropperSettings.croppedHeight = imageObject.croppedHeight;
+        
+       self.resizeCompanyImage(imageObject.websiteImage, data => {
+        self.companyLogoImage=data;
+          self.createCompanyThumbnail(self.companyLogoImage);
+        });
+       }
+
   }
    companyFileChangeListener($event) {
      this.crop_company_image=true;
      this.edit_company_image=true;
      this.hideCompanyCropper=true;
+     this.isCompanyImageExist=true;
     var image:any = new Image();
     var file:File = $event.target.files[0];
     var myReader:FileReader = new FileReader();
@@ -630,8 +682,10 @@ else
        // debugger;
         that.companyCropperSettings.croppedWidth = this.width;
         that.companyCropperSettings.croppedHeight = this.height;
+        that.companyLogoImage=this.src;
+        that.createCompanyThumbnail(that.companyLogoImage);
         //that.createCompanyThumbnail(image.src);
-        that.companyCropper.setImage(image);     
+        //that.companyCropper.setImage(image);     
     };
 
         
