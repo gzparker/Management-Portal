@@ -96,6 +96,9 @@ export class GlobalPreferencesPage {
   public personalHeight:string="";
   public companyWidth:string="";
   public companyHeight:string="";
+  public selectedSegment:any="1";
+  public websiteLinkSegment:string="1";
+  public display_name:string="";
 
   public user = {timezone:'America/New_York'};
   public placeholderString = 'Select timezone';
@@ -180,6 +183,18 @@ export class GlobalPreferencesPage {
       this.userId=data;
       this.loadGlobalSettings();
     });
+  }
+  segmentChanged(event:any)
+  {
+    if(event.value=="1")
+    {
+this.selectedSegment="1";
+    }
+    else if(event.value=="2")
+    {
+      this.selectedSegment="2";
+    }
+   
   }
   loadGlobalSettings()
   {

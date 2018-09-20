@@ -67,22 +67,11 @@
                 <ion-icon name="md-create"></ion-icon>
               </button>
             </div>
+            <ion-item class="identityName b32">
+              <ion-label stacked>Display Name<span [ngClass]="{'error': display_name==''}" *ngIf="display_name==''">*</span></ion-label>
+              <ion-input type="text" required [(ngModel)]="display_name" name="display_name" placeholder="display name"></ion-input>
+            </ion-item>
 
-
-            <div class="ImageCropperOption">
-
-              <!--<ion-item *ngIf="dataCompanyLogoImage.image">
-                <ion-label stacked>Edit Image</ion-label>
-                <ion-toggle [(ngModel)]="edit_company_image" name="edit_company_image" (click)="showHideCompanyCropper()"></ion-toggle>
-              </ion-item>-->
-
-              <!-- Image Cropper -->
-              <!--<img-cropper #companyCropper [image]="dataCompanyLogoImage" 
-              [settings]="companyCropperSettings"
-               (onCrop)="companyImageCropped($event)" *ngIf="hideCompanyCropper"></img-cropper>-->
-
-            </div>
-                
           <!--<ion-list-header>
             <h2>Select Personal Logo</h2>
           </ion-list-header>
@@ -160,30 +149,26 @@
           [style.background]="thirdColor" [cpPosition]="'bottom'" [cpCancelButton]="true" [cpCancelButtonClass]="'btn btn-primary btn-xs'"
             [value]="thirdColor" [cpOutputFormat]="'rgba'"></ion-input>-->
     </div>
+    <ion-segment class="centerStage" name="colorSegment" [(ngModel)]="colorSegment" color="primary" (ionChange)="segmentChanged($event)">
+      <ion-segment-button value="1">
+        Set Custom Admin Colors
+      </ion-segment-button>
+      <ion-segment-button value="2">
+        Set Top Dweller Colors
+      </ion-segment-button>
+    
+    </ion-segment>
     <ion-item class="filterLabel">
       <ion-label> Use Custom Color</ion-label>
       <ion-toggle checked="customColorOptionModal" (ionChange)="toggleCustomColor()" [(ngModel)]="customColorOptionModal" name="customColorOption"></ion-toggle>
     </ion-item>
     
-    <ion-list class="customColorOption" *ngIf="customColorOptionModal">
+    <ion-list class="customColorOption" *ngIf="selectedSegment=='1'">
     <ion-item (click)="showColorPopUp('header_color')">
       <ion-label>Header Color</ion-label>
-      <!--<ion-select [(ngModel)]="headerColor" name="headerColor" id="headerColor">
-        <ion-option *ngFor="let colorOption of colorOptions" value= {{colorOption.id}}>
-          {{colorOption.name}}
-          </ion-option>
-       </ion-select>-->
-      
+    
     </ion-item>
-    <ion-item (click)="showColorPopUp('side_bar_menu_color')">
-      <ion-label>Side-Bar Menu Color</ion-label>
-      <!--<ion-select [(ngModel)]="sideBarMenuColor" name="sideBarMenuColor" id="sideBarMenuColor">
-        <ion-option *ngFor="let colorOption of colorOptions" value= {{colorOption.id}}>
-          {{colorOption.name}}
-          </ion-option>
-       </ion-select>-->
-      
-    </ion-item>
+   
     <!--<ion-item>
       <ion-label>Text Color</ion-label>
       <ion-select [(ngModel)]="textColor" name="textColor" id="textColor">
@@ -193,51 +178,40 @@
        </ion-select>
       
     </ion-item>-->
-    <ion-item (click)="showColorPopUp('content_background_color')">
-      <ion-label>Content Background Color</ion-label>
-      <!--<ion-select [(ngModel)]="backgroundColor" name="backgroundColor" id="backgroundColor">
-        <ion-option *ngFor="let colorOption of colorOptions" value= {{colorOption.id}}>
-          {{colorOption.name}}
-          </ion-option>
-       </ion-select>-->
-      
-    </ion-item>
     <ion-item (click)="showColorPopUp('content_title_color')">
       <ion-label>Content Title Color</ion-label>
-      <!--<ion-select [(ngModel)]="buttonColor" name="buttonColor" id="buttonColor">
-        <ion-option *ngFor="let colorOption of colorOptions" value= {{colorOption.id}}>
-          {{colorOption.name}}
-          </ion-option>
-       </ion-select>-->
-      
+
     </ion-item>
-    <ion-item (click)="showColorPopUp('button_color')">
+    <ion-item (click)="showColorPopUp('button_color_website')">
       <ion-label>Button Color</ion-label>
-      <!--<ion-select [(ngModel)]="buttonColor" name="buttonColor" id="buttonColor">
-        <ion-option *ngFor="let colorOption of colorOptions" value= {{colorOption.id}}>
-          {{colorOption.name}}
-          </ion-option>
-       </ion-select>-->
-      
+
+    </ion-item>
+    <ion-item (click)="showColorPopUp('map_sidebar_color')">
+      <ion-label>Map Sidebar Color</ion-label>
+
     </ion-item>
     <ion-item (click)="showColorPopUp('pagination_color')">
       <ion-label>Pagination Color</ion-label>
-      <!--<ion-select [(ngModel)]="buttonColor" name="buttonColor" id="buttonColor">
-        <ion-option *ngFor="let colorOption of colorOptions" value= {{colorOption.id}}>
-          {{colorOption.name}}
-          </ion-option>
-       </ion-select>-->
-      
+
     </ion-item>
    
     <ion-item (click)="showColorPopUp('modal_background_color')">
       <ion-label>Modal Background Color</ion-label>
-      <!--<ion-select [(ngModel)]="buttonColor" name="buttonColor" id="buttonColor">
-        <ion-option *ngFor="let colorOption of colorOptions" value= {{colorOption.id}}>
-          {{colorOption.name}}
-          </ion-option>
-       </ion-select>-->
-      
+
+    </ion-item>
+  </ion-list>
+  <ion-list class="customColorOption" *ngIf="selectedSegment=='2'">
+    <ion-item (click)="showColorPopUp('side_bar_menu_color')">
+      <ion-label>Side-Bar Menu Color</ion-label>
+     
+    </ion-item>
+    <ion-item (click)="showColorPopUp('button_color_mobile')">
+      <ion-label>Button Color</ion-label>
+
+    </ion-item>
+    <ion-item (click)="showColorPopUp('content_background_color')">
+      <ion-label>Background Color</ion-label>
+   
     </ion-item>
   </ion-list>
   </ion-list>
