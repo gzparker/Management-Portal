@@ -158,10 +158,10 @@
       </ion-segment-button>
     
     </ion-segment>
-    <ion-item class="filterLabel">
+    <!--<ion-item class="filterLabel">
       <ion-label> Use Custom Color</ion-label>
       <ion-toggle checked="customColorOptionModal" (ionChange)="toggleCustomColor()" [(ngModel)]="customColorOptionModal" name="customColorOption"></ion-toggle>
-    </ion-item>
+    </ion-item>-->
     
     <ion-list class="customColorOption" *ngIf="selectedSegment=='1'">
     <ion-item (click)="showColorPopUp('header_color')">

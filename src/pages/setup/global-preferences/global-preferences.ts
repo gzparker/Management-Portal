@@ -72,6 +72,7 @@ export class GlobalPreferencesPage {
   public modalBackgroundColor:string="";
   public modalBackgroundColorOption:string="";
   public isCustomColor:string="0";
+  
   public customColorOption:boolean=false;
   public customColorOptionModal:boolean=false;
 
@@ -97,7 +98,7 @@ export class GlobalPreferencesPage {
   public companyWidth:string="";
   public companyHeight:string="";
   public selectedSegment:any="1";
-  public websiteLinkSegment:string="1";
+  public colorSegment:string="1";
   public display_name:string="";
 
   public user = {timezone:'America/New_York'};
@@ -186,6 +187,7 @@ export class GlobalPreferencesPage {
   }
   segmentChanged(event:any)
   {
+    this.customColorOptionModal=true;
     if(event.value=="1")
     {
 this.selectedSegment="1";
