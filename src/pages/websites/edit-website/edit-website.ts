@@ -108,6 +108,8 @@ export class EditWebsitePage {
   public paginationColorOption:string="";
   public modalBackgroundColor:string="";
   public modalBackgroundColorOption:string="";
+  public mapSidebarColor:string="";
+  public mapSidebarColorOption:string="";
   public isCustomColor:string="0";
   public customColorOption:boolean=false;
   public customColorOptionModal:boolean=false;
@@ -430,6 +432,14 @@ this.textColor=result.result.text_color;
 this.textColor=result.result.text_color_option;
 this.buttonColor=result.result.button_color;
 this.buttonColorOption=result.result.button_color_option;
+this.contentTitleColor=result.result.content_title_color;
+     this.contentTitleColorOption=result.result.content_title_color_option;
+     this.paginationColor=result.result.pagination_color;
+     this.paginationColorOption=result.result.pagination_color_option;
+     this.modalBackgroundColor=result.result.modal_background_color;
+     this.modalBackgroundColorOption=result.result.modal_background_color_option;
+     this.mapSidebarColor=result.result.map_sidebar_color;
+     this.mapSidebarColorOption=result.result.map_sidebar_color_option;
 ///////////////////////////////////////////////////////////////
 //debugger;
 if(result.result.mls_server_id!=null)
@@ -915,7 +925,7 @@ else
     this.buttonColor,this.textColor,this.backgroundColor,this.headerColorOption,this.sideBarMenuColorOption,
     this.buttonColorOption,this.textColorOption,this.backgroundColorOption,this.customColorOptionModal,
     this.contentTitleColor,this.contentTitleColorOption,this.paginationColor,this.paginationColorOption,
-    this.modalBackgroundColor,this.modalBackgroundColorOption)
+    this.modalBackgroundColor,this.modalBackgroundColorOption,this.mapSidebarColor,this.mapSidebarColorOption)
     .subscribe((result) => this.updateWebsiteResp(result));
      //}
       
@@ -1029,6 +1039,12 @@ this.homepageMeta_description=html;
     selectedColor.option=option;
     selectedColor.selectedColorOption=this.modalBackgroundColorOption;
     selectedColor.selectedColor=this.modalBackgroundColor;
+        }
+        if(option=='map_sidebar_color')
+        {
+    selectedColor.option=option;
+    selectedColor.selectedColorOption=this.mapSidebarColorOption;
+    selectedColor.selectedColor=this.mapSidebarColor;
         }
         var modalColor = this.modalCtrl.create(ColorSelectionPopupPage,{selectedColor:selectedColor});
         modalColor.onDidDismiss(data => {
@@ -1237,6 +1253,34 @@ this.homepageMeta_description=html;
     {
     this.modalBackgroundColorOption="";
     this.modalBackgroundColor="";
+    }
+    }
+    }
+    else if(options.option=='map_sidebar_color')
+    {
+      this.mapSidebarColorOption=options.selectedColorOption;
+      if(options.selectedColor!='')
+    {
+      this.mapSidebarColor=options.selectedColor;
+    }
+    else
+    {
+    if(this.mapSidebarColorOption=="base_color")
+    {
+      this.mapSidebarColor=this.colorBase;
+    }
+    else if(this.mapSidebarColorOption=="secondary_color")
+    {
+      this.mapSidebarColor=this.secondColor;
+    }
+    else if(this.mapSidebarColorOption=="tertiary_color")
+    {
+      this.mapSidebarColor=this.thirdColor;
+    }
+    else if(this.mapSidebarColorOption=="default")
+    {
+      this.mapSidebarColorOption="";
+      this.mapSidebarColor="";
     }
     }
     }

@@ -71,6 +71,16 @@ export class GlobalPreferencesPage {
   public paginationColorOption:string="";
   public modalBackgroundColor:string="";
   public modalBackgroundColorOption:string="";
+  public mapSidebarColor:string="";
+  public mapSidebarColorOption:string="";
+
+  public buttonDwellerColor:string="";
+  public buttonDwellerColorOption:string="";
+  public sideBarDwellerColor:string="";
+  public sideBarDwellerColorOption:string="";
+  public backgroundDwellerColor:string="";
+  public backgroundDwellerOption:string="";
+
   public isCustomColor:string="0";
   
   public customColorOption:boolean=false;
@@ -235,6 +245,7 @@ this.selectedSegment="1";
     this.secondColor=this.globalSettings.color_second;
      this.thirdColor=this.globalSettings.color_third;
      this.identity_name=this.globalSettings.identity_name;
+     this.display_name=this.globalSettings.display_name;
      this.headerColor=this.globalSettings.header_color;
      this.headerColorOption=this.globalSettings.header_color_option;
      this.sideBarMenuColor=this.globalSettings.sidebar_menu_color;
@@ -249,6 +260,14 @@ this.selectedSegment="1";
      this.paginationColorOption=this.globalSettings.pagination_color_option;
      this.modalBackgroundColor=this.globalSettings.modal_background_color;
      this.modalBackgroundColorOption=this.globalSettings.modal_background_color_option;
+     this.mapSidebarColor=this.globalSettings.map_sidebar_color;
+     this.mapSidebarColorOption=this.globalSettings.map_sidebar_color_option;
+     this.buttonDwellerColor=this.globalSettings.button_color_dweller;
+     this.buttonDwellerColorOption=this.globalSettings.button_color_dweller_option;
+     this.sideBarDwellerColor=this.globalSettings.side_bar_color_dweller;
+     this.sideBarDwellerColorOption=this.globalSettings.side_bar_color_dweller_option;
+     this.backgroundDwellerColor=this.globalSettings.background_color_dweller;
+     this.backgroundDwellerOption=this.globalSettings.background_color_dweller_option;
     // debugger;
      
         if(this.globalSettings.photo_company!=undefined)
@@ -314,6 +333,31 @@ selectedColor.option=option;
 selectedColor.selectedColorOption=this.modalBackgroundColorOption;
 selectedColor.selectedColor=this.modalBackgroundColor;
     }
+    if(option=='map_sidebar_color')
+    {
+selectedColor.option=option;
+selectedColor.selectedColorOption=this.mapSidebarColorOption;
+selectedColor.selectedColor=this.mapSidebarColor;
+    }
+    if(option=='button_color_dweller')
+    {
+selectedColor.option=option;
+selectedColor.selectedColorOption=this.buttonDwellerColorOption;
+selectedColor.selectedColor=this.buttonDwellerColor;
+    }
+    if(option=='side_bar_color_dweller')
+    {
+selectedColor.option=option;
+selectedColor.selectedColorOption=this.sideBarDwellerColorOption;
+selectedColor.selectedColor=this.sideBarDwellerColor;
+    }
+    if(option=='background_color_dweller')
+    {
+selectedColor.option=option;
+selectedColor.selectedColorOption=this.backgroundDwellerOption;
+selectedColor.selectedColor=this.backgroundDwellerColor;
+    }
+    //debugger;   
     var modalColor = this.modalCtrl.create(ColorSelectionPopupPage,{selectedColor:selectedColor});
     modalColor.onDidDismiss(data => {
      // console.log(data);
@@ -524,6 +568,119 @@ this.modalBackgroundColor="";
 }
 }
 }
+else if(options.option=='map_sidebar_color')
+{
+  this.mapSidebarColorOption=options.selectedColorOption;
+  if(options.selectedColor!='')
+{
+  this.mapSidebarColor=options.selectedColor;
+}
+else
+{
+if(this.mapSidebarColorOption=="base_color")
+{
+  this.mapSidebarColor=this.colorBase;
+}
+else if(this.mapSidebarColorOption=="secondary_color")
+{
+  this.mapSidebarColor=this.secondColor;
+}
+else if(this.mapSidebarColorOption=="tertiary_color")
+{
+  this.mapSidebarColor=this.thirdColor;
+}
+else if(this.mapSidebarColorOption=="default")
+{
+  this.mapSidebarColorOption="";
+  this.mapSidebarColor="";
+}
+}
+}
+else if(options.option=='button_color_dweller')
+{
+  this.buttonDwellerColorOption=options.selectedColorOption;
+  if(options.selectedColor!='')
+{
+  this.buttonDwellerColor=options.selectedColor;
+}
+else
+{
+if(this.buttonDwellerColorOption=="base_color")
+{
+  this.buttonDwellerColor=this.colorBase;
+}
+else if(this.buttonDwellerColorOption=="secondary_color")
+{
+  this.buttonDwellerColor=this.secondColor;
+}
+else if(this.buttonDwellerColorOption=="tertiary_color")
+{
+  this.buttonDwellerColor=this.thirdColor;
+}
+else if(this.buttonDwellerColorOption=="default")
+{
+  this.buttonDwellerColorOption="";
+  this.buttonDwellerColor="";
+}
+}
+}
+else if(options.option=='side_bar_color_dweller')
+{
+  this.sideBarDwellerColorOption=options.selectedColorOption;
+  if(options.selectedColor!='')
+{
+  this.sideBarDwellerColor=options.selectedColor;
+}
+else
+{
+if(this.sideBarDwellerColorOption=="base_color")
+{
+  this.sideBarDwellerColor=this.colorBase;
+}
+else if(this.sideBarDwellerColorOption=="secondary_color")
+{
+  this.sideBarDwellerColor=this.secondColor;
+}
+else if(this.sideBarDwellerColorOption=="tertiary_color")
+{
+  this.sideBarDwellerColor=this.thirdColor;
+}
+else if(this.sideBarDwellerColorOption=="default")
+{
+  this.sideBarDwellerColorOption="";
+  this.sideBarDwellerColor="";
+}
+}
+}
+else if(options.option=='background_color_dweller')
+{
+  this.backgroundDwellerOption=options.selectedColorOption;
+  if(options.selectedColor!='')
+{
+  this.backgroundDwellerColor=options.selectedColor;
+}
+else
+{
+if(this.backgroundDwellerOption=="base_color")
+{
+  this.backgroundDwellerColor=this.colorBase;
+}
+else if(this.backgroundDwellerOption=="secondary_color")
+{
+  this.backgroundDwellerColor=this.secondColor;
+}
+else if(this.backgroundDwellerOption=="tertiary_color")
+{
+  this.backgroundDwellerColor=this.thirdColor;
+}
+else if(this.backgroundDwellerOption=="default")
+{
+  this.backgroundDwellerOption="";
+  this.backgroundDwellerColor="";
+}
+}
+}
+//debugger;
   }
   toggleCustomColor(){
     //this.customColorOption=!this.customColorOption;
@@ -1003,11 +1160,14 @@ else
     {
     //debugger;
     this.userServiceObj.updateGlobalSettings(this.userId,this.personalImage,this.companyLogoImage,this.user.timezone,
-      this.colorBase,this.secondColor,this.thirdColor,this.identity_name,this.headerColor,this.sideBarMenuColor,
+      this.colorBase,this.secondColor,this.thirdColor,this.identity_name,this.display_name,this.headerColor,this.sideBarMenuColor,
       this.buttonColor,this.textColor,this.backgroundColor,this.headerColorOption,this.sideBarMenuColorOption,
       this.buttonColorOption,this.textColorOption,this.backgroundColorOption,this.customColorOptionModal,
       this.contentTitleColor,this.contentTitleColorOption,this.paginationColor,
-      this.paginationColorOption,this.modalBackgroundColor,this.modalBackgroundColorOption)
+      this.paginationColorOption,this.modalBackgroundColor,this.modalBackgroundColorOption,
+      this.buttonDwellerColor,
+      this.buttonDwellerColorOption,this.sideBarDwellerColor,this.sideBarDwellerColorOption,
+      this.backgroundDwellerColor,this.backgroundDwellerOption,this.mapSidebarColor,this.mapSidebarColorOption)
     .subscribe((result) => this.updateGlobalSettingsResp(result));
  
     }
