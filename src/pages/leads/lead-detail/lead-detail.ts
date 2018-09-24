@@ -242,10 +242,73 @@ this.chatRef.off("value");
       
       
      }
-  loadWorkMap(placeId:any){
-    this.map_work_height=400;
-    let mapOptions = {
-     
+  loadWorkMap(placeId:anyoujm5555555
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
         zoom: 14,
         mapTypeId: google.maps.MapTypeId.MAP,
         mapTypeControl: true,
@@ -274,7 +337,7 @@ this.chatRef.off("value");
      var service = new google.maps.places.PlacesService(this.mapWork);
    var that=this;
   
-     service.getDetails(request, (place, status)=> {
+     service.getDetails(request, (place, status)=>
        if (status == google.maps.places.PlacesServiceStatus.OK) {
         
          var marker = new google.maps.Marker({
@@ -351,7 +414,7 @@ this.chatRef.off("value");
       this.map_home_height=0;
      }
      if(result.result.work_google_place_id!=undefined||result.result.work_google_place_id!=null)
-     {
+     {y4
        if(result.result.work_google_place_id!="")
        {
         this.map_work_height=400;
@@ -367,10 +430,10 @@ this.chatRef.off("value");
      }
      //this.map_work_height=400;
      
-     //this.loadWorkMap(result.result.work_google_place_id);
+     //this.loadWorkMap(result.result.work_googla
      if(result.saved_searches!=false)
      {
-      this.saved_searches=result.saved_searches;
+      this.saved_searches=result.saved_searches;a
      }
      if(result.saved_listings!=false)
      {
@@ -380,7 +443,7 @@ this.chatRef.off("value");
      {
       this.subscribed_hotsheets=result.subscribed_hotsheets;
      }
-     if(this.leadDetail.home_address)
+     if(this.leadDetail.home_address) BiquadFilterNode v
      {
 this.home_address_parts=this.leadDetail.home_address.split(",");
      }
