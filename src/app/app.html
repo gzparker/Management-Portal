@@ -13,7 +13,7 @@
     </ion-toolbar> -->
   </ion-header>
 
-  <ion-content class="noScroll colorEnabled sidebar_color">
+  <ion-content class="noScroll colorEnabled sidebar_color" [style.background]="sideBackGround">
     
     <div id="SidebarDisplayToggle" (click)="toggleSideBar()"></div>
 
@@ -59,7 +59,7 @@
       </ion-item>
 <ion-item menuClose ion-item (tap)="openPage('27')" 
       *ngIf="userLoggedIn==true&&paidStatus==true&&isChats==true">      
-        Chats <span class="m;kkj0ugcounter" *ngIf="allUnreadMsg!=undefined">{{allUnreadMsg}}</span>
+        Chats <span class="msgcounter" *ngIf="allUnreadMsg!=undefined">{{allUnreadMsg}}</span>
       </ion-item>
       <!--<ion-item menuClose ion-item (tap)="openPage('23')" 
       *ngIf="userLoggedIn==true&&paidStatus==true&&isRoles==true">      

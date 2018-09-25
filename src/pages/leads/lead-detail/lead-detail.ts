@@ -142,7 +142,6 @@ this.chatRef.off("value");
   }
   setAccessLevels()
   {
-
     let parent_id = this.storage.get('parent_id');
       parent_id.then((data) => {
         if(data!=null)
@@ -242,73 +241,7 @@ this.chatRef.off("value");
       
       
      }
-  loadWorkMap(placeId:anyoujm5555555
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
+  loadWorkMap(placeId:any
         zoom: 14,
         mapTypeId: google.maps.MapTypeId.MAP,
         mapTypeControl: true,
@@ -414,7 +347,7 @@ this.chatRef.off("value");
       this.map_home_height=0;
      }
      if(result.result.work_google_place_id!=undefined||result.result.work_google_place_id!=null)
-     {y4
+     {
        if(result.result.work_google_place_id!="")
        {
         this.map_work_height=400;
@@ -433,7 +366,7 @@ this.chatRef.off("value");
      //this.loadWorkMap(result.result.work_googla
      if(result.saved_searches!=false)
      {
-      this.saved_searches=result.saved_searches;a
+      this.saved_searches=result.saved_searches;
      }
      if(result.saved_listings!=false)
      {
@@ -443,7 +376,7 @@ this.chatRef.off("value");
      {
       this.subscribed_hotsheets=result.subscribed_hotsheets;
      }
-     if(this.leadDetail.home_address) BiquadFilterNode v
+     if(this.leadDetail.home_address)
      {
 this.home_address_parts=this.leadDetail.home_address.split(",");
      }

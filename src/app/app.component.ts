@@ -94,6 +94,9 @@ export class MyApp {
   public chatData:any[]=[];
   public firebaseUserId:string="";
   public sideBarOption:string="1";
+  public sideBarMenuBackGround:string="";
+  public buttonColor:string="";
+  public contentBackGrounColor:string="";
   pages: Array<{ title: string, component: any }>;
   public geoCoderData={
     country:"",
@@ -131,11 +134,14 @@ export class MyApp {
  
   }
   ionViewWillEnter() { 
-   //debugger;
+  // debugger;
    // this.menuController.enable(true); 
   }
+  
+  
   initializeApp() {
     this.platform.ready().then(() => {
+     // debugger;
       //this.loadGeneralWebsiteSettings();
      this.setDeviceToken();
       this.statusBar.styleDefault();
@@ -144,6 +150,7 @@ export class MyApp {
       this.loadWebsiteInfoByDomain();
       this.loadAvailableCountries();
       this.setUserCurrentGeoLocation();
+      this.applyThemeColors();
       var that=this;
      
     firebase.database().ref('chats').on("child_added", function(snapshot) {
@@ -158,7 +165,18 @@ export class MyApp {
     });
   }
   ionViewDidLoad() {
+    //debugger;
     //this.menuController.enable(false);
+    
+  }
+  applyThemeColors()
+  {
+    let sidebarElements=document.getElementsByClassName("sidebar_color");
+    for (var i = 0; i < sidebarElements.length; i++) {
+      sidebarElements[i].setAttribute("style", "background-color: red;");
+    }
+    //document.getElementsByClassName("sidebar_color").setAttribute("style", "background-color: red;");
+   // debugger;
   }
   toggleSideBar(){
    // debugger;
