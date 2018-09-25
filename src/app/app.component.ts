@@ -173,7 +173,7 @@ export class MyApp {
   {
     let sidebarElements=document.getElementsByClassName("sidebar_color");
     for (var i = 0; i < sidebarElements.length; i++) {
-      sidebarElements[i].setAttribute("style", "background-color: red;");
+      //sidebarElements[i].setAttribute("style", "background-color: red;");
     }
     //document.getElementsByClassName("sidebar_color").setAttribute("style", "background-color: red;");
    // debugger;
