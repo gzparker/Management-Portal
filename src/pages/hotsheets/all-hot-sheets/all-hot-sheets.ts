@@ -84,6 +84,10 @@ export class AllHotSheetsPage {
       this.setAccessLevels();
     });
   }
+  ionViewDidEnter()
+  {
+    this.sharedServiceObj.updateColorThemeMethod(null);
+  }
   setAccessLevels()
   {
 

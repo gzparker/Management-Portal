@@ -81,6 +81,10 @@ export class AccountInfoPage {
       this.viewAccount();
     });
   }
+  ionViewDidEnter()
+  {
+    this.sharedServiceObj.updateColorThemeMethod(null);
+  }
   editAccount()
   {
 this.navCtrl.push(EditAccountPage,{userId:this.userId});

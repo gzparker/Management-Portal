@@ -34,5 +34,8 @@ export class ContactusPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad ContactusPage');
   }
-
+  ionViewDidEnter()
+  {
+    this.sharedServiceObj.updateColorThemeMethod(null);
+  }
 }

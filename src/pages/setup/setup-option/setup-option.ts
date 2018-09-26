@@ -40,6 +40,10 @@ export class SetupOptionPage {
     console.log('ionViewDidLoad SetupOptionPage');
     this.setAccessLevels();
   }
+  ionViewDidEnter()
+  {
+    this.sharedServiceObj.updateColorThemeMethod(null);
+  }
   setAccessLevels()
   {
 

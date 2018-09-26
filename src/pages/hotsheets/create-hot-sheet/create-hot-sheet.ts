@@ -313,6 +313,10 @@ else
   });
 }
   }
+  ionViewDidEnter()
+  {
+    this.sharedServiceObj.updateColorThemeMethod(null);
+  }
   setCurrenttPosition(result:any)
   {
 

@@ -38,7 +38,10 @@ public first_name:string="";
     this.leadInfo = this.navParams.get('lead');
     }
   }
-
+  ionViewDidEnter()
+  {
+    this.sharedServiceObj.updateColorThemeMethod(null);
+  }
   ionViewDidLoad() {
    
     let first_name_dummy=this.storage.get('first_name');

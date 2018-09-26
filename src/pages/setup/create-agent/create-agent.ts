@@ -140,6 +140,10 @@ export class CreateAgentPage {
     });
     
   }
+  ionViewDidEnter()
+  {
+    this.sharedServiceObj.updateColorThemeMethod(null);
+  }
   onAgentBreifDescBlured(quill) {
     //console.log('editor blur!', quill);
   }

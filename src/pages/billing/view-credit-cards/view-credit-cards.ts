@@ -80,6 +80,10 @@ export class ViewCreditCardsPage {
       this.setAccessLevels();
     });
   }
+  ionViewDidEnter()
+  {
+    this.sharedServiceObj.updateColorThemeMethod(null);
+  }
   setAccessLevels()
   {
 

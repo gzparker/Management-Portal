@@ -37,6 +37,10 @@ export class HomePage {
      // this.setBackgroundInfo();
      this.loadGeneralWebsiteSettings();
   }
+  ionViewDidEnter()
+  {
+    this.sharedServiceObj.updateColorThemeMethod(null);
+  }
   loadGeneralWebsiteSettings()
   {
     if(this.loadedWebsite.indexOf("localhost")>0)

@@ -86,6 +86,10 @@ this.loggedInUserInfo=data;
     });
     });
   }
+  ionViewDidEnter()
+  {
+    this.sharedServiceObj.updateColorThemeMethod(null);
+  }
   closePopUp()
   {
     this.viewCtrl.dismiss();

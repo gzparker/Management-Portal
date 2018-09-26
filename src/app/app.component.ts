@@ -97,6 +97,25 @@ export class MyApp {
   public sideBarMenuBackGround:string="";
   public buttonColor:string="";
   public contentBackGrounColor:string="";
+  public background_color_dweller="";
+  public background_color_dweller_option="";
+  public button_color_dweller="";
+  public button_color_dweller_option="";
+  public side_bar_color_dweller="";
+  public side_bar_color_dweller_option="";
+  public header_color="";
+  public header_color_option="";
+  public content_title_color="";
+  public content_title_color_option="";
+  public button_color_website="";
+  public button_color_website_option="";
+  public map_sidebar_color="";
+  public map_sidebar_color_option="";
+  public pagination_color="";
+  public pagination_color_option="";
+  public modal_background_color="";
+  public modal_background_color_option="";
+  
   pages: Array<{ title: string, component: any }>;
   public geoCoderData={
     country:"",
@@ -151,7 +170,7 @@ export class MyApp {
       this.loadWebsiteInfoByDomain();
       this.loadAvailableCountries();
       this.setUserCurrentGeoLocation();
-      this.applyThemeColors(true);
+      //this.applyThemeColors(null);
       var that=this;
      
     firebase.database().ref('chats').on("child_added", function(snapshot) {
@@ -170,37 +189,131 @@ export class MyApp {
     //this.menuController.enable(false);
     
   }
-  applyThemeColors(value:any)
+  applyThemeColors(colorObject:any)
   {
-    let background_color_dweller="";
-    let background_color_dweller_option="";
-    let button_color_dweller="";
-    let button_color_dweller_option="";
-    let side_bar_color_dweller="";
-    let side_bar_color_dweller_option="";
-    let userInfo = this.storage.get('globalSettings')
-    this.storage.get('globalSettings').then((data) => {
-
-      if (data != null) {
-        //this.userGeneralInfo=data;
-        background_color_dweller=data.background_color_dweller;
-        background_color_dweller_option=data.background_color_dweller_option;
-        button_color_dweller=data.button_color_dweller;
-        button_color_dweller_option=data.button_color_dweller_option;
-        side_bar_color_dweller=data.side_bar_color_dweller;
-        side_bar_color_dweller_option=data.side_bar_color_dweller_option;
-        
-        let sidebarElements=document.getElementsByClassName("sidebar_color");
-    for (var i = 0; i < sidebarElements.length; i++) {
-      //sidebarElements[i].setAttribute("style", "background-color:"+side_bar_color_dweller+";");
-      sidebarElements[0].setAttribute("style", "background-color:#000000 !important;");
-    }
+  if(colorObject!=null)
+  {
+   //debugger;
+  if(colorObject.option=="header_color")
+  {
+    this.header_color=colorObject.selectedColor
+  }
+  if(colorObject.option=="content_title_color")
+  {
+    this.content_title_color=colorObject.selectedColor
+  }
+  if(colorObject.option=="button_color_website")
+  {
+    this.button_color_website=colorObject.selectedColor
+  }
+  if(colorObject.option=="map_sidebar_color")
+  {
+    this.map_sidebar_color=colorObject.selectedColor
+  }
+  if(colorObject.option=="pagination_color")
+  {
+    this.pagination_color=colorObject.selectedColor
+  }
+  if(colorObject.option=="modal_background_color")
+  {
+    this.modal_background_color=colorObject.selectedColor
+  }
+  if(colorObject.option=="side_bar_color_dweller")
+  {
+    this.side_bar_color_dweller=colorObject.selectedColor
+  }
+  if(colorObject.option=="button_color_dweller")
+  {
+    this.button_color_dweller=colorObject.selectedColor
+  }
+  if(colorObject.option=="background_color_dweller")
+  {
+    this.background_color_dweller=colorObject.selectedColor
+  }
+}
 //debugger;
-      }
-    });
+  let sidebarElements=document.getElementsByClassName("sideBarContent");
+    for (let i = 0; i < sidebarElements.length; i++) {
+      
+      sidebarElements[i].setAttribute("style", "background-color:"+this.side_bar_color_dweller+" !important;");
+    }
+    //////////////////////////////Button Color////////////////////////////////
+    let buttonColorElement=document.getElementsByClassName("button_color");
     
-    //document.getElementsByClassName("sidebar_color").setAttribute("style", "background-color: red;");
-  //debugger;
+    for (let i = 0; i < buttonColorElement.length; i++) {
+    debugger;
+      buttonColorElement[i].setAttribute("style", "background-color:"+this.button_color_dweller+" !important;");
+    }
+    let buttonContactElement=document.getElementsByClassName("contactPhone");
+    
+    for (let i = 0; i < buttonContactElement.length; i++) {
+    
+      buttonContactElement[i].setAttribute("style", "background-color:"+this.button_color_dweller+" !important;");
+    }
+    let buttonContactChatElement=document.getElementsByClassName("contactChat");
+    
+    for (let i = 0; i < buttonContactChatElement.length; i++) {
+    
+      buttonContactChatElement[i].setAttribute("style", "background-color:"+this.button_color_dweller+" !important;");
+    }
+    let buttonContactEmailElement=document.getElementsByClassName("contactEmail");
+    
+    for (let i = 0; i < buttonContactEmailElement.length; i++) {
+    
+      buttonContactEmailElement[i].setAttribute("style", "background-color:"+this.button_color_dweller+" !important;");
+    }
+    let buttonContactInviteElement=document.getElementsByClassName("contactInvite");
+    
+    for (let i = 0; i < buttonContactInviteElement.length; i++) {
+    
+      buttonContactInviteElement[i].setAttribute("style", "background-color:"+this.button_color_dweller+" !important;");
+    }
+    let buttonSegmentElement=document.getElementsByClassName("segment-button");
+    
+    for (let i = 0; i < buttonSegmentElement.length; i++) {
+    
+      buttonSegmentElement[i].setAttribute("style", "color:"+this.button_color_dweller+" !important;");
+      buttonSegmentElement[i].setAttribute("style", "border-color:"+this.button_color_dweller+" !important;");
+    }
+    let buttonSegmentActivatedElement=document.getElementsByClassName("segment-activated");
+    
+    for (let i = 0; i < buttonSegmentActivatedElement.length; i++) {
+    
+      buttonSegmentActivatedElement[i].setAttribute("style", "color:"+this.button_color_dweller+" !important;");
+      buttonSegmentActivatedElement[i].setAttribute("style", "background-color:"+this.button_color_dweller+" !important;");
+    }
+    /////////////////////////////////Content Background/////////////////////////////////////////
+    let contentBackgroundElement=document.getElementsByClassName("background_color");
+    
+    for (let i = 0; i < contentBackgroundElement.length; i++) {
+
+      contentBackgroundElement[i].setAttribute("style", "background:"+this.background_color_dweller+" !important;");
+    }
+    let contentBackgroundColorEnabledElement=document.getElementsByClassName("colorEnabled");
+    
+    for (let i = 0; i < contentBackgroundColorEnabledElement.length; i++) {
+
+      contentBackgroundColorEnabledElement[i].setAttribute("style", "background:"+this.background_color_dweller+" !important;");
+    }
+    let contentSearchBarIosElement=document.getElementsByClassName("searchbar-ios");
+    
+    for (let i = 0; i < contentSearchBarIosElement.length; i++) {
+
+      contentSearchBarIosElement[i].setAttribute("style", "border-color:"+this.background_color_dweller+" !important;");
+    }
+    let contentSearchBarMdIosElement=document.getElementsByClassName("searchbar-md");
+    
+    for (let i = 0; i < contentSearchBarMdIosElement.length; i++) {
+
+      contentSearchBarMdIosElement[i].setAttribute("style", "border-color:"+this.background_color_dweller+" !important;");
+    }
+    let contentSearchWpMdIosElement=document.getElementsByClassName("searchbar-wp");
+    
+    for (let i = 0; i < contentSearchWpMdIosElement.length; i++) {
+
+      contentSearchWpMdIosElement[i].setAttribute("style", "border-color:"+this.background_color_dweller+" !important;");
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////
   }
   toggleSideBar(){
    // debugger;
@@ -688,6 +801,25 @@ else if(option=='6')
 
       if (data != null) {
         this.userGeneralInfo=data;
+        this.background_color_dweller=data.background_color_dweller;
+        this.background_color_dweller_option=data.background_color_dweller_option;
+        this.button_color_dweller=data.button_color_dweller;
+        this.button_color_dweller_option=data.button_color_dweller_option;
+        this.side_bar_color_dweller=data.side_bar_color_dweller;
+        this.side_bar_color_dweller_option=data.side_bar_color_dweller_option;
+        this.header_color=data.header_color;
+        this.header_color_option=data.header_color_option;
+        this.content_title_color=data.content_title_color;
+        this.content_title_color_option=data.content_title_color_option;
+        this.button_color_website=data.button_color_website;
+        this.button_color_website_option=data.button_color_website_option;
+        this.map_sidebar_color=data.map_sidebar_color;
+        this.map_sidebar_color_option=data.map_sidebar_color_option;
+        this.pagination_color=data.pagination_color;
+        this.pagination_color_option=data.pagination_color_option;
+        this.modal_background_color=data.modal_background_color;
+        this.modal_background_color_option=data.modal_background_color_option;
+        this.applyThemeColors(null);
 //debugger;
       }
     });

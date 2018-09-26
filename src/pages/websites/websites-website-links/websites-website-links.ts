@@ -48,7 +48,10 @@ export class WebsitesWebsiteLinksPage {
     public ngZone: NgZone,public menuCtrl: MenuController,public loadingCtrl: LoadingController,
     private crop: Crop,private camera: Camera,private imagePicker: ImagePicker) {
   }
-
+  ionViewDidEnter()
+  {
+    this.sharedServiceObj.updateColorThemeMethod(null);
+  }
   ionViewDidLoad() {
     let member_id = this.storage.get('userId');
     member_id.then((data) => {

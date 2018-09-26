@@ -55,6 +55,10 @@ export class MlsSettingsPage {
       this.loadMlsSetup();
     });
   }
+  ionViewDidEnter()
+  {
+    this.sharedServiceObj.updateColorThemeMethod(null);
+  }
 loadMlsSetup()
 {
   //debugger;

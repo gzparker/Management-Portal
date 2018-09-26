@@ -202,9 +202,9 @@ this.signOutEmitter.emit();
   {
 this.isPaidEmitter.emit(paidStatus);
   }
-  public updateColorThemeMethod(updateThemeStatus:boolean)
+  public updateColorThemeMethod(updateThemeOption:any)
   {
-    this.updateColorThemesEmitter.emit(updateThemeStatus);
+    this.updateColorThemesEmitter.emit(updateThemeOption);
   }
   public setNavigationalPage(option:string)
   {

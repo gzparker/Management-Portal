@@ -189,11 +189,17 @@ export class GlobalPreferencesPage {
   }
 
   ionViewDidLoad() {
+    
     let member_id = this.storage.get('userId');
     member_id.then((data) => {
       this.userId=data;
       this.loadGlobalSettings();
+     // this.sharedServiceObj.updateColorThemeMethod(null);
     });
+  }
+  ionViewDidEnter()
+  {
+    this.sharedServiceObj.updateColorThemeMethod(null);
   }
   segmentChanged(event:any)
   {
@@ -268,7 +274,7 @@ this.selectedSegment="1";
      this.sideBarDwellerColorOption=this.globalSettings.side_bar_color_dweller_option;
      this.backgroundDwellerColor=this.globalSettings.background_color_dweller;
      this.backgroundDwellerOption=this.globalSettings.background_color_dweller_option;
-    // debugger;
+     //debugger;
      
         if(this.globalSettings.photo_company!=undefined)
       {
@@ -341,6 +347,7 @@ selectedColor.selectedColor=this.mapSidebarColor;
     }
     if(option=='button_color_dweller')
     {
+      //debugger;
 selectedColor.option=option;
 selectedColor.selectedColorOption=this.buttonDwellerColorOption;
 selectedColor.selectedColor=this.buttonDwellerColor;
@@ -382,20 +389,24 @@ else
 if(this.headerColorOption=="base_color")
 {
 this.headerColor=this.colorBase;
+options.selectedColor=this.headerColor;
 }
 else if(this.headerColorOption=="secondary_color")
 {
 this.headerColor=this.secondColor;
+options.selectedColor=this.headerColor;
 }
 else if(this.headerColorOption=="tertiary_color")
 {
 this.headerColor=this.thirdColor;
+options.selectedColor=this.headerColor;
 //debugger;
 }
 else if(this.headerColorOption=="default")
 {
 this.headerColorOption="";
 this.headerColor="";
+options.selectedColor=this.headerColor;
 }
 }
 //debugger;
@@ -412,19 +423,23 @@ else
 if(this.sideBarMenuColorOption=="base_color")
 {
 this.sideBarMenuColor=this.colorBase;
+options.selectedColor=this.sideBarMenuColor;
 }
 else if(this.sideBarMenuColorOption=="secondary_color")
 {
 this.sideBarMenuColor=this.secondColor;
+options.selectedColor=this.sideBarMenuColor;
 }
 else if(this.sideBarMenuColorOption=="tertiary_color")
 {
 this.sideBarMenuColor=this.thirdColor;
+options.selectedColor=this.sideBarMenuColor;
 }
 else if(this.sideBarMenuColorOption=="default")
 {
 this.sideBarMenuColorOption="";
 this.sideBarMenuColor="";
+options.selectedColor=this.sideBarMenuColor;
 }
 }
 }
@@ -440,19 +455,23 @@ else
 if(this.backgroundColorOption=="base_color")
 {
 this.backgroundColor=this.colorBase;
+options.selectedColor=this.backgroundColor;
 }
 else if(this.backgroundColorOption=="secondary_color")
 {
 this.backgroundColor=this.secondColor;
+options.selectedColor=this.backgroundColor;
 }
 else if(this.backgroundColorOption=="tertiary_color")
 {
 this.backgroundColor=this.thirdColor;
+options.selectedColor=this.backgroundColor;
 }
 else if(this.backgroundColorOption=="default")
 {
 this.backgroundColorOption="";
 this.backgroundColor="";
+options.selectedColor=this.backgroundColor;
 }
 }
 }
@@ -468,19 +487,23 @@ else
 if(this.buttonColorOption=="base_color")
 {
 this.buttonColor=this.colorBase;
+options.selectedColor=this.buttonColor;
 }
 else if(this.buttonColorOption=="secondary_color")
 {
 this.buttonColor=this.secondColor;
+options.selectedColor=this.buttonColor;
 }
 else if(this.buttonColorOption=="tertiary_color")
 {
-this.backgroundColor=this.thirdColor;
+this.buttonColor=this.thirdColor;
+options.selectedColor=this.buttonColor;
 }
 else if(this.buttonColorOption=="default")
 {
 this.buttonColorOption="";
 this.buttonColor="";
+options.selectedColor=this.buttonColor;
 }
 }
 }
@@ -496,19 +519,23 @@ else
 if(this.contentTitleColorOption=="base_color")
 {
 this.contentTitleColor=this.colorBase;
+options.selectedColor=this.contentTitleColor;
 }
 else if(this.contentTitleColorOption=="secondary_color")
 {
 this.contentTitleColor=this.secondColor;
+options.selectedColor=this.contentTitleColor;
 }
 else if(this.contentTitleColorOption=="tertiary_color")
 {
 this.contentTitleColor=this.thirdColor;
+options.selectedColor=this.contentTitleColor;
 }
 else if(this.contentTitleColorOption=="default")
 {
 this.contentTitleColorOption="";
 this.contentTitleColor="";
+options.selectedColor=this.contentTitleColor;
 }
 }
 }
@@ -524,19 +551,23 @@ else
 if(this.paginationColorOption=="base_color")
 {
 this.paginationColor=this.colorBase;
+options.selectedColor=this.paginationColor;
 }
 else if(this.paginationColorOption=="secondary_color")
 {
 this.paginationColor=this.secondColor;
+options.selectedColor=this.paginationColor;
 }
 else if(this.paginationColorOption=="tertiary_color")
 {
 this.paginationColor=this.thirdColor;
+options.selectedColor=this.paginationColor;
 }
 else if(this.paginationColorOption=="default")
 {
 this.paginationColorOption="";
 this.paginationColor="";
+options.selectedColor=this.paginationColor;
 }
 }
 }
@@ -552,19 +583,23 @@ else
 if(this.modalBackgroundColorOption=="base_color")
 {
 this.modalBackgroundColor=this.colorBase;
+options.selectedColor=this.modalBackgroundColor;
 }
 else if(this.modalBackgroundColorOption=="secondary_color")
 {
 this.modalBackgroundColor=this.secondColor;
+options.selectedColor=this.modalBackgroundColor;
 }
 else if(this.modalBackgroundColorOption=="tertiary_color")
 {
 this.modalBackgroundColor=this.thirdColor;
+options.selectedColor=this.modalBackgroundColor;
 }
 else if(this.modalBackgroundColorOption=="default")
 {
 this.modalBackgroundColorOption="";
 this.modalBackgroundColor="";
+options.selectedColor=this.modalBackgroundColor;
 }
 }
 }
@@ -580,19 +615,23 @@ else
 if(this.mapSidebarColorOption=="base_color")
 {
   this.mapSidebarColor=this.colorBase;
+  options.selectedColor=this.mapSidebarColor;
 }
 else if(this.mapSidebarColorOption=="secondary_color")
 {
   this.mapSidebarColor=this.secondColor;
+  options.selectedColor=this.mapSidebarColor;
 }
 else if(this.mapSidebarColorOption=="tertiary_color")
 {
   this.mapSidebarColor=this.thirdColor;
+  options.selectedColor=this.mapSidebarColor;
 }
 else if(this.mapSidebarColorOption=="default")
 {
   this.mapSidebarColorOption="";
   this.mapSidebarColor="";
+  options.selectedColor=this.mapSidebarColor;
 }
 }
 }
@@ -608,19 +647,23 @@ else
 if(this.buttonDwellerColorOption=="base_color")
 {
   this.buttonDwellerColor=this.colorBase;
+  options.selectedColor=this.buttonDwellerColor;
 }
 else if(this.buttonDwellerColorOption=="secondary_color")
 {
   this.buttonDwellerColor=this.secondColor;
+  options.selectedColor=this.buttonDwellerColor;
 }
 else if(this.buttonDwellerColorOption=="tertiary_color")
 {
   this.buttonDwellerColor=this.thirdColor;
+  options.selectedColor=this.buttonDwellerColor;
 }
 else if(this.buttonDwellerColorOption=="default")
 {
   this.buttonDwellerColorOption="";
   this.buttonDwellerColor="";
+  options.selectedColor=this.buttonDwellerColor;
 }
 }
 }
@@ -636,19 +679,23 @@ else
 if(this.sideBarDwellerColorOption=="base_color")
 {
   this.sideBarDwellerColor=this.colorBase;
+  options.selectedColor=this.sideBarDwellerColor;
 }
 else if(this.sideBarDwellerColorOption=="secondary_color")
 {
   this.sideBarDwellerColor=this.secondColor;
+  options.selectedColor=this.sideBarDwellerColor;
 }
 else if(this.sideBarDwellerColorOption=="tertiary_color")
 {
   this.sideBarDwellerColor=this.thirdColor;
+  options.selectedColor=this.sideBarDwellerColor;
 }
 else if(this.sideBarDwellerColorOption=="default")
 {
   this.sideBarDwellerColorOption="";
   this.sideBarDwellerColor="";
+  options.selectedColor=this.sideBarDwellerColor;
 }
 }
 }
@@ -664,23 +711,28 @@ else
 if(this.backgroundDwellerOption=="base_color")
 {
   this.backgroundDwellerColor=this.colorBase;
+  options.selectedColor=this.backgroundDwellerColor;
 }
 else if(this.backgroundDwellerOption=="secondary_color")
 {
   this.backgroundDwellerColor=this.secondColor;
+  options.selectedColor=this.backgroundDwellerColor;
 }
 else if(this.backgroundDwellerOption=="tertiary_color")
 {
   this.backgroundDwellerColor=this.thirdColor;
+  options.selectedColor=this.backgroundDwellerColor;
 }
 else if(this.backgroundDwellerOption=="default")
 {
   this.backgroundDwellerOption="";
   this.backgroundDwellerColor="";
+  options.selectedColor=this.backgroundDwellerColor;
 }
 }
 }
-this.sharedServiceObj.updateColorThemeMethod(true);
+//debugger;
+//this.sharedServiceObj.updateColorThemeMethod(options);
 //debugger;
   }
   toggleCustomColor(){

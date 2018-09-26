@@ -150,7 +150,12 @@ export class EditAccountPage {
       this.viewAccount();
       this.getAllCountryCodes();
       this.setAccessLevels();
+      
     });
+  }
+  ionViewDidEnter()
+  {
+    this.sharedServiceObj.updateColorThemeMethod(null);
   }
   loadAllAvailableMLS()
   {
@@ -192,7 +197,7 @@ else
     if(this.isOwner==false)
     {
       this.isGlobalPreference=false;
-     
+      
     let allowed_access_options = this.storage.get('allowed_access_options');
     allowed_access_options.then((data) => {
       if(data!=null)
@@ -222,8 +227,9 @@ else
   {
     //debugger;
     this.isGlobalPreference=true;
-  
+    //this.sharedServiceObj.updateColorThemeMethod(null);
   }
+  
   }
   viewAccount():void{
     if(this.userId!="")

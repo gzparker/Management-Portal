@@ -38,7 +38,10 @@ public listingSelectedObj:any;
         //debugger;
       }
   }
-
+  ionViewDidEnter()
+  {
+    this.sharedServiceObj.updateColorThemeMethod(null);
+  }
   ionViewDidLoad() {
     console.log('ionViewDidLoad ListingDetailPopupPage');
   }

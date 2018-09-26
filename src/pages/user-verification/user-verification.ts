@@ -31,7 +31,7 @@ export class UserVerificationPage {
     public viewCtrl: ViewController, public userServiceObj: UserProvider, 
     public modalCtrl: ModalController, private storage: Storage,public ngZone: NgZone) {
   }
-
+  
   ionViewDidLoad() {
     this.getAllCountryCodes();
     if(this.navParams.get('master_id')!=undefined)

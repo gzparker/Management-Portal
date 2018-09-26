@@ -86,6 +86,10 @@ export class SubscriptionPage {
     });
     ///debugger;
   }
+  ionViewDidEnter()
+  {
+    this.sharedServiceObj.updateColorThemeMethod(null);
+  }
   setYearMonthValues()
   {
     let currentYear=parseInt(new Date().getFullYear().toString());

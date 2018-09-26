@@ -67,6 +67,10 @@ export class UpgradeCenterPage {
        this.setAccessLevels();
     });
   }
+  ionViewDidEnter()
+  {
+    this.sharedServiceObj.updateColorThemeMethod(null);
+  }
   setAccessLevels()
   {
 

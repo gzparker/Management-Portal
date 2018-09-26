@@ -71,6 +71,10 @@ this.loggedInUserInfo=data;
     });
     });
   }
+  ionViewDidEnter()
+  {
+    this.sharedServiceObj.updateColorThemeMethod(null);
+  }
   loadAllContacts()
   {
     let that=this;

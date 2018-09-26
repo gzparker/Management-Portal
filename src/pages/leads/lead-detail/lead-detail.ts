@@ -125,6 +125,10 @@ mapWork: any;*/
       this.last_name=data;
     });
   }
+  ionViewDidEnter()
+  {
+    this.sharedServiceObj.updateColorThemeMethod(null);
+  }
   ionViewDidLeave()
   {
     if(this.groupRef!=undefined)

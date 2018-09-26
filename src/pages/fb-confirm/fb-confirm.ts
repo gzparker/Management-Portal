@@ -46,6 +46,10 @@ export class FbConfirmPage {
     this.setFacebookValues();
     this.getAllCountryCodes();
   }
+  ionViewDidEnter()
+  {
+    this.sharedServiceObj.updateColorThemeMethod(null);
+  }
   setFacebookValues() {
     this.storage.get('fbMembershipResp').then((data) => {
       if (data == null) {

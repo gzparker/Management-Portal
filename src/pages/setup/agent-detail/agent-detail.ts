@@ -60,6 +60,10 @@ export class AgentDetailPage {
        }
     });
   }
+  ionViewDidEnter()
+  {
+    this.sharedServiceObj.updateColorThemeMethod(null);
+  }
   setAccessLevels()
   {
     let parent_id = this.storage.get('parent_id');

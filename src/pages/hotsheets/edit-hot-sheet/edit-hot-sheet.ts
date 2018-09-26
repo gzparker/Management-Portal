@@ -323,7 +323,10 @@ else
     });
    
   }
-
+  ionViewDidEnter()
+  {
+    this.sharedServiceObj.updateColorThemeMethod(null);
+  }
   initAutocomplete(): void {
    
     this.addressElement = this.searchbar.nativeElement.querySelector('.searchbar-input');

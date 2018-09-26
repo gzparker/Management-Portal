@@ -49,6 +49,10 @@ export class AccountOptionPage {
   ionViewDidLoad() {
     this.setAccessLevels();
   }
+  ionViewDidEnter()
+  {
+    this.sharedServiceObj.updateColorThemeMethod(null);
+  }
   setAccessLevels()
   {
 

@@ -38,7 +38,10 @@ public hotsheetSelectedObj:any;
         //debugger;
       }
   }
-
+  ionViewDidEnter()
+  {
+    this.sharedServiceObj.updateColorThemeMethod(null);
+  }
   ionViewDidLoad() {
     console.log('ionViewDidLoad HotsheetDetailPopupPage');
   }

@@ -62,6 +62,10 @@ export class EditRolePage {
        }
     });
   }
+  ionViewDidEnter()
+  {
+    this.sharedServiceObj.updateColorThemeMethod(null);
+  }
   ngAfterContentInit(){
     //debugger;
    

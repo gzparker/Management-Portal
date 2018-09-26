@@ -127,6 +127,7 @@ public chatWidth:string="";
     setTimeout(() => {
       that.scrollToBottom();
     }, 400);
+    this.sharedServiceObj.updateColorThemeMethod(null);
   }
   ionViewDidLeave()
   {

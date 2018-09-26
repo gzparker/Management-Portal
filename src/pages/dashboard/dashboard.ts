@@ -141,6 +141,7 @@ private subscription: ISubscription;
       }
     
     });
+    this.sharedServiceObj.updateColorThemeMethod(null);
   }
   loadAllAgents()
 {

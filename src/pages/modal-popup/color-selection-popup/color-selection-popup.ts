@@ -51,7 +51,10 @@ export class ColorSelectionPopupPage {
     //this.option = this.navParams.get('option');
     }
   }
-
+  ionViewDidEnter()
+  {
+    this.sharedServiceObj.updateColorThemeMethod(null);
+  }
   ionViewDidLoad() {
     console.log('ionViewDidLoad ColorSelectionPopupPage');
   }

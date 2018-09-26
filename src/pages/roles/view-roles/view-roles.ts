@@ -93,6 +93,10 @@ export class ViewRolesPage {
     });
     
   }
+  ionViewDidEnter()
+  {
+    this.sharedServiceObj.updateColorThemeMethod(null);
+  }
 createRole()
 {
   this.navCtrl.push(CreateRolePage);

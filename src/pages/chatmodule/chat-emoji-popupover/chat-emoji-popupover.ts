@@ -48,6 +48,10 @@ export class ChatEmojiPopupoverPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad ChatEmojiPopupoverPage');
   }
+  ionViewDidEnter()
+  {
+    this.sharedServiceObj.updateColorThemeMethod(null);
+  }
   closePopUp()
   {
     //debugger;

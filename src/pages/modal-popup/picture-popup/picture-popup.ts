@@ -101,7 +101,10 @@ export class PicturePopupPage {
        // debugger;
         }
     }
-
+    ionViewDidEnter()
+    {
+      this.sharedServiceObj.updateColorThemeMethod(null);
+    }
   ionViewDidLoad() {
     //console.log('ionViewDidLoad PicturePopupPage');
     var image:any = new Image();

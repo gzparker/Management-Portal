@@ -138,6 +138,10 @@ export class CreateLeadPage {
       this.initWorkAutocomplete();
     });
   }
+  ionViewDidEnter()
+  {
+    this.sharedServiceObj.updateColorThemeMethod(null);
+  }
   loadAllAgents()
     {
       if(this.userId.toString())

@@ -81,7 +81,7 @@
           [height]="personalHeight">
           </div>
 
-          <input id="custom-input" class="btnUpload" type="file" accept=".png, .jpg, .jpeg" 
+          <input id="custom-input" class="btnUpload button_color" type="file" accept=".png, .jpg, .jpeg" 
           capture="camera" multiple (change)="personalFileChangeListener($event)">
           <button ion-button (click)="editImage('personal');" *ngIf="isImageExist">
             <ion-icon name="md-create"></ion-icon>

@@ -77,6 +77,10 @@ export class UpcomingSubscriptionPage {
       this.viewAllUpcomingSubscription(null);
     });
   }
+  ionViewDidEnter()
+  {
+    this.sharedServiceObj.updateColorThemeMethod(null);
+  }
   viewAllUpcomingSubscription(refresher:any):void{
     if(this.userId!="")
     {

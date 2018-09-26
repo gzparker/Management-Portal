@@ -96,6 +96,10 @@ export class AllWebsitesPage {
       this.setAccessLevels();
     });
   }
+  ionViewDidEnter()
+  {
+    this.sharedServiceObj.updateColorThemeMethod(null);
+  }
   setAccessLevels()
   {
 

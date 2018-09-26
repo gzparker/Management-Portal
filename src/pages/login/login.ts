@@ -73,7 +73,10 @@ export class LoginPage {
       duration: 5000
     });
   }
-
+  ionViewDidEnter()
+  {
+    this.sharedServiceObj.updateColorThemeMethod(null);
+  }
   ionViewDidLoad() {
     let websiteInfo = this.storage.get('websiteInfo');
     websiteInfo.then((data) => {

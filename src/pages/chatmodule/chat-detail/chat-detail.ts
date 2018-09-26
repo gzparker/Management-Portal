@@ -138,7 +138,9 @@ this.loggedInUserInfo=data;
     
     that.scrollChatToBottom();
   }, 400);
+  this.sharedServiceObj.updateColorThemeMethod(null);
   }
+
   ionViewDidLeave()
   {
     if(this.groupRef!=undefined)

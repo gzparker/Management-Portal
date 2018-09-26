@@ -154,6 +154,10 @@ public loader:any;
       
     });
   }
+  ionViewDidEnter()
+  {
+    this.sharedServiceObj.updateColorThemeMethod(null);
+  }
   ionViewDidLeave()
   {
     if(this.groupRef!=undefined)

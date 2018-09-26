@@ -79,6 +79,10 @@ this.loggedInUserInfo=data;
     });
     });
   }
+  ionViewDidEnter()
+  {
+    this.sharedServiceObj.updateColorThemeMethod(null);
+  }
   loadAllContacts()
   {
     //debugger;

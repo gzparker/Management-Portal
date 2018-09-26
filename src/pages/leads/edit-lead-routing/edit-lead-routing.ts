@@ -63,6 +63,10 @@ public loader:any;
   ionViewDidLoad() {
     this.loadLeadRouting();
   }
+  ionViewDidEnter()
+  {
+    this.sharedServiceObj.updateColorThemeMethod(null);
+  }
   loadLeadRouting()
   {
     if(this.websiteId!="")

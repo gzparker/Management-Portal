@@ -54,6 +54,10 @@ export class CreateRolePage {
       this.getAllAccessLevels();
     });
   }
+  ionViewDidEnter()
+  {
+    this.sharedServiceObj.updateColorThemeMethod(null);
+  }
   setSelectedAccessLevels(roleId:string)
 {
 

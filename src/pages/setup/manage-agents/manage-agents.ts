@@ -70,6 +70,10 @@ export class ManageAgentsPage {
         duration: 5000
       });
   }
+  ionViewDidEnter()
+  {
+    this.sharedServiceObj.updateColorThemeMethod(null);
+  }
   //openPage(pageNumber:string) {
     //this.sharedServiceObj.setNavigationalPage(pageNumber);
  // }

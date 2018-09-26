@@ -136,6 +136,10 @@ let leadInfo=this.navParams.get('leadInfo');
       this.last_name=data;
     });
   }
+  ionViewDidEnter()
+  {
+    this.sharedServiceObj.updateColorThemeMethod(null);
+  }
   ionViewDidLeave()
   {
     if(this.groupRef!=undefined)

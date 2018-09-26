@@ -98,8 +98,10 @@ export class ChatPage {
     loader.present();
     
 this.getMessages(null);
+this.sharedServiceObj.updateColorThemeMethod(null);
     });
   }
+  
   showNewGroupPopUp()
   {
     var modalPage = this.modalCtrl.create(NewGroupPopupPage);

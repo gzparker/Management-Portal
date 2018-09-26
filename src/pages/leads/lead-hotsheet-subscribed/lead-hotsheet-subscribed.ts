@@ -21,5 +21,5 @@ export class LeadHotsheetSubscribedPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad LeadHotsheetSubscribedPage');
   }
-
+  
 }

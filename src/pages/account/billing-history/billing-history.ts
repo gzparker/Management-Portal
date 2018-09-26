@@ -80,6 +80,10 @@ export class BillingHistoryPage {
       this.viewAllBillingHistory(null);
     });
   }
+  ionViewDidEnter()
+  {
+    this.sharedServiceObj.updateColorThemeMethod(null);
+  }
   viewAllBillingHistory(refresher:any):void{
     if(this.userId!="")
     {

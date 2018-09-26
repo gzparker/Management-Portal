@@ -186,7 +186,10 @@ export class EditWebsitePage {
         });
         this.service_id=this.sharedServiceObj.service_id;
   }
-
+  ionViewDidEnter()
+  {
+    this.sharedServiceObj.updateColorThemeMethod(null);
+  }
   ionViewDidLoad() {
     CKEDITOR.disableAutoInline = true;
     CKEDITOR.inline( 'homepage_description', {removeButtons:'Underline,Subscript,Superscript,SpecialChar'

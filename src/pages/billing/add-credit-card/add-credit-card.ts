@@ -75,6 +75,10 @@ export class AddCreditCardPage {
     });
     });
   }
+  ionViewDidEnter()
+  {
+    this.sharedServiceObj.updateColorThemeMethod(null);
+  }
   setYearMonthValues()
   {
     let currentYear=parseInt(new Date().getFullYear().toString());

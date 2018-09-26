@@ -104,6 +104,10 @@ export class CreateWebsitePage {
     });
     this.loadAllAvailableMLS();
   }
+  ionViewDidEnter()
+  {
+    this.sharedServiceObj.updateColorThemeMethod(null);
+  }
   loadAllAvailableMLS()
   {
     this.subscriptionObj.loadAllAvailableMLS()

@@ -45,5 +45,8 @@ export class ChatActivitiesPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad ChatActivitiesPage');
   }
-
+  ionViewDidEnter()
+  {
+    this.sharedServiceObj.updateColorThemeMethod(null);
+  }
 }
