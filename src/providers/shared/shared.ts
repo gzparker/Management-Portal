@@ -23,6 +23,7 @@ declare var firebase:any;
 export class SharedProvider {
   public isLoggedInEmitter: EventEmitter<Boolean>;
   public isPaidEmitter: EventEmitter<Boolean>;
+  public updateColorThemesEmitter:EventEmitter<Boolean>;
   public navigationalPage: EventEmitter<String>;
   public signOutEmitter: EventEmitter<String>;
   public chatNewMsgSentEmiter: EventEmitter<String>;
@@ -66,6 +67,7 @@ export class SharedProvider {
   constructor(private http: Http,private storage: Storage, public alertCtrl: AlertController) {
     this.isLoggedInEmitter = new EventEmitter();
     this.isPaidEmitter=new EventEmitter();
+    this.updateColorThemesEmitter=new EventEmitter();
     this.navigationalPage=new EventEmitter();
     this.signOutEmitter=new EventEmitter();
     this.chatNewMsgSentEmiter=new EventEmitter();
@@ -199,6 +201,10 @@ this.signOutEmitter.emit();
   public setPaidStatus(paidStatus: boolean)
   {
 this.isPaidEmitter.emit(paidStatus);
+  }
+  public updateColorThemeMethod(updateThemeStatus:boolean)
+  {
+    this.updateColorThemesEmitter.emit(updateThemeStatus);
   }
   public setNavigationalPage(option:string)
   {

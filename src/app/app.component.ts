@@ -116,6 +116,7 @@ export class MyApp {
     this.initializeApp();
     sharedServiceObj.isLoggedInEmitter.subscribe(item => this.setLoginStatus(item));
     sharedServiceObj.isPaidEmitter.subscribe(item => this.setPaidStatus(item));
+    sharedServiceObj.updateColorThemesEmitter.subscribe(item => this.applyThemeColors(item));
     //sharedServiceObj.unreadMsgCounterEmitter.subscribe(item => this.setUnreadMsgs(item));
     // used for an example of ngFor and navigation
     this.pages = [
@@ -150,7 +151,7 @@ export class MyApp {
       this.loadWebsiteInfoByDomain();
       this.loadAvailableCountries();
       this.setUserCurrentGeoLocation();
-      this.applyThemeColors();
+      this.applyThemeColors(true);
       var that=this;
      
     firebase.database().ref('chats').on("child_added", function(snapshot) {
@@ -169,14 +170,37 @@ export class MyApp {
     //this.menuController.enable(false);
     
   }
-  applyThemeColors()
+  applyThemeColors(value:any)
   {
-    let sidebarElements=document.getElementsByClassName("sidebar_color");
+    let background_color_dweller="";
+    let background_color_dweller_option="";
+    let button_color_dweller="";
+    let button_color_dweller_option="";
+    let side_bar_color_dweller="";
+    let side_bar_color_dweller_option="";
+    let userInfo = this.storage.get('globalSettings')
+    this.storage.get('globalSettings').then((data) => {
+
+      if (data != null) {
+        //this.userGeneralInfo=data;
+        background_color_dweller=data.background_color_dweller;
+        background_color_dweller_option=data.background_color_dweller_option;
+        button_color_dweller=data.button_color_dweller;
+        button_color_dweller_option=data.button_color_dweller_option;
+        side_bar_color_dweller=data.side_bar_color_dweller;
+        side_bar_color_dweller_option=data.side_bar_color_dweller_option;
+        
+        let sidebarElements=document.getElementsByClassName("sidebar_color");
     for (var i = 0; i < sidebarElements.length; i++) {
-      //sidebarElements[i].setAttribute("style", "background-color: red;");
+      //sidebarElements[i].setAttribute("style", "background-color:"+side_bar_color_dweller+";");
+      sidebarElements[0].setAttribute("style", "background-color:#000000 !important;");
     }
+//debugger;
+      }
+    });
+    
     //document.getElementsByClassName("sidebar_color").setAttribute("style", "background-color: red;");
-   // debugger;
+  //debugger;
   }
   toggleSideBar(){
    // debugger;
