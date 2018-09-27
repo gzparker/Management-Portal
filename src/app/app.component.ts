@@ -193,7 +193,7 @@ export class MyApp {
   {
   if(colorObject!=null)
   {
-   //debugger;
+  // debugger;
   if(colorObject.option=="header_color")
   {
     this.header_color=colorObject.selectedColor
@@ -232,13 +232,14 @@ export class MyApp {
   }
 }
 //debugger;
-  let sidebarElements=document.getElementsByClassName("sideBarContent");
+  let sidebarElements=document.getElementsByClassName("sidebar_color");
     for (let i = 0; i < sidebarElements.length; i++) {
-      
-      sidebarElements[i].setAttribute("style", "background-color:"+this.side_bar_color_dweller+" !important;");
+     // debugger;
+      sidebarElements[i].setAttribute("style", "background:"+this.side_bar_color_dweller+" !important;");
     }
+
     //////////////////////////////Button Color////////////////////////////////
-    let buttonColorElement=document.getElementsByClassName("button_color");
+   /* let buttonColorElement=document.getElementsByClassName("button_color");
     
     for (let i = 0; i < buttonColorElement.length; i++) {
     debugger;
@@ -312,7 +313,7 @@ export class MyApp {
     for (let i = 0; i < contentSearchWpMdIosElement.length; i++) {
 
       contentSearchWpMdIosElement[i].setAttribute("style", "border-color:"+this.background_color_dweller+" !important;");
-    }
+    }*/
     ////////////////////////////////////////////////////////////////////////////////////////////
   }
   toggleSideBar(){

@@ -732,7 +732,7 @@ else if(this.backgroundDwellerOption=="default")
 }
 }
 //debugger;
-//this.sharedServiceObj.updateColorThemeMethod(options);
+this.sharedServiceObj.updateColorThemeMethod(options);
 //debugger;
   }
   toggleCustomColor(){
