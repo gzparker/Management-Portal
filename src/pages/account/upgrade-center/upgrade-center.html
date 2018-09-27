@@ -65,19 +65,19 @@
   <h1 class="centerStage contentTitle animated fadeInLeft">Account Details</h1>
 
   <ion-list class="centerStage animated bounceInUp">
-    <ion-item *ngIf="current_upgrade!=null" (click)="editAccount();">
+    <ion-item *ngIf="current_upgrade!=null">
       <ion-icon name="ios-home-outline" item-start></ion-icon>
         <h2>Name</h2>
         <p>{{current_upgrade.name}}</p>
     </ion-item>
 
-    <ion-item *ngIf="current_upgrade!=null" (click)="editAccount();">
+    <ion-item *ngIf="current_upgrade!=null">
       <ion-icon name="ios-calendar-outline" item-start></ion-icon>
         <h2>Interval</h2>
         <p>{{current_upgrade.interval}}</p>
     </ion-item>
 
-    <ion-item *ngIf="current_upgrade!=null" (click)="editAccount();">
+    <ion-item *ngIf="current_upgrade!=null">
       <ion-icon name="logo-usd" item-start></ion-icon>
         <h2>Amount</h2>
         <p>${{current_upgrade.amount}}</p>

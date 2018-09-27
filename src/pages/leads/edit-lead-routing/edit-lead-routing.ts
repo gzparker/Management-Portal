@@ -42,6 +42,8 @@ public send_to_email_addresses:string="";
 public send_to_zillow_crm:boolean=false;
 public send_to_intagent_crm:boolean=false;
 public send_to_zapier:boolean=false;
+public agent_microsites:boolean=false;
+public send_to_roundrobin:boolean=false;
 public leadRoutingUpdateMsg:string="";
 public isItCrmLead:boolean=false;
 public loader:any;
@@ -124,6 +126,22 @@ public loader:any;
         {
           this.send_to_zapier=true;
         }
+        if(this.leadRoutingDetail.agent_microsites==null||this.leadRoutingDetail.agent_microsites=="0")
+        {
+          this.agent_microsites=false;
+        }
+        else
+        {
+          this.agent_microsites=true;
+        }
+        if(this.leadRoutingDetail.send_to_roundrobin==null||this.leadRoutingDetail.send_to_roundrobin=="0")
+        {
+          this.send_to_roundrobin=false;
+        }
+        else
+        {
+          this.send_to_roundrobin=true;
+        }
       }  
     }
     else
@@ -142,6 +160,8 @@ public loader:any;
   let send_to_zillow_crm_dummy="0";
   let send_to_intagent_crm_dummy="0";
   let send_to_zapier_dummy="0";
+  let send_to_roundrobin_dummy="0";
+  let agent_microsites_dummy="0";
   /*if(this.send_to_email)
   {
     send_to_email_dummy="1";
@@ -158,10 +178,18 @@ public loader:any;
   {
     send_to_zapier_dummy="1";
   }
+  if(this.send_to_roundrobin)
+  {
+    send_to_roundrobin_dummy="1";
+  }
+  if(this.agent_microsites)
+  {
+    agent_microsites_dummy="1";
+  }
     //  debugger;
    
   this.userServiceObj.updateLeadRouting(this.websiteId,this.send_to_email_addresses,send_to_zillow_crm_dummy,
-  send_to_intagent_crm_dummy,send_to_zapier_dummy)
+  send_to_intagent_crm_dummy,send_to_zapier_dummy,agent_microsites_dummy,send_to_roundrobin_dummy)
     .subscribe((result) => this.updateLeadRoutingResp(result));
   
   }

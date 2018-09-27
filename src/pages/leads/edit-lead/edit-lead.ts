@@ -369,13 +369,15 @@ getHomeAddress(data) {
     this.notificationMsg="Lead has been updated successfully.";
   
   let leadInfo=result.leadInfo;
- // debugger;
+ 
   var i=0;
   this.userRef=firebase.database().ref('users');
+  //debugger;
     this.userRef.orderByChild("webUserId").equalTo(leadInfo.lead_id).on("value", function(snapshot) {
-      
+      //debugger;
       if(snapshot.exists())
       {
+        //debugger;
       snapshot.forEach(element => {
         
         if(element.val().is_lead=="1")
@@ -395,17 +397,17 @@ fredRef.update({email:leadInfo.email,first_name:leadInfo.first_name,image_url:le
       });
       that.ngZone.run(() => {
         
-        
+        //debugger;
         that.navCtrl.push(LeadDetailPage,{notificationMsg:that.notificationMsg.toUpperCase(),leadId:that.leadId});
          });
     }
     else
     {
-    
+    //debugger;
       that.userServiceObj.setFireBaseInfo(leadInfo.email,leadInfo.password,leadInfo.lead_id,leadInfo.first_name,leadInfo.last_name,
         leadInfo.image_url,"0","0","1",leadInfo.user_website_id);
         that.ngZone.run(() => {
-         
+         //debugger;
           that.navCtrl.push(LeadDetailPage,{notificationMsg:that.notificationMsg.toUpperCase(),leadId:that.leadId});
            });
     }
