@@ -1463,7 +1463,7 @@ updateGlobalSettings(member_id:string,personalImage:string,companyImage:string,
     data.append('background_color_dweller_option',backgroundDwellerOption);
     data.append('map_sidebar_color',mapSidebarColor);
     data.append('map_sidebar_color_option',mapSidebarColorOption);
- debugger;
+ //debugger;
    let updateSettingsResp=this.http
        .post(this.sharedServiceObj.registerationApiBaseUrl+'members/updateGlobalSettings', data, this.headerOptions)
        .map(this.extractData)
