@@ -260,6 +260,8 @@ this.selectedSegment="1";
      this.textColor=this.globalSettings.text_color_option;
      this.buttonColor=this.globalSettings.button_color;
      this.buttonColorOption=this.globalSettings.button_color_option;
+     this.backgroundColor=this.globalSettings.content_background;
+     this.backgroundColorOption=this.globalSettings.content_background_option;
      this.contentTitleColor=this.globalSettings.content_title_color;
      this.contentTitleColorOption=this.globalSettings.content_title_color_option;
      this.paginationColor=this.globalSettings.pagination_color;
@@ -312,6 +314,7 @@ selectedColor.selectedColor=this.sideBarMenuColor;
     if(option=='content_background_color')
     {
 selectedColor.option=option;
+//debugger;
 selectedColor.selectedColorOption=this.backgroundColorOption;
 selectedColor.selectedColor=this.backgroundColor;
     }

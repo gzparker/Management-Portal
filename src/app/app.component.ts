@@ -103,12 +103,16 @@ export class MyApp {
   public button_color_dweller_option="";
   public side_bar_color_dweller="";
   public side_bar_color_dweller_option="";
+  public sidebar_menu_color:string="";
+  public sidebar_menu_color_option:string="";
   public header_color="";
   public header_color_option="";
   public content_title_color="";
   public content_title_color_option="";
-  public button_color_website="";
-  public button_color_website_option="";
+  public content_background:string="";
+  public content_background_option:string="";
+  public button_color="";
+  public button_color_option="";
   public map_sidebar_color="";
   public map_sidebar_color_option="";
   public pagination_color="";
@@ -202,9 +206,17 @@ export class MyApp {
   {
     this.content_title_color=colorObject.selectedColor
   }
-  if(colorObject.option=="button_color_website")
+  if(colorObject.option=="button_color")
   {
-    this.button_color_website=colorObject.selectedColor
+    this.button_color=colorObject.selectedColor
+  }
+  if(colorObject.option=="side_bar_menu_color")
+  {
+    this.sidebar_menu_color=colorObject.selectedColor
+  }
+  if(colorObject.option=="content_background_color")
+  {
+    this.content_background=colorObject.selectedColor
   }
   if(colorObject.option=="map_sidebar_color")
   {
@@ -235,84 +247,84 @@ export class MyApp {
   let sidebarElements=document.getElementsByClassName("sidebar_color");
     for (let i = 0; i < sidebarElements.length; i++) {
      // debugger;
-      sidebarElements[i].setAttribute("style", "background:"+this.side_bar_color_dweller+" !important;");
+      sidebarElements[i].setAttribute("style", "background:"+this.sidebar_menu_color+" !important;");
     }
 
     //////////////////////////////Button Color////////////////////////////////
    /* let buttonColorElement=document.getElementsByClassName("button_color");
     
     for (let i = 0; i < buttonColorElement.length; i++) {
-    debugger;
-      buttonColorElement[i].setAttribute("style", "background-color:"+this.button_color_dweller+" !important;");
+    //debugger;
+      buttonColorElement[i].setAttribute("style", "background-color:"+this.button_color+" !important;");
     }
     let buttonContactElement=document.getElementsByClassName("contactPhone");
     
     for (let i = 0; i < buttonContactElement.length; i++) {
     
-      buttonContactElement[i].setAttribute("style", "background-color:"+this.button_color_dweller+" !important;");
+      buttonContactElement[i].setAttribute("style", "background-color:"+this.button_color+" !important;");
     }
     let buttonContactChatElement=document.getElementsByClassName("contactChat");
     
     for (let i = 0; i < buttonContactChatElement.length; i++) {
     
-      buttonContactChatElement[i].setAttribute("style", "background-color:"+this.button_color_dweller+" !important;");
+      buttonContactChatElement[i].setAttribute("style", "background-color:"+this.button_color+" !important;");
     }
     let buttonContactEmailElement=document.getElementsByClassName("contactEmail");
     
     for (let i = 0; i < buttonContactEmailElement.length; i++) {
     
-      buttonContactEmailElement[i].setAttribute("style", "background-color:"+this.button_color_dweller+" !important;");
+      buttonContactEmailElement[i].setAttribute("style", "background-color:"+this.button_color+" !important;");
     }
     let buttonContactInviteElement=document.getElementsByClassName("contactInvite");
     
     for (let i = 0; i < buttonContactInviteElement.length; i++) {
     
-      buttonContactInviteElement[i].setAttribute("style", "background-color:"+this.button_color_dweller+" !important;");
+      buttonContactInviteElement[i].setAttribute("style", "background-color:"+this.button_color+" !important;");
     }
     let buttonSegmentElement=document.getElementsByClassName("segment-button");
     
     for (let i = 0; i < buttonSegmentElement.length; i++) {
     
-      buttonSegmentElement[i].setAttribute("style", "color:"+this.button_color_dweller+" !important;");
-      buttonSegmentElement[i].setAttribute("style", "border-color:"+this.button_color_dweller+" !important;");
+      buttonSegmentElement[i].setAttribute("style", "color:"+this.button_color+" !important;");
+      buttonSegmentElement[i].setAttribute("style", "border-color:"+this.button_color+" !important;");
     }
     let buttonSegmentActivatedElement=document.getElementsByClassName("segment-activated");
     
     for (let i = 0; i < buttonSegmentActivatedElement.length; i++) {
     
-      buttonSegmentActivatedElement[i].setAttribute("style", "color:"+this.button_color_dweller+" !important;");
-      buttonSegmentActivatedElement[i].setAttribute("style", "background-color:"+this.button_color_dweller+" !important;");
+      buttonSegmentActivatedElement[i].setAttribute("style", "color:"+this.button_color+" !important;");
+      buttonSegmentActivatedElement[i].setAttribute("style", "background-color:"+this.button_color+" !important;");
     }
     /////////////////////////////////Content Background/////////////////////////////////////////
     let contentBackgroundElement=document.getElementsByClassName("background_color");
     
     for (let i = 0; i < contentBackgroundElement.length; i++) {
 
-      contentBackgroundElement[i].setAttribute("style", "background:"+this.background_color_dweller+" !important;");
+      contentBackgroundElement[i].setAttribute("style", "background:"+this.content_background+" !important;");
     }
     let contentBackgroundColorEnabledElement=document.getElementsByClassName("colorEnabled");
     
     for (let i = 0; i < contentBackgroundColorEnabledElement.length; i++) {
 
-      contentBackgroundColorEnabledElement[i].setAttribute("style", "background:"+this.background_color_dweller+" !important;");
+      contentBackgroundColorEnabledElement[i].setAttribute("style", "background:"+this.content_background+" !important;");
     }
     let contentSearchBarIosElement=document.getElementsByClassName("searchbar-ios");
     
     for (let i = 0; i < contentSearchBarIosElement.length; i++) {
 
-      contentSearchBarIosElement[i].setAttribute("style", "border-color:"+this.background_color_dweller+" !important;");
+      contentSearchBarIosElement[i].setAttribute("style", "border-color:"+this.content_background+" !important;");
     }
     let contentSearchBarMdIosElement=document.getElementsByClassName("searchbar-md");
     
     for (let i = 0; i < contentSearchBarMdIosElement.length; i++) {
 
-      contentSearchBarMdIosElement[i].setAttribute("style", "border-color:"+this.background_color_dweller+" !important;");
+      contentSearchBarMdIosElement[i].setAttribute("style", "border-color:"+this.content_background+" !important;");
     }
     let contentSearchWpMdIosElement=document.getElementsByClassName("searchbar-wp");
     
     for (let i = 0; i < contentSearchWpMdIosElement.length; i++) {
 
-      contentSearchWpMdIosElement[i].setAttribute("style", "border-color:"+this.background_color_dweller+" !important;");
+      contentSearchWpMdIosElement[i].setAttribute("style", "border-color:"+this.content_background+" !important;");
     }*/
     ////////////////////////////////////////////////////////////////////////////////////////////
   }
@@ -812,8 +824,8 @@ else if(option=='6')
         this.header_color_option=data.header_color_option;
         this.content_title_color=data.content_title_color;
         this.content_title_color_option=data.content_title_color_option;
-        this.button_color_website=data.button_color_website;
-        this.button_color_website_option=data.button_color_website_option;
+        this.button_color=data.button_color;
+        this.button_color_option=data.button_color_option;
         this.map_sidebar_color=data.map_sidebar_color;
         this.map_sidebar_color_option=data.map_sidebar_color_option;
         this.pagination_color=data.pagination_color;

@@ -164,10 +164,22 @@
     </ion-item>-->
     
     <ion-list class="customColorOption" *ngIf="selectedSegment=='1'">
-    <ion-item (click)="showColorPopUp('header_color')">
+        <ion-item (click)="showColorPopUp('side_bar_menu_color')">
+            <ion-label>Side-Bar Menu Color</ion-label>
+           
+          </ion-item>
+          <ion-item (click)="showColorPopUp('button_color')">
+            <ion-label>Button Color</ion-label>
+      
+          </ion-item>
+          <ion-item (click)="showColorPopUp('content_background_color')">
+            <ion-label>Background Color</ion-label>
+         
+          </ion-item>
+    <!--<ion-item (click)="showColorPopUp('header_color')">
       <ion-label>Header Color</ion-label>
     
-    </ion-item>
+    </ion-item>-->
    
     <!--<ion-item>
       <ion-label>Text Color</ion-label>
@@ -178,11 +190,11 @@
        </ion-select>
       
     </ion-item>-->
-    <ion-item (click)="showColorPopUp('content_title_color')">
+    <!--<ion-item (click)="showColorPopUp('content_title_color')">
       <ion-label>Content Title Color</ion-label>
 
     </ion-item>
-    <ion-item (click)="showColorPopUp('button_color_website')">
+    <ion-item (click)="showColorPopUp('button_color')">
       <ion-label>Button Color</ion-label>
 
     </ion-item>
@@ -198,7 +210,7 @@
     <ion-item (click)="showColorPopUp('modal_background_color')">
       <ion-label>Modal Background Color</ion-label>
 
-    </ion-item>
+    </ion-item>-->
   </ion-list>
   <ion-list class="customColorOption" *ngIf="selectedSegment=='2'">
     <ion-item (click)="showColorPopUp('side_bar_color_dweller')">
