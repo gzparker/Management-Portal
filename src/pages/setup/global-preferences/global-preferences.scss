@@ -12,6 +12,11 @@ page-global-preferences {
     }
   }
 
+  .colorSchemeOptions {
+  margin-left: -10px;
+  margin-right: -10px;
+  }
+
   .formUI {
   border-radius: 6px;
   box-shadow: -1px 0px 18px 1px rgba(41, 81, 123, 0.15);
@@ -22,6 +27,55 @@ page-global-preferences {
     box-shadow: none !important;
     background: none !important;
     border-bottom: 1px solid #E2E2E2;
+    }
+    ion-item.filterColorOptions {
+      .item-inner {
+      border-bottom: none !important;
+        ion-label {
+          span {
+          font-family: $font-one;
+          font-size: 12px;
+          font-style: italic;
+          letter-spacing: .3px;
+          padding-left: 6px;
+          opacity: .7;
+          }
+        }
+      }
+    }
+    .customList {
+      &.colorSchemeBlock {
+      padding-top: 3px;
+      padding-bottom: 7px;
+      border-bottom: none;
+      }
+
+      .customColorOption {
+      border-radius: 0 0 6px 6px !important;
+        .label-ios, .label-md, .label-wp {
+        margin: 14px 8px 14px 0 !important;
+          .colorPreview {
+          width: 26px;
+          height: 22px;
+          display: inline-block;
+          z-index: 100;
+          float: right;
+          visibility: visible !important;
+          margin: -3px 0 0 0;
+          border-radius: 2px;
+          right: 16px;
+          position: absolute;
+          // background: #00d2c6;
+          background: #cacaca;
+          }
+        }
+      }
+
+      .colorSchemeLabel {
+      margin-top: 0px !important;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #E2E2E2;
+      }
     }
   }
 
@@ -62,13 +116,49 @@ page-global-preferences {
       background: #f4f4f4;
       }      
     }
+    &.displayName {    
+    padding: 16px 0 12px 0 !important;
+    margin-bottom: 0px !important;
+    padding-bottom: 0px !important;
+    // background: pink !important;
+      .label-ios, .label-md, .label-wp {
+      font-size: 14px;
+      color: #696D72;
+      }
+      .item-inner {
+      padding-right: 0px !important;
+      border: none !important;
+      }
+      .text-input-ios, .text-input-md, .text-input-wp {
+      width: 100%;
+      padding: 8px 6px !important;
+      margin-right: 0px !important;
+      margin-bottom: 0px !important;
+      background: #f4f4f4;
+      }      
+    }
   }
 
-  
+  .button-full.button-outline {
+  border: none !important;
+  border-radius: 2px;
+  }
 
   .customList {
   border-radius: 0px !important;
   box-shadow: none !important;
+    &.b18 {
+    padding-bottom: 18px !important;
+    }
+    &.timezoneBlock {
+    width: 100%;
+    max-width: 35%;
+      .select2-container--default .select2-selection--single {
+      min-height: 34px;
+      padding-top: 3px;
+      border-radius: 2px;
+      }
+    }
 
     .filterLabel {
     border: none !important;
@@ -141,6 +231,8 @@ page-global-preferences {
 
 
   .uploadPhoto {
+  padding-top: 1px !important;
+
     .AccountImageUploader {
     width: 100%;
     height: auto;

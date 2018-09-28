@@ -103,12 +103,12 @@
       </ion-item>
       
       <ion-item class="desktopOption" side="right" *ngIf="!isApp">
-        <div class="optionIcon" *ngIf="!isApp"></div>
-        <button ion-button color="primary" item-right class="btn-edit" (click)="editLead(lead.lead_id)" *ngIf="isEditLeadAccess==true">
-          <ion-icon name="md-create"></ion-icon>Edit
-        </button>
+        <div class="optionIcon" *ngIf="!isApp"></div>        
         <button ion-button color="danger" item-right class="btn-del" (click)="deleteLead(lead)" *ngIf="isDeleteLeadAccess==true">
           <ion-icon name="md-close"></ion-icon>Delete
+        </button>
+        <button ion-button color="primary" item-right class="btn-edit" (click)="editLead(lead.lead_id)" *ngIf="isEditLeadAccess==true">
+          <ion-icon name="md-create"></ion-icon>Edit
         </button>
       </ion-item>
 

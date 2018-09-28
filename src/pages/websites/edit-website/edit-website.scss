@@ -16,6 +16,10 @@ page-edit-website {
     }
   }
 
+  ion-content.dashboardUI .label-ios[stacked], ion-content.dashboardUI .label-md[stacked], ion-content.dashboardUI .label-wp[stacked] {
+  margin-bottom: 2px !important;
+  } 
+
   .userInfoBlock.medIcon {
     ion-icon {
     font-size: 24px !important;
@@ -70,6 +74,9 @@ page-edit-website {
     }
     .customList {
     border-bottom: 1px solid #ebe9f0 !important;
+      &.noBorder {
+      border-bottom: none !important;
+      }
     }
 
     .bottom16 {
@@ -128,6 +135,19 @@ page-edit-website {
     width: 100%;
     min-height: 210px;
     position: relative;
+      &.imgFavicon {
+      min-height: 32px;
+        &:before {
+        display: none;
+        }
+        .imgCropperPreviewResult {
+          img {
+          max-width: 32px;
+          max-height: 32px;
+          }
+        }
+      }
+
       &:before {
       content: "";
       width: 100%;

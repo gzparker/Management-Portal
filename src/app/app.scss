@@ -19,182 +19,182 @@
 // ------------------------------------------------------------
 // DYNAMIC COLOR SETTINGS
 // ------------------------------------------------------------
-$sidebar_color: #20B6AD;
-$background_color: #20B6AD;
-$button_color: #20B6AD;
+// $sidebar_color: #20B6AD;
+// $background_color: #20B6AD;
+// $button_color: #20B6AD;
 
 // ------------------------------------------------------------
 // SIDEBAR - COLOR SETTINGS
 // ------------------------------------------------------------
-ion-menu {
-  ion-content {
-    &.colorEnabled {
-      &.sidebar_color {
-      background: $sidebar_color;
+// ion-menu {
+//   ion-content {
+//     &.colorEnabled {
+//       &.sidebar_color {
+//       background: $sidebar_color;
         
-        #sidenav {
-          .msgcounter {
-          background: #2b2b2b;
-          }          
-        }
+//         #sidenav {
+//           .msgcounter {
+//           background: #2b2b2b;
+//           }          
+//         }
 
-        #SidebarDisplayToggle, #SidebarResetToggle {
-        background: #2b2b2b;
-        }
+//         #SidebarDisplayToggle, #SidebarResetToggle {
+//         background: #2b2b2b;
+//         }
 
-      }
-    }
-  }
-}
+//       }
+//     }
+//   }
+// }
 
 
 // ------------------------------------------------------------
 // BACKGROUND- COLOR SETTINGS
 // ------------------------------------------------------------
-ion-header {
-  &.dashboardUI {
-    &.chatUI {
-      &.colorEnabled {
-        &.background_color {
-        background: $background_color;
-        }
-      }
-    }    
-  }
-}
+// ion-header {
+//   &.dashboardUI {
+//     &.chatUI {
+//       &.colorEnabled {
+//         &.background_color {
+//         background: $background_color;
+//         }
+//       }
+//     }    
+//   }
+// }
 
-ion-content {
-  &.dashboardUI {
-    &.colorEnabled {
-      &:before {
-      opacity: 0;
-      background: $background_color;
-      }
-      &.background_color {
-      background: $background_color;
-        .msgSearchBar {
-          .searchbar-ios, .searchbar-md, .searchbar-wp {
-          border-color: darken($background_color, 4%);
-          }
-        }
-      }      
-    }
-    &.chatMsgUI {
-      &.colorEnabled {
-        &.background_color {
-        background: none;
-          &:before {
-          opacity: 1;
-          }
-        }
-      }
-    }
-  }
-  &.generalInfoUI {
-    &.colorEnabled {      
-      &.background_color {
-        &:before {
-        background: $background_color;
-        }      
-      }      
-    }
-  }
-}
+// ion-content {
+//   &.dashboardUI {
+//     &.colorEnabled {
+//       &:before {
+//       opacity: 0;
+//       background: $background_color;
+//       }
+//       &.background_color {
+//       background: $background_color;
+//         .msgSearchBar {
+//           .searchbar-ios, .searchbar-md, .searchbar-wp {
+//           border-color: darken($background_color, 4%);
+//           }
+//         }
+//       }      
+//     }
+//     &.chatMsgUI {
+//       &.colorEnabled {
+//         &.background_color {
+//         background: none;
+//           &:before {
+//           opacity: 1;
+//           }
+//         }
+//       }
+//     }
+//   }
+//   &.generalInfoUI {
+//     &.colorEnabled {      
+//       &.background_color {
+//         &:before {
+//         background: $background_color;
+//         }      
+//       }      
+//     }
+//   }
+// }
 
-page-all-leads {
-  ion-content {
-    &.dashboardUI {
-      &.colorEnabled {
-        &.background_color {
-          ion-badge.badgeInvite {
-          border-color: #2b2b2b !important;
-          background: #2b2b2b !important;
-          opacity: .45;
-          @extend %transition;
-            &:hover {
-            opacity: .65;
-            }
-          }
-        }        
-      }
-    }
-  }
-}
+// page-all-leads {
+//   ion-content {
+//     &.dashboardUI {
+//       &.colorEnabled {
+//         &.background_color {
+//           ion-badge.badgeInvite {
+//           border-color: #2b2b2b !important;
+//           background: #2b2b2b !important;
+//           opacity: .45;
+//           @extend %transition;
+//             &:hover {
+//             opacity: .65;
+//             }
+//           }
+//         }        
+//       }
+//     }
+//   }
+// }
 
 
 
 // ------------------------------------------------------------
 // COLOR SETTINGS - BUTTONS
 // ------------------------------------------------------------
-ion-content {  
-  .dashboardBtn {
-    .button-default {
-      &.colorEnabled {
-        &.button_color {
-        background: $button_color;
-        }        
-      }
-    }
-  }
-  .uploadPhoto {
-    .btnUpload {
-      &.colorEnabled {
-        &.button_color {
-        background: $button_color;
-          &:before {
-          background: $button_color;
-          }
-        }
-      }
-    }
-  }
-  .leadsShortcutButtons {
-    &.colorEnabled {
-      &.button_color {
-        .contactPhone, .contactChat, .contactEmail, .contactInvite {
-        background: $button_color;
-        }
-      }
-    }
-  }
-  .leadsSavedInfo, .leadListings, .leadHotsheetName {
-    &.colorEnabled {
-      &.button_color {
+// ion-content {  
+//   .dashboardBtn {
+//     .button-default {
+//       &.colorEnabled {
+//         &.button_color {
+//         background: $button_color;
+//         }        
+//       }
+//     }
+//   }
+//   .uploadPhoto {
+//     .btnUpload {
+//       &.colorEnabled {
+//         &.button_color {
+//         background: $button_color;
+//           &:before {
+//           background: $button_color;
+//           }
+//         }
+//       }
+//     }
+//   }
+//   .leadsShortcutButtons {
+//     &.colorEnabled {
+//       &.button_color {
+//         .contactPhone, .contactChat, .contactEmail, .contactInvite {
+//         background: $button_color;
+//         }
+//       }
+//     }
+//   }
+//   .leadsSavedInfo, .leadListings, .leadHotsheetName {
+//     &.colorEnabled {
+//       &.button_color {
         
-        .segment-button {  
-        color: $button_color;
-        border-color: $button_color;
-          &.segment-activated {
-          color: #FFF;
-          border-color: $button_color;
-          background-color: $button_color;
-            &:hover {
-            color: #FFF !important;
-            }
-          }
-          &:hover {          
-          color: $button_color;
-          }
-        }
+//         .segment-button {  
+//         color: $button_color;
+//         border-color: $button_color;
+//           &.segment-activated {
+//           color: #FFF;
+//           border-color: $button_color;
+//           background-color: $button_color;
+//             &:hover {
+//             color: #FFF !important;
+//             }
+//           }
+//           &:hover {          
+//           color: $button_color;
+//           }
+//         }
 
-      }
-    }
-  }
-}
+//       }
+//     }
+//   }
+// }
 
-page-manage-agents {
-  ion-item-sliding {
-    &.colorEnabled {
-      &.button_color {
-        ion-item {
-          &:before {
-          background: $button_color;
-          }
-        }
-      }
-    }  
-  }
-}
+// page-manage-agents {
+//   ion-item-sliding {
+//     &.colorEnabled {
+//       &.button_color {
+//         ion-item {
+//           &:before {
+//           background: $button_color;
+//           }
+//         }
+//       }
+//     }  
+//   }
+// }
 
 
 // ------------------------------------------------------------
@@ -1245,8 +1245,10 @@ ion-content.dashboardUI {
           border-radius: 4px;        
           cursor: pointer;
           box-sizing: border-box;
-          border: 1px solid #4D8F2F;        
-          background: #77B55D;
+          // border: 1px solid #4D8F2F;
+          // background: #77B55D;
+          border: 1px solid #514c4c;
+          background: #514c4c;
           @extend %transition;            
           }
         }
@@ -1395,7 +1397,8 @@ display: none !important;
   cursor: pointer;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;  
-  background: #77B55D;
+  // background: #77B55D;
+  background: #514c4c;
     &:before {
     content: "";
     width: 18px;
@@ -1405,7 +1408,8 @@ display: none !important;
     left: 3px;
     z-index: 20;
     position: absolute;
-    background: #77B55D;
+    // background: #77B55D;
+    background: #514c4c;
     }
     &:after {
     content: "Upload";

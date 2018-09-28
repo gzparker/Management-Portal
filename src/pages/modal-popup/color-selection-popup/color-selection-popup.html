@@ -7,7 +7,7 @@
 <ion-header class="dashboardUI">
   <ion-navbar>
     
-    <ion-title>Select Color</ion-title>
+    <ion-title>Select Colors</ion-title>
     <!-- <button ion-button end class="button button-clear" (click)="closePopUp();">Cancel</button> -->
 
     <ion-buttons end>
@@ -26,50 +26,54 @@
     </ion-list-header>
   
     <ion-item>
-      <ion-label>1st Color</ion-label>
+      <ion-label>1st Color <span class="colorPreview sidebar_color button_color background_color"></span></ion-label>
       <ion-radio value="base_color"></ion-radio>
     </ion-item>
   
     <ion-item>
-      <ion-label>2nd Color</ion-label>
+      <ion-label>2nd Color <span class="colorPreview sidebar_color button_color background_color"></span></ion-label>
       <ion-radio value="secondary_color"></ion-radio>
     </ion-item>
   
     <ion-item>
-      <ion-label>3rd Color</ion-label>
+      <ion-label>3rd Color <span class="colorPreview sidebar_color button_color background_color"></span></ion-label>
       <ion-radio value="tertiary_color"></ion-radio>
     </ion-item>
   
     <ion-item>
-      <ion-label>Default Color</ion-label>
+      <ion-label>Default Color <span class="colorPreview default_color"></span></ion-label>
       <ion-radio value="default"></ion-radio>
     </ion-item>
   
     <ion-item>
-      <ion-label>Custom Color</ion-label>
+      <ion-label>Custom Color <span class="colorPreview custom_color"></span></ion-label>
       <ion-radio value="custom"></ion-radio>
     </ion-item>
   
   </ion-list>
-  <ion-list *ngIf="showCustomColor">
-
-    <ion-list-header>
+  
+  <ion-list class="customColorList" *ngIf="showCustomColor">
+    
+    <ion-label>
       Select Custom Color
-    </ion-list-header>
-    <div>
-     
-        <button ion-button color="secondary" outline [colorPicker]="customColor" 
-        (colorPickerChange)="customColor=$event"
-        [ngStyle]="{'background-color': customColor}" [cpPosition]="'bottom'" 
-           [cpOutputFormat]="'rgb'" full small>Select Color</button>
-           
-      <!--<div [colorPicker]="colorBase" 
-      (colorPickerChange)="colorBase=$event"
-        [style.background]="colorBase" [cpPosition]="'bottom'" 
-         [cpOutputFormat]="'rgba'" >Select Color</div>-->
-    </div>
-    </ion-list>
-    <div class="dashboardBtn">
-      <button ion-button color="primary" block (click)="saveColor();">Save</button>
-    </div>
+    </ion-label>
+
+    <div  class="CustomColordatePicker">     
+    <button ion-button color="secondary" outline [colorPicker]="customColor" 
+    (colorPickerChange)="customColor=$event"
+    [ngStyle]="{'background-color': customColor}" [cpPosition]="'bottom'" 
+       [cpOutputFormat]="'rgb'" full small>Select Color</button>
+       
+    <!--<div [colorPicker]="colorBase" 
+    (colorPickerChange)="colorBase=$event"
+    [style.background]="colorBase" [cpPosition]="'bottom'" 
+     [cpOutputFormat]="'rgba'" >Select Color</div>-->
+    </div>  
+
+  </ion-list>
+
+  <div class="dashboardBtn">
+    <button ion-button color="primary" block (click)="saveColor();">Save</button>
+  </div>
+
 </ion-content>

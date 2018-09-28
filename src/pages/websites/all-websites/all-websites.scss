@@ -18,6 +18,19 @@ page-all-websites {
         }
       }
 
+      .btn-add-websites {
+      display: table;
+      margin: 30px auto 0 auto;
+      padding: 0 38px;
+      border-radius: 4px;
+      background: #00bfff;
+      border: 2px solid #292929;
+      box-shadow: 0 0 10px rgba(16, 102, 138, 0.9);
+        .button-inner {
+        color: #FFF !important;
+        }
+      }
+
       
       .chip-ios, .chip-md, .chip-wp {
       width: 100%;
