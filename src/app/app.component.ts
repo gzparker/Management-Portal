@@ -246,12 +246,12 @@ export class MyApp {
 //debugger;
   let sidebarElements=document.getElementsByClassName("sidebar_color");
     for (let i = 0; i < sidebarElements.length; i++) {
-     // debugger;
+     //debugger;
       sidebarElements[i].setAttribute("style", "background:"+this.sidebar_menu_color+" !important;");
     }
 
     //////////////////////////////Button Color////////////////////////////////
-   /* let buttonColorElement=document.getElementsByClassName("button_color");
+   let buttonColorElement=document.getElementsByClassName("button_color");
     
     for (let i = 0; i < buttonColorElement.length; i++) {
     //debugger;
@@ -296,7 +296,7 @@ export class MyApp {
       buttonSegmentActivatedElement[i].setAttribute("style", "background-color:"+this.button_color+" !important;");
     }
     /////////////////////////////////Content Background/////////////////////////////////////////
-    let contentBackgroundElement=document.getElementsByClassName("background_color");
+    /*let contentBackgroundElement=document.getElementsByClassName("background_color");
     
     for (let i = 0; i < contentBackgroundElement.length; i++) {
 
@@ -826,6 +826,10 @@ else if(option=='6')
         this.content_title_color_option=data.content_title_color_option;
         this.button_color=data.button_color;
         this.button_color_option=data.button_color_option;
+        this.sidebar_menu_color=data.sidebar_menu_color;
+        this.sidebar_menu_color_option=data.sidebar_menu_color_option;
+        this.content_background=data.content_background;
+        this.content_background_option=data.content_background_option;
         this.map_sidebar_color=data.map_sidebar_color;
         this.map_sidebar_color_option=data.map_sidebar_color_option;
         this.pagination_color=data.pagination_color;
