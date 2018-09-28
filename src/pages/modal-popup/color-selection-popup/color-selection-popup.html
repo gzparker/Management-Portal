@@ -33,17 +33,17 @@
     </ion-list-header>
   
     <ion-item>
-      <ion-label>1st Color <span class="colorPreview sidebar_color button_color background_color"></span></ion-label>
+      <ion-label>1st Color <span class="colorPreview" [ngStyle]="{'background-color': colorBase}"></span></ion-label>
       <ion-radio value="base_color"></ion-radio>
     </ion-item>
   
     <ion-item>
-      <ion-label>2nd Color <span class="colorPreview sidebar_color button_color background_color"></span></ion-label>
+      <ion-label>2nd Color <span class="colorPreview" [ngStyle]="{'background-color': secondColor}"></span></ion-label>
       <ion-radio value="secondary_color"></ion-radio>
     </ion-item>
   
     <ion-item>
-      <ion-label>3rd Color <span class="colorPreview sidebar_color button_color background_color"></span></ion-label>
+      <ion-label>3rd Color <span class="colorPreview" [ngStyle]="{'background-color': thirdColor}"></span></ion-label>
       <ion-radio value="tertiary_color"></ion-radio>
     </ion-item>
   

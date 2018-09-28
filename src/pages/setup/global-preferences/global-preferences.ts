@@ -297,7 +297,10 @@ this.selectedSegment="1";
     var selectedColor={
       option:"",
       selectedColorOption:"",
-      selectedColor:""
+      selectedColor:"",
+      colorBase:"",
+      secondColor:"",
+      thirdColor:""
     }
     if(option=='header_color')
     {
@@ -367,6 +370,9 @@ selectedColor.option=option;
 selectedColor.selectedColorOption=this.backgroundDwellerOption;
 selectedColor.selectedColor=this.backgroundDwellerColor;
     }
+    selectedColor.colorBase=this.colorBase;
+    selectedColor.secondColor=this.secondColor;
+    selectedColor.thirdColor=this.thirdColor;
     //debugger;   
     var modalColor = this.modalCtrl.create(ColorSelectionPopupPage,{selectedColor:selectedColor});
     modalColor.onDidDismiss(data => {

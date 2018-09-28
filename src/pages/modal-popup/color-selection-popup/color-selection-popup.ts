@@ -30,6 +30,9 @@ export class ColorSelectionPopupPage {
   public selectedColorOption:string="";
   public customColor:string="";
   public option:string="";
+  public colorBase:string="";
+  public secondColor:string="";
+  public thirdColor:string="";
   public selectedColorObj:any;
   public showCustomColor:boolean=false;
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
@@ -45,7 +48,9 @@ export class ColorSelectionPopupPage {
      // {
         this.customColor=this.selectedColorObj.selectedColor;
      // }
-      
+      this.colorBase=this.selectedColorObj.colorBase;
+      this.secondColor=this.selectedColorObj.secondColor;
+      this.thirdColor=this.selectedColorObj.thirdColor;
       this.option=this.selectedColorObj.option;
      // debugger;
     //this.option = this.navParams.get('option');
