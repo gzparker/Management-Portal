@@ -6,12 +6,19 @@
 -->
 <ion-header class="dashboardUI">
   <ion-navbar>
-    
+
+   
     <ion-title>Select Colors</ion-title>
     <!-- <button ion-button end class="button button-clear" (click)="closePopUp();">Cancel</button> -->
 
-    <ion-buttons end>
+    <ion-buttons start class="btnCancel">
       <button ion-button end icon-left (click)="closePopUp();">Cancel</button>
+    </ion-buttons>
+    
+    <ion-buttons end>
+      <button ion-button (click)="saveColor();">
+        <ion-icon name="ios-bookmark"></ion-icon>
+      </button>
     </ion-buttons>
 
   </ion-navbar>
