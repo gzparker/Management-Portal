@@ -1421,7 +1421,7 @@ getAllMemberAllowedOptions(allowedOptions)
        return allowedOptionsResp;
 }
 updateGlobalSettings(member_id:string,personalImage:string,companyImage:string,
-  timezone:string,colorBase:string,secondColor:string,thirdColor:string,identity_name:string,display_name:string,headerColor:string,
+  timezone:string,colorBase:string,secondColor:string,thirdColor:string,identity_name:string,display_name_dweller:string,image_dweller:string,headerColor:string,
   sideBarMenuColor:string,buttonColor:string,textColor:string,backgroundColor:string,headerColorOption:string,sideBarMenuColorOption:string,
   buttonColorOption:string,textColorOption:string,backgroundColorOption:string,customColorOption:boolean,
   contentTitleColor:string,contentTitleColorOption:string,paginationColor:string,paginationColorOption:string,
@@ -1433,12 +1433,13 @@ updateGlobalSettings(member_id:string,personalImage:string,companyImage:string,
     data.append('master_id',member_id);
     data.append('photo_company',companyImage);
     data.append('photo_personal',personalImage);
+    data.append('image_dweller',image_dweller);
     data.append('timezone',timezone);
     data.append('color_base',colorBase);
     data.append('color_second',secondColor);
     data.append('color_third',thirdColor);
     data.append('identity_name',identity_name);
-    data.append('display_name',display_name);
+    data.append('display_name_dweller',display_name_dweller);
     data.append('header_color',headerColor);
     data.append('side_bar_menu_color',sideBarMenuColor);
     data.append('button_color',buttonColor);

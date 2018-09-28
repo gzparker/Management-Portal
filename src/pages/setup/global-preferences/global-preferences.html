@@ -67,10 +67,7 @@
                 <ion-icon name="md-create"></ion-icon>
               </button>
             </div>
-            <ion-item class="displayName b32">
-              <ion-label stacked>Display Name<span [ngClass]="{'error': display_name==''}" *ngIf="display_name==''">*</span></ion-label>
-              <ion-input type="text" required [(ngModel)]="display_name" name="display_name" placeholder="display name"></ion-input>
-            </ion-item>
+            
 
           <!--<ion-list-header>
             <h2>Select Personal Logo</h2>
@@ -185,7 +182,7 @@
       </ion-segment-button>
       <ion-segment-button value="2">
         <!-- Set Top Dweller Colors -->
-        Set Top Dweller Colors
+        Set Top Dweller Settings
       </ion-segment-button>
     
     </ion-segment>
@@ -244,6 +241,48 @@
     </ion-item>-->
   </ion-list>
   <ion-list class="customColorOption" *ngIf="selectedSegment=='2'">
+      <ion-item class="displayName b32">
+          <ion-label stacked>Display Name</ion-label>
+          <ion-input type="text" [(ngModel)]="display_name_dweller" name="display_name_dweller" placeholder="display_name_dweller"></ion-input>
+        </ion-item>
+        <ion-list *ngIf="isApp">
+
+          <ion-item class="customList nobrTop">
+            <button ion-button color="primary" block (click)="takeDwellerPicture();" >Select Dweller Image</button>
+          </ion-item>
+          <ion-item *ngIf="dwellerImage!=''">
+            <img [src]="dwellerImage" />
+          </ion-item>
+          <!--<ion-item>
+            <button ion-button color="primary" block (click)="takePersonalPicture();" >Select Personal Image</button>
+          </ion-item>
+          <ion-item *ngIf="personalImage!=''">
+            <img [src]="personalImage" />
+          </ion-item>-->
+          </ion-list>
+      
+          <ion-list *ngIf="!isApp" class="customList uploadPhoto">
+              
+            <ion-list-header><h2>Select Dweller Image</h2></ion-list-header>
+
+            <!-- Main Image Uploader -->
+            <div class="AccountImageUploader">
+
+              <!-- Image Cropper Result -->
+              <div class="imgCropperPreviewResult" *ngIf="dataDwellerImage.image">
+              <img [src]="dataDwellerImage.image" [width]="dwellerWidth"
+               [height]="dwellerHeight">                   
+              </div>
+
+              <!-- Image Upload Button -->
+              <input id="custom-input" class="btnUpload colorEnabled button_color" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="dwellerFileChangeListener($event)">
+              <button ion-button (click)="editImage('dwellerImage');" *ngIf="isDwellerImageExist">
+                <ion-icon name="md-create"></ion-icon>
+              </button>
+            </div>
+            
+      
+        </ion-list>
     <ion-item (click)="showColorPopUp('side_bar_color_dweller')">
       <ion-label>Sidebar Menu Color</ion-label>
      

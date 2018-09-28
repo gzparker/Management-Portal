@@ -42,12 +42,16 @@ export class GlobalPreferencesPage {
   // config 
   public hideCompanyCropper:boolean=true;
   public hidePersonalCropper:boolean=true;
+  public hideDwellerCropper:boolean=true;
   public edit_company_image:boolean=false;
   public edit_personal_image:boolean=false;
+  public edit_dweller_image:boolean=false;
   public crop_company_image:boolean=false;
   public crop_personal_image:boolean=false;
+  public crop_dweller_image:boolean=false;
   public companyCropperLoaded:boolean=false;
   public isCompanyImageExist:boolean=false;
+  public isDwellerImageExist:boolean=false;
   public cropperJsConfig: object;
   public isApp=false;
   public userLoggedId:boolean=false;
@@ -92,14 +96,18 @@ export class GlobalPreferencesPage {
   public description:string="";
   public companyCropperSettings;
   public personalCropperSettings;
+  public dwellerCropperSettings;
   public croppedWidth:Number;
   public croppedHeight:Number;
   public companyImageChangedEvent: any = '';
   public personalImageChangedEvent: any = '';
+  public dwellerImageChangedEvent: any = '';
   public dataCompanyLogoImage:any;
   public companyLogoImage:string="";
   public dataPersonalImage:any;
   public personalImage:string="";
+  public dataDwellerImage:any;
+  public dwellerImage:string="";
   public loader:any;
   public selectedRoute:string="";
   public globalSettings:any;
@@ -107,10 +115,12 @@ export class GlobalPreferencesPage {
   public personalHeight:string="";
   public companyWidth:string="";
   public companyHeight:string="";
+  public dwellerWidth:string="";
+  public dwellerHeight:string="";
   public selectedSegment:any="1";
   public colorSegment:string="1";
-  public display_name:string="";
-
+  public display_name_dweller:string="";
+ 
   public user = {timezone:'America/New_York'};
   public placeholderString = 'Select timezone';
   public colorOptions:any[]=[{id:"base_color",name:"1st Color"},
@@ -160,6 +170,22 @@ export class GlobalPreferencesPage {
         this.companyCropperSettings.keepAspect = false;
   
       this.companyCropperSettings.noFileInput = true;
+       //////////////Dweller Cropper Settings//////////////////
+       this.dwellerCropperSettings = new CropperSettings();
+       this.dwellerCropperSettings.width = 100;
+       this.dwellerCropperSettings.height = 100;
+       this.dwellerCropperSettings.croppedWidth = 1280;
+       this.dwellerCropperSettings.croppedHeight = 1000;
+       this.dwellerCropperSettings.canvasWidth = 500;
+       this.dwellerCropperSettings.canvasHeight = 300;
+       this.dwellerCropperSettings.minWidth = 10;
+         this.dwellerCropperSettings.minHeight = 10;
+         //this.companyCropperSettings.dynamicSizing=true;
+   
+         this.dwellerCropperSettings.rounded = false;
+         this.dwellerCropperSettings.keepAspect = false;
+   
+       this.dwellerCropperSettings.noFileInput = true;
     //////////////Personal Cropper Settings//////////////////
     this.personalCropperSettings = new CropperSettings();
       
@@ -180,6 +206,7 @@ export class GlobalPreferencesPage {
     ////////////////////////////////////////////////////////
         this.dataCompanyLogoImage= {};
         this.dataPersonalImage={};
+        this.dataDwellerImage={}
         this.loader = this.loadingCtrl.create({
           content: "Please wait...",
           duration: 5000
@@ -212,7 +239,7 @@ this.selectedSegment="1";
     {
       this.selectedSegment="2";
     }
-   
+  this.sharedServiceObj.updateColorThemeMethod(null); 
   }
   loadGlobalSettings()
   {
@@ -251,7 +278,14 @@ this.selectedSegment="1";
     this.secondColor=this.globalSettings.color_second;
      this.thirdColor=this.globalSettings.color_third;
      this.identity_name=this.globalSettings.identity_name;
-     this.display_name=this.globalSettings.display_name;
+     if(this.globalSettings.display_name_dweller!=undefined&&this.globalSettings.display_name_dweller!="")
+     {
+      this.display_name_dweller=this.globalSettings.display_name_dweller;
+     }
+     else
+     {
+      this.display_name_dweller=this.globalSettings.identity_name;
+     }
      this.headerColor=this.globalSettings.header_color;
      this.headerColorOption=this.globalSettings.header_color_option;
      this.sideBarMenuColor=this.globalSettings.sidebar_menu_color;
@@ -281,6 +315,15 @@ this.selectedSegment="1";
         if(this.globalSettings.photo_company!=undefined)
       {
         this.loadCompanyImage(this.sharedServiceObj.imgBucketUrl,this.globalSettings.photo_company);
+      }
+      if(this.globalSettings.image_dweller!=undefined)
+      {
+       
+        this.loadDwellerImage(this.sharedServiceObj.imgBucketUrl,this.globalSettings.image_dweller);
+      }
+      else
+      {
+
       }
       /*if(this.globalSettings.photo_personal!=undefined)
       { 
@@ -758,6 +801,35 @@ this.sharedServiceObj.updateColorThemeMethod(options);
       //this.isCustomColor="1";
     }
       }
+      loadDwellerImage(baseUrl:string,imageUrl:string) {
+   
+        const self = this;
+        //debugger;
+        //self.hideCompanyCropper=true;
+        var image:any = new Image();
+        const xhr = new XMLHttpRequest()
+        xhr.open("GET", baseUrl+imageUrl);
+        xhr.responseType = "blob";
+        xhr.send();
+        xhr.addEventListener("load", function() {
+            var reader = new FileReader();
+            reader.readAsDataURL(xhr.response); 
+           
+            reader.onloadend = function (loadEvent:any) {
+              //debugger;
+              image.src = loadEvent.target.result;
+              image.onload = function () {
+                self.dwellerCropperSettings.croppedWidth = this.width;
+                self.dwellerCropperSettings.croppedHeight = this.height;
+                self.dwellerImage=image.src;
+                //self.companyCropper.setImage(image); 
+                self.createDwellerThumbnail(image.src);
+            };
+              
+      
+          };
+        });
+      }
   loadCompanyImage(baseUrl:string,imageUrl:string) {
    
     const self = this;
@@ -856,18 +928,36 @@ else
   }*/
   editImage(imageType:string){
     var that=this;
-   
-    //debugger;
     let selectedImageOption={
-      mode:"edit",
-      croppedWidth:this.companyCropperSettings.croppedWidth,
-      croppedHeight:this.companyCropperSettings.croppedHeight,
-      //websiteWidth:this.personalWidth,
-      //websiteHeight:this.personalHeight,
-      //datawebsiteImage:this.dataPersonalImage,
-      websiteImage:this.companyLogoImage,
-      imageType:imageType
+      mode:'',
+      croppedWidth:'',
+      croppedHeight:'',
+      websiteImage:'',
+      imageType:''
     };
+    //debugger;
+    if(imageType=="companyImage")
+    {
+      selectedImageOption={
+        mode:"edit",
+        croppedWidth:this.companyCropperSettings.croppedWidth,
+        croppedHeight:this.companyCropperSettings.croppedHeight,
+       
+        websiteImage:this.companyLogoImage,
+        imageType:imageType
+      };
+    }
+    if(imageType=="dwellerImage")
+    {
+      selectedImageOption={
+        mode:"edit",
+        croppedWidth:this.dwellerCropperSettings.croppedWidth,
+        croppedHeight:this.dwellerCropperSettings.croppedHeight,
+       
+        websiteImage:this.dwellerImage,
+        imageType:imageType
+      };
+    } 
     //debugger;
     //document.remo
     //document.getElementById("canvas").remove();
@@ -900,8 +990,170 @@ else
           self.createCompanyThumbnail(self.companyLogoImage);
         });
        }
-
+       else if(imageType=="dwellerImage")
+       {
+        self.dwellerCropperSettings.croppedWidth = imageObject.croppedWidth;
+        self.dwellerCropperSettings.croppedHeight = imageObject.croppedHeight;
+        
+       self.resizeDwellerImage(imageObject.websiteImage, data => {
+        self.dwellerImage=data;
+          self.createDwellerThumbnail(self.dwellerImage);
+        });
+       }
   }
+  dwellerFileChangeListener($event) {
+    this.crop_dweller_image=true;
+    this.edit_dweller_image=true;
+    this.hideDwellerCropper=true;
+    this.isDwellerImageExist=true;
+   var image:any = new Image();
+   var file:File = $event.target.files[0];
+   var myReader:FileReader = new FileReader();
+   var that = this;
+   myReader.onloadend = function (loadEvent:any) {
+     image.src = loadEvent.target.result;
+     image.onload = function () {
+     //  alert (this.width);
+      // debugger;
+       that.dwellerCropperSettings.croppedWidth = this.width;
+       that.dwellerCropperSettings.croppedHeight = this.height;
+       that.dwellerImage=this.src;
+       that.createDwellerThumbnail(that.dwellerImage);
+       //that.createCompanyThumbnail(image.src);
+       //that.companyCropper.setImage(image);     
+   };
+
+       
+
+   };
+
+   myReader.readAsDataURL(file);
+}
+ dwellerImageCropped(image:any)
+ {
+   if(this.crop_dweller_image)
+   {
+     this.dwellerCropperSettings.croppedWidth = image.width;
+     this.dwellerCropperSettings.croppedHeight = image.height;
+   let that=this;
+     
+     this.resizeDwellerImage(this.dataDwellerImage.image, data => {
+     
+     that.dwellerImage=data;
+     this.createDwellerThumbnail(that.dwellerImage);
+       });
+   }
+  else
+  {
+    this.crop_dweller_image=true;
+  } 
+  
+ }
+
+ takeDwellerPicture(){
+  //debugger;
+    let options =
+    {
+      quality: 100,
+      correctOrientation: true
+    };
+    this.camera.getPicture(options)
+    .then((data) => {
+      this.dwellerImage="data:image/jpeg;base64," +data;
+      let image : any= new Image();
+       image.src = this.dwellerImage;
+       //this.companyLogoImage=image;
+      //this.companyLogoCropper.setImage(image);
+      if(this.isApp)
+      {
+     this.crop
+     .crop(this.dwellerImage, {quality: 75,targetHeight:100,targetWidth:100})
+    .then((newImage) => {
+   
+        //alert(newImage);
+        this.dwellerImage=newImage;
+      }, error => {
+       
+        alert(error)});
+      }
+    }, function(error) {
+
+      console.log(error);
+    });
+  }
+  createDwellerThumbnail(bigMatch:any) {
+    let that=this;
+    //debugger;
+      this.generateDwellerFromImage(bigMatch, 500, 500, 0.5, data => {
+     //debugger;
+    that.dataDwellerImage.image=data;
+      });
+    }
+    generateDwellerFromImage(img, MAX_WIDTH: number = 700, MAX_HEIGHT: number = 700, quality: number = 1, callback) {
+      var canvas: any = document.createElement("canvas");
+      var image:any = new Image();
+      
+      var that=this;
+   //debugger;
+      image.src = img;
+      image.onload = function () {
+       
+        var width=that.dwellerCropperSettings.croppedWidth;
+        var height=that.dwellerCropperSettings.croppedHeight;
+       //debugger;
+        if (width > height) {
+          if (width > MAX_WIDTH) {
+            height *= MAX_WIDTH / width;
+            width = MAX_WIDTH;
+          }
+        } else {
+          if (height > MAX_HEIGHT) {
+            width *= MAX_HEIGHT / height;
+            height = MAX_HEIGHT;
+          }
+        }
+        //debugger;
+        canvas.width = width;
+        canvas.height = height;
+        that.dwellerWidth = width;
+        that.dwellerHeight = height;
+        //debugger;
+        var ctx = canvas.getContext("2d");
+   
+        ctx.drawImage(image, 0, 0, width, height);
+   
+        // IMPORTANT: 'jpeg' NOT 'jpg'
+        var dataUrl = canvas.toDataURL('image/jpeg', quality);
+   
+        callback(dataUrl)
+      }
+      
+    }
+    resizeDwellerImage(img:any,callback)
+    {
+      var canvas: any = document.createElement("canvas");
+      var image:any = new Image();
+     
+      var that=this;
+ 
+      image.src = img;
+      image.onload = function () {
+       
+        var width=that.dwellerCropperSettings.croppedWidth;
+        var height=that.dwellerCropperSettings.croppedHeight;
+      
+        canvas.width = width;
+        canvas.height = height;
+
+        var ctx = canvas.getContext("2d");
+   
+        ctx.drawImage(image, 0, 0, width, height);
+
+        var dataUrl = canvas.toDataURL('image/jpeg', 1);
+
+       callback(dataUrl)
+      }
+    }
    companyFileChangeListener($event) {
      this.crop_company_image=true;
      this.edit_company_image=true;
@@ -1222,7 +1474,7 @@ else
     {
     //debugger;
     this.userServiceObj.updateGlobalSettings(this.userId,this.personalImage,this.companyLogoImage,this.user.timezone,
-      this.colorBase,this.secondColor,this.thirdColor,this.identity_name,this.display_name,this.headerColor,this.sideBarMenuColor,
+      this.colorBase,this.secondColor,this.thirdColor,this.identity_name,this.display_name_dweller,this.dwellerImage,this.headerColor,this.sideBarMenuColor,
       this.buttonColor,this.textColor,this.backgroundColor,this.headerColorOption,this.sideBarMenuColorOption,
       this.buttonColorOption,this.textColorOption,this.backgroundColorOption,this.customColorOptionModal,
       this.contentTitleColor,this.contentTitleColorOption,this.paginationColor,
