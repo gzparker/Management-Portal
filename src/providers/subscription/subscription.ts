@@ -180,6 +180,7 @@ upgradeDowngradePlan(user_id:string,upgrade_id:string)
  data.append('member_id',user_id);
  data.append('upgrade_id',upgrade_id);
  data.append('service_id',this.sharedServiceObj.service_id);
+ //debugger;
   let upgradeResp=this.http
     .post(this.sharedServiceObj.registerationApiBaseUrl+'subscriptions/upgradeDowngradeMember', data, this.headerOptions)
     .map(this.extractData)

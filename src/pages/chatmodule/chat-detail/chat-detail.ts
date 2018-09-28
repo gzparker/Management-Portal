@@ -186,6 +186,7 @@ this.chatRef.off("value");
     //firebase.database().ref('groups').orderByChild("groupId").equalTo(that.groupId).on("value", function(snapshot) {
     that.groupRef=firebase.database().ref('groups');
     that.groupRef.orderByChild("groupId").equalTo(that.groupId).on("value", function(snapshot) {
+      //debugger;
       snapshot.forEach(element=>{
     that.returnedGroup=element;
       });
