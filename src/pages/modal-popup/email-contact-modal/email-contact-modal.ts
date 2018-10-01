@@ -36,6 +36,7 @@ public first_name:string="";
       if(this.navParams.get('lead')!=undefined)
    {
     this.leadInfo = this.navParams.get('lead');
+    //debugger;
     }
   }
   ionViewDidEnter()
@@ -55,14 +56,13 @@ public first_name:string="";
   }
   sendContactEmail()
   {
-      let subject="Email From : "+this.first_name+" "+this.last_name;
-   //debugger;
-    this.userServiceObj.sendEmailToContact("wasif1024@gmail.com",subject,this.emailMessage,this.sharedServiceObj.service_id.toString())
+    let subject="Email From : "+this.first_name+" "+this.last_name;
+    this.userServiceObj.sendEmailToContact(this.leadInfo.lead_id,subject,this.emailMessage,this.sharedServiceObj.service_id.toString())
     .subscribe((result) => this.sendEmailToContactResp(result));
   }
   sendEmailToContactResp(result:any)
   {
-   debugger;
+   //debugger;
     if(result.status)
 {
   let toast = this.toastCtrl.create({

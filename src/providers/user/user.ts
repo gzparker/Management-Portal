@@ -887,13 +887,13 @@ sendAppInvitation(phone_number:string,message:string){
       .map(this.extractData)
       return leadInvitation;
   }
-  sendEmailToContact(email:string,subject:string,message:string,service_id:string){
+  sendEmailToContact(toUserId:string,subject:string,message:string,service_id:string){
     //debugger;
         let data = new URLSearchParams();
-     data.append('to',email);
+     data.append('to','user_'+toUserId);
      data.append('from','noreply@idxcompany.com');
     data.append('json_message',message);
-    data.append('notification_type','authorization_pin');
+    data.append('notification_type','message');
     data.append('title',subject);
     data.append('service_id',service_id);
     debugger;
