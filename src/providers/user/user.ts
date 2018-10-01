@@ -890,13 +890,15 @@ sendAppInvitation(phone_number:string,message:string){
   sendEmailToContact(email:string,subject:string,message:string,service_id:string){
     //debugger;
         let data = new URLSearchParams();
-     data.append('email',email);
-    data.append('message',message);
-    data.append('subject',subject);
+     data.append('to',email);
+     data.append('from','noreply@idxcompany.com');
+    data.append('json_message',message);
+    data.append('notification_type','authorization_pin');
+    data.append('title',subject);
     data.append('service_id',service_id);
     debugger;
       let contactEmail=this.http
-        .post(this.sharedServiceObj.registerationApiBaseUrl+'members/sendContactEmail', data, this.headerOptions)
+        .post(this.sharedServiceObj.registerationApiBaseUrl+'messaging/sendEmailMessage', data, this.headerOptions)
         .map(this.extractData)
         return contactEmail;
     }
