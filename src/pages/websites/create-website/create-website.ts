@@ -69,6 +69,7 @@ export class CreateWebsitePage {
   public mapSidebarColor:string="";
   public mapSidebarColorOption:string="";
   public isCustomColor:string="0";
+  public isSsl:string="0";
   public customColorOption:boolean=false;
   public customColorOptionModal:boolean=false;
   public CkeditorConfig = {removeButtons:'Underline,Subscript,Superscript,SpecialChar'

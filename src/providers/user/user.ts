@@ -1403,14 +1403,7 @@ roleDetail(role_id:string)
      .map(this.extractData)
      return roleResp;
 }
-viewGlobalSettings(member_id:string){
-  let data = new URLSearchParams();
-    data.append('master_id',member_id);
-   let viewSettingsResp=this.http
-       .post(this.sharedServiceObj.registerationApiBaseUrl+'members/viewGlobalSettings', data, this.headerOptions)
-       .map(this.extractData)
-       return viewSettingsResp;
-}
+
 getAllMemberAllowedOptions(allowedOptions)
 {
   
@@ -1421,6 +1414,39 @@ getAllMemberAllowedOptions(allowedOptions)
        .post(this.sharedServiceObj.registerationApiBaseUrl+'members/memberAllowedOptions', data, this.headerOptions)
        .map(this.extractData)
        return allowedOptionsResp;
+}
+loadNotificationSettings(member_id:string){
+  let data = new URLSearchParams();
+    data.append('member_id',member_id);
+    data.append('member_id',member_id);
+   let notificationSettingsResp=this.http
+       .post(this.sharedServiceObj.registerationApiBaseUrl+'members/loadNotificationSettings', data, this.headerOptions)
+       .map(this.extractData)
+       return notificationSettingsResp;
+}
+updateNotificationSettings(member_id:string,receive_account_support:any,
+  receive_messages:any,receive_policy_and_community:any,receive_promotions_and_tips:any,
+  receive_reminders:any){
+  let data = new URLSearchParams();
+    data.append('member_id',member_id);
+    data.append('receive_account_support',receive_account_support);
+    data.append('receive_messages',receive_messages);
+    data.append('receive_policy_and_community',receive_policy_and_community);
+    data.append('receive_promotions_and_tips',receive_promotions_and_tips);
+    data.append('receive_reminders',receive_reminders);
+    //debugger;
+   let notificationSettingsResp=this.http
+       .post(this.sharedServiceObj.registerationApiBaseUrl+'members/updateNotificationSettings', data, this.headerOptions)
+       .map(this.extractData)
+       return notificationSettingsResp;
+}
+viewGlobalSettings(member_id:string){
+  let data = new URLSearchParams();
+    data.append('master_id',member_id);
+   let viewSettingsResp=this.http
+       .post(this.sharedServiceObj.registerationApiBaseUrl+'members/viewGlobalSettings', data, this.headerOptions)
+       .map(this.extractData)
+       return viewSettingsResp;
 }
 updateGlobalSettings(member_id:string,personalImage:string,companyImage:string,
   timezone:string,colorBase:string,secondColor:string,thirdColor:string,identity_name:string,display_name_dweller:string,image_dweller:string,headerColor:string,

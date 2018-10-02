@@ -36,6 +36,13 @@ import { trigger } from '@angular/core/src/animation/dsl';
 })
 export class NotificationSettingsPage {
   public isApp=false;
+  public userId:string="";
+  public receive_messages:any[]=[];
+  public receive_reminders:any[]=[];
+  public receive_promotions_and_tips:any[]=[];
+  public receive_policy_and_community:any[]=[];
+  public receive_account_support:any[]=[];
+  public notificationOptions:any[]=[{id:"sms",name:"SMS"},{id:"email",name:"Email"},{id:"push",name:"Push Notification"}];
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,
     public sharedServiceObj: SharedProvider, private storage: Storage,
@@ -46,7 +53,47 @@ export class NotificationSettingsPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad NotificationSettingsPage');
+    let member_id = this.storage.get('userId');
+    member_id.then((data) => {
+      this.userId=data;
+      this.loadNotificationSettings();
+     // this.sharedServiceObj.updateColorThemeMethod(null);
+    });
   }
 
+  loadNotificationSettings()
+  {
+    this.userServiceObj.loadNotificationSettings(this.userId)
+      .subscribe((result) => this.loadNotificationSettingsResp(result));
+  }
+  loadNotificationSettingsResp(result:any)
+  {
+    //debugger;
+    if(result.status!=false)
+    {
+      let notificationSettingsData=result.results[0];
+this.receive_account_support=notificationSettingsData.receive_account_support.split(',');
+this.receive_reminders=notificationSettingsData.receive_reminders.split(',');
+this.receive_messages=notificationSettingsData.receive_messages.split(',');
+this.receive_policy_and_community=notificationSettingsData.receive_policy_and_community.split(',');
+this.receive_promotions_and_tips=notificationSettingsData.receive_promotions_and_tips.split(',');
+    }
+  }
+  updateNotificationSettings()
+  {
+    this.userServiceObj.updateNotificationSettings(this.userId,this.receive_account_support,
+      this.receive_messages,this.receive_policy_and_community,this.receive_promotions_and_tips,this.receive_reminders)
+    .subscribe((result) => this.updateNotificationSettingsResp(result));
+  }
+  updateNotificationSettingsResp(result:any)
+  {
+    if(result.status!=false)
+    {
+     // debugger;
+     this.ngZone.run(() => {
+      
+       this.navCtrl.setRoot(DashboardTabsPage,{notificationMsg:"Notification Settings have been updated successfully.".toUpperCase()});
+     });
+    }
+  } 
 }

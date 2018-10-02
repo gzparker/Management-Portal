@@ -4,15 +4,77 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
+<ion-header class="dashboardUI colorEnabled background_color">
 
   <ion-navbar>
-    <ion-title>notification-settings</ion-title>
+    <!-- <button ion-button menuToggle start>
+      <ion-icon name="menu"></ion-icon>
+    </button> -->
+    <ion-title>Notification Settings</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="updateNotificationSettings();" [disabled]="!notificationSettingsForm.valid">
+        <ion-icon name="ios-bookmark"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
-
-</ion-content>
+<ion-content padding class="dashboardUI">
+  <div class="dashboardBG colorEnabled background_color"></div>
+    <!-- <h1 class="contentTitle animated bounceInRight">Global Preferences</h1> -->
+  
+    <form role="form" data-toggle="validator" #notificationSettingsForm="ngForm" class="animated fadeIn">
+      <ion-item class="noPadding itemMargin">
+        <ion-label stacked>Receive Messages</ion-label>
+        <ion-select placeholder="-----" [(ngModel)]="receive_messages"  
+        name="receive_messages" multiple="true" required>
+        <ion-option *ngFor="let notificationOption of notificationOptions" value= {{notificationOption.id}}>
+        {{notificationOption.name}}
+        </ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item class="noPadding itemMargin">
+        <ion-label stacked>Receive Reminders</ion-label>
+        <ion-select placeholder="-----" [(ngModel)]="receive_reminders"  
+        name="receive_reminders" multiple="true" required>
+        <ion-option *ngFor="let notificationOption of notificationOptions" value= {{notificationOption.id}}>
+        {{notificationOption.name}}
+        </ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item class="noPadding itemMargin">
+        <ion-label stacked>Receive Promotions and Tips</ion-label>
+        <ion-select placeholder="-----" [(ngModel)]="receive_promotions_and_tips"  
+        name="receive_promotions_and_tips" multiple="true" required>
+        <ion-option *ngFor="let notificationOption of notificationOptions" value= {{notificationOption.id}}>
+        {{notificationOption.name}}
+        </ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item class="noPadding itemMargin">
+        <ion-label stacked>Receive Policy and Community</ion-label>
+        <ion-select placeholder="-----" [(ngModel)]="receive_policy_and_community"  
+        name="receive_policy_and_community" multiple="true" required>
+        <ion-option *ngFor="let notificationOption of notificationOptions" value= {{notificationOption.id}}>
+        {{notificationOption.name}}
+        </ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item class="noPadding itemMargin">
+        <ion-label stacked>Receive Account Support</ion-label>
+        <ion-select placeholder="-----" [(ngModel)]="receive_account_support"  
+        name="receive_account_support" multiple="true" required>
+        <ion-option *ngFor="let notificationOption of notificationOptions" value= {{notificationOption.id}}>
+        {{notificationOption.name}}
+        </ion-option>
+        </ion-select>
+      </ion-item>
+      <div class="dashboardBtn">
+        <button ion-button color="primary" class="colorEnabled button_color" 
+        block (click)="updateNotificationSettings();" [disabled]="!notificationSettingsForm.valid">Save</button>
+      </div>
+      
+  </form>
+  </ion-content>

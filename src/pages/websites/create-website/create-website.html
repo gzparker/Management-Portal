@@ -82,7 +82,11 @@
         <ion-icon name="md-briefcase" item-start></ion-icon>
         <!--<ion-label stacked><span [ngClass]="{'error': office_id==''}" *ngIf="office_id==''">*</span></ion-label>-->
         <ion-input type="text" [(ngModel)]="office_id" name="office_id" placeholder="Office ID" ></ion-input>
-      </ion-item> 
+      </ion-item>
+      <!--<ion-item class="filterLabel">
+        <ion-label>Is Ssl</ion-label>
+        <ion-toggle checked="isSsl" [(ngModel)]="isSsl" name="isSsl"></ion-toggle>
+      </ion-item>-->
     </ion-list>
    
     <div class="animated lightSpeedIn formShadow blk2">
