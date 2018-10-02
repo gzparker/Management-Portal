@@ -64,9 +64,11 @@ page-global-preferences {
           margin: -3px 0 0 0;
           border-radius: 2px;
           right: 16px;
-          position: absolute;
-          // background: #00d2c6;
-          background: #cacaca;
+          position: absolute;          
+          // background: #cacaca;
+          background: #00d2ff;
+          background: -webkit-gradient(linear, left bottom, left top, from(#1f9eff), to(#00d2ff));
+          background: linear-gradient(to top, #1f9eff, #00d2ff);
           }
         }
       }
