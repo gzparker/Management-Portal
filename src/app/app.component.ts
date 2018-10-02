@@ -250,82 +250,69 @@ export class MyApp {
       sidebarElements[i].setAttribute("style", "background:"+this.sidebar_menu_color+" !important;");
     }
 
-    //////////////////////////////Button Color////////////////////////////////
-   let buttonColorElement=document.getElementsByClassName("button_color");
+    //////////////////////////////Button Color////////////////////////////////    
+    let buttonColorElement=document.getElementsByClassName("button_color");
     
     for (let i = 0; i < buttonColorElement.length; i++) {
-    //debugger;
-      buttonColorElement[i].setAttribute("style", "background-color:"+this.button_color+" !important;");
+    
+      buttonColorElement[i].setAttribute("style", "background:"+this.button_color+" !important;");
+    }
+    let buttonToggleElement=document.getElementsByClassName("btnToggle");
+    
+    for (let i = 0; i < buttonToggleElement.length; i++) {
+    
+      buttonToggleElement[i].setAttribute("style", "background:"+this.button_color+" !important;");
+    }
+    let buttonBadgeElement=document.getElementsByClassName("msgcounter");
+    
+    for (let i = 0; i < buttonBadgeElement.length; i++) {
+    
+      buttonBadgeElement[i].setAttribute("style", "background:"+this.button_color+" !important;");
+    }
+    let buttonBadgeInviteElement=document.getElementsByClassName("badgeInvite");
+    
+    for (let i = 0; i < buttonBadgeInviteElement.length; i++) {
+    
+      buttonBadgeInviteElement[i].setAttribute("style", "background:"+this.button_color+" !important;");
     }
     let buttonContactElement=document.getElementsByClassName("contactPhone");
     
     for (let i = 0; i < buttonContactElement.length; i++) {
     
-      buttonContactElement[i].setAttribute("style", "background-color:"+this.button_color+" !important;");
+      buttonContactElement[i].setAttribute("style", "background:"+this.button_color+" !important;");
     }
     let buttonContactChatElement=document.getElementsByClassName("contactChat");
     
     for (let i = 0; i < buttonContactChatElement.length; i++) {
     
-      buttonContactChatElement[i].setAttribute("style", "background-color:"+this.button_color+" !important;");
+      buttonContactChatElement[i].setAttribute("style", "background:"+this.button_color+" !important;");
     }
     let buttonContactEmailElement=document.getElementsByClassName("contactEmail");
     
     for (let i = 0; i < buttonContactEmailElement.length; i++) {
     
-      buttonContactEmailElement[i].setAttribute("style", "background-color:"+this.button_color+" !important;");
+      buttonContactEmailElement[i].setAttribute("style", "background:"+this.button_color+" !important;");
     }
     let buttonContactInviteElement=document.getElementsByClassName("contactInvite");
     
     for (let i = 0; i < buttonContactInviteElement.length; i++) {
     
-      buttonContactInviteElement[i].setAttribute("style", "background-color:"+this.button_color+" !important;");
+      buttonContactInviteElement[i].setAttribute("style", "background:"+this.button_color+" !important;");
     }
-    let buttonSegmentElement=document.getElementsByClassName("segment-button");
     
-    for (let i = 0; i < buttonSegmentElement.length; i++) {
-    
-      buttonSegmentElement[i].setAttribute("style", "color:"+this.button_color+" !important;");
-      buttonSegmentElement[i].setAttribute("style", "border-color:"+this.button_color+" !important;");
-    }
-    let buttonSegmentActivatedElement=document.getElementsByClassName("segment-activated");
-    
-    for (let i = 0; i < buttonSegmentActivatedElement.length; i++) {
-    
-      buttonSegmentActivatedElement[i].setAttribute("style", "color:"+this.button_color+" !important;");
-      buttonSegmentActivatedElement[i].setAttribute("style", "background-color:"+this.button_color+" !important;");
-    }
     /////////////////////////////////Content Background/////////////////////////////////////////
     /*let contentBackgroundElement=document.getElementsByClassName("background_color");
     
     for (let i = 0; i < contentBackgroundElement.length; i++) {
 
       contentBackgroundElement[i].setAttribute("style", "background:"+this.content_background+" !important;");
-    }
-    let contentBackgroundColorEnabledElement=document.getElementsByClassName("colorEnabled");
-    
-    for (let i = 0; i < contentBackgroundColorEnabledElement.length; i++) {
-
-      contentBackgroundColorEnabledElement[i].setAttribute("style", "background:"+this.content_background+" !important;");
-    }
-    let contentSearchBarIosElement=document.getElementsByClassName("searchbar-ios");
-    
-    for (let i = 0; i < contentSearchBarIosElement.length; i++) {
-
-      contentSearchBarIosElement[i].setAttribute("style", "border-color:"+this.content_background+" !important;");
-    }
-    let contentSearchBarMdIosElement=document.getElementsByClassName("searchbar-md");
-    
-    for (let i = 0; i < contentSearchBarMdIosElement.length; i++) {
-
-      contentSearchBarMdIosElement[i].setAttribute("style", "border-color:"+this.content_background+" !important;");
-    }
-    let contentSearchWpMdIosElement=document.getElementsByClassName("searchbar-wp");
-    
-    for (let i = 0; i < contentSearchWpMdIosElement.length; i++) {
-
-      contentSearchWpMdIosElement[i].setAttribute("style", "border-color:"+this.content_background+" !important;");
     }*/
+    let contentBackgroundElement=document.getElementsByClassName("background_color");
+    
+    for (let i = 0; i < contentBackgroundElement.length; i++) {
+
+      contentBackgroundElement[i].setAttribute("style", "background:"+this.content_background+" !important;");
+    }
     ////////////////////////////////////////////////////////////////////////////////////////////
   }
   toggleSideBar(){

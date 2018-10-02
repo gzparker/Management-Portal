@@ -1,4 +1,10 @@
 page-new-message-popup {  
+  ion-content.dashboardUI {
+    .dashboardBG {
+    height: 19vh;
+    z-index: -1;
+    }
+  }
   ion-content.newMessage {
     
     .scroll-content {
@@ -111,7 +117,7 @@ page-new-message-popup {
         border-radius: 50px;
         background: none;
         // border: 8px solid rgba(0, 0, 0, 0.15);
-        border: 8px solid #3197D2;
+        border: 8px solid rgba(0, 0, 0, 0.22);
           .searchbar-search-icon {          
           top: 12px;
           left: 18px;
@@ -182,4 +188,15 @@ page-new-message-popup {
     height: 45vh !important;
     }
   }
+}
+
+
+/*IPAD LANDSCAPE */
+@media (max-width: 1400px) {
+  ion-content.dashboardUI {
+      .dashboardBG {
+      height: 32vh !important;
+      z-index: -1;
+      }
+    }
 }

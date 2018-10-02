@@ -1,4 +1,10 @@
 page-new-group-popup {
+  ion-content.dashboardUI {
+    .dashboardBG {
+    height: 19vh;
+    z-index: -1;
+    }
+  }
   ion-content.newMessage {
     
     .scroll-content {
@@ -164,6 +170,17 @@ page-new-group-popup {
   page-new-group-popup {
     ion-content.dashboardUI:after {
     height: 45vh !important;
-    }
+    }    
   }
+}
+
+
+/*IPAD LANDSCAPE */
+@media (max-width: 1400px) {
+  ion-content.dashboardUI {
+      .dashboardBG {
+      height: 32vh !important;
+      z-index: -1;
+      }
+    }
 }

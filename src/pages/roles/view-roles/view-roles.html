@@ -70,20 +70,20 @@
       </ion-item>      
       
       <ion-item class="desktopOption" side="right" *ngIf="!isApp">
-        <div class="optionIcon" *ngIf="!isApp"></div> 
-        <button ion-button color="primary" (click)="editRole(role.id)">
-          <ion-icon name="ios-brush">Edit</ion-icon>
-        </button>
+        <div class="optionIcon" *ngIf="!isApp"></div>         
         <button ion-button color="danger" (click)="deleteRole(role)">
           <ion-icon name="md-trash">Delete</ion-icon>
+        </button>
+        <button ion-button color="primary" (click)="editRole(role.id)">
+          <ion-icon name="ios-brush">Edit</ion-icon>
         </button>
       </ion-item>
-      <ion-item-options side="right" *ngIf="isApp">
-        <button ion-button color="primary" (click)="editRole(role.id)">
-          <ion-icon name="ios-brush">Edit</ion-icon>
-        </button>
+      <ion-item-options side="right" *ngIf="isApp">        
         <button ion-button color="danger" (click)="deleteRole(role)">
           <ion-icon name="md-trash">Delete</ion-icon>
+        </button>
+        <button ion-button color="primary" (click)="editRole(role.id)">
+          <ion-icon name="ios-brush">Edit</ion-icon>
         </button>
       </ion-item-options>
     </ion-item-sliding>

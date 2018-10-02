@@ -4,7 +4,7 @@
   'default':sideBarOption === '1',
   'IconOnly':sideBarOption === '2','noSidebar':sideBarOption === '3'}">
 
-<div id="SidebarResetToggle" (click)="toggleSideBar()"></div>
+<div id="SidebarResetToggle" class="btnToggle colorEnabled button_color" (click)="toggleSideBar()"></div>
 
 <ion-menu [content]="content" persistent="true">
   <ion-header>
@@ -15,7 +15,7 @@
 
   <ion-content class="noScroll colorEnabled sidebar_color" [style.background]="sideBackGround">
     
-    <div id="SidebarDisplayToggle" (click)="toggleSideBar()"></div>
+    <div id="SidebarDisplayToggle" class="btnToggle colorEnabled button_color" (click)="toggleSideBar()"></div>
 
     <ion-card text-center menuClose class="profileCard" *ngIf="userLoggedIn==true&&userGeneralInfo!=null"  
     (tap)="openPage('26')" > 
@@ -59,7 +59,7 @@
       </ion-item>
 <ion-item menuClose ion-item (tap)="openPage('27')" 
       *ngIf="userLoggedIn==true&&paidStatus==true&&isChats==true">      
-        Chats <span class="msgcounter" *ngIf="allUnreadMsg!=undefined">{{allUnreadMsg}}</span>
+        Chats <span class="msgcounter colorEnabled button_color" *ngIf="allUnreadMsg!=undefined">{{allUnreadMsg}}</span>
       </ion-item>
       <!--<ion-item menuClose ion-item (tap)="openPage('23')" 
       *ngIf="userLoggedIn==true&&paidStatus==true&&isRoles==true">      

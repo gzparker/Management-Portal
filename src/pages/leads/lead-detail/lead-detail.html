@@ -39,11 +39,11 @@
     </ion-item>
   </ion-list>
 
-  <div class="animated fadeIn leadsShortcutButtons colorEnabled button_color" *ngIf="leadDetail!=undefined">
-    <a class="contactPhone" href="tel:{{leadDetail.phone_mobile}}"><ion-icon name="md-call"></ion-icon><span>Call</span></a>
-    <div class="contactChat" (click)="chatContact(leadDetail);"><ion-icon name="chatboxes"></ion-icon><span>Chat</span></div>
-    <div class="contactEmail" (click)="emailContact(leadDetail);"><ion-icon name="ios-mail"></ion-icon><span>Mail</span></div>
-    <div class="contactInvite" *ngIf="leadDetail.app_installed!=undefined&&leadDetail.app_installed=='0'" 
+  <div class="animated fadeIn leadsShortcutButtons" *ngIf="leadDetail!=undefined">    
+    <a class="contactPhone colorEnabled button_color" href="tel:{{leadDetail.phone_mobile}}"><ion-icon name="md-call"></ion-icon><span>Call</span></a>
+    <div class="contactChat colorEnabled button_color" (click)="chatContact(leadDetail);"><ion-icon name="chatboxes"></ion-icon><span>Chat</span></div>
+    <div class="contactEmail colorEnabled button_color" (click)="emailContact(leadDetail);"><ion-icon name="ios-mail"></ion-icon><span>Mail</span></div>
+    <div class="contactInvite colorEnabled button_color" *ngIf="leadDetail.app_installed!=undefined&&leadDetail.app_installed=='0'" 
     (click)="invitationPopUp(leadDetail);"><ion-icon name="ios-mail"></ion-icon>
       <span>Invite</span></div>
   </div>
@@ -154,7 +154,7 @@
   </ion-list>
 
 
-  <ion-list class="centerStage leadsSavedInfo colorEnabled button_color">
+  <ion-list class="centerStage leadsSavedInfo">
     <ion-item>
     <h2 class="contentTitle" *ngIf="leadDetail!=undefined">{{leadDetail.first_name}}'s Saved</h2>
     
