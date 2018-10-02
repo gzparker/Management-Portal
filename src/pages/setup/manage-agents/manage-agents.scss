@@ -179,8 +179,8 @@ page-manage-agents {
     overflow: visible !important;
     width: 100%;    
     position: relative;    
-      &:before {
-      content: "View Profile";
+      
+      .viewProfile {
       font-family: $font-three;
       font-size: 14px;
       letter-spacing: .5px;
@@ -203,6 +203,31 @@ page-manage-agents {
       background: -webkit-linear-gradient(to right, #42a2f9, #59ebf2);
       background: linear-gradient(to right, #42a2f9, #59ebf2);
       }
+
+      // &:before {
+      // content: "View Profile";
+      // font-family: $font-three;
+      // font-size: 14px;
+      // letter-spacing: .5px;
+      // height: 34px;
+      // line-height: 34px;
+      // padding: 0 35px;
+      // border-radius: 50px;
+      // cursor: pointer !important;
+      // width: 155px !important;
+      // display: block !important;
+      // left: 0;
+      // right: 0;
+      // bottom: -17px;
+      // box-sizing: border-box;
+      // margin: 0 auto !important;
+      // position: absolute;
+      // color: #FFF;
+      // text-align: center;
+      // background: #58ABF7;
+      // background: -webkit-linear-gradient(to right, #42a2f9, #59ebf2);
+      // background: linear-gradient(to right, #42a2f9, #59ebf2);
+      // }
 
       ion-avatar {
         &.imgFull {

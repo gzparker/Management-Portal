@@ -1,5 +1,9 @@
 page-all-leads {
 
+  ion-header.dashboardUI {
+  height: 56px;
+  }
+
   ion-list-header.contactList {
     .item-inner {
       .input-wrapper {
@@ -68,7 +72,7 @@ page-all-leads {
         }
 
       &:before {
-      height: 63px;
+      height: 56px;
       z-index: 1;
       }
       &:after {
@@ -102,8 +106,10 @@ page-all-leads {
   color: #FFF;
   width: 52px;  
   border-radius: 20px;
-  border: 1px solid lighten($color-6, 20%) !important;
+  border: none;
+  // border: 1px solid lighten($color-6, 20%) !important;
   background: lighten($color-6, 25%) !important;
+  line-height: 13px;
   cursor: pointer;
   }
 

@@ -49,7 +49,7 @@ page-chat-emoji-popupover {
   ion-content {
     &.dashboardUI {
       .dashboardBG {
-      height: 100vh;
+      height: 100vh !important;
       z-index: -1;
       }
       &:before {

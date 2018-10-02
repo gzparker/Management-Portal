@@ -1,5 +1,11 @@
 page-setup-option {
 
+  ion-content.dashboardUI {
+    .dashboardBG {
+    height: 15.5vh;
+    }
+  }
+
   ion-content {
     &.dashboardUI {
       &.colorEnabled {
@@ -25,4 +31,17 @@ page-setup-option {
 
     }
   }
+}
+
+
+
+/*IPAD LANDSCAPE */
+@media (max-width: 1400px) {
+page-setup-option {
+  ion-content.dashboardUI {
+    .dashboardBG {
+    height: 22.5vh !important;
+    }
+  }
+}
 }

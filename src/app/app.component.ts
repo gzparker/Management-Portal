@@ -275,6 +275,12 @@ export class MyApp {
     
       buttonBadgeInviteElement[i].setAttribute("style", "background:"+this.button_color+" !important;");
     }
+    let buttonviewProfileElement=document.getElementsByClassName("viewProfile");
+    
+    for (let i = 0; i < buttonviewProfileElement.length; i++) {
+    
+      buttonviewProfileElement[i].setAttribute("style", "background:"+this.button_color+" !important;");
+    }
     let buttonContactElement=document.getElementsByClassName("contactPhone");
     
     for (let i = 0; i < buttonContactElement.length; i++) {
@@ -307,10 +313,10 @@ export class MyApp {
 
       contentBackgroundElement[i].setAttribute("style", "background:"+this.content_background+" !important;");
     }*/
+
     let contentBackgroundElement=document.getElementsByClassName("background_color");
     
     for (let i = 0; i < contentBackgroundElement.length; i++) {
-
       contentBackgroundElement[i].setAttribute("style", "background:"+this.content_background+" !important;");
     }
     ////////////////////////////////////////////////////////////////////////////////////////////
