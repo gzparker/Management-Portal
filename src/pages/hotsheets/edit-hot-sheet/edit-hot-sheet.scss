@@ -2,6 +2,11 @@ page-edit-hot-sheet {
   ion-content {
     &.dashboardUI {
 
+      .dashboardBG {
+      height: 45vh;
+      z-index: -1;
+      }
+
       &.colorEnabled {
         &.background_color {
         background: #EBF0F5;

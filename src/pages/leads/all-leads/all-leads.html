@@ -4,7 +4,7 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header class="dashboardUI">
+<ion-header class="dashboardUI colorEnabled background_color">
   <ion-navbar>
     <button ion-button menuToggle start>
       <ion-icon name="menu"></ion-icon>
@@ -18,7 +18,7 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding class="dashboardUI colorEnabled background_color">  
+<ion-content padding class="dashboardUI">
 
   <ion-refresher (ionRefresh)="viewAllLeads($event)">
     <ion-refresher-content></ion-refresher-content>
@@ -89,7 +89,7 @@
           <!--<img src="assets/imgs/profile-photo.jpg">-->
         </ion-avatar>
         <h2 class="cName" (click)="leadDetail(lead.lead_id);">{{lead.first_name}} <b>{{lead.last_name}}</b></h2>
-          <span *ngIf="lead.app_installed!=undefined&&lead.app_installed=='0'"><ion-badge color="primary" class="badgeInvite" (click)="invitationPopUp(lead);">Invite</ion-badge></span>
+          <span *ngIf="lead.app_installed!=undefined&&lead.app_installed=='0'"><ion-badge color="primary" class="badgeInvite colorEnabled button_color" (click)="invitationPopUp(lead);">Invite</ion-badge></span>
         <!-- <p class="cEmail" data-placeholder="N/A">{{lead.email}}</p> -->
         
         <!-- <h2>{{lead.first_name}}-{{lead.last_name}}</h2>

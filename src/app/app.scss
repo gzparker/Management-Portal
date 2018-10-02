@@ -340,6 +340,10 @@ ion-content {
   }
 } 
 
+.split-pane-md.split-pane-visible > .split-pane-side {
+border-right: none;
+}
+
 // ------------------------------------------------------------
 // DEFAULT SETTINGS
 // ------------------------------------------------------------
@@ -765,6 +769,16 @@ ion-content {
   background: #00d2ff;
   background: -webkit-linear-gradient(to top, #1f9eff, #00d2ff);
   background: linear-gradient(to top, #1f9eff, #00d2ff);
+
+    .dashboardBG {
+    width: 100%;
+    height: 32vh;
+    top: 0;
+    right: 0;
+    left: 0;
+    position: fixed;
+    }
+
     &:before {
     content: "";
     width: auto;
@@ -1247,8 +1261,8 @@ ion-content.dashboardUI {
           box-sizing: border-box;
           // border: 1px solid #4D8F2F;
           // background: #77B55D;
-          border: 1px solid #514c4c;
-          background: #514c4c;
+          border: 1px solid #6c6c6c;
+          background: #6c6c6c;
           @extend %transition;            
           }
         }
@@ -1398,7 +1412,11 @@ display: none !important;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;  
   // background: #77B55D;
-  background: #514c4c;
+  background: #6c6c6c;
+  @extend %transition;
+    &:hover {
+    opacity: .9;
+    }
     &:before {
     content: "";
     width: 18px;
@@ -1409,7 +1427,7 @@ display: none !important;
     z-index: 20;
     position: absolute;
     // background: #77B55D;
-    background: #514c4c;
+    background: #6c6c6c;
     }
     &:after {
     content: "Upload";

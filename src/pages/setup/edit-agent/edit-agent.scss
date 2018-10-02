@@ -2,6 +2,11 @@ page-edit-agent {
 
   ion-content {
     &.dashboardUI {
+      
+      .dashboardBG {
+      z-index: -1;
+      }
+
       &.colorEnabled {
         &.background_color {
         background: none;

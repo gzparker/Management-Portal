@@ -23,6 +23,11 @@ page-create-role {
 
   ion-content {
     &.dashboardUI {
+      .dashboardBG {
+      height: 55vh !important;
+      z-index: -1;
+      }
+
       &:before {
       height: 55vh;
       z-index: 1;

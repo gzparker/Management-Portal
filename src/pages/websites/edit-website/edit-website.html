@@ -4,7 +4,7 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header class="dashboardUI">
+<ion-header class="dashboardUI colorEnabled background_color">
 
   <ion-navbar>
     <ion-title>Edit Website</ion-title>
@@ -18,7 +18,8 @@
 </ion-header>
 
 
-<ion-content padding class="dashboardUI colorEnabled background_color">
+<ion-content padding class="dashboardUI">
+<div class="dashboardBG colorEnabled background_color"></div>
     <form role="form" data-toggle="validator" #websiteForm="ngForm" >
 
       <ion-list class="animated lightSpeedIn blk1">
@@ -169,7 +170,7 @@
                 </div>
 
                 <!-- Image Upload Button -->              
-                <input id="custom-input" class="btnUpload colorEnabled button_color" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="websiteLogoFileChangeListener($event)">
+                <input id="custom-input" class="btnUpload" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="websiteLogoFileChangeListener($event)">
                 <button ion-button (click)="editImage('logo');" *ngIf="isLogoImgExist">
                   <ion-icon name="md-create"></ion-icon>
                 </button>
@@ -204,7 +205,7 @@
               </div>
               
               <!-- Image Upload Button -->
-              <input id="custom-input" class="btnUpload colorEnabled button_color" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="websiteFavIconFileChangeListener($event)">
+              <input id="custom-input" class="btnUpload" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="websiteFavIconFileChangeListener($event)">
               <button ion-button (click)="editImage('favIcon');" *ngIf="isFavImgExist">
                 <ion-icon name="md-create"></ion-icon>
               </button>  

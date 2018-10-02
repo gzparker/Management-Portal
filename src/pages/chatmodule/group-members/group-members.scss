@@ -12,6 +12,9 @@ page-group-members {
 
 
   ion-content.dashboardUI.chatUI {
+    .dashboardBG {
+    height: 21vh !important;
+    }
     &:before {
     height: 21vh !important;
     z-index: 1;
