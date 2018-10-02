@@ -20,6 +20,7 @@ import { GlobalPreferencesPage } from '../setup/global-preferences/global-prefer
 import { ManageAgentsPage } from '../setup/manage-agents/manage-agents';
 import { MlsSettingsPage } from '../setup/mls-settings/mls-settings';
 import { SetupOptionPage } from '../setup/setup-option/setup-option';
+import { NotificationSettingsPage } from '../setup/notification-settings/notification-settings';
 import { UserOptionPage } from '../setup/user-option/user-option';
 
 import { AccountInfoPage } from '../account/account-info/account-info';
@@ -516,5 +517,9 @@ if(status==true)
     if (pageNumber == "27") {
       this.navCtrl.push(ChatPage);
     }
+    if (pageNumber == "28") {
+      this.navCtrl.push(NotificationSettingsPage);
+    }
+    
   }
 }

@@ -69,6 +69,7 @@ import { EditAgentPage } from '../pages/setup/edit-agent/edit-agent';
 import { MlsSettingsPage } from '../pages/setup/mls-settings/mls-settings';
 import { SetupOptionPage } from '../pages/setup/setup-option/setup-option';
 import { UserOptionPage } from '../pages/setup/user-option/user-option';
+import { NotificationSettingsPage } from '../pages/setup/notification-settings/notification-settings';
 
 import { AccountInfoPage } from '../pages/account/account-info/account-info';
 import { EditAccountPage } from '../pages/account/edit-account/edit-account';
@@ -142,7 +143,7 @@ var firebaseConfig = {
     ChatActivitiesPage,ChatDetailPage,ChatEmojiPopupoverPage,ChatFriendsActivePage,ChatFriendsActivePage,
     ChatFriendsMessengerPage,ChatGroupsPage,ChatsPage,ChatingImagePopUpPage,NewGroupPopupPage,
     NewMessagePopupPage,GroupChatDetailPage,GroupMembersPage,ChatFriendsPage,ListingDetailPopupPage,
-    HotsheetDetailPopupPage,EmailContactModalPage,ColorSelectionPopupPage,PicturePopupPage
+    HotsheetDetailPopupPage,EmailContactModalPage,ColorSelectionPopupPage,PicturePopupPage,NotificationSettingsPage
   ],
   imports: [
     BrowserModule, HttpModule,CKEditorModule,
@@ -171,7 +172,7 @@ var firebaseConfig = {
     ChatActivitiesPage,ChatDetailPage,ChatEmojiPopupoverPage,ChatFriendsActivePage,ChatFriendsActivePage,
     ChatFriendsMessengerPage,ChatGroupsPage,ChatsPage,ChatingImagePopUpPage,NewGroupPopupPage,NewMessagePopupPage,
     NewMessagePopupPage,GroupChatDetailPage,GroupMembersPage,ChatFriendsPage,
-    ListingDetailPopupPage,HotsheetDetailPopupPage,PicturePopupPage
+    ListingDetailPopupPage,HotsheetDetailPopupPage,PicturePopupPage,NotificationSettingsPage
   ],
   providers: [
     StatusBar,

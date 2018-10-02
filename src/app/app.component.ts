@@ -34,6 +34,7 @@ import { ManageAgentsPage } from '../pages/setup/manage-agents/manage-agents';
 import { MlsSettingsPage } from '../pages/setup/mls-settings/mls-settings';
 import { SetupOptionPage } from '../pages/setup/setup-option/setup-option';
 import { UserOptionPage } from '../pages/setup/user-option/user-option';
+import { NotificationSettingsPage } from '../pages/setup/notification-settings/notification-settings';
 
 import { AccountInfoPage } from '../pages/account/account-info/account-info';
 import { EditAccountPage } from '../pages/account/edit-account/edit-account';

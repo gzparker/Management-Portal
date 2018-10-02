@@ -12,6 +12,7 @@ import { UserProvider } from '../../../providers/user/user';
 import { GlobalPreferencesPage } from '../../setup/global-preferences/global-preferences';
 import { MlsSettingsPage } from '../../setup/mls-settings/mls-settings';
 import { UserOptionPage } from '../../setup/user-option/user-option';
+import { NotificationSettingsPage } from '../../setup/notification-settings/notification-settings';
 /**
  * Generated class for the SetupOptionPage page.
  *
@@ -123,6 +124,10 @@ export class SetupOptionPage {
     else if(pageNumber=="23")
     {
       this.navCtrl.setRoot(DashboardTabsPage,{selectedPage:"23"});
+    }
+    else if(pageNumber=="28")
+    {
+      this.navCtrl.setRoot(NotificationSettingsPage,{selectedPage:"28"});
     }
     //debugger;
     //this.sharedServiceObj.setNavigationalPage(pageNumber);
