@@ -27,6 +27,10 @@ page-websites-website-links {
 
 
   ion-list {
+    &.centerStage {
+    margin-top: 1px;
+    }
+
     .item-ios, .item-md, .item-wp {
       
       .item-inner {

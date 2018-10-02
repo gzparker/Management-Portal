@@ -16,6 +16,74 @@ page-edit-website {
     }
   }
 
+  ion-content.dashboardUI {
+    .dashboardBG {
+    z-index: -1;
+    }
+  }
+
+  ion-list.sectionBlock {
+  background: #FFF;
+    ion-item.sectionTitle {
+    border-radius: 0 !important;
+    padding-left: 0;
+    padding-bottom: 0px !important;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 1px;
+    padding-right: 0px !important;     
+    box-shadow: none !important;
+    background: none !important;    
+      
+      ion-list.noShadow {
+      margin-top: 1px;      
+      margin-bottom: 6px !important;
+      border-radius: 0px !important;
+      }
+
+      .item-inner {
+      padding-left: 16px;
+      }
+      span {
+      font-family: $font-one;
+      font-size: 13px;
+      // font-style: italic;
+      letter-spacing: .3px;
+      padding-left: 6px;
+      opacity: .75;
+      }
+    }
+  }
+
+  ion-list.customColorSettingsBlock {
+  box-shadow: none !important;  
+    .filterLabel {
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+    margin-left: 0px !important;
+    border-bottom: none !important;
+      .item-inner {
+      padding-right: 0px;
+      border-bottom: none !important;
+        .colorSchemeLabel {
+        padding-left: 0px !important;
+        }        
+      }
+    }
+    ion-list.customColorOption {
+    box-shadow: none !important;
+    margin-bottom: 0px;
+    background: #F5F5F5 !important;
+    border-radius: 6px !important;
+      ion-item {
+      background: #F5F5F5 !important;
+      }
+      .item-inner {
+      border-bottom: none;
+      }
+    }
+  }
+
   ion-content.dashboardUI .label-ios[stacked], ion-content.dashboardUI .label-md[stacked], ion-content.dashboardUI .label-wp[stacked] {
   margin-bottom: 2px !important;
   } 
@@ -116,6 +184,36 @@ page-edit-website {
     border-color: #ebe9f0 !important;
     }
   }
+
+  .wrapperArea {    
+  border-radius: 2px;
+  letter-spacing: .5px;
+  white-space: normal;
+  margin: 11px 0 0 0 !important;
+  padding: 11px 10px 10px 10px  !important;
+  background: #e9eef6;
+  width: 100%;
+  resize: none !important;
+    &.customCSS {
+    // margin-bottom: 8px !important;
+      textarea {
+      resize: none;
+      }
+    }
+
+    textarea {
+    font-size: 13px;
+    line-height: 20px;
+    text-overflow: unset;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: 160px;    
+    padding: 0 !important;
+    margin: 0 !important;
+    // resize: none !important;
+    }
+  }
+
   .expandText {
   height: 128px;
   font-size: 12px;
@@ -169,6 +267,79 @@ page-edit-website {
   .customList.cropFavicon {
   border-bottom: 0px !important;
   // padding-bottom: 6px !important;
+  }
+
+  .colorSchemeOptions {
+  margin-left: -10px;
+  margin-right: -10px;
+    button {
+    border-radius: 3px !important;
+    border: none;
+    }
+  }
+
+  .formUI {
+  border-radius: 6px;
+  box-shadow: -1px 0px 18px 1px rgba(41, 81, 123, 0.15);
+  background: #FFF !important;  
+    ion-item, .customList {
+    border-radius: 0px !important;
+    margin-bottom: 0px !important;
+    box-shadow: none !important;
+    background: none !important;
+    border-bottom: 1px solid #E2E2E2;
+    }
+    ion-item.filterColorOptions {
+      .item-inner {
+      border-bottom: none !important;
+        ion-label {
+          span {
+          font-family: $font-one;
+          font-size: 12px;
+          font-style: italic;
+          letter-spacing: .3px;
+          padding-left: 6px;
+          opacity: .7;
+          }
+        }
+      }
+    }
+    .customList {
+      &.colorSchemeBlock {
+      padding-top: 3px;
+      padding-bottom: 7px;
+      border-bottom: none;
+      }
+
+      .customColorOption {
+      border-radius: 6px !important;
+        .label-ios, .label-md, .label-wp {
+        margin: 14px 8px 14px 0 !important;
+          .colorPreview {
+          width: 26px;
+          height: 22px;
+          display: inline-block;
+          z-index: 100;
+          float: right;
+          visibility: visible !important;
+          margin: -3px 0 0 0;
+          border-radius: 2px;
+          right: 16px;
+          position: absolute;          
+          // background: #cacaca;
+          background: #00d2ff;
+          background: -webkit-gradient(linear, left bottom, left top, from(#1f9eff), to(#00d2ff));
+          background: linear-gradient(to top, #1f9eff, #00d2ff);
+          }
+        }
+      }
+
+      .colorSchemeLabel {
+      margin-top: 0px !important;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #E2E2E2;
+      }
+    }
   }
 
 }

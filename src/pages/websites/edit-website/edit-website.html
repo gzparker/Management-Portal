@@ -55,23 +55,58 @@
              </ion-option>
           </ion-select>
         </ion-item>
-        <ion-item class="userInfoBlock medIcon">
-          <ion-icon name="md-briefcase" item-start></ion-icon>
-          <!--<ion-label stacked><span [ngClass]="{'error': agent_id==''}" *ngIf="agent_id==''">*</span></ion-label>-->       
-          <ion-input type="text" [(ngModel)]="agent_id" name="agent_id" placeholder="Agent ID"></ion-input>
+        <ion-item class="userInfoBlock">
+          <!-- <ion-icon name="md-briefcase" item-start></ion-icon> -->
+          <!--<ion-label stacked><span [ngClass]="{'error': agent_id==''}" *ngIf="agent_id==''">*</span></ion-label>-->
+          <ion-label stacked>Agent ID:</ion-label>
+          <ion-input type="text" [(ngModel)]="agent_id" name="agent_id"></ion-input>
         </ion-item>
   
-        <ion-item class="userInfoBlock medIcon">
-          <ion-icon name="md-briefcase" item-start></ion-icon>
+        <ion-item class="userInfoBlock">
+          <!-- <ion-icon name="md-briefcase" item-start></ion-icon> -->
           <!--<ion-label stacked><span [ngClass]="{'error': broker_id==''}" *ngIf="broker_id==''">*</span></ion-label>-->
-          <ion-input type="text" [(ngModel)]="broker_id" name="broker_id" placeholder="Broker ID" ></ion-input>
+          <ion-label stacked>Broker ID</ion-label>
+          <ion-input type="text" [(ngModel)]="broker_id" name="broker_id"></ion-input>
         </ion-item>
   
-        <ion-item class="userInfoBlock medIcon">
-          <ion-icon name="md-briefcase" item-start></ion-icon>
+        <ion-item class="userInfoBlock">
+          <!-- <ion-icon name="md-briefcase" item-start></ion-icon> -->
           <!--<ion-label stacked><span [ngClass]="{'error': office_id==''}" *ngIf="office_id==''">*</span></ion-label>-->
-          <ion-input type="text" [(ngModel)]="office_id" name="office_id" placeholder="Office ID" ></ion-input>
+          <ion-label stacked>Office ID</ion-label>
+          <ion-input type="text" [(ngModel)]="office_id" name="office_id"></ion-input>
         </ion-item>   
+      
+        <ion-item>
+          <ion-label>Show Open Houses on Homepage</ion-label>
+          <ion-toggle [(ngModel)]="show_open_houses" name="show_open_houses"></ion-toggle>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Show New Houses on Homepage</ion-label>
+          <ion-toggle [(ngModel)]="show_new_listings" name="show_new_listings"></ion-toggle>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Feature Agent Listing on Homepage</ion-label>
+          <ion-toggle [(ngModel)]="feature_agent_listings" name="feature_agent_listings"></ion-toggle>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Feature Broker Listing on Homepage</ion-label>
+          <ion-toggle [(ngModel)]="feature_broker_listings" name="feature_broker_listings"></ion-toggle>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Feature Office Listing on Homepage</ion-label>
+          <ion-toggle [(ngModel)]="feature_office_listings" name="feature_office_listings"></ion-toggle>
+        </ion-item>
+
+        <!--<ion-item>
+          <ion-label>Is Active<span [ngClass]="{'error': isActive==false}" *ngIf="isActive==false">*</span></ion-label>
+          <ion-checkbox color="royal" item-right checked="false" [(ngModel)]="isActive" name="isActive" id="isActive" 
+          required >Is Active</ion-checkbox>
+        </ion-item>-->
+        
       </ion-list>
 
         
@@ -156,10 +191,11 @@
       <div class="animated lightSpeedIn formShadow blk4">
         <ion-list class="uploadPhoto noShadow" *ngIf="!isApp">
 
-            <ion-list-header>Upload Company/Brand Logo</ion-list-header>
+            <!-- <ion-list-header>Upload Company Logo</ion-list-header> -->
+            <ion-item><ion-label stacked class="labelLarge">Upload Company Logo</ion-label></ion-item>
 
             <!-- Main Image Uploader -->
-            <div class="customList bottomRadius0">
+            <div class="customList noBorder">
               
               <div class="HotSheetImageUploader">
 
@@ -193,10 +229,11 @@
 
 
 
-            <ion-list-header>Upload Website FavIcon</ion-list-header>
+            <!-- <ion-list-header>Upload Website FavIcon  (32x32 px)</ion-list-header> -->
+            <ion-item><ion-label stacked class="labelLarge">Upload Website Favicon  <span>(32x32 px)</span></ion-label></ion-item>
 
             <div class="customList cropFavicon">
-              <div class="HotSheetImageUploader">
+              <div class="HotSheetImageUploader imgFavicon">
 
               <!-- Image Cropper Result -->
               <div class="imgCropperPreviewResult" *ngIf="dataWebsiteIcon.image" >
@@ -226,16 +263,22 @@
         </ion-list>
       </div>
 
+      <ion-list class="sectionBlock animated lightSpeedIn blk5">
 
-      <ion-list class="animated lightSpeedIn blk5">
+          <ion-item class="sectionTitle">
+            <ion-label>Wrappers Management <span>(Advance)</span></ion-label>
+            <ion-toggle checked="customWebsiteWrapper" [(ngModel)]="customWebsiteWrapper" name="customColorOption"></ion-toggle>
+          </ion-item>
+
+        <ion-list class="noShadow" *ngIf="customWebsiteWrapper">
           <ion-item>
-            <ion-label stacked>Header Wrapper</ion-label>
-            <ion-textarea type="text" class="expandText" [(ngModel)]="header_wrapper" name="header_wrapper"></ion-textarea>
+            <ion-label stacked>Header HTML</ion-label>
+            <ion-textarea type="text" class="wrapperArea" [(ngModel)]="header_wrapper" name="header_wrapper" placeholder="Editable HTML for the Header goes here"></ion-textarea>
           </ion-item>
           
           <ion-item>
             <ion-label stacked>Footer Wrapper</ion-label>
-            <ion-textarea type="text" class="expandText" [(ngModel)]="footer_wrapper" name="footer_wrapper"></ion-textarea>
+            <ion-textarea type="text" class="wrapperArea" [(ngModel)]="footer_wrapper" name="footer_wrapper" placeholder="Editable HTML for the Footer goes here"></ion-textarea>
           </ion-item>
 
           <!--<ion-item>
@@ -251,81 +294,70 @@
 
           <ion-item>
             <ion-label stacked>Custom CSS</ion-label>
-            <ion-textarea type="text" class="expandText" [(ngModel)]="custom_css" name="custom_css"></ion-textarea>
+            <ion-textarea type="text" class="wrapperArea customCSS" [(ngModel)]="custom_css" name="custom_css" placeholder="Add your own CSS code here to customize the appearance and layout of your site"></ion-textarea>
           </ion-item>
+        </ion-list>
       </ion-list>
 
       
-      <ion-list class="animated lightSpeedIn blk6">
-          <ion-item>
-            <ion-label>Show Open Houses</ion-label>
-            <ion-toggle [(ngModel)]="show_open_houses" name="show_open_houses"></ion-toggle>
-          </ion-item>
+      <div class="formUI" style="margin-top: 16px;">
 
-          <ion-item>
-            <ion-label>Show New Houses</ion-label>
-            <ion-toggle [(ngModel)]="show_new_listings" name="show_new_listings"></ion-toggle>
-          </ion-item>
-
-          <ion-item>
-            <ion-label>Feature Agent Listing</ion-label>
-            <ion-toggle [(ngModel)]="feature_agent_listings" name="feature_agent_listings"></ion-toggle>
-          </ion-item>
-
-          <ion-item>
-            <ion-label>Feature Broker Listing</ion-label>
-            <ion-toggle [(ngModel)]="feature_broker_listings" name="feature_broker_listings"></ion-toggle>
-          </ion-item>
-
-          <ion-item>
-            <ion-label>Feature Office Listing</ion-label>
-            <ion-toggle [(ngModel)]="feature_office_listings" name="feature_office_listings"></ion-toggle>
-          </ion-item>
-
-          <!--<ion-item>
-            <ion-label>Is Active<span [ngClass]="{'error': isActive==false}" *ngIf="isActive==false">*</span></ion-label>
-            <ion-checkbox color="royal" item-right checked="false" [(ngModel)]="isActive" name="isActive" id="isActive" 
-            required >Is Active</ion-checkbox>
-          </ion-item>-->
-      </ion-list>
-      <ion-list class="customList">
-        <label>Color Scheme</label>
-        <div *ngIf="colorBase!=''">
-          <ion-label stacked>1st Color</ion-label>
-        
-            <button ion-button color="secondary" outline [colorPicker]="colorBase" 
-            (colorPickerChange)="colorBase=$event"
-            [ngStyle]="{'background-color': colorBase}" [cpPosition]="'bottom'" 
-               [cpOutputFormat]="'rgb'" full small>Select Color</button>
-         
-        </div>
-        <div *ngIf="secondColor!=''">
-            <ion-label stacked>2nd Color</ion-label>
-            <button ion-button color="secondary" outline [colorPicker]="secondColor" 
-            (colorPickerChange)="secondColor=$event"
-            [ngStyle]="{'background-color': secondColor}" [cpPosition]="'bottom'" [cpCancelButton]="true" 
-              [cpCancelButtonClass]="'btn btn-primary btn-xs'" [cpOutputFormat]="'rgb'" full small>Select Color</button>
-           
-        </div>
-        <div *ngIf="thirdColor!=''">
-              <ion-label stacked>3rd Color</ion-label>
-              <button ion-button color="secondary" outline [colorPicker]="thirdColor" 
-              (colorPickerChange)="thirdColor=$event"
-              [ngStyle]="{'background-color': thirdColor}" [cpPosition]="'bottom'" [cpCancelButton]="true" [cpCancelButtonClass]="'btn btn-primary btn-xs'"
-                 [cpOutputFormat]="'rgb'" full small>Select Color</button>
-             
-        </div>
-        <ion-item class="filterLabel">
-          <ion-label>Customized Website Colors</ion-label>
-          <ion-toggle checked="customColorOptionModal" [(ngModel)]="customColorOptionModal" name="customColorOption"></ion-toggle>
+        <ion-item class="filterColorOptions">
+          <ion-label>Color Settings</ion-label>
         </ion-item>
-        
-        <ion-list class="customColorOption" *ngIf="customColorOptionModal">
-            <ion-item (click)="showColorPopUp('header_color')">
-                <ion-label>Header Color</ion-label>
-              
+
+        <ion-list class="customList colorSchemeBlock">
+          <ion-grid>
+            <ion-row class="colorSchemeOptions">
+              <ion-col col-4>
+                <div *ngIf="colorBase!=''">
+                <ion-label stacked>1st Color</ion-label>
+
+                <button ion-button color="secondary" outline [colorPicker]="colorBase" 
+                (colorPickerChange)="colorBase=$event"
+                [ngStyle]="{'background-color': colorBase}" [cpPosition]="'bottom'" 
+                [cpOutputFormat]="'rgb'" full small>Select Color</button>
+
+                </div>                
+              </ion-col>
+              <ion-col col-4>
+                <div *ngIf="secondColor!=''">
+                <ion-label stacked>2nd Color</ion-label>
+
+                <button ion-button color="secondary" outline [colorPicker]="secondColor" 
+                (colorPickerChange)="secondColor=$event"
+                [ngStyle]="{'background-color': secondColor}" [cpPosition]="'bottom'" [cpCancelButton]="true" 
+                [cpCancelButtonClass]="'btn btn-primary btn-xs'" [cpOutputFormat]="'rgb'" full small>Select Color</button>
+
+                </div>                
+              </ion-col>
+              <ion-col col-4>
+                <div *ngIf="thirdColor!=''">
+                <ion-label stacked>3rd Color</ion-label>
+
+                <button ion-button color="secondary" outline [colorPicker]="thirdColor" 
+                (colorPickerChange)="thirdColor=$event"
+                [ngStyle]="{'background-color': thirdColor}" [cpPosition]="'bottom'" [cpCancelButton]="true" [cpCancelButtonClass]="'btn btn-primary btn-xs'"
+                [cpOutputFormat]="'rgb'" full small>Select Color</button>
+
+                </div>                
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-list>
+
+        <ion-list class="customList customColorSettingsBlock">
+
+          <ion-item class="filterLabel">
+            <ion-label class="colorSchemeLabel">Customized Website Colors</ion-label>          
+            <ion-toggle checked="customColorOptionModal" [(ngModel)]="customColorOptionModal" name="customColorOption"></ion-toggle>
+          </ion-item>
+          
+          <ion-list class="customColorOption" *ngIf="customColorOptionModal">
+              <ion-item (click)="showColorPopUp('header_color')">
+                  <ion-label>Header Color <span class="colorPreview sidebar_color"></span></ion-label>
               </ion-item>
-             
+               
               <!--<ion-item>
                 <ion-label>Text Color</ion-label>
                 <ion-select [(ngModel)]="textColor" name="textColor" id="textColor">
@@ -336,66 +368,67 @@
                 
               </ion-item>-->
               <ion-item (click)="showColorPopUp('content_title_color')">
-                <ion-label>Content Title Color</ion-label>
-          
+                <ion-label>Content Title Color <span class="colorPreview sidebar_color"></span></ion-label>
               </ion-item>
+
               <ion-item (click)="showColorPopUp('button_color_website')">
-                <ion-label>Button Color</ion-label>
-          
+                <ion-label>Button Color <span class="colorPreview sidebar_color"></span></ion-label>
               </ion-item>
+
               <ion-item (click)="showColorPopUp('map_sidebar_color')">
-                <ion-label>Map Sidebar Color</ion-label>
-          
+                <ion-label>Map Sidebar Color <span class="colorPreview sidebar_color"></span></ion-label>
               </ion-item>
+
               <ion-item (click)="showColorPopUp('pagination_color')">
-                <ion-label>Pagination Color</ion-label>
-          
+                <ion-label>Pagination Color <span class="colorPreview sidebar_color"></span></ion-label>
               </ion-item>
              
               <ion-item (click)="showColorPopUp('modal_background_color')">
-                <ion-label>Modal Background Color</ion-label>
-          
+                <ion-label>Modal Background Color <span class="colorPreview sidebar_color"></span></ion-label>
               </ion-item>
-        <!--<ion-item (click)="showColorPopUp('header_color')">
-          <ion-label>Header Color</ion-label>
-          
-        </ion-item>
-        <ion-item (click)="showColorPopUp('side_bar_menu_color')">
-          <ion-label>Side-Bar Menu Color</ion-label>
+
+          <!--<ion-item (click)="showColorPopUp('header_color')">
+            <ion-label>Header Color</ion-label>
+            
+          </ion-item>
+          <ion-item (click)="showColorPopUp('side_bar_menu_color')">
+            <ion-label>Side-Bar Menu Color</ion-label>
+           
+          </ion-item>-->
+          <!--<ion-item>
+            <ion-label>Text Color</ion-label>
+            <ion-select [(ngModel)]="textColor" name="textColor" id="textColor">
+              <ion-option *ngFor="let colorOption of colorOptions" value= {{colorOption.id}}>
+                {{colorOption.name}}
+                </ion-option>
+             </ion-select>
+            
+          </ion-item>-->
+          <!--<ion-item (click)="showColorPopUp('content_background_color')">
+            <ion-label>Content Background Color</ion-label>
+            
+          </ion-item>
+          <ion-item (click)="showColorPopUp('content_title_color')">
+            <ion-label>Content Title Color</ion-label>
+            
+          </ion-item>
+          <ion-item (click)="showColorPopUp('button_color')">
+            <ion-label>Button Color</ion-label>
+            
+          </ion-item>
+          <ion-item (click)="showColorPopUp('pagination_color')">
+            <ion-label>Pagination Color</ion-label>
+            
+          </ion-item>
          
-        </ion-item>-->
-        <!--<ion-item>
-          <ion-label>Text Color</ion-label>
-          <ion-select [(ngModel)]="textColor" name="textColor" id="textColor">
-            <ion-option *ngFor="let colorOption of colorOptions" value= {{colorOption.id}}>
-              {{colorOption.name}}
-              </ion-option>
-           </ion-select>
-          
-        </ion-item>-->
-        <!--<ion-item (click)="showColorPopUp('content_background_color')">
-          <ion-label>Content Background Color</ion-label>
-          
-        </ion-item>
-        <ion-item (click)="showColorPopUp('content_title_color')">
-          <ion-label>Content Title Color</ion-label>
-          
-        </ion-item>
-        <ion-item (click)="showColorPopUp('button_color')">
-          <ion-label>Button Color</ion-label>
-          
-        </ion-item>
-        <ion-item (click)="showColorPopUp('pagination_color')">
-          <ion-label>Pagination Color</ion-label>
-          
-        </ion-item>
-       
-        <ion-item (click)="showColorPopUp('modal_background_color')">
-          <ion-label>Modal Background Color</ion-label>
-          
-        </ion-item>-->
-      </ion-list>
-      </ion-list>
+          <ion-item (click)="showColorPopUp('modal_background_color')">
+            <ion-label>Modal Background Color</ion-label>
+            
+          </ion-item>-->
+        </ion-list>
+        </ion-list>
+      </div>
+
       <div class="dashboardBtn">
           <button ion-button color="primary" class="colorEnabled button_color" block (click)="updateWebsite();" [disabled]="!websiteForm.valid">Update Website</button>
       </div>
