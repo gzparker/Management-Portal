@@ -16,39 +16,36 @@
 
 </ion-header>
 
-
 <ion-content padding class="dashboardUI">
 <div class="dashboardBG colorEnabled background_color"></div>
-  <form role="form" data-toggle="validator" #websiteForm="ngForm">
-  
-    <ion-list>
+    <form role="form" data-toggle="validator" #websiteForm="ngForm" >
+
+      <ion-list class="websiteInfoSettings animated lightSpeedIn blk1">
+        <ion-item>
+            <ion-label stacked>Identity Name<span [ngClass]="{'error': identity_name==''}" *ngIf="identity_name==''">*</span></ion-label>
+            <ion-input type="text" [(ngModel)]="identity_name" 
+            name="identity_name" id="identity_name" required placeholder="Identity Name"></ion-input>
+        </ion-item>
         
-      <ion-item>
-          <ion-label stacked>Website Name<span [ngClass]="{'error': identity_name==''}" *ngIf="identity_name==''">*</span></ion-label>
-          <ion-input type="text" [(ngModel)]="identity_name" 
-          name="identity_name" id="identity_name" required placeholder="Website Name"></ion-input>
-      </ion-item>
-
-      <ion-item>
-          <ion-label stacked>Website Domain<span [ngClass]="{'error': website_domain==''}" *ngIf="website_domain==''">*</span></ion-label>
-          <ion-input type="text" [(ngModel)]="website_domain" 
-          name="website_domain" id="website_domain" placeholder="http://www.mydomain.com" required></ion-input>
-      </ion-item>
-
-      <ion-item>
-          <ion-label stacked>IDX Installed Location</ion-label>
-          <ion-input type="text" [(ngModel)]="website_a_record_location" 
-          name="website_a_record_location" id="website_a_record_location" 
-          placeholder="Please type a subdomain of where you would like your IDX installed. Ex. http://search.mydomain.com"></ion-input>
-      </ion-item>
-   
-      <ion-item>
-          <ion-label stacked>Identity Phone Number</ion-label>
-          <ion-input type="text" [(ngModel)]="identity_phone_number" 
-          name="identity_phone_number" id="identity_phone_number" placeholder="(xxx) xxx-xxxx" [brmasker]="{mask:'(000) 000-0000', len:14, type:'num'}"></ion-input>
-      </ion-item>
-      <!--<ion-list *ngIf="service_id=='2'" class="OptMLS noShadow">
-        <ion-item class="OptMLS noShadow">
+        <ion-item>
+            <ion-label stacked>Website Domain<span [ngClass]="{'error': website_domain==''}" *ngIf="website_domain==''">*</span></ion-label>
+            <ion-input type="text" [(ngModel)]="website_domain" 
+            name="website_domain" id="website_domain" required ></ion-input>
+        </ion-item>
+      
+        <ion-item>
+            <ion-label stacked>IDX Installed Location</ion-label>
+            <ion-input type="text" [(ngModel)]="website_a_record_location" 
+            name="website_a_record_location" id="website_a_record_location" 
+            placeholder="Please type exactly what your location is for your domain search."></ion-input>
+        </ion-item>
+       
+        <ion-item>
+            <ion-label stacked>Identity Phone Number</ion-label>
+            <ion-input type="text" [(ngModel)]="identity_phone_number" 
+            name="identity_phone_number" id="identity_phone_number" [brmasker]="{mask:'(000) 000-0000', len:14, type:'num'}"></ion-input>
+        </ion-item>
+        <ion-item class="OptMLS noShadow" *ngIf="service_id=='2'||service_id=='1'">
           <ion-label stacked>Select your MLS</ion-label>
           <ion-select placeholder="-----" [(ngModel)]="mls_server_id"  
           name="mls_server_id" multiple="true" required>
@@ -56,220 +53,138 @@
              </ion-option>
           </ion-select>
         </ion-item>
-           
-      </ion-list>-->
-      <ion-item class="OptMLS noShadow" *ngIf="service_id=='2'||service_id=='1'">
-        <ion-label stacked>Select your MLS</ion-label>
-        <ion-select placeholder="-----" [(ngModel)]="mls_server_id"  
-        name="mls_server_id" multiple="true">
-          <ion-option *ngFor="let mls of allMls" value= {{mls.mls_server_id}}>{{mls.name}}
-           </ion-option>
-        </ion-select>
-      </ion-item>
-      <ion-item class="userInfoBlock ReqField">
-        <ion-icon name="md-briefcase" item-start></ion-icon>
-        <!--<ion-label stacked><span [ngClass]="{'error': agent_id==''}" *ngIf="agent_id==''">*</span></ion-label>-->       
-        <ion-input type="text" [(ngModel)]="agent_id" name="agent_id" placeholder="Agent ID"></ion-input>
-      </ion-item>
 
-      <ion-item class="userInfoBlock ReqField">
-        <ion-icon name="md-briefcase" item-start></ion-icon>
-        <!--<ion-label stacked><span [ngClass]="{'error': broker_id==''}" *ngIf="broker_id==''">*</span></ion-label>-->
-        <ion-input type="text" [(ngModel)]="broker_id" name="broker_id" placeholder="Broker ID" ></ion-input>
-      </ion-item>
-
-      <ion-item class="userInfoBlock ReqField">
-        <ion-icon name="md-briefcase" item-start></ion-icon>
-        <!--<ion-label stacked><span [ngClass]="{'error': office_id==''}" *ngIf="office_id==''">*</span></ion-label>-->
-        <ion-input type="text" [(ngModel)]="office_id" name="office_id" placeholder="Office ID" ></ion-input>
-      </ion-item>
-      <!--<ion-item class="filterLabel">
-        <ion-label>Is Ssl</ion-label>
-        <ion-toggle checked="isSsl" [(ngModel)]="isSsl" name="isSsl"></ion-toggle>
-      </ion-item>-->
-    </ion-list>
-   
-    <div class="animated lightSpeedIn formShadow blk2">
-
-      <div class="itemPadding">
-          <ion-label>Home Page Description</ion-label>
-          <div id="homepage_description" contenteditable="true" class="expandText">
-              Home Page Description
-            </div>
-          <!--<ion-label>Home Page Description</ion-label>
-          
-          <ckeditor
-          [config]="CkeditorConfig"
-          [readonly]="false" [(ngModel)]="homepage_description"
-          (change)="homepageDescChanged($event)"
-          (blur)="homepageDescBlured($event)"
-          (focus)="homepageDescFocused($event)"
-          (ready)="homepageDescCreated($event)"
-          debounce="500" name="editorHomePageDescription">
-          </ckeditor>-->
-      </div>
-
-      <ion-item>
-          <ion-label stacked class="labelLarge">Homepage Search Text</ion-label>
-          <ion-input type="text" class="expandInputText" [(ngModel)]="homepage_search_text" 
-          name="homepage_search_text" id="homepage_search_text" 
-          placeholder="Action sentence to draw people to search for listings"></ion-input>
-      </ion-item>
-
-      <!-- <ion-item>
-          <ion-label stacked>Identity Phone Name</ion-label>
-          <ion-input type="text" [(ngModel)]="identity_phone_number" 
-          name="identity_phone_number" id="identity_phone_number" [brmasker]="{mask:'(000) 000-0000', len:14, type:'num'}"></ion-input>
-      </ion-item>-->
-
-      <ion-item>
-          <ion-label stacked class="labelLarge">Homepage Meta Title</ion-label>
-          <ion-textarea type="text" class="expandText" [(ngModel)]="homepage_meta_title" 
-          name="homepage_meta_title" id="homepage_meta_title" ></ion-textarea>
-      </ion-item>
-
-      <div class="itemPadding bt16">
-          <ion-label>Home Page Meta Description</ion-label>
-          <textarea type="text" class="expandText" id="homepageMeta_description" name="homepageMeta_description" [(ngModel)]="homepageMeta_description"></textarea>
-          <!--<ckeditor
-          [config]="CkeditorConfig"
-          [readonly]="false" [(ngModel)]="homepageMeta_description"
-          (change)="homepageMetaDescChanged($event)"
-          (blur)="homepageMetaDescBlured($event)"
-          (focus)="homepageMetaDescFocused($event)"
-          (ready)="homepageMetaDescCreated($event)"
-          debounce="500" name="editorHomePageDescription">
-          </ckeditor>-->
-      </div>
-    </div>
-    <ion-list class="customList">
-      <label>Color Scheme</label>
-      <div *ngIf="colorBase!=''">
-        <ion-label stacked>1st Color</ion-label>
+        <ion-grid class="agentID-Info">
+          <ion-row>
+            <ion-col col-4>
+              <ion-item class="userInfoBlock">
+              <!-- <ion-icon name="md-briefcase" item-start></ion-icon> -->
+              <!--<ion-label stacked><span [ngClass]="{'error': agent_id==''}" *ngIf="agent_id==''">*</span></ion-label>-->
+              <ion-label stacked>Agent ID:</ion-label>
+              <ion-input type="text" [(ngModel)]="agent_id" name="agent_id"></ion-input>
+              </ion-item>              
+            </ion-col>
+            <ion-col col-4>
+              <ion-item class="userInfoBlock">
+              <!-- <ion-icon name="md-briefcase" item-start></ion-icon> -->
+              <!--<ion-label stacked><span [ngClass]="{'error': broker_id==''}" *ngIf="broker_id==''">*</span></ion-label>-->
+              <ion-label stacked>Broker ID</ion-label>
+              <ion-input type="text" [(ngModel)]="broker_id" name="broker_id"></ion-input>
+              </ion-item>              
+            </ion-col>
+            <ion-col col-4>
+              <ion-item class="userInfoBlock">
+              <!-- <ion-icon name="md-briefcase" item-start></ion-icon> -->
+              <!--<ion-label stacked><span [ngClass]="{'error': office_id==''}" *ngIf="office_id==''">*</span></ion-label>-->
+              <ion-label stacked>Office ID</ion-label>
+              <ion-input type="text" [(ngModel)]="office_id" name="office_id"></ion-input>
+              </ion-item>               
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       
-          <button ion-button color="secondary" outline [colorPicker]="colorBase" 
-          (colorPickerChange)="colorBase=$event"
-          [ngStyle]="{'background-color': colorBase}" [cpPosition]="'bottom'" 
-             [cpOutputFormat]="'rgb'" full small>Select Color</button>
+        <ion-item>
+          <ion-label>Show Open Houses on Homepage</ion-label>
+          <ion-toggle [(ngModel)]="show_open_houses" name="show_open_houses"></ion-toggle>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Show New Houses on Homepage</ion-label>
+          <ion-toggle [(ngModel)]="show_new_listings" name="show_new_listings"></ion-toggle>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Feature Agent Listing on Homepage</ion-label>
+          <ion-toggle [(ngModel)]="feature_agent_listings" name="feature_agent_listings"></ion-toggle>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Feature Broker Listing on Homepage</ion-label>
+          <ion-toggle [(ngModel)]="feature_broker_listings" name="feature_broker_listings"></ion-toggle>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Feature Office Listing on Homepage</ion-label>
+          <ion-toggle [(ngModel)]="feature_office_listings" name="feature_office_listings"></ion-toggle>
+        </ion-item>
+
+        <!--<ion-item>
+          <ion-label>Is Active<span [ngClass]="{'error': isActive==false}" *ngIf="isActive==false">*</span></ion-label>
+          <ion-checkbox color="royal" item-right checked="false" [(ngModel)]="isActive" name="isActive" id="isActive" 
+          required >Is Active</ion-checkbox>
+        </ion-item>-->
         
-      </div>
-      <div *ngIf="secondColor!=''">
-          <ion-label stacked>2nd Color</ion-label>
-          <button ion-button color="secondary" outline [colorPicker]="secondColor" 
-          (colorPickerChange)="secondColor=$event"
-          [ngStyle]="{'background-color': secondColor}" [cpPosition]="'bottom'" [cpCancelButton]="true" 
-            [cpCancelButtonClass]="'btn btn-primary btn-xs'" [cpOutputFormat]="'rgb'" full small>Select Color</button>
-       
-      </div>
-      <div *ngIf="thirdColor!=''">
-            <ion-label stacked>3rd Color</ion-label>
-            <button ion-button color="secondary" outline [colorPicker]="thirdColor" 
-            (colorPickerChange)="thirdColor=$event"
-            [ngStyle]="{'background-color': thirdColor}" [cpPosition]="'bottom'" [cpCancelButton]="true" [cpCancelButtonClass]="'btn btn-primary btn-xs'"
-               [cpOutputFormat]="'rgb'" full small>Select Color</button>
+      </ion-list>
+
+      <div class="formUI formShadow mb16">
+
+        <ion-item class="filterColorOptions">
+          <ion-label>Homepage Description</ion-label>          
+          <!-- <ion-toggle [(ngModel)]="HomepageDescriptionSettings" name="HomepageDescriptionSettings"></ion-toggle> -->
+        </ion-item>
+        
+        <div class="HomepageDescriptionSettings">
           
-      </div>
-      <ion-item class="filterLabel">
-        <ion-label>Customized Website Colors</ion-label>
-        <ion-toggle checked="customColorOptionModal" [(ngModel)]="customColorOptionModal" name="customColorOption"></ion-toggle>
-      </ion-item>
-      
-      <ion-list class="customColorOption" *ngIf="customColorOptionModal">
-          <ion-item (click)="showColorPopUp('header_color')">
-              <ion-label>Header Color</ion-label>
-            
-            </ion-item>
-           
-            <!--<ion-item>
-              <ion-label>Text Color</ion-label>
-              <ion-select [(ngModel)]="textColor" name="textColor" id="textColor">
-                <ion-option *ngFor="let colorOption of colorOptions" value= {{colorOption.id}}>
-                  {{colorOption.name}}
-                  </ion-option>
-               </ion-select>
+          <div class="itemPadding">
               
-            </ion-item>-->
-            <ion-item (click)="showColorPopUp('content_title_color')">
-              <ion-label>Content Title Color</ion-label>
-        
-            </ion-item>
-            <ion-item (click)="showColorPopUp('button_color_website')">
-              <ion-label>Button Color</ion-label>
-        
-            </ion-item>
-            <ion-item (click)="showColorPopUp('map_sidebar_color')">
-              <ion-label>Map Sidebar Color</ion-label>
-        
-            </ion-item>
-            <ion-item (click)="showColorPopUp('pagination_color')">
-              <ion-label>Pagination Color</ion-label>
-        
-            </ion-item>
-           
-            <ion-item (click)="showColorPopUp('modal_background_color')">
-              <ion-label>Modal Background Color</ion-label>
-        
-            </ion-item>
-      <!--<ion-item (click)="showColorPopUp('header_color')">
-        <ion-label>Header Color</ion-label>
-        
-        
-      </ion-item>
-      <ion-item (click)="showColorPopUp('side_bar_menu_color')">
-        <ion-label>Side-Bar Menu Color</ion-label>
-       
-      </ion-item>-->
-      <!--<ion-item>
-        <ion-label>Text Color</ion-label>
-        <ion-select [(ngModel)]="textColor" name="textColor" id="textColor">
-          <ion-option *ngFor="let colorOption of colorOptions" value= {{colorOption.id}}>
-            {{colorOption.name}}
-            </ion-option>
-         </ion-select>
-        
-      </ion-item>-->
-      <!--<ion-item (click)="showColorPopUp('content_background_color')">
-        <ion-label>Content Background Color</ion-label>
-      
-      </ion-item>
-      <ion-item (click)="showColorPopUp('content_title_color')">
-        <ion-label>Content Title Color</ion-label>
-       
-      </ion-item>
-      <ion-item (click)="showColorPopUp('button_color')">
-        <ion-label>Button Color</ion-label>
-       
-      </ion-item>
-      <ion-item (click)="showColorPopUp('pagination_color')">
-        <ion-label>Pagination Color</ion-label>
-      
-      </ion-item>
-     
-      <ion-item (click)="showColorPopUp('modal_background_color')">
-        <ion-label>Modal Background Color</ion-label>
-      
-      </ion-item>-->
-    </ion-list>
-    </ion-list>
-    <ion-list class="animated lightSpeedIn blk6">
-      
-      <!--<ion-item>
-        <ion-label stacked>Intagent Website</ion-label>
-       
-        <ion-checkbox color="royal" item-right checked="false" [(ngModel)]="intagent_website" name="intagent_website" id="intagent_website" 
-            required >intagent_website</ion-checkbox>
-      </ion-item>
+              <ion-label stacked>Homepage Description Text</ion-label>
+              <div id="homepage_description" contenteditable="true" class="homeDescTxt"></div>
+              <!--<ckeditor
+              [config]="CkeditorConfig"
+              [readonly]="false" [(ngModel)]="homepage_description"
+              (change)="homepageDescChanged($event)"
+              (blur)="homepageDescBlured($event)"
+              (focus)="homepageDescFocused($event)"
+              (ready)="homepageDescCreated($event)"
+              debounce="500" name="editorHomePageDescription">
+              </ckeditor>-->
+          </div>
+          
+          <ion-item class="mb16">
+            <ion-label stacked>Homepage Search Text</ion-label>
+            <ion-textarea type="text" class="textHomepageSearch" [(ngModel)]="homepage_search_text" 
+            name="homepage_search_text" id="homepage_search_text" 
+            placeholder="Action sentence to draw people to search for listings"></ion-textarea>
+          </ion-item>
 
-      <ion-item>
-        <ion-label>Is Active<span [ngClass]="{'error': isActive==false}" *ngIf="isActive==false">*</span></ion-label>
-        <ion-checkbox color="royal" item-right checked="false" [(ngModel)]="isActive" name="isActive" id="isActive" 
-        required >Is Active</ion-checkbox>
-      </ion-item>-->   
-    </ion-list>
+        </div>
+      </div>
 
-    <div class="dashboardBtn">
-      <button ion-button color="primary" class="colorEnabled button_color" block (click)="createWebsite();" [disabled]="!websiteForm.valid">Save Website</button>
-    </div>
+      <div class="formUI formShadow mb16">
+      
+        <ion-item class="filterColorOptions">
+          <ion-label>Website Meta-Tags</ion-label>
+          <!-- <ion-toggle checked="customColorOptionModal" [(ngModel)]="customColorOptionModal" name="customColorOption"></ion-toggle> -->
+          <ion-toggle [(ngModel)]="metaDescriptionSettings" name="metaDescriptionSettings"></ion-toggle>
+        </ion-item>
+        
+        <div class="metaDescriptionSettings" *ngIf="metaDescriptionSettings">        
+        <ion-item>
+            <!-- <ion-label stacked class="labelLarge">Homepage Meta Title</ion-label> -->
+            <ion-label stacked>Meta-Tag Title</ion-label>
+            <ion-textarea type="text" class="textAreaSingle" [(ngModel)]="homepage_meta_title" 
+            name="homepage_meta_title" id="homepage_meta_title" placeholder="The title should state the main purpose of your website, your name, and your #1 target area."></ion-textarea>
+        </ion-item>
 
-  </form>
+        <div class="hmd itemPadding bt16">
+            <ion-label stacked>Meta-Tag Description</ion-label>
+            <textarea type="text" class="textAreaMetaDesc" id="homepageMeta_description" name="homepageMeta_description" [(ngModel)]="homepageMeta_description" placeholder="This is what a search engine will display on it's search results describing your website. "></textarea>
+            <!--<ckeditor
+            [config]="CkeditorConfig"
+            [readonly]="false" [(ngModel)]="homepageMeta_description"
+            (change)="homepageMetaDescChanged($event)"
+            (blur)="homepageMetaDescBlured($event)"
+            (focus)="homepageMetaDescFocused($event)"
+            (ready)="homepageMetaDescCreated($event)"
+            debounce="500" name="editorHomePageDescription">
+            </ckeditor>-->
+        </div>
+        </div>
+      </div>
+      
+      <div class="dashboardBtn">
+          <button ion-button color="primary" class="colorEnabled button_color" block (click)="createWebsite();" [disabled]="!websiteForm.valid">Save Website</button>
+      </div>
+
+    </form>
 </ion-content>

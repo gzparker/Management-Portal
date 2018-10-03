@@ -62,6 +62,10 @@ page-color-selection-popup {
               background: -webkit-gradient(linear, left bottom, left top, from(#1f9eff), to(#00d2ff));
               background: linear-gradient(to top, #1f9eff, #00d2ff);
               }
+              &.custom_color {
+              border: 3px solid #cacaca;
+              background: #FFF;
+              }
             }
           }
         }
