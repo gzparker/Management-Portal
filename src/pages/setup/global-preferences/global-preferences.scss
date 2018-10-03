@@ -15,6 +15,11 @@ page-global-preferences {
   .colorSchemeOptions {
   margin-left: -10px;
   margin-right: -10px;
+    button {
+    border-radius: 3px !important;
+    border: none;
+    background: #EDEDED;
+    }
   }
 
   .formUI {
