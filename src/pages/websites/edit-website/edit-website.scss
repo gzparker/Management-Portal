@@ -549,6 +549,18 @@ page-edit-website {
           background: -webkit-gradient(linear, left bottom, left top, from(#1f9eff), to(#00d2ff));
           background: linear-gradient(to top, #1f9eff, #00d2ff);
           }
+          .colorPreviewEmpty {
+            width: 26px;
+            height: 22px;
+            display: inline-block;
+            z-index: 100;
+            float: right;
+            visibility: visible !important;
+            margin: -3px 0 0 0;
+            border-radius: 2px;
+            right: 16px;
+            position: absolute;
+            }
         }
       }
 

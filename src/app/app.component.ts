@@ -976,7 +976,7 @@ fredRef.update({isOnline:'0'}).then(function() {
   // Update successful.
   that.storage.remove('firebaseUserId');
   }, function(error) {
-  debugger;
+  //debugger;
   // An error happened.
   });
 
