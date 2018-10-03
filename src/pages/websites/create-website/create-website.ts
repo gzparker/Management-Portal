@@ -69,7 +69,12 @@ export class CreateWebsitePage {
   public mapSidebarColor:string="";
   public mapSidebarColorOption:string="";
   public isCustomColor:string="0";
-  public isSsl:string="0";
+  public isSsl:boolean=false;
+  public show_open_houses:boolean=false;
+  public show_new_listings:boolean=false;
+  public feature_agent_listings:boolean=false;
+  public feature_broker_listings:boolean=false;
+  public feature_office_listings:boolean=false;
   public customColorOption:boolean=false;
   public customColorOptionModal:boolean=false;
   public CkeditorConfig = {removeButtons:'Underline,Subscript,Superscript,SpecialChar'
@@ -163,6 +168,36 @@ this.homepageMeta_description=html;
   }
   createWebsite():void{
     if(this.userId!=""){
+    let show_new_listing_dummy="0";
+    let show_open_houses_dummy="0";
+    let feature_agent_listings_dummy="0";
+    let feature_broker_listings_dummy="0";
+    let feature_office_listings_dummy="0";
+    let isSsl_dummy="0";
+    if(this.show_open_houses)
+       {
+         show_open_houses_dummy="1";
+       }
+       if(this.show_new_listings)
+       {
+        show_new_listing_dummy="1";
+       }
+       if(this.feature_agent_listings)
+       {
+        feature_agent_listings_dummy="1";
+       }
+       if(this.feature_broker_listings)
+       {
+        feature_broker_listings_dummy="1";
+       }
+       if(this.feature_office_listings)
+       {
+        feature_office_listings_dummy="1";
+       }
+       if(this.isSsl)
+       {
+        isSsl_dummy="1";
+       }
     //this.domainAccess=this.localStorageService.get('domainAccess');
     let isActiveFinal="1";
     let intagentWebsiteFinal:number=1;
@@ -201,7 +236,8 @@ intagentWebsiteFinal=0;
     this.buttonColor,this.textColor,this.backgroundColor,this.headerColorOption,this.sideBarMenuColorOption,
     this.buttonColorOption,this.textColorOption,this.backgroundColorOption,this.customColorOptionModal,this.contentTitleColor,
     this.contentTitleColorOption,this.paginationColor,this.paginationColorOption,this.modalBackgroundColor,this.modalBackgroundColorOption,
-    this.mapSidebarColor,this.mapSidebarColorOption)
+    this.mapSidebarColor,this.mapSidebarColorOption,show_new_listing_dummy,show_open_houses_dummy,feature_agent_listings_dummy,
+    feature_broker_listings_dummy,feature_office_listings_dummy,isSsl_dummy)
     .subscribe((result) => this.createWebsiteResp(result));
     // }
       }
@@ -209,8 +245,9 @@ intagentWebsiteFinal=0;
   createWebsiteResp(result:any):void{
  //debugger;
   this.websiteCreateMsg="Website has been created successfully.";
-  CKEDITOR.instances['homepage_description'].destroy(true);
+  
   this.ngZone.run(() => {
+    CKEDITOR.instances['homepage_description'].destroy(true);
   this.navCtrl.setRoot(EditLeadRoutingPage,{websiteId:result.website_id});
   });
   }

@@ -63,6 +63,7 @@ export class EditWebsitePage {
   public footer_wrapper:string="";
   public intagent_website:boolean=false;
   public custom_css:string="";
+  public isSsl:boolean=false;
   public show_open_houses:boolean=false;
   public show_new_listings:boolean=false;
   public feature_agent_listings:boolean=false;
@@ -475,6 +476,14 @@ if(result.result.show_open_houses==null||result.result.show_open_houses=="0")
 else
 {
   this.show_open_houses=true;
+}
+if(result.result.is_ssl==null||result.result.is_ssl=="0")
+{
+  this.isSsl=false;
+}
+else
+{
+  this.isSsl=true;
 }
 if(result.result.show_new_listings==null||result.result.show_new_listings=="0")
 {

@@ -109,7 +109,10 @@
           <ion-label>Feature Office Listing on Homepage</ion-label>
           <ion-toggle [(ngModel)]="feature_office_listings" name="feature_office_listings"></ion-toggle>
         </ion-item>
-
+        <ion-item>
+          <ion-label>Install SSL</ion-label>
+          <ion-toggle [(ngModel)]="isSsl" name="isSsl"></ion-toggle>
+        </ion-item>
         <!--<ion-item>
           <ion-label>Is Active<span [ngClass]="{'error': isActive==false}" *ngIf="isActive==false">*</span></ion-label>
           <ion-checkbox color="royal" item-right checked="false" [(ngModel)]="isActive" name="isActive" id="isActive" 
@@ -340,7 +343,7 @@
             <!-- <ion-toggle checked="customColorOptionModal" [(ngModel)]="customColorOptionModal" name="customColorOption"></ion-toggle> -->
           </ion-item>
           
-          <ion-list class="customColorOption" *ngIf="customColorOptionModal">
+          <ion-list class="customColorOption" *ngIf="colorSettingOptions">
               <ion-item (click)="showColorPopUp('header_color')">
                   <ion-label>Header Color <span class="colorPreview sidebar_color"></span></ion-label>
               </ion-item>

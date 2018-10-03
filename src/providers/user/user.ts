@@ -920,7 +920,10 @@ createWebsite(user_id:string,isActive:string,website_domain:string,identity_name
   headerColorOption:string,sideBarMenuColorOption:string,
   buttonColorOption:string,textColorOption:string,backgroundColorOption:string,customColorOption:boolean,
   contentTitleColor:string,contentTitleColorOption:string,paginationColor:string,paginationColorOption:string,
-  modalBackgroundColor:string,modalBackgroundColorOption:string,mapSidebarColor:string,mapSidebarColorOption:string){
+  modalBackgroundColor:string,modalBackgroundColorOption:string,mapSidebarColor:string,mapSidebarColorOption:string,
+  show_new_listings:string,show_open_houses:string,feature_agent_listings:string,
+  feature_broker_listings:string,
+  feature_office_listings:string,isSsl:string){
 //debugger;
     let data = new URLSearchParams();
     data.append('website_domain',website_domain);
@@ -962,6 +965,13 @@ data.append('content_title_color',contentTitleColor);
     data.append('modal_background_color_option',modalBackgroundColorOption);
     data.append('map_sidebar_color',mapSidebarColor);
     data.append('map_sidebar_color_option',mapSidebarColorOption);
+
+    data.append('show_new_listings',show_new_listings);
+ data.append('show_open_houses',show_open_houses);
+ data.append('feature_agent_listings',feature_agent_listings);
+ data.append('feature_broker_listings',feature_broker_listings);
+ data.append('feature_office_listings',feature_office_listings);
+ data.append('isSsl',isSsl);
 //debugger;
   let websiteListing=this.http
     .post(this.sharedServiceObj.registerationApiBaseUrl+'members/createWebsite', data, this.headerOptions)
