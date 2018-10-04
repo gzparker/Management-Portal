@@ -183,6 +183,31 @@ page-global-preferences {
         border-bottom: none !important;
         }
       }
+      &.topDweller {
+        .displayName {
+          .item-inner {
+            .input-wrapper {
+            margin-bottom: 16px !important;
+            }
+          }   
+        }
+        &.list-ios, &.list-md, &.list-wp {
+        background: #FFF !important;
+          ion-label {
+          margin-bottom: 0px !important;
+          }
+        }
+        .customList.topDweller {
+        padding: 16px 0;
+        }
+      }
+      &.topDwellerColors {
+        &.list-ios, &.list-md, &.list-wp {        
+          ion-label {
+          margin-bottom: 14px !important;
+          }
+        }
+      }
     } 
     
     
@@ -262,6 +287,12 @@ page-global-preferences {
 
     .imgCropperPreview {
     display: block !important;
+    }
+
+    .imgCropperPreviewResult {
+      img {
+      max-height: 210px;
+      }
     }
 
     img-cropper {

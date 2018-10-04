@@ -42,8 +42,9 @@
         <div class="cardbrand {{defaultCreditCard.brand}}">Brand</div>
         <div class="cardDetails">
         <p class="cn">Card #: xxxx-xxxx-xxxx-{{defaultCreditCard.last4}}</p>
-        <p class="ey">Exp Year: {{defaultCreditCard.exp_year}}</p>
-        <p class="em">Exp Month: {{defaultCreditCard.exp_month}}</p>
+        <p class="ey">Exp: {{defaultCreditCard.exp_month}}/{{defaultCreditCard.exp_year}}</p>        
+        <!-- <p class="ey">Exp Year: {{defaultCreditCard.exp_year}}</p>
+        <p class="em">Exp Month: {{defaultCreditCard.exp_month}}</p> -->
         </div>
       </ion-item>
       </div>
@@ -59,8 +60,9 @@
             <div class="cardbrand {{creditCard.brand}}">Brand</div>
             <div class="cardDetails">
             <p class="cn">Card Number: xxx-{{creditCard.last4}}</p>
-            <p class="ey">Exp Year: {{creditCard.exp_year}}</p>
-            <p class="em">Exp Month: {{creditCard.exp_month}}</p>
+            <p class="ey">Exp: {{creditCard.exp_month}}/{{creditCard.exp_year}}</p>            
+            <!-- <p class="ey">Exp Year: {{creditCard.exp_year}}</p>
+            <p class="em">Exp Month: {{creditCard.exp_month}}</p> -->
             </div>
             </ion-item>
             <ion-item class="desktopOption" side="right" *ngIf="!isApp">

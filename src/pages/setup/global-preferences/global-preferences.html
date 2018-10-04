@@ -241,8 +241,8 @@
 
     </ion-item>-->
   </ion-list>
-  <ion-list class="customColorOption" *ngIf="selectedSegment=='2'">
-      <ion-item class="displayName b32">
+  <ion-list class="customColorOption topDweller" *ngIf="selectedSegment=='2'">
+        <ion-item class="displayName b32">
           <ion-label stacked>Display Name</ion-label>
           <ion-input type="text" [(ngModel)]="display_name_dweller" name="display_name_dweller" placeholder="display_name_dweller"></ion-input>
         </ion-item>
@@ -262,9 +262,9 @@
           </ion-item>-->
           </ion-list>
       
-          <ion-list *ngIf="!isApp" class="customList uploadPhoto">
+          <ion-list *ngIf="!isApp" class="customList topDweller uploadPhoto">
               
-            <ion-list-header><h2>Select Dweller Image</h2></ion-list-header>
+            <ion-list-header><h2>Top Dweller Image</h2></ion-list-header>
 
             <!-- Main Image Uploader -->
             <div class="AccountImageUploader">
@@ -281,21 +281,26 @@
                 <ion-icon name="md-create"></ion-icon>
               </button>
             </div>
-            
-      
         </ion-list>
-    <ion-item (click)="showColorPopUp('side_bar_color_dweller')">
-      <ion-label>Sidebar Menu Color</ion-label>
-     
-    </ion-item>
-    <ion-item (click)="showColorPopUp('button_color_dweller')">
-      <ion-label>Button Color</ion-label>
 
-    </ion-item>
-    <ion-item (click)="showColorPopUp('background_color_dweller')">
-      <ion-label>Background Color</ion-label>
-   
-    </ion-item>
+        <ion-label class="colorSchemeLabel label label-md" style="margin-top:22px !important;">Top Dweller Colors</ion-label>
+        <ion-list class="customColorOption topDwellerColors">
+        <ion-item (click)="showColorPopUp('side_bar_color_dweller')">
+          <!-- <ion-label>Sidebar Menu Color <span class="colorPreview sidebar_color_dweller"></span></ion-label> -->
+          <ion-label>Sidebar Menu Color <span class="colorPreview"></span></ion-label>
+        </ion-item>
+
+        <ion-item (click)="showColorPopUp('button_color_dweller')">
+          <!-- <ion-label>Button Color <span class="colorPreview button_color_dweller"></span></ion-label> -->
+          <ion-label>Button Color <span class="colorPreview"></span></ion-label>
+        </ion-item>
+
+        <ion-item (click)="showColorPopUp('background_color_dweller')">
+          <!-- <ion-label>Background Color <span class="colorPreview background_color_dweller"></span></ion-label> -->
+          <ion-label>Background Color <span class="colorPreview"></span></ion-label>
+        </ion-item>
+        </ion-list>
+
   </ion-list>
   </ion-list>
   </div>
