@@ -33,8 +33,9 @@
         <div class="cardbrand {{cardDetail.brand}}">Brand</div>
         <div class="cardDetails">
         <p><strong>Card #:</strong> xxxx-xxxx-xxxx-{{cardDetail.last4}}</p>
-        <p><strong>Exp Year:</strong> {{cardDetail.exp_year}}</p>
-        <p><strong>Exp Month:</strong> {{cardDetail.exp_month}}</p>
+        <p><strong>Exp:</strong> {{cardDetail.exp_month}}/{{cardDetail.exp_year}}</p>        
+        <!-- <p><strong>Exp Year:</strong> {{cardDetail.exp_year}}</p>
+        <p><strong>Exp Month:</strong> {{cardDetail.exp_month}}</p> -->
         <p *ngIf="cardDetail.country!=undefined"><strong>Country:</strong> {{cardDetail.country}}</p>
         <p *ngIf="cardDetail.address_line1!=undefined"><strong>Address Line1:</strong> {{cardDetail.address_line1}}</p>
         <p *ngIf="cardDetail.address_line2!=undefined"><strong>Address Line2:</strong> {{cardDetail.address_line2}}</p>
