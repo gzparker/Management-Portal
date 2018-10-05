@@ -605,6 +605,10 @@ is_online="1";
     {
       data.append('last_name', dataObj.last_name);
     }
+    if(dataObj.agent_title!="")
+    {
+      data.append('agent_title', dataObj.agent_title);
+    }
     if(dataObj.description!="")
     {
       data.append('description', dataObj.description);
@@ -641,6 +645,7 @@ is_online="1";
     {
       data.append('mls_server_id', dataObj.mls_server_id);
     }
+    //debugger;
     //if(dataObj.timezone!="")
    // {
    //   data.append('timezone', dataObj.timezone);

@@ -15,7 +15,46 @@ page-edit-account {
     opacity: .8;
     }
   }
-
+  .homeDescTxt {
+    min-height: 120px;
+    height: auto;
+    margin-top: 11px;
+    padding: 11px 10px;
+    line-height: inherit;
+    background: #e9eef6;
+    box-sizing: border-box;
+      h1, h2, h3, h4, h5, ,h6, p {
+      margin-top: 0px !important;
+        em, strong {      
+        font-size: inherit !important;
+        }
+      }
+      h1 {
+      font-size: 2.6rem;      
+      }
+      h2 {
+      font-size: 2.4rem;
+      }
+      h3 {
+      font-size: 2.2rem;
+      }
+      h4 {
+      font-size: 2rem;
+      }
+      h5 {
+      font-size: 1.8rem;
+      }
+      h6 {
+      font-size: 1.6rem;
+      }
+      p {
+      font-size: 13px;
+      line-height: 20px;
+        &:last-child {
+        margin-bottom: 0px !important;
+        }
+      }
+    }
   .text-input::-moz-placeholder {
   color: #BBB;
   opacity: .8;

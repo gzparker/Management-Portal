@@ -120,6 +120,11 @@
         <ion-icon name="ios-person" item-start></ion-icon>                
         <ion-input type="text" required [(ngModel)]="last_name" name="last_name" placeholder="Last Name"></ion-input>
       </ion-item>
+      <ion-item class="userInfoBlock ReqField">
+        <ion-label stacked><span [ngClass]="{'error': agent_title==''}" *ngIf="agent_title==''">*</span></ion-label>
+        <ion-icon name="ios-person" item-start></ion-icon>                
+        <ion-input type="text" required [(ngModel)]="agent_title" name="agent_title" placeholder="Agent Title"></ion-input>
+      </ion-item>
       <!--<div id="inline-editor1" contenteditable="true">
         Click here to see the inline editor
       </div>-->
@@ -180,9 +185,11 @@
     </ion-list>
 
     <ion-list class="leadNotes">
-      <ion-item *ngIf="accountInfo!=null">
+      <ion-item>
         <h2 class="contentTitle">Description</h2>
-        <textarea type="text" class="expandText" id="user_description" name="user_description" [(ngModel)]="user_description"></textarea>
+        <!--<textarea type="text" class="expandText" id="user_description" name="user_description" 
+        [(ngModel)]="user_description"></textarea>-->
+        <div id="user_description_editor" contenteditable="true" class="homeDescTxt"></div>
       </ion-item>
     </ion-list>
 

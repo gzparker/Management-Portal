@@ -44,6 +44,10 @@
     </ion-item>
     
     <div class="centerStage">
+      <ion-item class="userInfoBlock" *ngIf="accountInfo.agent_title!=undefined&&accountInfo.agent_title!=''">
+            <ion-icon name="ios-mail-outline" item-start></ion-icon>
+            <p>{{accountInfo.agent_title}}</p>
+      </ion-item>
     <ion-item class="userInfoBlock">
       <ion-icon name="ios-mail-outline" item-start></ion-icon>
       <p>{{accountInfo.email}}</p>

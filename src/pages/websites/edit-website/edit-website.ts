@@ -531,6 +531,7 @@ else
 }*/
 this.header_wrapper=result.result.header_wrapper;
 this.footer_wrapper=result.result.footer_wrapper;
+this.custom_css=result.result.custom_css;
       /*if(result.result.status=="1")
       {
         this.isActive=true;
@@ -951,8 +952,9 @@ else
   
   updateWebsiteResp(result:any):void{
   this.websiteUpdateMsg="Website has been updated successfully.";
-  CKEDITOR.instances['homepage_description'].destroy(true);
+  
   this.ngZone.run(() => {
+    CKEDITOR.instances['homepage_description'].destroy(true);
     this.navCtrl.setRoot(AllWebsitesPage,{notificationMsg:this.websiteUpdateMsg.toUpperCase()});
     });
   }

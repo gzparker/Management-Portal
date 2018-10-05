@@ -48,6 +48,7 @@ export class EditAccountPage {
   public first_name: string = "";
   
   public last_name: string = "";
+  public agent_title:string="";
   public company:string="";
   
   public phone_number: number;
@@ -142,12 +143,22 @@ export class EditAccountPage {
       { name: 'links', items: [] },
       { name: 'styles', items: ['Format', 'FontSize' ] }
     ]});*/
-    
+    //debugger;
     let member_id = this.storage.get('userId');
    // debugger;
     member_id.then((data) => {
       this.userId=data;
       this.viewAccount();
+     // debugger;
+    CKEDITOR.disableAutoInline = true;
+    CKEDITOR.inline( 'user_description_editor', {removeButtons:'Underline,Subscript,Superscript,SpecialChar'
+    ,toolbar: [
+      { name: 'document', groups: [], items: ['Source'] },
+      { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline'] },
+      { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
+      { name: 'links', items: [] },
+      { name: 'styles', items: ['Format', 'FontSize' ] }
+    ]});
       this.getAllCountryCodes();
       this.setAccessLevels();
       
@@ -261,11 +272,14 @@ else
      this.last_name=this.accountInfo.last_name;
      this.company=this.accountInfo.company;
      //debugger;
-     this.user_description=this.accountInfo.description;
+     //this.user_description=this.accountInfo.description;
+     document.getElementById("user_description_editor").innerHTML=this.accountInfo.description;
      this.email=this.accountInfo.email;
+     //debugger;
      this.broker_id=this.accountInfo.broker_id;
      this.agent_id=this.accountInfo.agent_id;
      this.office_id=this.accountInfo.office_id;
+     this.agent_title=this.accountInfo.agent_title;
    // debugger;
      this.passwordUpdated=this.accountInfo.password;
      this.phone_number=this.accountInfo.phone_mobile;
@@ -702,6 +716,7 @@ else
       first_name: "",
       photo_personal:"",
       last_name: "",
+      agent_title:"",
       description:"",
       company:"",
       office_id:"",
@@ -735,9 +750,14 @@ if(this.accountInfo.last_name!=this.last_name)
 {
       dataObj.last_name = this.last_name;
 }
-if(this.accountInfo.description!=this.user_description)
+if(this.accountInfo.agent_title!=this.agent_title)
 {
-      dataObj.description = this.user_description;
+      dataObj.agent_title = this.agent_title;
+}
+if(this.accountInfo.description!=document.getElementById("user_description_editor").innerHTML)
+{
+      //dataObj.description = this.user_description;
+      dataObj.description = document.getElementById("user_description_editor").innerHTML;
 }
 if(this.accountInfo.company!=this.company)
 {
@@ -784,6 +804,7 @@ if(this.accountInfo.mls_server_id!=this.mls_server_id)
     {
 //debugger;
      this.ngZone.run(() => {
+      CKEDITOR.instances['user_description_editor'].destroy(true);
   this.navCtrl.push(AccountInfoPage,{notificationMsg:"Account has been updated successfully."})
     });
     }
