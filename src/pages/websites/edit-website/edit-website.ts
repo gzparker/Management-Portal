@@ -99,6 +99,8 @@ export class EditWebsitePage {
   public textColorOption:string="";
   public buttonColor:string="";
   public buttonColorOption:string="";
+  public navigationColor:string="";
+  public navigationColorOption:string="";
   public backgroundColor:string="";
   public backgroundColorOption:string="";
   public sideBarMenuColor:string="";
@@ -444,6 +446,8 @@ this.contentTitleColor=result.result.content_title_color;
      this.modalBackgroundColorOption=result.result.modal_background_color_option;
      this.mapSidebarColor=result.result.map_sidebar_color;
      this.mapSidebarColorOption=result.result.map_sidebar_color_option;
+     this.navigationColor=result.result.navigation_color;
+     this.navigationColorOption=result.result.navigation_color_option;
 ///////////////////////////////////////////////////////////////
 //debugger;
 if(result.result.mls_server_id!=null)
@@ -937,7 +941,8 @@ else
     this.buttonColor,this.textColor,this.backgroundColor,this.headerColorOption,this.sideBarMenuColorOption,
     this.buttonColorOption,this.textColorOption,this.backgroundColorOption,this.customColorOptionModal,
     this.contentTitleColor,this.contentTitleColorOption,this.paginationColor,this.paginationColorOption,
-    this.modalBackgroundColor,this.modalBackgroundColorOption,this.mapSidebarColor,this.mapSidebarColorOption)
+    this.modalBackgroundColor,this.modalBackgroundColorOption,
+    this.mapSidebarColor,this.mapSidebarColorOption,this.navigationColor,this.navigationColorOption)
     .subscribe((result) => this.updateWebsiteResp(result));
      //}
       
@@ -1008,7 +1013,10 @@ this.homepageMeta_description=html;
         var selectedColor={
           option:"",
           selectedColorOption:"",
-          selectedColor:""
+          selectedColor:"",
+          colorBase:"",
+          secondColor:"",
+          thirdColor:""
         }
         if(option=='header_color')
         {
@@ -1058,6 +1066,16 @@ this.homepageMeta_description=html;
     selectedColor.selectedColorOption=this.mapSidebarColorOption;
     selectedColor.selectedColor=this.mapSidebarColor;
         }
+        if(option=='navigation_color')
+        {
+    selectedColor.option=option;
+    selectedColor.selectedColorOption=this.navigationColorOption;
+    selectedColor.selectedColor=this.navigationColor;
+    //debugger;
+        }
+        selectedColor.colorBase=this.colorBase;
+    selectedColor.secondColor=this.secondColor;
+    selectedColor.thirdColor=this.thirdColor;
         var modalColor = this.modalCtrl.create(ColorSelectionPopupPage,{selectedColor:selectedColor});
         modalColor.onDidDismiss(data => {
          // console.log(data);
@@ -1072,7 +1090,7 @@ this.homepageMeta_description=html;
     if(options.option=='header_color')
     {
     this.headerColorOption=options.selectedColorOption;
-    if(options.selectedColor!='')
+    if(options.selectedColor!=''&&options.isCustomColor==true)
     {
       this.headerColor=options.selectedColor;
      // debugger;
@@ -1103,7 +1121,7 @@ this.homepageMeta_description=html;
     else if(options.option=='side_bar_menu_color')
     {
       this.sideBarMenuColorOption=options.selectedColorOption;
-      if(options.selectedColor!='')
+      if(options.selectedColor!=''&&options.isCustomColor==true)
     {
       this.sideBarMenuColor=options.selectedColor;
     }
@@ -1131,7 +1149,7 @@ this.homepageMeta_description=html;
     else if(options.option=='content_background_color')
     {
       this.backgroundColorOption=options.selectedColorOption;
-      if(options.selectedColor!='')
+      if(options.selectedColor!=''&&options.isCustomColor==true)
     {
       this.backgroundColor=options.selectedColor;
     }
@@ -1159,7 +1177,7 @@ this.homepageMeta_description=html;
     else if(options.option=='button_color')
     {
       this.buttonColorOption=options.selectedColorOption;
-      if(options.selectedColor!='')
+      if(options.selectedColor!=''&&options.isCustomColor==true)
     {
       this.buttonColor=options.selectedColor;
     }
@@ -1187,7 +1205,7 @@ this.homepageMeta_description=html;
     else if(options.option=='content_title_color')
     {
       this.contentTitleColorOption=options.selectedColorOption;
-      if(options.selectedColor!='')
+      if(options.selectedColor!=''&&options.isCustomColor==true)
     {
       this.contentTitleColor=options.selectedColor;
     }
@@ -1215,7 +1233,7 @@ this.homepageMeta_description=html;
     else if(options.option=='pagination_color')
     {
       this.paginationColorOption=options.selectedColorOption;
-      if(options.selectedColor!='')
+      if(options.selectedColor!=''&&options.isCustomColor==true)
     {
       this.paginationColor=options.selectedColor;
     }
@@ -1243,7 +1261,7 @@ this.homepageMeta_description=html;
     else if(options.option=='modal_background_color')
     {
       this.modalBackgroundColorOption=options.selectedColorOption;
-      if(options.selectedColor!='')
+      if(options.selectedColor!=''&&options.isCustomColor==true)
     {
       this.modalBackgroundColor=options.selectedColor;
     }
@@ -1271,7 +1289,7 @@ this.homepageMeta_description=html;
     else if(options.option=='map_sidebar_color')
     {
       this.mapSidebarColorOption=options.selectedColorOption;
-      if(options.selectedColor!='')
+      if(options.selectedColor!=''&&options.isCustomColor==true)
     {
       this.mapSidebarColor=options.selectedColor;
     }
@@ -1293,6 +1311,34 @@ this.homepageMeta_description=html;
     {
       this.mapSidebarColorOption="";
       this.mapSidebarColor="";
+    }
+    }
+    }
+    else if(options.option=='navigation_color')
+    {
+      this.navigationColorOption=options.selectedColorOption;
+      if(options.selectedColor!=''&&options.isCustomColor==true)
+    {
+      this.navigationColor=options.selectedColor;
+    }
+    else
+    {
+    if(this.navigationColorOption=="base_color")
+    {
+    this.navigationColor=this.colorBase;
+    }
+    else if(this.navigationColorOption=="secondary_color")
+    {
+    this.navigationColor=this.secondColor;
+    }
+    else if(this.navigationColorOption=="tertiary_color")
+    {
+    this.navigationColor=this.thirdColor;
+    }
+    else if(this.navigationColorOption=="default")
+    {
+    this.navigationColorOption="";
+    this.navigationColor="";
     }
     }
     }

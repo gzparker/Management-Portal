@@ -28,8 +28,11 @@ export class ColorSelectionPopupPage {
   public colorOptions:any[]=[{id:"base_color",name:"1st Color"},{id:"secondary_color",name:"2nd Color"},
   {id:"tertiary_color",name:"3rd Color"}];
   public selectedColorOption:string="";
-  public customColor:string="";
   public option:string="";
+  public customColor:string="";
+  public oldSelectedColorOption:string="";
+  public oldOption:string="";
+  public oldCustomColor:string="";
   public colorBase:string="";
   public secondColor:string="";
   public thirdColor:string="";
@@ -44,15 +47,33 @@ export class ColorSelectionPopupPage {
     {
       this.selectedColorObj=this.navParams.get('selectedColor');
       this.selectedColorOption=this.selectedColorObj.selectedColorOption;
-      //if(this.selectedColorOption=='custom')
-     // {
+      this.oldSelectedColorOption=this.selectedColorOption
+      /*if(this.selectedColorObj.selectedColor==undefined||this.selectedColorObj.selectedColor==null)
+      {
+        this.customColor="#000000";
+        this.oldCustomColor="";
+        //debugger;
+      }
+      if(this.selectedColorObj.selectedColor=="")
+      {
+        this.customColor="#000000";
+        this.oldCustomColor="";
+        //debugger;
+      }
+      else
+      {
         this.customColor=this.selectedColorObj.selectedColor;
-     // }
+        this.oldCustomColor=this.selectedColorObj.selectedColor;
+      }*/
+      this.customColor=this.selectedColorObj.selectedColor;
+        this.oldCustomColor=this.selectedColorObj.selectedColor;
+      //debugger;
       this.colorBase=this.selectedColorObj.colorBase;
       this.secondColor=this.selectedColorObj.secondColor;
       this.thirdColor=this.selectedColorObj.thirdColor;
       this.option=this.selectedColorObj.option;
-     // debugger;
+      this.oldOption=this.selectedColorObj.option;
+    // debugger;
     //this.option = this.navParams.get('option');
     }
   }
@@ -81,12 +102,13 @@ this.showCustomColor=true;
       this.selectColor.
     }*/
    // debugger;
-    /*selectedColor={
-      option:this.option,
-      selectedColorOption:this.selectedColorOption,
-      selectedColor:this.customColor
-    }*/
-    let selectedColor=this.selectedColorMethod();
+    let selectedColor={
+      option:this.oldOption,
+      selectedColorOption:this.oldSelectedColorOption,
+      selectedColor:this.oldCustomColor,
+      isCustomColor:false
+    }
+    //let selectedColor=this.selectedColorMethod();
     this.viewCtrl.dismiss(selectedColor);
   }
   saveColor()
@@ -99,17 +121,24 @@ this.showCustomColor=true;
   {
     let selectedColor={option:"",
       selectedColorOption:"",
-      selectedColor:""};
+      selectedColor:"",
+      isCustomColor:false};
     selectedColor.option=this.option;
     selectedColor.selectedColorOption=this.selectedColorOption;
     if(this.selectedColorOption=="custom")
     {
+      selectedColor.isCustomColor=true;
       selectedColor.selectedColor=this.customColor;
     }
     else
-    {
+    {selectedColor.isCustomColor=false;
       selectedColor.selectedColor='';
     }
     return selectedColor;
+  }
+  setCustomColor(colorValue:any)
+  {
+this.customColor=colorValue;
+//debugger;
   }
 }

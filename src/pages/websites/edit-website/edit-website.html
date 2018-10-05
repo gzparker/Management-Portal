@@ -365,6 +365,11 @@
                   <span  class="colorPreviewEmpty" *ngIf="contentTitleColor!=undefined||contentTitleColor!=''" [ngStyle]="{'background-color':contentTitleColor }"></span></ion-label>
               </ion-item>
 
+              <ion-item (click)="showColorPopUp('navigation_color')">
+                <ion-label>Navigation Color <span class="colorPreview" *ngIf="navigationColor==undefined||navigationColor==''"></span>
+                  <span  class="colorPreviewEmpty" *ngIf="navigationColor!=undefined||navigationColor!=''" [ngStyle]="{'background-color':navigationColor }"></span></ion-label>
+              </ion-item>
+
               <ion-item (click)="showColorPopUp('button_color')">
                 <ion-label>Button Color <span class="colorPreview" *ngIf="buttonColor==undefined||buttonColor==''"></span>
                   <span  class="colorPreviewEmpty" *ngIf="buttonColor!=undefined||buttonColor!=''" [ngStyle]="{'background-color':buttonColor }"></span></ion-label>

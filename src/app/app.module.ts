@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { DatePipe } from '@angular/common';
 import { Facebook } from '@ionic-native/facebook';
 import { Geolocation } from '@ionic-native/geolocation';
 import { NativeGeocoder } from '@ionic-native/native-geocoder';
@@ -184,6 +185,7 @@ var firebaseConfig = {
     ImagePicker,
 		Crop,
     Camera,
+    DatePipe,
     //InAppBrowser,
     SubscriptionProvider,
     ListingProvider

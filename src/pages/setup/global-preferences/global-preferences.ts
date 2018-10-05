@@ -431,7 +431,7 @@ selectedColor.selectedColor=this.backgroundDwellerColor;
 if(options.option=='header_color')
 {
 this.headerColorOption=options.selectedColorOption;
-if(options.selectedColor!='')
+if(options.selectedColor!=''&&options.isCustomColor==true)
 {
   this.headerColor=options.selectedColor;
  // debugger;
@@ -466,7 +466,7 @@ options.selectedColor=this.headerColor;
 else if(options.option=='side_bar_menu_color')
 {
   this.sideBarMenuColorOption=options.selectedColorOption;
-  if(options.selectedColor!='')
+  if(options.selectedColor!=''&&options.isCustomColor==true)
 {
   this.sideBarMenuColor=options.selectedColor;
 }
@@ -498,7 +498,7 @@ options.selectedColor=this.sideBarMenuColor;
 else if(options.option=='content_background_color')
 {
   this.backgroundColorOption=options.selectedColorOption;
-  if(options.selectedColor!='')
+  if(options.selectedColor!=''&&options.isCustomColor==true)
 {
   this.backgroundColor=options.selectedColor;
 }
@@ -530,7 +530,7 @@ options.selectedColor=this.backgroundColor;
 else if(options.option=='button_color')
 {
   this.buttonColorOption=options.selectedColorOption;
-  if(options.selectedColor!='')
+  if(options.selectedColor!=''&&options.isCustomColor==true)
 {
   this.buttonColor=options.selectedColor;
 }
@@ -562,7 +562,7 @@ options.selectedColor=this.buttonColor;
 else if(options.option=='content_title_color')
 {
   this.contentTitleColorOption=options.selectedColorOption;
-  if(options.selectedColor!='')
+  if(options.selectedColor!=''&&options.isCustomColor==true)
 {
   this.contentTitleColor=options.selectedColor;
 }
@@ -594,7 +594,7 @@ options.selectedColor=this.contentTitleColor;
 else if(options.option=='pagination_color')
 {
   this.paginationColorOption=options.selectedColorOption;
-  if(options.selectedColor!='')
+  if(options.selectedColor!=''&&options.isCustomColor==true)
 {
   this.paginationColor=options.selectedColor;
 }
@@ -626,7 +626,7 @@ options.selectedColor=this.paginationColor;
 else if(options.option=='modal_background_color')
 {
   this.modalBackgroundColorOption=options.selectedColorOption;
-  if(options.selectedColor!='')
+  if(options.selectedColor!=''&&options.isCustomColor==true)
 {
   this.modalBackgroundColor=options.selectedColor;
 }
@@ -658,7 +658,7 @@ options.selectedColor=this.modalBackgroundColor;
 else if(options.option=='map_sidebar_color')
 {
   this.mapSidebarColorOption=options.selectedColorOption;
-  if(options.selectedColor!='')
+  if(options.selectedColor!=''&&options.isCustomColor==true)
 {
   this.mapSidebarColor=options.selectedColor;
 }
@@ -690,7 +690,7 @@ else if(this.mapSidebarColorOption=="default")
 else if(options.option=='button_color_dweller')
 {
   this.buttonDwellerColorOption=options.selectedColorOption;
-  if(options.selectedColor!='')
+  if(options.selectedColor!=''&&options.isCustomColor==true)
 {
   this.buttonDwellerColor=options.selectedColor;
 }
@@ -722,7 +722,7 @@ else if(this.buttonDwellerColorOption=="default")
 else if(options.option=='side_bar_color_dweller')
 {
   this.sideBarDwellerColorOption=options.selectedColorOption;
-  if(options.selectedColor!='')
+  if(options.selectedColor!=''&&options.isCustomColor==true)
 {
   this.sideBarDwellerColor=options.selectedColor;
 }
@@ -754,7 +754,7 @@ else if(this.sideBarDwellerColorOption=="default")
 else if(options.option=='background_color_dweller')
 {
   this.backgroundDwellerOption=options.selectedColorOption;
-  if(options.selectedColor!='')
+  if(options.selectedColor!=''&&options.isCustomColor==true)
 {
   this.backgroundDwellerColor=options.selectedColor;
 }

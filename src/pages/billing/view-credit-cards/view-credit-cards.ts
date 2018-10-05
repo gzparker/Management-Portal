@@ -2,6 +2,7 @@ import { Component, ViewChild, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, Platform, MenuController,LoadingController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
+import { DatePipe } from '@angular/common'
 import { AlertController,ToastController } from 'ionic-angular';
 
 import { AccountOptionPage } from '../../account/account-option/account-option';
@@ -47,7 +48,7 @@ export class ViewCreditCardsPage {
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, 
-    public platform: Platform,public loadingCtrl: LoadingController,private toastCtrl: ToastController) {
+    public platform: Platform,public loadingCtrl: LoadingController,private toastCtrl: ToastController,public datepipe: DatePipe) {
       if(this.navParams.get('notificationMsg')!=undefined)
       {
         let toast = this.toastCtrl.create({
@@ -83,6 +84,14 @@ export class ViewCreditCardsPage {
   ionViewDidEnter()
   {
     this.sharedServiceObj.updateColorThemeMethod(null);
+  }
+  setExpDateFormate(exp_month:string,exp_year:string)
+  {
+    
+    let formatedDate=new Date(exp_year+"/"+exp_month);
+    //debugger;
+    return this.datepipe.transform(formatedDate, 'MM/yy');
+    //return formatedDate;
   }
   setAccessLevels()
   {

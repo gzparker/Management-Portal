@@ -53,7 +53,9 @@
     </ion-item>
   
     <ion-item>
-      <ion-label>Custom Color <span class="colorPreview custom_color"></span></ion-label>
+      <ion-label>Custom Color <span class="colorPreview" *ngIf="selectedColorOption=='custom'"
+         [ngStyle]="{'background-color': customColor}"></span>
+         <span class="colorPreview custom_color" *ngIf="selectedColorOption!='custom'"></span></ion-label>
       <ion-radio value="custom"></ion-radio>
     </ion-item>
   
@@ -67,7 +69,7 @@
 
     <div  class="CustomColordatePicker">     
     <button ion-button color="secondary" outline [colorPicker]="customColor" 
-    (colorPickerChange)="customColor=$event"
+    (colorPickerChange)="setCustomColor($event)"
     [ngStyle]="{'background-color': customColor}" [cpPosition]="'bottom'" 
        [cpOutputFormat]="'rgb'" full small>Select Color</button>
        
