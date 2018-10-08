@@ -954,6 +954,7 @@ else
   this.websiteUpdateMsg="Website has been updated successfully.";
   
   this.ngZone.run(() => {
+    debugger;
     CKEDITOR.instances['homepage_description'].destroy(true);
     this.navCtrl.setRoot(AllWebsitesPage,{notificationMsg:this.websiteUpdateMsg.toUpperCase()});
     });

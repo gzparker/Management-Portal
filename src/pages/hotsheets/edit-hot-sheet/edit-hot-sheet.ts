@@ -43,22 +43,32 @@ export class EditHotSheetPage {
   communityImageCropper:ImageCropperComponent;*/
   public hideHeaderCropper:boolean=true;
   public hideCommunityCropper:boolean=true;
+  public hideSlideShowCropper:boolean=true;
   public edit_header_image:boolean=false;
   public edit_community_image:boolean=false;
+  public edit_slideshow_image:boolean=false;
   public crop_header_image:boolean=false;
   public crop_community_image:boolean=false;
+  public crop_slideshow_image:boolean=false;
   public isHeaderExist:boolean=false;
   public headerCropperSettings;
   public communityCropperSettings;
+  public slideShowCropperSettings;
   public croppedWidth:Number;
   public croppedHeight:Number;
   public dataHeaderImage:any;
   public dataCommunityImage:any;
+  public dataSlideShowImage:any;
   public headerWidth:string="";
   public headerHeight:string="";
   public communityWidth:string="";
   public communityHeight:string="";
+  public slideShowWidth:string="";
+  public slideShowHeight:string="";
   public dataCommunityImageArray:any[]=[];
+  public slideShowImage:string="";
+  public slideShowImageArray:string[]=[];
+  public dataSlideShowImageArray:any[]=[];
   public multiSelect:IMultiSelectSettings = {
     enableSearch: true,
     checkedStyle: 'fontawesome',
@@ -237,6 +247,22 @@ public isWebBrowser=false;
       this.communityCropperSettings.keepAspect = false;
   
       this.communityCropperSettings.noFileInput = true;
+
+      this.slideShowCropperSettings = new CropperSettings();
+      this.slideShowCropperSettings.width = 100;
+      this.slideShowCropperSettings.height = 100;
+      this.slideShowCropperSettings.croppedWidth = 1280;
+      this.slideShowCropperSettings.croppedHeight = 1000;
+      this.slideShowCropperSettings.canvasWidth = 500;
+      this.slideShowCropperSettings.canvasHeight = 300;
+      this.slideShowCropperSettings.minWidth = 10;
+      this.slideShowCropperSettings.minHeight = 10;
+  
+      this.slideShowCropperSettings.rounded = false;
+      this.slideShowCropperSettings.keepAspect = false;
+  
+      this.slideShowCropperSettings.noFileInput = true;
+      this.dataSlideShowImage={};
       this.dataHeaderImage= {};
       this.dataCommunityImage={};
       this.loader = this.loadingCtrl.create({
@@ -1363,7 +1389,7 @@ else
          // debugger;
           this.storage.set('searchFilterObj',this.json_search);
           
-         
+         //debugger;
          this.loadLastSearchedValue();
          if(result.result.community_image_url!=undefined)
       {
@@ -1374,6 +1400,20 @@ else
           //that.returnedGroup=element;
           //debugger;
           this.loadCommunityImage(this.sharedServiceObj.imgBucketUrl,element);
+        //debugger;
+            });
+      //this.loadCommunityImage(this.sharedServiceObj.imgBucketUrl,result.result.community_image_url);
+        
+      }
+      if(result.result.slideshow_image_url!=undefined)
+      {
+        //this.additionalInfoOption=true;
+        //debugger;
+        let slideShowImagesArray=result.result.slideshow_image_url.split(",");
+        slideShowImagesArray.forEach(element=>{
+          //that.returnedGroup=element;
+          //debugger;
+          this.loadSlideShowImage(this.sharedServiceObj.imgBucketUrl,element);
         //debugger;
             });
       //this.loadCommunityImage(this.sharedServiceObj.imgBucketUrl,result.result.community_image_url);
@@ -1422,8 +1462,41 @@ else
           };
         });
       }
-      addMoreCommunityImage()
+      loadSlideShowImage(baseUrl:string,imageUrl:string) {
+       //debugger;
+          const self = this;
+        //this.hideCommunityCropper=true;
+          
+          var image:any = new Image();
+          const xhr = new XMLHttpRequest()
+          xhr.open("GET", baseUrl+imageUrl);
+          xhr.responseType = "blob";
+          xhr.send();
+          xhr.addEventListener("load", function() {
+              var reader = new FileReader();
+              reader.readAsDataURL(xhr.response); 
+             
+              reader.onloadend = function (loadEvent:any) {
+               // debugger;
+                image.src = loadEvent.target.result;
+                
+                image.onload = function () {
+                  //debugger;
+                  self.slideShowCropperSettings.croppedWidth=this.width;
+                  self.slideShowCropperSettings.croppedHeight=this.height;
+                  self.slideShowImage=image.src;
+                  //debugger;
+                  self.createSlideShowImageThumbnail(image.src,"1");
+                  
+                  //self.communityImageCropper.setImage(image);
+                }
+            };
+          });
+        }
+      addMoreGalleryImage(option:string)
   {
+    if(option=="community")
+    {
     let commObj={imageData:"",imageDataDummy:"",imageWidth:"",imageHeight:""};
         commObj.imageDataDummy=this.dataCommunityImage.image;
         commObj.imageData=this.communityImage;
@@ -1434,15 +1507,38 @@ else
     //this.communityImageArray.push(this.communityImage);
     this.hideCommunityCropper=false;
     this.dataCommunityImage={};
+    }
+    if(option=="slideShow")
+    {
+      let commObj={imageData:"",imageDataDummy:"",imageWidth:"",imageHeight:""};
+      commObj.imageDataDummy=this.dataSlideShowImage.image;
+      commObj.imageData=this.slideShowImage;
+      commObj.imageWidth=this.slideShowWidth;
+      commObj.imageHeight=this.slideShowHeight;
+      this.dataSlideShowImageArray.push(commObj);
 
+  //this.communityImageArray.push(this.communityImage);
+  this.hideSlideShowCropper=false;
+  this.dataSlideShowImage={};
+    }
     //debugger;
   }
-  deleteCommunityImage(imageObj)
+  deleteGalleryImage(imageObj,option:string)
   {
-    let selectedIndex = this.dataCommunityImageArray.indexOf(imageObj);
-            if (selectedIndex >= 0) {
-            this.dataCommunityImageArray.splice(selectedIndex, 1);
-            }
+    if(option=="community")
+    {
+      let selectedIndex = this.dataCommunityImageArray.indexOf(imageObj);
+      if (selectedIndex >= 0) {
+      this.dataCommunityImageArray.splice(selectedIndex, 1);
+      }
+    }
+    if(option=="slideShow")
+    {
+      let selectedIndex = this.dataSlideShowImageArray.indexOf(imageObj);
+      if (selectedIndex >= 0) {
+      this.dataSlideShowImageArray.splice(selectedIndex, 1);
+      }
+    }
   }
       loadHeaderImage(baseUrl:string,imageUrl:string) {
        // debugger;
@@ -1531,6 +1627,18 @@ else
           this.dataCommunityImage={};
          //debugger;
         }
+        if(this.dataSlideShowImage.image!=undefined&&this.dataSlideShowImage.image!='')
+      {
+        let commObj={imageData:"",imageDataDummy:"",imageWidth:"",imageHeight:""};
+        commObj.imageDataDummy=this.dataSlideShowImage.image;
+        commObj.imageData=this.slideShowImage;
+        commObj.imageWidth=this.slideShowWidth;
+        commObj.imageHeight=this.slideShowHeight;
+        this.dataSlideShowImageArray.push(commObj);
+        this.hideSlideShowCropper=false;
+        this.dataSlideShowImage={};
+       //debugger;
+      }
       if(this.userId!="")
         {
          //if(this.domainAccess)
@@ -1564,7 +1672,8 @@ else
       this.sharedServiceObj.mlsServerId,this.name,this.hotsheet_Title,this.slug,JSON.stringify(this.searchListObject),CKEDITOR.instances['brief_description'].getData(),
       CKEDITOR.instances['main_description'].getData(),this.virtual_tour_url,this.video_url,this.sub_city,
       this.dataCommunityImageArray,this.headerImage,this.city,this.administrative_area_level_1,
-      this.community,this.assigned_agent_id,this.polygon_search,this.meta_description,this.meta_title,this.parent_id)
+      this.community,this.assigned_agent_id,this.polygon_search,this.meta_description,
+      this.meta_title,this.parent_id,this.dataSlideShowImageArray)
         .subscribe((result) => this.updateHotSheetResp(result));
             //}
           //});
@@ -1590,7 +1699,8 @@ else
         this.sharedServiceObj.mlsServerId,this.name,this.hotsheet_Title,this.slug,JSON.stringify(this.searchListObject),CKEDITOR.instances['brief_description'].getData(),
         CKEDITOR.instances['main_description'].getData(),this.virtual_tour_url,this.video_url,this.sub_city,
         this.dataCommunityImageArray,this.headerImage,this.city,this.administrative_area_level_1,
-        this.community,this.assigned_agent_id,this.polygon_search,this.meta_description,this.meta_title,this.parent_id)
+        this.community,this.assigned_agent_id,this.polygon_search,this.meta_description,this.meta_title,
+        this.parent_id,this.dataSlideShowImageArray)
         .subscribe((result) => this.updateHotSheetResp(result));
    
         }
@@ -1747,6 +1857,48 @@ else
          this.crop_community_image=true;
        } 
       }
+      slideShowFileChangeListener($event) {
+        this.crop_slideshow_image=true;
+        this.edit_slideshow_image=true;
+        this.hideSlideShowCropper=true;
+        var image:any = new Image();
+        var file:File = $event.target.files[0];
+        var myReader:FileReader = new FileReader();
+        var that = this;
+        myReader.onloadend = function (loadEvent:any) {
+            image.src = loadEvent.target.result;
+            image.onload = function () {
+              that.slideShowCropperSettings.croppedWidth=this.width;
+              that.slideShowCropperSettings.croppedHeight=this.height;
+              that.slideShowImage=this.src;
+              that.createSlideShowImageThumbnail(that.slideShowImage,"0");
+              //that.commun
+            //that.communityImageCropper.setImage(image);
+            }
+        };
+    
+        myReader.readAsDataURL(file);
+    }
+       slideShowImageCropped(image:any)
+      {
+        if(this.crop_slideshow_image)
+        {
+          this.slideShowCropperSettings.croppedWidth=image.width;
+          this.slideShowCropperSettings.croppedHeight=image.height;
+               
+               let that=this;
+                this.resizeSlideShowImage(this.dataSlideShowImage.image, data => {
+                
+                  that.slideShowImage=data;
+                  
+                  this.createSlideShowImageThumbnail(that.slideShowImage,"0");
+                    });
+        }
+  else
+  {
+    this.crop_slideshow_image=true;
+  }
+      }
        takeHeaderPicture(){
        //debugger;
          let options =
@@ -1825,7 +1977,7 @@ else
     if(editMode=="1")
    {
      //debugger;
-     that.addMoreCommunityImage();
+     that.addMoreGalleryImage('community');
    }
       });
     }
@@ -1969,6 +2121,87 @@ else
          callback(dataUrl)
         }
       }
+      createSlideShowImageThumbnail(bigMatch:any,editMode:string) {
+        let that=this;
+       
+        //debugger;
+          this.generateSlideShowImageFromImage(bigMatch, 500, 500, 0.5, data => {
+            
+        that.dataSlideShowImage.image=data;
+        if(editMode=="1")
+        {
+          //debugger;
+          that.addMoreGalleryImage('slideShow');
+        }
+        //debugger;
+          });
+        }
+        generateSlideShowImageFromImage(img, MAX_WIDTH: number = 700, MAX_HEIGHT: number = 700, quality: number = 1, callback) {
+          var canvas: any = document.createElement("canvas");
+          var image:any = new Image();
+          //image.width=this.companyCropperSettings.croppedWidth;
+          //image.height=this.companyCropperSettings.croppedHeight;
+          var that=this;
+       //debugger;
+          image.src = img;
+          image.onload = function () {
+           
+            var width=that.slideShowCropperSettings.croppedWidth;
+            var height=that.slideShowCropperSettings.croppedHeight;
+           //debugger;
+            if (width > height) {
+              if (width > MAX_WIDTH) {
+                height *= MAX_WIDTH / width;
+                width = MAX_WIDTH;
+              }
+            } else {
+              if (height > MAX_HEIGHT) {
+                width *= MAX_HEIGHT / height;
+                height = MAX_HEIGHT;
+              }
+            }
+            //debugger;
+            canvas.width = width;
+            canvas.height = height;
+            that.slideShowWidth = width;
+            that.slideShowHeight = height;
+            //debugger;
+            var ctx = canvas.getContext("2d");
+       
+            ctx.drawImage(image, 0, 0, width, height);
+       
+            // IMPORTANT: 'jpeg' NOT 'jpg'
+            var dataUrl = canvas.toDataURL('image/jpeg', quality);
+       
+            callback(dataUrl)
+          }
+          
+        }
+        resizeSlideShowImage(img:any,callback)
+        {
+          var canvas: any = document.createElement("canvas");
+          var image:any = new Image();
+         
+          var that=this;
+      
+          image.src = img;
+          image.onload = function () {
+           
+            var width=that.slideShowCropperSettings.croppedWidth;
+            var height=that.slideShowCropperSettings.croppedHeight;
+          
+            canvas.width = width;
+            canvas.height = height;
+      
+            var ctx = canvas.getContext("2d");
+       
+            ctx.drawImage(image, 0, 0, width, height);
+      
+            var dataUrl = canvas.toDataURL('image/jpeg', 1);
+      
+           callback(dataUrl)
+          }
+        }
    ////////////////////////////////////////////////////////////////////////
     refreshValueSubDivision($event:any):void{
     

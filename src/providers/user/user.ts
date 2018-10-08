@@ -1187,7 +1187,7 @@ createHotSheet(user_id:string,website_id:string,mlsServerId:string,name:string,h
   json_search:any,brief_description:any,main_description:any,virtual_tour_url:any,video_url:any,
   sub_city:any,communityImage:any,headerImage:any,local:any,
   administrative_area_level_1:any,community:any,agent_ids:any,polygon_search:any,
-  meta_description:any,meta_title:any,parent_id:any){
+  meta_description:any,meta_title:any,parent_id:any,slideShowImage:any){
     //debugger;
  let data = new URLSearchParams();
  data.append('name',name);
@@ -1211,6 +1211,7 @@ createHotSheet(user_id:string,website_id:string,mlsServerId:string,name:string,h
  data.append('virtual_tour_url',virtual_tour_url);
  data.append('header_image',headerImage);
  data.append('community_image',JSON.stringify(communityImage));
+ data.append('slideshow_image',JSON.stringify(slideShowImage));
  data.append('assigned_agent_ids',agent_ids);
 //debugger;
   let hotSheetCreatingResp=this.http
@@ -1241,7 +1242,7 @@ updateHotSheet(id:string,user_id:string,website_id:string,mlsServerId:string,nam
   json_search:any,brief_description:any,main_description:any,virtual_tour_url:any,video_url:any,
   sub_city:any,communityImage:any,headerImage:any,local:any,
   administrative_area_level_1:any,community:any,agent_ids:any,polygon_search:any,
-  meta_description:any,meta_title:any,parent_id:any){
+  meta_description:any,meta_title:any,parent_id:any,slideShowImage:any){
  let data = new URLSearchParams();
  data.append('id',id);
  data.append('name',name);
@@ -1265,7 +1266,9 @@ updateHotSheet(id:string,user_id:string,website_id:string,mlsServerId:string,nam
  data.append('virtual_tour_url',virtual_tour_url);
  data.append('header_image',headerImage);
  data.append('community_image',JSON.stringify(communityImage));
+ data.append('slideshow_image',JSON.stringify(slideShowImage));
  data.append('assigned_agent_ids',agent_ids);
+ 
 //debugger;
   let hotSheetUpdatingResp=this.http
     .post(this.sharedServiceObj.apiBaseUrl+'members/updateSavedHotsheet', data, this.headerOptionsIDX)

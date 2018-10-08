@@ -220,34 +220,38 @@
 
       <ion-list *ngIf="!isApp">
           <ion-label stacked>Community/Gallery Images</ion-label>
-        <!--<ion-item class="toggleImageEdit" *ngIf="dataCommunityImage.image">
-          <ion-label>Edit Image</ion-label>
-          <ion-toggle [(ngModel)]="edit_community_image" 
-          name="edit_community_image" (click)="showHideCommunityCropper()"></ion-toggle>
-        </ion-item>-->
-   
-        
-
-        <!-- Main Image Uploader -->
-      
-          <!-- Image Cropper -->          
-          <!--<img-cropper #communityImageCropper [image]="dataCommunityImage" [settings]="communityCropperSettings" 
-          (onCrop)="communtiyImageCropped($event)" *ngIf="hideCommunityCropper"></img-cropper>-->
-
+       
           <!-- Image Cropper Result -->          
           <span *ngFor="let communityImage of dataCommunityImageArray">          
           <img [src]="communityImage.imageDataDummy" [width]="communityImage.imageWidth"
           [height]="communityImage.imageHeight">
-          <button ion-button color="danger" item-right class="btn-del" (click)="deleteCommunityImage(communityImage)"><ion-icon name="md-close"></ion-icon>Delete</button>
+          <button ion-button color="danger" item-right class="btn-del" (click)="deleteGalleryImage(communityImage,'community')"><ion-icon name="md-close"></ion-icon>Delete</button>
           </span>
 
           <!-- Image Upload Button -->
           <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="communityFileChangeListener($event)">
-          <button ion-button color="primary" block (click)="addMoreCommunityImage();" 
+          <button ion-button color="primary" block (click)="addMoreGalleryImage('community');" 
           *ngIf="dataCommunityImage.image">Add More</button>      
           
            
     </ion-list>
+    <ion-list *ngIf="!isApp">
+      <ion-label stacked>SlideShow Images</ion-label>
+   
+      <!-- Image Cropper Result -->          
+      <span *ngFor="let slideShowImage of dataSlideShowImageArray">          
+      <img [src]="slideShowImage.imageDataDummy" [width]="slideShowImage.imageWidth"
+      [height]="slideShowImage.imageHeight">
+      <button ion-button color="danger" item-right class="btn-del" (click)="deleteGalleryImage(slideShowImage,'slideShow')"><ion-icon name="md-close"></ion-icon>Delete</button>
+      </span>
+
+      <!-- Image Upload Button -->
+      <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="slideShowFileChangeListener($event)">
+      <button ion-button color="primary" block (click)="addMoreGalleryImage('slideShow');" 
+      *ngIf="dataSlideShowImage.image">Add More</button>      
+      
+       
+</ion-list>
     </div>
 
     <!-- <ion-item>
