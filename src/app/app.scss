@@ -279,9 +279,21 @@ display: none;
 // ------------------------------------------------------------
 // SIDEBAR MENU OPTION 3 = HIDE SIDEBAR
 // ------------------------------------------------------------
+.noSidbearMenuButton {
+position: fixed;
+border: none;
+display: none;
+  .toolbar-background-ios, .toolbar-background-md, .toolbar-background-wp {
+  background: none !important;
+  }
+}
+
 .noSidebar {  
   #SidebarResetToggle {
   left: 0px;
+  display: block;
+  }
+  .noSidbearMenuButton {
   display: block;
   }
 }

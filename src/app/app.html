@@ -6,6 +6,12 @@
 
 <div id="SidebarResetToggle" class="btnToggle colorEnabled button_color" (click)="toggleSideBar()"></div>
 
+<ion-toolbar class="noSidbearMenuButton">
+  <button ion-button menuToggle>
+    <ion-icon name="menu"></ion-icon>
+  </button>
+</ion-toolbar>
+
 <ion-menu [content]="content" persistent="true">
   <ion-header>
     <!-- <ion-toolbar class="company-logo">
@@ -13,8 +19,8 @@
     </ion-toolbar> -->
   </ion-header>
 
-  <ion-content class="noScroll colorEnabled sidebar_color" [style.background]="sideBackGround">
-    
+  <ion-content class="noScroll colorEnabled sidebar_color" [style.background]="sideBackGround">  
+
     <div id="SidebarDisplayToggle" class="btnToggle colorEnabled button_color" (click)="toggleSideBar()"></div>
 
     <ion-card text-center menuClose class="profileCard" *ngIf="userLoggedIn==true&&userGeneralInfo!=null"  
