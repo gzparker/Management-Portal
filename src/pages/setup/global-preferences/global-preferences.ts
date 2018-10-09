@@ -1472,7 +1472,7 @@ else
     updateGlobalSettings(){
       if(this.userId!="")
     {
-    //debugger;
+    debugger;
     this.userServiceObj.updateGlobalSettings(this.userId,this.personalImage,this.companyLogoImage,this.user.timezone,
       this.colorBase,this.secondColor,this.thirdColor,this.identity_name,this.display_name_dweller,this.dwellerImage,this.headerColor,this.sideBarMenuColor,
       this.buttonColor,this.textColor,this.backgroundColor,this.headerColorOption,this.sideBarMenuColorOption,

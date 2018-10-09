@@ -69,6 +69,7 @@ export class CreateWebsitePage {
   public mapSidebarColor:string="";
   public mapSidebarColorOption:string="";
   public isCustomColor:string="0";
+  public login_register_popup_time:string="0";
   public isSsl:boolean=false;
   public show_open_houses:boolean=false;
   public show_new_listings:boolean=false;
@@ -237,7 +238,7 @@ intagentWebsiteFinal=0;
     this.buttonColorOption,this.textColorOption,this.backgroundColorOption,this.customColorOptionModal,this.contentTitleColor,
     this.contentTitleColorOption,this.paginationColor,this.paginationColorOption,this.modalBackgroundColor,this.modalBackgroundColorOption,
     this.mapSidebarColor,this.mapSidebarColorOption,show_new_listing_dummy,show_open_houses_dummy,feature_agent_listings_dummy,
-    feature_broker_listings_dummy,feature_office_listings_dummy,isSsl_dummy)
+    feature_broker_listings_dummy,feature_office_listings_dummy,isSsl_dummy,this.login_register_popup_time)
     .subscribe((result) => this.createWebsiteResp(result));
     // }
       }

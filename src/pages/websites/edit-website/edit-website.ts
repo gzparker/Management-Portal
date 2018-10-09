@@ -114,6 +114,7 @@ export class EditWebsitePage {
   public mapSidebarColor:string="";
   public mapSidebarColorOption:string="";
   public isCustomColor:string="0";
+  public login_register_popup_time:string="0";
   public customColorOption:boolean=false;
   public customColorOptionModal:boolean=false;
 
@@ -884,6 +885,7 @@ else
     let feature_broker_listings_dummy="0";
     let feature_office_listings_dummy="0";
     let intagent_website_dummy="0";
+    let isSsl_dummy="0";
   if(this.userId!="")
     {
      //if(this.domainAccess)
@@ -920,6 +922,10 @@ else
        {
         intagent_website_dummy="1";
        }
+       if(this.isSsl)
+       {
+        isSsl_dummy="1";
+       }
        if(this.website_domain.indexOf("http://www")<0 && this.website_domain.indexOf("https://www")<0)
 {
  // debugger;
@@ -930,7 +936,7 @@ else
  // debugger;
   this.website_domain=this.website_domain;
 }
-     //  debugger;
+   //debugger;
   this.userServiceObj.updateWebsite(this.userId,isActiveFinal,this.website_domain,this.websiteId,
     this.contact_email,this.header_wrapper,this.footer_wrapper,intagent_website_dummy,this.custom_css,
     show_new_listing_dummy,show_open_houses_dummy,feature_agent_listings_dummy,
@@ -943,7 +949,8 @@ else
     this.buttonColorOption,this.textColorOption,this.backgroundColorOption,this.customColorOptionModal,
     this.contentTitleColor,this.contentTitleColorOption,this.paginationColor,this.paginationColorOption,
     this.modalBackgroundColor,this.modalBackgroundColorOption,
-    this.mapSidebarColor,this.mapSidebarColorOption,this.navigationColor,this.navigationColorOption)
+    this.mapSidebarColor,this.mapSidebarColorOption,this.navigationColor,this.navigationColorOption,
+    isSsl_dummy,this.login_register_popup_time)
     .subscribe((result) => this.updateWebsiteResp(result));
      //}
       
@@ -954,7 +961,7 @@ else
   this.websiteUpdateMsg="Website has been updated successfully.";
   
   this.ngZone.run(() => {
-    debugger;
+    //debugger;
     CKEDITOR.instances['homepage_description'].destroy(true);
     this.navCtrl.setRoot(AllWebsitesPage,{notificationMsg:this.websiteUpdateMsg.toUpperCase()});
     });

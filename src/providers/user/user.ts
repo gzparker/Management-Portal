@@ -928,7 +928,7 @@ createWebsite(user_id:string,isActive:string,website_domain:string,identity_name
   modalBackgroundColor:string,modalBackgroundColorOption:string,mapSidebarColor:string,mapSidebarColorOption:string,
   show_new_listings:string,show_open_houses:string,feature_agent_listings:string,
   feature_broker_listings:string,
-  feature_office_listings:string,isSsl:string){
+  feature_office_listings:string,isSsl:string,login_register_popup_time:string){
 //debugger;
     let data = new URLSearchParams();
     data.append('website_domain',website_domain);
@@ -977,6 +977,7 @@ data.append('content_title_color',contentTitleColor);
  data.append('feature_broker_listings',feature_broker_listings);
  data.append('feature_office_listings',feature_office_listings);
  data.append('isSsl',isSsl);
+ data.append('login_register_popup_time',login_register_popup_time);
 //debugger;
   let websiteListing=this.http
     .post(this.sharedServiceObj.registerationApiBaseUrl+'members/createWebsite', data, this.headerOptions)
@@ -1008,7 +1009,8 @@ updateWebsite(user_id:string,isActive:string,website_domain:string,website_id:st
   buttonColorOption:string,textColorOption:string,backgroundColorOption:string,customColorOption:boolean,
   contentTitleColor:string,contentTitleColorOption:string,paginationColor:string,paginationColorOption:string,
   modalBackgroundColor:string,modalBackgroundColorOption:string,
-  mapSidebarColor:string,mapSidebarColorOption:string,navigationColor:string,navigationColorOption:string){
+  mapSidebarColor:string,mapSidebarColorOption:string,navigationColor:string,navigationColorOption:string,
+  isSsl:string,login_register_popup_time:string){
 
 let data = new URLSearchParams();
  data.append('website_domain',website_domain);
@@ -1064,6 +1066,8 @@ data.append('content_title_color',contentTitleColor);
     data.append('map_sidebar_color_option',mapSidebarColorOption);
     data.append('navigation_color',navigationColor);
     data.append('navigation_color_option',navigationColorOption);
+    data.append('isSsl',isSsl);
+ data.append('login_register_popup_time',login_register_popup_time);
 //debugger;
   let websiteListing=this.http
     .post(this.sharedServiceObj.registerationApiBaseUrl+'members/updateWebsite', data, this.headerOptions)
