@@ -540,7 +540,87 @@ page-create-website {
           }
         }
       }
-
+      .leadMapAddress {
+        width: 100%;
+        height: auto;
+        padding: 16px;
+        border-bottom: 1px solid #ebe9f0 !important;
+        margin-bottom: 1px;
+        overflow: hidden;  
+          .addressBlock {
+          width: 100%;
+          max-width: 60%;
+          float: left;
+          display: block;
+          padding-left: 55px;
+          position: relative;
+      
+            .item-block, .item-inner, .item-inner, .input-wrapper {
+            max-height: 24px;
+            display: contents;
+            }
+      
+            .label-ios, .label-md, .label-wp {
+            padding: 0px !important;
+            margin: 0px !important;
+              // a {
+              // color: red  !important;
+              // }
+            }
+          
+            ion-icon {
+            font-size: 24px;
+            position: absolute;
+            left: 6px;
+            top: -4px;
+            color: #777;
+            }
+      
+            h2 {
+            font-size: 12px !important;
+            // color: #b0b1b2 !important;
+            color: #777 !important;
+            margin-bottom: 6px !important;
+            padding-bottom: 0px !important;
+            }
+            p {
+            font-size: 14px !important;
+            // color: #3c3d3f !important;
+            color: $flatblue !important;
+            line-height: 22px;
+            padding: 0;
+            margin: 0;
+            }
+          }
+          .leadsHomeAddressMap, .leadsWorkAddressMap {
+          width: 100%;
+          max-width: 40%;
+          float: right;    
+          padding: 3px 0 0 15px;
+          position: relative;
+            &:before {
+            content: "";
+            width: 100%;
+            height: 100%;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 10;
+            position: absolute;
+            display: block;
+            }
+      
+            #mapHome, #mapWork {      
+            margin: 0;
+            height: 110px !important; 
+            // border: 1px solid #DDD;
+              &:empty {
+              display: none;
+              }
+            }
+          } 
+        }
       .colorSchemeLabel {
       margin-top: 0px !important;
       padding-bottom: 16px;

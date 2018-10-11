@@ -195,6 +195,10 @@ public isWebBrowser=false;
   public communityImageChangedEvent:any='';
   public allHotSheetList:any[]=[];
   public mapLocation:any;
+  public geoLocationOptions = {
+    types: ['(cities)'],
+    componentRestrictions: {country: "us"}
+   };
   public loader:any;
  
   @ViewChild('map') mapElement: ElementRef;
@@ -408,7 +412,7 @@ else
     
   }
   createAutocomplete(addressEl: HTMLInputElement): Observable<any> {
-    const autocomplete = new google.maps.places.Autocomplete(addressEl);
+    const autocomplete = new google.maps.places.Autocomplete(addressEl,this.geoLocationOptions);
     autocomplete.bindTo('bounds', this.map);
     return new Observable((sub: any) => {
       google.maps.event.addListener(autocomplete, 'place_changed', () => {

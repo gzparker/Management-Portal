@@ -102,6 +102,10 @@ public hideLeadCropper:boolean=true;
   public userRef:any;
   public notificationMsg:string="";
 public loader:any;
+public geoLocationOptions = {
+  types: ['(cities)'],
+  componentRestrictions: {country: "us"}
+ };
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,
     public sharedServiceObj: SharedProvider, private storage: Storage,
@@ -193,7 +197,7 @@ this.chatRef.off("value");
   });
 }
 createHomeAutocomplete(addressEl: HTMLInputElement): Observable<any> {
-  const autocomplete = new google.maps.places.Autocomplete(addressEl);
+  const autocomplete = new google.maps.places.Autocomplete(addressEl,this.geoLocationOptions);
   
   return new Observable((sub: any) => {
     google.maps.event.addListener(autocomplete, 'place_changed', () => {
@@ -224,7 +228,7 @@ getHomeAddress(data) {
     });
   }
   createWorkAutocomplete(addressEl: HTMLInputElement): Observable<any> {
-    const autocomplete = new google.maps.places.Autocomplete(addressEl);
+    const autocomplete = new google.maps.places.Autocomplete(addressEl,this.geoLocationOptions);
     
     return new Observable((sub: any) => {
       google.maps.event.addListener(autocomplete, 'place_changed', () => {

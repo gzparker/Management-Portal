@@ -111,6 +111,10 @@ public isWebBrowser=false;
   public stories:string="";
   public year_built:string="";
   public status:any[]=[];
+  public geoLocationOptions = {
+    types: ['(cities)'],
+    componentRestrictions: {country: "us"}
+   };
   public statusOptions:any[]=[{id:"all",name:"All"},{id:"for_sale",name:"For Sale"},{id:"for_rent",name:"For Rent"},
   {id:"pending",name:"Pending"},{id:"recently_sold",name:"Recently Sold"},{id:"pre_selling",name:"Pre Selling"},{id:"buy_me_out",name:"Buy Me Out"}
   ,{id:"rent_to_own",name:"Ren to own"}];
@@ -391,8 +395,8 @@ else
   mapsSearchBar(ev: any) {
     // set input to the value of the searchbar
     //this.search = ev.target.value;
-    console.log(ev);
-    const autocomplete = new google.maps.places.Autocomplete(ev);
+    //console.log(ev);
+    const autocomplete = new google.maps.places.Autocomplete(ev,this.geoLocationOptions);
     autocomplete.bindTo('bounds', this.map);
     return new Observable((sub: any) => {
       google.maps.event.addListener(autocomplete, 'place_changed', () => {
@@ -426,7 +430,7 @@ else
   }
 
   createAutocomplete(addressEl: HTMLInputElement): Observable<any> {
-    const autocomplete = new google.maps.places.Autocomplete(addressEl);
+    const autocomplete = new google.maps.places.Autocomplete(addressEl,this.geoLocationOptions);
     autocomplete.bindTo('bounds', this.map);
     return new Observable((sub: any) => {
       google.maps.event.addListener(autocomplete, 'place_changed', () => {

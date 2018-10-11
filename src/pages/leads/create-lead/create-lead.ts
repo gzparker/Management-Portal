@@ -92,7 +92,10 @@ export class CreateLeadPage {
   public leadWidth:string="";
   public leadHeight:string="";
   public leadImage:string="";
-
+  public geoLocationOptions = {
+    types: ['(cities)'],
+    componentRestrictions: {country: "us"}
+   };
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,
     public sharedServiceObj: SharedProvider, private storage: Storage,
@@ -190,12 +193,13 @@ export class CreateLeadPage {
    
     this.addressHomeElement = this.searchHomeBar.nativeElement.querySelector('.searchbar-input');
     this.createHomeAutocomplete(this.addressHomeElement).subscribe((location) => {
-      
+    //debugger;  
     });
   }
 
   createHomeAutocomplete(addressEl: HTMLInputElement): Observable<any> {
-    const autocomplete = new google.maps.places.Autocomplete(addressEl);
+    
+    const autocomplete = new google.maps.places.Autocomplete(addressEl,this.geoLocationOptions);
     
     return new Observable((sub: any) => {
       google.maps.event.addListener(autocomplete, 'place_changed', () => {
@@ -205,7 +209,7 @@ export class CreateLeadPage {
             message: 'Autocomplete returned place with no geometry'
           });
         } else {
-          
+          //debugger;
           sub.next(place.geometry.location);
           this.getHomeAddress(place);
           
@@ -226,7 +230,7 @@ export class CreateLeadPage {
       });
     }
     createWorkAutocomplete(addressEl: HTMLInputElement): Observable<any> {
-      const autocomplete = new google.maps.places.Autocomplete(addressEl);
+      const autocomplete = new google.maps.places.Autocomplete(addressEl,this.geoLocationOptions);
       
       return new Observable((sub: any) => {
         google.maps.event.addListener(autocomplete, 'place_changed', () => {

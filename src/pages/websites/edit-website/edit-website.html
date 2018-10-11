@@ -35,7 +35,14 @@
             <ion-input type="text" [(ngModel)]="website_domain" 
             name="website_domain" id="website_domain" required ></ion-input>
         </ion-item>
-      
+        <div class="leadMapAddress">          
+          <div class="addressBlock">
+          <ion-icon name="md-pin" item-start></ion-icon>
+          <h2 class="contentTitle">Target City</h2>
+          <!--<ion-input type="text" placeholder="Edit Home Address"></ion-input>-->
+          <ion-searchbar #searchTargetCityBar placeholder="Search Target City" [(ngModel)]="targetCityDummy" name="targetCityDummy" id="targetCityDummy"></ion-searchbar>
+          </div>
+      </div>
         <ion-item>
             <ion-label stacked>IDX Installed Location</ion-label>
             <ion-input type="text" [(ngModel)]="website_a_record_location" 

@@ -10,26 +10,16 @@
     <button ion-button menuToggle start>
       <ion-icon name="menu"></ion-icon>
     </button>
-    
-    <!-- <ion-title>ALL WEBSITES</ion-title> -->
-    <!-- <ion-buttons end *ngIf="allWebsiteList.length<=0&&showCreateButton">
-      <button ion-button (click)="createWebsite();">Create Website</button>
-    </ion-buttons> -->    
-    <!--<ion-buttons end *ngIf="showCreateButton">
-      <button ion-button (click)="createWebsite();">Create Website</button>
+    <!--<ion-buttons end *ngIf="allWebsiteList.length<=0&&showCreateButton">
+      <button ion-button icon-left (click)="createWebsite();">
+        <ion-icon name="md-add"></ion-icon>
+      </button>
     </ion-buttons>-->
-
-    <ion-buttons end *ngIf="allWebsiteList.length<=0&&showCreateButton">
+    <ion-buttons end>
       <button ion-button icon-left (click)="createWebsite();">
         <ion-icon name="md-add"></ion-icon>
       </button>
     </ion-buttons>
-    <!--<ion-buttons end>
-      <button ion-button icon-left (click)="createWebsite();">
-        <ion-icon name="md-add"></ion-icon>
-      </button>
-    </ion-buttons>-->
-
   </ion-navbar>  
 </ion-header>
 

@@ -1,8 +1,9 @@
-import { Component, ViewChild, NgZone } from '@angular/core';
+import { Component, ViewChild, NgZone,ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, Platform,
   MenuController,LoadingController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { Observable } from 'rxjs/Observable';
 import { Storage } from '@ionic/storage';
 import { Crop } from '@ionic-native/crop';
 import { Camera, CameraOptions } from '@ionic-native/camera';
@@ -28,12 +29,16 @@ import { SubscriptionProvider } from '../../../providers/subscription/subscripti
  * Ionic pages and navigation.
  */
 declare var CKEDITOR: any;
+declare var google: any;
+declare var firebase:any;
 @IonicPage()
 @Component({
   selector: 'page-edit-website',
   templateUrl: 'edit-website.html',
 })
 export class EditWebsitePage {
+  @ViewChild('searchTargetCityBar', { read: ElementRef }) searchTargetCityBar: ElementRef
+  searchTargetCityElement: HTMLInputElement = null;
   /*@ViewChild('companyLogoCropper', undefined)
   companyLogoCropper:ImageCropperComponent;
   @ViewChild('favIconLogoCropper', undefined)
@@ -78,6 +83,9 @@ export class EditWebsitePage {
   public logoWidth:string="";
   public logoHeight:string="";
   public website_a_record_location:string="";
+  public targetCityDummy:string="";
+  public target_city:string="";
+  public target_place_id:string="";
   public identity_phone_number:string="";
   public homepage_description:string="";
   public homepageMeta_description:string="";
@@ -117,7 +125,10 @@ export class EditWebsitePage {
   public login_register_popup_time:string="0";
   public customColorOption:boolean=false;
   public customColorOptionModal:boolean=false;
-
+  public geoLocationOptions = {
+    types: ['(cities)'],
+    componentRestrictions: {country: "us"}
+   };
   /*private CkeditorConfig = {removeButtons:'Underline,Subscript,Superscript,SpecialChar'
   ,toolbar: [
     { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ ] },
@@ -214,9 +225,47 @@ export class EditWebsitePage {
        this.websiteId = this.navParams.get('websiteId');
        //debugger;
        this.editWebsite();
+       this.initCityAutocomplete();
        } 
     });
   }
+  initCityAutocomplete(): void {
+   
+    this.searchTargetCityElement = this.searchTargetCityBar.nativeElement.querySelector('.searchbar-input');
+    this.createCityAutocomplete(this.searchTargetCityElement).subscribe((location) => {
+      
+    });
+  }
+  createCityAutocomplete(addressEl: HTMLInputElement): Observable<any> {
+    const autocomplete = new google.maps.places.Autocomplete(addressEl,this.geoLocationOptions);
+    
+    return new Observable((sub: any) => {
+      google.maps.event.addListener(autocomplete, 'place_changed', () => {
+        const place = autocomplete.getPlace();
+        if (!place.geometry) {
+          sub.error({
+            message: 'Autocomplete returned place with no geometry'
+          });
+        } else {
+          
+          sub.next(place.geometry.location);
+          this.getCityAddress(place);
+          
+        }
+      });
+    });
+  }
+  getCityAddress(data) {
+
+    this.target_place_id=data.place_id;
+    data.address_components.forEach(element => {
+      if(element.types[0]=="locality")
+      {
+    this.target_city=element.long_name; 
+      }
+     });
+    //debugger;
+     }
   loadAllAvailableMLS()
   {
     this.subscriptionObj.loadAllAvailableMLS()
@@ -449,6 +498,9 @@ this.contentTitleColor=result.result.content_title_color;
      this.mapSidebarColorOption=result.result.map_sidebar_color_option;
      this.navigationColor=result.result.navigation_color;
      this.navigationColorOption=result.result.navigation_color_option;
+     this.targetCityDummy=result.result.target_city;
+     this.target_city=result.result.target_city;
+     this.target_place_id=result.result.target_google_place_id;
 ///////////////////////////////////////////////////////////////
 //debugger;
 if(result.result.mls_server_id!=null)
@@ -950,7 +1002,7 @@ else
     this.contentTitleColor,this.contentTitleColorOption,this.paginationColor,this.paginationColorOption,
     this.modalBackgroundColor,this.modalBackgroundColorOption,
     this.mapSidebarColor,this.mapSidebarColorOption,this.navigationColor,this.navigationColorOption,
-    isSsl_dummy,this.login_register_popup_time)
+    isSsl_dummy,this.login_register_popup_time,this.target_city,this.target_place_id)
     .subscribe((result) => this.updateWebsiteResp(result));
      //}
       

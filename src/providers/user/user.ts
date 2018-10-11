@@ -928,7 +928,8 @@ createWebsite(user_id:string,isActive:string,website_domain:string,identity_name
   modalBackgroundColor:string,modalBackgroundColorOption:string,mapSidebarColor:string,mapSidebarColorOption:string,
   show_new_listings:string,show_open_houses:string,feature_agent_listings:string,
   feature_broker_listings:string,
-  feature_office_listings:string,isSsl:string,login_register_popup_time:string){
+  feature_office_listings:string,isSsl:string,login_register_popup_time:string,target_city:string,
+  target_place_id:string){
 //debugger;
     let data = new URLSearchParams();
     data.append('website_domain',website_domain);
@@ -978,7 +979,9 @@ data.append('content_title_color',contentTitleColor);
  data.append('feature_office_listings',feature_office_listings);
  data.append('isSsl',isSsl);
  data.append('login_register_popup_time',login_register_popup_time);
-//debugger;
+ data.append('target_city',target_city);
+ data.append('target_place_id',target_place_id);
+debugger;
   let websiteListing=this.http
     .post(this.sharedServiceObj.registerationApiBaseUrl+'members/createWebsite', data, this.headerOptions)
     .map(this.extractData)
@@ -1010,7 +1013,8 @@ updateWebsite(user_id:string,isActive:string,website_domain:string,website_id:st
   contentTitleColor:string,contentTitleColorOption:string,paginationColor:string,paginationColorOption:string,
   modalBackgroundColor:string,modalBackgroundColorOption:string,
   mapSidebarColor:string,mapSidebarColorOption:string,navigationColor:string,navigationColorOption:string,
-  isSsl:string,login_register_popup_time:string){
+  isSsl:string,login_register_popup_time:string,target_city:string,
+  target_place_id:string){
 
 let data = new URLSearchParams();
  data.append('website_domain',website_domain);
@@ -1068,6 +1072,8 @@ data.append('content_title_color',contentTitleColor);
     data.append('navigation_color_option',navigationColorOption);
     data.append('isSsl',isSsl);
  data.append('login_register_popup_time',login_register_popup_time);
+ data.append('target_city',target_city);
+ data.append('target_place_id',target_place_id);
 //debugger;
   let websiteListing=this.http
     .post(this.sharedServiceObj.registerationApiBaseUrl+'members/updateWebsite', data, this.headerOptions)
