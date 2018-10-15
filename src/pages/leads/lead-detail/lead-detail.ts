@@ -104,6 +104,7 @@ mapWork: any;*/
   }
 
   ionViewDidLoad() {
+    this.sharedServiceObj.updateColorThemeMethod(null);
     let member_id = this.storage.get('userId');
     //debugger;
     member_id.then((data) => {

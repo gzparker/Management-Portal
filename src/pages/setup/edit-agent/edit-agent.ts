@@ -107,6 +107,7 @@ export class EditAgentPage {
   }
 
   ionViewDidLoad() {
+    this.sharedServiceObj.updateColorThemeMethod(null);
     CKEDITOR.disableAutoInline = true;
     CKEDITOR.inline('description', {removeButtons:'Underline,Subscript,Superscript,SpecialChar'
     ,toolbar: [

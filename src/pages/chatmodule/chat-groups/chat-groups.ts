@@ -43,7 +43,7 @@ export class ChatGroupsPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ChatGroupsPage');
+    this.sharedServiceObj.updateColorThemeMethod(null);
   }
   ionViewDidEnter()
   {

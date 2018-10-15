@@ -206,6 +206,7 @@ export class EditWebsitePage {
     this.sharedServiceObj.updateColorThemeMethod(null);
   }
   ionViewDidLoad() {
+    this.sharedServiceObj.updateColorThemeMethod(null);
     CKEDITOR.disableAutoInline = true;
     CKEDITOR.inline( 'homepage_description', {removeButtons:'Underline,Subscript,Superscript,SpecialChar'
     ,toolbar: [

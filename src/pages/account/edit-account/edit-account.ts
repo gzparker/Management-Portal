@@ -131,7 +131,7 @@ export class EditAccountPage {
   }
 
   ionViewDidLoad() {
-    
+    this.sharedServiceObj.updateColorThemeMethod(null);
     //debugger;
     /*CKEDITOR.disableAutoInline = true;
     CKEDITOR.inline( 'inline-editor1', this.CkeditorConfig);*/

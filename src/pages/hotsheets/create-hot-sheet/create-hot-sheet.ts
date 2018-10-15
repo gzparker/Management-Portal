@@ -288,6 +288,7 @@ public isWebBrowser=false;
     }
 
   ionViewDidLoad() {
+    this.sharedServiceObj.updateColorThemeMethod(null);
     CKEDITOR.disableAutoInline = true;
     CKEDITOR.inline( 'brief_description', {removeButtons:'Underline,Subscript,Superscript,SpecialChar'
     ,toolbar: [

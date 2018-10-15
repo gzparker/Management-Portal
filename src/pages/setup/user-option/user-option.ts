@@ -33,7 +33,7 @@ export class UserOptionPage {
     this.sharedServiceObj.updateColorThemeMethod(null);
   }
   ionViewDidLoad() {
-    console.log('ionViewDidLoad UserOptionPage');
+    this.sharedServiceObj.updateColorThemeMethod(null);
   }
   openPage(pageNumber:string) {
     this.navCtrl.push(ManageAgentsPage);

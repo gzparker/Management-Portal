@@ -38,7 +38,8 @@ export class SetupOptionPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad SetupOptionPage');
+    this.sharedServiceObj.updateColorThemeMethod(null);
+    //console.log('ionViewDidLoad SetupOptionPage');
     this.setAccessLevels();
   }
   ionViewDidEnter()

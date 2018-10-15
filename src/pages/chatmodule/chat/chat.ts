@@ -80,6 +80,7 @@ export class ChatPage {
       }
   }
   ionViewDidLoad() {
+    this.sharedServiceObj.updateColorThemeMethod(null);
   this.groupRef=firebase.database().ref('groups');
   this.userRef=firebase.database().ref('users');
   this.chatRef=firebase.database().ref('chats');
@@ -88,6 +89,7 @@ export class ChatPage {
   ionViewDidEnter()
   {
     var that=this;
+    this.sharedServiceObj.updateColorThemeMethod(null);
     let firebaseUserIdData = this.storage.get('firebaseUserId');
     firebaseUserIdData.then((data) => {
     this.firebaseUserId=data;

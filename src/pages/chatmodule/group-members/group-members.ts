@@ -64,6 +64,7 @@ export class GroupMembersPage {
   
   ionViewDidLoad() {
     var that=this;
+    this.sharedServiceObj.updateColorThemeMethod(null);
     let member_id = this.storage.get('userId');
     member_id.then((data) => {
       this.userId=data;

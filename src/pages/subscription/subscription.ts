@@ -78,7 +78,9 @@ export class SubscriptionPage {
   }
 
   ionViewDidLoad() {
+    this.sharedServiceObj.updateColorThemeMethod(null);
     this.platform.ready().then(() => {
+      
       this.full_name = this.navParams.get('full_name');
       this.listAllPackages();
       this.loadAllAvailableMLS();

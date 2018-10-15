@@ -45,7 +45,7 @@ export class ChatsPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ChatsPage');
+    this.sharedServiceObj.updateColorThemeMethod(null);
   }
   ionViewDidEnter()
   {

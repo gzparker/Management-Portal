@@ -82,7 +82,7 @@ export class ColorSelectionPopupPage {
     this.sharedServiceObj.updateColorThemeMethod(null);
   }
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ColorSelectionPopupPage');
+    this.sharedServiceObj.updateColorThemeMethod(null);
   }
   selectColor(){
     if(this.selectedColorOption=="custom")

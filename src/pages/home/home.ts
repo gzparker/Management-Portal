@@ -35,6 +35,7 @@ export class HomePage {
       this.loadedWebsite=document.URL.toString();
       this.isApp = (!document.URL.startsWith("http"));
      // this.setBackgroundInfo();
+     this.sharedServiceObj.updateColorThemeMethod(null);
      this.loadGeneralWebsiteSettings();
   }
   ionViewDidEnter()

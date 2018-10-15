@@ -44,7 +44,7 @@ public first_name:string="";
     this.sharedServiceObj.updateColorThemeMethod(null);
   }
   ionViewDidLoad() {
-   
+    this.sharedServiceObj.updateColorThemeMethod(null);
     let first_name_dummy=this.storage.get('first_name');
     first_name_dummy.then((data) => {
       this.first_name=data;

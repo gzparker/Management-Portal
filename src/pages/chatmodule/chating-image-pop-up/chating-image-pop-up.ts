@@ -44,7 +44,7 @@ export class ChatingImagePopUpPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ChatingImagePopUpPage');
+    this.sharedServiceObj.updateColorThemeMethod(null);
   }
   ionViewDidEnter()
   {

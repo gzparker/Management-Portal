@@ -46,7 +46,7 @@ export class ChatEmojiPopupoverPage {
     this.viewCtrl.dismiss({"selectedEmoji" : emojiCode});
   }
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ChatEmojiPopupoverPage');
+    this.sharedServiceObj.updateColorThemeMethod(null);
   }
   ionViewDidEnter()
   {

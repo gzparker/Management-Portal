@@ -276,6 +276,7 @@ public isWebBrowser=false;
     }
 
   ionViewDidLoad() {
+    this.sharedServiceObj.updateColorThemeMethod(null);
     CKEDITOR.disableAutoInline = true;
     if(!CKEDITOR.instances['brief_description'])
     {

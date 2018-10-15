@@ -46,6 +46,7 @@ export class AccountInfoPage {
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform,
     public loadingCtrl: LoadingController,private toastCtrl: ToastController) {
+      
       if(this.navParams.get('notificationMsg')!=undefined)
       {
         /*let alert = this.alertCtrl.create({
@@ -74,7 +75,7 @@ export class AccountInfoPage {
   }
 
   ionViewDidLoad() {
-    
+    this.sharedServiceObj.updateColorThemeMethod(null);
     let member_id = this.storage.get('userId');
     member_id.then((data) => {
       this.userId=data;

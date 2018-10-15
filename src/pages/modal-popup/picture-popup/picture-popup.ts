@@ -107,6 +107,7 @@ export class PicturePopupPage {
     }
   ionViewDidLoad() {
     //console.log('ionViewDidLoad PicturePopupPage');
+    this.sharedServiceObj.updateColorThemeMethod(null);
     var image:any = new Image();
           var that=this;
           image.src = this.websiteImage;

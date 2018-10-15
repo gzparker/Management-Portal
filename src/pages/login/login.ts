@@ -78,6 +78,7 @@ export class LoginPage {
     this.sharedServiceObj.updateColorThemeMethod(null);
   }
   ionViewDidLoad() {
+    this.sharedServiceObj.updateColorThemeMethod(null);
     let websiteInfo = this.storage.get('websiteInfo');
     websiteInfo.then((data) => {
       this.website_id=data.id;

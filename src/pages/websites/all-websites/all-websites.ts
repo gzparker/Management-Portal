@@ -86,6 +86,7 @@ export class AllWebsitesPage {
   }
 
   ionViewDidLoad() {
+    this.sharedServiceObj.updateColorThemeMethod(null);
     //alert('welcome');
     let member_id = this.storage.get('userId');
     member_id.then((data) => {

@@ -42,7 +42,7 @@ export class FbConfirmPage {
     this.viewCtrl.dismiss();
   }
   ionViewDidLoad() {
-    //console.log('ionViewDidLoad FbConfirmPage');
+    this.sharedServiceObj.updateColorThemeMethod(null);
     this.setFacebookValues();
     this.getAllCountryCodes();
   }

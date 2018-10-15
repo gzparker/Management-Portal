@@ -28,7 +28,7 @@ export class ChangePasswordPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ChangePasswordPage');
+    this.sharedServiceObj.updateColorThemeMethod(null);
   }
   ionViewDidEnter()
   {

@@ -45,7 +45,7 @@ export class ChatFriendsPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ChatFriendsPage');
+    this.sharedServiceObj.updateColorThemeMethod(null);
   }
   ionViewDidEnter()
   {
