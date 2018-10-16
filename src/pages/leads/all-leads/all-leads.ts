@@ -1,4 +1,4 @@
-import { Component, ViewChild, NgZone } from '@angular/core';
+import { Component, ViewChild, NgZone,AfterViewInit } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, Platform,
   MenuController,LoadingController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
@@ -31,7 +31,7 @@ declare var firebase:any;
   selector: 'page-all-leads',
   templateUrl: 'all-leads.html',
 })
-export class AllLeadsPage {
+export class AllLeadsPage{
   public notificationMsg:string="";
   public leadId:string="";
   public allLeadsList:any[]=[];
@@ -118,15 +118,19 @@ let leadInfo=this.navParams.get('leadInfo');
         duration: 5000
       });
   }
-
+  /*ngAfterViewInit() {
+    this.updateColorTheme();
+    debugger;
+  }*/
   ionViewDidLoad() {
-    this.sharedServiceObj.updateColorThemeMethod(null);
+    
     let member_id = this.storage.get('userId');
     member_id.then((data) => {
       this.userId=data;
       this.viewAllWebsite();
       this.viewAllLeads(null);
       this.setAccessLevels();
+      this.updateColorTheme();
     });
     let first_name_dummy=this.storage.get('first_name');
     first_name_dummy.then((data) => {
@@ -139,7 +143,9 @@ let leadInfo=this.navParams.get('leadInfo');
   }
   ionViewDidEnter()
   {
-    this.sharedServiceObj.updateColorThemeMethod(null);
+    
+    this.updateColorTheme();
+    //debugger;
   }
   ionViewDidLeave()
   {
@@ -155,6 +161,11 @@ if(this.chatRef!=undefined)
 {
 this.chatRef.off("value");
 }
+  }
+  updateColorTheme()
+  {
+    this.sharedServiceObj.updateColorThemeMethod(null);
+    //debugger;
   }
   invitationPopUp(lead:any)
   {
@@ -322,6 +333,7 @@ if(result.status)
   setLeadFilteredItems()
   {
 this.searchedLeadsList=this.filterItems(this.searchLeadTerm);
+//this.updateColorTheme();
   }
   filterItems(searchTerm){
     //debugger;
@@ -331,7 +343,6 @@ this.searchedLeadsList=this.filterItems(this.searchLeadTerm);
 }
 filterItemsByCategory()
 {
- // debugger;
   this.viewAllLeads(null);
   
 }
@@ -360,7 +371,8 @@ filterItemsByCategory()
       //debugger;
       this.allLeadsList=result.results;
       this.searchedLeadsList=result.results;
-     // debugger;
+      //debugger;
+      //this.updateColorTheme();
       if(this.category!="")
       {
         this.setLeadFilteredItems();

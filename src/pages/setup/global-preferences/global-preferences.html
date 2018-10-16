@@ -194,15 +194,19 @@
     
     <ion-list class="customColorOption" *ngIf="selectedSegment=='1'">
         <ion-item (click)="showColorPopUp('side_bar_menu_color')">
-          <ion-label>Sidebar Menu Color <span class="colorPreview sidebar_color"></span></ion-label>
+          <ion-label>Sidebar Menu Color <span class="colorPreview" *ngIf="sideBarMenuColor==undefined||sideBarMenuColor==''"></span>
+            <span  class="colorPreviewEmpty" *ngIf="sideBarMenuColor!=undefined||sideBarMenuColor!=''" [ngStyle]="{'background-color':sideBarMenuColor }"></span>
+          </ion-label>
            
           </ion-item>
           <ion-item (click)="showColorPopUp('button_color')">
-            <ion-label>Button Color <span class="colorPreview button_color"></span></ion-label>
+            <ion-label>Button Color <span class="colorPreview" *ngIf="buttonColor==undefined||buttonColor==''"></span>
+              <span  class="colorPreviewEmpty" *ngIf="buttonColor!=undefined||buttonColor!=''" [ngStyle]="{'background-color':buttonColor }"></span></ion-label>
       
           </ion-item>
           <ion-item (click)="showColorPopUp('content_background_color')">
-            <ion-label>Background Color <span class="colorPreview background_color"></span></ion-label>
+            <ion-label>Background Color <span class="colorPreview" *ngIf="backgroundColor==undefined||backgroundColor==''"></span>
+              <span  class="colorPreviewEmpty" *ngIf="backgroundColor!=undefined||backgroundColor!=''" [ngStyle]="{'background-color':backgroundColor }"></span></ion-label>
          
           </ion-item>
     <!--<ion-item (click)="showColorPopUp('header_color')">
@@ -287,17 +291,20 @@
         <ion-list class="customColorOption topDwellerColors">
         <ion-item (click)="showColorPopUp('side_bar_color_dweller')">
           <!-- <ion-label>Sidebar Menu Color <span class="colorPreview sidebar_color_dweller"></span></ion-label> -->
-          <ion-label>Sidebar Menu Color <span class="colorPreview"></span></ion-label>
+          <ion-label>Sidebar Menu Color <span class="colorPreview" *ngIf="sideBarDwellerColor==undefined||sideBarDwellerColor==''"></span>
+            <span  class="colorPreviewEmpty" *ngIf="sideBarDwellerColor!=undefined||sideBarDwellerColor!=''" [ngStyle]="{'background-color':sideBarDwellerColor }"></span></ion-label>
         </ion-item>
 
         <ion-item (click)="showColorPopUp('button_color_dweller')">
           <!-- <ion-label>Button Color <span class="colorPreview button_color_dweller"></span></ion-label> -->
-          <ion-label>Button Color <span class="colorPreview"></span></ion-label>
+          <ion-label>Button Color <span class="colorPreview" *ngIf="buttonDwellerColor==undefined||buttonDwellerColor==''"></span>
+            <span  class="colorPreviewEmpty" *ngIf="buttonDwellerColor!=undefined||buttonDwellerColor!=''" [ngStyle]="{'background-color':buttonDwellerColor }"></span></ion-label>
         </ion-item>
 
         <ion-item (click)="showColorPopUp('background_color_dweller')">
           <!-- <ion-label>Background Color <span class="colorPreview background_color_dweller"></span></ion-label> -->
-          <ion-label>Background Color <span class="colorPreview"></span></ion-label>
+          <ion-label>Background Color <span class="colorPreview" *ngIf="backgroundDwellerColor==undefined||backgroundDwellerColor==''"></span>
+            <span  class="colorPreviewEmpty" *ngIf="backgroundDwellerColor!=undefined||backgroundDwellerColor!=''" [ngStyle]="{'background-color':backgroundDwellerColor }"></span></ion-label>
         </ion-item>
         </ion-list>
 

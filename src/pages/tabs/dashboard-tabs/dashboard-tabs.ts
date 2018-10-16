@@ -77,8 +77,6 @@ export class DashboardTabsPage {
   }
   loadGlobalSettings()
   {
-    //this.showSetupTab=true;
-    //debugger;
     this.userServiceObj.viewGlobalSettings(this.userId)
     .subscribe((result) => this.loadGlobalSettingsResp(result));
   }
