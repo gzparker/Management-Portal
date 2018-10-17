@@ -64,7 +64,7 @@ export class UpgradeCenterPage {
     member_id.then((data) => {
       this.userId=data;
      
-       this.loadUpgradeList();
+       //this.loadUpgradeList();
        this.setAccessLevels();
     });
   }
@@ -144,6 +144,7 @@ export class UpgradeCenterPage {
   }
   loadUpgradeListResp(result:any)
   {
+    //debugger;
 if(result.status==true)
 {
   this.upgradePlans=result.plans;

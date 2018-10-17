@@ -40,8 +40,10 @@
 
       <ion-item class="OptPackage" *ngFor="let package of intervalBasedPackages">
           <ion-label>{{package.name}}</ion-label>
-          <p *ngIf="pay_yearly==true">${{package.amount/12}}/month</p>
-          <p *ngIf="pay_yearly==false">${{package.amount}}</p>
+          <ion-label *ngIf="pay_yearly==true">${{package.amount/12}}/month</ion-label>
+          <ion-label *ngIf="pay_yearly==false">${{package.amount}}</ion-label>
+          <ion-label *ngIf="package.required=='true'">*Required</ion-label>
+          <ion-label *ngIf="package.required!='true'">Optional</ion-label>
           <!-- <ion-label>{{package.description}}</ion-label> -->
           <!--<ion-toggle [(ngModel)]="pepperoni"></ion-toggle>--> 
           <ion-checkbox color="royal" checked="false" item-right (click)="setSelectedPackage(package)"></ion-checkbox>

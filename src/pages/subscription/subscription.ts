@@ -114,11 +114,19 @@ export class SubscriptionPage {
   packagesResp(resp: any) {
     //this.loader.present();
     if (resp.status == true) {
-     // debugger;
+     //debugger;
       this.tos_url=resp.tos_url;
       if (resp.plans != undefined) {
       // debugger;
-        this.allAvailablePackages = resp.plans;
+      resp.plans.available_products.forEach(element => {
+        element.product_plans.forEach(element => {
+          this.allAvailablePackages.push(element);
+        });
+        
+        
+      });
+      //debugger;
+        //this.allAvailablePackages = resp.plans;
         this.listIntervalBasedPackages();
        //debugger;
       }
@@ -137,9 +145,10 @@ export class SubscriptionPage {
   {
     pay_yearly_dummy="month";
   }
+  
   this.intervalBasedPackages=this.allAvailablePackages.filter(
     packageList => packageList.interval === pay_yearly_dummy);
-
+    //debugger;
   }
   loadAllAvailableMLS()
   {
@@ -173,7 +182,7 @@ else
   saveSubscribeUser() {
 if(this.selectedPackagesList.length>0)
 {
-  
+  let requiredPlan="";
   let dataObj = {
     member_id: "",
     full_name: "",
@@ -191,8 +200,14 @@ if(this.selectedPackagesList.length>0)
 for(let i=0;i<this.selectedPackagesList.length;i++)
 {
   dataObj.service_plans_array.push(this.selectedPackagesList[i].id);
+  if(this.selectedPackagesList[i].required=="true")
+  {
+    requiredPlan="1";
+  }
  // debugger;
 }
+if(requiredPlan=="1")
+{
   dataObj.full_name = this.full_name;
   dataObj.cc_number = this.cc_number;
   dataObj.exp_month = this.expiryDate.split("-")[1];
@@ -209,7 +224,18 @@ for(let i=0;i<this.selectedPackagesList.length;i++)
 
    this.subscriptionObj.saveUserSubscription(dataObj).
      subscribe((result) => this.saveSubscribeUserResp(result));
+    });
+}
+else
+{
+  let alert = this.alertCtrl.create({
+    title: 'Select Plan',
+    subTitle: "You must need to select one required product plan.",
+    buttons: ['Ok']
   });
+  alert.present();
+}  
+  
 }
 else
 {
@@ -287,6 +313,7 @@ else
   }
   checkPromoCodeResp(resp:any)
   {
+    //debugger;
     if(resp.status==true)
     {
       this.selectedPromoCode=resp;
@@ -320,7 +347,8 @@ if(this.selectedPackagesList!=undefined)
     if(this.selectedPromoCode!=undefined&&this.selectedPromoCode.coupon==this.promo_code)
     {
       //debugger;
-      if(this.selectedPromoCode.id==this.selectedPackagesList[i].id&&this.selectedPromoCode.coupon==this.promo_code)
+      //if(this.selectedPromoCode.id==this.selectedPackagesList[i].id&&this.selectedPromoCode.coupon==this.promo_code)
+      if(this.selectedPackagesList[i].required=="true"&&this.selectedPromoCode.coupon==this.promo_code)
       {
         this.selectedCoupon=this.selectedPromoCode.coupon;
         this.totalAmount=this.totalAmount+parseFloat(this.selectedPromoCode.subtract_amount);

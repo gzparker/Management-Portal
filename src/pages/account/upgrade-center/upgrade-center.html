@@ -18,13 +18,7 @@
 
 <ion-content padding class="dashboardUI noScroll">
 <div class="dashboardBG colorEnabled background_color"></div>
-    <!--<ion-chip *ngIf="notificationMsg!=''">
-        <ion-label color="secondary">{{notificationMsg}}</ion-label>
-      </ion-chip>
-      <ion-chip *ngIf="notificationError!=''">
-        <ion-label color="danger">{{notificationError}}</ion-label>
-      </ion-chip>-->
-
+   
     <div class="centerStage animated bounceInUp formShadow">
     <ion-item>
         <ion-label stacked>Interval</ion-label>
@@ -36,11 +30,11 @@
     </ion-item>
     <ion-item>
     <ion-label stacked>Select Plan To Upgrade</ion-label>
-      <!--<ion-select [(ngModel)]="interval" 
+      <ion-select [(ngModel)]="interval" 
   name="interval" (ngModelChange)="filterPlansList()">
   <ion-option value="month">MONTH</ion-option>
   <ion-option value="year">YEAR</ion-option>
-   </ion-select>-->
+   </ion-select>
    <ion-select [(ngModel)]="selectedCurrentPlans" (ngModelChange)="onPlanSelection($event)" 
    name="selectedCurrentPlans">
     <ion-option *ngFor="let plan of upgradeFilteredPlans" value= {{plan.id}}>
