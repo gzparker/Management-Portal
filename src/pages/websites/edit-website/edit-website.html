@@ -20,7 +20,7 @@
 
 
 <ion-content padding class="dashboardUI">
-<div class="dashboardBG colorEnabled background_color"></div>
+<div class="dashboardBG colorEnabled background_color" ion-fixed></div>
     <form role="form" data-toggle="validator" #websiteForm="ngForm" >
 
       <ion-list class="websiteInfoSettings animated lightSpeedIn blk1">
@@ -35,10 +35,12 @@
             <ion-input type="text" [(ngModel)]="website_domain" 
             name="website_domain" id="website_domain" required ></ion-input>
         </ion-item>
-        <div class="leadMapAddress">          
-          <div class="addressBlock">
-          <ion-icon name="md-pin" item-start></ion-icon>
-          <h2 class="contentTitle">Target City</h2>
+
+        <div class="websiteInfoSettings blk1">          
+          <div class="targetCityBlock">
+          <!-- <ion-icon name="md-pin" item-start></ion-icon> -->
+          <!-- <h2 class="contentTitle">Target City</h2> -->
+          <ion-label stacked>Target City</ion-label>
           <!--<ion-input type="text" placeholder="Edit Home Address"></ion-input>-->
           <ion-searchbar #searchTargetCityBar placeholder="Search Target City" [(ngModel)]="targetCityDummy" name="targetCityDummy" id="targetCityDummy"></ion-searchbar>
           </div>
