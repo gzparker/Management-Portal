@@ -173,13 +173,13 @@ let upgradeCenterList=this.http
   .map(this.extractData)
   return upgradeCenterList;
 }
-upgradeDowngradePlan(user_id:string,upgrade_id:string)
+upgradeDowngradePlan(user_id:string,service_id:string,subscription_plan_ids:any)
 {
 //debugger;
     let data = new URLSearchParams();
  data.append('member_id',user_id);
- data.append('upgrade_id',upgrade_id);
- data.append('service_id',this.sharedServiceObj.service_id);
+ data.append('update_subscription_id_and_plan_id_json',"");
+ data.append('service_id',service_id);
  //debugger;
   let upgradeResp=this.http
     .post(this.sharedServiceObj.registerationApiBaseUrl+'subscriptions/upgradeDowngradeMember', data, this.headerOptions)
