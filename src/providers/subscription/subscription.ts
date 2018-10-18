@@ -175,10 +175,18 @@ let upgradeCenterList=this.http
 }
 upgradeDowngradePlan(user_id:string,service_id:string,subscription_plan_ids:any)
 {
-//debugger;
+debugger;
     let data = new URLSearchParams();
  data.append('member_id',user_id);
- data.append('update_subscription_id_and_plan_id_json',"");
+ if(subscription_plan_ids=="")
+ {
+  data.append('update_subscription_id_and_plan_id_json',subscription_plan_ids);
+ }
+ else
+ {
+  data.append('update_subscription_id_and_plan_id_json',JSON.stringify(subscription_plan_ids));
+ }
+ 
  data.append('service_id',service_id);
  //debugger;
   let upgradeResp=this.http
@@ -188,7 +196,7 @@ upgradeDowngradePlan(user_id:string,service_id:string,subscription_plan_ids:any)
 
 }
   private extractData(res: Response) {
-  //debugger;
+  debugger;
     return res.json();
   }
   private handleErrorObservable(error: Response | any) {

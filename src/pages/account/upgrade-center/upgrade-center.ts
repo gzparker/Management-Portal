@@ -165,19 +165,30 @@ export class UpgradeCenterPage {
     //debugger;
   }
   setSelectedPackage(packageItem:any) {
-    let packageExists=this.intervalBasedAvailablePackages.filter(packageList => packageList.plan_id === packageItem.plan_id);
-    if(packageExists)
+    let packageExists=this.intervalBasedSubscribedPackages.filter(packageList => packageList.plan_id === packageItem.plan_id);
+    if(packageExists.length>0)
     {
+      //debugger;
       let alert = this.alertCtrl.create({
         title: 'Plan Exists',
         subTitle: "Sorry this plan already exists.",
-        buttons: ['Ok']
+        buttons: [{
+          text: 'Ok',
+          handler: () => {
+            //debugger;
+            //document.getElementById(packageItem.plan_id).checked=false;
+            //document.getElementById(packageItem.plan_id).removeAttribute('checked');
+            //debugger;
+          }
+        }]
       });
       alert.present();
       //return false;
       //debugger;
+      
       //let checkedBox:any=document.getElementById(packageItem.plan_id);
-      //document.getElementById(packageItem.plan_id).checked=false;
+      //document.getElementById(packageItem.plan_id).removeAttribute('checked');
+      
       //debugger;
     }
     else
@@ -196,6 +207,7 @@ export class UpgradeCenterPage {
   }
   calculateTotalSubscribedPrice()
   {
+    this.totalSubscribedAmount=0;
     this.intervalBasedSubscribedPackages.forEach(element => {
       this.totalSubscribedAmount=this.totalSubscribedAmount+element.plan_amount;
     });
@@ -236,24 +248,25 @@ finalSelectedPlans.push(planObj);
 });
 
 //debugger;
-      this.subscribtionObj.upgradeDowngradePlan(this.userId.toString(),this.sharedServiceObj.service_id,this.selectedPackagesList)
+      this.subscribtionObj.upgradeDowngradePlan(this.userId.toString(),this.sharedServiceObj.service_id,finalSelectedPlans)
       .subscribe((result) => this.upgradeDowngradePlanResp(result));
     }
   }
   upgradeDowngradePlanResp(resp:any)
   {
-
+debugger;
 if(resp.status==true)
 {
   this.stripe_customer_id=resp.results.stripe_customer_id;
   this.subscription_id=resp.results.subscription_id;
   //this.allAvailablePackages=resp.results.available_products;
+  this.allSubscribedPackages=resp.results.customer_subscription.customer_subscribed_products;
   resp.results.available_products.forEach(element => {
     element.product_plans.forEach(element => {
       this.allAvailablePackages.push(element);
     });
   });
-  this.allSubscribedPackages=resp.results.customer_subscription.customer_subscribed_products;
+  
   this.listIntervalBasedPackages();
   //debugger;
 }

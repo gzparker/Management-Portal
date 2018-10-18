@@ -52,7 +52,8 @@
           <!--<ion-label *ngIf="package.required=='true'">*Required</ion-label>
           <ion-label *ngIf="package.required!='true'">Optional</ion-label>-->
          
-          <ion-checkbox color="royal" checked="false" id="{{package.plan_id}}" item-right (click)="setSelectedPackage(package)"></ion-checkbox>
+          <ion-checkbox color="royal" checked="false" id="{{package.plan_id}}" item-right 
+          (ionChange)="setSelectedPackage(package)"></ion-checkbox>
       </ion-item>
       <ion-item class="TotalPrice">
         <ion-label *ngIf="pay_yearly==true">Total Price: <strong>${{totalAmount}}/year</strong></ion-label>
