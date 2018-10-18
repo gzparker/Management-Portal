@@ -232,6 +232,31 @@ page-edit-website {
     .item-inner {
     padding: 0px !important;
     }
+
+    .targetCityBlock {
+    padding: 0 16px;
+    background: #FFF;
+      .label {
+      padding: 16px 0 4px 0;
+      margin-top: 0px;
+      }
+      .searchbar-md {
+      padding: 8px 0;
+        .searchbar-search-icon {
+        top: 7px;
+        left: 12px;
+        }
+        .searchbar-input {
+        font-size: 14px;
+        color: #696D72;
+        padding: 3px 16px 2px 40px;
+        box-shadow: none !important;
+        // border: 1px solid #E9EEF6;
+        background-color: #E9EEF6 !important;
+        }
+      }
+    }
+
     .text-input {
     width: 100%;
     padding: 10px 12px;
