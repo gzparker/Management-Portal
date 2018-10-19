@@ -13,7 +13,7 @@ import { UpcomingSubscriptionPage } from '../../account/upcoming-subscription/up
 import { AccountInfoPage } from '../../account/account-info/account-info';
 import { SetupOptionPage } from '../../setup/setup-option/setup-option';
 
-import { AlertController } from 'ionic-angular';
+import { AlertController,ToastController } from 'ionic-angular';
 import { SharedProvider } from '../../../providers/shared/shared';
 import { UserProvider } from '../../../providers/user/user';
 
@@ -43,7 +43,23 @@ export class AccountOptionPage {
   
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
-    public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform) {
+    public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform,private toastCtrl: ToastController) {
+      if(this.navParams.get('notificationMsg')!=undefined)
+      {
+        
+        let toast = this.toastCtrl.create({
+          message: this.navParams.get('notificationMsg'),
+          duration: 3000,
+          position: 'top',
+          cssClass:'successToast'
+        });
+      
+        toast.onDidDismiss(() => {
+          //console.log('Dismissed toast');
+        });
+      
+        toast.present();
+      }
   }
 
   ionViewDidLoad() {

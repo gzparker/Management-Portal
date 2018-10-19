@@ -40,12 +40,12 @@
   </ion-list>
 
   <div class="animated fadeIn leadsShortcutButtons" *ngIf="leadDetail!=undefined">    
-    <a class="contactPhone colorEnabled button_color" href="tel:{{leadDetail.phone_mobile}}"><ion-icon name="md-call"></ion-icon><span>Call</span></a>
-    <div class="contactChat colorEnabled button_color" (click)="chatContact(leadDetail);"><ion-icon name="chatboxes"></ion-icon><span>Chat</span></div>
-    <div class="contactEmail colorEnabled button_color" (click)="emailContact(leadDetail);"><ion-icon name="ios-mail"></ion-icon><span>Mail</span></div>
+    <a class="contactPhone colorEnabled button_color" href="tel:{{leadDetail.phone_mobile}}"><ion-icon name="md-call"></ion-icon><span class="button_color">Call</span></a>
+    <div class="contactChat colorEnabled button_color" (click)="chatContact(leadDetail);"><ion-icon name="chatboxes"></ion-icon><span class="button_color">Chat</span></div>
+    <div class="contactEmail colorEnabled button_color" (click)="emailContact(leadDetail);"><ion-icon name="ios-mail"></ion-icon><span class="button_color">Mail</span></div>
     <div class="contactInvite colorEnabled button_color" *ngIf="leadDetail.app_installed!=undefined&&leadDetail.app_installed=='0'" 
     (click)="invitationPopUp(leadDetail);"><ion-icon name="ios-mail"></ion-icon>
-      <span>Invite</span></div>
+      <span class="button_color">Invite</span></div>
   </div>
   
   <!-- <h1 class="contentTitle animated bounceInRight">Contact Details</h1> -->

@@ -175,7 +175,7 @@ let upgradeCenterList=this.http
 }
 upgradeDowngradePlan(user_id:string,service_id:string,subscription_plan_ids:any)
 {
-debugger;
+//debugger;
     let data = new URLSearchParams();
  data.append('member_id',user_id);
  if(subscription_plan_ids=="")
@@ -196,7 +196,7 @@ debugger;
 
 }
   private extractData(res: Response) {
-  debugger;
+  //debugger;
     return res.json();
   }
   private handleErrorObservable(error: Response | any) {

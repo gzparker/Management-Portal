@@ -12,7 +12,7 @@ import { ImagePicker } from '@ionic-native/image-picker';
 import { FbConfirmPage } from '../../fb-confirm/fb-confirm';
 import { AlertController } from 'ionic-angular';
 import { ImageCropperComponent, CropperSettings } from "ngx-img-cropper";
-
+import { AccountOptionPage } from '../account-option/account-option';
 import { UserVerificationPage } from '../../user-verification/user-verification';
 
 import { SharedProvider } from '../../../providers/shared/shared';
@@ -88,12 +88,10 @@ export class UpgradeCenterPage {
   }
   setAccessLevels()
   {
-
     let parent_id = this.storage.get('parent_id');
       parent_id.then((data) => {
         if(data!=null)
-        {
-          //debugger;    
+        {  
       this.parentId=data;
       this.isOwner=false;
         }
@@ -102,7 +100,6 @@ export class UpgradeCenterPage {
       this.isOwner=true;
        }
        this.allowMenuOptions();
-      
       });
   }
   allowMenuOptions()
@@ -161,6 +158,7 @@ export class UpgradeCenterPage {
     packageList => packageList.plan_price_interval === pay_yearly_dummy);
   this.intervalBasedSubscribedPackages=this.allSubscribedPackages.filter(
     packageList => packageList.plan_interval === pay_yearly_dummy);
+    //debugger;
     this.calculateTotalSubscribedPrice();
     //debugger;
   }
@@ -233,7 +231,7 @@ if(this.selectedPackagesList!=undefined)
     if(option=="1")
     {
       this.subscribtionObj.upgradeDowngradePlan(this.userId.toString(),this.sharedServiceObj.service_id,"")
-      .subscribe((result) => this.upgradeDowngradePlanResp(result));
+      .subscribe((result) => this.upgradeDowngradePlanResp(result,option));
     }
     else
     {
@@ -249,25 +247,42 @@ finalSelectedPlans.push(planObj);
 
 //debugger;
       this.subscribtionObj.upgradeDowngradePlan(this.userId.toString(),this.sharedServiceObj.service_id,finalSelectedPlans)
-      .subscribe((result) => this.upgradeDowngradePlanResp(result));
+      .subscribe((result) => this.upgradeDowngradePlanResp(result,option));
     }
   }
-  upgradeDowngradePlanResp(resp:any)
+  upgradeDowngradePlanResp(resp:any,option:string)
   {
-debugger;
+
 if(resp.status==true)
 {
-  this.stripe_customer_id=resp.results.stripe_customer_id;
-  this.subscription_id=resp.results.subscription_id;
-  //this.allAvailablePackages=resp.results.available_products;
-  this.allSubscribedPackages=resp.results.customer_subscription.customer_subscribed_products;
-  resp.results.available_products.forEach(element => {
-    element.product_plans.forEach(element => {
-      this.allAvailablePackages.push(element);
+  if(option=="1")
+  {
+    this.stripe_customer_id=resp.results.stripe_customer_id;
+    this.subscription_id=resp.results.subscription_id;
+    //this.allAvailablePackages=resp.results.available_products;
+    this.allSubscribedPackages=resp.results.customer_subscription.customer_subscribed_products;
+    resp.results.available_products.forEach(element => {
+      element.product_plans.forEach(element => {
+        //debugger;
+        let foundSubscribedPackage=this.allSubscribedPackages.filter(
+          packageList => packageList.plan_id === element.plan_id);
+          if(foundSubscribedPackage.length<=0)
+          {
+            this.allAvailablePackages.push(element);
+          }
+        
+      });
     });
+    
+    this.listIntervalBasedPackages();
+   
+  }
+ else
+ {
+  this.ngZone.run(() => {
+    this.navCtrl.push(AccountOptionPage,{notificationMsg:"New plan has been subscribed."});
   });
-  
-  this.listIntervalBasedPackages();
+ }
   //debugger;
 }
 
