@@ -280,7 +280,20 @@ if(resp.status==true)
  else
  {
   this.ngZone.run(() => {
-    this.navCtrl.push(AccountOptionPage,{notificationMsg:"New plan has been subscribed."});
+    let toast = this.toastCtrl.create({
+      message: this.navParams.get('notificationMsg'),
+      duration: 3000,
+      position: 'top',
+      cssClass:'successToast'
+    });
+  
+    toast.onDidDismiss(() => {
+      //console.log('Dismissed toast');
+    });
+  
+    toast.present();
+    this.upgradeDowngradeList("1");
+    //this.navCtrl.push(AccountOptionPage,{notificationMsg:"New plan has been subscribed."});
   });
  }
   //debugger;
