@@ -252,7 +252,8 @@ finalSelectedPlans.push(planObj);
   }
   upgradeDowngradePlanResp(resp:any,option:string)
   {
-
+this.allSubscribedPackages=[];
+this.allAvailablePackages=[];
 if(resp.status==true)
 {
   if(option=="1")
@@ -281,7 +282,7 @@ if(resp.status==true)
  {
   this.ngZone.run(() => {
     let toast = this.toastCtrl.create({
-      message: this.navParams.get('notificationMsg'),
+      message: "New plan has been subscribed.",
       duration: 3000,
       position: 'top',
       cssClass:'successToast'
