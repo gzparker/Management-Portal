@@ -104,7 +104,7 @@ mapWork: any;*/
   }
 
   ionViewDidLoad() {
-    this.sharedServiceObj.updateColorThemeMethod(null);
+    //this.sharedServiceObj.updateColorThemeMethod(null);
     let member_id = this.storage.get('userId');
     //debugger;
     member_id.then((data) => {
@@ -115,6 +115,7 @@ mapWork: any;*/
         this.leadId=this.navParams.get('leadId');
         this.loadLeadDetail();
         this.setAccessLevels();
+        
       }
     });
     let first_name_dummy=this.storage.get('first_name');
@@ -128,7 +129,8 @@ mapWork: any;*/
   }
   ionViewDidEnter()
   {
-    this.sharedServiceObj.updateColorThemeMethod(null);
+    //this.sharedServiceObj.updateColorThemeMethod(null);
+    this.updateColorTheme();
   }
   ionViewDidLeave()
   {
@@ -144,6 +146,11 @@ if(this.chatRef!=undefined)
 {
 this.chatRef.off("value");
 }
+  }
+  updateColorTheme()
+  {
+    this.sharedServiceObj.updateColorThemeMethod(null);
+    //debugger;
   }
   setAccessLevels()
   {
@@ -324,6 +331,10 @@ this.chatRef.off("value");
     });
   }
   }
+  makePhoneCall(phoneNumber:string)
+  {
+    window.open('tel:'+phoneNumber);
+  }
   editLeadResp(result:any):void{
     this.loader.dismiss();
     //debugger;
@@ -391,6 +402,7 @@ this.home_address_parts=this.leadDetail.home_address.split(",");
 this.work_address_parts=this.leadDetail.work_address.split(",");
      }
     //debugger;
+    this.updateColorTheme();
   //this.editLeadModal.open();
    }
   
