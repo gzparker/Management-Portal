@@ -122,7 +122,7 @@ export class EditWebsitePage {
   public mapSidebarColor:string="";
   public mapSidebarColorOption:string="";
   public isCustomColor:string="0";
-  public login_register_popup_time:string="0";
+  public login_register_popup_time:string="8000";
   public customColorOption:boolean=false;
   public customColorOptionModal:boolean=false;
   public geoLocationOptions = {

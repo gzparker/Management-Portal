@@ -1,6 +1,6 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, Platform,
-  MenuController,LoadingController } from 'ionic-angular';
+  MenuController,LoadingController,ToastController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Storage } from '@ionic/storage';
@@ -46,7 +46,7 @@ export class WebsitesWebsiteLinksPage {
     public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform, 
     public ngZone: NgZone,public menuCtrl: MenuController,public loadingCtrl: LoadingController,
-    private crop: Crop,private camera: Camera,private imagePicker: ImagePicker) {
+    private crop: Crop,private camera: Camera,private imagePicker: ImagePicker,private toastCtrl: ToastController) {
   }
   ionViewDidEnter()
   {
@@ -69,6 +69,21 @@ export class WebsitesWebsiteLinksPage {
     //debugger;
     window.open(redirectUrl, '_black');
     
+  }
+  copied($event:any)
+  {
+    //debugger;
+    let toast = this.toastCtrl.create({
+      message: "copied",
+      duration: 3000,
+      position: 'top',
+      cssClass:'successToast'
+    });
+    
+    toast.onDidDismiss(() => {
+      
+    });
+    toast.present();
   }
   copyLink(redirectUrl:string)
   {

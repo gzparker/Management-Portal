@@ -77,7 +77,7 @@ export class CreateWebsitePage {
   public mapSidebarColor:string="";
   public mapSidebarColorOption:string="";
   public isCustomColor:string="0";
-  public login_register_popup_time:string="0";
+  public login_register_popup_time:string="8000";
   public isSsl:boolean=false;
   public show_open_houses:boolean=false;
   public show_new_listings:boolean=false;
