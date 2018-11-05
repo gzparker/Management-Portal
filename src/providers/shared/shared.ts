@@ -653,15 +653,15 @@ that.chatOldMsgSentEmiter.emit("1");
     }
     return description;
    }
-  setUserTyping(groupId,firebaseUserId){
+  setUserTyping(groupId,firebaseUserId,description:string){
         let that=this;
         //debugger;
             var fredRef=firebase.database().ref('groups/'+groupId);
-          fredRef.update({userTyping:"1",typerId:firebaseUserId});
+          fredRef.update({userTyping:"1",typerId:firebaseUserId,typingText:description});
           }
   setUserNotTyping(groupId){
             var fredRef=firebase.database().ref('groups/'+groupId);
-          fredRef.update({userTyping:"0"});
+          fredRef.update({userTyping:"0",typingText:""});
           }
   // this could also be a private method of the component class
   private extractData(res: Response) {

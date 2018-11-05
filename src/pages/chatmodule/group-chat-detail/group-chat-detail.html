@@ -199,7 +199,7 @@
       <div class="chatbox-options-upload"><button class="button button-clear btn-add" (click)="openImageOptions();">Upload</button></div>
       <div class="chatbox-container" data-tap-disabled="true">
       <div contenteditable="true" class="chatbox-box input-chat" id="chatDescription" name="chatDescription" type="text" 
-      placeholder="Type something..." data-text="Type something..." (keydown)="setUserTyping(returnedGroup.key)" 
+      placeholder="Type something..." data-text="Type something..." (input)="setUserTyping(returnedGroup.key)" 
       (blur)="setUserNotTyping(returnedGroup.key)" [innerHTML]="description" ></div>    
     </div>
 

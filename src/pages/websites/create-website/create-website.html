@@ -30,7 +30,7 @@
         <ion-item>
             <ion-label stacked>Website Domain<span [ngClass]="{'error': website_domain==''}" *ngIf="website_domain==''">*</span></ion-label>
             <ion-input type="text" [(ngModel)]="website_domain" 
-            name="website_domain" id="website_domain" required ></ion-input>
+            name="website_domain" id="website_domain" required [pattern]="'^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}'"></ion-input>
         </ion-item>
         <div class="leadMapAddress">          
           <div class="addressBlock">

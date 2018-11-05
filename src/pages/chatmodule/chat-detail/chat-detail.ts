@@ -324,9 +324,9 @@ if(i==snapshot.numChildren()){
      }
    }
    setUserTyping(groupId:any,description:any){
-  
+  //debugger;
   let that=this;
-  that.sharedServiceObj.setUserTyping(groupId,that.firebaseUserId);
+  that.sharedServiceObj.setUserTyping(groupId,that.firebaseUserId,document.getElementById("chatDescription").innerText);
 
   }
    setUserNotTyping(groupId:any){

@@ -219,7 +219,7 @@ this.chatRef.off("value");
 }
   setUserTyping(groupId){
 let that=this;
-  that.sharedServiceObj.setUserTyping(groupId,that.firebaseUserId);
+  that.sharedServiceObj.setUserTyping(groupId,that.firebaseUserId,document.getElementById("chatDescription").innerHTML);
   }
    setUserNotTyping(groupId){
     let that=this;
