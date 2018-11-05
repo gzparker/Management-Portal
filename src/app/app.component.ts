@@ -373,7 +373,7 @@ this.storage.set("websiteInfo",result.result);
   setDeviceToken(){
     //debugger;
     const messaging = firebase.messaging();
-    messaging.usePublicVapidKey("BFLnyRGk5TlJYMkX6X-H7xZWikEdVZL9tE5t3x_q2mh4P3OM-kHkOmhlmYUGSxSV6BYdCbuSpwcBCQ3Oc0Gb3t4");
+    messaging.usePublicVapidKey(this.sharedServiceObj.idxFirebasePublicKey);
 //debugger;
 messaging.requestPermission()
 .then(function() {

@@ -981,7 +981,7 @@ data.append('content_title_color',contentTitleColor);
  data.append('login_register_popup_time',login_register_popup_time);
  data.append('target_city',target_city);
  data.append('target_place_id',target_place_id);
-debugger;
+//debugger;
   let websiteListing=this.http
     .post(this.sharedServiceObj.registerationApiBaseUrl+'members/createWebsite', data, this.headerOptions)
     .map(this.extractData)

@@ -102,16 +102,21 @@ this.loggedInUserInfo=data;
     firebaseUserId.then((data) => {
     var fredRef=firebase.database().ref('users').on('child_added', function(snapshot) {
       //debugger;
-      if(data!=snapshot.val().fbId)
+      if(snapshot.val().first_name!=undefined&&snapshot.val().last_name!=undefined)
       {
-        that.allAvailableContacts.push(snapshot.val());
+        if(data!=snapshot.val().fbId)
+        {
+          //debugger;
+          that.allAvailableContacts.push(snapshot.val());
+        }
       }
+      
     
     
   });
-
+debugger;
     });
-   // debugger;
+   
   }
   filterContacts()
   {
