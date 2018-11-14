@@ -103,7 +103,10 @@ export class CreateWebsitePage {
     public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform, 
     public ngZone: NgZone,public menuCtrl: MenuController,public loadingCtrl: LoadingController) {
-      this.service_id=this.sharedServiceObj.service_id; 
+      let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
+    generalWebsiteSettings.then((data) => {
+      this.service_id=data.service_id;
+    });
   }
 
   ionViewDidLoad() {

@@ -98,8 +98,12 @@ export class BillingHistoryPage {
     {
       this.loader.present();
     }
-  this.subscriptionObj.subscriptionBillingHistory(this.userId.toString())
-    .subscribe((result) => this.viewAllBillingHistoryResp(result));
+    let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
+    generalWebsiteSettings.then((data) => {
+      this.subscriptionObj.subscriptionBillingHistory(this.userId.toString(),data.service_id)
+      .subscribe((result) => this.viewAllBillingHistoryResp(result));
+    });
+  
     }
     
   }
@@ -140,8 +144,11 @@ export class BillingHistoryPage {
               this.historyFoundMessage="All subscriptions have been deleted.Please subscribe again.";
               this.notificationMsg="";
             }
-            this.subscriptionObj.cancelSubscription(this.userId.toString(),subscription.subscription_id)
+            let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
+    generalWebsiteSettings.then((data) => {
+            this.subscriptionObj.cancelSubscription(this.userId.toString(),subscription.subscription_id,data.service_id)
             .subscribe((result) => this.deleteSubscriptionResp(result));
+    });
           }
         }
       ]

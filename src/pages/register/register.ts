@@ -131,8 +131,11 @@ export class RegisterPage {
     }
     
     dataObj.userType = this.userType;
-    this.userServiceObj.userSignUp(dataObj)
+    let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
+        generalWebsiteSettings.then((data) => {
+    this.userServiceObj.userSignUp(dataObj,data.service_id)
       .subscribe((result) => this.userSignUpResponse(result));
+        });
   }
 
   userSignUpResponse(result: any): void {

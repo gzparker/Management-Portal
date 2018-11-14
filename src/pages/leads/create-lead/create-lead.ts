@@ -92,6 +92,7 @@ export class CreateLeadPage {
   public leadWidth:string="";
   public leadHeight:string="";
   public leadImage:string="";
+  public service_id:string="";
   public geoLocationOptions = {
     types: ['(cities)'],
     componentRestrictions: {country: "us"}
@@ -141,6 +142,10 @@ export class CreateLeadPage {
       this.initHomeAutocomplete();
       this.initWorkAutocomplete();
     });
+    let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
+        generalWebsiteSettings.then((data) => {
+          this.service_id=data.service_id;
+        });
   }
   ionViewDidEnter()
   {
@@ -151,8 +156,10 @@ export class CreateLeadPage {
       if(this.userId.toString())
       {
        // debugger;
-        this.userServiceObj.viewMemberAgents(this.userId.toString())
+    
+        this.userServiceObj.viewMemberAgents(this.userId.toString(),this.service_id)
       .subscribe((result) => this.loadAllAgentsResp(result));
+        
       }
       
     }
@@ -293,8 +300,10 @@ this.home_lat_lng,this.home_google_place_id,this.work_address,this.work_lat_lng,
   {
 
 let that=this;
+
 that.userServiceObj.setFireBaseInfo(email,password,webUserId,first_name,last_name,
-  image_url,parent_id,is_submember,is_lead,website_id);
+  image_url,parent_id,is_submember,is_lead,website_id,this.service_id);
+
 //debugger;
    /*firebase.auth().createUserWithEmailAndPassword(email,password)
                  .then(function (currentUser) {

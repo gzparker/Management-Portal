@@ -146,10 +146,11 @@ private subscription: ISubscription;
   }
   loadAllAgents()
 {
-  
-    this.userServiceObj.viewMemberAgents(this.userId.toString())
+  let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
+        generalWebsiteSettings.then((data) => {
+    this.userServiceObj.viewMemberAgents(this.userId.toString(),data.service_id)
   .subscribe((result) => this.loadAllAgentsResp(result));
-  
+        });
   
 }
 loadAllAgentsResp(result:any)

@@ -227,10 +227,13 @@ if(this.selectedPackagesList!=undefined)
   }
   upgradeDowngradeList(option:string)
   {
-    let finalSelectedPlans:any[]=[];
+    let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
+    generalWebsiteSettings.then((data) => {
+      //this.service_id=data.service_id;
+      let finalSelectedPlans:any[]=[];
     if(option=="1")
     {
-      this.subscribtionObj.upgradeDowngradePlan(this.userId.toString(),this.sharedServiceObj.service_id,"")
+      this.subscribtionObj.upgradeDowngradePlan(this.userId.toString(),data.service_id,"")
       .subscribe((result) => this.upgradeDowngradePlanResp(result,option));
     }
     else
@@ -246,9 +249,11 @@ finalSelectedPlans.push(planObj);
 });
 
 //debugger;
-      this.subscribtionObj.upgradeDowngradePlan(this.userId.toString(),this.sharedServiceObj.service_id,finalSelectedPlans)
+      this.subscribtionObj.upgradeDowngradePlan(this.userId.toString(),data.service_id,finalSelectedPlans)
       .subscribe((result) => this.upgradeDowngradePlanResp(result,option));
     }
+    });
+    
   }
   upgradeDowngradePlanResp(resp:any,option:string)
   {

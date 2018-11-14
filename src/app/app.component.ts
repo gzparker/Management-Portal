@@ -172,7 +172,8 @@ export class MyApp {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       this.clearAllStorageElement();
-      this.loadWebsiteInfoByDomain();
+      //this.loadWebsiteInfoByDomain();
+      this.loadGeneralWebsiteSettings();
       this.loadAvailableCountries();
       this.setUserCurrentGeoLocation();
       //this.applyThemeColors(null);
@@ -337,11 +338,9 @@ else if(this.sideBarOption=="3")
   this.sideBarOption="1";
 }
   }
-  loadWebsiteInfoByDomain()
+  /*loadWebsiteInfoByDomain()
   {
-    //debugger
-    //this.userServiceObj.loadAllWebsiteInfoByDomain(document.URL.toString())
-    //.subscribe((result) => this.loadWebsiteInfoByDomainResp(result));
+    
     let dummyWebsiteUrl="";
     if(this.loadedWebsite[this.loadedWebsite.length-1]=="/")
     {
@@ -351,10 +350,10 @@ dummyWebsiteUrl=this.loadedWebsite.substr(0,this.loadedWebsite.length-1)
     {
       dummyWebsiteUrl=this.loadedWebsite;
     }
-    //debugger;
+  
     if(dummyWebsiteUrl.indexOf("localhost")>0)
     {
-     // debugger;
+    
      this.userServiceObj.loadAllWebsiteInfoByDomain("cotierproperties.com")
     .subscribe((result) => this.loadWebsiteInfoByDomainResp(result));
     }
@@ -367,9 +366,32 @@ dummyWebsiteUrl=this.loadedWebsite.substr(0,this.loadedWebsite.length-1)
   }
   loadWebsiteInfoByDomainResp(result:any)
   {
-//debugger;
 this.storage.set("websiteInfo",result.result);
+  }*/
+  loadGeneralWebsiteSettings()
+  {
+    if(this.loadedWebsite.indexOf("localhost")>0)
+    {
+      this.sharedServiceObj.getServiceDefaultInfoByUrl("https://intagent.configuration.menu")
+      .subscribe((result) => this.loadGeneralWebsiteSettingsResp(result));
+    }
+    else
+    {
+     this.sharedServiceObj.getServiceDefaultInfoByUrl(this.loadedWebsite.toString())
+     .subscribe((result) => this.loadGeneralWebsiteSettingsResp(result));
+    }
+
   }
+  loadGeneralWebsiteSettingsResp(result:any)
+  {
+    var that=this;
+if(result)
+{
+  //debugger;
+  this.storage.set("generalWebsiteSettings",result);
+ 
+  }
+}
   setDeviceToken(){
     //debugger;
     const messaging = firebase.messaging();

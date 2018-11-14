@@ -126,7 +126,7 @@ this.headerOptions= new RequestOptions({ headers: this.headers });
 
   }
   setFireBaseInfo(email:string,password:string,webUserId:string,first_name:string,last_name:string,
-    image_url:string,parent_id:string,is_submember:string,is_lead:string,website_id:string)
+    image_url:string,parent_id:string,is_submember:string,is_lead:string,website_id:string,service_id:string)
   {
   
    let that=this;
@@ -151,7 +151,7 @@ var userExists="0";
       {
         snapshot.forEach(element => {
 i=i+1;
-if(element.val().is_lead=="0"&&element.val().website_id==website_id)
+if(element.val().is_lead=="0"&&element.val().service_id==service_id)
 {
   
   userExists="1";
@@ -170,6 +170,7 @@ if(i==snapshot.numChildren())
     is_lead:is_lead,
     is_submember:is_submember,
     website_id:website_id,
+    service_id:service_id,
     image_url: image_url,
     parent_id: parent_id,
     fbId:element.key,
@@ -191,6 +192,7 @@ if(i==snapshot.numChildren())
     is_lead:is_lead,
     is_submember:is_submember,
     website_id:website_id,
+    service_id:service_id,
     image_url: image_url,
     parent_id: parent_id,
     verified: "1",
@@ -221,6 +223,7 @@ if(i==snapshot.numChildren())
     is_lead:is_lead,
     is_submember:is_submember,
     website_id:website_id,
+    service_id:service_id,
     image_url: image_url,
     parent_id: parent_id,
     verified: "1",
@@ -472,7 +475,7 @@ is_online="1";
       .map(this.extractData)
     return loggedInStatus;
   }
-  userSignUp(dataObj: any) {
+  userSignUp(dataObj: any,service_id:string) {
     let firbase_token = this.storage.get('firebase_token');
     firbase_token.then((data) => {
  
@@ -495,7 +498,7 @@ is_online="1";
     data.append('firebase_token', this.firbase_token_data);
     data.append('device_name', this.device_name);
     data.append('location', dataObj.location);
-    data.append('service_id', this.sharedServiceObj.service_id);
+    data.append('service_id', service_id);
 
     let signUpStatus = this.http
       .post(url, data, this.headerOptions)
@@ -528,11 +531,11 @@ is_online="1";
       .map(this.extractData)
     return signUpAdditionalInfo;
   }
-  sendVerificationInfo(json_data: any) {
+  sendVerificationInfo(json_data: any,service_id:string) {
     let data = new URLSearchParams();
     data.append('master_id', json_data.master_id);
     data.append('verify_by', json_data.verify_by);
-    data.append('service_id', this.sharedServiceObj.service_id);
+    data.append('service_id', service_id);
     if (json_data.verify_by == "phone") {
       data.append('phone_mobile', json_data.phone_number_verify);
       data.append('country_code', json_data.country_code);
@@ -1133,14 +1136,14 @@ let creditCardDetail=this.http
   return creditCardDetail;
 }
 
-addCreditCardDetail(creditCardData: any) {
+addCreditCardDetail(creditCardData: any,service_id:string) {
   //debugger;
   let url = "";
   let data = new URLSearchParams();
   url = this.sharedServiceObj.registerationApiBaseUrl + 'PaymentMethods/savePaymentMethod';
   
   data.append('member_id', creditCardData.member_id);
-  data.append('service_id',this.sharedServiceObj.service_id);
+  data.append('service_id',service_id);
   data.append('full_name', creditCardData.full_name);
   data.append('cc', creditCardData.cc_number);
   data.append('exp_month', creditCardData.exp_month);
@@ -1295,11 +1298,11 @@ let hotSheetDeletingResp=this.http
     .map(this.extractData)
     return hotSheetDeletingResp;
 }
-viewMemberAgents(user_id:string)
+viewMemberAgents(user_id:string,service_id:string)
 {
   let data = new URLSearchParams();
   data.append('member_id',user_id);
-  data.append('service_id',this.sharedServiceObj.service_id.toString());
+  data.append('service_id',service_id);
   let agentListResp=this.http
      .post(this.sharedServiceObj.registerationApiBaseUrl+'members/viewSubMembers', data, this.headerOptions)
      .map(this.extractData)
@@ -1366,11 +1369,11 @@ deleteAgent(agent_id:string)
      .map(this.extractData)
      return agentResp;
 }
-loadAllRoles(member_id:string)
+loadAllRoles(member_id:string,service_id:string)
 {
   let data = new URLSearchParams();
   //debugger;
-  data.append('service_id',this.sharedServiceObj.service_id);
+  data.append('service_id',service_id);
   data.append('member_id',member_id);
  let roleResp=this.http
      .post(this.sharedServiceObj.registerationApiBaseUrl+'members/allRoles', data, this.headerOptions)
@@ -1387,23 +1390,23 @@ deleteRole(role_id:string)
      .map(this.extractData)
      return roleResp;
 }
-loadAllAccessLevels()
+loadAllAccessLevels(service_id:string)
 {
   let data = new URLSearchParams();
   //debugger;
-  data.append('service_id',this.sharedServiceObj.service_id);
+  data.append('service_id',service_id);
  let roleResp=this.http
      .post(this.sharedServiceObj.registerationApiBaseUrl+'members/allAccessLevels', data, this.headerOptions)
      .map(this.extractData)
      return roleResp;
 }
-createRole(access_level:any,user_id:string,name:string)
+createRole(access_level:any,user_id:string,name:string,service_id:string)
 {
   let data = new URLSearchParams();
   //debugger;
   data.append('access_level',access_level);
   data.append('member_id',user_id);
-  data.append('service_id',this.sharedServiceObj.service_id);
+  data.append('service_id',service_id);
   data.append('name',name);
  // debugger;
  let roleResp=this.http

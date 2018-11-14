@@ -120,8 +120,11 @@ getAllRoles(refresher:any){
   {
     this.loader.present();
   }
-  this.userServiceObj.loadAllRoles(member_id)
+  let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
+    generalWebsiteSettings.then((data) => {
+  this.userServiceObj.loadAllRoles(member_id,data.service_id)
   .subscribe((result) => this.getAllRolesResp(result));
+    });
 }
 getAllRolesResp(result: any)
 {

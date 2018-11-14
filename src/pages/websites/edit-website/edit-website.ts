@@ -199,7 +199,10 @@ export class EditWebsitePage {
           content: "Please wait...",
           duration: 5000
         });
-        this.service_id=this.sharedServiceObj.service_id;
+        let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
+    generalWebsiteSettings.then((data) => {
+        this.service_id=data.service_id;
+    });
   }
   ionViewDidEnter()
   {

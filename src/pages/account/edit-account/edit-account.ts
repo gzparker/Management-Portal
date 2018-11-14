@@ -126,7 +126,11 @@ export class EditAccountPage {
   
       this.cropperSettings.noFileInput = true;
         this.dataPersonalImage={};
-        this.service_id=this.sharedServiceObj.service_id;
+        let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
+    generalWebsiteSettings.then((data) => {
+      this.service_id=data.service_id;
+    });
+        //this.service_id=this.sharedServiceObj.service_id;
         this.loadAllAvailableMLS();
   }
 

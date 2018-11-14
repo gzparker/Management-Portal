@@ -75,9 +75,11 @@ export class EditRolePage {
   }
   getAllAccessLevels()
   {
-    this.userServiceObj.loadAllAccessLevels()
+    let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
+    generalWebsiteSettings.then((data) => {
+    this.userServiceObj.loadAllAccessLevels(data.service_id)
     .subscribe((result) => this.getAllAccessLevelsResp(result));
-
+    });
   }
   getAllAccessLevelsResp(result: any)
   {

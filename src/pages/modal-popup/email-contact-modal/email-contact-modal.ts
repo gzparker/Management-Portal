@@ -57,8 +57,11 @@ public first_name:string="";
   sendContactEmail()
   {
     let subject="Email From : "+this.first_name+" "+this.last_name;
-    this.userServiceObj.sendEmailToContact(this.leadInfo.lead_id,subject,this.emailMessage,this.sharedServiceObj.service_id.toString())
+    let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
+    generalWebsiteSettings.then((data) => {
+    this.userServiceObj.sendEmailToContact(this.leadInfo.lead_id,subject,this.emailMessage,data.service_id.toString())
     .subscribe((result) => this.sendEmailToContactResp(result));
+    });
   }
   sendEmailToContactResp(result:any)
   {

@@ -128,9 +128,11 @@ export class AddCreditCardPage {
       member_id.then((memberResp) => {
         //debugger;
         dataObj.member_id = memberResp;
-    
-        this.userServiceObj.addCreditCardDetail(dataObj).
+        let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
+        generalWebsiteSettings.then((data) => {
+        this.userServiceObj.addCreditCardDetail(dataObj,data.service_id).
           subscribe((result) => this.saveCreditCardResp(result));
+        });
       });
    
       }

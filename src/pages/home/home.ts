@@ -42,7 +42,7 @@ export class HomePage {
   {
     this.sharedServiceObj.updateColorThemeMethod(null);
   }
-  loadGeneralWebsiteSettings()
+  /*loadGeneralWebsiteSettings()
   {
     if(this.loadedWebsite.indexOf("localhost")>0)
     {
@@ -55,31 +55,29 @@ export class HomePage {
      .subscribe((result) => this.loadGeneralWebsiteSettingsResp(result));
     }
 
-  }
-  loadGeneralWebsiteSettingsResp(result:any)
+  }*/
+  loadGeneralWebsiteSettings()
   {
     var that=this;
-if(result)
+    let serviceInfo=this.storage.get("generalWebsiteSettings");
+    serviceInfo.then((result)=>
 {
-  this.storage.set("generalWebsiteSettings",result);
+  
   that.websiteBackgroundInfo=result;
- // this._app.setTitle(that.websiteBackgroundInfo.service_name + " - App Name");
+
   document.getElementById("appPageTitle").innerText=that.websiteBackgroundInfo.service_name;
-  //debugger;
+  
   if(result.header_color)
   {
     
       that.headerColor=result.header_color;
  
- // debugger;
 }
 if(result.sidebar_menu_color)
 {
  
     that.sideBarMenuColor=result.sidebar_menu_color;
 
-
-// debugger;
 }
 if(result.button_color)
 {
@@ -113,8 +111,8 @@ if(result.modal_background_color)
 {
 that.modalBackgroundColor=result.modal_background_color;
 }
-//debugger;
-}
+
+});
   }
   
 openPage(pagenumber:string){

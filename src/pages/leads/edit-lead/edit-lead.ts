@@ -101,6 +101,7 @@ public hideLeadCropper:boolean=true;
   public chatRef:any;
   public userRef:any;
   public notificationMsg:string="";
+  public service_id:string="";
 public loader:any;
 public geoLocationOptions = {
   types: ['(cities)'],
@@ -158,6 +159,10 @@ public geoLocationOptions = {
        }
       
     });
+    let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
+        generalWebsiteSettings.then((data) => {
+          this.service_id=data.service_id;
+        });
   }
   ionViewDidEnter()
   {
@@ -259,8 +264,10 @@ getHomeAddress(data) {
     {
       if(this.userId.toString())
       {
-        this.userServiceObj.viewMemberAgents(this.userId.toString())
+        
+        this.userServiceObj.viewMemberAgents(this.userId.toString(),this.service_id)
       .subscribe((result) => this.loadAllAgentsResp(result));
+       
       }
       
     }
@@ -394,9 +401,10 @@ fredRef.update({email:leadInfo.email,first_name:leadInfo.first_name,image_url:le
 }
       else
       {
-        
+      
         that.userServiceObj.setFireBaseInfo(leadInfo.email,leadInfo.password,leadInfo.lead_id,leadInfo.first_name,leadInfo.last_name,
-          leadInfo.image_url,"0","0","1",leadInfo.user_website_id);
+          leadInfo.image_url,"0","0","1",leadInfo.user_website_id,this.service_id);
+       
       }
 
       });
@@ -409,8 +417,9 @@ fredRef.update({email:leadInfo.email,first_name:leadInfo.first_name,image_url:le
     else
     {
     //debugger;
+    
       that.userServiceObj.setFireBaseInfo(leadInfo.email,leadInfo.password,leadInfo.lead_id,leadInfo.first_name,leadInfo.last_name,
-        leadInfo.image_url,"0","0","1",leadInfo.user_website_id);
+        leadInfo.image_url,"0","0","1",leadInfo.user_website_id,this.service_id);
         that.ngZone.run(() => {
          //debugger;
           that.navCtrl.push(LeadDetailPage,{notificationMsg:that.notificationMsg.toUpperCase(),leadId:that.leadId});

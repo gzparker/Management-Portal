@@ -201,8 +201,11 @@ export class ViewCreditCardsPage {
     {
       refresher.complete();
     }
-      this.userServiceObj.allListCreditCards(this.userId.toString(),this.sharedServiceObj.service_id)
+    let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
+    generalWebsiteSettings.then((data) => {
+      this.userServiceObj.allListCreditCards(this.userId.toString(),data.service_id)
     .subscribe((result) => this.loadAllCreditCardsResp(result));
+    });
     }
     
   }
@@ -286,8 +289,11 @@ export class ViewCreditCardsPage {
               
               toast.present();
             }
-            this.userServiceObj.deleteCreditCard(this.userId.toString(),this.sharedServiceObj.service_id,creditCard.unique_id)
+            let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
+    generalWebsiteSettings.then((data) => {
+            this.userServiceObj.deleteCreditCard(this.userId.toString(),data.service_id,creditCard.unique_id)
             .subscribe((result) => this.deleteCreditCardResp(result));
+    });
           }
         }
       ]

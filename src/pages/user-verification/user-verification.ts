@@ -70,8 +70,11 @@ export class UserVerificationPage {
       verify_by: this.verify_by
     };
    //debugger;
-    this.userServiceObj.sendVerificationInfo(dataObj)
+   let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
+   generalWebsiteSettings.then((data) => {
+    this.userServiceObj.sendVerificationInfo(dataObj,data.service_id)
       .subscribe((result) => this.verifyUserResp(result));
+   });
   }
   verifyUserResp(result: any): void {
     //debugger;

@@ -36,12 +36,12 @@ this.headerOptionsIDX= new RequestOptions({ headers: this.headersIDX });
 this.headers.append("REGISTRATIONKEY",this.sharedServiceObj.registerationApiKey);
 this.headerOptions= new RequestOptions({ headers: this.headers });
   }
-  getServicePackagesList() {
+  getServicePackagesList(service_id:string) {
     let url = "";
     let data = new URLSearchParams();
     url = this.sharedServiceObj.registerationApiBaseUrl + 'subscriptions/listAll';
     //debugger;
-    data.append('service_id', this.sharedServiceObj.service_id);
+    data.append('service_id', service_id);
     //data.append('interval', interval);
     //debugger;
     let subscriptionList = this.http
@@ -49,12 +49,12 @@ this.headerOptions= new RequestOptions({ headers: this.headers });
       .map(this.extractData)
     return subscriptionList;
   }
-  checkPromoCode(promo_code:any) {
+  checkPromoCode(promo_code:any,service_id:string) {
     let url = "";
     let data = new URLSearchParams();
     url = this.sharedServiceObj.registerationApiBaseUrl + 'subscriptions/checkPromoCode';
     //debugger;
-    data.append('service_id', this.sharedServiceObj.service_id);
+    data.append('service_id', service_id);
     data.append('promo_code', promo_code);
     //data.append('interval', interval);
     //debugger;
@@ -63,13 +63,13 @@ this.headerOptions= new RequestOptions({ headers: this.headers });
       .map(this.extractData)
     return checkPromoCodeResp;
   }
-  saveUserSubscription(subscriptionData: any) {
+  saveUserSubscription(subscriptionData: any,service_id:string) {
     //debugger;
     let url = "";
     let data = new URLSearchParams();
     url = this.sharedServiceObj.registerationApiBaseUrl + 'subscriptions/addCreditCardAndCreateSubscription';
     //debugger;
-    data.append('service_id', this.sharedServiceObj.service_id);
+    data.append('service_id', service_id);
     data.append('member_id', subscriptionData.member_id);
     data.append('full_name', subscriptionData.full_name);
     data.append('cc', subscriptionData.cc_number);
@@ -85,12 +85,12 @@ this.headerOptions= new RequestOptions({ headers: this.headers });
       .map(this.extractData)
     return subscriptionList;
   }
-  subscriptionBillingHistory(member_id:string)
+  subscriptionBillingHistory(member_id:string,service_id:string)
   {
     let url = "";
     let data = new URLSearchParams();
     url = this.sharedServiceObj.registerationApiBaseUrl + 'subscriptions/getMyBillingHistory';
-    data.append('service_id', this.sharedServiceObj.service_id);
+    data.append('service_id', service_id);
     data.append('member_id', member_id);
     //debugger;
     let billingHistoryList = this.http
@@ -98,13 +98,13 @@ this.headerOptions= new RequestOptions({ headers: this.headers });
       .map(this.extractData)
     return billingHistoryList;
   }
-  upcomingSubscriptionList(member_id:string)
+  upcomingSubscriptionList(member_id:string,service_id:string)
   {
     let url = "";
     let data = new URLSearchParams();
     url = this.sharedServiceObj.registerationApiBaseUrl + 'subscriptions/mySubscriptions';
     //debugger;
-    data.append('service_id', this.sharedServiceObj.service_id);
+    data.append('service_id', service_id);
     data.append('member_id', member_id);
     //debugger;
     let upcomingSubscriptionList = this.http
@@ -112,12 +112,12 @@ this.headerOptions= new RequestOptions({ headers: this.headers });
       .map(this.extractData)
     return upcomingSubscriptionList;
   }
-  cancelSubscription(member_id:string,subscription_id:string)
+  cancelSubscription(member_id:string,subscription_id:string,service_id:string)
   {
     let url = "";
     let data = new URLSearchParams();
     url = this.sharedServiceObj.registerationApiBaseUrl + 'subscriptions/cancelSubscription';
-    data.append('service_id', this.sharedServiceObj.service_id);
+    data.append('service_id', service_id);
     data.append('member_id', member_id);
     data.append('subscription_id', subscription_id);
     let cancelSubscriptionResp = this.http

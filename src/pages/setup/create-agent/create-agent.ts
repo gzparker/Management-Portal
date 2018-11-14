@@ -219,8 +219,11 @@ this.description=html;
   {
     member_id=this.userId;
   }
-    this.userServiceObj.loadAllRoles(member_id)
+  let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
+    generalWebsiteSettings.then((data) => {
+    this.userServiceObj.loadAllRoles(member_id,data.service_id)
     .subscribe((result) => this.getAllRolesResp(result));
+    });
   }
   getAllRolesResp(result: any)
   {

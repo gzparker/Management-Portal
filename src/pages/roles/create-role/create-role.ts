@@ -78,9 +78,11 @@ let selectedIndex = this.access_level.indexOf(roleId);
 }
   getAllAccessLevels()
   {
-    this.userServiceObj.loadAllAccessLevels()
+    let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
+    generalWebsiteSettings.then((data) => {
+    this.userServiceObj.loadAllAccessLevels(data.service_id)
     .subscribe((result) => this.getAllAccessLevelsResp(result));
-
+    });
   }
   getAllAccessLevelsResp(result: any)
   {
@@ -101,8 +103,11 @@ this.access_level=this.all_access_levels;
   }*/
   createRole()
   {
-    this.userServiceObj.createRole(this.access_level,this.userId,this.role_name)
+    let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
+    generalWebsiteSettings.then((data) => {
+    this.userServiceObj.createRole(this.access_level,this.userId,this.role_name,data.service_id)
     .subscribe((result) => this.createRoleResp(result));
+    });
   }
   createRoleResp(result:any)
   {

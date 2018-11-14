@@ -99,9 +99,12 @@ export class EditCreditCardPage {
   loadCreditCardDetail()
   {
     this.loader.present();
-    this.userServiceObj.loadCreditCardDetail(this.userId.toString(),this.sharedServiceObj.service_id,
+    let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
+    generalWebsiteSettings.then((data) => {
+    this.userServiceObj.loadCreditCardDetail(this.userId.toString(),data.service_id,
     this.uniquer_id)
     .subscribe((result) => this.loadCreditCardDetailResp(result));
+    });
   }
   loadCreditCardDetailResp(result:any)
   {
@@ -140,9 +143,12 @@ this.expiryDate=new Date(this.expiryDate).toISOString();
     }
     this.exp_month = this.expiryDate.split("-")[1];
     this.exp_year = this.expiryDate.split("-")[0];
-    this.userServiceObj.updateCreditCardDetail(this.userId.toString(),this.sharedServiceObj.service_id,
+    let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
+    generalWebsiteSettings.then((data) => {
+    this.userServiceObj.updateCreditCardDetail(this.userId.toString(),data.service_id,
     this.uniquer_id,this.full_name,this.exp_year,this.exp_month,this.zipCode,this.primary_source_data,this.cvc)
     .subscribe((result) => this.updateCreditCardResp(result));
+    });
   }
  updateCreditCardResp(result:any)
  {

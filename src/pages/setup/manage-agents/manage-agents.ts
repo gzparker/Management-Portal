@@ -194,8 +194,11 @@ loadAllAgents(refresher:any)
   {
     this.loader.present();
   }
-    this.userServiceObj.viewMemberAgents(this.userId.toString())
+  let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
+        generalWebsiteSettings.then((data) => {
+    this.userServiceObj.viewMemberAgents(this.userId.toString(),data.service_id)
   .subscribe((result) => this.loadAllAgentsResp(result));
+        });
   }
   
 }

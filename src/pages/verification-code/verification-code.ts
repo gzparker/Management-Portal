@@ -22,7 +22,7 @@ export class VerificationCodePage {
   public verification_code: string = "";
   public verificationMsg: string = "";
   public acctVerified: boolean = false;
-  public website_id:string="";
+  public service_id:string="";
   //public verificationMsg:string="";
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public viewCtrl: ViewController, public userServiceObj: UserProvider, private storage: Storage, 
@@ -92,7 +92,7 @@ export class VerificationCodePage {
           //this.storage.set('allowed_access_options', result.memberAllowedOptions);
           this.userServiceObj.setFireBaseInfo(result.memberCredentials.email,result.memberCredentials.password,
             result.memberCredentials.id,result.memberCredentials.first_name,result.memberCredentials.last_name,
-            result.memberCredentials.image_url,result.memberCredentials.parent_id,is_submember,is_lead,this.website_id);
+            result.memberCredentials.image_url,result.memberCredentials.parent_id,is_submember,is_lead,"",this.service_id);
             this.navCtrl.setRoot(DashboardTabsPage);
         }
         else
@@ -102,7 +102,7 @@ export class VerificationCodePage {
           //this.userServiceObj.setFireBaseInfo(result.memberCredentials);
           this.userServiceObj.setFireBaseInfo(result.memberCredentials.email,result.memberCredentials.password,
           result.memberCredentials.id,result.memberCredentials.first_name,result.memberCredentials.last_name,
-          result.memberCredentials.image_url,result.memberCredentials.parent_id,is_submember,is_lead,this.website_id);
+          result.memberCredentials.image_url,result.memberCredentials.parent_id,is_submember,is_lead,"",this.service_id);
           this.navCtrl.setRoot(DashboardTabsPage);
         }
         //  debugger;
@@ -152,9 +152,9 @@ setAllAccessOptionsResp(result:any)
 }
   ionViewDidLoad() {
     this.master_id = this.navParams.get('master_id');
-    let websiteInfo = this.storage.get('websiteInfo');
-    websiteInfo.then((data) => {
-      this.website_id=data.id;
+    let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
+    generalWebsiteSettings.then((data) => {
+      this.service_id=data.service_id;
     });
     // console.log('ionViewDidLoad VerificationCodePage');
   }

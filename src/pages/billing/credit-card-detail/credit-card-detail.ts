@@ -116,10 +116,13 @@ export class CreditCardDetailPage {
   }
   loadCreditCardDetail()
   {
-    this.loader.present();  
-    this.userServiceObj.loadCreditCardDetail(this.userId.toString(),this.sharedServiceObj.service_id,
+    this.loader.present();
+    let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
+    generalWebsiteSettings.then((data) => {
+    this.userServiceObj.loadCreditCardDetail(this.userId.toString(),data.service_id,
     this.uniquer_id)
     .subscribe((result) => this.loadCreditCardDetailResp(result));
+    });
   }
   loadCreditCardDetailResp(result:any)
   {

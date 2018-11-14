@@ -73,7 +73,10 @@ export class SubscriptionPage {
       this.calendarMaxDate=new Date();
       this.calendarMaxDate.setFullYear(this.calendarMaxDate.getFullYear() + 50);
       this.calendarMaxDate=this.calendarMaxDate.toISOString();
-      this.service_id=this.sharedServiceObj.service_id;
+      let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
+    generalWebsiteSettings.then((data) => {
+      this.service_id=data.service_id;
+    });
    //   this.expiryDate=new Date(this.expiryDate).toISOString();
   }
 
@@ -108,7 +111,7 @@ export class SubscriptionPage {
   listAllPackages() {
     //debugger;
     
-    this.subscriptionObj.getServicePackagesList()
+    this.subscriptionObj.getServicePackagesList(this.service_id)
       .subscribe((result) => this.packagesResp(result)); 
   }
   packagesResp(resp: any) {
@@ -222,7 +225,7 @@ if(requiredPlan=="1")
   
     dataObj.member_id = memberResp;
 
-   this.subscriptionObj.saveUserSubscription(dataObj).
+   this.subscriptionObj.saveUserSubscription(dataObj,this.service_id).
      subscribe((result) => this.saveSubscribeUserResp(result));
     });
 }
@@ -307,7 +310,7 @@ else
   {
     if(this.promo_code!="")
     {
-      this.subscriptionObj.checkPromoCode(this.promo_code).
+      this.subscriptionObj.checkPromoCode(this.promo_code,this.service_id).
       subscribe((result) => this.checkPromoCodeResp(result));
     }
   }

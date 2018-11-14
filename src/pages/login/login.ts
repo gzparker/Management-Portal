@@ -52,7 +52,7 @@ export class LoginPage {
   public allCountryCodes: any[] = [];
   public verify_by: string = "email";
   public master_id: string = "";
-  public website_id:string="";
+  public service_id:string="";
   public verification_code: string = "";
   public loader:any;
 
@@ -79,9 +79,9 @@ export class LoginPage {
   }
   ionViewDidLoad() {
     this.sharedServiceObj.updateColorThemeMethod(null);
-    let websiteInfo = this.storage.get('websiteInfo');
-    websiteInfo.then((data) => {
-      this.website_id=data.id;
+    let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
+    generalWebsiteSettings.then((data) => {
+      this.service_id=data.service_id;
     });
   }
   back() {
@@ -133,7 +133,7 @@ let is_lead:string="0";
           this.setAllAccessOptions(result.userAssignedRoles);
           this.userServiceObj.setFireBaseInfo(result.memberCredentials.email,result.memberCredentials.password,
             result.memberCredentials.id,result.memberCredentials.first_name,result.memberCredentials.last_name,
-            result.memberCredentials.image_url,result.memberCredentials.parent_id,is_submember,is_lead,this.website_id);
+            result.memberCredentials.image_url,result.memberCredentials.parent_id,is_submember,is_lead,"",this.service_id);
             this.navCtrl.setRoot(DashboardTabsPage);
             //this.storage.set('allowed_access_options', result.memberAllowedOptions);
         }
@@ -145,7 +145,7 @@ let is_lead:string="0";
          //debugger;
           this.userServiceObj.setFireBaseInfo(result.memberCredentials.email,result.memberCredentials.password,
           result.memberCredentials.id,result.memberCredentials.first_name,result.memberCredentials.last_name,
-          result.memberCredentials.image_url,result.memberCredentials.parent_id,is_submember,is_lead,this.website_id);
+          result.memberCredentials.image_url,result.memberCredentials.parent_id,is_submember,is_lead,"",this.service_id);
           this.navCtrl.setRoot(DashboardTabsPage);
    
         }

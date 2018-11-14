@@ -114,7 +114,7 @@ this.loggedInUserInfo=data;
     
     
   });
-debugger;
+
     });
    
   }
