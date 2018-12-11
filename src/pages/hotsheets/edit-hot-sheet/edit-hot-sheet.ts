@@ -442,7 +442,7 @@ else
          center: latLng,
          zoom: 14,
          mapTypeId: google.maps.MapTypeId.MAP,
-         mapTypeControl: true,
+         mapTypeControl: false,
          mapTypeControlOptions: {
            style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
            position: google.maps.ControlPosition.TOP_CENTER
@@ -520,9 +520,9 @@ else
      google.maps.event.removeListener(this.move);
      var path = this.poly.getPath();
 
-     var ArrayforPolygontoUse= this.sharedServiceObj.simplyfierLatitude(path.b,12.5);
+     var ArrayforPolygontoUse= this.sharedServiceObj.simplyfierLatitude(path.j,12.5);
 
-     path.b=ArrayforPolygontoUse;
+     path.j=ArrayforPolygontoUse;
    this.poly.setMap(null);
    this.poly = new google.maps.Polygon({
        map: this.map,

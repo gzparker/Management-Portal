@@ -132,6 +132,7 @@ this.headerOptions= new RequestOptions({ headers: this.headers });
    let that=this;
  //debugger;
  let is_online="0";
+ let foundOldElement:any;
  if(is_lead=="0")
  {
 is_online="1";
@@ -155,15 +156,16 @@ if(element.val().is_lead=="0"&&element.val().service_id==service_id)
 {
   
   userExists="1";
+  foundOldElement=element;
 }
 if(i==snapshot.numChildren())
 {
   if(userExists=="1")
   {
-    that.storage.set('firebaseUserId',element.key);
+    that.storage.set('firebaseUserId',foundOldElement.key);
     //window.localStorage.setItem("firebaseKey", element.key);
     //debugger;
-    var fredRef=firebase.database().ref('users/'+element.key);
+    var fredRef=firebase.database().ref('users/'+foundOldElement.key);
     fredRef.update({isOnline:is_online,webUserId:webUserId,first_name: first_name,
     last_name:last_name,
     user_type:"1",
@@ -173,7 +175,7 @@ if(i==snapshot.numChildren())
     service_id:service_id,
     image_url: image_url,
     parent_id: parent_id,
-    fbId:element.key,
+    fbId:foundOldElement.key,
     verified: "1",
     email:email}).then(function(ref) {
       //location.reload();

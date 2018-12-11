@@ -73,10 +73,7 @@ export class SubscriptionPage {
       this.calendarMaxDate=new Date();
       this.calendarMaxDate.setFullYear(this.calendarMaxDate.getFullYear() + 50);
       this.calendarMaxDate=this.calendarMaxDate.toISOString();
-      let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
-    generalWebsiteSettings.then((data) => {
-      this.service_id=data.service_id;
-    });
+      
    //   this.expiryDate=new Date(this.expiryDate).toISOString();
   }
 
@@ -85,8 +82,14 @@ export class SubscriptionPage {
     this.platform.ready().then(() => {
       
       this.full_name = this.navParams.get('full_name');
+      let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
+    generalWebsiteSettings.then((data) => {
+      //debugger;
+      this.service_id=data.service_id;
       this.listAllPackages();
       this.loadAllAvailableMLS();
+    });
+      
       //debugger;
     });
     ///debugger;
@@ -115,6 +118,7 @@ export class SubscriptionPage {
       .subscribe((result) => this.packagesResp(result)); 
   }
   packagesResp(resp: any) {
+    //debugger;
     //this.loader.present();
     if (resp.status == true) {
      //debugger;

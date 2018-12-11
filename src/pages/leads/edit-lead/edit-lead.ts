@@ -151,18 +151,21 @@ public geoLocationOptions = {
       {
         //debugger;
        this.leadId = this.navParams.get('leadId');
+       let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
+       generalWebsiteSettings.then((data) => {
+        this.service_id=data.service_id;
        this.getAllWebsite();
        this.loadAllAgents();
        this.initHomeAutocomplete();
       this.initWorkAutocomplete();
        this.editLead(this.leadId);
+       
+        });
        }
       
     });
-    let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
-        generalWebsiteSettings.then((data) => {
-          this.service_id=data.service_id;
-        });
+  
+          
   }
   ionViewDidEnter()
   {

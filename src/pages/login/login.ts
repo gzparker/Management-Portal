@@ -81,6 +81,7 @@ export class LoginPage {
     this.sharedServiceObj.updateColorThemeMethod(null);
     let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
     generalWebsiteSettings.then((data) => {
+      //debugger;
       this.service_id=data.service_id;
     });
   }
@@ -113,17 +114,14 @@ let is_lead:string="0";
           {
             this.storage.set('userId', result.memberCredentials.parent_id);
             this.storage.set('subMemberId', result.memberCredentials.id);
-            //debugger;
           }
           else
           {
-            //;
             this.storage.set('userId', result.memberCredentials.id);
           }
           this.storage.set('parent_id', result.memberCredentials.parent_id);
           this.storage.set('image_url',result.memberCredentials.image_url);
           this.storage.set('loggedInUserInfo', result);
-          //debugger;
           this.storage.set('globalSettings',result.globalSettings);
           this.userLoggedId = true;
         if(result.memberCredentials.parent_id!=undefined)
@@ -135,7 +133,6 @@ let is_lead:string="0";
             result.memberCredentials.id,result.memberCredentials.first_name,result.memberCredentials.last_name,
             result.memberCredentials.image_url,result.memberCredentials.parent_id,is_submember,is_lead,"",this.service_id);
             this.navCtrl.setRoot(DashboardTabsPage);
-            //this.storage.set('allowed_access_options', result.memberAllowedOptions);
         }
         else
         {

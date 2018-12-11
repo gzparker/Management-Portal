@@ -166,7 +166,7 @@ export class MyApp {
   
   initializeApp() {
     this.platform.ready().then(() => {
-     // debugger;
+     //debugger;
       //this.loadGeneralWebsiteSettings();
      this.setDeviceToken();
       this.statusBar.styleDefault();
@@ -370,14 +370,32 @@ this.storage.set("websiteInfo",result.result);
   }*/
   loadGeneralWebsiteSettings()
   {
-    if(this.loadedWebsite.indexOf("localhost")>0)
+    
+    let dummyWebsiteUrl="";
+    if(this.loadedWebsite[this.loadedWebsite.length-1]=="/")
+    {
+dummyWebsiteUrl=this.loadedWebsite.substr(0,this.loadedWebsite.length-1)
+    }
+    else
+    {
+      dummyWebsiteUrl=this.loadedWebsite;
+    }
+    ///debugger;
+    if(dummyWebsiteUrl=="https://configuration.menu"||dummyWebsiteUrl=="http://configuration.menu")
+    {
+      //debugger;
+      this.sharedServiceObj.getServiceDefaultInfoByUrl("https://idx.configuration.menu")
+      .subscribe((result) => this.loadGeneralWebsiteSettingsResp(result));
+    }
+    else if(this.loadedWebsite.indexOf("localhost")>0)
     {
       this.sharedServiceObj.getServiceDefaultInfoByUrl("https://intagent.configuration.menu")
       .subscribe((result) => this.loadGeneralWebsiteSettingsResp(result));
     }
     else
     {
-     this.sharedServiceObj.getServiceDefaultInfoByUrl(this.loadedWebsite.toString())
+      //debugger;
+     this.sharedServiceObj.getServiceDefaultInfoByUrl(dummyWebsiteUrl.toString())
      .subscribe((result) => this.loadGeneralWebsiteSettingsResp(result));
     }
 
@@ -487,6 +505,8 @@ this.geolocation.getCurrentPosition().then((resp) => {
     {
       that.chatGroups=[];
       snapshot.forEach(element => {
+        if(element.key!=undefined)
+        {
         i=i+1;
     that.chatGroups.push(element);
     if(i==snapshot.numChildren())
@@ -496,6 +516,8 @@ this.geolocation.getCurrentPosition().then((resp) => {
        // debugger;
         //that.chatRef.orderByChild("groupId").equalTo(groupData.val().groupId).on("value", function(snapshot) {
        if(snapshot.exists()){
+         if(element.key!=undefined)
+         {
         that.chatData=[];
         snapshot.forEach(element => {
           j=j+1;
@@ -508,8 +530,10 @@ this.geolocation.getCurrentPosition().then((resp) => {
           }
       
         });
+      }
        }});
     }
+  }
       });
   }
 });

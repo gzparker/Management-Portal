@@ -189,7 +189,11 @@ this.chatRef.off("value");
     that.groupRef.orderByChild("groupId").equalTo(that.groupId).on("value", function(snapshot) {
       //debugger;
       snapshot.forEach(element=>{
-    that.returnedGroup=element;
+        if(element.key!=undefined)
+        {
+          that.returnedGroup=element;
+        }
+    
       });
     //debugger;
  //let test="ddf";
@@ -199,6 +203,8 @@ this.chatRef.off("value");
       that.users=[];
       let i=0;
     snapshot.forEach(element=>{
+      if(element.key!=undefined)
+      {
       that.users.push(element.val());
       i=i+1;
 
@@ -206,6 +212,7 @@ if(i==snapshot.numChildren()){
   //debugger;
 //that.scrollToBottom();
 }
+      }
     });
         
    
@@ -215,11 +222,14 @@ if(i==snapshot.numChildren()){
     that.chatDetailArray=[];
    let i=0;
     snapshot.forEach(element => {
+      if(element.key!=undefined)
+      {
       that.chatDetailArray.push(element);
 i=i+1;
 if(i==snapshot.numChildren()){
   that.sharedServiceObj.markMessageAsRead(that.firebaseUserId,that.chatDetailArray)
 }
+      }
     });
     
   });
