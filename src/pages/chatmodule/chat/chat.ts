@@ -219,8 +219,13 @@ loadAllChatGroups()
       that.chatGroups=[];
   that.chatGroupsOld=[];
       snapshot.forEach(element => {
-    that.chatGroups.push(element);
-    that.chatGroupsOld.push(element);
+        //debugger;
+        if(element.key!=undefined)
+        {
+          that.chatGroups.push(element);
+          that.chatGroupsOld.push(element);
+        }
+    
       });
   }
     //let abc="ssd";

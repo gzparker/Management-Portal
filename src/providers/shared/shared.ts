@@ -411,6 +411,7 @@ sendMessage(type:string,description:any,redirectUserId:any,firebaseUserId:any,
                                          provider: 'Firebase',
                                          deletedFor:deletedFor,
                                          groupId:groupId,
+                                         type:"backEnd",
                                          modifiedDate:Date()
                                         
                                      }).then(function (ref) {
@@ -469,6 +470,7 @@ fromImageUrl=loggedInUserInfo.memberCredentials.image_url;
                                          provider: 'Firebase',
                                          deletedFor:deletedFor,
                                          readBy:readBy,
+                                         type:"backEnd",
                                          groupId:groupId
                                         
                                      }).then(function (ref) {
@@ -548,6 +550,7 @@ toImageUrl=lastMessage.fromUserImage;
                                     provider: 'Firebase',
                                     deletedFor:deletedFor,
                                     readBy:readBy,
+                                    type:"backEnd",
                                     groupId:groupId
                                    
                                 }).then(function (ref) {
@@ -665,7 +668,7 @@ that.chatOldMsgSentEmiter.emit("1");
           }
   // this could also be a private method of the component class
   private extractData(res: Response) {
-  //debugger;
+  
     return res.json();
   }
   private handleErrorObservable(error: Response | any) {

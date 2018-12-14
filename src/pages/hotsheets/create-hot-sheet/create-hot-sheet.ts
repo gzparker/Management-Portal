@@ -417,6 +417,7 @@ else
   initAutocomplete(): void {
    
     this.addressElement = this.searchbar.nativeElement.querySelector('.searchbar-input');
+    
     this.createAutocomplete(this.addressElement).subscribe((location) => {
       //console.log('Searchdata', location);
 
@@ -459,7 +460,7 @@ else
         center: latLng,
         zoom: 14,
         mapTypeId: google.maps.MapTypeId.MAP,
-        mapTypeControl: true,
+        mapTypeControl: false,
         mapTypeControlOptions: {
           style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
           position: google.maps.ControlPosition.TOP_CENTER
@@ -496,6 +497,7 @@ else
       this.map.controls[google.maps.ControlPosition.TOP_RIGHT].push(centerControlDiv);
       google.maps.event.addDomListener(this.map, 'mousedown', this.mouseDownCallBack.bind(this));
       google.maps.event.addDomListener(this.map, 'idle', this.setMapCoordinates.bind(this));
+      
       /*google.maps.event.addDomListener(this.map, 'idle',(e=>{
         this.polygon_search=this.polygon_search;
       }));*/
@@ -522,10 +524,10 @@ else
     google.maps.event.removeListener(this.mouseUp);
     google.maps.event.removeListener(this.move);
     var path = this.poly.getPath();
-   
-    var ArrayforPolygontoUse= this.sharedServiceObj.simplyfierLatitude(path.b,12.5);
+   //debugger;
+    var ArrayforPolygontoUse= this.sharedServiceObj.simplyfierLatitude(path.j,12.5);
   
-    path.b=ArrayforPolygontoUse;
+    path.j=ArrayforPolygontoUse;
   this.poly.setMap(null);
   this.poly = new google.maps.Polygon({
       map: this.map,
