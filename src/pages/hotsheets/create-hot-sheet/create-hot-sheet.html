@@ -274,7 +274,22 @@
               </ion-option>
               </ion-select>
             </ion-item>
-
+            <ion-item>
+              <ion-label>Listing Type</ion-label>
+              <ion-select [(ngModel)]="listing_type_modal" name="listing_type_modal" multiple="true">
+              <ion-option *ngFor="let listingTypeObj of listingTypeOptions" value= {{listingTypeObj.id}}>
+              {{listingTypeObj.name}}
+              </ion-option>
+              </ion-select>
+            </ion-item>
+            <ion-item>
+              <ion-label>Home Type</ion-label>
+              <ion-select [(ngModel)]="home_type_modal" name="home_type_modal" multiple="true">
+              <ion-option *ngFor="let homeTypeObj of homeTypeOptions" value= {{homeTypeObj.id}}>
+              {{homeTypeObj.name}}
+              </ion-option>
+              </ion-select>
+            </ion-item>
             <ion-item>
               <ion-label>Property Size</ion-label>        
               <ion-input type="text" [(ngModel)]="unit_size_min"
@@ -344,32 +359,25 @@
               <ion-input type="text" [(ngModel)]="listing_size_max" 
               name="listing_size_max" id="listing_size_max" placeholder="max"></ion-input>
             </ion-item>
-
-            <ion-item>
+            
+            <!--<ion-item>
               <ion-label fixed>Lot Size</ion-label>
-              <!--<ion-select [(ngModel)]="lot_size" name="lot_size" id="lot_size"
-              (ngModelChange)="updateSearchObject()">
-               
-              <ion-option value="2000">2,000+ sqft</ion-option>
-              <ion-option value="3000">3,000+ sqft</ion-option>
-              <ion-option value="4000">4,000+ sqft</ion-option>
-              <ion-option value="5000">5,000+ sqft</ion-option>
-              <ion-option value="7500">7,500+ sqft</ion-option>
-              <ion-option value="10890">.25+ acre (10,890+ sqft)</ion-option>
-              <ion-option value="21780">.5+ acre (21,780+ sqft)</ion-option>
-              <ion-option value="43560">1+ acre</ion-option>
-              <ion-option value="87120">2+ acres</ion-option>
-              <ion-option value="217800">5+ acres</ion-option>
-              <ion-option value="435600">10+ acres</ion-option>
-               </ion-select>-->
+             
                <ion-input type="text" [(ngModel)]="lot_size_min"
                name="lot_size_min" id="lot_size_min" placeholder="min" (blur)="updateSearchObject()"></ion-input>
            
                <ion-input type="text" [(ngModel)]="lot_size_max" 
                name="lot_size_max" id="lot_size_max" placeholder="max" (blur)="updateSearchObject()"></ion-input>
               
+            </ion-item>-->
+            <ion-item>
+              <ion-label>Lot Size</ion-label>
+              <ion-select [(ngModel)]="lot_size_modal" name="lot_size_modal">
+              <ion-option *ngFor="let lotSizeObj of lotSizeOptions" value= {{lotSizeObj.id}}>
+              {{lotSizeObj.name}}
+              </ion-option>
+              </ion-select>
             </ion-item>
-
             <ion-item>
               <ion-label fixed>Year Built</ion-label>
               

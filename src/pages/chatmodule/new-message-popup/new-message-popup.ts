@@ -110,9 +110,6 @@ this.loggedInUserInfo=data;
           that.allAvailableContacts.push(snapshot.val());
         }
       }
-      
-    
-    
   });
 
     });

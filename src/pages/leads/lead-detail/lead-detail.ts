@@ -49,6 +49,7 @@ export class LeadDetailPage {
  public map_work_height:number;
  public map_home_height:number;
  public selectedSegment:any="1";
+ public googleMapUrl:string="http://maps.google.com/maps?q=";
  public leadsDetailSegment:string="1";
  public internal_notes:string="";
  public emailMessage:string="";
@@ -57,7 +58,7 @@ export class LeadDetailPage {
  public parentId:string="";
  public isOwner:boolean=false;
  public isEditLeadAccess:boolean=false;
- public googleMapUrl:string="http://maps.google.com/maps?q=";
+ 
  public home_address_parts:string[]=[];
  public work_address_parts:string[]=[];
  public first_name:string="";

@@ -41,33 +41,14 @@ export class EditHotSheetPage {
   headerImageCropper:ImageCropperComponent;
   @ViewChild('communityImageCropper', undefined)
   communityImageCropper:ImageCropperComponent;*/
-  public hideHeaderCropper:boolean=true;
-  public hideCommunityCropper:boolean=true;
-  public hideSlideShowCropper:boolean=true;
-  public edit_header_image:boolean=false;
-  public edit_community_image:boolean=false;
-  public edit_slideshow_image:boolean=false;
-  public crop_header_image:boolean=false;
-  public crop_community_image:boolean=false;
-  public crop_slideshow_image:boolean=false;
-  public isHeaderExist:boolean=false;
-  public headerCropperSettings;
-  public communityCropperSettings;
-  public slideShowCropperSettings;
-  public croppedWidth:Number;
-  public croppedHeight:Number;
-  public dataHeaderImage:any;
-  public dataCommunityImage:any;
-  public dataSlideShowImage:any;
-  public headerWidth:string="";
-  public headerHeight:string="";
-  public communityWidth:string="";
-  public communityHeight:string="";
-  public slideShowWidth:string="";
-  public slideShowHeight:string="";
-  public dataCommunityImageArray:any[]=[];
-  public slideShowImage:string="";
-  public slideShowImageArray:string[]=[];
+  public hideHeaderCropper:boolean=true;public hideCommunityCropper:boolean=true;public hideSlideShowCropper:boolean=true;
+  public edit_header_image:boolean=false;public edit_community_image:boolean=false;public edit_slideshow_image:boolean=false;
+  public crop_header_image:boolean=false;public crop_community_image:boolean=false;public crop_slideshow_image:boolean=false;
+  public isHeaderExist:boolean=false;public headerCropperSettings;public communityCropperSettings;public slideShowCropperSettings;
+  public croppedWidth:Number;public croppedHeight:Number;public dataHeaderImage:any;public dataCommunityImage:any;
+  public dataSlideShowImage:any;public headerWidth:string="";public headerHeight:string="";public communityWidth:string="";
+  public communityHeight:string="";public slideShowWidth:string="";public slideShowHeight:string="";
+  public dataCommunityImageArray:any[]=[];public slideShowImage:string="";public slideShowImageArray:string[]=[];
   public dataSlideShowImageArray:any[]=[];
   public multiSelect:IMultiSelectSettings = {
     enableSearch: true,
@@ -76,61 +57,31 @@ export class EditHotSheetPage {
     dynamicTitleMaxItems: 3,
     displayAllSelectedText: true
 };
-public isApp=false;
-public isWebBrowser=false;
-  public msl_id:string="";
-  public mls_server_id:string="";
-  public json_search:string="";
-  public oldSlug:string="";
-  public hotSheetId:string="";
-  public name:string="";
-  public hotsheet_Title:string="";
-  public hotsheetUpdateMsg:string="";
-  public advanceSearchOption:boolean=false;
-  public additionalInfoOption:boolean=false;
-  public slug:string="";
-  public allWebsiteList:any[]=[];
-  public selectedWebsite:string="";
-  public bedrooms:string="";
-  public bathrooms:string="";
-  public address:string="";
-  public address_country:string="";
-  public address_township:string="";
-  public basement:string="";
-  public date_listed:Date;
-  public days_on_market:string="";
-  public garage_size:string="";
-  public listing_size:string="";
-  public lot_size_min:string="";
-  public lot_size_max:string="";
-  public year_built_min:string="";
-  public year_built_max:string="";
-  public dols:string="-1";
-  public parcel_num:string="";
-  public school_district:string="";
-  public school_elem:string="";
-  public school_high:string="";
-  public stories:string="";
-  public year_built:string="";
-  public status:any[]=[];
+public isApp=false;public isWebBrowser=false;public msl_id:string="";public mls_server_id:string="";
+  public json_search:string="";public oldSlug:string="";public hotSheetId:string="";public name:string="";
+  public hotsheet_Title:string="";public hotsheetUpdateMsg:string="";public advanceSearchOption:boolean=false;
+  public additionalInfoOption:boolean=false;public slug:string="";public allWebsiteList:any[]=[];
+  public selectedWebsite:string="";public bedrooms:string="";public bathrooms:string="";public address:string="";
+  public address_country:string="";public address_township:string="";public basement:string="";
+  public date_listed:Date;public days_on_market:string="";public garage_size:string="";public listing_size:string="";
+  public lot_size_min:string="";public lot_size_max:string="";;public lot_size_modal:string="0";public year_built_min:string="";public year_built_max:string="";
+  public dols:string="-1";public parcel_num:string="";public school_district:string="";public school_elem:string="";
+  public school_high:string="";public stories:string="";public year_built:string="";public status:any[]=[];
   public statusOptions:any[]=[{id:"all",name:"All"},{id:"for_sale",name:"For Sale"},{id:"for_rent",name:"For Rent"},
   {id:"pending",name:"Pending"},{id:"recently_sold",name:"Recently Sold"},{id:"pre_selling",name:"Pre Selling"},{id:"buy_me_out",name:"Buy Me Out"}
-  ,{id:"rent_to_own",name:"Ren to own"}];
-  public status_modal:string="all";
-  public status_last_searched:string="";
-  public address_city:any[]=[];
-  public address_city_options:any[]=[];
-  public address_city_modal:any[]=[];
-  public address_city_last_searched:any[]=[];
-  public address_subdivision:any[]=[];
-  public address_subdivision_options:any[]=[];
-  public address_subdivision_modal:any[]=[];
-  public address_subdivision_last_searched:any[]=[];
-  public price:any={lower: 0, upper: 600000000};
+  ,{id:"rent_to_own",name:"Rent to own"}];
+  public status_modal:string="all";public status_last_searched:string="";public address_city:any[]=[];
+  public address_city_options:any[]=[];public address_city_modal:any[]=[];public address_city_last_searched:any[]=[];
+  public address_subdivision:any[]=[];public address_subdivision_options:any[]=[];public address_subdivision_modal:any[]=[];
+  public address_subdivision_last_searched:any[]=[];public price:any={lower: 0, upper: 600000000};
   public listing_type:any[]=[];
-  public listingTypeOptions:any[]=[{id:"all",name:"All"},{id:"house",name:"House"},{id:"cnd",name:"Condo"},
-        {id:"twnhs",name:"TownHouse"},{id:"land",name:"Land"},{id:"duplx",name:"Duplex"},
-        {id:"comm",name:"Commercial"}];
+  public homeTypeOptions:any[]=[{id:"house",name:"Houses"},{id:"cnd",name:"Condos/Apartments"},{id:"land",name:"Lots/Land"},
+  {id:"comm",name:"Commercial"}];
+  public listingTypeOptions:any[]=[{id:"for_sale",name:"For Sale"},{id:"for_rent",name:"For Rent"},{id:"recently_sold",name:"Recently Sold"}];
+  public lotSizeOptions:any[]=[{id:"0",name:"Any"},{id:"2000",name:"2000+ sqft"},{id:"3000",name:"3,000+ sqft"},
+  {id:"4000",name:"4,000+ sqft"},{id:"5000",name:"5,000+ sqft"},{id:"7500",name:"7,500+ sqft"},{id:"10890",name:".25+ acre / 10,890+ sqft"}
+  ,{id:"21780",name:".5+ acre / 21,780+ sqft"},{id:"43560",name:"1+ acre"},{id:"87120",name:"2+ acres"},{id:"217800",name:"5+ acres"},
+  {id:"435600",name:"10+ acres"},{id:"custom",name:"Custom size"}];
   public CkeditorConfig = {removeButtons:'Underline,Subscript,Superscript,SpecialChar'
         ,toolbar: [
           { name: 'document', groups: [], items: ['Source'] },
@@ -139,68 +90,28 @@ public isWebBrowser=false;
           { name: 'links', items: [] },
           { name: 'styles', items: ['Format', 'FontSize' ] }
         ]};
-  public listing_type_modal:any[]=["all"];
-  public listing_type_last_searched:any[]=[];
-  public address_zip_code:any[]=[];
-  public address_zip_code_options:any[]=[];
-  public address_zip_code_modal:any[]=[];
-  public address_zip_code_last_searched:any[]=[];
-  public neighbourhood:any[]=[];
-  public neighbourhood_options:any[]=[];
-  public neighbourhood_modal:any[]=[];
-  public neighbourhood_last_searched:any[]=[];
-  public savedPolygonPath:any;
-  public google_address:string="";
-  public google_dist:string="";
-  public google_prov:string="";
-  public google_country:string="";
-  public searchListObject:any;
-  public selectedSearch : boolean=false;
-  public showUpdateButton : boolean=true;
-  public selectedLat:string="";
-  public selectedLong:string="";
-  public userId:string="";
-  public brief_description:string="";
-  public main_description:string="";
-  public virtual_tour_url:string="";
-  public video_url:string="";
-  public city:string="";
-  public sub_city:string="";
-  public polygon_search:any="";
-  public headerImage:string="";
-  public communityImage:string="";
-  public allAgents:any[]=[];
-  public assigned_agent_id:any[]=[];
-  public unit_size_min:string="";
-  public unit_size_max:string="";
-  public local:string="";
-  public neighbourhoodAddress:string="";
-  public administrative_area_level_1:string="";
-  public meta_title:string="";
-  public meta_description:string="";
-  public community:string="";
-  public zoom: number = 8;
-  public drawingManager:any;
-  public isDrawing:boolean = false;
-  public latitude: number = 51.673858;
-  public longitude: number = 7.815982;
-  public polygons:any[] = [];
-  public toDrawing = false;
-  public move:any=null;
-  public mouseUp:any=null;
-  public poly:any;
-  public map_height:number;
-  public parent_id:string="";
-  public headerImageChangedEvent:any='';
-  public communityImageChangedEvent:any='';
-  public allHotSheetList:any[]=[];
-  public mapLocation:any;
+  public listing_type_modal:any[]=["for_sale"];public home_type_modal:any[]=["house","cnd","land","comm"];public listing_type_last_searched:any[]=[];public address_zip_code:any[]=[];
+  public address_zip_code_options:any[]=[];public address_zip_code_modal:any[]=[];public address_zip_code_last_searched:any[]=[];
+  public neighbourhood:any[]=[];public neighbourhood_options:any[]=[];public neighbourhood_modal:any[]=[];
+  public neighbourhood_last_searched:any[]=[];public savedPolygonPath:any;public google_address:string="";
+  public google_dist:string="";public google_prov:string="";public google_country:string="";
+  public searchListObject:any;public selectedSearch : boolean=false;public showUpdateButton : boolean=true;
+  public selectedLat:string="";public selectedLong:string="";public userId:string="";public brief_description:string="";
+  public main_description:string="";public virtual_tour_url:string="";public video_url:string="";public city:string="";
+  public sub_city:string="";public polygon_search:any="";public headerImage:string="";public communityImage:string="";
+  public allAgents:any[]=[];public assigned_agent_id:any[]=[];public unit_size_min:string="";public unit_size_max:string="";
+  public local:string="";public neighbourhoodAddress:string="";public administrative_area_level_1:string="";
+  public meta_title:string="";public meta_description:string="";public community:string="";public zoom: number = 8;
+  public drawingManager:any;public isDrawing:boolean = false;public latitude: number = 51.673858;
+  public longitude: number = 7.815982;public polygons:any[] = [];public toDrawing = false;public move:any=null;
+  public mouseUp:any=null;public poly:any;public map_height:number;public parent_id:string="";public headerImageChangedEvent:any='';
+  public communityImageChangedEvent:any='';public allHotSheetList:any[]=[];public mapLocation:any;
   public geoLocationOptions = {
     types: ['(cities)'],
     componentRestrictions: {country: "us"}
    };
   public loader:any;
- 
+  public north_east_lat:any;public north_east_lon:any;public south_west_lat:any;public south_west_lon:any;
   @ViewChild('map') mapElement: ElementRef;
   map: any;
   constructor(private geolocation: Geolocation,public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
@@ -498,7 +409,10 @@ else
     //this.selectedLong=data.geometry.location.lng();
     this.mapLocation=this.map.getBounds().getSouthWest().lat().toString()+","+this.map.getBounds().getSouthWest().lng().toString()
     +","+this.map.getBounds().getNorthEast().lat().toString()+","+this.map.getBounds().getNorthEast().lng();
-  
+    this.north_east_lat=this.map.getBounds().getNorthEast().lat();
+    this.north_east_lon=this.map.getBounds().getNorthEast().lng();
+    this.south_west_lat=this.map.getBounds().getSouthWest().lat();
+    this.south_west_lon=this.map.getBounds().getSouthWest().lng();
    }
    mouseDownCallBack(e:any)
    {
@@ -1065,6 +979,22 @@ this.meta_description=html;
          }
          this.neighbourhood_options=optionsArray;
       }
+      if(result.searchFieldsJson.north_east_lat!=undefined)
+         {
+           this.north_east_lat=result.searchFieldsJson.north_east_lat;
+         }
+         if(result.searchFieldsJson.north_east_lon!=undefined)
+         {
+           this.north_east_lon=result.searchFieldsJson.north_east_lon;
+         }
+         if(result.searchFieldsJson.south_west_lat!=undefined)
+         {
+           this.south_west_lat=result.searchFieldsJson.south_west_lat;
+         }
+         if(result.searchFieldsJson.south_west_lon!=undefined)
+         {
+           this.south_west_lon=result.searchFieldsJson.south_west_lon;
+         }
       /////////////////////////////////////////////////////////////////////////
       this.editHotSheet();
     }
@@ -1095,8 +1025,9 @@ this.meta_description=html;
           // debugger;
            let savedPrice=lastSearchedObj.price.split("-");
            //this.price=lastSearchedObj.price;
-           this.price.lower=savedPrice[0].toString();
-           this.price.upper=savedPrice[1].toString();
+           this.price = {lower: savedPrice[0].toString(), upper: savedPrice[1].toString()};
+           //this.price.lower=savedPrice[0].toString();
+           //this.price.upper=savedPrice[1].toString();
          }
          if(lastSearchedObj.bathrooms!=undefined)
          {
@@ -1247,6 +1178,22 @@ this.meta_description=html;
          {
            this.selectedLong=lastSearchedObj.selectedLong;
          }
+         if(lastSearchedObj.north_east_lat!=undefined)
+         {
+           this.north_east_lat=lastSearchedObj.north_east_lat;
+         }
+         if(lastSearchedObj.north_east_lon!=undefined)
+         {
+           this.north_east_lon=lastSearchedObj.north_east_lon;
+         }
+         if(lastSearchedObj.south_west_lat!=undefined)
+         {
+           this.south_west_lat=lastSearchedObj.south_west_lat;
+         }
+         if(lastSearchedObj.south_west_lon!=undefined)
+         {
+           this.south_west_lon=lastSearchedObj.south_west_lon;
+         }
        //  debugger;
           //this.loadSavedPolygon();
           if(!this.isApp)
@@ -1324,7 +1271,8 @@ else
         neighborhood:this.neighbourhood_modal,selectedLat:this.selectedLat,
         selectedLong:this.selectedLong,price:finalPrice,
         destinct_for_sale_listing_types:"all",map_location:this.mapLocation,year_built_min:this.year_built_min,
-        year_built_max:this.year_built_max,dols:this.dols,unit_size_max:this.unit_size_max,unit_size_min:this.unit_size_min
+        year_built_max:this.year_built_max,dols:this.dols,unit_size_max:this.unit_size_max,unit_size_min:this.unit_size_min,
+        north_east_lat:this.north_east_lat,north_east_lon:this.north_east_lon,south_west_lat:this.south_west_lat,south_west_lon:this.south_west_lon
       };
     }
     else
@@ -1341,7 +1289,8 @@ else
         neighborhood:this.neighbourhood_modal,selectedLat:this.selectedLat,
         selectedLong:this.selectedLong,price:finalPrice,
         destinct_for_sale_listing_types:"all",map_location:this.mapLocation,year_built_min:this.year_built_min,
-        year_built_max:this.year_built_max,dols:this.dols,unit_size_max:this.unit_size_max,unit_size_min:this.unit_size_min
+        year_built_max:this.year_built_max,dols:this.dols,unit_size_max:this.unit_size_max,unit_size_min:this.unit_size_min,
+        north_east_lat:this.north_east_lat,north_east_lon:this.north_east_lon,south_west_lat:this.south_west_lat,south_west_lon:this.south_west_lon
       };
     }
      // debugger;

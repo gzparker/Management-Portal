@@ -16,13 +16,13 @@ import { ChartsModule } from 'ng2-charts';
 import { ClipboardModule } from 'ngx-clipboard';
 
 import { ColorPickerModule } from 'ngx-color-picker';
-
+import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 import { TimezonePickerModule } from 'ng2-timezone-selector';
 import { ImageCropperComponent, CropperSettings } from "ngx-img-cropper";
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
+
 import { ImagePicker } from '@ionic-native/image-picker';
 import { Crop } from '@ionic-native/crop';
 import { Camera } from '@ionic-native/camera';
@@ -30,6 +30,9 @@ import { Camera } from '@ionic-native/camera';
 import { AgmCoreModule } from '@agm/core';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { BrMaskerModule } from 'brmasker-ionic-3';
 
 //import { ListPage } from '../pages/list/list';
 import { LoginPage } from '../pages/login/login';
@@ -114,9 +117,7 @@ import { NewMessagePopupPage } from '../pages/chatmodule/new-message-popup/new-m
 import { GroupChatDetailPage } from '../pages/chatmodule/group-chat-detail/group-chat-detail';
 import { GroupMembersPage } from '../pages/chatmodule/group-members/group-members';
 
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
-import { BrMaskerModule } from 'brmasker-ionic-3';
+
 import { UserProvider } from '../providers/user/user';
 import { SharedProvider } from '../providers/shared/shared';
 import { SubscriptionProvider } from '../providers/subscription/subscription';
