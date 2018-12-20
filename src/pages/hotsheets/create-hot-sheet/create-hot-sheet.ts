@@ -99,8 +99,7 @@ public isApp=false;public isWebBrowser=false;public msl_id:string="";public name
   public address_city_options:any[]=[];public address_city_modal:any[]=[];public address_city_last_searched:any[]=[];
   public address_subdivision:any[]=[];public address_subdivision_options:any[]=[];public address_subdivision_modal:any[]=[];
   public address_subdivision_last_searched:any[]=[];public price:any={lower: 0, upper: 600000000};
-  public listing_type:any[]=[];public listing_type_modal:any[]=["for_sale"];public home_type_modal:any[]=["house","cnd","land","comm"];
-  public listing_type_last_searched:any[]=[];
+  public listing_type:any[]=["for_sale"];public home_type_modal:any[]=["house","cnd","land","comm"];
   public address_zip_code:any[]=[];public address_zip_code_options:any[]=[];public address_zip_code_modal:any[]=[];
   public address_zip_code_last_searched:any[]=[];public neighbourhood:any[]=[];public neighbourhood_options:any[]=[];
   public neighbourhood_modal:any[]=[];public neighbourhood_last_searched:any[]=[];public google_address:string="";
@@ -894,6 +893,14 @@ this.allListingTypeChecked=true;
       {
 this.lot_size_modal=result.searchFieldsJson.lot_size;
       }
+      if(result.searchFieldsJson.home_type)
+         {
+           this.home_type_modal=result.searchFieldsJson.home_type;
+         }
+        if(result.searchFieldsJson.listing_type)
+         {
+           this.listing_type=result.searchFieldsJson.listing_type;
+         }
       this.parcel_num=result.searchFieldsJson.parcel_num;
       //this.school_district=result.searchFieldsJson.school_district;
      // this.school_elem=result.searchFieldsJson.school_elem;
@@ -1108,12 +1115,11 @@ this.lot_size_modal=lastSearchedObj.lot_size;
          }
          if(lastSearchedObj.home_type)
          {
-           this.listing_type_last_searched=lastSearchedObj.home_type;
+           this.home_type_modal=lastSearchedObj.home_type;
          }
-        if(lastSearchedObj.home_type)
+        if(lastSearchedObj.listing_type)
          {
-           this.listing_type_last_searched=lastSearchedObj.home_type;
-           this.listing_type_modal=this.listing_type_last_searched;
+           this.listing_type=lastSearchedObj.listing_type;
          }
          if(lastSearchedObj.status)
          {
@@ -1175,7 +1181,7 @@ this.lot_size_modal=lastSearchedObj.lot_size;
       let finalPrice=this.price.lower.toString()+"-"+this.price.upper.toString();
     
      //debugger;
-     for(let i=0;i<this.listing_type_modal.length;i++)
+     /*for(let i=0;i<this.listing_type_modal.length;i++)
      {
        if(this.listing_type_modal[i]=="all")
        {
@@ -1185,15 +1191,15 @@ this.lot_size_modal=lastSearchedObj.lot_size;
      if(this.dols=="-1")
      {
        this.dols="";
-     }
+     }*/
      //debugger;
       if(isAllSelected)
       {
       this.searchListObject={msl_id:this.msl_id,bedrooms:this.bedrooms,bathrooms:this.bathrooms,address_township:this.address_township,days_on_market:this.days_on_market,
         date_listed:this.date_listed,garage_size:this.garage_size,lot_size_min:this.lot_size_min,lot_size_max:this.lot_size_max,
         parcel_num:this.parcel_num,school_district:this.school_district,school_elem:this.school_elem,school_high:this.school_high,
-        listing_type:this.status_modal,stories:this.stories,address_city:this.address_city_modal,address_subdivision:this.address_subdivision_modal,
-        home_type:"all",address_zip_code:this.address_zip_code_modal,lot_size:this.lot_size_modal,
+        listing_type:this.listing_type,stories:this.stories,address_city:this.address_city_modal,address_subdivision:this.address_subdivision_modal,
+        home_type:this.home_type_modal,address_zip_code:this.address_zip_code_modal,lot_size:this.lot_size_modal,
         neighborhood:this.neighbourhood_modal,selectedLat:this.selectedLat,selectedLong:this.selectedLong,
         listing_size_max:this.listing_size_max,listing_size_min:this.listing_size_min,price:finalPrice,
         destinct_for_sale_listing_types:"all",map_location:this.mapLocation,year_built_min:this.year_built_min,
@@ -1207,8 +1213,8 @@ this.lot_size_modal=lastSearchedObj.lot_size;
         date_listed:this.date_listed,garage_size:this.garage_size,
         lot_size_min:this.lot_size_min,lot_size_max:this.lot_size_max,
         parcel_num:this.parcel_num,school_district:this.school_district,school_elem:this.school_elem,school_high:this.school_high,
-        listing_type:this.status_modal,stories:this.stories,address_city:this.address_city_modal,address_subdivision:this.address_subdivision_modal,
-        home_type:this.listing_type_modal,address_zip_code:this.address_zip_code_modal,lot_size:this.lot_size_modal,
+        listing_type:this.listing_type,stories:this.stories,address_city:this.address_city_modal,address_subdivision:this.address_subdivision_modal,
+        home_type:this.home_type_modal,address_zip_code:this.address_zip_code_modal,lot_size:this.lot_size_modal,
         neighborhood:this.neighbourhood_modal,selectedLat:this.selectedLat,selectedLong:this.selectedLong,
         listing_size_max:this.listing_size_max,listing_size_min:this.listing_size_min,price:finalPrice,
         destinct_for_sale_listing_types:"all",map_location:this.mapLocation,year_built_min:this.year_built_min,

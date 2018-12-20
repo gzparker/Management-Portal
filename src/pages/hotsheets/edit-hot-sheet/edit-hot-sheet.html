@@ -320,18 +320,18 @@
         </ion-item>
 
         <div class="filterOptions" *ngIf="advanceSearchOption">     
-            <ion-item *ngIf="status!=undefined">
+            <!--<ion-item *ngIf="status!=undefined">
               <ion-label>Status</ion-label>
               <ion-select [(ngModel)]="status_modal" (ngModelChange)="selectedStatus($event)" name="status_modal">
                 <ion-option *ngFor="let status of statusOptions" value= {{status.id}}>
                    {{status.name}}
                  </ion-option>
                </ion-select>  
-            </ion-item>
+            </ion-item>-->
 
             <ion-item>
               <ion-label>Listing Type</ion-label>
-              <ion-select [(ngModel)]="listing_type_modal" name="listing_type_modal" multiple="true">
+              <ion-select [(ngModel)]="listing_type" name="listing_type" multiple="true">
               <ion-option *ngFor="let listingTypeObj of listingTypeOptions" value= {{listingTypeObj.id}}>
               {{listingTypeObj.name}}
               </ion-option>
