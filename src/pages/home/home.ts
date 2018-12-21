@@ -58,11 +58,12 @@ export class HomePage {
   }*/
   loadGeneralWebsiteSettings()
   {
+    debugger;
     var that=this;
     let serviceInfo=this.storage.get("generalWebsiteSettings");
     serviceInfo.then((result)=>
 {
-  
+  debugger;
   that.websiteBackgroundInfo=result;
 
   document.getElementById("appPageTitle").innerText=that.websiteBackgroundInfo.service_name;
@@ -113,6 +114,7 @@ that.modalBackgroundColor=result.modal_background_color;
 }
 
 });
+debugger;
   }
   
 openPage(pagenumber:string){

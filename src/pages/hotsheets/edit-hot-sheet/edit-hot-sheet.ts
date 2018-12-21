@@ -64,7 +64,7 @@ public isApp=false;public isWebBrowser=false;public msl_id:string="";public mls_
   public selectedWebsite:string="";public bedrooms:string="";public bathrooms:string="";public address:string="";
   public address_country:string="";public address_township:string="";public basement:string="";
   public date_listed:Date;public days_on_market:string="";public garage_size:string="";public listing_size:string="";
-  public lot_size_min:string="";public lot_size_max:string="";;public lot_size_modal:string="0";public year_built_min:string="";public year_built_max:string="";
+  public lot_size_min:string="";public lot_size_max:string="";public lot_size_modal:string="0";public year_built_min:string="";public year_built_max:string="";
   public dols:string="-1";public parcel_num:string="";public school_district:string="";public school_elem:string="";
   public school_high:string="";public stories:string="";public year_built:string="";public status:any[]=[];
   public statusOptions:any[]=[{id:"all",name:"All"},{id:"for_sale",name:"For Sale"},{id:"for_rent",name:"For Rent"},
@@ -2200,7 +2200,7 @@ else
    // this.updateSearchObject();
     }
     removedListingType($event:any):void{
-      this.listing_type_modal.splice(this.listing_type_modal.indexOf($event.id),1);
+      //this.listing_type_modal.splice(this.listing_type_modal.indexOf($event.id),1);
     //  this.updateSearchObject();
     }
     refreshStatus($event:any):void{

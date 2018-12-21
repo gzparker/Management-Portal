@@ -99,7 +99,7 @@ public isApp=false;public isWebBrowser=false;public msl_id:string="";public name
   public address_city_options:any[]=[];public address_city_modal:any[]=[];public address_city_last_searched:any[]=[];
   public address_subdivision:any[]=[];public address_subdivision_options:any[]=[];public address_subdivision_modal:any[]=[];
   public address_subdivision_last_searched:any[]=[];public price:any={lower: 0, upper: 600000000};
-  public listing_type:any[]=["for_sale"];public home_type_modal:any[]=["house","cnd","land","comm"];
+  public listing_type:any[]=["for_sale","for_rent","recently_sold"];public home_type_modal:any[]=["house","cnd","land","comm"];
   public address_zip_code:any[]=[];public address_zip_code_options:any[]=[];public address_zip_code_modal:any[]=[];
   public address_zip_code_last_searched:any[]=[];public neighbourhood:any[]=[];public neighbourhood_options:any[]=[];
   public neighbourhood_modal:any[]=[];public neighbourhood_last_searched:any[]=[];public google_address:string="";
@@ -1924,7 +1924,7 @@ else
   //  this.updateSearchObject();
     }
     removedListingType($event:any):void{
-      this.listing_type_modal.splice(this.listing_type_modal.indexOf($event.id),1);
+      //this.listing_type_modal.splice(this.listing_type_modal.indexOf($event.id),1);
     //  this.updateSearchObject();
     }
     refreshStatus($event:any):void{
