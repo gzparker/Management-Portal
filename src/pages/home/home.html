@@ -7,7 +7,7 @@
   </ion-navbar>  
 </ion-header>
 
-<ion-content padding>
+<ion-content padding class="colorEnabled background_color">
 
   <ion-slides pager *ngIf="isApp">
     <ion-slide *ngFor="let slide of slides">
@@ -16,7 +16,12 @@
       <p [innerHTML]="slide.description"></p>
     </ion-slide>
     <ion-slide class="animated fadeInDown">
+      
+      <!-- Logo for IDX -->
       <img src="assets/imgs/idx-main-logo-white.png" class="slide-image"/>
+
+      <!-- Logo for Intagent -->
+      <!-- <img src="assets/imgs/logo_intagent.png" class="slide-image"/> -->
       <h2 class="slide-title">IDX COMPANY&reg; App</h2>
       <p>IDX is an industry standard that enables a real estate professional to display all of an MLS's property 
         listings on their website, provided they in turn permit other MLS members to display their listings.</p>
@@ -53,9 +58,9 @@
     </ion-slides>
   <div class="formBlock animated fadeInUp">
     <div class="colBlock">
-    <button ion-button color="primary" block (click)="openPage('2');">Sign In</button></div>
+    <button ion-button color="primary" class="colorEnabled button_color" block (click)="openPage('2');">Sign In</button></div>
     <div class="colBlock">
-    <button ion-button color="primary" block (click)="openPage('3');">Sign Up</button></div>
+    <button ion-button color="primary" class="colorEnabled button_color" block (click)="openPage('3');">Sign Up</button></div>
   </div>
 
 </ion-content>
