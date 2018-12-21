@@ -273,7 +273,7 @@ else
       this.ngZone.run(() => {
         let confirm = this.alertCtrl.create({
           title: 'Sign Up',
-          message: 'Thank you for singing up with our IDX System',
+          message: 'Thank you for signing up with us!',
           buttons: [
            
             {
