@@ -1,5 +1,9 @@
 page-login {
 
+  * ::-webkit-scrollbar {
+  display: none;
+  }
+
   ion-menu {  
   display: none !important;
   }

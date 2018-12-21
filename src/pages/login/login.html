@@ -15,7 +15,7 @@
 </ion-header>
 
 
-<ion-content padding class="login-background colorEnabled background_color">
+<ion-content padding class="login-background">
 
   <div class="loginLogo animated fadeIn">
     <a (click)="userSignup();" class="newAccount">Don't have an account? <strong>Sign Up</strong></a>
@@ -34,7 +34,7 @@
     </ion-item>
 
     <div padding>
-      <button ion-button color="primary" class="colorEnabled button_color" block (click)="userLogin();" [disabled]="!modalFormLogin.valid">Login</button>
+      <button ion-button color="primary" block (click)="userLogin();" [disabled]="!modalFormLogin.valid">Login</button>
       <!-- <button ion-button color="primary" block (click)="onFacebookLoginClick();">Facebook Login</button> -->
       <button ion-button color="primary" block icon-start (click)="onFacebookLoginClick();">
         <ion-icon name="logo-facebook"></ion-icon>Facebook Login

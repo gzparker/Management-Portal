@@ -1,5 +1,9 @@
 page-register {
 
+  * ::-webkit-scrollbar {
+  display: none;
+  }
+
   [padding] .scroll-content {
   padding: 30px 25px !important;
   }
