@@ -17,7 +17,7 @@
 </ion-header>
 
 
-<ion-content padding class="login-background">
+<ion-content padding class="login-background colorEnabled background_color">
 <h1 class="contentTitle">Create a New Account</h1>
 <form #modalFormSignUp="ngForm" class="signupForm animated fadeIn">
 
@@ -61,7 +61,7 @@
   </div>
 
   <div class="loginButtons">
-    <button ion-button color="primary" block (click)="userSignUp();" [disabled]="!modalFormSignUp.valid">Sign Up</button>
+    <button ion-button color="primary" class="colorEnabled button_color" block (click)="userSignUp();" [disabled]="!modalFormSignUp.valid">Sign Up</button>
     <button ion-button color="primary" block icon-start (click)="onFacebookLoginClick();">
       <ion-icon name="logo-facebook"></ion-icon>Signup with Facebook
     </button>
