@@ -7,7 +7,10 @@
   </ion-navbar>  
 </ion-header>
 
-<ion-content padding class="colorEnabled background_color">
+
+<!-- //note: Load this class "ui-intagent" if url is Intagent, else remove class like "LINE 13" -->
+<ion-content padding class="ui-intagent">
+<!-- <ion-content padding> -->
 
   <ion-slides pager *ngIf="isApp">
     <ion-slide *ngFor="let slide of slides">
@@ -18,10 +21,10 @@
     <ion-slide class="animated fadeInDown">
       
       <!-- Logo for IDX -->
-      <img src="assets/imgs/idx-main-logo-white.png" class="slide-image"/>
+      <img src="assets/imgs/idx-main-logo-white.png" class="slide-image logo-idx"/>
 
       <!-- Logo for Intagent -->
-      <!-- <img src="assets/imgs/logo_intagent.png" class="slide-image"/> -->
+      <!-- <img src="assets/imgs/logo_intagent.png" class="slide-image logo-intagent"/> -->
       
       <h2 class="slide-title colorEnabled text_color">IDX COMPANY&reg; App</h2>
       <p class="colorEnabled text_color">IDX is an industry standard that enables a real estate professional to display all of an MLS's property 
@@ -59,9 +62,9 @@
     </ion-slides>
   <div class="formBlock animated fadeInUp">
     <div class="colBlock">
-    <button ion-button color="primary" class="colorEnabled button_color" block (click)="openPage('2');">Sign In</button></div>
+    <button ion-button color="primary" block (click)="openPage('2');">Sign In</button></div>
     <div class="colBlock">
-    <button ion-button color="primary" class="colorEnabled button_color" block (click)="openPage('3');">Sign Up</button></div>
+    <button ion-button color="primary" block (click)="openPage('3');">Sign Up</button></div>
   </div>
 
 </ion-content>

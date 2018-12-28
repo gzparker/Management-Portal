@@ -15,11 +15,14 @@
 </ion-header>
 
 
-<ion-content padding class="login-background">
+<!-- //note: Load this class "ui-intagent" if url is Intagent, else remove class like "LINE 20" -->
+<ion-content padding class="login-background ui-intagent">
+<!-- <ion-content padding class="login-background"> -->
 
   <div class="loginLogo animated fadeIn">
     <a (click)="userSignup();" class="newAccount">Don't have an account? <strong>Sign Up</strong></a>
-    <img src="assets/imgs/idx-main-logo-white.png" class="companylogo">
+    <img src="assets/imgs/idx-main-logo-white.png" class="logo-idx">
+    <img src="assets/imgs/logo_intagent.png" class="logo-intagent">
   </div>
   
   <form #modalFormLogin="ngForm" class="loginForm animated fadeInUp">
