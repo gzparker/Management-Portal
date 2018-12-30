@@ -63,6 +63,7 @@ export class LoginPage {
   public sideBarMenuColor:string="";
   public buttonColor:string="";
   public textColor:string="";
+  
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform
@@ -78,13 +79,94 @@ export class LoginPage {
     this.sharedServiceObj.updateColorThemeMethod(null);
   }
   ionViewDidLoad() {
+    let that=this;
     this.sharedServiceObj.updateColorThemeMethod(null);
     let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
     generalWebsiteSettings.then((data) => {
       //debugger;
-      this.service_id=data.service_id;
+      that.service_id=data.service_id;
+      that.websiteBackgroundInfo=data;
+      if(that.websiteBackgroundInfo!=undefined)
+  {
+    debugger;
+    that.applyColors();
+  }
     });
   }
+  applyColors()
+{
+  
+  let contentBackgroundElement=document.getElementsByClassName("background_color");
+    
+  for (let i = 0; i < contentBackgroundElement.length; i++) {
+    contentBackgroundElement[i].setAttribute("style", "background:"+this.websiteBackgroundInfo.content_background+" !important;");
+  }
+  let sidebarElements=document.getElementsByClassName("sidebar_color");
+    for (let i = 0; i < sidebarElements.length; i++) {
+      sidebarElements[i].setAttribute("style", "background:"+this.websiteBackgroundInfo.sidebar_menu_color+" !important;");
+    }
+    let textBarElements=document.getElementsByClassName("text_color");
+    for (let i = 0; i < textBarElements.length; i++) {
+    
+     textBarElements[i].setAttribute("style", "color:"+this.websiteBackgroundInfo.text_color+" !important;");
+     //debugger;
+    }
+    //////////////////////////////Button Color////////////////////////////////    
+    let buttonColorElement=document.getElementsByClassName("button_color");
+    
+    for (let i = 0; i < buttonColorElement.length; i++) {
+    
+      buttonColorElement[i].setAttribute("style", "background:"+this.websiteBackgroundInfo.button_color+" !important;");
+    }
+    let buttonToggleElement=document.getElementsByClassName("btnToggle");
+    
+    for (let i = 0; i < buttonToggleElement.length; i++) {
+    
+      buttonToggleElement[i].setAttribute("style", "background:"+this.websiteBackgroundInfo.button_color+" !important;");
+    }
+    let buttonBadgeElement=document.getElementsByClassName("msgcounter");
+    
+    for (let i = 0; i < buttonBadgeElement.length; i++) {
+    
+      buttonBadgeElement[i].setAttribute("style", "background:"+this.websiteBackgroundInfo.button_color+" !important;");
+    }
+    let buttonBadgeInviteElement=document.getElementsByClassName("badgeInvite");
+    
+    for (let i = 0; i < buttonBadgeInviteElement.length; i++) {
+    
+      buttonBadgeInviteElement[i].setAttribute("style", "background:"+this.websiteBackgroundInfo.button_color+" !important;");
+    }
+    let buttonviewProfileElement=document.getElementsByClassName("viewProfile");
+    
+    for (let i = 0; i < buttonviewProfileElement.length; i++) {
+    
+      buttonviewProfileElement[i].setAttribute("style", "background:"+this.websiteBackgroundInfo.button_color+" !important;");
+    }
+    let buttonContactElement=document.getElementsByClassName("contactPhone");
+    
+    for (let i = 0; i < buttonContactElement.length; i++) {
+    
+      buttonContactElement[i].setAttribute("style", "background:"+this.websiteBackgroundInfo.button_color+" !important;");
+    }
+    let buttonContactChatElement=document.getElementsByClassName("contactChat");
+    
+    for (let i = 0; i < buttonContactChatElement.length; i++) {
+    
+      buttonContactChatElement[i].setAttribute("style", "background:"+this.websiteBackgroundInfo.button_color+" !important;");
+    }
+    let buttonContactEmailElement=document.getElementsByClassName("contactEmail");
+    
+    for (let i = 0; i < buttonContactEmailElement.length; i++) {
+    
+      buttonContactEmailElement[i].setAttribute("style", "background:"+this.websiteBackgroundInfo.button_color+" !important;");
+    }
+    let buttonContactInviteElement=document.getElementsByClassName("contactInvite");
+    
+    for (let i = 0; i < buttonContactInviteElement.length; i++) {
+    
+      buttonContactInviteElement[i].setAttribute("style", "background:"+this.websiteBackgroundInfo.button_color+" !important;");
+    }
+}  
   back() {
     //public back = (url) => this.navCtrl.pop();
   }

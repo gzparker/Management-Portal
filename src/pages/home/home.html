@@ -52,10 +52,11 @@
       <ion-slide class="animated fadeInDown">
           <img src={{websiteBackgroundInfo.brand_image_url}} 
         (error)="imgHome.src = this.sharedServiceObj.noImageUrl" #imgHome/>
-        <!--<img src="assets/imgs/idx-main-logo-white.png" class="slide-image"/>-->
+        
         <h2 class="slide-title colorEnabled text_color">{{websiteBackgroundInfo.service_name}}</h2>
         <p class="colorEnabled text_color">{{websiteBackgroundInfo.description}}</p>
       </ion-slide>
+      <span>{{applyColors()}}</span>
     </ion-slides>
   <div class="formBlock animated fadeInUp">
     <div class="colBlock">

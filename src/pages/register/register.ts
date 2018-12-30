@@ -196,6 +196,80 @@ this.navCtrl.setRoot(LoginPage);
     var modalPage = this.modalCtrl.create(UserVerificationPage, { master_id: master_id });
     modalPage.present();
   }
+  applyColors()
+{
+  
+  let contentBackgroundElement=document.getElementsByClassName("background_color");
+    
+  for (let i = 0; i < contentBackgroundElement.length; i++) {
+    contentBackgroundElement[i].setAttribute("style", "background:"+this.websiteBackgroundInfo.content_background+" !important;");
+  }
+  let sidebarElements=document.getElementsByClassName("sidebar_color");
+    for (let i = 0; i < sidebarElements.length; i++) {
+      sidebarElements[i].setAttribute("style", "background:"+this.websiteBackgroundInfo.sidebar_menu_color+" !important;");
+    }
+    let textBarElements=document.getElementsByClassName("text_color");
+    for (let i = 0; i < textBarElements.length; i++) {
+    
+     textBarElements[i].setAttribute("style", "color:"+this.websiteBackgroundInfo.text_color+" !important;");
+     //debugger;
+    }
+    //////////////////////////////Button Color////////////////////////////////    
+    let buttonColorElement=document.getElementsByClassName("button_color");
+    
+    for (let i = 0; i < buttonColorElement.length; i++) {
+    
+      buttonColorElement[i].setAttribute("style", "background:"+this.websiteBackgroundInfo.button_color+" !important;");
+    }
+    let buttonToggleElement=document.getElementsByClassName("btnToggle");
+    
+    for (let i = 0; i < buttonToggleElement.length; i++) {
+    
+      buttonToggleElement[i].setAttribute("style", "background:"+this.websiteBackgroundInfo.button_color+" !important;");
+    }
+    let buttonBadgeElement=document.getElementsByClassName("msgcounter");
+    
+    for (let i = 0; i < buttonBadgeElement.length; i++) {
+    
+      buttonBadgeElement[i].setAttribute("style", "background:"+this.websiteBackgroundInfo.button_color+" !important;");
+    }
+    let buttonBadgeInviteElement=document.getElementsByClassName("badgeInvite");
+    
+    for (let i = 0; i < buttonBadgeInviteElement.length; i++) {
+    
+      buttonBadgeInviteElement[i].setAttribute("style", "background:"+this.websiteBackgroundInfo.button_color+" !important;");
+    }
+    let buttonviewProfileElement=document.getElementsByClassName("viewProfile");
+    
+    for (let i = 0; i < buttonviewProfileElement.length; i++) {
+    
+      buttonviewProfileElement[i].setAttribute("style", "background:"+this.websiteBackgroundInfo.button_color+" !important;");
+    }
+    let buttonContactElement=document.getElementsByClassName("contactPhone");
+    
+    for (let i = 0; i < buttonContactElement.length; i++) {
+    
+      buttonContactElement[i].setAttribute("style", "background:"+this.websiteBackgroundInfo.button_color+" !important;");
+    }
+    let buttonContactChatElement=document.getElementsByClassName("contactChat");
+    
+    for (let i = 0; i < buttonContactChatElement.length; i++) {
+    
+      buttonContactChatElement[i].setAttribute("style", "background:"+this.websiteBackgroundInfo.button_color+" !important;");
+    }
+    let buttonContactEmailElement=document.getElementsByClassName("contactEmail");
+    
+    for (let i = 0; i < buttonContactEmailElement.length; i++) {
+    
+      buttonContactEmailElement[i].setAttribute("style", "background:"+this.websiteBackgroundInfo.button_color+" !important;");
+    }
+    let buttonContactInviteElement=document.getElementsByClassName("contactInvite");
+    
+    for (let i = 0; i < buttonContactInviteElement.length; i++) {
+    
+      buttonContactInviteElement[i].setAttribute("style", "background:"+this.websiteBackgroundInfo.button_color+" !important;");
+    }
+} 
   getAllCountryCodes(): void {
     let avilableCountryList = this.storage.get('availableCountryList');
     avilableCountryList.then((data) => {
@@ -343,8 +417,18 @@ this.navCtrl.setRoot(LoginPage);
   }
   ionViewDidLoad() {
     //debugger;
+    let that=this;
     this.getAllCountryCodes();
-    console.log('ionViewDidLoad RegisterPage');
+    let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
+    generalWebsiteSettings.then((data) => {
+      //debugger;
+      
+      that.websiteBackgroundInfo=data;
+      if(that.websiteBackgroundInfo!=undefined)
+  {
+    that.applyColors();
+  }
+    });
   }
 
 }

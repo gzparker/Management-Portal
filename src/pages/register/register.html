@@ -69,7 +69,7 @@
 </form>
   
   <a (click)="userSignIn();" class="signupLink">Already a member? <strong>Sign in now</strong></a>
-
+  <span *ngIf="websiteBackgroundInfo!=undefined">{{applyColors()}}</span>
   <!--<ion-chip *ngIf="userSignUpMsg!=''">
     <ion-label color="danger">{{userSignUpMsg}}</ion-label>
   </ion-chip>-->

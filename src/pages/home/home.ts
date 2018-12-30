@@ -36,11 +36,12 @@ export class HomePage {
       this.isApp = (!document.URL.startsWith("http"));
      // this.setBackgroundInfo();
      this.sharedServiceObj.updateColorThemeMethod(null);
-     this.loadGeneralWebsiteSettings();
+     
   }
   ionViewDidEnter()
   {
     this.sharedServiceObj.updateColorThemeMethod(null);
+    this.loadGeneralWebsiteSettings();
   }
   /*loadGeneralWebsiteSettings()
   {
@@ -58,27 +59,37 @@ export class HomePage {
   }*/
   loadGeneralWebsiteSettings()
   {
-    debugger;
+    //debugger;
     var that=this;
     let serviceInfo=this.storage.get("generalWebsiteSettings");
     serviceInfo.then((result)=>
 {
-  debugger;
+  //debugger;
   that.websiteBackgroundInfo=result;
-
-  document.getElementById("appPageTitle").innerText=that.websiteBackgroundInfo.service_name;
-  
-  if(result.header_color)
+  if(that.websiteBackgroundInfo!=undefined)
   {
+    that.applyColors();
+  }
+
+  
     
+    /////////////////////////////////Content Background/////////////////////////////////////////
+    /*let contentBackgroundElement=document.getElementsByClassName("background_color");
+    
+    for (let i = 0; i < contentBackgroundElement.length; i++) {
+
+      contentBackgroundElement[i].setAttribute("style", "background:"+this.content_background+" !important;");
+    }*/
+
+   
+    ////////////////////////////////////////////////////////////////////////////////////////////
+  /*if(result.header_color)
+  {
       that.headerColor=result.header_color;
- 
 }
 if(result.sidebar_menu_color)
 {
- 
     that.sideBarMenuColor=result.sidebar_menu_color;
-
 }
 if(result.button_color)
 {
@@ -111,12 +122,85 @@ that.paginationColor=result.pagination_color;
 if(result.modal_background_color)
 {
 that.modalBackgroundColor=result.modal_background_color;
-}
+}*/
 
 });
-debugger;
+//debugger;
   }
+applyColors()
+{
   
+  let contentBackgroundElement=document.getElementsByClassName("background_color");
+    
+  for (let i = 0; i < contentBackgroundElement.length; i++) {
+    contentBackgroundElement[i].setAttribute("style", "background:"+this.websiteBackgroundInfo.content_background+" !important;");
+  }
+  let sidebarElements=document.getElementsByClassName("sidebar_color");
+    for (let i = 0; i < sidebarElements.length; i++) {
+      sidebarElements[i].setAttribute("style", "background:"+this.websiteBackgroundInfo.sidebar_menu_color+" !important;");
+    }
+    let textBarElements=document.getElementsByClassName("text_color");
+    for (let i = 0; i < textBarElements.length; i++) {
+    
+     textBarElements[i].setAttribute("style", "color:"+this.websiteBackgroundInfo.text_color+" !important;");
+     //debugger;
+    }
+    //////////////////////////////Button Color////////////////////////////////    
+    let buttonColorElement=document.getElementsByClassName("button_color");
+    
+    for (let i = 0; i < buttonColorElement.length; i++) {
+    
+      buttonColorElement[i].setAttribute("style", "background:"+this.websiteBackgroundInfo.button_color+" !important;");
+    }
+    let buttonToggleElement=document.getElementsByClassName("btnToggle");
+    
+    for (let i = 0; i < buttonToggleElement.length; i++) {
+    
+      buttonToggleElement[i].setAttribute("style", "background:"+this.websiteBackgroundInfo.button_color+" !important;");
+    }
+    let buttonBadgeElement=document.getElementsByClassName("msgcounter");
+    
+    for (let i = 0; i < buttonBadgeElement.length; i++) {
+    
+      buttonBadgeElement[i].setAttribute("style", "background:"+this.websiteBackgroundInfo.button_color+" !important;");
+    }
+    let buttonBadgeInviteElement=document.getElementsByClassName("badgeInvite");
+    
+    for (let i = 0; i < buttonBadgeInviteElement.length; i++) {
+    
+      buttonBadgeInviteElement[i].setAttribute("style", "background:"+this.websiteBackgroundInfo.button_color+" !important;");
+    }
+    let buttonviewProfileElement=document.getElementsByClassName("viewProfile");
+    
+    for (let i = 0; i < buttonviewProfileElement.length; i++) {
+    
+      buttonviewProfileElement[i].setAttribute("style", "background:"+this.websiteBackgroundInfo.button_color+" !important;");
+    }
+    let buttonContactElement=document.getElementsByClassName("contactPhone");
+    
+    for (let i = 0; i < buttonContactElement.length; i++) {
+    
+      buttonContactElement[i].setAttribute("style", "background:"+this.websiteBackgroundInfo.button_color+" !important;");
+    }
+    let buttonContactChatElement=document.getElementsByClassName("contactChat");
+    
+    for (let i = 0; i < buttonContactChatElement.length; i++) {
+    
+      buttonContactChatElement[i].setAttribute("style", "background:"+this.websiteBackgroundInfo.button_color+" !important;");
+    }
+    let buttonContactEmailElement=document.getElementsByClassName("contactEmail");
+    
+    for (let i = 0; i < buttonContactEmailElement.length; i++) {
+    
+      buttonContactEmailElement[i].setAttribute("style", "background:"+this.websiteBackgroundInfo.button_color+" !important;");
+    }
+    let buttonContactInviteElement=document.getElementsByClassName("contactInvite");
+    
+    for (let i = 0; i < buttonContactInviteElement.length; i++) {
+    
+      buttonContactInviteElement[i].setAttribute("style", "background:"+this.websiteBackgroundInfo.button_color+" !important;");
+    }
+}  
 openPage(pagenumber:string){
   if(pagenumber=='2')
   {
