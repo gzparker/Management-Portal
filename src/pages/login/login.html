@@ -15,13 +15,20 @@
 </ion-header>
 
 
+<!-- //note: Add this class "ui-intagent" if url is Intagent, else remove class like "Line 20". Check Line 19 as reference -->
+<!-- <ion-content padding class="login-background ui-intagent"> -->
 <ion-content padding class="login-background">
 
   <div class="loginLogo animated fadeIn">
     <a (click)="userSignup();" class="newAccount">Don't have an account? <strong>Sign Up</strong></a>
+<<<<<<< HEAD
     <!--<img src="assets/imgs/idx-main-logo-white.png" class="companylogo">-->
     <img src={{websiteBackgroundInfo.brand_image_url}}  *ngIf="websiteBackgroundInfo!=undefined"
         (error)="imgLogin.src = this.sharedServiceObj.noImageUrl" #imgLogin/>
+=======
+    <img src="assets/imgs/idx-main-logo-white.png" class="logo-idx">
+    <img src="assets/imgs/logo_intagent.png" class="logo-intagent">
+>>>>>>> ec7c90f0642f30a001338dfef48640f91448b382
   </div>
   
   <form #modalFormLogin="ngForm" class="loginForm animated fadeInUp">

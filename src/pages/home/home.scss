@@ -12,6 +12,23 @@ page-home {
   background: #00d2ff !important;
   background: -webkit-linear-gradient(to top, #1f9eff, #00d2ff) !important;
   background: linear-gradient(to top, #1f9eff, #00d2ff) !important;
+    &.ui-intagent {
+    background: #FFF !important;
+      * {
+      color: #333;
+      }
+      .formBlock .colBlock .button-block {      
+      border: 2px solid #a40e18;
+      background: #a40e18;
+        &:hover {
+        border: 2px solid lighten(#a40e18, 4%);
+        background: lighten(#a40e18, 4%);
+        }
+        .button-inner {
+        color: #FFF;
+        }
+      }
+    }
 
     
     h2 {
