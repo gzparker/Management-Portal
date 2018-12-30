@@ -38,6 +38,10 @@ export class HomePage {
      this.sharedServiceObj.updateColorThemeMethod(null);
      
   }
+  ionViewDidLoad()
+  {
+    this.sharedServiceObj.updateColorThemeMethod(null);
+  }
   ionViewDidEnter()
   {
     this.sharedServiceObj.updateColorThemeMethod(null);
