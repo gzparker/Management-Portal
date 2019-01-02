@@ -63,12 +63,26 @@ export class LoginPage {
   public sideBarMenuColor:string="";
   public buttonColor:string="";
   public textColor:string="";
-  
+  public loadedWebsite:string="";
+  public serviceType:string="";
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform
     ,public loadingCtrl: LoadingController,public ngZone: NgZone,private toastCtrl: ToastController) {
     userServiceObj.fbLoginDecision.subscribe(item => this.faceBookDecisionMethod(item));
+    this.loadedWebsite=document.URL.toString();
+    if(this.loadedWebsite.indexOf("localhost")>0)
+    {
+      this.serviceType="intagent";
+    }
+    else if(this.loadedWebsite.indexOf("intagent")>0)
+    {
+      this.serviceType="intagent";
+    }
+    else if(this.loadedWebsite.indexOf("idx")>0)
+    {
+      this.serviceType="idx";
+    }
     this.loader = this.loadingCtrl.create({
       content: "Please wait...",
       duration: 5000
@@ -76,11 +90,11 @@ export class LoginPage {
   }
   ionViewDidEnter()
   {
-    this.sharedServiceObj.updateColorThemeMethod(null);
+    //this.sharedServiceObj.updateColorThemeMethod(null);
   }
   ionViewDidLoad() {
     let that=this;
-    this.sharedServiceObj.updateColorThemeMethod(null);
+    //this.sharedServiceObj.updateColorThemeMethod(null);
     let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
     generalWebsiteSettings.then((data) => {
       //debugger;
@@ -88,7 +102,7 @@ export class LoginPage {
       that.websiteBackgroundInfo=data;
       if(that.websiteBackgroundInfo!=undefined)
   {
-    debugger;
+    //debugger;
     that.applyColors();
   }
     });

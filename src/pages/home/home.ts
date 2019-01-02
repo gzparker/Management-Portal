@@ -25,7 +25,7 @@ export class HomePage {
   public contentTitleColor:string="";
   public paginationColor:string="";
   public modalBackgroundColor:string="";
-
+public serviceType:string="";
   public loadedWebsite:string="";
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
@@ -33,18 +33,31 @@ export class HomePage {
     public platform: Platform,public actionSheetCtrl: ActionSheetController,private _app: App) {
       this._app.setTitle(" - App Name");
       this.loadedWebsite=document.URL.toString();
+      if(this.loadedWebsite.indexOf("localhost")>0)
+    {
+      this.serviceType="intagent";
+    }
+    else if(this.loadedWebsite.indexOf("intagent")>0)
+    {
+      this.serviceType="intagent";
+    }
+    else if(this.loadedWebsite.indexOf("idx")>0)
+    {
+      this.serviceType="idx";
+    }
+      //debugger;
       this.isApp = (!document.URL.startsWith("http"));
      // this.setBackgroundInfo();
-     this.sharedServiceObj.updateColorThemeMethod(null);
+     //this.sharedServiceObj.updateColorThemeMethod(null);
      
   }
   ionViewDidLoad()
   {
-    this.sharedServiceObj.updateColorThemeMethod(null);
+    //this.sharedServiceObj.updateColorThemeMethod(null);
   }
   ionViewDidEnter()
   {
-    this.sharedServiceObj.updateColorThemeMethod(null);
+    //this.sharedServiceObj.updateColorThemeMethod(null);
     this.loadGeneralWebsiteSettings();
   }
   /*loadGeneralWebsiteSettings()

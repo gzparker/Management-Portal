@@ -19,7 +19,7 @@
 
 <!-- //note: Add this class "ui-intagent" if url is Intagent, else remove class like "Line 22". Check Line 21 as reference -->
 <!-- <ion-content padding class="login-background ui-intagent"> -->
-<ion-content padding class="login-background">
+<ion-content padding class="login-background" [ngClass]="{'ui-intagent': serviceType=='intagent', 'ui-idx':serviceType=='idx' }">
 
 <h1 class="contentTitle">Create a New Account</h1>
 <form #modalFormSignUp="ngForm" class="signupForm animated fadeIn">

@@ -64,11 +64,26 @@ export class RegisterPage {
   public buttonColor:string="";
   public textColor:string="";
   public loader:any;
+  public loadedWebsite:string="";
+  public serviceType:string="";
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider,
     public modalCtrl: ModalController, private storage: Storage,
     public loadingCtrl: LoadingController,public actionSheetCtrl: ActionSheetController, 
     public alertCtrl: AlertController,private toastCtrl: ToastController) {
+      this.loadedWebsite=document.URL.toString();
+    if(this.loadedWebsite.indexOf("localhost")>0)
+    {
+      this.serviceType="intagent";
+    }
+    else if(this.loadedWebsite.indexOf("intagent")>0)
+    {
+      this.serviceType="intagent";
+    }
+    else if(this.loadedWebsite.indexOf("idx")>0)
+    {
+      this.serviceType="idx";
+    }
       this.loader = this.loadingCtrl.create({
         content: "Please wait...",
         duration: 5000
