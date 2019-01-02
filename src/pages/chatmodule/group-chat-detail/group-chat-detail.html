@@ -209,7 +209,7 @@
       <button class="button button-clear btn-camera" (click)="takeListingPhoto('new');" *ngIf="isApp">Take Image</button>
       <button class="button button-clear btn-emoji" (click)="openEmoji()">Select Emoji</button>
       <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple 
-      (change)="chatFileChangeListener($event)" *ngIf="hideChatImageSelect&&!isApp">
+  (change)="chatFileChangeListener($event)" #chatImageInput style="display:none">
     </div>
 
     </div>

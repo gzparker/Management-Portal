@@ -1,4 +1,4 @@
-import { Component, ViewChild, NgZone } from '@angular/core';
+import { Component, ViewChild, NgZone,ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, Platform,
    MenuController,ActionSheetController,Tabs,Content,LoadingController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
@@ -42,6 +42,7 @@ declare var firebase:any;
 export class ChatDetailPage {
   /*@ViewChild('chatImageCropper', undefined)
   chatImageCropper:ImageCropperComponent;*/
+  @ViewChild('chatImageInput', { read: ElementRef }) chatImageInput: ElementRef;
   @ViewChild(Content) content: Content;
   public groupId:string="";
   public chatingUserName:string="";
@@ -268,9 +269,9 @@ if(i==snapshot.numChildren()){
         {
           text: 'Upload Image',
           handler: () => {
-            this.hideChatImageSelect=true;
+            //this.hideChatImageSelect=true;
             //this.scrollChatToBottom();
-            //this.uploadImage();
+            this.uploadImage();
           }
         },
         {
@@ -288,7 +289,11 @@ if(i==snapshot.numChildren()){
  
     actionSheet.present();
   }
- 
+  uploadImage()
+  {
+    //debugger;
+this.chatImageInput.nativeElement.click();
+  }
    openEmoji()
    {
      var that=this;

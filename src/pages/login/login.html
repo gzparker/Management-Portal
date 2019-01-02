@@ -24,6 +24,8 @@
     <!--<img src="assets/imgs/idx-main-logo-white.png" class="companylogo">-->
     <img src={{websiteBackgroundInfo.brand_image_url}}  *ngIf="websiteBackgroundInfo!=undefined"
         (error)="imgLogin.src = this.sharedServiceObj.noImageUrl" #imgLogin/>
+        <!--<img src="assets/imgs/idx-main-logo-white.png" class="logo-idx">
+    <img src="assets/imgs/logo_intagent.png" class="logo-intagent">-->
   </div>
   
   <form #modalFormLogin="ngForm" class="loginForm animated fadeInUp">
