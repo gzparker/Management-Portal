@@ -19,13 +19,14 @@
 <!-- <ion-content padding class="login-background ui-intagent"> -->
 <ion-content padding class="login-background" [ngClass]="{'ui-intagent': serviceType=='intagent', 'ui-idx':serviceType=='idx' }">
 
-  <div class="loginLogo animated fadeIn">
-    <a (click)="userSignup();" class="newAccount">Don't have an account? <strong>Sign Up</strong></a>
-    <!--<img src="assets/imgs/idx-main-logo-white.png" class="companylogo">-->
+  <div class="loginLogo animated fadeIn">    
+    
     <img src={{websiteBackgroundInfo.brand_image_url}}  *ngIf="websiteBackgroundInfo!=undefined"
         (error)="imgLogin.src = this.sharedServiceObj.noImageUrl" #imgLogin [ngClass]="{'logo-intagent': serviceType=='intagent', 'logo-idx':serviceType=='idx' }"/>
-        <!--<img src="assets/imgs/idx-main-logo-white.png" class="logo-idx">
-    <img src="assets/imgs/logo_intagent.png" class="logo-intagent">-->
+        
+        <!--<img src="assets/imgs/idx-main-logo-white.png" class="logo-idx">-->
+        <!--<img src="assets/imgs/logo_intagent.png" class="logo-intagent">-->
+
   </div>
   
   <form #modalFormLogin="ngForm" class="loginForm animated fadeInUp">
@@ -46,7 +47,11 @@
         <ion-icon name="logo-facebook"></ion-icon>Facebook Login
       </button>
     </div>
+
+    <a (click)="userSignup();" class="newAccount">Don't have an account? <strong>Sign Up</strong></a>
+
   </form>
+
   <span *ngIf="websiteBackgroundInfo!=undefined">{{applyColors()}}</span>
   <!--<ion-chip *ngIf="userLogginMsg!=''">
     <ion-label color="danger">{{userLogginMsg}}</ion-label>

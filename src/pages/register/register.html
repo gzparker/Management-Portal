@@ -69,9 +69,11 @@
       <ion-icon name="logo-facebook"></ion-icon>Signup with Facebook
     </button>
   </div>
-</form>
-  
+
   <a (click)="userSignIn();" class="signupLink">Already a member? <strong>Sign in now</strong></a>
+
+</form>
+
   <span *ngIf="websiteBackgroundInfo!=undefined">{{applyColors()}}</span>
   <!--<ion-chip *ngIf="userSignUpMsg!=''">
     <ion-label color="danger">{{userSignUpMsg}}</ion-label>
