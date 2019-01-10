@@ -26,28 +26,29 @@
       <!-- Logo for Intagent -->
       <!-- <img src="assets/imgs/logo_intagent.png" class="slide-image logo-intagent"/> -->
       
-      <h2 class="slide-title colorEnabled text_color">IDX COMPANY&reg; App</h2>
-      <p class="colorEnabled text_color">IDX is an industry standard that enables a real estate professional to display all of an MLS's property 
+      
+      <h2 class="slide-title">IDX COMPANY&reg; App</h2>
+      <p>IDX is an industry standard that enables a real estate professional to display all of an MLS's property 
         listings on their website, provided they in turn permit other MLS members to display their listings.</p>
     </ion-slide>
     <ion-slide>
       <img src="assets/imgs/ica-slidebox-img-1.png" class="slide-image"/>
-      <h2 class="slide-title colorEnabled text_color">What is IDX?</h2>
-      <p class="colorEnabled text_color">The simple definition: For real estate agents and brokers in the US, IDX is the system that allows 
+      <h2 class="slide-title">What is IDX?</h2>
+      <p>The simple definition: For real estate agents and brokers in the US, IDX is the system that allows 
         REALTORS® to show MLS property listings on their websites. IDX stands for "Internet Data Exchange", which sounds technical, but really it's quite simple from the agent's perspective.</p>
     </ion-slide>
     <ion-slide>
       <img src="assets/imgs/ica-slidebox-img-2.png" class="slide-image"/>
-      <h2 class="slide-title colorEnabled text_color">Why use IDX?</h2>
-      <p class="colorEnabled text_color">These are the benefits of IDX Integration on website, Catch Audience's Attention, Capture Leads, 
+      <h2 class="slide-title">Why use IDX?</h2>
+      <p>These are the benefits of IDX Integration on website, Catch Audience's Attention, Capture Leads, 
         Search Engine Friendly, interact with your client directly.</p>
     </ion-slide>
   </ion-slides>
   <ion-slides pager *ngIf="!isApp&&websiteBackgroundInfo==undefined">
     <ion-slide class="animated fadeInDown">
       <img src="assets/imgs/idx-main-logo-white.png" class="slide-image"/>
-        <h2 class="slide-title colorEnabled text_color">IDX COMPANY&reg; App</h2>
-        <p class="colorEnabled text_color">IDX is an industry standard that enables a real estate professional to display all of an MLS's property 
+        <h2 class="slide-title">IDX COMPANY&reg; App</h2>
+        <p>IDX is an industry standard that enables a real estate professional to display all of an MLS's property 
           listings on their website, provided they in turn permit other MLS members to display their listings.</p>
     </ion-slide>
   </ion-slides>
@@ -56,8 +57,8 @@
           <img src={{websiteBackgroundInfo.brand_image_url}} 
         (error)="imgHome.src = this.sharedServiceObj.noImageUrl" #imgHome/>
         
-        <h2 class="slide-title colorEnabled text_color">{{websiteBackgroundInfo.service_name}}</h2>
-        <p class="colorEnabled text_color">{{websiteBackgroundInfo.description}}</p>
+        <h2 class="slide-title">{{websiteBackgroundInfo.service_name}}</h2>
+        <p>{{websiteBackgroundInfo.description}}</p>
       </ion-slide>
       <span>{{applyColors()}}</span>
     </ion-slides>
