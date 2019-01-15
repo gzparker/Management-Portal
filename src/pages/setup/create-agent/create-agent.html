@@ -70,7 +70,7 @@
     <ion-item>
       <ion-label stacked>Mobile Number</ion-label>
       <ion-input type="text" [(ngModel)]="phone_mobile" name="phone_mobile" id="phone_mobile"  
-      [brmasker]="{mask:'(000) 000-0000', len:14, type:'num'}" placeholder="Phone Number"></ion-input>
+      [brmasker]="{mask:'(000) 000-0000', len:15, type:'num'}" placeholder="Phone Number"></ion-input>
     </ion-item>
     <ion-item>
         <ion-label stacked>Access Level<span [ngClass]="error" *ngIf="access_level.length==0">*</span></ion-label>

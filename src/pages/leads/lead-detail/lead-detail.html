@@ -79,19 +79,19 @@
       <ion-item class="leadsPhone1" *ngIf="leadDetail!=undefined&&leadDetail.phone_mobile!=undefined&&leadDetail.phone_mobile!=''">
         <ion-icon name="md-call" item-start></ion-icon>
         <!-- <h2>Mobile #</h2> -->
-        <p>{{leadDetail.phone_mobile}}</p>
+        <p>{{this.sharedServiceObj.phone_number_mask(leadDetail.phone_mobile)}}</p>
       </ion-item>
 
       <ion-item class="leadsPhone2" *ngIf="leadDetail!=undefined&&leadDetail.phone_office!=undefined&&leadDetail.phone_office!=''">
         <ion-icon name="md-call" item-start></ion-icon>
         <!-- <h2>Office #</h2> -->
-        <p>{{leadDetail.phone_office}}</p>
+        <p>{{this.sharedServiceObj.phone_number_mask(leadDetail.phone_office)}}</p>
       </ion-item>
 
       <ion-item class="leadsPhone3" *ngIf="leadDetail!=undefined&&leadDetail.phone_home!=undefined&&leadDetail.phone_home!=''">
         <ion-icon name="md-call" item-start></ion-icon>
         <!-- <h2>Home #</h2> -->
-        <p>{{leadDetail.phone_home}}</p>
+        <p>{{this.sharedServiceObj.phone_number_mask(leadDetail.phone_home)}}</p>
       </ion-item>
 
       <!-- <ion-item class="leadsHomeAddress" *ngIf="leadDetail!=undefined">
@@ -188,7 +188,7 @@
         </ion-avatar>
         <h2 class="forSale" *ngIf="saved_listing.listing_type=='for_sale'">For Sale</h2>
         <h2 class="forRent" *ngIf="saved_listing.listing_type=='for_rent'">For Rent</h2>
-        <p class="lsPrice">${{saved_listing.price}}</p>
+        <p class="lsPrice">${{this.sharedServiceObj.numAbbriv(saved_listing.price)}}</p>
         <p class="streetAddress">{{saved_listing.address_street_num}} {{saved_listing.address_street_name}}, {{saved_listing.address_city}}, {{saved_listing.address_state_or_province}}</p>
         <div class="lsInfo">          
           <span class="bed">{{saved_listing.bedrooms}}</span>

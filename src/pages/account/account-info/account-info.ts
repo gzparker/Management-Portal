@@ -2,7 +2,7 @@ import { Component, ViewChild, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, Platform, MenuController,LoadingController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
-
+import { BrMaskerIonic3, BrMaskModel } from 'brmasker-ionic-3';
 import { EditAccountPage } from '../edit-account/edit-account';
 import { AlertController,ToastController } from 'ionic-angular';
 import { SharedProvider } from '../../../providers/shared/shared';
@@ -19,6 +19,7 @@ import { UserProvider } from '../../../providers/user/user';
 @Component({
   selector: 'page-account-info',
   templateUrl: 'account-info.html',
+  providers:[BrMaskerIonic3]
 })
 export class AccountInfoPage {
   public notificationMsg:string="";
@@ -45,7 +46,7 @@ export class AccountInfoPage {
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform,
-    public loadingCtrl: LoadingController,private toastCtrl: ToastController) {
+    public loadingCtrl: LoadingController,private toastCtrl: ToastController,public brMaskerIonic3: BrMaskerIonic3) {
       
       if(this.navParams.get('notificationMsg')!=undefined)
       {
@@ -133,4 +134,18 @@ this.navCtrl.push(EditAccountPage,{userId:this.userId});
     }
     
   }
+  setPhoneMask(phoneNumber:string)
+    {
+      if(phoneNumber!=undefined)
+      {
+        const config: BrMaskModel = new BrMaskModel();
+        config.mask = '(000) 000-0000';
+        config.len = 14;
+        config.type = 'num';
+        return this.brMaskerIonic3.writeCreateValue(phoneNumber, config);
+      }
+      else{
+        return "";
+      }
+    }
 }

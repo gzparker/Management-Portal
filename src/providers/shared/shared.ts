@@ -214,7 +214,40 @@ this.isPaidEmitter.emit(paidStatus);
   trim (str) {
   return str.replace(/^\s+|\s+$/gm,'');
 }
-
+numAbbriv(num) {
+  if (num > 999999) {
+      return num > 999999 ? (num / 1000000).toFixed(1) + 'M' : num
+  } else if (num > 999) {
+      return num > 999 ? (num / 1000).toFixed(1) + 'k' : num
+  } else {
+      return num;
+  }
+}
+phone_number_mask(phoneNumber:string){
+  let sArea:string="";
+let sPrefix:string="";
+let sNumber:string="";
+//debugger;
+  phoneNumber = phoneNumber.replace("[^0-9]",'');
+  if(phoneNumber.length == 10){ 
+  sArea = phoneNumber.substring(0,3);
+  sPrefix = phoneNumber.substring(3,6);
+  sNumber = phoneNumber.substring(6,10);
+  phoneNumber = "("+sArea+") "+sPrefix+"-"+sNumber;
+  //debugger;
+  return(phoneNumber);
+  } else if ( phoneNumber.length == 11) {
+  sArea = phoneNumber.substring(0,4);
+  sPrefix = phoneNumber.substring(4,7);
+  sNumber = phoneNumber.substring(7,11);
+  phoneNumber = ""+sArea+"-"+sPrefix+"-"+sNumber;
+  //debugger;
+  return(phoneNumber);
+  } else {
+    return "";
+  }
+  //debugger;
+  }
 rgbaToHex (rgba) {
     var parts = rgba.substring(rgba.indexOf("(")).split(","),
         r:any = parseInt(this.trim(parts[0].substring(1)), 10),

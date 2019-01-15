@@ -34,7 +34,7 @@
         </ion-avatar>
         <h2 class="forSale" *ngIf="listingSelectedObj.listing_type=='for_sale'">For Sale</h2>
         <h2 class="forRent" *ngIf="listingSelectedObj.listing_type=='for_rent'">For Rent</h2>
-        <p class="lsPrice">${{listingSelectedObj.price}}</p>
+        <p class="lsPrice">${{this.sharedServiceObj.numAbbriv(listingSelectedObj.price)}}</p>
         <p class="streetAddress">{{listingSelectedObj.address_street_num}} {{listingSelectedObj.address_street_name}}, {{listingSelectedObj.address_city}}, {{listingSelectedObj.address_state_or_province}}</p>
         <div class="lsInfo">          
           <span class="bed">{{listingSelectedObj.bedrooms}}</span>

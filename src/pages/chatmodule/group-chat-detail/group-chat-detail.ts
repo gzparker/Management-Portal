@@ -1,6 +1,6 @@
 import { Component, ViewChild, NgZone,ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, Platform,
-   MenuController,ActionSheetController,Tabs,Content,LoadingController } from 'ionic-angular';
+   MenuController,ActionSheetController,Tabs,Content,LoadingController,PopoverController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 import { ISubscription } from "rxjs/Subscription";
@@ -78,7 +78,7 @@ public chatWidth:string="";
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, 
     public platform: Platform,public actionSheetCtrl: ActionSheetController,
-    public loadingCtrl: LoadingController,private toastCtrl: ToastController) {
+    public loadingCtrl: LoadingController,private toastCtrl: ToastController,public popoverCtrl: PopoverController) {
       this.isApp = (!document.URL.startsWith("http"));
       if(this.navParams.get('groupId')!=undefined)
    {
@@ -354,8 +354,18 @@ that.chatImage="";
 openEmoji()
    {
      var that=this;
-     var modalPage = this.modalCtrl.create(ChatEmojiPopupoverPage);
-     modalPage.onDidDismiss(data => {
+     var popOverPage = this.popoverCtrl.create(ChatEmojiPopupoverPage);
+     let ev = {
+      target : {
+        getBoundingClientRect : () => {
+          return {
+            top: '100',
+            left:'100'
+          };
+        }
+      }
+    };
+    popOverPage.onDidDismiss(data => {
       if(data!=undefined)
       {
         if(data.selectedEmoji!=undefined||data.selectedEmoji!=null)
@@ -365,7 +375,7 @@ openEmoji()
       }
       
    });
-     modalPage.present();
+   popOverPage.present({ev});
    }
    replaceEmoji(description)
    {

@@ -13,6 +13,7 @@ import { WebsitesWebsiteLinksPage } from '../../websites/websites-website-links/
 import { FbConfirmPage } from '../../fb-confirm/fb-confirm';
 import { AlertController } from 'ionic-angular';
 import { ImageCropperComponent, CropperSettings } from "ngx-img-cropper";
+import { BrMaskerIonic3, BrMaskModel } from 'brmasker-ionic-3';
 import { PicturePopupPage } from '../../../pages/modal-popup/picture-popup/picture-popup';
 import { ColorSelectionPopupPage } from '../../modal-popup/color-selection-popup/color-selection-popup';
 
@@ -35,6 +36,7 @@ declare var firebase:any;
 @Component({
   selector: 'page-edit-website',
   templateUrl: 'edit-website.html',
+  providers:[BrMaskerIonic3]
 })
 export class EditWebsitePage {
   @ViewChild('searchTargetCityBar', { read: ElementRef }) searchTargetCityBar: ElementRef
@@ -148,7 +150,7 @@ export class EditWebsitePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,
-    public sharedServiceObj: SharedProvider, private storage: Storage,
+    public sharedServiceObj: SharedProvider, private storage: Storage,public brMaskerIonic3: BrMaskerIonic3,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform, 
     public ngZone: NgZone,public menuCtrl: MenuController,public loadingCtrl: LoadingController,
     private crop: Crop,private camera: Camera,private imagePicker: ImagePicker) {
@@ -233,6 +235,22 @@ export class EditWebsitePage {
        } 
     });
   }
+  setPhoneMask(phoneNumber:string)
+    {
+     // debugger;
+     if(phoneNumber!="")
+     {
+      const config: BrMaskModel = new BrMaskModel();
+      config.mask = '(000) 000-0000';
+      config.len = 15;
+      config.type = 'num';
+      return this.brMaskerIonic3.writeCreateValue(phoneNumber, config);
+     }
+    else
+    {
+      return "";
+    } 
+    }
   initCityAutocomplete(): void {
    
     this.searchTargetCityElement = this.searchTargetCityBar.nativeElement.querySelector('.searchbar-input');
@@ -461,7 +479,7 @@ else
 this.identity_name=result.result.identity_name;
 //this.website_a_record_location=result.result.website_a_record_location;
 this.website_a_record_location=result.result.idx_search_subdomain;
-this.identity_phone_number=result.result.identity_phone_number;
+this.identity_phone_number=this.setPhoneMask(result.result.identity_phone_number);
 //this.homepage_description=result.result.homepage_description;
 document.getElementById("homepage_description").innerHTML=result.result.homepage_description;
 this.homepageMeta_description=result.result.homepage_meta_description;

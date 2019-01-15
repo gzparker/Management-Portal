@@ -55,7 +55,7 @@
 
     <ion-item class="userInfoBlock">
       <ion-icon name="md-call" item-start></ion-icon>
-      <p>{{accountInfo.phone_mobile}}</p>
+      <p>{{this.sharedServiceObj.phone_number_mask(accountInfo.phone_mobile)}}</p>
     </ion-item>
 
     <!-- <ion-item class="userInfoBlock">
@@ -94,7 +94,7 @@
   <ion-list class="centerStage leadNotes">
       <ion-item *ngIf="accountInfo!=null">
         <h2 class="contentTitle">Description</h2>
-        <p>{{accountInfo.description}}</p>
+        <p [innerHTML]="accountInfo.description"></p>
       </ion-item>
   </ion-list>
 

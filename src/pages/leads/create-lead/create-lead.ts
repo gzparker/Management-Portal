@@ -6,6 +6,7 @@ import { Storage } from '@ionic/storage';
 import { DashboardPage } from '../../dashboard/dashboard';
 import { FbConfirmPage } from '../../fb-confirm/fb-confirm';
 import { IMultiSelectOption,IMultiSelectSettings } from 'angular-2-dropdown-multiselect';
+import { BrMaskerIonic3, BrMaskModel } from 'brmasker-ionic-3';
 import { Crop } from '@ionic-native/crop';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { ImagePicker } from '@ionic-native/image-picker';
@@ -37,6 +38,7 @@ declare var firebase:any;
 @Component({
   selector: 'page-create-lead',
   templateUrl: 'create-lead.html',
+  providers:[BrMaskerIonic3]
 })
 export class CreateLeadPage {
   @ViewChild('searchHomeBar', { read: ElementRef }) searchHomeBar: ElementRef;
@@ -101,7 +103,7 @@ export class CreateLeadPage {
     public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,
     public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform, 
-    public ngZone: NgZone,public menuCtrl: MenuController,private crop: Crop,
+    public ngZone: NgZone,public menuCtrl: MenuController,private crop: Crop,public brMaskerIonic3: BrMaskerIonic3,
     private camera: Camera,private imagePicker: ImagePicker,public loadingCtrl: LoadingController) {
       this.isApp = (!document.URL.startsWith("http"));
       
@@ -151,6 +153,7 @@ export class CreateLeadPage {
   {
     this.sharedServiceObj.updateColorThemeMethod(null);
   }
+  
   loadAllAgents()
     {
       if(this.userId.toString())

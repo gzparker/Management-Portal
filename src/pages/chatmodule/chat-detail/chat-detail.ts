@@ -1,6 +1,6 @@
 import { Component, ViewChild, NgZone,ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, Platform,
-   MenuController,ActionSheetController,Tabs,Content,LoadingController } from 'ionic-angular';
+   MenuController,ActionSheetController,Tabs,Content,LoadingController,PopoverController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 import { Crop } from '@ionic-native/crop';
@@ -83,7 +83,7 @@ private CkeditorConfig = {removeButtons:'Underline,Subscript,Superscript,Special
   ]};
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
-    public modalCtrl: ModalController, public alertCtrl: AlertController, 
+    public modalCtrl: ModalController, public alertCtrl: AlertController,public popoverCtrl: PopoverController,
     public platform: Platform,public actionSheetCtrl: ActionSheetController,public loadingCtrl: LoadingController) {
       this.isApp = (!document.URL.startsWith("http"));
       
@@ -297,8 +297,19 @@ this.chatImageInput.nativeElement.click();
    openEmoji()
    {
      var that=this;
-     var modalPage = this.modalCtrl.create(ChatEmojiPopupoverPage);
-     modalPage.onDidDismiss(data => {
+     var popOverPage = this.popoverCtrl.create(ChatEmojiPopupoverPage);
+     let ev = {
+      target : {
+        getBoundingClientRect : () => {
+          return {
+            top: '100',
+            left:'100'
+          };
+        }
+      }
+    };
+    popOverPage.onDidDismiss(data => {
+       //debugger;
       if(data!=undefined)
       {
         if(data.selectedEmoji!=undefined||data.selectedEmoji!=null)
@@ -308,7 +319,7 @@ this.chatImageInput.nativeElement.click();
       }
        
    });
-     modalPage.present();
+   popOverPage.present({ev});
    }
    replaceEmoji(description)
    {

@@ -6,6 +6,7 @@ import { Storage } from '@ionic/storage';
 
 import { Observable } from 'rxjs/Observable';
 import { IMultiSelectOption,IMultiSelectSettings } from 'angular-2-dropdown-multiselect';
+import { BrMaskerIonic3, BrMaskModel } from 'brmasker-ionic-3';
 import { Crop } from '@ionic-native/crop';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { ImagePicker } from '@ionic-native/image-picker';
@@ -40,6 +41,7 @@ declare var firebase:any;
 @Component({
   selector: 'page-edit-lead',
   templateUrl: 'edit-lead.html',
+  providers:[BrMaskerIonic3]
 })
 export class EditLeadPage {
   @ViewChild('searchHomeBar', { read: ElementRef }) searchHomeBar: ElementRef;
@@ -109,7 +111,7 @@ public geoLocationOptions = {
  };
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,
-    public sharedServiceObj: SharedProvider, private storage: Storage,
+    public sharedServiceObj: SharedProvider, private storage: Storage,public brMaskerIonic3: BrMaskerIonic3,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform, 
     public ngZone: NgZone,public menuCtrl: MenuController,public loadingCtrl: LoadingController,private crop: Crop,
     private camera: Camera,private imagePicker: ImagePicker,private toastCtrl: ToastController) {
@@ -186,6 +188,22 @@ if(this.chatRef!=undefined)
 this.chatRef.off("value");
 }
   }
+  setPhoneMask(phoneNumber:string)
+    {
+     // debugger;
+     if(phoneNumber!="")
+     {
+      const config: BrMaskModel = new BrMaskModel();
+      config.mask = '(000) 000-0000';
+      config.len = 15;
+      config.type = 'num';
+      return this.brMaskerIonic3.writeCreateValue(phoneNumber, config);
+     }
+    else
+    {
+      return "";
+    } 
+    }
   editLead(leadId:string):void{
     if(this.userId!="")
     {
@@ -318,9 +336,9 @@ getHomeAddress(data) {
      this.firstName=result.result.first_name;
      this.lastName=result.result.last_name;
      this.email=result.result.email;
-     this.mobileNumber=result.result.phone_mobile;
-     this.officeNumber=result.result.phone_office;
-     this.homeNumber=result.result.phone_home;
+     this.mobileNumber=this.setPhoneMask(result.result.phone_mobile);
+     this.officeNumber=this.setPhoneMask(result.result.phone_office);
+     this.homeNumber=this.setPhoneMask(result.result.phone_home);
      this.leadId=result.result.lead_id;
      this.selectedWebsite=result.result.website_id;
      this.home_address_street=result.result.home_address_street;

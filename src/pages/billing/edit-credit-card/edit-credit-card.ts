@@ -94,7 +94,7 @@ export class EditCreditCardPage {
     {
       this.monthValues.push(i);
     }
-    this.expiryDate=new Date(new Date().getFullYear().toString()+"-"+(new Date().getMonth().toString())).toISOString();
+    this.expiryDate=new Date(new Date().getFullYear().toString()+"-"+((new Date().getMonth()+1).toString())).toISOString();
   }
   loadCreditCardDetail()
   {

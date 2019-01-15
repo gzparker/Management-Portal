@@ -143,7 +143,7 @@
       <ion-item class="userInfoBlock ReqField">
         <ion-icon name="md-call" item-start></ion-icon>
         <!-- <ion-label stacked><span [ngClass]="{'error': phone_number==null}" *ngIf="phone_number==null">*</span></ion-label>         -->
-        <ion-input type="text" name="phone_number" [(ngModel)]="phone_number" placeholder="Cell Number" [brmasker]="{phone: true}"></ion-input>
+        <ion-input type="text" name="phone_number" [(ngModel)]="phone_number" placeholder="Cell Number" [brmasker]="{mask:'(000) 000-0000', len:15, type:'num'}"></ion-input>
       </ion-item>
       <ion-item class="OptMLS noShadow" *ngIf="service_id=='2'||service_id=='1'">
         <ion-label stacked>Select your MLS</ion-label>

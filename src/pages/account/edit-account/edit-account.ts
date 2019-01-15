@@ -6,6 +6,7 @@ import { Crop } from '@ionic-native/crop';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { ImageCropperComponent, CropperSettings } from "ngx-img-cropper";
+import { BrMaskerIonic3, BrMaskModel } from 'brmasker-ionic-3';
 import { GlobalPreferencesPage } from '../../setup/global-preferences/global-preferences';
 import 'moment';
 import * as moment from 'moment-timezone';
@@ -26,6 +27,7 @@ declare var CKEDITOR: any;
 @Component({
   selector: 'page-edit-account',
   templateUrl: 'edit-account.html',
+  providers:[BrMaskerIonic3]
 })
 export class EditAccountPage {
   @ViewChild('personalCropper', undefined)
@@ -95,7 +97,7 @@ export class EditAccountPage {
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform,
-    public loadingCtrl: LoadingController,private crop: Crop,private camera: Camera,
+    public loadingCtrl: LoadingController,private crop: Crop,private camera: Camera,public brMaskerIonic3: BrMaskerIonic3,
     private imagePicker: ImagePicker,private toastCtrl: ToastController, public subscriptionObj: SubscriptionProvider) {
       //this.CkeditorConfig=this.sharedServiceObj.CkeditorConfig;
       this.hideImageCropper=false;
@@ -172,6 +174,22 @@ export class EditAccountPage {
   {
     this.sharedServiceObj.updateColorThemeMethod(null);
   }
+  setPhoneMask(phoneNumber:string)
+    {
+     // debugger;
+     if(phoneNumber!="")
+     {
+      const config: BrMaskModel = new BrMaskModel();
+      config.mask = '(000) 000-0000';
+      config.len = 15;
+      config.type = 'num';
+      return this.brMaskerIonic3.writeCreateValue(phoneNumber, config);
+     }
+    else
+    {
+      return "";
+    } 
+    }
   loadAllAvailableMLS()
   {
     this.subscriptionObj.loadAllAvailableMLS()
@@ -286,7 +304,7 @@ else
      this.agent_title=this.accountInfo.agent_title;
    // debugger;
      this.passwordUpdated=this.accountInfo.password;
-     this.phone_number=this.accountInfo.phone_mobile;
+     this.phone_number=this.setPhoneMask(this.accountInfo.phone_mobile);
       if(this.accountInfo.mls_server_id!=null)
           {
       this.mls_server_id=this.accountInfo.mls_server_id.split(',');
