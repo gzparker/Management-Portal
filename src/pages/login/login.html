@@ -21,8 +21,14 @@
 
   <div class="loginLogo animated fadeIn">    
     
-    <img src={{websiteBackgroundInfo.brand_image_url}}  *ngIf="websiteBackgroundInfo!=undefined"
-        (error)="imgLogin.src = this.sharedServiceObj.noImageUrl" #imgLogin [ngClass]="{'logo-intagent': serviceType=='intagent', 'logo-idx':serviceType=='idx' }"/>
+    <!--<img src={{websiteBackgroundInfo.brand_image_url}}  *ngIf="websiteBackgroundInfo!=undefined"
+        (error)="imgLogin.src = this.sharedServiceObj.noImageUrl" #imgLogin [ngClass]="{'logo-intagent': serviceType=='intagent', 'logo-idx':serviceType=='idx' }"/>-->
+        <img *ngIf="serviceType=='intagent'&&websiteBackgroundInfo!=undefined" src={{websiteBackgroundInfo.brand_image_url}} 
+        (error)="imgHome.src = this.sharedServiceObj.noImageUrl" 
+        [ngClass]="{'slide-image': serviceType=='intagent', 'logo-intagent':serviceType=='intagent' }" #imgHome/>
+        <img *ngIf="serviceType=='idx'&&websiteBackgroundInfo!=undefined" src={{websiteBackgroundInfo.brand_image_url}} 
+        (error)="imgHome.src = this.sharedServiceObj.noImageUrl" 
+        [ngClass]="{'slide-image': serviceType=='idx', 'logo-idx':serviceType=='idx' }" #imgHome/>
         
         <!--<img src="assets/imgs/idx-main-logo-white.png" class="logo-idx">-->
         <!--<img src="assets/imgs/logo_intagent.png" class="logo-intagent">-->
