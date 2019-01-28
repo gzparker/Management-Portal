@@ -7,7 +7,7 @@ import { EditAccountPage } from '../edit-account/edit-account';
 import { AlertController,ToastController } from 'ionic-angular';
 import { SharedProvider } from '../../../providers/shared/shared';
 import { UserProvider } from '../../../providers/user/user';
-
+import { DashboardTabsPage } from '../../tabs/dashboard-tabs/dashboard-tabs';
 /**
  * Generated class for the AccountInfoPage page.
  *
@@ -89,7 +89,8 @@ export class AccountInfoPage {
   }
   editAccount()
   {
-this.navCtrl.push(EditAccountPage,{userId:this.userId});
+//this.navCtrl.push(EditAccountPage,{userId:this.userId});
+this.navCtrl.setRoot(DashboardTabsPage,{selectedPage:26});
   }
   viewAccount():void{
     if(this.userId!="")

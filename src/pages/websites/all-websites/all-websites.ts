@@ -334,7 +334,40 @@ export class AllWebsitesPage {
     this.navCtrl.push(EditLeadRoutingPage,{websiteId:websiteId});
   }
   createWebsite(){
-    this.navCtrl.push(CreateWebsitePage);
+   // debugger;
+    //this.navCtrl.push(CreateWebsitePage);
+    this.userServiceObj.checkWebsiteCount(this.userId.toString())
+    .subscribe((result) => this.checkWebsiteCountResp(result));
+  }
+  checkWebsiteCountResp(result:any)
+  {
+//debugger;
+if(result.status==true)
+{
+  this.navCtrl.push(CreateWebsitePage);
+}
+else
+{
+  let confirm = this.alertCtrl.create({
+    title: 'Website Create?',
+    message: result.message,
+    buttons: [
+      {
+        text: 'Cancel',
+        handler: () => {
+         // console.log('Disagree clicked');
+        }
+      },
+      {
+        text: 'Ok',
+        handler: () => {
+          this.navCtrl.push(CreateWebsitePage);
+        }
+      }
+    ]
+  });
+  confirm.present(); 
+}
   }
   viewPaperWorkStatus(website_id:string)
   {

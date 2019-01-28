@@ -815,16 +815,12 @@ if(this.accountInfo.mls_server_id!=this.mls_server_id)
  
       dataObj.mls_server_id = this.mls_server_id.toString();
 }
-//debugger;
-//this.loader.present();
     this.userServiceObj.updateAccount(this.userId,dataObj)
     .subscribe((result) => this.updatAccountResp(result));
   }
   updatAccountResp(result:any):void{
-   //this.loader.dismiss();
     if(result.status==true)
     {
-//debugger;
      this.ngZone.run(() => {
       CKEDITOR.instances['user_description_editor'].destroy(true);
   this.navCtrl.push(AccountInfoPage,{notificationMsg:"Account has been updated successfully."})
@@ -832,14 +828,6 @@ if(this.accountInfo.mls_server_id!=this.mls_server_id)
     }
   else
   {
-   // debugger;
-    //this.accountInfoUpdateMsg=result.message;
-    /*let alert = this.alertCtrl.create({
-      title: 'Notification',
-      subTitle: result.message,
-      buttons: ['Ok']
-    });
-    alert.present();*/
     let toast = this.toastCtrl.create({
       message: result.message,
       duration: 3000,

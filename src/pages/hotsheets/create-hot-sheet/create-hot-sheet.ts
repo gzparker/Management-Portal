@@ -62,7 +62,7 @@ public isApp=false;public isWebBrowser=false;public msl_id:string="";public name
   public bathrooms:string="";public address:string="";public address_country:string="";public address_township:string="";
   public basement:string="";public date_listed:Date;public days_on_market:string="";public garage_size:string="";
   public unit_size_min:string="";public unit_size_max:string="";public lot_size_modal:string="0";public lot_size_min:string="";
-  public lot_size_max:string="";public year_built_min:string="";public year_built_max:string="";
+  public lot_size_max:string="";public lot_size_type:string="sqft";public year_built_min:string="";public year_built_max:string="";
   public dols:string="-1";public parcel_num:string="";public school_district:string="";public school_elem:string="";
   public school_high:string="";public stories:string="";public year_built:string="";public status:any[]=[];
   public geoLocationOptions = {
@@ -107,7 +107,7 @@ public isApp=false;public isWebBrowser=false;public msl_id:string="";public name
   public selectedSearch : boolean=false;public showUpdateButton : boolean=true;public selectedLat:string="";
   public selectedLong:string="";public userId:string="";public brief_description:string="";public main_description:string="";
   public virtual_tour_url:string="";public video_url:string="";public city:string="";public sub_city:string="";
-  public polygon_search:any="";public headerImage:string="";public communityImage:string="";
+  public polygon_search:any="";public headerImage:string="";public communityImage:string="";public showCustom:boolean=false;
   public communityImageArray:string[]=[];public dataCommunityImageArray:any[]=[];public slideShowImage:string="";
   public slideShowImageArray:string[]=[];public dataSlideShowImageArray:any[]=[];public allAgents:any[]=[];
   public assigned_agent_id:any[]=[];public listing_size_min:string="";public listing_size_max:string="";
@@ -887,6 +887,18 @@ this.allListingTypeChecked=true;
       this.days_on_market=result.searchFieldsJson.days_on_market;
       this.garage_size=result.searchFieldsJson.garage_size;
      // this.listing_size=result.searchFieldsJson.listing_size;
+     if(result.searchFieldsJson.lot_size_min!=undefined)
+       {
+         this.lot_size_min=result.searchFieldsJson.lot_size_min;
+       }
+       if(result.searchFieldsJson.lot_size_max!=undefined)
+       {
+         this.lot_size_max=result.searchFieldsJson.lot_size_max;
+       }
+       if(result.searchFieldsJson.lot_size_type!=undefined)
+       {
+         this.lot_size_type=result.searchFieldsJson.lot_size_type;
+       }
       /*this.lot_size_min=result.searchFieldsJson.lot_size_min;
       this.lot_size_max=result.searchFieldsJson.lot_size_max;*/
       if(result.searchFieldsJson.lot_size)
@@ -1069,14 +1081,18 @@ this.lot_size_modal=result.searchFieldsJson.lot_size;
       {
 this.lot_size_modal=lastSearchedObj.lot_size;
       }
-         /*if(lastSearchedObj.lot_size_min)
+         if(lastSearchedObj.lot_size_min)
          {
            this.lot_size_min=lastSearchedObj.lot_size_min;
          }
          if(lastSearchedObj.lot_size_max)
          {
            this.lot_size_max=lastSearchedObj.lot_size_max;
-         }*/
+         }
+         if(lastSearchedObj.lot_size_type)
+         {
+           this.lot_size_type=lastSearchedObj.lot_size_type;
+         }
          if(lastSearchedObj.parcel_num)
          {
            this.parcel_num=lastSearchedObj.parcel_num;
@@ -1193,10 +1209,20 @@ this.lot_size_modal=lastSearchedObj.lot_size;
        this.dols="";
      }*/
      //debugger;
+     //debugger;
+          if(this.lot_size_modal=="custom")
+      {
+        this.showCustom=true;
+      }
+      else
+      {
+        this.showCustom=false;
+      }
       if(isAllSelected)
       {
       this.searchListObject={msl_id:this.msl_id,bedrooms:this.bedrooms,bathrooms:this.bathrooms,address_township:this.address_township,days_on_market:this.days_on_market,
-        date_listed:this.date_listed,garage_size:this.garage_size,lot_size_min:this.lot_size_min,lot_size_max:this.lot_size_max,
+        date_listed:this.date_listed,garage_size:this.garage_size,lot_size_min:this.lot_size_min,
+        lot_size_max:this.lot_size_max,lot_size_type:this.lot_size_type,
         parcel_num:this.parcel_num,school_district:this.school_district,school_elem:this.school_elem,school_high:this.school_high,
         listing_type:this.listing_type,stories:this.stories,address_city:this.address_city_modal,address_subdivision:this.address_subdivision_modal,
         home_type:this.home_type_modal,address_zip_code:this.address_zip_code_modal,lot_size:this.lot_size_modal,
@@ -1211,7 +1237,7 @@ this.lot_size_modal=lastSearchedObj.lot_size;
     {
       this.searchListObject={msl_id:this.msl_id,bedrooms:this.bedrooms,bathrooms:this.bathrooms,address_township:this.address_township,days_on_market:this.days_on_market,
         date_listed:this.date_listed,garage_size:this.garage_size,
-        lot_size_min:this.lot_size_min,lot_size_max:this.lot_size_max,
+        lot_size_min:this.lot_size_min,lot_size_max:this.lot_size_max,lot_size_type:this.lot_size_type,
         parcel_num:this.parcel_num,school_district:this.school_district,school_elem:this.school_elem,school_high:this.school_high,
         listing_type:this.listing_type,stories:this.stories,address_city:this.address_city_modal,address_subdivision:this.address_subdivision_modal,
         home_type:this.home_type_modal,address_zip_code:this.address_zip_code_modal,lot_size:this.lot_size_modal,
@@ -1295,7 +1321,8 @@ this.lot_size_modal=lastSearchedObj.lot_size;
 
          //if(data!=null)
          //{
-          debugger;
+          //debugger;
+          
           this.userServiceObj.createHotSheet(this.userId.toString(),this.selectedWebsite,
           this.sharedServiceObj.mlsServerId,this.name,this.hotsheet_Title,this.slug,
           JSON.stringify(this.searchListObject),CKEDITOR.instances['brief_description'].getData(),

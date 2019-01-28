@@ -372,12 +372,33 @@
             </ion-item>-->
             <ion-item>
               <ion-label>Lot Size</ion-label>
-              <ion-select [(ngModel)]="lot_size_modal" name="lot_size_modal">
+              <ion-select [(ngModel)]="lot_size_modal" name="lot_size_modal" (ngModelChange)="updateSearchObject()">
               <ion-option *ngFor="let lotSizeObj of lotSizeOptions" value= {{lotSizeObj.id}}>
               {{lotSizeObj.name}}
               </ion-option>
               </ion-select>
             </ion-item>
+            <ion-item class="input-text-right mr5" *ngIf="showCustom==true">
+              <ion-label>Lot Size</ion-label>
+              <ion-input type="text" [(ngModel)]="lot_size_min"
+              name="lot_size_min" id="lot_size_min" placeholder="min" (blur)="updateSearchObject()"></ion-input>
+        
+              <ion-input type="text" [(ngModel)]="lot_size_max" 
+              name="lot_size_max" id="lot_size_max" placeholder="max" (blur)="updateSearchObject()"></ion-input>
+            </ion-item>
+           
+            <ion-list radio-group [(ngModel)]="lot_size_type" *ngIf="showCustom==true" (ionChange)="updateSearchObject()" [ngModelOptions]="{standalone: true}">
+     
+              <ion-item>
+                <ion-label>Sq.Ft</ion-label>
+                <ion-radio value="sqft"></ion-radio>
+              </ion-item>
+              <ion-item>
+                <ion-label>Acre</ion-label>
+                <ion-radio value="acre"></ion-radio>
+              </ion-item>
+           
+          </ion-list>
             <ion-item>
               <ion-label fixed>Year Built</ion-label>
               

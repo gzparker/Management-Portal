@@ -906,7 +906,7 @@ sendAppInvitation(phone_number:string,message:string){
     data.append('notification_type','message');
     data.append('title',subject);
     data.append('service_id',service_id);
-    debugger;
+    //debugger;
       let contactEmail=this.http
         .post(this.sharedServiceObj.registerationApiBaseUrl+'messaging/sendEmailMessage', data, this.headerOptions)
         .map(this.extractData)
@@ -920,6 +920,15 @@ allUserWebsites(user_id:string){
     .post(this.sharedServiceObj.registerationApiBaseUrl+'members/viewAllWebsites', data, this.headerOptions)
     .map(this.extractData)
     return websiteListing;
+}
+checkWebsiteCount(user_id:string)
+{
+  let data = new URLSearchParams();
+  data.append('member_id',user_id);
+  let websiteCountResult=this.http
+    .post(this.sharedServiceObj.registerationApiBaseUrl+'members/checkWebsiteCount', data, this.headerOptions)
+    .map(this.extractData)
+    return websiteCountResult;
 }
 createWebsite(user_id:string,isActive:string,website_domain:string,identity_name:string,
   intagent_website:number,website_a_record_location:string,identity_phone_number:string,homepage_description:string,
@@ -1050,7 +1059,7 @@ data.append('homepage_meta_title',homepage_meta_title);
 data.append('agent_id',agent_id);
 data.append('office_id',office_id);
 data.append('broker_id',broker_id);
-
+//debugger;
 data.append('color_base',colorBase);
 data.append('color_second',secondColor);
 data.append('color_third',thirdColor);
