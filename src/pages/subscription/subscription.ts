@@ -33,6 +33,7 @@ export class SubscriptionPage {
   public allAvailablePackages: any[] = [];
   public intervalBasedPackages: any[] = [];
   public selectedPackagesList: any[] = [];
+  public selected_packageIds:any[]=[];
   public yearValues:any[]=[];
   public monthValues:any[]=[];
   public selectedCoupon:string="";
@@ -210,8 +211,8 @@ if(this.selectedPackagesList.length>0)
 //});
 for(let i=0;i<this.selectedPackagesList.length;i++)
 {
-  dataObj.service_plans_array.push(this.selectedPackagesList[i].id);
-  if(this.selectedPackagesList[i].required=="true")
+  dataObj.service_plans_array.push(this.selectedPackagesList[i][0].id);
+  if(this.selectedPackagesList[i][0].required=="true")
   {
     requiredPlan="1";
   }
@@ -332,23 +333,27 @@ else
     }
   }
   setSelectedPackage(packageItem:any) {
-    let selectedIndex = this.selectedPackagesList.indexOf(packageItem);
+    this.selectedPackagesList=[];
+    this.selected_packageIds.forEach(element => {
+      let foundPackage=this.intervalBasedPackages.filter(
+        packageList => packageList.id === element);
+        this.selectedPackagesList.push(foundPackage);
+    });
+    
+    /*let selectedIndex = this.selectedPackagesList.indexOf(packageItem);
     if (selectedIndex >= 0) {
       this.selectedPackagesList.splice(selectedIndex, 1);
     }
     else {
       this.selectedPackagesList.push(packageItem);
-    }
+    }*/
+    //debugger;
     this.calculateTotalPrice();
   }
   calculateTotalPrice()
   {
     this.totalAmount=0;
     this.selectedCoupon="";
-//debugger;
-//this.selectedPackagesList.forEach((item)=>{
-//debugger;
-//})
 if(this.selectedPackagesList!=undefined)
 {
   if(this.selectedPackagesList.length>0)
@@ -357,34 +362,22 @@ if(this.selectedPackagesList!=undefined)
   {
     if(this.selectedPromoCode!=undefined&&this.selectedPromoCode.coupon==this.promo_code)
     {
-      //debugger;
-      //if(this.selectedPromoCode.id==this.selectedPackagesList[i].id&&this.selectedPromoCode.coupon==this.promo_code)
-      if(this.selectedPackagesList[i].required=="true"&&this.selectedPromoCode.coupon==this.promo_code)
+      if(this.selectedPackagesList[i][0].required=="true"&&this.selectedPromoCode.coupon==this.promo_code)
       {
         this.selectedCoupon=this.selectedPromoCode.coupon;
         this.totalAmount=this.totalAmount+parseFloat(this.selectedPromoCode.subtract_amount);
       }
       else
       {
-        this.totalAmount=this.totalAmount+parseFloat(this.selectedPackagesList[i].amount);
+        this.totalAmount=this.totalAmount+parseFloat(this.selectedPackagesList[i][0].amount);
       }
     }
     else
     {
-      this.totalAmount=this.totalAmount+parseFloat(this.selectedPackagesList[i].amount);
+      this.totalAmount=this.totalAmount+parseFloat(this.selectedPackagesList[i][0].amount);
     }
-   /* if(this.selectedPlanStringListString!="")
-    {
-      this.selectedPlanStringListString=this.selectedPlanStringListString+","+this.selectedPackagesList[i].stripe_dev_plan_id.toString();
-    }
-    else
-    {
-      this.selectedPlanStringListString=this.selectedPlanStringListString;
-    }*/
-  //debugger;
   }
 }
 }
-
   }
 }
