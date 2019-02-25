@@ -71,6 +71,42 @@
         </ion-option>
         </ion-select>
       </ion-item>
+      <ion-item class="noPadding itemMargin">
+        <ion-label stacked>Receive Reminders</ion-label>
+        <ion-select placeholder="-----" [(ngModel)]="receive_reminders"  
+        name="receive_reminders" multiple="true" required>
+        <ion-option *ngFor="let notificationOption of notificationOptions" value= {{notificationOption.id}}>
+        {{notificationOption.name}}
+        </ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item class="noPadding itemMargin">
+        <ion-label stacked>Receive Lead Notifications</ion-label>
+        <ion-select placeholder="-----" [(ngModel)]="receive_lead_notifications"  
+        name="receive_lead_notifications" multiple="true" required>
+        <ion-option *ngFor="let notificationOption of notificationOptions" value= {{notificationOption.id}}>
+        {{notificationOption.name}}
+        </ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item class="noPadding itemMargin">
+        <ion-label stacked>Receive Hotsheet Notifications</ion-label>
+        <ion-select placeholder="-----" [(ngModel)]="receive_hotsheet_notifications"  
+        name="receive_hotsheet_notifications" multiple="true" required>
+        <ion-option *ngFor="let notificationOption of notificationOptions" value= {{notificationOption.id}}>
+        {{notificationOption.name}}
+        </ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item class="noPadding itemMargin">
+        <ion-label stacked>Receive Website Visitors Notifications</ion-label>
+        <ion-select placeholder="-----" [(ngModel)]="receive_website_notifications"  
+        name="receive_website_notifications" multiple="true" required>
+        <ion-option *ngFor="let notificationOption of notificationOptions" value= {{notificationOption.id}}>
+        {{notificationOption.name}}
+        </ion-option>
+        </ion-select>
+      </ion-item>
       <div class="dashboardBtn">
         <button ion-button color="primary" class="colorEnabled button_color" 
         block (click)="updateNotificationSettings();" [disabled]="!notificationSettingsForm.valid">Save</button>

@@ -32,33 +32,18 @@
             <ion-input type="text" [(ngModel)]="website_domain" 
             name="website_domain" id="website_domain" required [pattern]="'^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}'"></ion-input>
         </ion-item>
-
-        <!-- <div class="leadMapAddress">
-          <div class="addressBlock">
-          <ion-icon name="md-pin" item-start></ion-icon>
-          <h2 class="contentTitle">Target City</h2>          
-          <ion-searchbar #searchTargetCityBar placeholder="Search Target City" [(ngModel)]="targetCityDummy" name="targetCityDummy" id="targetCityDummy"></ion-searchbar>
-          </div>
-      </div> -->
-      
       <div class="websiteInfoSettings blk1">          
           <div class="targetCityBlock">
-          <!-- <ion-icon name="md-pin" item-start></ion-icon> -->
-          <!-- <h2 class="contentTitle">Target City</h2> -->
           <ion-label stacked>Target City</ion-label>
-          <!--<ion-input type="text" placeholder="Edit Home Address"></ion-input>-->
           <ion-searchbar #searchTargetCityBar placeholder="Search Target City" [(ngModel)]="targetCityDummy" name="targetCityDummy" id="targetCityDummy"></ion-searchbar>
           </div>
       </div>
-
-
         <ion-item>
             <ion-label stacked>IDX Installed Location</ion-label>
             <ion-input type="text" [(ngModel)]="website_a_record_location" 
             name="website_a_record_location" id="website_a_record_location" 
             placeholder="Please type exactly what your location is for your domain search."></ion-input>
         </ion-item>
-       
         <ion-item>
             <ion-label stacked>Identity Phone Number</ion-label>
             <ion-input type="text" [(ngModel)]="identity_phone_number" 
@@ -97,8 +82,6 @@
             </ion-col>
             <ion-col col-4>
               <ion-item class="userInfoBlock">
-              <!-- <ion-icon name="md-briefcase" item-start></ion-icon> -->
-              <!--<ion-label stacked><span [ngClass]="{'error': office_id==''}" *ngIf="office_id==''">*</span></ion-label>-->
               <ion-label stacked>Office ID</ion-label>
               <ion-input type="text" [(ngModel)]="office_id" name="office_id"></ion-input>
               </ion-item>               

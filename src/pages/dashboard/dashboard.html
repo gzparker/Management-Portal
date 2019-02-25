@@ -17,43 +17,12 @@
 <ion-content padding class="noHeader dashboardUI">
 <div class="dashboardBG colorEnabled background_color" ion-fixed></div>
   <div class="centerStage">
-  <!--<ion-chip *ngIf="notificationMsg!=''">
-    <ion-label color="secondary">{{notificationMsg}}</ion-label>
-  </ion-chip>-->
-
-  <!-- <h1 class="contentTitle">Welcome To Dashboard</h1> -->
   <h1 class="contentTitle animated bounceInRight">Leads Chart</h1>  
-
-
-  <!--<ion-card menuClose (tap)="openPage('6')" *ngIf="userId!=''">
-    <img src="assets/imgs/card-leads.jpg"/>
-    <div class="card-title">Leads</div>
-    <div class="card-subtitle">{{totalSubMembers}} Listings</div>
-  </ion-card>-->
-  
+ 
   <ion-card class="animated bounceInDown">
-    <!-- <ion-card-header>Leads Chart</ion-card-header> -->
     <ion-card-content>
       <canvas #barCanvas></canvas>      
     </ion-card-content>
   </ion-card>
- 
-  <!--<ion-card>
-    <ion-card-header>
-      Doughnut Chart
-    </ion-card-header>
-    <ion-card-content>
-      <canvas #doughnutCanvas></canvas>
-    </ion-card-content>
-  </ion-card>
-
-  <ion-card>
-    <ion-card-header>
-      Line Chart
-    </ion-card-header>
-    <ion-card-content>
-      <canvas #lineCanvas></canvas>
-    </ion-card-content>
-  </ion-card>-->
   </div>
 </ion-content>

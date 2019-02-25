@@ -67,7 +67,7 @@ export class MyApp {
   public isWebBrowser=false;
   rootPage: any = HomePage;
   public userLoggedIn: boolean = false;
-  public paidStatus:boolean=true;
+  public paidStatus:boolean=false;
   public allCountryCodes: any[] = [];
   public showWebsiteSubmenu=false;
   public showLeadsSubmenu=false;
@@ -417,7 +417,7 @@ if(result)
 //debugger;
 messaging.requestPermission()
 .then(function() {
- 
+  debugger;
 })
 .then(function(token) {
 //debugger;
@@ -430,7 +430,7 @@ messaging.requestPermission()
 });
 messaging.getToken().then((currentToken)=> {
   if (currentToken) {
-  //debugger;
+  debugger;
   //alert(currentToken);
     this.storage.set("firebase_token",currentToken);
     
@@ -446,7 +446,10 @@ messaging.getToken().then((currentToken)=> {
   //setTokenSentToServer(false);
 });
 messaging.onMessage(function(payload){
+  debugger;
+  alert("notification received");
     console.log('onMessage',payload);
+    //debugger;
 })
   }
   clearAllStorageElement() {

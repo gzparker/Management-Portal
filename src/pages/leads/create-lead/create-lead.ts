@@ -272,13 +272,15 @@ export class CreateLeadPage {
     if(this.userId!="")
     {
     //  this.loader.present();
+    debugger;
   this.userServiceObj.createLead(this.userId.toString(),this.selectedWebsite,this.email,
   this.password,this.firstName,this.lastName,
   this.officeNumber,this.mobileNumber,this.homeNumber,this.home_address_street,this.home_address_city,
   this.home_address_state_or_province,this.home_address_zipcode,
   this.work_address_street,this.work_address_city,this.work_address_state_or_province,this.work_zipcode,
 this.assigned_agent_id,this.category,this.internal_notes,this.home_address,
-this.home_lat_lng,this.home_google_place_id,this.work_address,this.work_lat_lng,this.work_google_place_id,this.leadImage)
+this.home_lat_lng,this.home_google_place_id,this.work_address,this.work_lat_lng,this.work_google_place_id,
+this.leadImage)
     .subscribe((result) => this.createLeadResp(result));
  
     }

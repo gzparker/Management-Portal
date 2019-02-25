@@ -467,7 +467,7 @@ is_online="1";
     url = this.sharedServiceObj.registerationApiBaseUrl + 'members/memberLogin';
     
     let data = new URLSearchParams();
-    //debugger;
+    debugger;
     data.append('email', email);
     data.append('password', password);
     data.append('firebase_token', this.firbase_token_data);
@@ -1463,7 +1463,7 @@ getAllMemberAllowedOptions(allowedOptions)
 loadNotificationSettings(member_id:string){
   let data = new URLSearchParams();
     data.append('member_id',member_id);
-    data.append('member_id',member_id);
+    //data.append('member_id',member_id);
    let notificationSettingsResp=this.http
        .post(this.sharedServiceObj.registerationApiBaseUrl+'members/loadNotificationSettings', data, this.headerOptions)
        .map(this.extractData)
@@ -1471,7 +1471,8 @@ loadNotificationSettings(member_id:string){
 }
 updateNotificationSettings(member_id:string,receive_account_support:any,
   receive_messages:any,receive_policy_and_community:any,receive_promotions_and_tips:any,
-  receive_reminders:any){
+  receive_reminders:any,receive_lead_notifications:any,receive_website_notifications:any,
+  receive_hotsheet_notifications:any){
   let data = new URLSearchParams();
     data.append('member_id',member_id);
     data.append('receive_account_support',receive_account_support);
@@ -1479,6 +1480,9 @@ updateNotificationSettings(member_id:string,receive_account_support:any,
     data.append('receive_policy_and_community',receive_policy_and_community);
     data.append('receive_promotions_and_tips',receive_promotions_and_tips);
     data.append('receive_reminders',receive_reminders);
+    data.append('receive_lead_notifications',receive_lead_notifications);
+    data.append('receive_website_notifications',receive_website_notifications);
+    data.append('receive_hotsheet_notifications',receive_hotsheet_notifications);
     //debugger;
    let notificationSettingsResp=this.http
        .post(this.sharedServiceObj.registerationApiBaseUrl+'members/updateNotificationSettings', data, this.headerOptions)

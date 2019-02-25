@@ -42,6 +42,9 @@ export class NotificationSettingsPage {
   public receive_promotions_and_tips:any[]=[];
   public receive_policy_and_community:any[]=[];
   public receive_account_support:any[]=[];
+  public receive_lead_notifications:any[]=[];
+  public receive_website_notifications:any[]=[];
+  public receive_hotsheet_notifications:any[]=[];
   public notificationOptions:any[]=[{id:"sms",name:"SMS"},{id:"email",name:"Email"},{id:"push",name:"Push Notification"}];
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,
@@ -72,17 +75,46 @@ export class NotificationSettingsPage {
     if(result.status!=false)
     {
       let notificationSettingsData=result.results[0];
-this.receive_account_support=notificationSettingsData.receive_account_support.split(',');
-this.receive_reminders=notificationSettingsData.receive_reminders.split(',');
-this.receive_messages=notificationSettingsData.receive_messages.split(',');
-this.receive_policy_and_community=notificationSettingsData.receive_policy_and_community.split(',');
-this.receive_promotions_and_tips=notificationSettingsData.receive_promotions_and_tips.split(',');
+      debugger;
+      if(notificationSettingsData.receive_account_support!=null)
+      {
+        this.receive_account_support=notificationSettingsData.receive_account_support.split(',');
+      }
+      if(notificationSettingsData.receive_reminders!=null)
+      {
+        this.receive_reminders=notificationSettingsData.receive_reminders.split(',');
+      }
+      if(notificationSettingsData.receive_messages!=null)
+      {
+        this.receive_messages=notificationSettingsData.receive_messages.split(',');
+      }
+      if(notificationSettingsData.receive_policy_and_community!=null)
+      {
+        this.receive_policy_and_community=notificationSettingsData.receive_policy_and_community.split(',');
+      }
+      if(notificationSettingsData.receive_promotions_and_tips!=null)
+      {
+        this.receive_promotions_and_tips=notificationSettingsData.receive_promotions_and_tips.split(',');
+      }
+      if(notificationSettingsData.receive_lead_notifications!=null)
+      {
+        this.receive_lead_notifications=notificationSettingsData.receive_lead_notifications.split(',');
+      }
+      if(notificationSettingsData.receive_website_notifications!=null)
+      {
+        this.receive_website_notifications=notificationSettingsData.receive_website_notifications.split(',');
+      }
+      if(notificationSettingsData.receive_hotsheet_notifications!=null)
+      {
+        this.receive_hotsheet_notifications=notificationSettingsData.receive_hotsheet_notifications.split(',');
+      }
     }
   }
   updateNotificationSettings()
   {
     this.userServiceObj.updateNotificationSettings(this.userId,this.receive_account_support,
-      this.receive_messages,this.receive_policy_and_community,this.receive_promotions_and_tips,this.receive_reminders)
+      this.receive_messages,this.receive_policy_and_community,this.receive_promotions_and_tips,
+      this.receive_reminders,this.receive_lead_notifications,this.receive_website_notifications,this.receive_hotsheet_notifications)
     .subscribe((result) => this.updateNotificationSettingsResp(result));
   }
   updateNotificationSettingsResp(result:any)
