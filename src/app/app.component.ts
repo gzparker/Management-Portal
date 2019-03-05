@@ -417,7 +417,7 @@ if(result)
 //debugger;
 messaging.requestPermission()
 .then(function() {
-  debugger;
+  //debugger;
 })
 .then(function(token) {
 //debugger;
@@ -430,7 +430,7 @@ messaging.requestPermission()
 });
 messaging.getToken().then((currentToken)=> {
   if (currentToken) {
-  debugger;
+  //debugger;
   //alert(currentToken);
     this.storage.set("firebase_token",currentToken);
     
@@ -446,7 +446,7 @@ messaging.getToken().then((currentToken)=> {
   //setTokenSentToServer(false);
 });
 messaging.onMessage(function(payload){
-  debugger;
+  //debugger;
   alert("notification received");
     console.log('onMessage',payload);
     //debugger;

@@ -26,10 +26,6 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <!--<ion-chip *ngIf="notificationMsg!=''">
-    <ion-label color="secondary">{{notificationMsg}}</ion-label>
-  </ion-chip>-->
-
   <h1 class="centerStage contentTitle animated bounceInRight">Manage Members</h1>
   
   <div class="centerStage formShadow">
@@ -70,33 +66,7 @@
   </ion-list>
   </div>
 
-  
-  <!--<div class="formShadow">
-  <ion-list *ngIf="isApp" class="animated lightSpeedIn noShadow">
-   
-    <ion-item-sliding *ngFor="let agent of allAgents">
-      <ion-item (click)="agentDetail(agent.id)">
-        <ion-avatar class="imgFull">
-        <img src="{{this.sharedServiceObj.imgBucketUrl}}{{agent.image_url}}" (error)="imgAgent1.src = this.sharedServiceObj.noImageUrl" #imgAgent1/>
-        </ion-avatar>
-        <h2 class="agentName">{{agent.first_name}} {{agent.last_name}}</h2>
-        <p class="agentEmail">{{agent.email}}</p>
-        <p class="agentDescription" [innerHTML]="agent.description"></p>
-    </ion-item>
-    <ion-item-options side="right">
-      <button ion-button item-right color="primary" (click)="editAgent(agent.id)" *ngIf="isEditAgentAccess==true">
-        <ion-icon name="ios-brush">Edit</ion-icon>
-      </button>
-      <button ion-button item-right color="danger" (click)="deleteAgent(agent)" *ngIf="isDeleteAgentAccess==true">
-        <ion-icon name="md-trash">Delete</ion-icon>
-      </button>
-    </ion-item-options>
-  </ion-item-sliding>
-
-</ion-list>
-</div>-->
-
-<div class="centerStage formShadow">
+<!--<div class="centerStage formShadow">
 <ion-list class="animated lightSpeedIn noShadow">
 
   <ion-item-sliding *ngFor="let agent of allAgents" class="colorEnabled button_color">
@@ -132,10 +102,5 @@
   </ion-item-sliding>
 
 </ion-list>
-</div>
-
-<!--<ion-chip *ngIf='allAgents.length<=0&&agentsFoundMessage!=""'>
-  <ion-label color="danger">{{agentsFoundMessage}}</ion-label>
-</ion-chip>-->
-
+</div>-->
 </ion-content>

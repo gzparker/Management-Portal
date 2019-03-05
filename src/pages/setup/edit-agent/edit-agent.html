@@ -45,6 +45,15 @@
         <ion-input type="password" [(ngModel)]="password" name="password" id="password"></ion-input>
     </ion-item>
     <ion-item>
+      <ion-label stacked>Select Website</ion-label>
+      <ion-select placeholder="-----" [(ngModel)]="selectedWebsite" 
+      name="selectedWebsite" multiple="true" required>
+       <ion-option *ngFor="let website of allWebsiteList" value= {{website.id}}>
+          {{website.website}}
+        </ion-option>
+      </ion-select>
+ </ion-item>
+    <ion-item>
       <ion-label stacked>MLS ID</ion-label>
       <ion-input type="text" [(ngModel)]="mls_id" name="mls_id" id="mls_id"></ion-input>
   </ion-item>

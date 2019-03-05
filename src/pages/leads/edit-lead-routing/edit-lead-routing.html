@@ -59,6 +59,15 @@
               <ion-toggle [(ngModel)]="send_to_roundrobin" name="send_to_roundrobin"></ion-toggle>
             </ion-item>
             <ion-item>
+              <ion-label stacked>Select Agents</ion-label>
+              <ion-select placeholder="-----" [(ngModel)]="assigned_agent_id"  
+              name="assigned_agent_id" multiple="true">
+              <ion-option *ngFor="let agent of allAgents" value= {{agent.id}}>
+              {{agent.first_name}} {{agent.last_name}}
+              </ion-option>
+              </ion-select>
+            </ion-item>
+            <ion-item>
               <ion-label>Agent microsites automatically get leads, CC main email above. </ion-label>
               <ion-toggle [(ngModel)]="agent_microsites" name="agent_microsites"></ion-toggle>
             </ion-item>

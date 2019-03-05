@@ -45,6 +45,8 @@ export class EditAgentPage {
   public selectedCountryCode: string = "";
   public selectedCountryAbbv: string = "";
   public access_level:any[]=[];
+  public allWebsiteList:any[]=[];
+  public selectedWebsite:any[]=[];
   public phone_mobile:string="";
   public agentUpdateMsg:string="";
   public description:string="";
@@ -122,6 +124,7 @@ export class EditAgentPage {
       this.userId=data;
       let parent_id = this.storage.get('parent_id');
       parent_id.then((data) => {
+        this.getAllWebsite();
         if(data!=null)
         {
       this.parentId=data;
@@ -205,7 +208,11 @@ loadAgentDetailsResp(result:any)
         this.access_level=this.agentDetail.access_level.split(",");
         //debugger;
       }
-      
+      if(this.agentDetail.website_id!=null)
+      {
+        this.selectedWebsite=this.agentDetail.website_id.split(",");
+        //debugger;
+      }
       this.password=this.agentDetail.password;
       //this.description=this.agentDetail.description;
       document.getElementById("description").innerHTML=this.agentDetail.description;
@@ -220,6 +227,26 @@ loadAgentDetailsResp(result:any)
   {
 
   }
+}
+getAllWebsite():void{
+    
+  if(this.userId!="")
+  {
+    //debugger;
+    this.loader.present();
+this.userServiceObj.allUserWebsites(this.userId.toString())
+  .subscribe((result) => this.getAllWebsiteResp(result));
+  }
+  
+}
+getAllWebsiteResp(result:any):void{
+  this.loader.dismiss();
+  if(result.status==true)
+  {
+    this.allWebsiteList=result.result;
+    //debugger;
+  }
+  
 }
 getAllRoles(){
  // debugger;
@@ -313,6 +340,7 @@ updateAgent()
         mls_id:"",
         phone_mobile:"",
         access_level:[],
+        website_id:[],
         password:"",
         description: "",
         country_abbv: "",
@@ -353,9 +381,9 @@ updateAgent()
         dataObj.description = document.getElementById("description").innerHTML;
   }
   dataObj.access_level=this.access_level;
+  dataObj.website_id=this.selectedWebsite;
   dataObj.country_abbv=this.selectedCountryAbbv;
   dataObj.country_code=this.selectedCountryCode;
-  //debugger;
     this.userServiceObj.updateAgent(this.agent_id,dataObj)
     .subscribe((result) => this.updateAgentResp(result));
     }

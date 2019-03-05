@@ -320,7 +320,7 @@ this.userServiceObj.getAllMemberAllowedOptions(finalAllowedRolesOptions)
 setAllAccessOptionsResp(result:any)
 {
   if (result.status == true) {
-    debugger;
+    //debugger;
     this.storage.set('allowed_access_options', result.memberAllowedOptions);
     this.navCtrl.setRoot(DashboardTabsPage);
   }

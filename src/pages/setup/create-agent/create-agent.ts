@@ -49,6 +49,8 @@ export class CreateAgentPage {
   public selectedCountryAbbv: string = "";
   public allCountryCodes: any[] = [];
   public allRoles:any[]=[];
+  public allWebsiteList:any[]=[];
+  public selectedWebsite:any[]=[];
   public agentCreateMsg:string="";
   public description:string="";
   public cropperWidth:string="";
@@ -116,9 +118,11 @@ export class CreateAgentPage {
     ]});
     let member_id = this.storage.get('userId');
     member_id.then((data) => {
+      
       this.userId=data;
       let parent_id = this.storage.get('parent_id');
       parent_id.then((data) => {
+        this.getAllWebsite();
         if(data!=null)
         {
       this.parentId=data;
@@ -163,13 +167,33 @@ export class CreateAgentPage {
 this.description=html;
  
   }
+  getAllWebsite():void{
+    
+    if(this.userId!="")
+    {
+      //debugger;
+      this.loader.present();
+  this.userServiceObj.allUserWebsites(this.userId.toString())
+    .subscribe((result) => this.getAllWebsiteResp(result));
+    }
+    
+  }
+  getAllWebsiteResp(result:any):void{
+    this.loader.dismiss();
+    if(result.status==true)
+    {
+      this.allWebsiteList=result.result;
+      //debugger;
+    }
+    
+  }
   createAgent()
   {
     if(this.userId!="")
     {
     //debugger;  
   this.userServiceObj.createAgent(this.userId,this.firstName,this.lastName,this.email,this.selectedCountryCode,this.phone_mobile.toString(),this.access_level,
-    this.password,this.agentImage,document.getElementById("description").innerHTML,this.mls_id,this.selectedCountryAbbv)
+    this.password,this.agentImage,document.getElementById("description").innerHTML,this.mls_id,this.selectedCountryAbbv,this.selectedWebsite)
     .subscribe((result) => this.createAgentResp(result));
  
     }

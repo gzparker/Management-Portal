@@ -212,33 +212,39 @@ loadAllAgentsResp(result:any)
     this.allAgents=result.results;
     this.agentServices=result.services;
     //debugger;
-    if(this.allAgents.length.toString()>=this.agentServices[0].max_users.toString())
+    if(result.services === false)
     {
-      this.max_agents_added=true;
-      let actionSheet = this.actionSheetCtrl.create({
-        title: 'Select any option',
-        buttons: [
-          {
-            text: 'Please upgrade your account to add additional Agents/Users',
-            handler: () => {
-              //this.navCtrl.setRoot(GlobalPreferencesPage, { route: "subscribe" });
-              this.ngZone.run(() => {
-                this.navCtrl.setRoot(UpgradeCenterPage);
-              });
-            }
-          },
-          {
-            text: 'Cancel',
-            handler: () => {
-            }
-          }
-        ]
-      });
-      actionSheet.present();
+      this.max_agents_added=false;
     }
     else
     {
-      this.max_agents_added=false;
+      if(this.allAgents.length.toString()>=this.agentServices[0].max_users.toString())
+      {
+        this.max_agents_added=true;
+        let actionSheet = this.actionSheetCtrl.create({
+          title: 'Select any option',
+          buttons: [
+            {
+              text: 'Please upgrade your account to add additional Agents/Users',
+              handler: () => {
+                //this.navCtrl.setRoot(GlobalPreferencesPage, { route: "subscribe" });
+                this.ngZone.run(() => {
+                  this.navCtrl.setRoot(UpgradeCenterPage);
+                });
+              }
+            },
+            {
+              text: 'Cancel',
+              handler: () => {
+              }
+            }
+          ]
+        });
+        actionSheet.present();
+      }else
+      {
+        this.max_agents_added=false;
+      }
     }
   }
   else
