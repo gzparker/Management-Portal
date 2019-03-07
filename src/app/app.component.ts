@@ -422,7 +422,8 @@ messaging.requestPermission()
 .then(function(token) {
 //debugger;
 //send this token to server
-  console.log(token); // Display user token
+  //console.log(token); // Display user token
+  this.storage.set("firebase_token",token);
 })
 .catch(function(err) { // Happen if user deney permission
 //debugger;

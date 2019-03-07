@@ -86,14 +86,6 @@ export class EditAccountPage {
     { name: 'links', items: [] },
     { name: 'styles', items: ['Format', 'FontSize' ] }
   ]};
-  /*private CkeditorConfig = {removeButtons:'Underline,Subscript,Superscript,SpecialChar'
-  ,toolbar: [
-    { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source'] },
-    { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', '-', 'RemoveFormat' ] },
-    { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
-    { name: 'links', items: [ 'Link', 'Unlink'] },
-    { name: 'styles', items: ['Format', 'FontSize' ] }
-  ]};*/
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform,
