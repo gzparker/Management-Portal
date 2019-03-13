@@ -14,6 +14,7 @@ page-edit-role {
   }  
 
   .contentTitle {
+  color: #000 !important;
     span {
     color: #F44336;
     position: absolute;
@@ -31,12 +32,12 @@ page-edit-role {
     &.dashboardUI {
       
       .dashboardBG {
-      height: 55vh !important;
-      z-index: -1;
+      height: 12vh !important;
+      z-index: 1 !important;
       }
 
       &:before {
-      height: 55vh;
+      height: 12vh;
       z-index: 1;
       }
       &:after {

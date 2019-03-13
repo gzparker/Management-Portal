@@ -80,8 +80,8 @@
         Account
       </ion-item>
      
-      <ion-item no-lines menuClose ion-item (tap)="logOut()" *ngIf="userLoggedIn==true&&paidStatus==false">
-        <ion-icon name="undo" item-start></ion-icon>
+      <ion-item class="logOut" no-lines menuClose ion-item (tap)="logOut()" *ngIf="userLoggedIn==true&&paidStatus==false">
+        <!-- <ion-icon name="undo" item-start></ion-icon> -->
         LogOut
       </ion-item>
       </ion-list>

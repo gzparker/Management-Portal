@@ -15,4 +15,24 @@ page-notification-settings {
       }
     }
   }
+
+  ion-content.dashboardUI {
+    .dashboardBG {    
+    z-index: 1 !important;
+    }
+  }
+
+  ion-content {
+    &.dashboardUI {
+      &.colorEnabled {
+        &.background_color {
+        background: none;
+          &:before {
+          opacity: 1;
+          }
+        }
+      }
+    }
+  }
+
 }

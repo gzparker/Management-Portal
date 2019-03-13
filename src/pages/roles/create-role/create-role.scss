@@ -14,6 +14,7 @@ page-create-role {
   }  
 
   .contentTitle {
+  color: #000 !important;
     span {
     color: #F44336;
     position: absolute;
@@ -24,19 +25,20 @@ page-create-role {
   ion-content {
     &.dashboardUI {
       .dashboardBG {
-      height: 55vh !important;
-      z-index: -1;
+      height: 12vh !important;
+      z-index: 1 !important;
       }
 
       &:before {
-      height: 55vh;
+      height: 12vh;
       z-index: 1;
       }
       &:after {
       height: 100vh;
       }
 
-      ion-list {      
+      ion-list {
+      border-radius: 2px;   
         &:first-child {
         margin-bottom: 15px;
           .item-inner {

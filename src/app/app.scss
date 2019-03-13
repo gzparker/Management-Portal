@@ -510,6 +510,17 @@ border-right: none;
           }
         }
       }
+      &.logOut {
+        .input-wrapper {
+          .label-ios, .label-md, .label-wp {
+            &:before {
+            top: 2px;
+            background: url("../../assets/icon/svg/logout.svg") no-repeat center center !important;
+            background-size: 90% !important;
+            }
+          }
+        }
+      }
     }
 
     .item-inner {

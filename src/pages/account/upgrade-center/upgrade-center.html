@@ -18,8 +18,9 @@
 
 <ion-content padding class="dashboardUI noScroll">
 <div class="dashboardBG colorEnabled background_color" ion-fixed></div>
+
 <!--<form class="centerStage" role="form" data-toggle="validator" #subscribeForm="ngForm">-->
-  <ion-list class="noShadow" *ngIf="!userSubscribed">
+  <ion-list class="customWrapper centerStage animated lightSpeedIn" *ngIf="!userSubscribed">
 
     <div class="formShadow">
       <ion-item>
@@ -30,43 +31,46 @@
       
       <h3 class="centerStage contentTitle animated bounceInRight">Subscribed Packages</h3>
       <ion-list *ngIf="intervalBasedSubscribedPackages">
-      <ion-item class="OptPackage" *ngFor="let package of intervalBasedSubscribedPackages">
-        <ion-label>{{package.plan_nickname}}</ion-label>
-        <ion-label *ngIf="pay_yearly==true">${{package.plan_amount/12}}/month</ion-label>
-        <ion-label *ngIf="pay_yearly==false">${{package.plan_amount}}</ion-label>
-        <ion-label *ngIf="package.required=='true'">*Required</ion-label>
-          <ion-label *ngIf="package.required!='true'">Add-On Feature</ion-label>
-    </ion-item>
-    <ion-item class="TotalPrice">
-      <ion-label *ngIf="pay_yearly==true">Total Price: <strong>${{totalSubscribedAmount}}/year</strong></ion-label>
-      <ion-label *ngIf="pay_yearly==false">Total Price: <strong>${{totalSubscribedAmount}}/month</strong></ion-label>
-    </ion-item>
-  </ion-list>
-  
-      <h3 class="centerStage contentTitle animated bounceInRight">Choose From Available Packages</h3>
-      <ion-list *ngIf="intervalBasedAvailablePackages.length>0">
-      <ion-item class="TotalPrice">
-        <ion-label *ngIf="pay_yearly==true">Total Price: <strong>${{totalAmount}}/year</strong></ion-label>
-        <ion-label *ngIf="pay_yearly==false">Total Price: <strong>${{totalAmount}}/month</strong></ion-label>
-      </ion-item>
-      <ion-item class="OptPackage" *ngFor="let package of intervalBasedAvailablePackages">
-          <ion-label>{{package.plan_name}}</ion-label>
-          <ion-label *ngIf="pay_yearly==true">${{package.plan_price/12}}/month</ion-label>
-          <ion-label *ngIf="pay_yearly==false">${{package.plan_price}}</ion-label>
+        <ion-item class="OptPackage" *ngFor="let package of intervalBasedSubscribedPackages">
+          <ion-label>{{package.plan_nickname}}</ion-label>
+          <ion-label *ngIf="pay_yearly==true">${{package.plan_amount/12}}/month</ion-label>
+          <ion-label *ngIf="pay_yearly==false">${{package.plan_amount}}</ion-label>
           <ion-label *ngIf="package.required=='true'">*Required</ion-label>
           <ion-label *ngIf="package.required!='true'">Add-On Feature</ion-label>
-          <!--<ion-label *ngIf="package.required=='true'">*Required</ion-label>
-          <ion-label *ngIf="package.required!='true'">Optional</ion-label>-->
-         
-          <ion-checkbox color="royal" checked="false" id="{{package.plan_id}}" item-right 
-          (ionChange)="setSelectedPackage(package)"></ion-checkbox>
-      </ion-item>
+        </ion-item>
+        <ion-item class="TotalPrice">
+          <ion-label *ngIf="pay_yearly==true">Total Price: <strong>${{totalSubscribedAmount}}/year</strong></ion-label>
+          <ion-label *ngIf="pay_yearly==false">Total Price: <strong>${{totalSubscribedAmount}}/month</strong></ion-label>
+        </ion-item>
+      </ion-list>
+      
+      <h3 class="centerStage contentTitle animated bounceInRight">Choose From Available Packages</h3>
+      <ion-list *ngIf="intervalBasedAvailablePackages.length>0">
+        <ion-item class="TotalPrice">
+          <ion-label *ngIf="pay_yearly==true">Total Price: <strong>${{totalAmount}}/year</strong></ion-label>
+          <ion-label *ngIf="pay_yearly==false">Total Price: <strong>${{totalAmount}}/month</strong></ion-label>
+        </ion-item>
+        <ion-item class="OptPackage" *ngFor="let package of intervalBasedAvailablePackages">
+            <ion-label>{{package.plan_name}}</ion-label>
+            <ion-label *ngIf="pay_yearly==true">${{package.plan_price/12}}/month</ion-label>
+            <ion-label *ngIf="pay_yearly==false">${{package.plan_price}}</ion-label>
+            <ion-label *ngIf="package.required=='true'">*Required</ion-label>
+            <ion-label *ngIf="package.required!='true'">Add-On Feature</ion-label>
+            <!--<ion-label *ngIf="package.required=='true'">*Required</ion-label>
+            <ion-label *ngIf="package.required!='true'">Optional</ion-label>-->
+           
+            <ion-checkbox color="royal" checked="false" id="{{package.plan_id}}" item-right 
+            (ionChange)="setSelectedPackage(package)"></ion-checkbox>
+        </ion-item>
+      
       <ion-item class="TotalPrice">
         <ion-label *ngIf="pay_yearly==true">Total Price: <strong>${{totalAmount}}/year</strong></ion-label>
         <ion-label *ngIf="pay_yearly==false">Total Price: <strong>${{totalAmount}}/month</strong></ion-label>
       </ion-item>
+
     </ion-list>
     </div>
+
     <div class="dashboardBtn">
       <button ion-button color="primary" block (click)="upgradeDowngradeList('2');">Upgrade/DownGrade</button>
     </div>
