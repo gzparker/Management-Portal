@@ -3,18 +3,9 @@ import { IonicPage, NavController, NavParams, ModalController, Platform,
   MenuController,LoadingController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
-import { DashboardPage } from '../../dashboard/dashboard';
-import { FbConfirmPage } from '../../fb-confirm/fb-confirm';
-
-import { CreateLeadPage } from '../../leads/create-lead/create-lead';
-import { LeadDetailPage } from '../../leads/lead-detail/lead-detail';
-import { EditLeadPage } from '../../leads/edit-lead/edit-lead';
-import { AllLeadsPage } from '../../leads/all-leads/all-leads';
 import { AllWebsitesPage } from '../../websites/all-websites/all-websites';
 
 import { AlertController } from 'ionic-angular';
-
-import { UserVerificationPage } from '../../user-verification/user-verification';
 
 import { SharedProvider } from '../../../providers/shared/shared';
 import { UserProvider } from '../../../providers/user/user';
@@ -26,8 +17,6 @@ import { SubscriptionProvider } from '../../../providers/subscription/subscripti
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-
-@IonicPage()
 @Component({
   selector: 'page-edit-lead-routing',
   templateUrl: 'edit-lead-routing.html',

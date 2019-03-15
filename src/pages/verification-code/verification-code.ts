@@ -3,7 +3,6 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 import { SharedProvider } from '../../providers/shared/shared';
 import { UserProvider } from '../../providers/user/user';
 import { Storage } from '@ionic/storage';
-import { DashboardPage } from '../dashboard/dashboard';
 import { DashboardTabsPage } from '../tabs/dashboard-tabs/dashboard-tabs';
 /**
  * Generated class for the VerificationCodePage page.
@@ -12,7 +11,6 @@ import { DashboardTabsPage } from '../tabs/dashboard-tabs/dashboard-tabs';
  * Ionic pages and navigation.
  */
 declare var firebase:any;
-@IonicPage()
 @Component({
   selector: 'page-verification-code',
   templateUrl: 'verification-code.html',

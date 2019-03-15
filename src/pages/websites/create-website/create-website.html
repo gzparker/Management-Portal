@@ -192,7 +192,7 @@
       </div>
       
       <div class="dashboardBtn">
-          <button ion-button color="primary" class="colorEnabled button_color" block (click)="createWebsite();" [disabled]="!websiteForm.valid">Save Website</button>
+          <button ion-button color="primary" class="colorEnabled button_color" block (click)="createWebsite();" [disabled]="!websiteForm.valid||target_place_id==''">Save Website</button>
       </div>
 
     </form>

@@ -3,8 +3,6 @@ import { IonicPage, NavController, NavParams, ModalController, Platform,
   MenuController,LoadingController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
-import { DashboardPage } from '../../dashboard/dashboard';
-import { FbConfirmPage } from '../../fb-confirm/fb-confirm';
 
 import { CreateLeadPage } from '../../leads/create-lead/create-lead';
 import { LeadDetailPage } from '../../leads/lead-detail/lead-detail';
@@ -12,8 +10,6 @@ import { EditLeadPage } from '../../leads/edit-lead/edit-lead';
 import { EditLeadRoutingPage } from '../../leads/edit-lead-routing/edit-lead-routing';
 
 import { AlertController,ToastController } from 'ionic-angular';
-
-import { UserVerificationPage } from '../../user-verification/user-verification';
 
 import { SharedProvider } from '../../../providers/shared/shared';
 import { UserProvider } from '../../../providers/user/user';
@@ -26,7 +22,6 @@ import { AllWebsitesPage } from '../../websites/all-websites/all-websites';
  * Ionic pages and navigation.
  */
 declare var firebase:any;
-@IonicPage()
 @Component({
   selector: 'page-all-leads',
   templateUrl: 'all-leads.html',

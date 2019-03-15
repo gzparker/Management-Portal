@@ -460,6 +460,7 @@ is_online="1";
   }
 
   openFBConfirmModal() {
+    debugger;
     this.fbLoginDecision.emit('0');
   }
   userLogin(email: string, password: string) {
@@ -1088,7 +1089,7 @@ data.append('content_title_color',contentTitleColor);
  data.append('login_register_popup_time',login_register_popup_time);
  data.append('target_city',target_city);
  data.append('target_place_id',target_place_id);
-//debugger;
+debugger;
   let websiteListing=this.http
     .post(this.sharedServiceObj.registerationApiBaseUrl+'members/updateWebsite', data, this.headerOptions)
     .map(this.extractData)
@@ -1403,11 +1404,13 @@ deleteRole(role_id:string)
      .map(this.extractData)
      return roleResp;
 }
-loadAllAccessLevels(service_id:string)
-{
+loadAllAccessLevels(service_id:string) {
   let data = new URLSearchParams();
   //debugger;
+  //var service_id_array:any = service_id.split(" ");
+  //debugger;
   data.append('service_id',service_id);
+  //debugger;
  let roleResp=this.http
      .post(this.sharedServiceObj.registerationApiBaseUrl+'members/allAccessLevels', data, this.headerOptions)
      .map(this.extractData)

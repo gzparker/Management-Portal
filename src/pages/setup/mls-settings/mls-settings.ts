@@ -8,7 +8,6 @@ import { AlertController } from 'ionic-angular';
 
 import { SharedProvider } from '../../../providers/shared/shared';
 import { UserProvider } from '../../../providers/user/user';
-import { SubscriptionProvider } from '../../../providers/subscription/subscription';
 
 /**
  * Generated class for the MlsSettingsPage page.
@@ -17,7 +16,6 @@ import { SubscriptionProvider } from '../../../providers/subscription/subscripti
  * Ionic pages and navigation.
  */
 
-@IonicPage()
 @Component({
   selector: 'page-mls-settings',
   templateUrl: 'mls-settings.html',

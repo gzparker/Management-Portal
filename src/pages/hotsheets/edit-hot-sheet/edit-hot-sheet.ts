@@ -28,7 +28,6 @@ import { ListingProvider } from '../../../providers/listing/listing';
 declare var google: any;
 declare var CKEDITOR: any;
 declare var latitudeSimplifier;
-@IonicPage()
 @Component({
   selector: 'page-edit-hot-sheet',
   templateUrl: 'edit-hot-sheet.html',

@@ -6,21 +6,6 @@ import { Storage } from '@ionic/storage';
 import { ISubscription } from "rxjs/Subscription";
 import { AlertController } from 'ionic-angular';
 
-import { DashboardTabsPage } from '../../tabs/dashboard-tabs/dashboard-tabs';
-
-import { ChatPage } from '../chat/chat';
-import { ChatAccountPage } from '../chat-account/chat-account';
-import { ChatActivitiesPage } from '../chat-activities/chat-activities';
-import { ChatDetailPage } from '../chat-detail/chat-detail';
-import { ChatEmojiPopupoverPage } from '../chat-emoji-popupover/chat-emoji-popupover';
-import { ChatFriendsPage } from '../chat-friends/chat-friends';
-import { ChatFriendsActivePage } from '../chat-friends-active/chat-friends-active';
-import { ChatFriendsMessengerPage } from '../chat-friends-messenger/chat-friends-messenger';
-import { ChatGroupsPage } from '../chat-groups/chat-groups';
-import { ChatsPage } from '../chats/chats';
-import { ChatingImagePopUpPage } from '../chating-image-pop-up/chating-image-pop-up';
-import { NewGroupPopupPage } from '../new-group-popup/new-group-popup';
-
 import { SharedProvider } from '../../../providers/shared/shared';
 import { UserProvider } from '../../../providers/user/user';
 
@@ -31,7 +16,6 @@ import { UserProvider } from '../../../providers/user/user';
  * Ionic pages and navigation.
  */
 declare var firebase:any;
-@IonicPage()
 @Component({
   selector: 'page-new-message-popup',
   templateUrl: 'new-message-popup.html',

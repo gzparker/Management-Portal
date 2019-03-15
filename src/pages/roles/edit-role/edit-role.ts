@@ -7,7 +7,6 @@ import { Crop } from '@ionic-native/crop';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { ImageCropperComponent, CropperSettings } from "ngx-img-cropper";
-import { PicturePopupPage } from '../../../pages/modal-popup/picture-popup/picture-popup';
 
 import { ViewRolesPage } from '../view-roles/view-roles';
 
@@ -23,7 +22,6 @@ import { SubscriptionProvider } from '../../../providers/subscription/subscripti
  * Ionic pages and navigation.
  */
 
-@IonicPage()
 @Component({
   selector: 'page-edit-role',
   templateUrl: 'edit-role.html',

@@ -6,9 +6,6 @@ import { Storage } from '@ionic/storage';
 import { ISubscription } from "rxjs/Subscription";
 import { AlertController } from 'ionic-angular';
 
-import { DashboardTabsPage } from '../../tabs/dashboard-tabs/dashboard-tabs';
-
-
 import { SharedProvider } from '../../../providers/shared/shared';
 import { UserProvider } from '../../../providers/user/user';
 
@@ -19,7 +16,6 @@ import { UserProvider } from '../../../providers/user/user';
  * Ionic pages and navigation.
  */
 
-@IonicPage()
 @Component({
   selector: 'page-listing-detail-popup',
   templateUrl: 'listing-detail-popup.html',

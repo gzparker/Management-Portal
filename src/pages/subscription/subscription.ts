@@ -3,14 +3,10 @@ import { IonicPage, NavController, NavParams, ModalController, Platform,MenuCont
   ActionSheetController,LoadingController,ToastController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
-import { DashboardPage } from '../dashboard/dashboard';
-import { DashboardTabsPage } from '../tabs/dashboard-tabs/dashboard-tabs';
-import { FbConfirmPage } from '../fb-confirm/fb-confirm';
 //import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser';
 import { AlertController } from 'ionic-angular';
 import { GlobalPreferencesPage } from '../setup/global-preferences/global-preferences';
 
-import { UserVerificationPage } from '../user-verification/user-verification';
 
 import { SharedProvider } from '../../providers/shared/shared';
 import { UserProvider } from '../../providers/user/user';
@@ -23,7 +19,6 @@ import { SubscriptionProvider } from '../../providers/subscription/subscription'
  * Ionic pages and navigation.
  */
 
-@IonicPage()
 @Component({
   selector: 'page-subscription',
   templateUrl: 'subscription.html',

@@ -2,9 +2,7 @@ import { Component, ViewChild, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, Platform,LoadingController,ToastController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
-import { DashboardPage } from '../dashboard/dashboard';
 import { DashboardTabsPage } from '../tabs/dashboard-tabs/dashboard-tabs';
-import { FbConfirmPage } from '../fb-confirm/fb-confirm';
 import { AlertController } from 'ionic-angular';
 import { RegisterPage } from '../../pages/register/register';
 
@@ -21,8 +19,6 @@ import { UserProvider } from '../../providers/user/user';
  */
 //declare const FB:any;
 declare var firebase:any;
-@IonicPage()
-
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',

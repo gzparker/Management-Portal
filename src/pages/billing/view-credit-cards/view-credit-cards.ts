@@ -5,11 +5,6 @@ import { Storage } from '@ionic/storage';
 import { DatePipe } from '@angular/common'
 import { AlertController,ToastController } from 'ionic-angular';
 
-import { AccountOptionPage } from '../../account/account-option/account-option';
-
-import { ChangePasswordPage } from '../../account/change-password/change-password';
-import { UpgradeCenterPage } from '../../account/upgrade-center/upgrade-center';
-
 import { EditCreditCardPage } from '../edit-credit-card/edit-credit-card';
 import { CreditCardDetailPage } from '../credit-card-detail/credit-card-detail';
 import { AddCreditCardPage } from '../add-credit-card/add-credit-card';
@@ -25,7 +20,6 @@ import { UserProvider } from '../../../providers/user/user';
  * Ionic pages and navigation.
  */
 
-@IonicPage()
 @Component({
   selector: 'page-view-credit-cards',
   templateUrl: 'view-credit-cards.html',

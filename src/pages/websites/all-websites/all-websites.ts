@@ -3,16 +3,12 @@ import { IonicPage, NavController, NavParams, ModalController, Platform,
   MenuController,LoadingController,ToastController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
-import { DashboardPage } from '../../dashboard/dashboard';
-import { FbConfirmPage } from '../../fb-confirm/fb-confirm';
 import { CreateWebsitePage } from '../../websites/create-website/create-website';
 import { EditWebsitePage } from '../../websites/edit-website/edit-website';
 import { WebsitesWebsiteLinksPage } from '../../websites/websites-website-links/websites-website-links';
-import { DashboardTabsPage } from '../../tabs/dashboard-tabs/dashboard-tabs';
 import { AlertController } from 'ionic-angular';
 import { MlsSettingsPage } from '../../setup/mls-settings/mls-settings';
 import { EditLeadRoutingPage } from '../../leads/edit-lead-routing/edit-lead-routing';
-import { UserVerificationPage } from '../../user-verification/user-verification';
 
 import { SharedProvider } from '../../../providers/shared/shared';
 import { UserProvider } from '../../../providers/user/user';
@@ -25,7 +21,6 @@ import { SubscriptionProvider } from '../../../providers/subscription/subscripti
  * Ionic pages and navigation.
  */
 
-@IonicPage()
 @Component({
   selector: 'page-all-websites',
   templateUrl: 'all-websites.html',

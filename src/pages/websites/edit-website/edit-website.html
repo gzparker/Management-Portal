@@ -485,7 +485,7 @@
       </ion-list>
 
       <div class="dashboardBtn">
-          <button ion-button color="primary" class="colorEnabled button_color" block (click)="updateWebsite();" [disabled]="!websiteForm.valid">Update Website</button>
+          <button ion-button color="primary" class="colorEnabled button_color" block (click)="updateWebsite();" [disabled]="!websiteForm.valid||target_place_id==''||targetCityDummy==''">Update Website</button>
       </div>
 
     </form>

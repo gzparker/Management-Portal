@@ -26,7 +26,6 @@ import { ListingProvider } from '../../../providers/listing/listing';
 declare var CKEDITOR: any;
 declare var google: any;
 declare var latitudeSimplifier;
-@IonicPage()
 @Component({
   selector: 'page-create-hot-sheet',
   templateUrl: 'create-hot-sheet.html'

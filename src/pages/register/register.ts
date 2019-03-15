@@ -3,7 +3,6 @@ import { IonicPage, NavController, NavParams, ModalController,LoadingController,
   ActionSheetController,AlertController,ToastController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
-import { DashboardPage } from '../dashboard/dashboard';
 import { DashboardTabsPage } from '../tabs/dashboard-tabs/dashboard-tabs';
 import { LoginPage } from '../../pages/login/login';
 import { FbConfirmPage } from '../fb-confirm/fb-confirm';
@@ -17,7 +16,6 @@ import { UserProvider } from '../../providers/user/user';
  * Ionic pages and navigation.
  */
 
-@IonicPage()
 @Component({
   selector: 'page-register',
   templateUrl: 'register.html',

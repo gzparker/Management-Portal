@@ -6,7 +6,6 @@ import { Crop } from '@ionic-native/crop';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { ImageCropperComponent, CropperSettings } from "ngx-img-cropper";
-import { GlobalPreferencesPage } from '../../setup/global-preferences/global-preferences';
 import 'moment';
 import * as moment from 'moment-timezone';
 import { AlertController,ToastController } from 'ionic-angular';
@@ -20,7 +19,6 @@ import { SubscriptionProvider } from '../../../providers/subscription/subscripti
  * Ionic pages and navigation.
  */
 
-@IonicPage()
 @Component({
   selector: 'page-picture-popup',
   templateUrl: 'picture-popup.html',

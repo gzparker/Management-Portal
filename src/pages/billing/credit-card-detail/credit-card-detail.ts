@@ -4,11 +4,6 @@ import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 import { AlertController } from 'ionic-angular';
 
-import { AccountOptionPage } from '../../account/account-option/account-option';
-
-import { ChangePasswordPage } from '../../account/change-password/change-password';
-import { UpgradeCenterPage } from '../../account/upgrade-center/upgrade-center';
-
 import { EditCreditCardPage } from '../../billing/edit-credit-card/edit-credit-card';
 
 import { SharedProvider } from '../../../providers/shared/shared';
@@ -21,7 +16,6 @@ import { UserProvider } from '../../../providers/user/user';
  * Ionic pages and navigation.
  */
 
-@IonicPage()
 @Component({
   selector: 'page-credit-card-detail',
   templateUrl: 'credit-card-detail.html',

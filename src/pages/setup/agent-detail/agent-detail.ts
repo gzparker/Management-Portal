@@ -21,7 +21,6 @@ import { SubscriptionProvider } from '../../../providers/subscription/subscripti
  * Ionic pages and navigation.
  */
 
-@IonicPage()
 @Component({
   selector: 'page-agent-detail',
   templateUrl: 'agent-detail.html',

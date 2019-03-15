@@ -3,7 +3,6 @@ import { IonicPage, NavController, NavParams, ModalController, Platform, MenuCon
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 
-import { DashboardTabsPage } from '../../tabs/dashboard-tabs/dashboard-tabs';
 import { ManageAgentsPage } from '../manage-agents/manage-agents';
 
 import { AlertController } from 'ionic-angular';
@@ -17,7 +16,6 @@ import { UserProvider } from '../../../providers/user/user';
  * Ionic pages and navigation.
  */
 
-@IonicPage()
 @Component({
   selector: 'page-user-option',
   templateUrl: 'user-option.html',

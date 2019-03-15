@@ -8,7 +8,6 @@ import { Crop } from '@ionic-native/crop';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { ImageCropperComponent, CropperSettings } from "ngx-img-cropper";
-import { PicturePopupPage } from '../../../pages/modal-popup/picture-popup/picture-popup';
 
 import 'moment';
 import * as moment from 'moment-timezone';
@@ -16,8 +15,6 @@ import { AlertController } from 'ionic-angular';
 import { SharedProvider } from '../../../providers/shared/shared';
 import { UserProvider } from '../../../providers/user/user';
 import { SubscriptionProvider } from '../../../providers/subscription/subscription';
-import { ColorSelectionPopupPage } from '../../modal-popup/color-selection-popup/color-selection-popup';
-import { DashboardPage } from '../../dashboard/dashboard';
 import { DashboardTabsPage } from '../../tabs/dashboard-tabs/dashboard-tabs';
 import { trigger } from '@angular/core/src/animation/dsl';
 
@@ -29,7 +26,6 @@ import { trigger } from '@angular/core/src/animation/dsl';
  * Ionic pages and navigation.
  */
 
-@IonicPage()
 @Component({
   selector: 'page-notification-settings',
   templateUrl: 'notification-settings.html',
@@ -56,6 +52,7 @@ export class NotificationSettingsPage {
   }
 
   ionViewDidLoad() {
+    this.sharedServiceObj.updateColorThemeMethod(null);
     let member_id = this.storage.get('userId');
     member_id.then((data) => {
       this.userId=data;
@@ -63,7 +60,10 @@ export class NotificationSettingsPage {
      // this.sharedServiceObj.updateColorThemeMethod(null);
     });
   }
-
+  ionViewDidEnter()
+  {
+    this.sharedServiceObj.updateColorThemeMethod(null);
+  }
   loadNotificationSettings()
   {
     this.userServiceObj.loadNotificationSettings(this.userId)

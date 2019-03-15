@@ -3,7 +3,6 @@ import { IonicPage, NavController, NavParams, ViewController, ModalController, P
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 import { AlertController } from 'ionic-angular';
-import { DashboardPage } from '../dashboard/dashboard';
 import { DashboardTabsPage } from '../tabs/dashboard-tabs/dashboard-tabs';
 import { SharedProvider } from '../../providers/shared/shared';
 import { UserProvider } from '../../providers/user/user';
@@ -14,8 +13,6 @@ import { UserVerificationPage } from '../user-verification/user-verification';
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-
-@IonicPage()
 @Component({
   selector: 'page-fb-confirm',
   templateUrl: 'fb-confirm.html',

@@ -4,14 +4,10 @@ import { IonicPage, NavController, NavParams, ModalController, Platform,
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Observable } from 'rxjs/Observable';
 import { Storage } from '@ionic/storage';
-import { FbConfirmPage } from '../../fb-confirm/fb-confirm';
-import { AllWebsitesPage } from '../../websites/all-websites/all-websites';
 import { EditLeadRoutingPage } from '../../leads/edit-lead-routing/edit-lead-routing';
 import { AlertController } from 'ionic-angular';
 import { ImageCropperComponent, CropperSettings } from "ngx-img-cropper";
-import { PicturePopupPage } from '../../../pages/modal-popup/picture-popup/picture-popup';
 
-import { UserVerificationPage } from '../../user-verification/user-verification';
 import { ColorSelectionPopupPage } from '../../modal-popup/color-selection-popup/color-selection-popup';
 
 import { SharedProvider } from '../../../providers/shared/shared';
@@ -26,7 +22,6 @@ import { SubscriptionProvider } from '../../../providers/subscription/subscripti
 declare var CKEDITOR: any;
 declare var google: any;
 declare var firebase:any;
-@IonicPage()
 @Component({
   selector: 'page-create-website',
   templateUrl: 'create-website.html',

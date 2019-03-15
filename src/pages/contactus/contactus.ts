@@ -2,8 +2,6 @@ import { Component, ViewChild, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, Platform } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
-import { DashboardPage } from '../dashboard/dashboard';
-import { SetupOptionPage } from '../setup/setup-option/setup-option';
 import { DashboardTabsPage } from '../tabs/dashboard-tabs/dashboard-tabs';
 
 import { AlertController } from 'ionic-angular';
@@ -16,8 +14,6 @@ import { UserProvider } from '../../providers/user/user';
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-
-@IonicPage()
 @Component({
   selector: 'page-contactus',
   templateUrl: 'contactus.html',

@@ -9,11 +9,9 @@ import { FbConfirmPage } from '../fb-confirm/fb-confirm';
 import { Chart } from 'chart.js';
 import { SubscriptionPage } from '../subscription/subscription';
 
-import { DashboardTabsPage } from '../tabs/dashboard-tabs/dashboard-tabs';
 import { AllWebsitesPage } from '../websites/all-websites/all-websites';
 import { AllLeadsPage } from '../leads/all-leads/all-leads';
 import { AllHotSheetsPage } from '../hotsheets/all-hot-sheets/all-hot-sheets';
-import { UserVerificationPage } from '../user-verification/user-verification';
 
 import { CreateAgentPage } from '../setup/create-agent/create-agent';
 import { GlobalPreferencesPage } from '../setup/global-preferences/global-preferences';
@@ -41,19 +39,6 @@ import { EditRolePage } from '../roles/edit-role/edit-role';
 import { ViewRolesPage } from '../roles/view-roles/view-roles';
 
 import { ChatPage } from '../chatmodule/chat/chat';
-import { ChatAccountPage } from '../chatmodule/chat-account/chat-account';
-import { ChatActivitiesPage } from '../chatmodule/chat-activities/chat-activities';
-import { ChatDetailPage } from '../chatmodule/chat-detail/chat-detail';
-import { ChatEmojiPopupoverPage } from '../chatmodule/chat-emoji-popupover/chat-emoji-popupover';
-import { ChatFriendsPage } from '../chatmodule/chat-friends/chat-friends';
-import { ChatFriendsActivePage } from '../chatmodule/chat-friends-active/chat-friends-active';
-import { ChatFriendsMessengerPage } from '../chatmodule/chat-friends-messenger/chat-friends-messenger';
-import { ChatGroupsPage } from '../chatmodule/chat-groups/chat-groups';
-import { ChatsPage } from '../chatmodule/chats/chats';
-import { ChatingImagePopUpPage } from '../chatmodule/chating-image-pop-up/chating-image-pop-up';
-import { GroupChatDetailPage } from '../chatmodule/group-chat-detail/group-chat-detail';
-import { GroupMembersPage } from '../chatmodule/group-members/group-members';
-
 
 import { SharedProvider } from '../../providers/shared/shared';
 import { UserProvider } from '../../providers/user/user';
@@ -64,8 +49,6 @@ import { UserProvider } from '../../providers/user/user';
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-
-@IonicPage()
 @Component({
   selector: 'page-dashboard',
   templateUrl: 'dashboard.html',

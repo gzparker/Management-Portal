@@ -6,8 +6,6 @@ import { Storage } from '@ionic/storage';
 import { ISubscription } from "rxjs/Subscription";
 import { AlertController,ToastController } from 'ionic-angular';
 
-import { DashboardTabsPage } from '../../tabs/dashboard-tabs/dashboard-tabs';
-
 import { SharedProvider } from '../../../providers/shared/shared';
 import { UserProvider } from '../../../providers/user/user';
 
@@ -18,8 +16,6 @@ import { UserProvider } from '../../../providers/user/user';
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-
-@IonicPage()
 @Component({
   selector: 'page-color-selection-popup',
   templateUrl: 'color-selection-popup.html',

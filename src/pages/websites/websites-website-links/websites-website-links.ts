@@ -7,14 +7,9 @@ import { Storage } from '@ionic/storage';
 import { Crop } from '@ionic-native/crop';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { ImagePicker } from '@ionic-native/image-picker';
-//import { AllWebsitesPage } from '../../websites/all-websites/all-websites';
-//import { WebsitesWebsiteLinksPage } from '../../websites/websites-website-links/websites-website-links';
-import { FbConfirmPage } from '../../fb-confirm/fb-confirm';
+
 import { AlertController } from 'ionic-angular';
 import { ImageCropperComponent, CropperSettings } from "ngx-img-cropper";
-import { PicturePopupPage } from '../../../pages/modal-popup/picture-popup/picture-popup';
-
-import { UserVerificationPage } from '../../user-verification/user-verification';
 
 import { SharedProvider } from '../../../providers/shared/shared';
 import { UserProvider } from '../../../providers/user/user';
@@ -26,8 +21,6 @@ import { SubscriptionProvider } from '../../../providers/subscription/subscripti
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-
-@IonicPage()
 @Component({
   selector: 'page-websites-website-links',
   templateUrl: 'websites-website-links.html',

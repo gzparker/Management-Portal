@@ -3,7 +3,6 @@ import { IonicPage, NavController, NavParams, ModalController, Platform,Tabs } f
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 import { DashboardPage } from '../../dashboard/dashboard';
-import { ContactusPage } from '../../contactus/contactus';
 import { SetupOptionPage } from '../../setup/setup-option/setup-option';
 import { ChatPage } from '../../chatmodule/chat/chat';
 
@@ -17,8 +16,6 @@ import { UserProvider } from '../../../providers/user/user';
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-
-@IonicPage()
 @Component({
   selector: 'page-dashboard-tabs',
   templateUrl: 'dashboard-tabs.html',

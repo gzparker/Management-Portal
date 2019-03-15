@@ -1,7 +1,6 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, Platform, MenuController,LoadingController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
-import {DatePipe} from '@angular/common';
 import { Storage } from '@ionic/storage';
 import { AlertController,ToastController } from 'ionic-angular';
 
@@ -17,7 +16,6 @@ import { UserProvider } from '../../../providers/user/user';
  * Ionic pages and navigation.
  */
 
-@IonicPage()
 @Component({
   selector: 'page-add-credit-card',
   templateUrl: 'add-credit-card.html',

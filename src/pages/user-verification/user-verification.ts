@@ -1,8 +1,6 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, ModalController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
-import { SharedProvider } from '../../providers/shared/shared';
-import { DashboardPage } from '../dashboard/dashboard';
 import { UserProvider } from '../../providers/user/user';
 import { VerificationCodePage } from '../verification-code/verification-code';
 /**
@@ -12,7 +10,6 @@ import { VerificationCodePage } from '../verification-code/verification-code';
  * Ionic pages and navigation.
  */
 
-@IonicPage()
 @Component({
   selector: 'page-user-verification',
   templateUrl: 'user-verification.html',

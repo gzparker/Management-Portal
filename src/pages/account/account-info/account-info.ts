@@ -3,7 +3,6 @@ import { IonicPage, NavController, NavParams, ModalController, Platform, MenuCon
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 import { BrMaskerIonic3, BrMaskModel } from 'brmasker-ionic-3';
-import { EditAccountPage } from '../edit-account/edit-account';
 import { AlertController,ToastController } from 'ionic-angular';
 import { SharedProvider } from '../../../providers/shared/shared';
 import { UserProvider } from '../../../providers/user/user';
@@ -14,8 +13,6 @@ import { DashboardTabsPage } from '../../tabs/dashboard-tabs/dashboard-tabs';
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-
-@IonicPage()
 @Component({
   selector: 'page-account-info',
   templateUrl: 'account-info.html',

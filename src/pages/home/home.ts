@@ -10,6 +10,7 @@ import { LoginPage } from '../../pages/login/login';
 import { RegisterPage } from '../../pages/register/register';
 import { SharedProvider } from '../../providers/shared/shared';
 import { UserProvider } from '../../providers/user/user';
+
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -57,6 +58,7 @@ public serviceType:string="";
   }
   ionViewDidEnter()
   {
+    //debugger;
     //this.sharedServiceObj.updateColorThemeMethod(null);
     this.loadGeneralWebsiteSettings();
   }
@@ -88,58 +90,6 @@ public serviceType:string="";
     that.applyColors();
   }
 
-  
-    
-    /////////////////////////////////Content Background/////////////////////////////////////////
-    /*let contentBackgroundElement=document.getElementsByClassName("background_color");
-    
-    for (let i = 0; i < contentBackgroundElement.length; i++) {
-
-      contentBackgroundElement[i].setAttribute("style", "background:"+this.content_background+" !important;");
-    }*/
-
-   
-    ////////////////////////////////////////////////////////////////////////////////////////////
-  /*if(result.header_color)
-  {
-      that.headerColor=result.header_color;
-}
-if(result.sidebar_menu_color)
-{
-    that.sideBarMenuColor=result.sidebar_menu_color;
-}
-if(result.button_color)
-{
-  that.buttonColor=result.button_color;
-}
-if(result.text_color)
-{
-that.textColor=result.text_color;
-}
-if(result.text_color)
-{
-that.textColor=result.text_color;
-}
-if(result.text_color)
-{
-that.textColor=result.text_color;
-}
-if(result.content_background)
-{
-that.contentBackgrounColor=result.content_background;
-}
-if(result.content_title_color)
-{
-that.contentTitleColor=result.content_title_color;
-}
-if(result.pagination_color)
-{
-that.paginationColor=result.pagination_color;
-}
-if(result.modal_background_color)
-{
-that.modalBackgroundColor=result.modal_background_color;
-}*/
 
 });
 //debugger;

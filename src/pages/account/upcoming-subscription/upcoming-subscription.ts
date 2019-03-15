@@ -3,11 +3,7 @@ import { IonicPage, NavController, NavParams, ModalController, Platform,
   MenuController,LoadingController,ToastController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
-import { PicturePopupPage } from '../../../pages/modal-popup/picture-popup/picture-popup';
-import { DashboardPage } from '../../dashboard/dashboard';
-import { FbConfirmPage } from '../../fb-confirm/fb-confirm';
 import { AlertController } from 'ionic-angular';
-import { UserVerificationPage } from '../../user-verification/user-verification';
 import { SharedProvider } from '../../../providers/shared/shared';
 import { UserProvider } from '../../../providers/user/user';
 import { SubscriptionProvider } from '../../../providers/subscription/subscription';
@@ -19,7 +15,6 @@ import { SubscriptionProvider } from '../../../providers/subscription/subscripti
  * Ionic pages and navigation.
  */
 
-@IonicPage()
 @Component({
   selector: 'page-upcoming-subscription',
   templateUrl: 'upcoming-subscription.html',
@@ -41,7 +36,8 @@ export class UpcomingSubscriptionPage {
     public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,
     public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform, 
-    public ngZone: NgZone,public menuCtrl: MenuController,public loadingCtrl: LoadingController,private toastCtrl: ToastController) {
+    public ngZone: NgZone,public menuCtrl: MenuController,public loadingCtrl: LoadingController,
+    private toastCtrl: ToastController) {
       if(this.navParams.get('notificationMsg')!=undefined)
       {
         let toast = this.toastCtrl.create({

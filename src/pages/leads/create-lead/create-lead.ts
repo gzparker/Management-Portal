@@ -15,12 +15,8 @@ import { ImageCropperComponent, CropperSettings } from "ngx-img-cropper";
 import { Observable } from 'rxjs/Observable';
 import { PicturePopupPage } from '../../../pages/modal-popup/picture-popup/picture-popup';
 import { AllLeadsPage } from '../../leads/all-leads/all-leads';
-import { LeadDetailPage } from '../../leads/lead-detail/lead-detail';
-import { EditLeadPage } from '../../leads/edit-lead/edit-lead';
 
 import { AlertController } from 'ionic-angular';
-
-import { UserVerificationPage } from '../../user-verification/user-verification';
 
 import { SharedProvider } from '../../../providers/shared/shared';
 import { UserProvider } from '../../../providers/user/user';
@@ -34,7 +30,6 @@ import { SubscriptionProvider } from '../../../providers/subscription/subscripti
  */
 declare var google: any;
 declare var firebase:any;
-@IonicPage()
 @Component({
   selector: 'page-create-lead',
   templateUrl: 'create-lead.html',

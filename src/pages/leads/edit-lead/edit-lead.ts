@@ -11,19 +11,14 @@ import { Crop } from '@ionic-native/crop';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { ImageCropperComponent, CropperSettings } from "ngx-img-cropper";
-import { DashboardPage } from '../../dashboard/dashboard';
-import { FbConfirmPage } from '../../fb-confirm/fb-confirm';
 
 import { PicturePopupPage } from '../../../pages/modal-popup/picture-popup/picture-popup';
-import { CreateLeadPage } from '../../leads/create-lead/create-lead';
 import { AllLeadsPage } from '../../leads/all-leads/all-leads';
 import { LeadDetailPage } from '../../leads/lead-detail/lead-detail';
 
 import { ManageAgentsPage } from '../../setup/manage-agents/manage-agents';
 
 import { AlertController,ToastController } from 'ionic-angular';
-
-import { UserVerificationPage } from '../../user-verification/user-verification';
 
 import { SharedProvider } from '../../../providers/shared/shared';
 import { UserProvider } from '../../../providers/user/user';
@@ -37,7 +32,6 @@ import { SubscriptionProvider } from '../../../providers/subscription/subscripti
  */
 declare var google: any;
 declare var firebase:any;
-@IonicPage()
 @Component({
   selector: 'page-edit-lead',
   templateUrl: 'edit-lead.html',

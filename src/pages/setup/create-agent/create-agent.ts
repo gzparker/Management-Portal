@@ -22,7 +22,6 @@ import { SubscriptionProvider } from '../../../providers/subscription/subscripti
  * Ionic pages and navigation.
  */
 declare var CKEDITOR: any;
-@IonicPage()
 @Component({
   selector: 'page-create-agent',
   templateUrl: 'create-agent.html'

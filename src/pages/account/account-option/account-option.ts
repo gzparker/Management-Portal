@@ -2,9 +2,7 @@ import { Component, ViewChild, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, Platform, MenuController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
-import { HomePage } from '../../../pages/home/home';
 
-import { DashboardTabsPage } from '../../tabs/dashboard-tabs/dashboard-tabs';
 import { ViewCreditCardsPage } from '../../billing/view-credit-cards/view-credit-cards';
 import { UpgradeCenterPage } from '../../account/upgrade-center/upgrade-center';
 import { ChangePasswordPage } from '../../account/change-password/change-password';
@@ -23,8 +21,6 @@ import { UserProvider } from '../../../providers/user/user';
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-
-@IonicPage()
 @Component({
   selector: 'page-account-option',
   templateUrl: 'account-option.html',

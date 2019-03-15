@@ -3,9 +3,6 @@ import { IonicPage, NavController, NavParams, ModalController, Platform,
   MenuController,LoadingController, ViewController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
-import { DashboardPage } from '../../dashboard/dashboard';
-import { FbConfirmPage } from '../../fb-confirm/fb-confirm';
-
 import { EditLeadPage } from '../edit-lead/edit-lead';
 import { LeadHotsheetSubscribedPage } from '../lead-hotsheet-subscribed/lead-hotsheet-subscribed';
 import { LeadSavedListingPage } from '../lead-saved-listing/lead-saved-listing';
@@ -16,8 +13,6 @@ import { EmailContactModalPage } from '../../modal-popup/email-contact-modal/ema
 import { NewMessagePopupPage } from '../../chatmodule/new-message-popup/new-message-popup';
 
 import { AlertController,ToastController } from 'ionic-angular';
-
-import { UserVerificationPage } from '../../user-verification/user-verification';
 
 import { SharedProvider } from '../../../providers/shared/shared';
 import { UserProvider } from '../../../providers/user/user';
@@ -30,7 +25,6 @@ import { SubscriptionProvider } from '../../../providers/subscription/subscripti
  */
 declare var google: any;
 declare var firebase:any;
-@IonicPage()
 @Component({
   selector: 'page-lead-detail',
   templateUrl: 'lead-detail.html',

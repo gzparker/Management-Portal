@@ -23,7 +23,6 @@ import { SubscriptionProvider } from '../../../providers/subscription/subscripti
  * Ionic pages and navigation.
  */
 
-@IonicPage()
 @Component({
   selector: 'page-view-roles',
   templateUrl: 'view-roles.html',

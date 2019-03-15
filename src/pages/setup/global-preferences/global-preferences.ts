@@ -17,7 +17,6 @@ import { SharedProvider } from '../../../providers/shared/shared';
 import { UserProvider } from '../../../providers/user/user';
 import { SubscriptionProvider } from '../../../providers/subscription/subscription';
 import { ColorSelectionPopupPage } from '../../modal-popup/color-selection-popup/color-selection-popup';
-import { DashboardPage } from '../../dashboard/dashboard';
 import { DashboardTabsPage } from '../../tabs/dashboard-tabs/dashboard-tabs';
 import { trigger } from '@angular/core/src/animation/dsl';
 
@@ -27,7 +26,6 @@ import { trigger } from '@angular/core/src/animation/dsl';
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-@IonicPage()
 @Component({
   selector: 'page-global-preferences',
   templateUrl: 'global-preferences.html',

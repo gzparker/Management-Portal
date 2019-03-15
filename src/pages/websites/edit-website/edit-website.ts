@@ -9,15 +9,11 @@ import { Crop } from '@ionic-native/crop';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { AllWebsitesPage } from '../../websites/all-websites/all-websites';
-import { WebsitesWebsiteLinksPage } from '../../websites/websites-website-links/websites-website-links';
-import { FbConfirmPage } from '../../fb-confirm/fb-confirm';
 import { AlertController } from 'ionic-angular';
 import { ImageCropperComponent, CropperSettings } from "ngx-img-cropper";
 import { BrMaskerIonic3, BrMaskModel } from 'brmasker-ionic-3';
 import { PicturePopupPage } from '../../../pages/modal-popup/picture-popup/picture-popup';
 import { ColorSelectionPopupPage } from '../../modal-popup/color-selection-popup/color-selection-popup';
-
-import { UserVerificationPage } from '../../user-verification/user-verification';
 
 import { SharedProvider } from '../../../providers/shared/shared';
 import { UserProvider } from '../../../providers/user/user';
@@ -32,7 +28,6 @@ import { SubscriptionProvider } from '../../../providers/subscription/subscripti
 declare var CKEDITOR: any;
 declare var google: any;
 declare var firebase:any;
-@IonicPage()
 @Component({
   selector: 'page-edit-website',
   templateUrl: 'edit-website.html',
@@ -278,7 +273,7 @@ export class EditWebsitePage {
     });
   }
   getCityAddress(data) {
-
+debugger;
     this.target_place_id=data.place_id;
     data.address_components.forEach(element => {
       if(element.types[0]=="locality")
@@ -1010,7 +1005,7 @@ else
  // debugger;
   this.website_domain=this.website_domain;
 }
-   //debugger;
+   debugger;
   this.userServiceObj.updateWebsite(this.userId,isActiveFinal,this.website_domain,this.websiteId,
     this.contact_email,this.header_wrapper,this.footer_wrapper,intagent_website_dummy,this.custom_css,
     show_new_listing_dummy,show_open_houses_dummy,feature_agent_listings_dummy,

@@ -19,7 +19,6 @@ import { UserProvider } from '../../../providers/user/user';
  * Ionic pages and navigation.
  */
 
-@IonicPage()
 @Component({
   selector: 'page-manage-agents',
   templateUrl: 'manage-agents.html',

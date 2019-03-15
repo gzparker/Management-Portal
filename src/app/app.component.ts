@@ -8,51 +8,16 @@ import { NativeGeocoder, NativeGeocoderReverseResult, NativeGeocoderForwardResul
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
-
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
 import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
 import { SharedProvider } from '../providers/shared/shared';
 import { UserProvider } from '../providers/user/user';
 import { DashboardPage } from '../pages/dashboard/dashboard';
 import { DashboardTabsPage } from '../pages/tabs/dashboard-tabs/dashboard-tabs';
-import { AllWebsitesPage } from '../pages/websites/all-websites/all-websites';
-import { CreateWebsitePage } from '../pages/websites/create-website/create-website';
-import { EditWebsitePage } from '../pages/websites/edit-website/edit-website';
 
-import { AllLeadsPage } from '../pages/leads/all-leads/all-leads';
-import { CreateLeadPage } from '../pages/leads/create-lead/create-lead';
-import { LeadDetailPage } from '../pages/leads/lead-detail/lead-detail';
-import { EditLeadPage } from '../pages/leads/edit-lead/edit-lead';
-
-import { UserVerificationPage } from '../pages/user-verification/user-verification';
-
-import { CreateAgentPage } from '../pages/setup/create-agent/create-agent';
-import { GlobalPreferencesPage } from '../pages/setup/global-preferences/global-preferences';
-import { ManageAgentsPage } from '../pages/setup/manage-agents/manage-agents';
-import { MlsSettingsPage } from '../pages/setup/mls-settings/mls-settings';
-import { SetupOptionPage } from '../pages/setup/setup-option/setup-option';
-import { UserOptionPage } from '../pages/setup/user-option/user-option';
-import { NotificationSettingsPage } from '../pages/setup/notification-settings/notification-settings';
-
-import { AccountInfoPage } from '../pages/account/account-info/account-info';
 import { EditAccountPage } from '../pages/account/edit-account/edit-account';
-import { AccountOptionPage } from '../pages/account/account-option/account-option';
-import { BillingHistoryPage } from '../pages/account/billing-history/billing-history';
-import { UpcomingSubscriptionPage } from '../pages/account/upcoming-subscription/upcoming-subscription';
 
-import { ChangePasswordPage } from '../pages/account/change-password/change-password';
-import { UpgradeCenterPage } from '../pages/account/upgrade-center/upgrade-center';
-
-import { ViewCreditCardsPage } from '../pages/billing/view-credit-cards/view-credit-cards';
-import { EditCreditCardPage } from '../pages/billing/edit-credit-card/edit-credit-card';
-import { CreditCardDetailPage } from '../pages/billing/credit-card-detail/credit-card-detail';
-
-import { AllHotSheetsPage } from '../pages/hotsheets/all-hot-sheets/all-hot-sheets';
-import { CreateHotSheetPage } from '../pages/hotsheets/create-hot-sheet/create-hot-sheet';
-import { EditHotSheetPage } from '../pages/hotsheets/edit-hot-sheet/edit-hot-sheet';
-import { DashboardTabsComponent } from '../components/dashboard-tabs/dashboard-tabs';
 import { ChatPage } from '../pages/chatmodule/chat/chat';
 
 declare var google: any;
@@ -64,61 +29,23 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
   tab1Root: any = DashboardPage;
   public isApp=false;
-  public isWebBrowser=false;
-  rootPage: any = HomePage;
-  public userLoggedIn: boolean = false;
-  public paidStatus:boolean=false;
-  public allCountryCodes: any[] = [];
-  public showWebsiteSubmenu=false;
-  public showLeadsSubmenu=false;
-  public showHotsheetsSubmenu=false;
-  public isOwner:boolean=false;
-  public isDashboard:boolean=true;
-  public isWebsites:boolean=false;
-  public isLeads:boolean=false;
-  public isHotSheets:boolean=false;
-  public isChats:boolean=false;
-  public isRoles:boolean=false;
-  public isAccount:boolean=false;
-  public userGeneralInfo:any;
-  public imgBaseUrl=this.sharedServiceObj.imgBucketUrl;
-  public noImgUrl="../assets/imgs/profile-photo.jpg";
-  public allUnreadMsg:number=0;
-  //public totalUnreadMessage:number=0;
-  public loadedWebsite:string="";
-  public groupRef:any;
-  public groupMemberRef:any;
-  public chatRef:any;
-  public userRef:any;
-  public groupMembersData:any[]=[];
-  public chatGroups:any[]=[];
-  public chatData:any[]=[];
-  public firebaseUserId:string="";
-  public sideBarOption:string="1";
-  public sideBarMenuBackGround:string="";
-  public buttonColor:string="";
-  public contentBackGrounColor:string="";
-  public background_color_dweller="";
-  public background_color_dweller_option="";
-  public button_color_dweller="";
-  public button_color_dweller_option="";
-  public side_bar_color_dweller="";
-  public side_bar_color_dweller_option="";
-  public sidebar_menu_color:string="";
-  public sidebar_menu_color_option:string="";
-  public header_color="";
-  public header_color_option="";
-  public content_title_color="";
-  public content_title_color_option="";
-  public content_background:string="";
-  public content_background_option:string="";
-  public button_color="";
-  public button_color_option="";
-  public map_sidebar_color="";
-  public map_sidebar_color_option="";
-  public pagination_color="";
-  public pagination_color_option="";
-  public modal_background_color="";
+  public isWebBrowser=false;rootPage: any = HomePage;public userLoggedIn: boolean = false;
+  public paidStatus:boolean=false;public allCountryCodes: any[] = [];public showWebsiteSubmenu=false;
+  public showLeadsSubmenu=false;public showHotsheetsSubmenu=false;public isOwner:boolean=false;
+  public isDashboard:boolean=true;public isWebsites:boolean=false;public isLeads:boolean=false;
+  public isHotSheets:boolean=false;public isChats:boolean=false;public isRoles:boolean=false;
+  public isAccount:boolean=false;public userGeneralInfo:any;public imgBaseUrl=this.sharedServiceObj.imgBucketUrl;
+  public noImgUrl="../assets/imgs/profile-photo.jpg";public allUnreadMsg:number=0;public loadedWebsite:string="";
+  public groupRef:any;public groupMemberRef:any;public chatRef:any;public userRef:any;public groupMembersData:any[]=[];
+  public chatGroups:any[]=[];public chatData:any[]=[];public firebaseUserId:string="";public sideBarOption:string="1";
+  public sideBarMenuBackGround:string="";public buttonColor:string="";public contentBackGrounColor:string="";
+  public background_color_dweller="";public background_color_dweller_option="";public button_color_dweller="";
+  public button_color_dweller_option="";public side_bar_color_dweller="";public side_bar_color_dweller_option="";
+  public sidebar_menu_color:string="";public sidebar_menu_color_option:string="";
+  public header_color="";public header_color_option="";public content_title_color="";
+  public content_title_color_option="";public content_background:string="";public content_background_option:string="";
+  public button_color="";public button_color_option="";public map_sidebar_color="";public map_sidebar_color_option="";
+  public pagination_color="";public pagination_color_option="";public modal_background_color="";
   public modal_background_color_option="";
   
   pages: Array<{ title: string, component: any }>;
@@ -141,16 +68,12 @@ export class MyApp {
     sharedServiceObj.isLoggedInEmitter.subscribe(item => this.setLoginStatus(item));
     sharedServiceObj.isPaidEmitter.subscribe(item => this.setPaidStatus(item));
     sharedServiceObj.updateColorThemesEmitter.subscribe(item => this.applyThemeColors(item));
-    //sharedServiceObj.unreadMsgCounterEmitter.subscribe(item => this.setUnreadMsgs(item));
-    // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Home', component: HomePage },
       { title: "Login", component: LoginPage },
       { title: "Register", component: RegisterPage }
     ];
     this.setLoginInitialStatus();
-   
-//debugger;
     this.isApp = (!document.URL.startsWith("http"));
     this.loadedWebsite=document.URL.toString();
    sharedServiceObj.signOutEmitter.subscribe(item => {
@@ -159,47 +82,32 @@ export class MyApp {
  
   }
   ionViewWillEnter() { 
-  // debugger;
-   // this.menuController.enable(true); 
   }
   
   
   initializeApp() {
     this.platform.ready().then(() => {
-     //debugger;
-      //this.loadGeneralWebsiteSettings();
      this.setDeviceToken();
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       this.clearAllStorageElement();
-      //this.loadWebsiteInfoByDomain();
       this.loadGeneralWebsiteSettings();
       this.loadAvailableCountries();
       this.setUserCurrentGeoLocation();
-      //this.applyThemeColors(null);
       var that=this;
      
     firebase.database().ref('chats').on("child_added", function(snapshot) {
-      //debugger;
       that.loadAllMsgCounter();
     });
-     // this.loadAllMsgCounter();
-      /*let allUnreadMessage = this.storage.get('allUnreadMessage');
-    allUnreadMessage.then((data) => {
-      this.setUnreadMsgs(data);
-    });*/
+  
     });
   }
   ionViewDidLoad() {
-    //debugger;
-    //this.menuController.enable(false);
-    
   }
   applyThemeColors(colorObject:any)
   {
   if(colorObject!=null)
   {
-  // debugger;
   if(colorObject.option=="header_color")
   {
     this.header_color=colorObject.selectedColor
@@ -245,10 +153,8 @@ export class MyApp {
     this.background_color_dweller=colorObject.selectedColor
   }
 }
-//debugger;
   let sidebarElements=document.getElementsByClassName("sidebar_color");
     for (let i = 0; i < sidebarElements.length; i++) {
-     //debugger;
       sidebarElements[i].setAttribute("style", "background:"+this.sidebar_menu_color+" !important;");
     }
 
@@ -338,36 +244,6 @@ else if(this.sideBarOption=="3")
   this.sideBarOption="1";
 }
   }
-  /*loadWebsiteInfoByDomain()
-  {
-    
-    let dummyWebsiteUrl="";
-    if(this.loadedWebsite[this.loadedWebsite.length-1]=="/")
-    {
-dummyWebsiteUrl=this.loadedWebsite.substr(0,this.loadedWebsite.length-1)
-    }
-    else
-    {
-      dummyWebsiteUrl=this.loadedWebsite;
-    }
-  
-    if(dummyWebsiteUrl.indexOf("localhost")>0)
-    {
-    
-     this.userServiceObj.loadAllWebsiteInfoByDomain("cotierproperties.com")
-    .subscribe((result) => this.loadWebsiteInfoByDomainResp(result));
-    }
-    else
-    {
-      this.userServiceObj.loadAllWebsiteInfoByDomain(dummyWebsiteUrl)
-      .subscribe((result) => this.loadWebsiteInfoByDomainResp(result));
-    }
-    
-  }
-  loadWebsiteInfoByDomainResp(result:any)
-  {
-this.storage.set("websiteInfo",result.result);
-  }*/
   loadGeneralWebsiteSettings()
   {
     
@@ -380,10 +256,8 @@ dummyWebsiteUrl=this.loadedWebsite.substr(0,this.loadedWebsite.length-1)
     {
       dummyWebsiteUrl=this.loadedWebsite;
     }
-    ///debugger;
     if(dummyWebsiteUrl=="https://configuration.menu"||dummyWebsiteUrl=="http://configuration.menu")
     {
-      //debugger;
       this.sharedServiceObj.getServiceDefaultInfoByUrl("https://idx.configuration.menu")
       .subscribe((result) => this.loadGeneralWebsiteSettingsResp(result));
     }
@@ -394,7 +268,6 @@ dummyWebsiteUrl=this.loadedWebsite.substr(0,this.loadedWebsite.length-1)
     }
     else
     {
-      //debugger;
      this.sharedServiceObj.getServiceDefaultInfoByUrl(dummyWebsiteUrl.toString())
      .subscribe((result) => this.loadGeneralWebsiteSettingsResp(result));
     }
@@ -405,34 +278,26 @@ dummyWebsiteUrl=this.loadedWebsite.substr(0,this.loadedWebsite.length-1)
     var that=this;
 if(result)
 {
-  //debugger;
   this.storage.set("generalWebsiteSettings",result);
  
   }
 }
   setDeviceToken(){
-    //debugger;
     const messaging = firebase.messaging();
     messaging.usePublicVapidKey(this.sharedServiceObj.idxFirebasePublicKey);
-//debugger;
+    //this.storage.get('firebase_token').then((data) => {
+      //if(data == null){
 messaging.requestPermission()
 .then(function() {
-  //debugger;
 })
 .then(function(token) {
-//debugger;
-//send this token to server
-  //console.log(token); // Display user token
   this.storage.set("firebase_token",token);
 })
-.catch(function(err) { // Happen if user deney permission
-//debugger;
+.catch(function(err) {
   console.log('Unable to get permission to notify.', err);
 });
 messaging.getToken().then((currentToken)=> {
   if (currentToken) {
-  //debugger;
-  //alert(currentToken);
     this.storage.set("firebase_token",currentToken);
     
   } else {
@@ -441,39 +306,32 @@ messaging.getToken().then((currentToken)=> {
     
   }
 }).catch(function(err) {
- // debugger;
   console.log('An error occurred while retrieving token. ', err);
-  //showToken('Error retrieving Instance ID token. ', err);
-  //setTokenSentToServer(false);
 });
+    //}
+  //});
 messaging.onMessage(function(payload){
-  //debugger;
-  alert("notification received");
+  debugger;
     console.log('onMessage',payload);
-    //debugger;
 })
   }
   clearAllStorageElement() {
     this.storage.remove("userCurrentLocation");
     this.storage.remove("userCountryInfo");
-    this.storage.remove("availableCountryList");
+    //this.storage.remove("availableCountryList");
   }
   setUserCurrentGeoLocation() {
     if(!this.isApp)
     {
-     // alert("webbrowser");
       if (window.navigator.geolocation) {
         window.navigator.geolocation.getCurrentPosition((position)=> {
           this.storage.set("userCurrentLatitude", position.coords.latitude);
           this.storage.set("userCurrentLongitude", position.coords.longitude);
           this.setUserCountry(position.coords.latitude, position.coords.longitude);
-  //debugger;
         }, function() {
          
         });
       } else {
-        // Browser doesn't support Geolocation
-       
       }
     }
 else
@@ -493,17 +351,14 @@ this.geolocation.getCurrentPosition().then((resp) => {
 
   }
   AfterViewInit(){
-   // debugger;
   }
   loadAllMsgCounter()
 {
   var that=this;
   let i=0;
- // debugger;
   let firebaseUserIdData = this.storage.get('firebaseUserId');
   firebaseUserIdData.then((data) => {
   this.firebaseUserId=data;
- 
   var fredRef=firebase.database().ref('groups').on('value', function(snapshot) {
     if(snapshot.exists())
     {
@@ -529,7 +384,6 @@ this.geolocation.getCurrentPosition().then((resp) => {
           if(j==snapshot.numChildren())
           {
             that.allUnreadMsg=0;
-            //debugger;
             that.countUnreadMessages();
           }
       
@@ -541,18 +395,10 @@ this.geolocation.getCurrentPosition().then((resp) => {
       });
   }
 });
-
-/*var chatsObjRef=firebase.database().ref('chats').on('value', function(chatsObjRefVal) {
- if(chatsObjRefVal.exists())
- {
-   that.countUnreadMessages();
- }
-});*/
   });
 }
 countUnreadMessages()
 {
- //debugger;
 var that=this;
 let i=0;
   that.chatGroups.forEach(function(groupData) {
@@ -569,20 +415,13 @@ if(groupData.val().deletedFor.indexOf(that.firebaseUserId)<0)
  }
  else if(groupData.val().isGroup==1)
  {
-   //debugger;
-//if(that.groupMembersData)
-//{
-  //that.groupMembersData.forEach(function(groupMember) {
     var fredRef=firebase.database().ref('groupMembers').on('child_added', function(snapshot) {
   if(snapshot.val().userId==that.firebaseUserId&&snapshot.val().groupId==groupData.val().groupId)
   {
-    //debugger;
     that.totalUnreadMessages(groupData,i);
    
   }
 });
- // });
-//}
  }
 }
 }
@@ -592,7 +431,6 @@ i=i+1;
 }
 totalUnreadMessages(groupData:any,arrIndex:any)
 {
-//debugger;
   var that=this;
   let totalUnreadMessage=0;
   var unreadCounter=0;
@@ -604,85 +442,32 @@ totalUnreadMessages(groupData:any,arrIndex:any)
   if(chatDataItem.val().readBy.indexOf(that.firebaseUserId)<0)
 {
   unreadCounter=unreadCounter+1;
-  //debugger;
 }
 }
 if(i==that.chatData.length)
 {
   if(unreadCounter>0)
   {
-  //debugger;
-  //totalUnreadMessage=totalUnreadMessage+unreadCounter;
   that.allUnreadMsg=that.allUnreadMsg+unreadCounter;
-  //debugger;
-    
-    //debugger;
   }
   else
   {
-   // debugger;
-    //that.allUnreadMsg=0;
-    //that.sharedServiceObj.setUnreadMsgs(that.allUnreadMsg.toString());
-    //that.storage.set("allUnreadMessage",that.allUnreadMsg.toString());
   }
   that.sharedServiceObj.setUnreadMsgs(that.allUnreadMsg.toString());
-  //that.storage.set("allUnreadMessage",that.allUnreadMsg.toString());
 }
   });
-    /*firebase.database().ref('chats').orderByChild("groupId").equalTo(groupData.val().groupId).on("value", function(snapshot) {
-     if(snapshot.exists()){
-      i=0;
-      let totalUnreadMessage=0;
-  var unreadCounter=0;
-      snapshot.forEach(element => {
-        //debugger;
-        i=i+1;
-if(element.val().readBy.indexOf(that.firebaseUserId)<0)
-{
-  unreadCounter=unreadCounter+1;
-}
-if(i==snapshot.numChildren())
-{
-  //debugger;
-  if(unreadCounter>0)
-  {
-  // debugger;
-  totalUnreadMessage=totalUnreadMessage+unreadCounter;
-  that.allUnreadMsg=that.allUnreadMsg+totalUnreadMessage;
-  debugger;
-    that.sharedServiceObj.setUnreadMsgs(that.allUnreadMsg.toString());
-    that.storage.set("allUnreadMessage",that.allUnreadMsg.toString());
-    //debugger;
-  }
-  else
-  {
-   // debugger;
-    that.allUnreadMsg=0;
-    that.sharedServiceObj.setUnreadMsgs(that.allUnreadMsg.toString());
-    that.storage.set("allUnreadMessage",that.allUnreadMsg.toString());
-  }
-}
-
-});
-    }
-});*/
 }    
 
   setUnreadMsgs(msgCounter:string)
   {
-//this.allUnreadMsg=msgCounter;
   }
   setUserCountry(latitude: any, longitude: any) {
  
     if(this.isApp)
     {
-   //alert('app');
       this.nativeGeocoder.reverseGeocode(latitude, longitude)
       .then((result: NativeGeocoderReverseResult) => {
-      //debugger;
-//alert(JSON.stringify(result));
         this.storage.set("userCountryInfo", result);
-        //this.setGeoCodeInfo(result.countryName,result.countryCode);
       })
       .catch((error: any) => {
       
@@ -690,7 +475,6 @@ if(i==snapshot.numChildren())
     }
     else
     {
-     //alert('no app');
       var latlng = new google.maps.LatLng(latitude, longitude);
       var geocoder = new google.maps.Geocoder;
    
@@ -710,7 +494,6 @@ if(i==snapshot.numChildren())
           }
         
         } else {
-        //  alert('not inside');
         }
       });
    
@@ -719,7 +502,6 @@ if(i==snapshot.numChildren())
   }
   setGeoCodeInfo(countryName:any,countryCode:any)
   {
-  //  debugger;
 this.geoCoderData.country=countryName;
 this.geoCoderData.countryCode=countryCode;
 this.storage.set("userCountryInfo", this.geoCoderData);
@@ -736,17 +518,13 @@ this.showSideMenue=false;
         this.showSideMenue=true;
         this.setAccessLevels();
         this.setUserGeneralInfo();
-        //debugger;
         this.userLoggedIn = true;
         this.rootPage = DashboardTabsPage;
-        //this.rootPage = DashboardPage;
-        //this.nav.setRoot(DashboardPage);
       }
     });
 
   }
   setLoginStatus(item: any): void {
-//debugger;
     this.userLoggedIn = item;
     if(item==true)
     {
@@ -759,20 +537,30 @@ this.showSideMenue=false;
     this.loadAllMsgCounter();
     this.setAccessLevels();
     this.setUserGeneralInfo();
-    // debugger;
   }
   setPaidStatus(item: any):void{
     this.paidStatus=item;
   }
   loadAvailableCountries() {
-    if (this.allCountryCodes == undefined) {
+    this.storage.get('availableCountryList').then((data) => {
+      if(data!=null) {
+        //debugger;
+        this.storage.set("availableCountryList", data);
+      } else {
+        //this.storage.set("availableCountryList", data);
+        //debugger;
+        this.userServiceObj.loadCountryCodes()
+        .subscribe((result) => this.getAllCountryCodesResp(result));
+      }
+    });
+    /*if (this.allCountryCodes == undefined) {
       this.userServiceObj.loadCountryCodes()
         .subscribe((result) => this.getAllCountryCodesResp(result));
     }
     else if (this.allCountryCodes.length <= 0) {
       this.userServiceObj.loadCountryCodes()
         .subscribe((result) => this.getAllCountryCodesResp(result));
-    }
+    }*/
   }
   getAllCountryCodesResp(result: any): void {
     let countryCodesDummy = [];
@@ -783,7 +571,6 @@ this.showSideMenue=false;
   }
 
   openPage(pageNumber) {
-    //debugger;
     if (pageNumber == "1") {
       this.nav.setRoot(HomePage);
     }
@@ -803,27 +590,6 @@ this.showSideMenue=false;
     else{
       this.nav.setRoot(DashboardTabsPage,{selectedPage:pageNumber});
     }
-    /*if (pageNumber == "5") {  
-      this.nav.setRoot(DashboardTabsPage,{selectedPage:"5"});
-    }
-    if (pageNumber == "6") {
-      this.nav.setRoot(DashboardTabsPage,{selectedPage:"6"});   
-    }
-    if (pageNumber == "7") {
-      this.nav.setRoot(DashboardTabsPage,{selectedPage:"7"});   
-    }
-    if (pageNumber == "8") {
-      this.nav.setRoot(DashboardTabsPage,{selectedPage:"8"});
-    }
-    if (pageNumber == "9") {
-      this.nav.setRoot(DashboardTabsPage,{selectedPage:"9"});
-    }
-    if (pageNumber == "23") {
-      this.nav.setRoot(DashboardTabsPage,{selectedPage:"23"});
-    }
-    if (pageNumber == "26") {
-      this.nav.setRoot(DashboardTabsPage,{selectedPage:"26"});
-    }*/
   }
   editAccount()
   {
@@ -881,7 +647,6 @@ else if(option=='6')
         this.modal_background_color=data.modal_background_color;
         this.modal_background_color_option=data.modal_background_color_option;
         this.applyThemeColors(null);
-//debugger;
       }
     });
   }
@@ -892,25 +657,21 @@ else if(option=='6')
       parent_id.then((data) => {
         if(data!=null)
         {
-         // debugger;    
       this.parentId=data;
       this.isOwner=false;
         }
        else
        {
-         //debugger;
       this.isOwner=true;
        }
        this.allowMenuOptions();
       
       });
-      //debugger;
   }
   allowMenuOptions()
   {
     if(this.isOwner==false)
     {
-     // debugger;
       this.isAccount=false;
     this.isHotSheets=false;
     this.isLeads=false;
@@ -922,11 +683,8 @@ else if(option=='6')
       {
         if(data!=false)
         {
-        //debugger;
         this.isAccount=true;
         let savedAccessLevels:any[]=data;
-
-       // debugger;
         let websiteAccesLevels=savedAccessLevels.filter((element) => {
           return (element.key=="view-websites");
       });
@@ -989,7 +747,6 @@ else if(option=='6')
   }
   else
   {
-   // debugger;
     this.isAccount=true;
     this.isChats=true;
     this.isDashboard=true;
@@ -998,7 +755,6 @@ else if(option=='6')
     this.isRoles=true;
     this.isWebsites=true;
   }
-  //debugger;
   }
   logOut() {
     let that=this;
@@ -1015,24 +771,18 @@ else if(option=='6')
     this.storage.remove("allowed_access_options");
     this.storage.remove('is_submember');
     this.storage.remove('allUnreadMessage');
-    //debugger;
     let firebaseUserId = this.storage.get('firebaseUserId');
     firebaseUserId.then((data) => {
     var fredRef=firebase.database().ref('users/'+data);
- //debugger;
-//The following 2 function calls are equivalent
 fredRef.update({isOnline:'0'}).then(function() {
-  //debugger;
-  // Update successful.
+
   that.storage.remove('firebaseUserId');
   }, function(error) {
-  //debugger;
-  // An error happened.
+
   });
 
     });
-    
-   // debugger;
+
     if (this.userServiceObj.facebookObject != undefined) {
       if (this.userServiceObj.facebookObject.getAccessToken.length > 0) {
         this.userServiceObj.facebookObject.logout();

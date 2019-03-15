@@ -18,7 +18,6 @@ import { UserProvider } from '../../../providers/user/user';
  * Ionic pages and navigation.
  */
 
-@IonicPage()
 @Component({
   selector: 'page-all-hot-sheets',
   templateUrl: 'all-hot-sheets.html',

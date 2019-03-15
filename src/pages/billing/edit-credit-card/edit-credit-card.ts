@@ -5,11 +5,6 @@ import {DatePipe} from '@angular/common';
 import { Storage } from '@ionic/storage';
 import { AlertController } from 'ionic-angular';
 
-import { AccountOptionPage } from '../../account/account-option/account-option';
-
-import { ChangePasswordPage } from '../../account/change-password/change-password';
-import { UpgradeCenterPage } from '../../account/upgrade-center/upgrade-center';
-
 import { ViewCreditCardsPage } from '../../billing/view-credit-cards/view-credit-cards';
 
 import { SharedProvider } from '../../../providers/shared/shared';
@@ -22,7 +17,6 @@ import { UserProvider } from '../../../providers/user/user';
  * Ionic pages and navigation.
  */
 
-@IonicPage()
 @Component({
   selector: 'page-edit-credit-card',
   templateUrl: 'edit-credit-card.html',
