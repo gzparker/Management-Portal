@@ -100,4 +100,29 @@ page-upgrade-center {
       }
     }
   }
+
+  .customWrapper {
+  padding: 16px;
+    .formShadow {
+    background: #FFF;
+      h3 {
+      padding: 16px;
+      font-weight: 600 !important;
+      }
+      ion-list {      
+      margin: 0 16px;
+      border-radius: 0 !important;
+      box-shadow: none;
+      border-top: 1px solid #DDD;
+      border-bottom: 1px solid #DDD;
+        .item-inner {
+        width: 100%;
+        max-width: 100%;
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+        }
+      }
+    }
+  }
+
 }
