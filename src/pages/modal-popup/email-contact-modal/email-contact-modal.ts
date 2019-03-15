@@ -55,7 +55,7 @@ public first_name:string="";
     let subject="Email From : "+this.first_name+" "+this.last_name;
     let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
     generalWebsiteSettings.then((data) => {
-    this.userServiceObj.sendEmailToContact(this.leadInfo.lead_id,subject,this.emailMessage,data.service_id.toString())
+    this.userServiceObj.sendEmailToContact(this.leadInfo.lead_id,subject,this.emailMessage,data.service_id.toString(),'https://s3-us-west-2.amazonaws.com/central-system/usr/6193c4f73a9ad64c/assets/static/people/company_photocQIu.jpg')
     .subscribe((result) => this.sendEmailToContactResp(result));
     });
   }

@@ -721,7 +721,7 @@ createLead(member_id:string,website_id:string,email:string,password:string,first
   home_address_city:string,home_address_state_or_province:string,home_address_zipcode:string,work_address_street:string,
   work_address_city:string,work_address_state_or_province:string,work_zipcode:string,assigned_agent_id:string,
   category:string,internal_notes:string,home_address:string,home_lat_lng:string,home_google_place_id:string,
-  work_address:string,work_lat_lng:string,work_google_place_id:string,leadImage:string){
+  work_address:string,work_lat_lng:string,work_google_place_id:string,leadImage:string,service_id:string){
 let phone_office_num="";
 let phone_mobile_num="";
 let phone_home_num="";
@@ -749,6 +749,7 @@ data.append('phone_mobile',phone_mobile_num);
 data.append('phone_home',phone_home_num);
 data.append('website_id',website_id);
 data.append('member_id',member_id);
+data.append('service_id',service_id);
 
 data.append('home_address_street',home_address_street);
 data.append('home_address_city',home_address_city);
@@ -898,7 +899,7 @@ sendAppInvitation(phone_number:string,message:string){
       .map(this.extractData)
       return leadInvitation;
   }
-  sendEmailToContact(toUserId:string,subject:string,message:string,service_id:string){
+  sendEmailToContact(toUserId:string,subject:string,message:string,service_id:string,notify_icon:string){
     //debugger;
         let data = new URLSearchParams();
      data.append('to','user_'+toUserId);
@@ -907,6 +908,8 @@ sendAppInvitation(phone_number:string,message:string){
     data.append('notification_type','message');
     data.append('title',subject);
     data.append('service_id',service_id);
+    data.append('force_type','email');
+    data.append('notify_icon',notify_icon)
     //debugger;
       let contactEmail=this.http
         .post(this.sharedServiceObj.registerationApiBaseUrl+'messaging/sendEmailMessage', data, this.headerOptions)

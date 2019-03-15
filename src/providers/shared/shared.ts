@@ -214,6 +214,29 @@ this.isPaidEmitter.emit(paidStatus);
   trim (str) {
   return str.replace(/^\s+|\s+$/gm,'');
 }
+sendNotification(toUserId:string,subject:string,message:string,service_id:string,notify_icon:string,toType:string){
+  //debugger;
+      let data = new URLSearchParams();
+if(toType=='member')
+{
+  data.append('to','member_'+toUserId);
+} else{
+  data.append('to','user_'+toUserId);
+}
+//debugger;
+   data.append('from','noreply@idxcompany.com');
+  data.append('json_message',message);
+  data.append('notification_type','message');
+  data.append('title',subject);
+  data.append('service_id',service_id);
+  data.append('force_type','email');
+  data.append('notify_icon',notify_icon)
+  //debugger;
+    let contactEmail=this.http
+      .post(this.registerationApiBaseUrl+'messaging/sendEmailMessage', data, this.headerOptions)
+      .map(this.extractData)
+      return contactEmail;
+  }
 numAbbriv(num) {
   if (num > 999999) {
       return num > 999999 ? (num / 1000000).toFixed(1) + 'M' : num

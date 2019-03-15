@@ -90,6 +90,7 @@ export class CreateLeadPage {
   public leadHeight:string="";
   public leadImage:string="";
   public service_id:string="";
+  public websiteBackgroundInfo:any;
   public geoLocationOptions = {
     types: ['(cities)'],
     componentRestrictions: {country: "us"}
@@ -147,8 +148,21 @@ export class CreateLeadPage {
   ionViewDidEnter()
   {
     this.sharedServiceObj.updateColorThemeMethod(null);
+    this.loadGeneralWebsiteSettings();
   }
-  
+  loadGeneralWebsiteSettings()
+  {
+    //debugger;
+    var that=this;
+    let serviceInfo=this.storage.get("generalWebsiteSettings");
+    serviceInfo.then((result)=>
+{
+  //debugger;
+  that.websiteBackgroundInfo=result;
+
+});
+//debugger;
+  }
   loadAllAgents()
     {
       if(this.userId.toString())
@@ -267,7 +281,7 @@ export class CreateLeadPage {
     if(this.userId!="")
     {
     //  this.loader.present();
-    debugger;
+    //debugger;
   this.userServiceObj.createLead(this.userId.toString(),this.selectedWebsite,this.email,
   this.password,this.firstName,this.lastName,
   this.officeNumber,this.mobileNumber,this.homeNumber,this.home_address_street,this.home_address_city,
@@ -275,7 +289,7 @@ export class CreateLeadPage {
   this.work_address_street,this.work_address_city,this.work_address_state_or_province,this.work_zipcode,
 this.assigned_agent_id,this.category,this.internal_notes,this.home_address,
 this.home_lat_lng,this.home_google_place_id,this.work_address,this.work_lat_lng,this.work_google_place_id,
-this.leadImage)
+this.leadImage,this.service_id)
     .subscribe((result) => this.createLeadResp(result));
  
     }
@@ -286,6 +300,10 @@ this.leadImage)
     {
       this.leadCreateMsg="Lead has been created successfully.";
       //debugger;
+      this.sharedServiceObj.sendNotification(this.userId.toString(),"New Lead",this.leadCreateMsg,this.service_id,
+      this.websiteBackgroundInfo.brand_image_url,"member").
+      subscribe((result) => this.sendNotificationResp(result));
+      //debugger;
       let leadInfo=result.leadInfo;
       this.createFirebaseLead(leadInfo.email,leadInfo.password,
         leadInfo.lead_id,leadInfo.first_name,leadInfo.last_name,
@@ -294,6 +312,14 @@ this.leadImage)
       
     }
   
+  }
+  sendNotificationResp(result:any)
+  {
+   //debugger;
+    if(result.status)
+{
+  
+}
   }
   createFirebaseLead(email:string,password:string,webUserId:string,first_name:string,last_name:string,
     image_url:string,parent_id:string,is_submember:string,is_lead:string,website_id:string,leadCreationResp:string,leadInfo:any)
