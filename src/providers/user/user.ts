@@ -429,7 +429,7 @@ is_online="1";
         else {
 
           this.storage.set("fbMembershipResp", this.fbAuthResp);
-          this.openFBConfirmModal();
+          this.openFBConfirmModal('0');
 
 
         }
@@ -459,9 +459,43 @@ is_online="1";
     }
   }
 
-  openFBConfirmModal() {
-    debugger;
-    this.fbLoginDecision.emit('0');
+  openFBConfirmModal(type:string) {
+    //debugger;
+    this.fbLoginDecision.emit(type);
+  }
+  googleSignUp() {
+    //debugger;
+    this.storage.get('googleAuth').then((googleAuth) => {
+      if (googleAuth != null) {
+        //debugger;
+        this.fbEmailCheck(googleAuth.google_email).subscribe(result => this.checkGoogleEmail(result));
+      }
+      });
+   }
+   checkGoogleEmail(resp: any): void {
+     if (resp.status === true) {
+       const googleAuth: any = this.storage.get('googleAuth');
+     if (googleAuth != null) {
+      this.fbSetAuthenticationValues(resp);
+       this.googleUpdateToken(googleAuth.google_email, googleAuth.google_token)
+         .subscribe(result => this.googleUpdateTokenResp(result));
+     }
+     } else {
+      this.openFBConfirmModal('2');
+     }
+  }
+  googleUpdateToken(email: string, google_token: string) {
+    const data = new URLSearchParams();
+    //debugger;
+     data.append('email', email);
+     data.append('google_token', google_token);
+     const searchedListing = this.http
+       .post(this.sharedServiceObj.apiBaseUrl + 'members/googleTokenUpdate', data,
+       this.headerOptions)
+       .map(this.extractData);
+     return searchedListing;
+   }
+  googleUpdateTokenResp(result: any): void {
   }
   userLogin(email: string, password: string) {
     let url = "";
@@ -484,6 +518,7 @@ is_online="1";
  
       this.firbase_token_data=data;
     });
+    //debugger;
     let url = "";
     let data = new URLSearchParams();
     url = this.sharedServiceObj.registerationApiBaseUrl + 'members/memberSignup';
@@ -495,6 +530,7 @@ is_online="1";
     data.append('last_name', dataObj.last_name);
     data.append('phone_mobile', dataObj.phone_number.toString());
     data.append('fb_token', dataObj.fb_token);
+    data.append('google_token', dataObj.google_token);
     data.append('country_code', dataObj.country_code);
     data.append('country_abbv', dataObj.country_abbv);
     data.append('verified', dataObj.verified);

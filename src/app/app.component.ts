@@ -292,7 +292,7 @@ messaging.requestPermission()
 })
 .then(function(token) {
   this.storage.set("firebase_token",token);
-  debugger;
+  //debugger;
 })
 .catch(function(err) {
   console.log('Unable to get permission to notify.', err);
@@ -300,7 +300,7 @@ messaging.requestPermission()
 messaging.getToken().then((currentToken)=> {
   if (currentToken) {
     this.storage.set("firebase_token",currentToken);
-    debugger;
+    //debugger;
   } else {
  
     console.log('No Instance ID token available. Request permission to generate one.');
@@ -312,7 +312,7 @@ messaging.getToken().then((currentToken)=> {
     //}
   //});
 messaging.onMessage(function(payload){
-  debugger;
+  //debugger;
     console.log('onMessage',payload);
 })
   }

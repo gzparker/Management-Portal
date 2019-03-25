@@ -23,6 +23,7 @@ export class FbConfirmPage {
   public first_name_fb: string = "";
   public last_name_fb: string = "";
   public fb_token_id: string = "";
+  public google_token: string = "";
   public master_id: string = "";
   public phone_number_verify: number;
   public selectedCountryCode: string = "1";
@@ -30,9 +31,14 @@ export class FbConfirmPage {
   public userCreated: boolean = false;
   public userFbSignUpMsg: string = "";
   public allCountryCodes: any[] = [];
+  public acct_type: string = "";
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
-    public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform, public viewCtrl: ViewController) {
+    public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform, 
+    public viewCtrl: ViewController) {
+      if(this.navParams.get('type')!=undefined){
+        this.acct_type=this.navParams.get('type');
+      }
   }
   closeModal() {
     //debugger;
@@ -40,7 +46,14 @@ export class FbConfirmPage {
   }
   ionViewDidLoad() {
     this.sharedServiceObj.updateColorThemeMethod(null);
-    this.setFacebookValues();
+    if(this.acct_type=="0")
+    {
+      this.setFacebookValues();
+    }
+    else if(this.acct_type=="2"){
+      debugger;
+      this.setGoogleValues();
+    }
     this.getAllCountryCodes();
   }
   ionViewDidEnter()
@@ -67,8 +80,28 @@ export class FbConfirmPage {
       }
     });
   }
+  setGoogleValues() {
+    debugger;
+      //const googleAuth: any = this.localStorageService.get('googleAuth');
+      this.storage.get('googleAuth').then((googleAuth) => {
+        debugger;
+      if (googleAuth == null) {
+      } else {
+        this.emailFb = googleAuth.google_email;
+        const fullname = googleAuth.google_name.split(' ');
+        this.google_token = googleAuth.google_token;
+  
+        if (fullname[0] !== undefined) {
+          this.first_name_fb = fullname[0];
+        }
+        if (fullname[1] !== undefined) {
+          this.last_name_fb = fullname[1];
+        }
+      }
+    });
+  }
   fbSignUpMethod(): void {
-
+debugger;
     this.userSignUp();
     // if(this.emailFb!="")
     //  {
@@ -91,6 +124,7 @@ export class FbConfirmPage {
       website_id: "",
       userType: "",
       fb_token: "",
+      google_token: "",
       verified: 0
     };
     //if(this.domainAccess)
@@ -99,14 +133,21 @@ export class FbConfirmPage {
     //debugger;
     dataObj.email = this.emailFb;
     dataObj.password = this.fbPassword;
+    if(this.acct_type=="0")
+    {
     dataObj.fb_token = this.fb_token_id;
+    }
+    if(this.acct_type=="2")
+    {
+      dataObj.google_token=this.google_token;
+    }
     dataObj.first_name = this.first_name_fb;
     dataObj.last_name = this.last_name_fb;
     dataObj.country_code = this.selectedCountryCode;
     dataObj.country_abbv = this.selectedCountryAbbv;
     dataObj.phone_number = Math.floor(Math.random() * (90000000 - 1 + 1)) + 1;
     dataObj.verified = 0;
-    //debugger;
+    debugger;
 
     //debugger;
     let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');

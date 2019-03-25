@@ -1,11 +1,11 @@
-import { Component, ViewChild, NgZone } from '@angular/core';
+import { Component, ViewChild, NgZone,ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, Platform,LoadingController,ToastController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 import { DashboardTabsPage } from '../tabs/dashboard-tabs/dashboard-tabs';
 import { AlertController } from 'ionic-angular';
 import { RegisterPage } from '../../pages/register/register';
-
+import { FbConfirmPage } from '../fb-confirm/fb-confirm';
 import { UserVerificationPage } from '../user-verification/user-verification';
 
 import { SharedProvider } from '../../providers/shared/shared';
@@ -19,48 +19,36 @@ import { UserProvider } from '../../providers/user/user';
  */
 //declare const FB:any;
 declare var firebase:any;
+declare const gapi: any;
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',
 })
 export class LoginPage {
+  @ViewChild('btnGoogle', { read: ElementRef }) btnGoogle: ElementRef
+  btnGoogleElement: HTMLInputElement = null;
+  public email: string = ""; public emailFb: string = ""; public password: string = ""; public fbPassword: string = "";
+  public first_name: string = ""; public first_name_fb: string = ""; public last_name: string = "";
+  public last_name_fb: string = ""; public phone_number: number; public phone_number_verify: number;
+  public userLogginMsg: string = ""; public verificationMsg: string = ""; public userLoggedId: boolean = false;
+  public fbAuthResp: any; public acctVerified: boolean = false; public fb_token_id: string = "";
+  public selectedCountryCode: string = ""; public selectedCountryAbbv: string = ""; public allCountryCodes: any[] = [];
+  public verify_by: string = "email"; public master_id: string = ""; public service_id:string="";
+  public verification_code: string = ""; public loader:any; public fbLoginStatus: any;
+  public appId: number = 701598080041539; public websiteBackgroundInfo:any; public headerColor:string="";
+  public sideBarMenuColor:string=""; public buttonColor:string=""; public textColor:string="";
+  public loadedWebsite:string=""; public serviceType:string="";
+  public google_token= ''; public google_id= ''; public google_name= ''; public google_image= ''; public google_email= '';
+  private clientId = this.sharedServiceObj.google_client_id;
+  private scope = [
+    'profile',
+    'email',
+    'https://www.googleapis.com/auth/plus.me',
+    'https://www.googleapis.com/auth/contacts.readonly',
+    'https://www.googleapis.com/auth/admin.directory.user.readonly'
+  ].join(' ');
 
-  public email: string = "";
-  public emailFb: string = "";
-  public password: string = "";
-  public fbPassword: string = "";
-  public first_name: string = "";
-  public first_name_fb: string = "";
-  public last_name: string = "";
-  public last_name_fb: string = "";
-  public phone_number: number;
-  public phone_number_verify: number;
-  public userLogginMsg: string = "";
-  public verificationMsg: string = "";
-
-  public userLoggedId: boolean = false;
-  public fbAuthResp: any;
-
-  public acctVerified: boolean = false;
-  public fb_token_id: string = "";
-  public selectedCountryCode: string = "";
-  public selectedCountryAbbv: string = "";
-  public allCountryCodes: any[] = [];
-  public verify_by: string = "email";
-  public master_id: string = "";
-  public service_id:string="";
-  public verification_code: string = "";
-  public loader:any;
-
-  public fbLoginStatus: any;
-  public appId: number = 701598080041539;
-  public websiteBackgroundInfo:any;
-  public headerColor:string="";
-  public sideBarMenuColor:string="";
-  public buttonColor:string="";
-  public textColor:string="";
-  public loadedWebsite:string="";
-  public serviceType:string="";
+  public auth2: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform
@@ -90,6 +78,9 @@ export class LoginPage {
   }
   ionViewDidLoad() {
     let that=this;
+    this.btnGoogleElement = this.btnGoogle.nativeElement;
+    //debugger;
+    this.googleInit();
     //this.sharedServiceObj.updateColorThemeMethod(null);
     let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
     generalWebsiteSettings.then((data) => {
@@ -102,6 +93,45 @@ export class LoginPage {
     that.applyColors();
   }
     });
+  }
+  public googleInit() {
+    const that = this;
+    gapi.load('auth2', function () {
+      that.auth2 = gapi.auth2.init({
+        client_id: that.clientId,
+        cookiepolicy: 'single_host_origin',
+        scope: that.scope
+      });
+      that.attachSignin(that.btnGoogleElement);
+    });
+  }
+  public attachSignin(element) {
+    const that = this;
+    this.auth2.attachClickHandler(element, {},
+      function (googleUser) {
+
+        const profile = googleUser.getBasicProfile();
+        //debugger;
+        that.google_token = googleUser.getAuthResponse().id_token;
+        that.google_id = profile.getId();
+        that.google_name = profile.getName();
+        that.google_image = profile.getImageUrl();
+        that.google_email = profile.getEmail();
+        const dataObj = {
+          google_token : that.google_token,
+          google_id : that.google_id,
+          google_name : that.google_name,
+          google_image : that.google_image,
+          google_email : that.google_email
+        };
+        debugger;
+        that.storage.set('googleAuth', dataObj);
+        //that.localStorageService.set('googleAuth', dataObj);
+        //debugger;
+        that.userServiceObj.googleSignUp();
+      }, function (error) {
+        console.log(JSON.stringify(error, undefined, 2));
+      });
   }
   applyColors()
 {
@@ -332,10 +362,13 @@ setAllAccessOptionsResp(result:any)
   }
   faceBookDecisionMethod(opt: string) {
     if (opt == "0") {
-      this.navCtrl.push(UserVerificationPage);
+      this.navCtrl.push(FbConfirmPage, { type: "0" });
     }
     else if (opt == "1") {
       this.navCtrl.push(DashboardTabsPage);
+    }
+    else if (opt == "2") {
+      this.navCtrl.push(FbConfirmPage, { type: "2" });
     }
   }
   getAllCountryCodes(): void {

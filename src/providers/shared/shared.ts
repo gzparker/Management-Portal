@@ -38,6 +38,7 @@ export class SharedProvider {
   public idxFirebasePublicKey="BFLnyRGk5TlJYMkX6X-H7xZWikEdVZL9tE5t3x_q2mh4P3OM-kHkOmhlmYUGSxSV6BYdCbuSpwcBCQ3Oc0Gb3t4";
   public defaultNoImage="assets/imgs/noImage.png";
   public idxChatAppLink="http://www.cotierproperties.com/";
+  public google_client_id = '244299399814-e2sl5e1gmu5o1tbl71nvf9c25o7hs49g.apps.googleusercontent.com';
  
   private headers: Headers = new Headers();
   private headerOptions: RequestOptions = new RequestOptions();
@@ -214,7 +215,8 @@ this.isPaidEmitter.emit(paidStatus);
   trim (str) {
   return str.replace(/^\s+|\s+$/gm,'');
 }
-sendNotification(toUserId:string,subject:string,message:string,service_id:string,notify_icon:string,toType:string){
+sendNotification(toUserId:string,subject:string,message:string,service_id:string,notify_icon:string,
+  toType:string,notification_type:string){
   //debugger;
       let data = new URLSearchParams();
 if(toType=='member')
@@ -226,7 +228,7 @@ if(toType=='member')
 //debugger;
    data.append('from','noreply@idxcompany.com');
   data.append('json_message',message);
-  data.append('notification_type','message');
+  data.append('notification_type',notification_type);
   data.append('title',subject);
   data.append('service_id',service_id);
   data.append('force_type','email');
@@ -724,7 +726,7 @@ that.chatOldMsgSentEmiter.emit("1");
           }
   // this could also be a private method of the component class
   private extractData(res: Response) {
-  
+  //debugger;
     return res.json();
   }
   private handleErrorObservable(error: Response | any) {

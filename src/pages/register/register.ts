@@ -21,49 +21,19 @@ import { UserProvider } from '../../providers/user/user';
   templateUrl: 'register.html',
 })
 export class RegisterPage {
-  public email: string = "";
-  public emailFb: string = "";
-  public password: string = "";
-  public fbPassword: string = "";
-  public first_name: string = "";
-  public first_name_fb: string = "";
-  public last_name: string = "";
-  public last_name_fb: string = "";
-  public phone_number: number;
-  public phone_number_verify: number;
-  public userLogginMsg: string = "";
-  public verificationMsg: string = "";
-  public userSignUpMsg: string = "";
-  public userFbSignUpMsg: string = "";
-  public userCreated: boolean = false;
-  public userTypeSelected: boolean = true;
-  public userType: string = "1";
-  public domainAccess: any;
-  public userLoggedId: boolean = false;
-  public fbAuthResp: any;
-  public fbSignUp: boolean = false;
-  public acctVerified: boolean = false;
-  public fb_token_id: string = "";
-  public selectedCountryCode: string = "";
-  public selectedCountryAbbv: string = "";
-  public allCountryCodes: any[] = [];
-  public verify_by: string = "email";
-  public master_id: string = "";
-  public verification_code: string = "";
-  public urlToUse = "";
-  public title: string;
-  public message: string;
-  public modalType: number;
-  public fbLoginStatus: any;
-  public appId: number = 701598080041539;
-  public websiteBackgroundInfo:any;
-  public headerColor:string="";
-  public sideBarMenuColor:string="";
-  public buttonColor:string="";
-  public textColor:string="";
-  public loader:any;
-  public loadedWebsite:string="";
-  public serviceType:string="";
+  public email: string = ""; public emailFb: string = ""; public password: string = ""; public fbPassword: string = "";
+  public first_name: string = ""; public first_name_fb: string = ""; public last_name: string = "";
+  public last_name_fb: string = ""; public phone_number: number; public phone_number_verify: number;
+  public userLogginMsg: string = ""; public verificationMsg: string = ""; public userSignUpMsg: string = "";
+  public userFbSignUpMsg: string = ""; public userCreated: boolean = false; public userTypeSelected: boolean = true;
+  public userType: string = "1"; public domainAccess: any; public userLoggedId: boolean = false; public fbAuthResp: any;
+  public fbSignUp: boolean = false; public acctVerified: boolean = false; public fb_token_id: string = "";
+  public selectedCountryCode: string = ""; public selectedCountryAbbv: string = ""; public allCountryCodes: any[] = [];
+  public verify_by: string = "email"; public master_id: string = ""; public verification_code: string = "";
+  public urlToUse = ""; public title: string; public message: string; public modalType: number;
+  public fbLoginStatus: any; public appId: number = 701598080041539; public websiteBackgroundInfo:any;
+  public headerColor:string=""; public sideBarMenuColor:string=""; public buttonColor:string="";
+  public textColor:string=""; public loader:any; public loadedWebsite:string=""; public serviceType:string="";
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider,
     public modalCtrl: ModalController, private storage: Storage,
@@ -90,12 +60,13 @@ export class RegisterPage {
   }
   faceBookDecisionMethod(opt: string) {
     if (opt == "0") {
-    
-      this.navCtrl.push(FbConfirmPage);
+      this.navCtrl.push(FbConfirmPage, { type: "0" });
     }
     else if (opt == "1") {
-      
-    this.navCtrl.setRoot(DashboardTabsPage);
+      this.navCtrl.push(DashboardTabsPage);
+    }
+    else if (opt == "2") {
+      this.navCtrl.push(FbConfirmPage, { type: "2" });
     }
   }
   
@@ -113,6 +84,7 @@ export class RegisterPage {
       website_id: "",
       userType: "",
       fb_token: "",
+      google_token: "",
       verified: 0
     };
     //if(this.domainAccess)
