@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, NgZone,ElementRef  } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController,LoadingController,
   ActionSheetController,AlertController,ToastController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
@@ -15,12 +15,15 @@ import { UserProvider } from '../../providers/user/user';
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-
+declare var firebase:any;
+declare const gapi: any;
 @Component({
   selector: 'page-register',
   templateUrl: 'register.html',
 })
 export class RegisterPage {
+  @ViewChild('btnGoogle', { read: ElementRef }) btnGoogle: ElementRef
+  btnGoogleElement: HTMLInputElement = null;
   public email: string = ""; public emailFb: string = ""; public password: string = ""; public fbPassword: string = "";
   public first_name: string = ""; public first_name_fb: string = ""; public last_name: string = "";
   public last_name_fb: string = ""; public phone_number: number; public phone_number_verify: number;
@@ -34,6 +37,17 @@ export class RegisterPage {
   public fbLoginStatus: any; public appId: number = 701598080041539; public websiteBackgroundInfo:any;
   public headerColor:string=""; public sideBarMenuColor:string=""; public buttonColor:string="";
   public textColor:string=""; public loader:any; public loadedWebsite:string=""; public serviceType:string="";
+  public google_token= ''; public google_id= ''; public google_name= ''; public google_image= ''; public google_email= '';
+  private clientId = this.sharedServiceObj.google_client_id;
+  private scope = [
+    'profile',
+    'email',
+    'https://www.googleapis.com/auth/plus.me',
+    'https://www.googleapis.com/auth/contacts.readonly',
+    'https://www.googleapis.com/auth/admin.directory.user.readonly'
+  ].join(' ');
+
+  public auth2: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider,
     public modalCtrl: ModalController, private storage: Storage,
@@ -400,9 +414,51 @@ this.navCtrl.setRoot(LoginPage);
   onFacebookLoginClick(): void {
     this.userServiceObj.onFacebookLoginClick();
   }
+  public googleInit() {
+    const that = this;
+    gapi.load('auth2', function () {
+      that.auth2 = gapi.auth2.init({
+        client_id: that.clientId,
+        cookiepolicy: 'single_host_origin',
+        scope: that.scope
+      });
+      that.attachSignin(that.btnGoogleElement);
+    });
+  }
+  public attachSignin(element) {
+    const that = this;
+    this.auth2.attachClickHandler(element, {},
+      function (googleUser) {
+
+        const profile = googleUser.getBasicProfile();
+        //debugger;
+        that.google_token = googleUser.getAuthResponse().id_token;
+        that.google_id = profile.getId();
+        that.google_name = profile.getName();
+        that.google_image = profile.getImageUrl();
+        that.google_email = profile.getEmail();
+        const dataObj = {
+          google_token : that.google_token,
+          google_id : that.google_id,
+          google_name : that.google_name,
+          google_image : that.google_image,
+          google_email : that.google_email
+        };
+        //debugger;
+        that.storage.set('googleAuth', dataObj);
+        //that.localStorageService.set('googleAuth', dataObj);
+        //debugger;
+        that.userServiceObj.googleSignUp();
+      }, function (error) {
+        console.log(JSON.stringify(error, undefined, 2));
+      });
+  }
   ionViewDidLoad() {
     //debugger;
     let that=this;
+    this.btnGoogleElement = this.btnGoogle.nativeElement;
+    //debugger;
+    this.googleInit();
     this.getAllCountryCodes();
     let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
     generalWebsiteSettings.then((data) => {

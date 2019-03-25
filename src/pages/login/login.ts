@@ -124,7 +124,7 @@ export class LoginPage {
           google_image : that.google_image,
           google_email : that.google_email
         };
-        debugger;
+        //debugger;
         that.storage.set('googleAuth', dataObj);
         //that.localStorageService.set('googleAuth', dataObj);
         //debugger;
