@@ -46,19 +46,10 @@ export class UpcomingSubscriptionPage {
           position: 'top',
           cssClass:'successToast'
         });
-      
         toast.onDidDismiss(() => {
           //console.log('Dismissed toast');
         });
-      
         toast.present();
-        /*let alert = this.alertCtrl.create({
-          title: 'Notification',
-          subTitle: this.navParams.get('notificationMsg'),
-          buttons: ['Ok']
-        });
-        alert.present();*/
-        //this.notificationMsg=this.navParams.get('notificationMsg');
       }
       this.loader = this.loadingCtrl.create({
         content: "Please wait...",
@@ -80,8 +71,7 @@ export class UpcomingSubscriptionPage {
   }
   viewAllUpcomingSubscription(refresher:any):void{
     if(this.userId!="")
-    {
-      
+    { 
     if(refresher!=null)
     {
       refresher.complete();
@@ -96,7 +86,6 @@ export class UpcomingSubscriptionPage {
     .subscribe((result) => this.viewAllUpcomingSubscriptionResp(result));
     });
     }
-    
   }
   viewAllUpcomingSubscriptionResp(result:any):void{
     this.loader.dismiss();

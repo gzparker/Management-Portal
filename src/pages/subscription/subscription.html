@@ -26,18 +26,36 @@
     <ion-label color="danger">{{subscriptionMsg}}</ion-label>
   </ion-chip>-->
 
-  <h3 class="centerStage contentTitle animated bounceInRight">Choose Subscription Packages</h3>
-
-  <form class="centerStage" role="form" data-toggle="validator" #subscribeForm="ngForm"> 
+  
+  <form class="centerStage" role="form" data-toggle="validator" #subscribeForm="ngForm">
   <ion-list class="noShadow" *ngIf="!userSubscribed">
-
-    <div class="formShadow">
+ 
+      <ion-list class="noShadow cardDetails">
+          <h3 class="centerStage contentTitle animated bounceInRight">Choose Start-Up Cost</h3>
+          <ion-list radio-group [(ngModel)]="selected_pricingPlan_Modal" name="selected_pricingPlan_Modal" (ngModelChange)="calculateTotalPrice()">
+     
+              <ion-item *ngFor="let startUpPlan of startUpPlansList">
+                <ion-label>{{startUpPlan.plan_title}}-{{startUpPlan.plan_cost}}$</ion-label>
+                <ion-radio value={{startUpPlan.id}}></ion-radio>
+              </ion-item>
+           
+          </ion-list>
+          <!--<ion-item>
+              <ion-select placeholder="Select StartUp Package" [(ngModel)]="selected_pricingPlan_Modal" name="selected_pricingPlan_Modal" required>
+                <ion-option *ngFor="let startUpPlan of startUpPlansList" value= {{startUpPlan.id}}>
+                  ({{startUpPlan.plan_title}}){{startUpPlan.plan_cost}}
+                </ion-option>
+              </ion-select>
+          </ion-item>-->
+        </ion-list>
+        <ion-list class="noShadow cardDetails">
+ 
+      <h3 class="centerStage contentTitle animated bounceInRight">Choose Subscription Packages</h3>
       <ion-item>
           <ion-label *ngIf="pay_yearly==true">Pay Monthly</ion-label>
           <ion-label *ngIf="pay_yearly==false">Pay Yearly</ion-label>
           <ion-toggle [(ngModel)]="pay_yearly" name="pay_yearly" (ngModelChange)="listIntervalBasedPackages()"></ion-toggle>
       </ion-item>
-
       <!--<ion-item class="OptPackage" *ngFor="let package of intervalBasedPackages">
           <ion-label>{{package.name}}</ion-label>
           <ion-label *ngIf="pay_yearly==false">${{package.amount/12}}/month</ion-label>
@@ -49,8 +67,10 @@
       <ion-item>
       <ion-select [(ngModel)]="selected_packageIds" name="selected_packageIds" multiple="true" (ngModelChange)="setSelectedPackage()">
         <ion-option *ngFor="let package of intervalBasedPackages" value= {{package.id}}>
-          <span *ngIf="pay_yearly==true">{{package.name}}(${{package.amount/12}}/month)</span>
+          <span *ngIf="pay_yearly==true">{{package.name}}(${{package.amount/12 | number:'1.1-3'}}/month)</span>
           <span *ngIf="pay_yearly==false">{{package.name}}(${{package.amount}})</span>
+          <span *ngIf="package.required=='true'">*Required</span>
+          <span *ngIf="package.required!='true'">Optional</span>
         </ion-option>
       </ion-select>
       </ion-item>
@@ -62,20 +82,23 @@
         </ion-option>
         </ion-select>
       </ion-item>-->
+      
+  </ion-list>
+  <ion-list class="noShadow cardDetails">
+      <h3 class="centerStage contentTitle animated bounceInRight">Promo Code</h3>
       <ion-item class="OptPromo">
-        <ion-label stacked>Promo Code</ion-label>
-        <ion-input type="text" [(ngModel)]="promo_code" placeholder="Enter Promo Code" name="promo_code" id="promo_code"></ion-input>
-        <button ion-button large clear (click)="checkPromoCode()" item-end>
-          <ion-icon name="add"></ion-icon>
-        </button>
-      </ion-item>
-
-      <ion-item class="TotalPrice">
-        <ion-label *ngIf="pay_yearly==true">Total Price: <strong>${{totalAmount}}/year</strong></ion-label>
-        <ion-label *ngIf="pay_yearly==false">Total Price: <strong>${{totalAmount}}/month</strong></ion-label>
-      </ion-item>
-    </div>
-
+          <ion-label stacked>Promo Code</ion-label>
+          <ion-input type="text" [(ngModel)]="promo_code" placeholder="Enter Promo Code" name="promo_code" id="promo_code"></ion-input>
+          <button ion-button large clear (click)="checkPromoCode()" item-end>
+            <ion-icon name="add"></ion-icon>
+          </button>
+        </ion-item>
+  
+        <ion-item class="TotalPrice">
+          <ion-label *ngIf="pay_yearly==true">Total Price: <strong>${{totalAmount}}/year</strong></ion-label>
+          <ion-label *ngIf="pay_yearly==false">Total Price: <strong>${{totalAmount}}/month</strong></ion-label>
+        </ion-item>
+  </ion-list>
     <ion-list class="noShadow cardDetails">
       <ion-item>
         <ion-label stacked>Card Name</ion-label>

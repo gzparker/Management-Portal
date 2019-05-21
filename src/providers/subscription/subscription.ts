@@ -63,12 +63,28 @@ this.headerOptions= new RequestOptions({ headers: this.headers });
       .map(this.extractData)
     return checkPromoCodeResp;
   }
+  checkStartUpPromoCode(plan_id:any,promo_code:any,service_id:string) {
+    let url = "";
+    let data = new URLSearchParams();
+    url = this.sharedServiceObj.registerationApiBaseUrl + 'subscriptions/getPlanPromoDetail';
+    //debugger;
+    data.append('service_id', service_id);
+    data.append('promo_code', promo_code);
+    data.append('plan_id', plan_id);
+    //data.append('interval', interval);
+    //debugger;
+    let promoCodeDetailResp = this.http
+      .post(url, data, this.headerOptions)
+      .map(this.extractData)
+    return promoCodeDetailResp;
+  }
   saveUserSubscription(subscriptionData: any,service_id:string) {
     //debugger;
     let url = "";
     let data = new URLSearchParams();
     url = this.sharedServiceObj.registerationApiBaseUrl + 'subscriptions/addCreditCardAndCreateSubscription';
     //debugger;
+
     data.append('service_id', service_id);
     data.append('member_id', subscriptionData.member_id);
     data.append('full_name', subscriptionData.full_name);
@@ -79,6 +95,9 @@ this.headerOptions= new RequestOptions({ headers: this.headers });
     data.append('service_plans_array', subscriptionData.service_plans_array.toString());
     data.append('mls_service_id',subscriptionData.mls_service_id);
     data.append('stripe_coupon_code',subscriptionData.stripe_coupon_code);
+    data.append('startupPromoCodeId',subscriptionData.startupPromoCodeId);
+    data.append('startupCost',subscriptionData.startupCost);
+    
     //debugger;
     let subscriptionList = this.http
       .post(url, data, this.headerOptions)
@@ -103,7 +122,6 @@ this.headerOptions= new RequestOptions({ headers: this.headers });
     let url = "";
     let data = new URLSearchParams();
     url = this.sharedServiceObj.registerationApiBaseUrl + 'subscriptions/mySubscriptions';
-    //debugger;
     data.append('service_id', service_id);
     data.append('member_id', member_id);
     //debugger;
@@ -173,7 +191,7 @@ let upgradeCenterList=this.http
   .map(this.extractData)
   return upgradeCenterList;
 }
-upgradeDowngradePlan(user_id:string,service_id:string,subscription_plan_ids:any)
+upgradeDowngradePlan(user_id:string,service_id:string,subscription_plan_ids:any,action:string)
 {
 //debugger;
     let data = new URLSearchParams();
@@ -186,17 +204,29 @@ upgradeDowngradePlan(user_id:string,service_id:string,subscription_plan_ids:any)
  {
   data.append('update_subscription_id_and_plan_id_json',JSON.stringify(subscription_plan_ids));
  }
- 
+ //debugger;
  data.append('service_id',service_id);
+ data.append('action',action);
  //debugger;
   let upgradeResp=this.http
     .post(this.sharedServiceObj.registerationApiBaseUrl+'subscriptions/upgradeDowngradeMember', data, this.headerOptions)
     .map(this.extractData)
     return upgradeResp;
-
+}
+getServiceStartUpPlanList(service_id:string) {
+  let url = "";
+  let data = new URLSearchParams();
+  url = this.sharedServiceObj.registerationApiBaseUrl + 'subscriptions/getServiceStartUpPlans';
+  //debugger;
+  data.append('service_id', service_id);
+  //debugger;
+  let subscriptionList = this.http
+    .post(url, data, this.headerOptions)
+    .map(this.extractData)
+  return subscriptionList;
 }
   private extractData(res: Response) {
-  //debugger;
+  debugger;
     return res.json();
   }
   private handleErrorObservable(error: Response | any) {

@@ -92,6 +92,33 @@ export class AddCreditCardPage {
     this.expiryDate=new Date(new Date().getFullYear().toString()+"-"+((new Date().getMonth()+1).toString())).toISOString();
   }
   saveCreditCard() {
+    if(parseInt(((new Date().getMonth()+1).toString()))>parseInt(this.expiryDate.split("-")[1])){
+      let toast = this.toastCtrl.create({
+        message: "Stripe card date is not valid.",
+        duration: 3000,
+        position: 'top',
+        cssClass:'errorToast'
+      });
+      
+      toast.onDidDismiss(() => {
+        //console.log('Dismissed toast');
+      });
+      
+      toast.present();
+    }else if(parseInt(new Date().getFullYear().toString())>parseInt(this.expiryDate.split("-")[0])){
+      let toast = this.toastCtrl.create({
+        message: "Stripe card date is not valid.",
+        duration: 3000,
+        position: 'top',
+        cssClass:'errorToast'
+      });
+      
+      toast.onDidDismiss(() => {
+        //console.log('Dismissed toast');
+      });
+      
+      toast.present();
+    } else{
       let dataObj = {
         member_id: "",
         full_name: "",
@@ -132,10 +159,12 @@ export class AddCreditCardPage {
           subscribe((result) => this.saveCreditCardResp(result));
         });
       });
+    }
+      
    
       }
       saveCreditCardResp(data: any) {
-        //debugger;
+        debugger;
         if (data.status == true) {
           this.ngZone.run(() => {
             this.navCtrl.push(ViewCreditCardsPage,{notificationMsg:data.message.toUpperCase()});

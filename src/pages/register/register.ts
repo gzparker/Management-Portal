@@ -24,6 +24,7 @@ declare const gapi: any;
 export class RegisterPage {
   @ViewChild('btnGoogle', { read: ElementRef }) btnGoogle: ElementRef
   btnGoogleElement: HTMLInputElement = null;
+  public isApp=false;public registeration_platform: string="";
   public email: string = ""; public emailFb: string = ""; public password: string = ""; public fbPassword: string = "";
   public first_name: string = ""; public first_name_fb: string = ""; public last_name: string = "";
   public last_name_fb: string = ""; public phone_number: number; public phone_number_verify: number;
@@ -53,6 +54,15 @@ export class RegisterPage {
     public modalCtrl: ModalController, private storage: Storage,
     public loadingCtrl: LoadingController,public actionSheetCtrl: ActionSheetController, 
     public alertCtrl: AlertController,private toastCtrl: ToastController) {
+      this.isApp = (!document.URL.startsWith("http"));
+      if(!this.isApp)
+      {
+        this.registeration_platform='browser';
+      }
+      else{
+        this.registeration_platform='app';
+      }
+      //debugger;
       this.loadedWebsite=document.URL.toString();
     if(this.loadedWebsite.indexOf("localhost")>0)
     {
@@ -99,6 +109,7 @@ export class RegisterPage {
       userType: "",
       fb_token: "",
       google_token: "",
+      registeration_platform:"",
       verified: 0
     };
     //if(this.domainAccess)
@@ -112,6 +123,7 @@ export class RegisterPage {
       dataObj.last_name = this.last_name_fb;
       dataObj.country_code = this.selectedCountryCode;
       dataObj.country_abbv = this.selectedCountryAbbv;
+      dataObj.registeration_platform=this.registeration_platform;
       dataObj.phone_number = Math.floor(Math.random() * (90000000 - 1 + 1)) + 1;
       dataObj.verified = 0;
       //debugger;
@@ -126,6 +138,7 @@ export class RegisterPage {
       dataObj.country_code = this.selectedCountryCode;
       dataObj.country_abbv = this.selectedCountryAbbv;
       dataObj.phone_number = this.phone_number;
+      dataObj.registeration_platform=this.registeration_platform;
       dataObj.verified = 0;
     }
     

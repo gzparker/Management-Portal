@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams, ModalController, Platform, MenuCon
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import {DatePipe} from '@angular/common';
 import { Storage } from '@ionic/storage';
-import { AlertController } from 'ionic-angular';
+import { AlertController,ToastController } from 'ionic-angular';
 
 import { ViewCreditCardsPage } from '../../billing/view-credit-cards/view-credit-cards';
 
@@ -46,7 +46,7 @@ export class EditCreditCardPage {
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, 
-    public platform: Platform,public loadingCtrl: LoadingController) {
+    public platform: Platform,public loadingCtrl: LoadingController,private toastCtrl: ToastController) {
       this.setYearMonthValues();
       this.calendarMinDate=new Date();
       this.calendarMinDate.setFullYear(this.calendarMinDate.getFullYear(),0);
@@ -110,7 +110,8 @@ this.full_name=this.cardDetail.name;
 this.zipCode=this.cardDetail.address_zip;
 this.cc_number="xxx-"+this.cardDetail.last4;
 this.cvc=this.cardDetail.cvc;
-if(this.cardDetail.primary_source==null||this.cardDetail.primary_source=="0")
+//debugger;
+if(this.cardDetail.id!==result.customer.default_source)
 {
 this.primary_source=false;
 }
@@ -118,6 +119,7 @@ else
 {
   this.primary_source=true;
 }
+//debugger;
 this.expiryDate=this.cardDetail.exp_year+"-"+(parseInt(this.cardDetail.exp_month)).toString();
 //debugger;
 this.expiryDate=new Date(this.expiryDate).toISOString();
@@ -126,7 +128,34 @@ this.expiryDate=new Date(this.expiryDate).toISOString();
   }
   updateCreditCard()
   {
-    //this.loader.present();
+    //debugger;
+    if(parseInt(((new Date().getMonth()+1).toString()))>parseInt(this.expiryDate.split("-")[1])){
+      let toast = this.toastCtrl.create({
+        message: "Stripe card date is not valid.",
+        duration: 3000,
+        position: 'top',
+        cssClass:'errorToast'
+      });
+      
+      toast.onDidDismiss(() => {
+        //console.log('Dismissed toast');
+      });
+      
+      toast.present();
+    }else if(parseInt(new Date().getFullYear().toString())>parseInt(this.expiryDate.split("-")[0])){
+      let toast = this.toastCtrl.create({
+        message: "Stripe card date is not valid.",
+        duration: 3000,
+        position: 'top',
+        cssClass:'errorToast'
+      });
+      
+      toast.onDidDismiss(() => {
+        //console.log('Dismissed toast');
+      });
+      
+      toast.present();
+    } else{
     if(this.primary_source)
     {
       this.primary_source_data="1";
@@ -144,8 +173,10 @@ this.expiryDate=new Date(this.expiryDate).toISOString();
     .subscribe((result) => this.updateCreditCardResp(result));
     });
   }
+  }
  updateCreditCardResp(result:any)
  {
+   //debugger;
   //this.loader.dismiss();
 if(result.status==true)
 {

@@ -83,8 +83,6 @@ export class MyApp {
   }
   ionViewWillEnter() { 
   }
-  
-  
   initializeApp() {
     this.platform.ready().then(() => {
      this.setDeviceToken();
@@ -104,8 +102,7 @@ export class MyApp {
   }
   ionViewDidLoad() {
   }
-  applyThemeColors(colorObject:any)
-  {
+  applyThemeColors(colorObject:any){
   if(colorObject!=null)
   {
   if(colorObject.option=="header_color")
@@ -157,30 +154,23 @@ export class MyApp {
     for (let i = 0; i < sidebarElements.length; i++) {
       sidebarElements[i].setAttribute("style", "background:"+this.sidebar_menu_color+" !important;");
     }
-
     //////////////////////////////Button Color////////////////////////////////    
     let buttonColorElement=document.getElementsByClassName("button_color");
-    
     for (let i = 0; i < buttonColorElement.length; i++) {
-    
       buttonColorElement[i].setAttribute("style", "background:"+this.button_color+" !important;");
     }
     let buttonToggleElement=document.getElementsByClassName("btnToggle");
-    
     for (let i = 0; i < buttonToggleElement.length; i++) {
-    
       buttonToggleElement[i].setAttribute("style", "background:"+this.button_color+" !important;");
     }
     let buttonBadgeElement=document.getElementsByClassName("msgcounter");
     
     for (let i = 0; i < buttonBadgeElement.length; i++) {
-    
       buttonBadgeElement[i].setAttribute("style", "background:"+this.button_color+" !important;");
     }
     let buttonBadgeInviteElement=document.getElementsByClassName("badgeInvite");
     
     for (let i = 0; i < buttonBadgeInviteElement.length; i++) {
-    
       buttonBadgeInviteElement[i].setAttribute("style", "background:"+this.button_color+" !important;");
     }
     let buttonviewProfileElement=document.getElementsByClassName("viewProfile");
@@ -190,9 +180,7 @@ export class MyApp {
       buttonviewProfileElement[i].setAttribute("style", "background:"+this.button_color+" !important;");
     }
     let buttonContactElement=document.getElementsByClassName("contactPhone");
-    
     for (let i = 0; i < buttonContactElement.length; i++) {
-    
       buttonContactElement[i].setAttribute("style", "background:"+this.button_color+" !important;");
     }
     let buttonContactChatElement=document.getElementsByClassName("contactChat");
@@ -215,13 +203,6 @@ export class MyApp {
     }
     
     /////////////////////////////////Content Background/////////////////////////////////////////
-    /*let contentBackgroundElement=document.getElementsByClassName("background_color");
-    
-    for (let i = 0; i < contentBackgroundElement.length; i++) {
-
-      contentBackgroundElement[i].setAttribute("style", "background:"+this.content_background+" !important;");
-    }*/
-
     let contentBackgroundElement=document.getElementsByClassName("background_color");
     
     for (let i = 0; i < contentBackgroundElement.length; i++) {
@@ -230,7 +211,6 @@ export class MyApp {
     ////////////////////////////////////////////////////////////////////////////////////////////
   }
   toggleSideBar(){
-   // debugger;
 if(this.sideBarOption=="1")
 {
   this.sideBarOption="2";
@@ -243,10 +223,9 @@ else if(this.sideBarOption=="3")
 {
   this.sideBarOption="1";
 }
-  }
+}
   loadGeneralWebsiteSettings()
-  {
-    
+  {    
     let dummyWebsiteUrl="";
     if(this.loadedWebsite[this.loadedWebsite.length-1]=="/")
     {
@@ -263,7 +242,7 @@ dummyWebsiteUrl=this.loadedWebsite.substr(0,this.loadedWebsite.length-1)
     }
     else if(this.loadedWebsite.indexOf("localhost")>0)
     {
-      this.sharedServiceObj.getServiceDefaultInfoByUrl("https://intagent.configuration.menu")
+      this.sharedServiceObj.getServiceDefaultInfoByUrl("https://idx.configuration.menu")
       .subscribe((result) => this.loadGeneralWebsiteSettingsResp(result));
     }
     else
@@ -271,15 +250,14 @@ dummyWebsiteUrl=this.loadedWebsite.substr(0,this.loadedWebsite.length-1)
      this.sharedServiceObj.getServiceDefaultInfoByUrl(dummyWebsiteUrl.toString())
      .subscribe((result) => this.loadGeneralWebsiteSettingsResp(result));
     }
-
   }
   loadGeneralWebsiteSettingsResp(result:any)
   {
     var that=this;
 if(result)
 {
+  //debugger;
   this.storage.set("generalWebsiteSettings",result);
- 
   }
 }
   setDeviceToken(){

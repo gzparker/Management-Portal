@@ -51,7 +51,7 @@ export class FbConfirmPage {
       this.setFacebookValues();
     }
     else if(this.acct_type=="2"){
-      debugger;
+      //debugger;
       this.setGoogleValues();
     }
     this.getAllCountryCodes();
@@ -81,10 +81,10 @@ export class FbConfirmPage {
     });
   }
   setGoogleValues() {
-    debugger;
+    //debugger;
       //const googleAuth: any = this.localStorageService.get('googleAuth');
       this.storage.get('googleAuth').then((googleAuth) => {
-        debugger;
+        //debugger;
       if (googleAuth == null) {
       } else {
         this.emailFb = googleAuth.google_email;
@@ -101,7 +101,7 @@ export class FbConfirmPage {
     });
   }
   fbSignUpMethod(): void {
-debugger;
+//debugger;
     this.userSignUp();
     // if(this.emailFb!="")
     //  {

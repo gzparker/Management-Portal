@@ -38,6 +38,7 @@ export class SharedProvider {
   public idxFirebasePublicKey="BFLnyRGk5TlJYMkX6X-H7xZWikEdVZL9tE5t3x_q2mh4P3OM-kHkOmhlmYUGSxSV6BYdCbuSpwcBCQ3Oc0Gb3t4";
   public defaultNoImage="assets/imgs/noImage.png";
   public idxChatAppLink="http://www.cotierproperties.com/";
+  //public google_client_id = '244299399814-e2sl5e1gmu5o1tbl71nvf9c25o7hs49g.apps.googleusercontent.com';
   public google_client_id = '244299399814-e2sl5e1gmu5o1tbl71nvf9c25o7hs49g.apps.googleusercontent.com';
  
   private headers: Headers = new Headers();
@@ -293,6 +294,28 @@ getServiceDefaultInfoByUrl(domain:string){
     .post(this.registerationApiBaseUrl+'general/getServiceDefaultInfoByDomainUrl', data, this.headerOptions)
     .map(this.extractData)
     return websiteDefaultSettingsResp;
+}
+getServiceStartUpPlans(service_id:string){
+
+  let data = new URLSearchParams();
+//data.append('lead_id',lead_id);
+data.append('service_id',service_id);
+//debugger;
+let serviceStartUpPlansResp=this.http
+  .post(this.registerationApiBaseUrl+'subscription/getServiceStartUpPlans', data, this.headerOptions)
+  .map(this.extractData)
+  return serviceStartUpPlansResp;
+}
+getStartUpPromo(plan_id:string){
+
+  let data = new URLSearchParams();
+//data.append('lead_id',lead_id);
+data.append('plan_id',plan_id);
+//debugger;
+let planStarUpPromoResp=this.http
+  .post(this.registerationApiBaseUrl+'subscription/getStartUpPromo', data, this.headerOptions)
+  .map(this.extractData)
+  return planStarUpPromoResp;
 }
 markMessageAsRead(firebaseUserId:any,chatDetailArray:any)
 {

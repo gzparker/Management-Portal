@@ -23,6 +23,7 @@ import { SharedProvider } from '../../providers/shared/shared';
   and Angular DI.
 */
 declare const FB: any;
+declare const window: any;
 declare var firebase:any;
 @Injectable()
 export class UserProvider {
@@ -78,30 +79,44 @@ this.headerOptions= new RequestOptions({ headers: this.headers });
     this.isApp = (!document.URL.startsWith("http"));
     if(!this.isApp)
     {
-    //alert('1');
-    FB.init({
-      appId: '701598080041539',
-      cookie: false,
-      xfbml: true,
-      version: 'v2.9',
-      status: true
-    });
-    this.facebookObject = FB;
-    this.facebookObject.getLoginStatus(response => {
-//alert('1..');
-      this.fbLoginStatus = response;
-
+      let that=this;
+    (window as any).fbAsyncInit = function() {
+      FB.init({
+        appId      : '2272192993020272',
+        secret:'df36e3c6e5ae919e807740ccd48ff71f',
+        cookie     : true,
+        xfbml      : true,
+        version    : 'v3.2'
+      });
+      FB.AppEvents.logPageView();
+      that.facebookObject = FB;
+      //debugger;
+      
+      that.facebookObject.getLoginStatus(response => {
+      
+        that.fbLoginStatus = response.status;
     }, true);
+    };
+
+    (function(d, s, id){
+       var js, fjs = d.getElementsByTagName(s)[0];
+       if (d.getElementById(id)) {return;}
+       js = d.createElement(s); js.id = id;
+       js.src = "https://connect.facebook.net/en_US/sdk.js";
+       fjs.parentNode.insertBefore(js, fjs);
+     }(document, 'script', 'facebook-jssdk'));
+
+    
   }
   else
   {
-    
-    //this.fb.browserInit(701598080041539,'v2.9');
+  debugger;  
+    this.fb.browserInit(2272192993020272,'v3.2');
     this.facebookObject = this.fb;
     let status=this.facebookObject.getLoginStatus();  
     status.then((resp)=>{
-   
-      this.fbLoginStatus = resp;
+   debugger;
+      this.fbLoginStatus = resp.status;
     }).catch((error) => {
      
       console.log('Error getting location', error);
@@ -114,13 +129,12 @@ this.headerOptions= new RequestOptions({ headers: this.headers });
       //this.firebase_token_data=data;
       this.firbase_token_data=data;
     });
-
   
   }
   onFacebookLoginClick(): void {
-   //alert('3');
+    //debugger;
+    //alert(JSON.stringify(this.fbLoginStatus)) ;
     if (this.fbLoginStatus != undefined) {
-     //alert('4');
       this.statusChangeCallback(this.fbLoginStatus);
     }
 
@@ -330,71 +344,74 @@ is_online="1";
        
   }
   statusChangeCallback(resp) {
-
+//debugger;
     if (resp != 0) {
-      if (resp.status === 'connected') {
+      if (resp === 'connected') {
         //alert('5');
     if(!this.isApp)
         {
+          //debugger;
         //alert('6');
-        this.facebookObject.api('/me', { locale: 'en_US', fields: 'name, email,picture' }, this.setFacebookAuthentication.bind(this));
+        this.facebookObject.api('/me?fields=id,name,email,first_name,last_name,picture.type(large)', this.setFacebookAuthentication.bind(this));
         }
         else
         {
-         //alert('7');
-          this.fb.api('/me?fields=id,name,email,picture',['public_profile', 'user_friends', 'email'])
+          this.fb.api('/me?fields=id,name,email,picture',['public_profile', 'user_friends', 'email','first_name','last_name'])
           .then((res: any) =>{this.setFacebookAuthentication(res)})
           .catch(e => {console.log('Error getting location', e);});
         }
-      } else if (resp.status === 'not_authorized') {
+      } else if (resp === 'not_authorized') {
         //alert('8');
-        
-      } else {
-       
+        //debugger;
+        this.facebookObject.login(this.checkFacebookResp.bind(this), {scope: 'email'});
+      } else {  
         if(!this.isApp)
         {
         // alert('9');
          // alert('yes');
-          this.facebookObject.login(this.checkFacebookResp.bind(this));
+          this.facebookObject.login(this.checkFacebookResp.bind(this), {scope: 'email'});
         }
        else
        {
       //alert('10');
-        this.fb.login(['public_profile', 'user_friends', 'email'])
+        this.fb.login(['public_profile', 'user_friends', 'email','first_name','last_name'])
         .then((res: FacebookLoginResponse) =>{this.checkFacebookResp(res)})
         .catch(e => {console.log('Error getting location', e);});
-       } 
-
+       }
       }
     }
     else {
    // alert('4');
      if(!this.isApp)
      {
+       //debugger;
      //alert('11');
-       this.facebookObject.login(this.checkFacebookResp.bind(this));
+       this.facebookObject.login(this.checkFacebookResp.bind(this), {scope: 'email'});
      }
     else
     {
-     // alert('12');
-    this.fb.login(['public_profile', 'user_friends', 'email'])
+      //debugger;
+ 
+    this.fb.login(['public_profile', 'user_friends', 'email','first_name','last_name'])
     .then((res: FacebookLoginResponse) =>{this.checkFacebookResp(res)})
     .catch(e => {console.log('Error getting location', e);});
     } 
     }
   };
   checkFacebookResp(resp: any) {
+    //debugger;
 //alert('first');
     if (resp.authResponse) {
+      //debugger;
       if(!this.isApp)
       {
      //alert('14');
-      this.facebookObject.api('/me', { locale: 'en_US', fields: 'name, email,picture' }, this.setFacebookAuthentication.bind(this));
+      this.facebookObject.api('/me?fields=id,name,email,first_name,last_name,picture.type(large)', this.setFacebookAuthentication.bind(this));
       }
       else
       {
      //alert('15');
-        this.fb.api('/me?fields=id,name,email,picture',['public_profile', 'user_friends', 'email'])
+        this.fb.api('/me?fields=id,name,email,picture',['public_profile','user_friends', 'email','first_name','last_name'])
       .then((res: any) =>{this.setFacebookAuthentication(res)})
       .catch(e => {console.log('Error getting location', e);});
       }
@@ -402,6 +419,7 @@ is_online="1";
 
   }
   setFacebookAuthentication(response: any): void {
+    //debugger;
    // alert('here');
     //alert(JSON.stringify(response));
     if (response.email) {
@@ -537,7 +555,9 @@ is_online="1";
     data.append('firebase_token', this.firbase_token_data);
     data.append('device_name', this.device_name);
     data.append('location', dataObj.location);
+    data.append('registeration_platform', dataObj.registeration_platform);
     data.append('service_id', service_id);
+    
 
     let signUpStatus = this.http
       .post(url, data, this.headerOptions)
@@ -1201,7 +1221,7 @@ addCreditCardDetail(creditCardData: any,service_id:string) {
   data.append('exp_year', creditCardData.exp_year);
   data.append('cvc', creditCardData.cvc);
   //data.append('primary_source',creditCardData.primary_source);
- //debugger;
+ debugger;
   let addCreditCardResp = this.http
     .post(url, data, this.headerOptions)
     .map(this.extractData)
@@ -1220,7 +1240,7 @@ updateCreditCardDetail(user_id:string,service_id:string,unique_id:string,name:st
   data.append('zipcode',zipcode);
   data.append('cvc',cvc);
   data.append('primary_source',primary_source);
-  //debugger;
+  debugger;
 let creditCardDetail=this.http
   .post(this.sharedServiceObj.registerationApiBaseUrl+'PaymentMethods/updatePaymentMethod', data, this.headerOptions)
   .map(this.extractData)
