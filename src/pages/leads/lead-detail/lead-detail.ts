@@ -63,10 +63,6 @@ export class LeadDetailPage {
  public userRef:any;
  public notificationMsg:string="";
 public loader:any;
-/*@ViewChild('mapHome') mapHomeElement: ElementRef;
-mapHome: any;
-@ViewChild('mapWork') mapWorkElement: ElementRef;
-mapWork: any;*/
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,
     public sharedServiceObj: SharedProvider, private storage: Storage,
@@ -202,93 +198,6 @@ this.chatRef.off("value");
     
   }
   }
-  /*loadHomeMap(placeId:any){
-    this.map_home_height=400;
-    
-         let mapOptions = {
-        
-           zoom: 14,
-           mapTypeId: google.maps.MapTypeId.MAP,
-           mapTypeControl: true,
-           mapTypeControlOptions: {
-             style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-             position: google.maps.ControlPosition.TOP_CENTER
-           },
-           zoomControl: true,
-           zoomControlOptions: {
-             style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-             position: google.maps.ControlPosition.LEFT_TOP
-           },
-           scaleControl: true,
-           streetViewControl: true,
-           streetViewControlOptions: {
-             position: google.maps.ControlPosition.LEFT_TOP
-           }
-         };
-    
-         this.mapHome = new google.maps.Map(this.mapHomeElement.nativeElement, mapOptions);
-         var request = {
-          placeId: placeId
-        };
-      
-        var infowindow = new google.maps.InfoWindow();
-        var service = new google.maps.places.PlacesService(this.mapHome);
-      var that=this;
-     
-        service.getDetails(request, (place, status)=> {
-          if (status == google.maps.places.PlacesServiceStatus.OK) {
-           
-            var marker = new google.maps.Marker({
-              map: that.mapHome,
-              position: place.geometry.location
-            });
-            that.mapHome.fitBounds(place.geometry.viewport);
-          }
-        });
-      
-      
-     }
-  loadWorkMap(placeId:any
-        zoom: 14,
-        mapTypeId: google.maps.MapTypeId.MAP,
-        mapTypeControl: true,
-        mapTypeControlOptions: {
-          style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-          position: google.maps.ControlPosition.TOP_CENTER
-        },
-        zoomControl: true,
-        zoomControlOptions: {
-          style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-          position: google.maps.ControlPosition.LEFT_TOP
-        },
-        scaleControl: true,
-        streetViewControl: true,
-        streetViewControlOptions: {
-          position: google.maps.ControlPosition.LEFT_TOP
-        }
-      };
- 
-      this.mapWork = new google.maps.Map(this.mapWorkElement.nativeElement, mapOptions);
-      var request = {
-       placeId: placeId
-     };
-  
-     var infowindow = new google.maps.InfoWindow();
-     var service = new google.maps.places.PlacesService(this.mapWork);
-   var that=this;
-  
-     service.getDetails(request, (place, status)=>
-       if (status == google.maps.places.PlacesServiceStatus.OK) {
-        
-         var marker = new google.maps.Marker({
-           map: that.mapWork,
-           position: place.geometry.location
-         });
-         that.mapWork.fitBounds(place.geometry.viewport);
-       }
-     });
-   
-  }*/
   editLead(){
     if(this.leadId!="")
     {
@@ -298,7 +207,6 @@ this.chatRef.off("value");
   loadLeadDetail(){
     if(this.userId!="")
     {
-     // debugger;
       this.loader.present();
       this.loadFirebaseLeadDetail();
   this.userServiceObj.leadDetail(this.leadId,this.userId.toString())
@@ -310,18 +218,13 @@ this.chatRef.off("value");
     var that=this;
     if(this.userId!="")
     {
-     //debugger;
     this.userRef=firebase.database().ref('users');
     this.userRef.orderByChild("webUserId").equalTo(this.leadId).on("value", function(snapshot) {
       snapshot.forEach(element => {
-        //debugger;
         if(element.val().is_lead=="1")
         {
           that.firebaseLeadDetail=element.val();
-          //debugger;
         }
-      
-//debugger;
       });
     });
   }

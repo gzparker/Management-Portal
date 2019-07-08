@@ -7,6 +7,7 @@ import { AlertController } from 'ionic-angular';
 import { RegisterPage } from '../../pages/register/register';
 import { FbConfirmPage } from '../fb-confirm/fb-confirm';
 import { UserVerificationPage } from '../user-verification/user-verification';
+import { SubscriptionPage } from '../subscription/subscription';
 
 import { SharedProvider } from '../../providers/shared/shared';
 import { UserProvider } from '../../providers/user/user';
@@ -17,7 +18,6 @@ import { UserProvider } from '../../providers/user/user';
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-//declare const FB:any;
 declare var firebase:any;
 declare const gapi: any;
 @Component({
@@ -74,22 +74,17 @@ export class LoginPage {
   }
   ionViewDidEnter()
   {
-    //this.sharedServiceObj.updateColorThemeMethod(null);
   }
   ionViewDidLoad() {
     let that=this;
     this.btnGoogleElement = this.btnGoogle.nativeElement;
-    //debugger;
     this.googleInit();
-    //this.sharedServiceObj.updateColorThemeMethod(null);
     let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
     generalWebsiteSettings.then((data) => {
-      //debugger;
       that.service_id=data.service_id;
       that.websiteBackgroundInfo=data;
       if(that.websiteBackgroundInfo!=undefined)
   {
-    //debugger;
     that.applyColors();
   }
     });
@@ -111,7 +106,6 @@ export class LoginPage {
       function (googleUser) {
 
         const profile = googleUser.getBasicProfile();
-        //debugger;
         that.google_token = googleUser.getAuthResponse().id_token;
         that.google_id = profile.getId();
         that.google_name = profile.getName();
@@ -124,10 +118,7 @@ export class LoginPage {
           google_image : that.google_image,
           google_email : that.google_email
         };
-        //debugger;
         that.storage.set('googleAuth', dataObj);
-        //that.localStorageService.set('googleAuth', dataObj);
-        //debugger;
         that.userServiceObj.googleSignUp();
       }, function (error) {
         console.log(JSON.stringify(error, undefined, 2));
@@ -149,7 +140,6 @@ export class LoginPage {
     for (let i = 0; i < textBarElements.length; i++) {
     
      textBarElements[i].setAttribute("style", "color:"+this.websiteBackgroundInfo.text_color+" !important;");
-     //debugger;
     }
     //////////////////////////////Button Color////////////////////////////////    
     let buttonColorElement=document.getElementsByClassName("button_color");
@@ -194,10 +184,8 @@ export class LoginPage {
     
       buttonContactChatElement[i].setAttribute("style", "background:"+this.websiteBackgroundInfo.button_color+" !important;");
     }
-    let buttonContactEmailElement=document.getElementsByClassName("contactEmail");
-    
+    let buttonContactEmailElement=document.getElementsByClassName("contactEmail");  
     for (let i = 0; i < buttonContactEmailElement.length; i++) {
-    
       buttonContactEmailElement[i].setAttribute("style", "background:"+this.websiteBackgroundInfo.button_color+" !important;");
     }
     let buttonContactInviteElement=document.getElementsByClassName("contactInvite");
@@ -208,14 +196,12 @@ export class LoginPage {
     }
 }  
   back() {
-    //public back = (url) => this.navCtrl.pop();
   }
   userLogin(): void {
-    this.userServiceObj.userLogin(this.email, this.password)
+    this.userServiceObj.userLogin(this.email, this.password,this.service_id)
       .subscribe((result) => this.userLoginResponse(result));
   }
   userLoginResponse(result: any): void {
-    //this.loader.dismiss();
 let is_submember:string="0";
 let is_lead:string="0";
     if (result.status == true) {
@@ -224,7 +210,6 @@ let is_lead:string="0";
         if (result.memberCredentials.verified == "1") {
           this.storage.ready().then(() => {
           this.storage.set('loggedId', '1');
-          this.storage.set('selectedService','2');
           this.storage.set('email', result.memberCredentials.email);
           this.storage.set('first_name', result.memberCredentials.first_name);
           this.storage.set('last_name', result.memberCredentials.last_name);
@@ -245,6 +230,7 @@ let is_lead:string="0";
           this.storage.set('image_url',result.memberCredentials.image_url);
           this.storage.set('loggedInUserInfo', result);
           this.storage.set('globalSettings',result.globalSettings);
+          this.storage.set('subscribed_services',result.subscribed_services);
           this.userLoggedId = true;
         if(result.memberCredentials.parent_id!=undefined)
         {
@@ -254,26 +240,16 @@ let is_lead:string="0";
           this.userServiceObj.setFireBaseInfo(result.memberCredentials.email,result.memberCredentials.password,
             result.memberCredentials.id,result.memberCredentials.first_name,result.memberCredentials.last_name,
             result.memberCredentials.image_url,result.memberCredentials.parent_id,is_submember,is_lead,"",this.service_id);
-            this.navCtrl.setRoot(DashboardTabsPage);
         }
         else
         {
           this.storage.set('is_submember', "0");
           is_submember="0";
-          //this.userServiceObj.setFireBaseInfo(result.memberCredentials);
-         //debugger;
           this.userServiceObj.setFireBaseInfo(result.memberCredentials.email,result.memberCredentials.password,
           result.memberCredentials.id,result.memberCredentials.first_name,result.memberCredentials.last_name,
           result.memberCredentials.image_url,result.memberCredentials.parent_id,is_submember,is_lead,"",this.service_id);
-          this.navCtrl.setRoot(DashboardTabsPage);
-   
         }
-        //  debugger;
-         //debugger;
-        //debugger;
-        //this.sharedServiceObj.setLoginStatus(true);
-         
-          
+        this.navCtrl.setRoot(DashboardTabsPage);
       });
         }
         else if (result.memberCredentials.verified == "0") {
@@ -293,7 +269,6 @@ let is_lead:string="0";
 
     }
     else {
-      //debugger;
       this.email = "";
       this.password = "";
       this.userLogginMsg = result.message;
@@ -301,12 +276,6 @@ let is_lead:string="0";
       this.storage.remove('userType');
       this.storage.remove('loggedInUserInfo');
       this.userLoggedId = false;
-      /*let alert = this.alertCtrl.create({
-        title: 'Error',
-        subTitle: this.userLogginMsg,
-        buttons: ['Ok']
-      });
-      alert.present();*/
       let toast = this.toastCtrl.create({
         message: this.userLogginMsg,
         duration: 3000,
@@ -315,10 +284,8 @@ let is_lead:string="0";
       });
       
       toast.onDidDismiss(() => {
-        //console.log('Dismissed toast');
       });
       toast.present();
-      // this.loginModal.close();
 
     }
  
@@ -331,22 +298,18 @@ setAllAccessOptions(userAllowedRoles:any)
 {
 let finalAllowedRolesOptions:number[]=[];
 userAllowedRoles.forEach(element => {
-  //finalAllowedRolesOptions.concat(element.allowed_options.split(','));
-  //debugger;
   let dummyAllOptions=element.allowed_options.split(',');
   for(let i=0;i<dummyAllOptions.length;i++)
   {
     finalAllowedRolesOptions.push(dummyAllOptions[i].toString());
   }
 });
-//debugger;
 this.userServiceObj.getAllMemberAllowedOptions(finalAllowedRolesOptions)
       .subscribe((result) => this.setAllAccessOptionsResp(result));
 }
 setAllAccessOptionsResp(result:any)
 {
   if (result.status == true) {
-    //debugger;
     this.storage.set('allowed_access_options', result.memberAllowedOptions);
     this.navCtrl.setRoot(DashboardTabsPage);
   }
@@ -357,7 +320,6 @@ setAllAccessOptionsResp(result:any)
   }
 
   onFacebookLoginClick(): void {
-    //
     this.userServiceObj.onFacebookLoginClick();
   }
   faceBookDecisionMethod(opt: string) {
@@ -424,8 +386,6 @@ setAllAccessOptionsResp(result:any)
             {
               that.headerColor=data.color_tertiary;
           }
-         
-         // debugger;
         }
         if(data.sidebar_menu_color)
         {
@@ -441,8 +401,6 @@ setAllAccessOptionsResp(result:any)
           {
             that.sideBarMenuColor=data.color_tertiary;
         }
-        
-       // debugger;
       }
       if(data.button_color)
       {
@@ -458,8 +416,6 @@ setAllAccessOptionsResp(result:any)
         {
           that.buttonColor=data.color_tertiary;
       }
-      
-     // debugger;
     }
     if(data.text_color)
     {
@@ -478,7 +434,6 @@ setAllAccessOptionsResp(result:any)
     
   
   }
-  //debugger;
       }
       });
   }
@@ -509,7 +464,6 @@ this.setCountryCode();
     selectedCountryCodeData = this.allCountryCodes.filter(item => item.country_abbv == $event);
     this.selectedCountryAbbv = selectedCountryCodeData[0].country_abbv;
     this.selectedCountryCode = selectedCountryCodeData[0].country_code;
-    // debugger;
   }
 
 }

@@ -64,24 +64,10 @@ export class AllLeadsPage{
     public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform, 
     public ngZone: NgZone,public menuCtrl: MenuController,public loadingCtrl: LoadingController,private toastCtrl: ToastController) {
-      /*if(this.platform.is('core') || this.platform.is('mobileweb')) {
-        this.isApp=false;
-      }
-      else
-      {
-        this.isApp=true;
-      }*/
-      //debugger;
       this.isApp = (!document.URL.startsWith("http"));
       if(this.navParams.get('notificationMsg')!=undefined)
       {
         this.notificationMsg=this.navParams.get('notificationMsg');
-        /*let alert = this.alertCtrl.create({
-          title: 'Notification',
-          subTitle: this.notificationMsg,
-          buttons: ['Ok']
-        });
-        alert.present();*/
         let toast = this.toastCtrl.create({
           message: this.notificationMsg,
           duration: 3000,
@@ -90,33 +76,18 @@ export class AllLeadsPage{
         });
         
         toast.onDidDismiss(() => {
-          //console.log('Dismissed toast');
         });
         toast.present();
       }
       if(this.navParams.get('leadInfo')!=undefined)
       {
 let leadInfo=this.navParams.get('leadInfo');
-//if(this.navParams.get('currentUser')!=undefined)
-  //    {
-        
-       // let currentUser=this.navParams.get('currentUser');
-        //this.userServiceObj.saveFireBaseUserInfo(leadInfo.email,leadInfo.password,leadInfo.webUserId,leadInfo.first_name,leadInfo.last_name,
-          //leadInfo.image_url,leadInfo.parent_id,leadInfo.is_submember,leadInfo.is_lead,leadInfo.website_id,currentUser);
-      
-        //}
-        //this.userServiceObj.setFireBaseInfo(leadInfo.email,leadInfo.password,leadInfo.webUserId,leadInfo.first_name,leadInfo.last_name,
-          //leadInfo.image_url,leadInfo.parent_id,leadInfo.is_submember,leadInfo.is_lead,leadInfo.website_id);  
       }
       this.loader = this.loadingCtrl.create({
         content: "Please wait...",
         duration: 5000
       });
   }
-  /*ngAfterViewInit() {
-    this.updateColorTheme();
-    debugger;
-  }*/
   ionViewDidLoad() {
     
     let member_id = this.storage.get('userId');
@@ -186,7 +157,6 @@ this.chatRef.off("value");
       ]
     });
     alert.present();
-
   }
   sendAppInvitation(lead:any)
   {
@@ -197,7 +167,7 @@ this.chatRef.off("value");
   }
   sendAppInvitationResp(result:any)
   {
-   // debugger;
+  // debugger;
 if(result.status)
 {
   let toast = this.toastCtrl.create({
@@ -216,7 +186,6 @@ if(result.status)
   }
   setAccessLevels()
   {
-
     let parent_id = this.storage.get('parent_id');
       parent_id.then((data) => {
         if(data!=null)
@@ -362,7 +331,6 @@ filterItemsByCategory()
     this.loader.dismiss();
     if(result.status==true)
     {
-     // debugger;
       //debugger;
       this.allLeadsList=result.results;
       this.searchedLeadsList=result.results;
@@ -387,15 +355,8 @@ filterItemsByCategory()
       });
       
       toast.onDidDismiss(() => {
-        //console.log('Dismissed toast');
       });
       toast.present();
-      /*let alert = this.alertCtrl.create({
-        title: 'Error',
-        subTitle: this.leadsFoundMessage,
-        buttons: ['Ok']
-      });
-      alert.present();*/
     }
     
   }
@@ -423,9 +384,12 @@ filterItemsByCategory()
 this.navCtrl.push(EditLeadPage,{leadId:leadId});
   }
   leadDetail(leadId:string){
+    //debugger;
     if(this.isLeadDetailAccess==true)
     {
+      this.ngZone.run(() => {
       this.navCtrl.push(LeadDetailPage,{leadId:leadId});
+      });
     }
     
       }
@@ -466,15 +430,8 @@ this.navCtrl.push(EditLeadPage,{leadId:leadId});
               });
               
               toast.onDidDismiss(() => {
-                //console.log('Dismissed toast');
               });
               toast.present();
-              /*let alert = this.alertCtrl.create({
-                title: 'Error',
-                subTitle: this.leadsFoundMessage,
-                buttons: ['Ok']
-              });
-              alert.present();*/
             }
             this.userRef=firebase.database().ref('users');
     this.userRef.orderByChild("webUserId").equalTo(lead.lead_id).on("value", function(snapshot) {

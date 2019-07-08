@@ -37,7 +37,6 @@ export class MlsSettingsPage {
       }
       if(this.navParams.get('website_Id')!=undefined)
       {
-        //debugger;
         this.website_Id=this.navParams.get('website_Id');
       }
       this.loader = this.loadingCtrl.create({
@@ -60,7 +59,6 @@ export class MlsSettingsPage {
   }
 loadMlsSetup()
 {
-  //debugger;
   if(this.userId!="")
     {
       
@@ -74,19 +72,10 @@ loadPaperWorkStatusResp(result:any):void{
   this.loader.dismiss();
   if(result.status==true)
   {
-    //debugger;
     this.paperWorkDetails=result.result;   
   }
   else
   {
-    //this.paperWorkFoundMsg=result.message;
-//debugger;
-/*let alert = this.alertCtrl.create({
-  title: 'Error',
-  subTitle: this.paperWorkFoundMsg,
-  buttons: ['Ok']
-});
-alert.present();*/
 let toast = this.toastCtrl.create({
   message: this.paperWorkFoundMsg,
   duration: 3000,
@@ -95,7 +84,6 @@ let toast = this.toastCtrl.create({
 });
 
 toast.onDidDismiss(() => {
-  //console.log('Dismissed toast');
 });
 toast.present();
   }

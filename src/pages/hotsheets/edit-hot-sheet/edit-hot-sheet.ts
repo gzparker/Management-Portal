@@ -104,7 +104,8 @@ public isApp=false;public isWebBrowser=false;public msl_id:string="";public mls_
   public drawingManager:any;public isDrawing:boolean = false;public latitude: number = 51.673858;public showCustom:any=false;
   public longitude: number = 7.815982;public polygons:any[] = [];public toDrawing = false;public move:any=null;
   public mouseUp:any=null;public poly:any;public map_height:number;public parent_id:string="";public headerImageChangedEvent:any='';
-  public communityImageChangedEvent:any='';public allHotSheetList:any[]=[];public mapLocation:any;
+  public communityImageChangedEvent:any='';public allHotSheetList:any[]=[];public mapLocation:any;public validYear:boolean=true;
+  public validPrice:boolean=true;
   public geoLocationOptions = {
     types: ['(cities)'],
     componentRestrictions: {country: "us"}
@@ -281,6 +282,27 @@ else
      // this.addMarker(location, "Mein gesuchter Standort");
 
     });
+  }
+  validateYear(){
+    //debugger;
+//this.validYear=true;
+if(this.year_built_max<this.year_built_min)
+    {
+      this.validYear=false;
+    }
+else{
+  this.validYear=true;
+}
+  }
+  validatePropertySize(){
+    //debugger;
+    if(this.unit_size_max<this.unit_size_min)
+    {
+      this.validPrice=false;
+    }
+else{
+  this.validPrice=true;
+}
   }
   setHotSheetDefaultTitle()
   {

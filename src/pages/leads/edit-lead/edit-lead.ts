@@ -42,8 +42,6 @@ export class EditLeadPage {
   addressHomeElement: HTMLInputElement = null;
   @ViewChild('searchWorkBar', { read: ElementRef }) searchWorkBar: ElementRef;
   addressWorkElement: HTMLInputElement = null;
-  /*@ViewChild('leadImageCropper', undefined)
-  leadImageCropper:ImageCropperComponent;*/
   public isApp=false;
   public isWebBrowser=false;
   public isLeadImageExist=false;

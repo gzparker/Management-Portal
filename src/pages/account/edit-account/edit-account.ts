@@ -26,7 +26,7 @@ declare var CKEDITOR: any;
 @Component({
   selector: 'page-edit-account',
   templateUrl: 'edit-account.html',
-  providers:[BrMaskerIonic3]
+  providers:[BrMaskerIonic3,ImageCropperComponent]
 })
 export class EditAccountPage {
   @ViewChild('personalCropper', undefined)
@@ -90,19 +90,11 @@ export class EditAccountPage {
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform,
     public loadingCtrl: LoadingController,private crop: Crop,private camera: Camera,public brMaskerIonic3: BrMaskerIonic3,
     private imagePicker: ImagePicker,private toastCtrl: ToastController, public subscriptionObj: SubscriptionProvider) {
-      //this.CkeditorConfig=this.sharedServiceObj.CkeditorConfig;
       this.hideImageCropper=false;
       this.loader = this.loadingCtrl.create({
         content: "Please wait...",
         duration: 5000
       });
-      /*if(this.platform.is('core') || this.platform.is('mobileweb') || this.platform.is('cordova') || this.platform.is('mobile')) {
-        this.isApp=false;
-      }
-      else
-      {
-        this.isApp=true;
-      }*/
       this.isApp = (!document.URL.startsWith("http"));
       this.cropperSettings = new CropperSettings();
       this.cropperSettings.width = 100;
@@ -129,24 +121,10 @@ export class EditAccountPage {
 
   ionViewDidLoad() {
     this.sharedServiceObj.updateColorThemeMethod(null);
-    //debugger;
-    /*CKEDITOR.disableAutoInline = true;
-    CKEDITOR.inline( 'inline-editor1', this.CkeditorConfig);*/
-  /*CKEDITOR.replace( 'inline-editor1', {removeButtons:'Underline,Subscript,Superscript,SpecialChar'
-    ,toolbar: [
-      { name: 'document', groups: [], items: ['Source'] },
-      { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline'] },
-      { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
-      { name: 'links', items: [] },
-      { name: 'styles', items: ['Format', 'FontSize' ] }
-    ]});*/
-    //debugger;
     let member_id = this.storage.get('userId');
-   // debugger;
     member_id.then((data) => {
       this.userId=data;
       this.viewAccount();
-     // debugger;
     CKEDITOR.disableAutoInline = true;
     CKEDITOR.inline( 'user_description_editor', {removeButtons:'Underline,Subscript,Superscript,SpecialChar'
     ,toolbar: [
@@ -269,7 +247,7 @@ else
     if(result.status==true)
     {
     // debugger;
-     this.accountInfo=result.result;
+     this.accountInfo=result.memberInfo;
      this.globalSettings=result.globalSettings;
      //debugger;
      if(this.globalSettings!=null)
@@ -736,14 +714,15 @@ else
       mls_server_id:"",
       agent_id:"",
       broker_id:"",
+      service_id:"",
       country_code: "",
       country_abbv: "",
       phone_number: "",
       email: "",
       password: "",
       timezone:""
-    
     };
+dataObj.service_id=this.service_id;
 dataObj.photo_personal=this.personalImage;
 //debugger;
 if(this.accountInfo.email!=this.email)
@@ -803,7 +782,6 @@ if(this.accountInfo.phone_mobile!=this.phone_number)
 }
 if(this.accountInfo.mls_server_id!=this.mls_server_id)
 {
- 
       dataObj.mls_server_id = this.mls_server_id.toString();
 }
     this.userServiceObj.updateAccount(this.userId,dataObj)

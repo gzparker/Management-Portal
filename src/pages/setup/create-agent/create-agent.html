@@ -61,10 +61,18 @@
         </ion-option>
       </ion-select>
  </ion-item>
-    <ion-item>
+ <ion-item class="OptMLS noShadow" *ngIf="service_id=='2'||service_id=='1'">
+  <ion-label stacked>Select your MLS</ion-label>
+  <ion-select placeholder="-----" [(ngModel)]="mls_id"  
+  name="mls_server_id" multiple="true" required>
+    <ion-option *ngFor="let mls of allMls" value= {{mls.mls_server_id}}>{{mls.name}}
+     </ion-option>
+  </ion-select>
+</ion-item>
+    <!--<ion-item>
       <ion-label stacked>MLS ID</ion-label>
       <ion-input type="text" [(ngModel)]="mls_id" name="mls_id" id="mls_id" placeholder="Your MLS ID"></ion-input>
-    </ion-item>
+    </ion-item>-->
     <!--<ion-item>
       <ion-label>Select Country<span [ngClass]="{'error': selectedCountryAbbv==''}" 
         *ngIf="selectedCountryAbbv==''">*</span></ion-label>
@@ -143,7 +151,7 @@
        (onCrop)="agentImageCropped($event)" *ngIf="hideAgentCropper"></img-cropper>-->
         
         
-        <input id="custom-input" class="btnUpload" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="fileChangeListener($event)">
+        <input id="custom-input" class="btnUpload colorEnabled button_color" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="fileChangeListener($event)">
         <button ion-button (click)="editImage('agentImage');" *ngIf="isAgentImageExist">
           <ion-icon name="md-create"></ion-icon>
         </button>

@@ -26,12 +26,9 @@ public listingSelectedObj:any;
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, 
     public platform: Platform,public actionSheetCtrl: ActionSheetController,public viewCtrl: ViewController) {
-     // debugger;
       if(this.navParams.get('listingSelectedObj')!=undefined)
       {
-       // debugger;
         this.listingSelectedObj=this.navParams.get('listingSelectedObj');
-        //debugger;
       }
   }
   ionViewDidEnter()

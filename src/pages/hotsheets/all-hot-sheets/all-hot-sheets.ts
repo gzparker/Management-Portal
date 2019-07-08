@@ -39,23 +39,10 @@ export class AllHotSheetsPage {
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController,
      public platform: Platform,public loadingCtrl: LoadingController,private toastCtrl: ToastController) {
-      /*if(this.platform.is('core') || this.platform.is('mobileweb')) {
-        this.isApp=false;
-      }
-      else
-      {
-        this.isApp=true;
-      }*/
       this.isApp = (!document.URL.startsWith("http"));
       if(this.navParams.get('notificationMsg')!=undefined)
       {
         this.notificationMsg=this.navParams.get('notificationMsg');
-        /*let alert = this.alertCtrl.create({
-          title: 'Notification',
-          subTitle: this.notificationMsg,
-          buttons: ['Ok']
-        });
-        alert.present();*/
         let toast = this.toastCtrl.create({
           message: this.navParams.get('notificationMsg'),
           duration: 3000,
@@ -64,7 +51,6 @@ export class AllHotSheetsPage {
         });
         
         toast.onDidDismiss(() => {
-          //console.log('Dismissed toast');
         });
         toast.present();
       }
@@ -94,7 +80,6 @@ export class AllHotSheetsPage {
       parent_id.then((data) => {
         if(data!=null)
         {
-          //debugger;    
       this.parentId=data;
       this.isOwner=false;
         }
@@ -119,9 +104,7 @@ export class AllHotSheetsPage {
       {
         if(data!=false)
         {
-        //debugger;
         let savedAccessLevels:any[]=data;
-    //debugger;
      
       let createHotsheetAccesLevels=savedAccessLevels.filter((element) => {
         return (element.key=="create-hotsheet");
@@ -193,21 +176,16 @@ export class AllHotSheetsPage {
     this.loader.dismiss();
     if(result.status==true)
     {
-      
-     // debugger;
       this.allHotSheetList=result.result;
-     // debugger;
     }
     else
     {
-      //debugger;
       this.allHotSheetList=[];
       this.hotsheetFoundMessage="No hotsheet found.";
     }
     
   }
   editHotsheet(id:string):void{
-   // debugger;
    if(this.isEditHotsheetAccess==true)
    {
     this.navCtrl.push(EditHotSheetPage,{id:id});
@@ -223,7 +201,6 @@ export class AllHotSheetsPage {
         {
           text: 'Cancel',
           handler: () => {
-           // console.log('Disagree clicked');
           }
         },
         {
@@ -237,12 +214,6 @@ export class AllHotSheetsPage {
             {
               this.hotsheetFoundMessage="All hotsheets have been deleted.Please add new hotsheet.";
               this.notificationMsg="";
-              /*let alert = this.alertCtrl.create({
-                title: 'Error',
-                subTitle: this.hotsheetFoundMessage,
-                buttons: ['Ok']
-              });
-              alert.present();*/
               let toast = this.toastCtrl.create({
                 message: this.hotsheetFoundMessage,
                 duration: 3000,
@@ -251,7 +222,6 @@ export class AllHotSheetsPage {
               });
               
               toast.onDidDismiss(() => {
-                //console.log('Dismissed toast');
               });
               toast.present();
             }
@@ -264,11 +234,8 @@ export class AllHotSheetsPage {
     confirm.present();
   }
   deleteHotsheetResp(result:any):void{
-  //debugger;
   if(result.status==true)
   {
-   // debugger;
- // this.viewAllHotSheets();
   }
   
   }

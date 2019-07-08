@@ -202,6 +202,11 @@ this.signOutEmitter.emit();
   }
   public setPaidStatus(paidStatus: boolean)
   {
+    if(paidStatus==true){
+      this.storage.set('paid_status', '1');
+    }else{
+      this.storage.set('paid_status', '0');
+    }
 this.isPaidEmitter.emit(paidStatus);
   }
   public updateColorThemeMethod(updateThemeOption:any)
@@ -254,6 +259,7 @@ phone_number_mask(phoneNumber:string){
 let sPrefix:string="";
 let sNumber:string="";
 //debugger;
+if(phoneNumber!=undefined&&phoneNumber!=""){
   phoneNumber = phoneNumber.replace("[^0-9]",'');
   if(phoneNumber.length == 10){ 
   sArea = phoneNumber.substring(0,3);
@@ -272,6 +278,9 @@ let sNumber:string="";
   } else {
     return "";
   }
+} else{
+  return "";
+}
   //debugger;
   }
 rgbaToHex (rgba) {

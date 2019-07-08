@@ -37,7 +37,6 @@ export class SetupOptionPage {
 
   ionViewDidLoad() {
     this.sharedServiceObj.updateColorThemeMethod(null);
-    //console.log('ionViewDidLoad SetupOptionPage');
     this.setAccessLevels();
   }
   ionViewDidEnter()
@@ -50,8 +49,7 @@ export class SetupOptionPage {
     let parent_id = this.storage.get('parent_id');
       parent_id.then((data) => {
         if(data!=null)
-        {
-          //debugger;    
+        {    
       this.parentId=data;
       this.isOwner=false;
         }
@@ -105,10 +103,8 @@ export class SetupOptionPage {
   }
   else
   {
-    //debugger;
     this.isGlobalPreference=true;
     this.isAgents=true;
-    
   }
   }
   openPage(pageNumber:string) {
@@ -122,16 +118,11 @@ export class SetupOptionPage {
     }
     else if(pageNumber=="23")
     {
-     // this.navCtrl.setRoot(DashboardTabsPage,{selectedPage:"23"});
      this.navCtrl.push(ViewRolesPage);
     }
     else if(pageNumber=="28")
     {
       this.navCtrl.push(NotificationSettingsPage);
-      //this.navCtrl.setRoot(NotificationSettingsPage,{selectedPage:"28"});
     }
-    //debugger;
-    //this.sharedServiceObj.setNavigationalPage(pageNumber);
-    //this.navCtrl.setRoot(DashboardTabsPage,{selectedPage:pageNumber.toString()});
   }
 }

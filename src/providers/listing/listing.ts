@@ -1,5 +1,4 @@
 import { HttpClient } from '@angular/common/http';
-//import { HTTP } from '@ionic-native/http';
 
 import { Http, Response, URLSearchParams, Headers, RequestOptions } from '@angular/http';
 import { EventEmitter, Injectable } from '@angular/core';
@@ -37,7 +36,6 @@ export class ListingProvider {
   }
   
  getBrokerListingForSale(brokerId:string){
-// debugger;
     let data = new URLSearchParams();
   data.append('mls_server_id', this.sharedServiceObj.mlsServerId);
  data.append('broker_id',brokerId);
@@ -73,7 +71,6 @@ getAvailableSearchFields(){
 
     let data = new URLSearchParams();
   data.append('mls_server_id', this.sharedServiceObj.mlsServerId);
- //debugger;
   let searchFields=this.http
     .post(this.sharedServiceObj.apiBaseUrl+'listings/getSearchFields', data, this.headerOptionsIDX)
     .map(this.extractData)

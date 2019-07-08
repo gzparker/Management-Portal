@@ -47,12 +47,6 @@ export class AccountInfoPage {
       
       if(this.navParams.get('notificationMsg')!=undefined)
       {
-        /*let alert = this.alertCtrl.create({
-          title: 'Notification',
-          subTitle: this.navParams.get('notificationMsg'),
-          buttons: ['Ok']
-        });
-        alert.present();*/
         let toast = this.toastCtrl.create({
           message: this.navParams.get('notificationMsg'),
           duration: 3000,
@@ -61,7 +55,6 @@ export class AccountInfoPage {
         });
       
         toast.onDidDismiss(() => {
-          //console.log('Dismissed toast');
         });
       
         toast.present();
@@ -86,7 +79,6 @@ export class AccountInfoPage {
   }
   editAccount()
   {
-//this.navCtrl.push(EditAccountPage,{userId:this.userId});
 this.navCtrl.setRoot(DashboardTabsPage,{selectedPage:26});
   }
   viewAccount():void{
@@ -101,34 +93,14 @@ this.navCtrl.setRoot(DashboardTabsPage,{selectedPage:26});
  
   accountInfoResp(result:any):void{
     this.loader.dismiss();
-  
     if(result.status==true)
     {
-//debugger;
-      this.accountInfo=result.result;
+      this.accountInfo=result.memberInfo;
       this.globalSettings=result.globalSettings;
       let firebaseUserId = this.storage.get('firebaseUserId');
       firebaseUserId.then((data) => {
-        this.userServiceObj.updateFirebaseUserInfo(result.result,data);
+        this.userServiceObj.updateFirebaseUserInfo(result.memberInfo,data);
     });
-      /*if(this.localStorageService.get('fbAuthResp'))
-      {
-  this.fbAuthResp=this.localStorageService.get('fbAuthResp');
-  if(this.fbAuthResp!=undefined)
-  {
-    this.fb_pic_url=this.fbAuthResp.picture.data.url;
-  }
-  else
-  {
-    this.fb_pic_url=this.sharedServiceObj.defaultNoImage;
-  }
-      }
-      else
-      {
-        this.fb_pic_url=this.sharedServiceObj.defaultNoImage;
-      }*/
-      
-      // debugger;
     }
     
   }

@@ -40,13 +40,6 @@ export class BillingHistoryPage {
     public ngZone: NgZone,public menuCtrl: MenuController,public loadingCtrl: LoadingController,private toastCtrl: ToastController) {
       if(this.navParams.get('notificationMsg')!=undefined)
       {
-        //this.notificationMsg=this.navParams.get('notificationMsg');
-        /*let alert = this.alertCtrl.create({
-          title: 'Notification',
-          subTitle: this.navParams.get('notificationMsg'),
-          buttons: ['Ok']
-        });
-        alert.present();*/
         let toast = this.toastCtrl.create({
           message: this.navParams.get('notificationMsg'),
           duration: 3000,
@@ -55,7 +48,6 @@ export class BillingHistoryPage {
         });
       
         toast.onDidDismiss(() => {
-          //console.log('Dismissed toast');
         });
       
         toast.present();
@@ -69,7 +61,6 @@ export class BillingHistoryPage {
   ionViewDidLoad() {
     this.sharedServiceObj.updateColorThemeMethod(null);
     let member_id = this.storage.get('userId');
-    //debugger;
     member_id.then((data) => {
       this.userId=data;
       this.viewAllBillingHistory(null);
@@ -123,7 +114,6 @@ export class BillingHistoryPage {
         {
           text: 'Cancel',
           handler: () => {
-           // console.log('Disagree clicked');
           }
         },
         {

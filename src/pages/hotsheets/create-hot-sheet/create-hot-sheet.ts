@@ -34,11 +34,6 @@ export class CreateHotSheetPage {
  
   @ViewChild('searchbar', { read: ElementRef }) searchbar: ElementRef;
   addressElement: HTMLInputElement = null;
-  //@ViewChild('headerImageCropper', undefined)
-  //headerImageCropper:ImageCropperComponent;
-  //@ViewChild('communityImageCropper', undefined)
-  //communityImageCropper:ImageCropperComponent;
-
   listSearch: string = '';
   public hideHeaderCropper:boolean=true;public hideCommunityCropper:boolean=true;public hideSlideShowCropper:boolean=true;
   public edit_header_image:boolean=false;public edit_community_image:boolean=false;public edit_slideshow_image:boolean=false;
@@ -78,14 +73,6 @@ public isApp=false;public isWebBrowser=false;public msl_id:string="";public name
   {id:"4000",name:"4,000+ sqft"},{id:"5000",name:"5,000+ sqft"},{id:"7500",name:"7,500+ sqft"},{id:"10890",name:".25+ acre / 10,890+ sqft"}
   ,{id:"21780",name:".5+ acre / 21,780+ sqft"},{id:"43560",name:"1+ acre"},{id:"87120",name:"2+ acres"},{id:"217800",name:"5+ acres"},
   {id:"435600",name:"10+ acres"},{id:"custom",name:"Custom size"}];
-  /*private CkeditorConfig = {removeButtons:'Underline,Subscript,Superscript,SpecialChar'
-  ,toolbar: [
-    { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source'] },
-    { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', '-', 'RemoveFormat' ] },
-    { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
-    { name: 'links', items: [ 'Link', 'Unlink'] },
-    { name: 'styles', items: ['Format', 'FontSize' ] }
-  ]};*/
   public CkeditorConfig = {removeButtons:'Underline,Subscript,Superscript,SpecialChar'
   ,toolbar: [
     { name: 'document', groups: [], items: ['Source'] },
@@ -115,7 +102,8 @@ public isApp=false;public isWebBrowser=false;public msl_id:string="";public name
   public latitude: number = 51.673858;public longitude: number = 7.815982;public polygons:any[] = [];
   public toDrawing = false;public move:any=null;public mouseUp:any=null;public poly:any;public map_height:number;
   public parent_id:string="";public headerImageChangedEvent:any='';public communityImageChangedEvent:any='';
-  public allListingTypeChecked:boolean=false;public allHotSheetList:any[]=[];
+  public allListingTypeChecked:boolean=false;public allHotSheetList:any[]=[];public validYear:boolean=true;
+  public validPrice:boolean=true;
   
   public mapLocation:any;public loader:any;
   public north_east_lat:any;public north_east_lon:any;public south_west_lat:any;public south_west_lon:any;
@@ -127,16 +115,6 @@ public isApp=false;public isWebBrowser=false;public msl_id:string="";public name
     ,public listinServiceObj:ListingProvider,
     private crop: Crop,private camera: Camera,private imagePicker: ImagePicker,
     public loadingCtrl: LoadingController,private toastCtrl: ToastController) {
-      //debugger;
-      //this.CkeditorConfig=this.sharedServiceObj.CkeditorConfig;
-      /*if(this.platform.is('core') || this.platform.is('mobileweb') || this.platform.is('cordova') || 
-      this.platform.is('mobile')) {
-        this.isApp=false;
-      }
-      else
-      {
-        this.isApp=true;
-      }*/
       this.isApp = (!document.URL.startsWith("http"));
       this.hideCommunityCropper=false;
       this.hideHeaderCropper=false;
@@ -304,6 +282,27 @@ else
     }
     
   }
+  validateYear(){
+    //debugger;
+//this.validYear=true;
+if(this.year_built_max<this.year_built_min)
+    {
+      this.validYear=false;
+    }
+else{
+  this.validYear=true;
+}
+  }
+  validatePropertySize(){
+    //debugger;
+    if(this.unit_size_max<this.unit_size_min)
+    {
+      this.validPrice=false;
+    }
+else{
+  this.validPrice=true;
+}
+  }
   mapsSearchBar(ev: any) {
     // set input to the value of the searchbar
     //this.search = ev.target.value;
@@ -408,34 +407,21 @@ else
       this.map.controls[google.maps.ControlPosition.TOP_RIGHT].push(centerControlDiv);
       google.maps.event.addDomListener(this.map, 'mousedown', this.mouseDownCallBack.bind(this));
       google.maps.event.addDomListener(this.map, 'idle', this.setMapCoordinates.bind(this));
-      
-      /*google.maps.event.addDomListener(this.map, 'idle',(e=>{
-        this.polygon_search=this.polygon_search;
-      }));*/
-    //}, (err) => {
-    //  console.log(err);
-    //});
   }
   mouseDownCallBack(e:any)
   {
-  // debugger;
-   //do it with the right mouse-button only
    if (!this.toDrawing) return;
    this.map.setOptions({
      draggable: false 
    });
    this.mouseUp=google.maps.event.addListener(this.map, 'mouseup',this.mouseUpCallBack.bind(this));
    this.move = google.maps.event.addListener(this.map, 'mousemove',this.mouseMoveCallBack.bind(this));
- 
-   //debugger;
   }
   mouseUpCallBack(e:any)
   {
-    //debugger;
     google.maps.event.removeListener(this.mouseUp);
     google.maps.event.removeListener(this.move);
     var path = this.poly.getPath();
-   //debugger;
     var ArrayforPolygontoUse= this.sharedServiceObj.simplyfierLatitude(path.j,12.5);
   
     path.j=ArrayforPolygontoUse;
@@ -714,37 +700,20 @@ loadAllAgentsResp(result:any)
       this.local='';
       this.neighbourhoodAddress='';
       this.slug="";
-    // debugger;
+
       data.address_components.forEach(element => {
-        //debugger;
+
         if(element.types[0]=="locality")
         {
-      // debugger;
+
           this.local=element.long_name;
 this.city=element.long_name;
-          /*if(this.slug!='')
-          {
-            this.slug=this.slug+"/"+element.long_name;
-          }
-          else
-          {
-            this.slug=element.long_name
-          }*/
+
         }
         if(element.types[0]=="neighborhood")
         {
           this.neighbourhoodAddress=element.long_name;
-          this.sub_city=element.long_name;
-         // debugger;
-          /*if(this.slug!='')
-          {
-            this.slug=this.slug+"/"+element.long_name;
-          }
-          else
-          {
-            this.slug=element.long_name;
-          }*/
-          
+          this.sub_city=element.long_name; 
         }
         if(element.types[0]=="administrative_area_level_1")
         {
@@ -791,19 +760,6 @@ this.city=element.long_name;
           this.neighbourhoodAddress=this.neighbourhoodAddress+"-"+neighbourhoodAddressParts[i];
         }
       }
-      /*let slugParts=this.slug.split(' ');
-      this.slug='';
-      for(let i=slugParts.length-1;i>=0;i--)
-      {
-        if(i==slugParts.length-1)
-        {
-          this.slug=this.slug+slugParts[i];
-        }
-        else
-        {
-          this.slug=this.slug+"-"+slugParts[i];
-        }
-      }*/
       if(this.neighbourhoodAddress!='')
       {
         this.slug=this.local+"/"+this.neighbourhoodAddress;
@@ -935,53 +891,23 @@ this.lot_size_modal=result.searchFieldsJson.lot_size;
       }
       if(result.searchFieldsJson.status!=undefined)
       {
-        /*let optionsArray:any[]=[];
-      this.status=result.searchFieldsJson.status;
-      for(let i=0;i<this.status.length;i++){
-     
-        let obj={id:this.status[i],name:this.status[i]};
-        optionsArray.push(obj);
-      }
-      this.statusOptions=optionsArray;*/
-      
-     // debugger;
       }
       if(result.searchFieldsJson.address_subdivision!=undefined)
       {
       
       let optionsArray:any[]=[];
       this.address_subdivision=result.searchFieldsJson.address_subdivision;
-    //  debugger
       for(let i=0;i<this.address_subdivision.length;i++){
         
            let obj={id:this.address_subdivision[i],name:this.address_subdivision[i]};
            optionsArray.push(obj);
          }
          this.address_subdivision_options=optionsArray;
-      //debugger;
       }
-      /*if(result.searchFieldsJson.listing_type!=undefined)
-      {
-        let optionsArray:any[]=[{id:"all",name:"All"},{id:"house",name:"House"},{id:"cnd",name:"Condo"},
-        {id:"twnhs",name:"TownHouse"},{id:"land",name:"Land"},{id:"duplx",name:"Duplex"},
-        {id:"comm",name:"Commercial"}];
-        this.listingTypeOptions=optionsArray;
-        /*let optionsArray:any[]=[];
-      this.listing_type=result.searchFieldsJson.listing_type;
-   
-      for(let i=0;i<this.listing_type.length;i++){
-        
-           let obj={id:this.listing_type[i],name:this.listing_type[i]};
-           optionsArray.push(obj);
-         }
-         this.listingTypeOptions=optionsArray;
-      }*/
       if(result.searchFieldsJson.address_zip_code!=undefined)
       {
-      //this.address_zip_code=result.searchFieldsJson.address_zip_code;
       let optionsArray:any[]=[];
       this.address_zip_code=result.searchFieldsJson.address_zip_code;
-     // debugger
       for(let i=0;i<this.address_zip_code.length;i++){
         
            let obj={id:this.address_zip_code[i],name:this.address_zip_code[i]};
@@ -993,7 +919,6 @@ this.lot_size_modal=result.searchFieldsJson.lot_size;
       {
       let optionsArray:any[]=[];
       this.neighbourhood=result.searchFieldsJson.neighborhood;
-    //  debugger;
       for(let i=0;i<this.neighbourhood.length;i++){
         
            let obj={id:this.neighbourhood[i],name:this.neighbourhood[i]};
@@ -1018,14 +943,11 @@ this.lot_size_modal=result.searchFieldsJson.lot_size;
            this.south_west_lon=result.searchFieldsJson.south_west_lon;
          }
       /////////////////////////////////////////////////////////////////////////
-     // this.loadLastSearchedValue();
     }
     loadLastSearchedValue():void{
-      //debugger;
       let lastSearchedObj=null;
       let lastSearchedString=null;
     this.storage.get('searchFilterObj').then((data) => {
-      //debugger;
       if(data!=null)
       {
      lastSearchedString=data;
@@ -1033,7 +955,6 @@ this.lot_size_modal=result.searchFieldsJson.lot_size;
     });
 
     lastSearchedObj=JSON.parse(JSON.parse(JSON.stringify(lastSearchedString)));
-    //debugger;
     if(lastSearchedObj!=null)
     {
       if(lastSearchedObj)
@@ -1074,7 +995,6 @@ this.lot_size_modal=result.searchFieldsJson.lot_size;
          }
          if(lastSearchedObj.listing_size)
          {
-           //this.listing_size=lastSearchedObj.listing_size;
          }
          if(lastSearchedObj.lot_size)
       {
@@ -1194,21 +1114,6 @@ this.lot_size_modal=lastSearchedObj.lot_size;
     updateSearchObject():void{
       let isAllSelected:boolean=false;
       let finalPrice=this.price.lower.toString()+"-"+this.price.upper.toString();
-    
-     //debugger;
-     /*for(let i=0;i<this.listing_type_modal.length;i++)
-     {
-       if(this.listing_type_modal[i]=="all")
-       {
-         isAllSelected=true;
-       }
-     }
-     if(this.dols=="-1")
-     {
-       this.dols="";
-     }*/
-     //debugger;
-     //debugger;
           if(this.lot_size_modal=="custom")
       {
         this.showCustom=true;
@@ -1247,7 +1152,6 @@ this.lot_size_modal=lastSearchedObj.lot_size;
         north_east_lat:this.north_east_lat,north_east_lon:this.north_east_lon,south_west_lat:this.south_west_lat,south_west_lon:this.south_west_lon
       };
     }
-    //this.storage.set('searchFilterObj',JSON.stringify(this.searchListObject));
     }
     addMoreGalleryImage(option:string)
   {
@@ -1259,8 +1163,6 @@ this.lot_size_modal=lastSearchedObj.lot_size;
       commObj.imageWidth=this.communityWidth;
       commObj.imageHeight=this.communityHeight;
       this.dataCommunityImageArray.push(commObj);
-
-  //this.communityImageArray.push(this.communityImage);
   this.hideCommunityCropper=false;
   this.dataCommunityImage={};
     }
@@ -1272,16 +1174,12 @@ this.lot_size_modal=lastSearchedObj.lot_size;
       commObj.imageWidth=this.slideShowWidth;
       commObj.imageHeight=this.slideShowHeight;
       this.dataSlideShowImageArray.push(commObj);
-
-  //this.communityImageArray.push(this.communityImage);
   this.hideSlideShowCropper=false;
   this.dataSlideShowImage={};
     }
 
-    //debugger;
   }
     createHotSheet():void{
-      //this.domainAccess=this.localStorageService.get('domainAccess');
       if(this.dataCommunityImage.image!=undefined&&this.dataCommunityImage.image!='')
       {
         let commObj={imageData:"",imageDataDummy:"",imageWidth:"",imageHeight:""};
@@ -1292,7 +1190,6 @@ this.lot_size_modal=lastSearchedObj.lot_size;
         this.dataCommunityImageArray.push(commObj);
         this.hideCommunityCropper=false;
         this.dataCommunityImage={};
-       //debugger;
       }
       if(this.dataSlideShowImage.image!=undefined&&this.dataSlideShowImage.image!='')
       {
@@ -1304,7 +1201,6 @@ this.lot_size_modal=lastSearchedObj.lot_size;
         this.dataSlideShowImageArray.push(commObj);
         this.hideSlideShowCropper=false;
         this.dataSlideShowImage={};
-       //debugger;
       }
     if(this.userId!="")
       {
@@ -1315,13 +1211,6 @@ this.lot_size_modal=lastSearchedObj.lot_size;
       if(result.status!=false)
       {
     this.updateSearchObject();
-    //let json_search=this.storage.get("searchFilterObj");
-     //json_search.then((data) => {
-
-         //if(data!=null)
-         //{
-          //debugger;
-          
           this.userServiceObj.createHotSheet(this.userId.toString(),this.selectedWebsite,
           this.sharedServiceObj.mlsServerId,this.name,this.hotsheet_Title,this.slug,
           JSON.stringify(this.searchListObject),CKEDITOR.instances['brief_description'].getData(),
@@ -1330,20 +1219,11 @@ this.lot_size_modal=lastSearchedObj.lot_size;
           this.community,this.assigned_agent_id,this.polygon_search,
           this.meta_description,this.meta_title,this.parent_id,this.dataSlideShowImageArray)
           .subscribe((result) => this.createHotSheetResp(result));
-        // }
-
-      //});
     }
     else
     {
       this.ngZone.run(()=>{ 
       this.hotsheetCreateMsg="Slug already exists.";
-      /*let alert = this.alertCtrl.create({
-        title: 'Error',
-        subTitle: this.hotsheetCreateMsg,
-        buttons: ['Ok']
-      });
-      alert.present();*/
       let toast = this.toastCtrl.create({
         message: this.hotsheetCreateMsg,
         duration: 3000,
@@ -1352,7 +1232,6 @@ this.lot_size_modal=lastSearchedObj.lot_size;
       });
       
       toast.onDidDismiss(() => {
-        //console.log('Dismissed toast');
       });
       toast.present();
       });
@@ -1361,14 +1240,11 @@ this.lot_size_modal=lastSearchedObj.lot_size;
     }
     createHotSheetResp(result:any):void{
     this.storage.remove('searchFilterObj');
-    //debugger;
   
     this.hotsheetCreateMsg="HotSheet has been created successfully.";
     this.ngZone.run(()=>{
       CKEDITOR.instances['brief_description'].destroy(true);
       CKEDITOR.instances['main_description'].destroy(true);
-      //$('#txt_postMsg').remove();
-      //$('#cke_txt_postMsg').remove();
       document.getElementById('brief_description').remove();
       document.getElementById('main_description').remove();
       this.navCtrl.setRoot(AllHotSheetsPage,{notificationMsg:this.hotsheetCreateMsg.toString()});

@@ -732,6 +732,15 @@ page-lead-detail {
     }
     .contactPhone {    
     background: $flatblue;
+    .icon-ios, .icon-md, .icon-wp {
+      &:before {
+      content: "";
+      width: 28px;
+      height: 28px;
+      background: url(../assets/icon/svg/chat/015.svg) no-repeat center center !important;
+      background-size: 100% !important;
+      }
+    }
     }
     .contactChat {    
     background: $flatblue;

@@ -151,13 +151,13 @@
             </div>
           </ion-item>              
             
-            <ion-item class="desktopOption" side="right" *ngIf="isApp">
+            <!--<ion-item class="desktopOption" side="right" *ngIf="!isApp">
             <div class="optionIcon" *ngIf="!isApp"></div>
                 <button ion-button color="danger" item-right class="btn-del" (click)="deleteSingleChat(chat.val().groupId,chat.key);"><ion-icon name="md-close"></ion-icon>Delete</button>
-            </ion-item>
+            </ion-item>-->
 
-            <ion-item-options side="right" *ngIf="!isApp">   
-                <button ion-button color="danger" item-right class="btn-del" (click)="deleteSingleChat(chat.val().groupId,chat.key);"><ion-icon name="md-close"></ion-icon>Delete</button>
+            <ion-item-options side="right">   
+                <button ion-button color="danger" item-right class="btn-del" (click)="deleteSingleChat(chat,chat.val().groupId,chat.key);"><ion-icon name="md-close"></ion-icon>Delete</button>
             </ion-item-options>
 
         </ion-item-sliding>

@@ -95,9 +95,9 @@ export class EditWebsitePage {
   public mls_server_id:any[]=[];
   public service_id:string="";
 
-  public colorBase:string="";
-  public secondColor:string="";
-  public thirdColor:string="";
+  public colorBase:string="#00d2ff";
+  public secondColor:string="#00d2ff";
+  public thirdColor:string="#00d2ff";
   public headerColor:string="";
   public headerColorOption:string="";
   public textColor:string="";
@@ -273,7 +273,7 @@ export class EditWebsitePage {
     });
   }
   getCityAddress(data) {
-debugger;
+//debugger;
     this.target_place_id=data.place_id;
     data.address_components.forEach(element => {
       if(element.types[0]=="locality")
@@ -493,9 +493,17 @@ else
 {
   this.customColorOptionModal=true;
 }
-this.colorBase=result.result.color_base;
-this.secondColor=result.result.color_second;
-this.thirdColor=result.result.color_third;
+if(result.result.color_base!=null&&result.result.color_base!=undefined&&result.result.color_base!=""){
+  this.colorBase=result.result.color_base;
+}
+if(result.result.color_second!=null&&result.result.color_second!=undefined&&result.result.color_second!=""){
+  this.secondColor=result.result.color_second;
+}
+if(result.result.color_third!=null&&result.result.color_third!=undefined&&result.result.color_third!=""){
+  this.thirdColor=result.result.color_third;
+}
+
+
 this.identity_name=result.result.identity_name;
 this.headerColor=result.result.header_color;
 this.headerColorOption=result.result.header_color_option;

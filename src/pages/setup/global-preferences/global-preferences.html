@@ -14,7 +14,19 @@
     <ion-buttons end>
       <button ion-button (click)="updateGlobalSettings();" [disabled]="!globalSettingsForm.valid">
         <ion-icon name="ios-bookmark"></ion-icon>
-      </button>
+      </button><!--<input [value]="color"
+       [style.background]="color"
+       [cpPosition]="'bottom'"
+       [(colorPicker)]="color"/>-->
+       <!--<span [style.background]="colorBase"
+      [cpPosition]="'bottom'"
+      [cpPositionOffset]="'50%'"
+      [cpPositionRelativeToArrow]="true" (colorPickerChange)="colorBase=$event"
+      [(colorPicker)]="colorBase" [cpOutputFormat]="'rgb'">Change Color</span>-->
+        <!--<button ion-button color="secondary" outline [colorPicker]="colorBase" 
+        (colorPickerChange)="colorBase=$event"
+        [ngStyle]="{'background-color': colorBase}" [cpPosition]="'bottom'" 
+           [cpOutputFormat]="'rgb'" full small>Change Color</button>-->
     </ion-buttons>
   </ion-navbar>
 
@@ -22,9 +34,9 @@
 
 
 <ion-content padding class="dashboardUI">
+  
 <div class="dashboardBG colorEnabled background_color" ion-fixed></div>
   <!-- <h1 class="contentTitle animated bounceInRight">Global Preferences</h1> -->
-
   <form role="form" data-toggle="validator" #globalSettingsForm="ngForm" class="animated fadeIn">
      
     <div class="formUI"> 
@@ -63,7 +75,7 @@
               </div>
 
               <!-- Image Upload Button -->
-              <input id="custom-input" class="btnUpload" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="companyFileChangeListener($event)">
+              <input id="custom-input" class="btnUpload colorEnabled button_color" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="companyFileChangeListener($event)">
               <button ion-button (click)="editImage('companyImage');" *ngIf="isCompanyImageExist">
                 <ion-icon name="md-create"></ion-icon>
               </button>
@@ -112,7 +124,7 @@
     </ion-select>-->
 
   
-  <div class="formUI" style="margin-top: 16px;">
+  <div class="formUI" style="margin-top: 16px;" *ngIf="selectedRoute==''">
 
     <ion-item class="filterColorOptions">
       <ion-label>Color Settings <span>(preset colors are generated from your logo)</span></ion-label>
@@ -120,7 +132,7 @@
     </ion-item>
 
 
-    <ion-list *ngIf="selectedRoute==''" class="customList colorSchemeBlock">
+    <ion-list class="customList colorSchemeBlock">
     
     <!-- <label class="colorSchemeLabel">Color Scheme</label> -->
     
@@ -129,16 +141,10 @@
       <ion-col col-4>
       <div *ngIf="colorBase!=''">
       <ion-label stacked>1st Color</ion-label>
-    
-        <button ion-button color="secondary" outline [colorPicker]="colorBase" 
+      <button ion-button color="secondary" outline [colorPicker]="colorBase" 
         (colorPickerChange)="colorBase=$event"
-        [ngStyle]="{'background-color': colorBase}" [cpPosition]="'bottom'" 
-           [cpOutputFormat]="'rgb'" full small>Change Color</button>
-           
-      <!--<div [colorPicker]="colorBase" 
-      (colorPickerChange)="colorBase=$event"
-        [style.background]="colorBase" [cpPosition]="'bottom'" 
-         [cpOutputFormat]="'rgba'" >Select Color</div>-->
+        [style.background]="colorBase" 
+        [cpOutputFormat]="'rgb'" full small>Change Color</button>
       </div>
       </ion-col>
       <ion-col col-4>
@@ -173,7 +179,7 @@
   </ion-list>
 
     
-  <ion-list *ngIf="selectedRoute==''" class="customList">
+  <ion-list class="customList">
 
     <ion-label class="colorSchemeLabel">Customize Theme Color</ion-label>
 
@@ -187,11 +193,6 @@
       </ion-segment-button>
     
     </ion-segment>
-    <!--<ion-item class="filterLabel">
-      <ion-label> Use Custom Color</ion-label>
-      <ion-toggle checked="customColorOptionModal" (ionChange)="toggleCustomColor()" [(ngModel)]="customColorOptionModal" name="customColorOption"></ion-toggle>
-    </ion-item>-->
-    
     <ion-list class="customColorOption" *ngIf="selectedSegment=='1'">
         <ion-item (click)="showColorPopUp('side_bar_menu_color')">
           <ion-label>Sidebar Menu Color <span class="colorPreview" *ngIf="sideBarMenuColor==undefined||sideBarMenuColor==''"></span>
@@ -209,41 +210,6 @@
               <span  class="colorPreviewEmpty" *ngIf="backgroundColor!=undefined||backgroundColor!=''" [ngStyle]="{'background-color':backgroundColor }"></span></ion-label>
          
           </ion-item>
-    <!--<ion-item (click)="showColorPopUp('header_color')">
-      <ion-label>Header Color</ion-label>
-    
-    </ion-item>-->
-   
-    <!--<ion-item>
-      <ion-label>Text Color</ion-label>
-      <ion-select [(ngModel)]="textColor" name="textColor" id="textColor">
-        <ion-option *ngFor="let colorOption of colorOptions" value= {{colorOption.id}}>
-          {{colorOption.name}}
-          </ion-option>
-       </ion-select>
-      
-    </ion-item>-->
-    <!--<ion-item (click)="showColorPopUp('content_title_color')">
-      <ion-label>Content Title Color</ion-label>
-
-    </ion-item>
-    <ion-item (click)="showColorPopUp('button_color')">
-      <ion-label>Button Color</ion-label>
-
-    </ion-item>
-    <ion-item (click)="showColorPopUp('map_sidebar_color')">
-      <ion-label>Map Sidebar Color</ion-label>
-
-    </ion-item>
-    <ion-item (click)="showColorPopUp('pagination_color')">
-      <ion-label>Pagination Color</ion-label>
-
-    </ion-item>
-   
-    <ion-item (click)="showColorPopUp('modal_background_color')">
-      <ion-label>Modal Background Color</ion-label>
-
-    </ion-item>-->
   </ion-list>
   <ion-list class="customColorOption topDweller" *ngIf="selectedSegment=='2'">
         <ion-item class="displayName b32">
@@ -280,7 +246,7 @@
               </div>
 
               <!-- Image Upload Button -->
-              <input id="custom-input" class="btnUpload" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="dwellerFileChangeListener($event)">
+              <input id="custom-input" class="btnUpload colorEnabled button_color" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="dwellerFileChangeListener($event)">
               <button ion-button (click)="editImage('dwellerImage');" *ngIf="isDwellerImageExist">
                 <ion-icon name="md-create"></ion-icon>
               </button>

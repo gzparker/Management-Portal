@@ -32,7 +32,6 @@ public first_name:string="";
       if(this.navParams.get('lead')!=undefined)
    {
     this.leadInfo = this.navParams.get('lead');
-    //debugger;
     }
   }
   ionViewDidEnter()
@@ -61,7 +60,6 @@ public first_name:string="";
   }
   sendEmailToContactResp(result:any)
   {
-   //debugger;
     if(result.status)
 {
   let toast = this.toastCtrl.create({

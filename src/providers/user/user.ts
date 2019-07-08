@@ -110,12 +110,12 @@ this.headerOptions= new RequestOptions({ headers: this.headers });
   }
   else
   {
-  debugger;  
+  //debugger;  
     this.fb.browserInit(2272192993020272,'v3.2');
     this.facebookObject = this.fb;
     let status=this.facebookObject.getLoginStatus();  
     status.then((resp)=>{
-   debugger;
+   //debugger;
       this.fbLoginStatus = resp.status;
     }).catch((error) => {
      
@@ -335,6 +335,7 @@ is_online="1";
   
   updateFirebaseUserInfo(result:any,userId:string)
   {
+    //debugger;
     var fredRef=firebase.database().ref('users/'+userId);
     //debugger;
     fredRef.update({isOnline:'1',first_name: result.first_name,
@@ -515,7 +516,7 @@ is_online="1";
    }
   googleUpdateTokenResp(result: any): void {
   }
-  userLogin(email: string, password: string) {
+  userLogin(email: string, password: string,service_id:string) {
     let url = "";
     url = this.sharedServiceObj.registerationApiBaseUrl + 'members/memberLogin';
     
@@ -523,6 +524,7 @@ is_online="1";
     //debugger;
     data.append('email', email);
     data.append('password', password);
+    data.append('service_id', service_id);
     data.append('firebase_token', this.firbase_token_data);
     data.append('device_name', this.device_name);
     let loggedInStatus = this.http
@@ -639,7 +641,7 @@ is_online="1";
     return searchedListing;
   }
   userInfo(user_id: string) {
-   // debugger;
+   //debugger;
     let data = new URLSearchParams();
     data.append('member_id', user_id);
     let acountInfoResp = this.http
@@ -690,6 +692,10 @@ is_online="1";
     if(dataObj.office_id!="")
     {
       data.append('office_id', dataObj.office_id);
+    }
+    if(dataObj.service_id!="")
+    {
+      data.append('service_id', dataObj.service_id);
     }
     if(dataObj.broker_id!="")
     {
@@ -950,6 +956,7 @@ sendAppInvitation(phone_number:string,message:string){
       let data = new URLSearchParams();
    data.append('phone_number',phone_number);
   data.append('message',message);
+  //debugger;
     let leadInvitation=this.http
       .post(this.sharedServiceObj.registerationApiBaseUrl+'members/sendAppInvitation', data, this.headerOptions)
       .map(this.extractData)
@@ -1003,7 +1010,7 @@ createWebsite(user_id:string,isActive:string,website_domain:string,identity_name
   show_new_listings:string,show_open_houses:string,feature_agent_listings:string,
   feature_broker_listings:string,
   feature_office_listings:string,isSsl:string,login_register_popup_time:string,target_city:string,
-  target_place_id:string){
+  target_place_id:string,customer_id:string,source:string,websiteCount:string,startupCost:string,service_id:string){
 //debugger;
     let data = new URLSearchParams();
     data.append('website_domain',website_domain);
@@ -1019,6 +1026,7 @@ data.append('homepage_description',homepage_description);
 data.append('homepageMeta_description',homepageMeta_description);
 data.append('homepage_search_text',homepage_search_text);
 data.append('homepage_meta_title',homepage_meta_title);
+data.append('service_id',service_id);
 data.append('agent_id',agent_id);
 data.append('office_id',office_id);
 data.append('broker_id',broker_id);
@@ -1038,23 +1046,29 @@ data.append('text_color_option',textColorOption);
 data.append('content_background_option',backgroundColorOption);
 data.append('isCustomColor',customColorOption.toString());
 data.append('content_title_color',contentTitleColor);
-    data.append('content_title_color_option',contentTitleColorOption);
-    data.append('pagination_color',paginationColor);
-    data.append('pagination_color_option',paginationColorOption);
-    data.append('modal_background_color',modalBackgroundColor);
-    data.append('modal_background_color_option',modalBackgroundColorOption);
-    data.append('map_sidebar_color',mapSidebarColor);
-    data.append('map_sidebar_color_option',mapSidebarColorOption);
+data.append('content_title_color_option',contentTitleColorOption);
+data.append('pagination_color',paginationColor);
+data.append('pagination_color_option',paginationColorOption);
+data.append('modal_background_color',modalBackgroundColor);
+data.append('modal_background_color_option',modalBackgroundColorOption);
+data.append('map_sidebar_color',mapSidebarColor);
+data.append('map_sidebar_color_option',mapSidebarColorOption);
 
-    data.append('show_new_listings',show_new_listings);
- data.append('show_open_houses',show_open_houses);
- data.append('feature_agent_listings',feature_agent_listings);
- data.append('feature_broker_listings',feature_broker_listings);
- data.append('feature_office_listings',feature_office_listings);
- data.append('isSsl',isSsl);
- data.append('login_register_popup_time',login_register_popup_time);
- data.append('target_city',target_city);
- data.append('target_place_id',target_place_id);
+data.append('show_new_listings',show_new_listings);
+data.append('show_open_houses',show_open_houses);
+data.append('feature_agent_listings',feature_agent_listings);
+data.append('feature_broker_listings',feature_broker_listings);
+data.append('feature_office_listings',feature_office_listings);
+data.append('isSsl',isSsl);
+data.append('login_register_popup_time',login_register_popup_time);
+data.append('target_city',target_city);
+data.append('target_place_id',target_place_id);
+//////////////////////////Startup  Fees/////////////////////////////
+data.append('customer_id',customer_id);
+data.append('card',source);
+data.append('websiteCount',websiteCount);
+data.append('startupCost',startupCost);
+//////////////////////////Startup  Fees/////////////////////////////
 //debugger;
   let websiteListing=this.http
     .post(this.sharedServiceObj.registerationApiBaseUrl+'members/createWebsite', data, this.headerOptions)
@@ -1148,7 +1162,7 @@ data.append('content_title_color',contentTitleColor);
  data.append('login_register_popup_time',login_register_popup_time);
  data.append('target_city',target_city);
  data.append('target_place_id',target_place_id);
-debugger;
+//debugger;
   let websiteListing=this.http
     .post(this.sharedServiceObj.registerationApiBaseUrl+'members/updateWebsite', data, this.headerOptions)
     .map(this.extractData)
@@ -1221,7 +1235,7 @@ addCreditCardDetail(creditCardData: any,service_id:string) {
   data.append('exp_year', creditCardData.exp_year);
   data.append('cvc', creditCardData.cvc);
   //data.append('primary_source',creditCardData.primary_source);
- debugger;
+ //debugger;
   let addCreditCardResp = this.http
     .post(url, data, this.headerOptions)
     .map(this.extractData)
@@ -1240,7 +1254,7 @@ updateCreditCardDetail(user_id:string,service_id:string,unique_id:string,name:st
   data.append('zipcode',zipcode);
   data.append('cvc',cvc);
   data.append('primary_source',primary_source);
-  debugger;
+  //debugger;
 let creditCardDetail=this.http
   .post(this.sharedServiceObj.registerationApiBaseUrl+'PaymentMethods/updatePaymentMethod', data, this.headerOptions)
   .map(this.extractData)
@@ -1380,10 +1394,11 @@ viewMemberAgents(user_id:string,service_id:string)
      return agentListResp;
 }
 createAgent(user_id:string,first_name:string,last_name:string,email:string,countryCode:string,phone_mobile:string,access_level:any,
-password:string,image:string,description:string,mls_id:string,countryCodeAbbv:string,selectedWebsite:any)
+password:string,image:string,description:string,mls_id:string,countryCodeAbbv:string,selectedWebsite:any,service_id:string)
 {
   let data = new URLSearchParams();
   data.append('member_id',user_id);
+  data.append('service_id',service_id);
   data.append('first_name',first_name);
   data.append('last_name',last_name);
   data.append('email',email);
@@ -1414,11 +1429,12 @@ updateAgent(agent_id:string,dataObj:any)
     data.append('phone_mobile',dataObj.phone_mobile);
     data.append('access_level',dataObj.access_level);
     data.append('website_id',dataObj.website_id);
+    data.append('service_id',dataObj.service_id);
     data.append('password',dataObj.password);
     data.append('mls_id',dataObj.mls_id);
     data.append('image',dataObj.agent_image);
     data.append('description',dataObj.description);
- debugger;
+ //debugger;
   let updateAgentResp=this.http
    .post(this.sharedServiceObj.registerationApiBaseUrl+'members/updateSubMember', data, this.headerOptions)
      .map(this.extractData)

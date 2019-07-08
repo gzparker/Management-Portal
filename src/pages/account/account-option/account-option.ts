@@ -51,7 +51,6 @@ export class AccountOptionPage {
         });
       
         toast.onDidDismiss(() => {
-          //console.log('Dismissed toast');
         });
       
         toast.present();
@@ -72,8 +71,7 @@ export class AccountOptionPage {
     let parent_id = this.storage.get('parent_id');
       parent_id.then((data) => {
         if(data!=null)
-        {
-          //debugger;    
+        {   
       this.parentId=data;
       this.isOwner=false;
         }
@@ -99,7 +97,6 @@ export class AccountOptionPage {
     allowed_access_options.then((data) => {
       if(data!=null)
       {
-        //debugger;
         if(data!=false)
         {
         let savedAccessLevels:any[]=data;
@@ -176,7 +173,6 @@ export class AccountOptionPage {
   }
   else
   {
-    //debugger;
     this.isBillingHistory=true;
     this.isCreditCardList=true;
     this.isUpcomingSubscription=true;
@@ -207,7 +203,6 @@ export class AccountOptionPage {
     if (pageNumber == "8") {
       this.navCtrl.push(SetupOptionPage);
     }
-    //this.navCtrl.setRoot(DashboardTabsPage,{selectedPage:pageNumber.toString()});
   }
   logOut() {
     this.sharedServiceObj.setLogOut();

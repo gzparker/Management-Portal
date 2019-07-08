@@ -24,7 +24,6 @@ export class ContactusPage {
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform) {
       this.navCtrl.setRoot(DashboardTabsPage,{selectedPage:"8"});
-    //this.sharedServiceObj.setNavigationalPage('8');
   }
 
   ionViewDidLoad() {

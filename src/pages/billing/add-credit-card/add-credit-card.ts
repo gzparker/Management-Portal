@@ -39,14 +39,12 @@ export class AddCreditCardPage {
   public yearValues:any[]=[];
   public monthValues:any[]=[];
   public loader:any;
-  //public calendarMinDate=new Date().toISOString();
 
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, 
     public platform: Platform,public loadingCtrl: LoadingController,private toastCtrl: ToastController) {
       this.setYearMonthValues();
-     // this.expiryDate=new Date(new Date().getFullYear().toString()+"-"+(new Date().getMonth().toString())).toISOString();
       this.calendarMinDate=new Date();
       this.calendarMinDate.setFullYear(this.calendarMinDate.getFullYear(),0);
       this.calendarMinDate=this.calendarMinDate.toISOString();
@@ -101,7 +99,6 @@ export class AddCreditCardPage {
       });
       
       toast.onDidDismiss(() => {
-        //console.log('Dismissed toast');
       });
       
       toast.present();
@@ -114,7 +111,6 @@ export class AddCreditCardPage {
       });
       
       toast.onDidDismiss(() => {
-        //console.log('Dismissed toast');
       });
       
       toast.present();
@@ -131,14 +127,6 @@ export class AddCreditCardPage {
         cvc: "",
         primary_source:""
       };
-    /*if(this.primary_source)
-    {
-      this.primary_source_data="1";
-    }
-    else
-    {
-      this.primary_source_data="0";
-    }*/
       dataObj.full_name = this.full_name;
       dataObj.first_name=this.first_name;
       dataObj.last_name=this.last_name;
@@ -147,11 +135,8 @@ export class AddCreditCardPage {
       dataObj.exp_month = this.expiryDate.split("-")[1];
       dataObj.exp_year = this.expiryDate.split("-")[0];
       dataObj.cvc = this.cvc;
-      //dataObj.primary_source=this.primary_source_data;
-//debugger;
       let member_id = this.storage.get('userId');
       member_id.then((memberResp) => {
-        //debugger;
         dataObj.member_id = memberResp;
         let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
         generalWebsiteSettings.then((data) => {
@@ -164,7 +149,6 @@ export class AddCreditCardPage {
    
       }
       saveCreditCardResp(data: any) {
-        debugger;
         if (data.status == true) {
           this.ngZone.run(() => {
             this.navCtrl.push(ViewCreditCardsPage,{notificationMsg:data.message.toUpperCase()});
@@ -180,17 +164,9 @@ export class AddCreditCardPage {
           });
           
           toast.onDidDismiss(() => {
-            //console.log('Dismissed toast');
           });
           
           toast.present();
-          /*let alert = this.alertCtrl.create({
-            title: 'Error',
-            subTitle: this.creditCardMsg,
-            buttons: ['Ok']
-          });
-          alert.present();*/
-          //this.creditCardMsg=data.message.toUpperCase();
         }
       }
 }

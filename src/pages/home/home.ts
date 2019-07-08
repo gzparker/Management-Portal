@@ -46,44 +46,21 @@ public serviceType:string="";
     {
       this.serviceType="idx";
     }
-      //debugger;
       this.isApp = (!document.URL.startsWith("http"));
-     // this.setBackgroundInfo();
-     //this.sharedServiceObj.updateColorThemeMethod(null);
-     
   }
   ionViewDidLoad()
   {
-    //this.sharedServiceObj.updateColorThemeMethod(null);
   }
   ionViewDidEnter()
   {
-    //debugger;
-    //this.sharedServiceObj.updateColorThemeMethod(null);
     this.loadGeneralWebsiteSettings();
   }
-  /*loadGeneralWebsiteSettings()
-  {
-    if(this.loadedWebsite.indexOf("localhost")>0)
-    {
-      this.sharedServiceObj.getServiceDefaultInfoByUrl("https://intagent.configuration.menu")
-      .subscribe((result) => this.loadGeneralWebsiteSettingsResp(result));
-    }
-    else
-    {
-     this.sharedServiceObj.getServiceDefaultInfoByUrl(this.loadedWebsite.toString())
-     .subscribe((result) => this.loadGeneralWebsiteSettingsResp(result));
-    }
-
-  }*/
   loadGeneralWebsiteSettings()
   {
-    //debugger;
     var that=this;
     let serviceInfo=this.storage.get("generalWebsiteSettings");
     serviceInfo.then((result)=>
 {
-  //debugger;
   that.websiteBackgroundInfo=result;
   if(that.websiteBackgroundInfo!=undefined)
   {
@@ -92,7 +69,6 @@ public serviceType:string="";
 
 
 });
-//debugger;
   }
 applyColors()
 {
@@ -110,7 +86,6 @@ applyColors()
     for (let i = 0; i < textBarElements.length; i++) {
     
      textBarElements[i].setAttribute("style", "color:"+this.websiteBackgroundInfo.text_color+" !important;");
-     //debugger;
     }
     //////////////////////////////Button Color////////////////////////////////    
     let buttonColorElement=document.getElementsByClassName("button_color");

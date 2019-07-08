@@ -10,8 +10,6 @@
   <ion-navbar>
     
     <ion-title>General Info</ion-title>
-    <!-- <ion-title *ngIf="accountInfo!=null">{{accountInfo.first_name}} {{accountInfo.last_name}}</ion-title> -->
-
     <ion-buttons end>
       <button ion-button (click)="editAccount();">
         <ion-icon name="md-create"></ion-icon>
@@ -68,11 +66,14 @@
       <p>{{accountInfo.phone_home}}</p>
     </ion-item> -->
     
-    <ion-item class="userInfoBlock">
+    <!--<ion-item class="userInfoBlock">
       <ion-icon name="md-briefcase" item-start></ion-icon>      
       <p *ngIf="accountInfo.mls_id!=null&&accountInfo.mls_id!=undefined">MLS ID: {{accountInfo.mls_id}}</p>
+    </ion-item>-->
+    <ion-item class="userInfoBlock">
+      <ion-icon name="md-briefcase" item-start></ion-icon>      
+      <p *ngIf="accountInfo.agent_id!=null&&accountInfo.agent_id!=undefined">Agent ID: {{accountInfo.agent_id}}</p>
     </ion-item>
-
     <ion-item class="userInfoBlock">
       <ion-icon name="md-briefcase" item-start></ion-icon>      
       <p *ngIf="accountInfo.broker_id!=null&&accountInfo.broker_id!=undefined">Broker ID: {{accountInfo.broker_id}}</p>

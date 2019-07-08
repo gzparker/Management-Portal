@@ -31,10 +31,6 @@ import { trigger } from '@angular/core/src/animation/dsl';
   templateUrl: 'global-preferences.html',
 })
 export class GlobalPreferencesPage {
-  /*@ViewChild('companyCropper', undefined)
-  companyCropper:ImageCropperComponent;
-  @ViewChild('personalCropper', undefined)
-  personalCropper:ImageCropperComponent;*/
   public ngxCropperConfig: object;
  
   // config 
@@ -54,9 +50,9 @@ export class GlobalPreferencesPage {
   public isApp=false;
   public userLoggedId:boolean=false;
   public identity_name:string="";
-  public colorBase:string="";
-  public secondColor:string="";
-  public thirdColor:string="";
+  public colorBase:string="#00d2ff";
+  public secondColor:string="#00d2ff";
+  public thirdColor:string="#00d2ff";
   public headerColor:string="";
   public headerColorOption:string="";
   public textColor:string="";
@@ -272,9 +268,17 @@ this.selectedSegment="1";
         }
        //this.customColorOptionModal=this.globalSettings.isCustomColor;
       //this.customColorOption=this.globalSettings.isCustomColor;
-     this.colorBase=this.globalSettings.color_base;
-    this.secondColor=this.globalSettings.color_second;
-     this.thirdColor=this.globalSettings.color_third;
+      //debugger;
+      if(this.globalSettings.color_base!=null&&this.globalSettings.color_base!=undefined&&this.globalSettings.color_base!=""){
+        this.colorBase=this.globalSettings.color_base;
+      }
+      if(this.globalSettings.color_second!=null&&this.globalSettings.color_second!=undefined&&this.globalSettings.color_second!=""){
+        this.secondColor=this.globalSettings.color_second;
+      } 
+      if(this.globalSettings.color_third!=null&&this.globalSettings.color_third!=undefined&&this.globalSettings.color_third!=""){
+        this.thirdColor=this.globalSettings.color_third;
+      }
+     
      this.identity_name=this.globalSettings.identity_name;
      if(this.globalSettings.display_name_dweller!=undefined&&this.globalSettings.display_name_dweller!="")
      {
@@ -332,6 +336,10 @@ this.selectedSegment="1";
       this.storage.set('globalSettings',this.globalSettings);
       //debugger;
     }
+  }
+  changeBaseColorEvent($event:any){
+this.colorBase=$event;
+//debugger;
   }
   showColorPopUp(option:string){
     var that=this;
@@ -1221,14 +1229,14 @@ else
       .crop(this.companyLogoImage, {quality: 75,targetHeight:100,targetWidth:100})
      .then((newImage) => {
     
-         //alert(newImage);
+         alert(newImage);
          this.companyLogoImage=newImage;
        }, error => {
         
          alert(error)});
        }
      }, function(error) {
-
+      alert(error)
        console.log(error);
      });
    }
@@ -1470,7 +1478,7 @@ else
     updateGlobalSettings(){
       if(this.userId!="")
     {
-    debugger;
+    //debugger;
     this.userServiceObj.updateGlobalSettings(this.userId,this.personalImage,this.companyLogoImage,this.user.timezone,
       this.colorBase,this.secondColor,this.thirdColor,this.identity_name,this.display_name_dweller,this.dwellerImage,this.headerColor,this.sideBarMenuColor,
       this.buttonColor,this.textColor,this.backgroundColor,this.headerColorOption,this.sideBarMenuColorOption,

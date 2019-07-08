@@ -69,7 +69,6 @@ this.loggedInUserInfo=data;
     let firebaseUserId = this.storage.get('firebaseUserId');
     firebaseUserId.then((data) => {
     var fredRef=firebase.database().ref('users').on('child_added', function(snapshot) {
-      //debugger;
       if(data!=snapshot.val().fbId)
       {
         if(snapshot.val().fbId!=undefined&&snapshot.val().fbId!=null)
@@ -80,15 +79,11 @@ this.loggedInUserInfo=data;
   });
 
     });
-   // debugger;
   }
   filterContacts()
   {
-    //this.allAvailableSearchedContacts=[];
     if(this.searchKeyword!="")
     {
-      //crtuk
-     
       this.allAvailableSearchedContacts = this.allAvailableContacts.filter(
         contact => (contact.first_name.toLowerCase()+" "+contact.last_name.toLowerCase()).indexOf(this.searchKeyword.toLowerCase()) > -1);
     }
@@ -96,16 +91,11 @@ this.loggedInUserInfo=data;
     {
       this.allAvailableSearchedContacts=[];
     }
-      //let abc="ddfd";
-      //debugger;
-   // this.selectedCountryCode = foundCountry[0].country_code;
   }
   createGroup=function(type){
     var that=this;
-    //var groupMembersData=$scope.contacts;
      var deletedFor=["0"];
     var createDate=Date();
-   //debugger;
     var desc=that.groupTitle;
     var groupId=that.firebaseUserId+"_"+Date();
     
@@ -162,7 +152,7 @@ fbId=memberData.fbId;
 if(memberData.image_url)
 {
   image_url=memberData.image_url;
-}                                   //debugger;
+}
   groupMembers.push({
     memberName:name,
     userId:fbId,
@@ -174,9 +164,7 @@ if(memberData.image_url)
   
   i=i+1;
   i=i;
-  //debugger;
 if(i==that.groupMembersData.length){
-  //debugger;
   that.sharedServiceObj.createGroupEmitter();
   that.closePopUp();
 
@@ -187,7 +175,6 @@ if(i==that.groupMembersData.length){
 }
   closePopUp()
   {
-    //debugger;
     this.viewCtrl.dismiss();
   }
   selectChatMember(availableContact:any)

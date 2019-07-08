@@ -36,6 +36,7 @@ export class ManageAgentsPage {
   public isAgentDetailAccess:boolean=false;
   public agentsFoundMessage:string="";
   public max_agents_added:boolean=false;
+  public showCreateButton:boolean=false;
   public no_image_found:string="https://s3.us-west-2.amazonaws.com/central-system/img/default/profile_icon.png";
   public loader:any;
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
@@ -46,12 +47,6 @@ export class ManageAgentsPage {
       if(this.navParams.get('notificationMsg')!=undefined)
       {
         this.notificationMsg=this.navParams.get('notificationMsg');
-        /*let alert = this.alertCtrl.create({
-          title: 'Notification',
-          subTitle: this.notificationMsg,
-          buttons: ['Ok']
-        });
-        alert.present();*/
         let toast = this.toastCtrl.create({
           message: this.notificationMsg,
           duration: 3000,
@@ -60,7 +55,6 @@ export class ManageAgentsPage {
         });
         
         toast.onDidDismiss(() => {
-          //console.log('Dismissed toast');
         });
         toast.present();
       }
@@ -73,9 +67,23 @@ export class ManageAgentsPage {
   {
     this.sharedServiceObj.updateColorThemeMethod(null);
   }
-  //openPage(pageNumber:string) {
-    //this.sharedServiceObj.setNavigationalPage(pageNumber);
- // }
+  viewAllWebsite():void{
+    if(this.userId!="")
+    {
+     this.userServiceObj.allUserWebsites(this.userId.toString())
+    .subscribe((result) => this.viewAllWebsiteResp(result));
+    } 
+  }
+  viewAllWebsiteResp(result:any):void{
+    if(result.status==true)
+    {
+      this.showCreateButton=true;  
+    }
+    else
+    {
+      this.showCreateButton=false;
+    }
+  }
  createAgent()
  {
    this.navCtrl.push(CreateAgentPage);
@@ -85,6 +93,7 @@ export class ManageAgentsPage {
   let member_id = this.storage.get('userId');
   member_id.then((data) => {
     this.userId=data;
+    this.viewAllWebsite();
     this.loadAllAgents(null);
     this.setAccessLevels();
   });
@@ -95,8 +104,7 @@ setAccessLevels()
     let parent_id = this.storage.get('parent_id');
       parent_id.then((data) => {
         if(data!=null)
-        {
-          //debugger;    
+        { 
       this.parentId=data;
       this.isOwner=false;
         }
@@ -119,10 +127,7 @@ setAccessLevels()
       {
         if(data!=false)
         {
-        //debugger;
         let savedAccessLevels:any[]=data;
-    //debugger;
-     
       let editAgentAccesLevels=savedAccessLevels.filter((element) => {
         return (element.key=="edit-agent");
     });
@@ -203,14 +208,11 @@ loadAllAgents(refresher:any)
 }
 loadAllAgentsResp(result:any)
 {
-  //debugger;
   this.loader.dismiss();
   if(result.status==true)
   {
-   //debugger;
     this.allAgents=result.results;
     this.agentServices=result.services;
-    //debugger;
     if(result.services === false)
     {
       this.max_agents_added=false;
@@ -226,7 +228,6 @@ loadAllAgentsResp(result:any)
             {
               text: 'Please upgrade your account to add additional Agents/Users',
               handler: () => {
-                //this.navCtrl.setRoot(GlobalPreferencesPage, { route: "subscribe" });
                 this.ngZone.run(() => {
                   this.navCtrl.setRoot(UpgradeCenterPage);
                 });
@@ -266,7 +267,6 @@ loadAllAgentsResp(result:any)
     });
     
     toast.onDidDismiss(() => {
-      //console.log('Dismissed toast');
     });
     toast.present();
   }
@@ -281,7 +281,6 @@ deleteAgent(agent:any)
       {
         text: 'Cancel',
         handler: () => {
-         // console.log('Disagree clicked');
         }
       },
       {
@@ -313,11 +312,8 @@ this.max_agents_added=true;
   confirm.present();
 }
 deleteAgentResp(result:any):void{
-  //debugger;
   if(result.status==true)
   {
-   // debugger;
- // this.viewAllHotSheets();
   }
   
   }
@@ -327,7 +323,6 @@ agentDetail(agent_id:string)
  {
   if(agent_id!="")
   {
-    //debugger;
     this.navCtrl.push(AgentDetailPage,{agent_id:agent_id});
   }
  }

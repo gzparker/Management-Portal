@@ -35,18 +35,6 @@
 
     <ion-list id="sidenav" class="app-menu disable-user-behavior">
    
-      <!--<ion-item menuClose ion-item (tap)="openPage('1')" 
-      *ngIf="userLoggedIn==false">
-        Home
-      </ion-item>
-      <ion-item menuClose ion-item (tap)="openPage('2')" 
-      *ngIf="userLoggedIn==false">
-        Login
-      </ion-item>
-      <ion-item menuClose ion-item (tap)="openPage('3')" 
-      *ngIf="userLoggedIn==false">
-        Register
-      </ion-item>-->
       <ion-item menuClose ion-item (tap)="openPage('4')" 
       *ngIf="userLoggedIn==true&&paidStatus==true&&isDashboard==true">      
         Dashboard
@@ -63,7 +51,7 @@
       *ngIf="userLoggedIn==true&&paidStatus==true&&isHotSheets==true">      
         Hot Sheets
       </ion-item>
-<ion-item menuClose ion-item (tap)="openPage('27')" 
+      <ion-item menuClose ion-item (tap)="openPage('27')" 
       *ngIf="userLoggedIn==true&&paidStatus==true&&isChats==true">      
         Chats <span class="msgcounter colorEnabled button_color" *ngIf="allUnreadMsg!=undefined">{{allUnreadMsg}}</span>
       </ion-item>

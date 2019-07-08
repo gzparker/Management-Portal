@@ -28,8 +28,6 @@ declare var CKEDITOR: any;
   templateUrl: 'edit-agent.html',
 })
 export class EditAgentPage {
-  /*@ViewChild('agentCropper', undefined)
-  agentCropper:ImageCropperComponent;*/
   public hideAgentCropper:boolean=true;
   public isApp=false;
   public edit_agent_image:boolean=false;
@@ -37,6 +35,7 @@ export class EditAgentPage {
   public userLoggedId:boolean=false;
   public isAgentImageExist:boolean=false;
   public mls_id:string="";
+  public service_id:string="";
   public firstName:string="";
   public lastName:string="";
   public email:string="";
@@ -46,6 +45,7 @@ export class EditAgentPage {
   public access_level:any[]=[];
   public allWebsiteList:any[]=[];
   public selectedWebsite:any[]=[];
+  public allMls:any[]=[];
   public phone_mobile:string="";
   public agentUpdateMsg:string="";
   public description:string="";
@@ -77,13 +77,6 @@ export class EditAgentPage {
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform, 
     public ngZone: NgZone,public menuCtrl: MenuController,public loadingCtrl: LoadingController,
     private crop: Crop,private camera: Camera,private imagePicker: ImagePicker) {
-      /*if(this.platform.is('core') || this.platform.is('mobileweb') || this.platform.is('cordova') || this.platform.is('mobile')) {
-        this.isApp=false;
-      }
-      else
-      {
-        this.isApp=true;
-      }*/
       this.isApp = (!document.URL.startsWith("http"));
       this.hideAgentCropper=false;
       this.cropperSettings = new CropperSettings();
@@ -108,6 +101,10 @@ export class EditAgentPage {
   }
 
   ionViewDidLoad() {
+    let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
+    generalWebsiteSettings.then((data) => {
+      this.service_id=data.service_id;
+    });
     this.sharedServiceObj.updateColorThemeMethod(null);
     CKEDITOR.disableAutoInline = true;
     CKEDITOR.inline('description', {removeButtons:'Underline,Subscript,Superscript,SpecialChar'
@@ -123,19 +120,17 @@ export class EditAgentPage {
       this.userId=data;
       let parent_id = this.storage.get('parent_id');
       parent_id.then((data) => {
+        this.loadAllAvailableMLS();
         this.getAllWebsite();
         if(data!=null)
         {
       this.parentId=data;
-      //debugger;
       this.getAllRoles();
         }
         else
         {
-        //  debugger;
           this.getAllRoles();
         }
-      //debugger;
       });
       if(this.navParams.get('agent_id')!=undefined)
       {
@@ -145,12 +140,10 @@ export class EditAgentPage {
        let country_abbv = this.storage.get('country_abbv');
        country_abbv.then((data) => {
          this.selectedCountryAbbv=data;
-        // debugger;
        });
        let country_code = this.storage.get('country_code');
        country_code.then((data) => {
          this.selectedCountryCode=data;
-        // debugger;
        });
     });
    
@@ -159,21 +152,32 @@ export class EditAgentPage {
   {
     this.sharedServiceObj.updateColorThemeMethod(null);
   }
+  loadAllAvailableMLS()
+  {
+    this.subscriptionObj.loadAllAvailableMLS()
+    .subscribe((result) => this.allAvailableMLSResp(result)); 
+  }
+  allAvailableMLSResp(resp: any)
+  {
+if(resp.status==true)
+{
+  this.allMls=resp.available_mls;
+}
+else
+{
+  this.allMls=[];
+}
+  }
   onAgentBreifDescBlured(quill) {
-    //console.log('editor blur!', quill);
   }
  
   onAgentBreifDescFocused(quill) {
-    //console.log('editor focus!', quill);
   }
  
   onAgentBreifDescCreated(quill) {
-   // this.editor = quill;
-    //console.log('quill is ready! this is current quill instance object', quill);
   }
  
   onAgentBreifDescChanged(html) {
-//debugger;
 this.description=html;
  
   }
@@ -200,20 +204,20 @@ loadAgentDetailsResp(result:any)
       this.firstName=this.agentDetail.first_name;
       this.lastName=this.agentDetail.last_name;
       this.email=this.agentDetail.email;
-      this.mls_id=this.agentDetail.mls_id;
+      if(this.agentDetail.mls_server_id!=null)
+          {
+            this.mls_id=this.agentDetail.mls_server_id.split(',');
+          }
       this.phone_mobile=this.agentDetail.phone_mobile;
       if(this.agentDetail.access_level!=null)
       {
         this.access_level=this.agentDetail.access_level.split(",");
-        //debugger;
       }
       if(this.agentDetail.website_id!=null)
       {
         this.selectedWebsite=this.agentDetail.website_id.split(",");
-        //debugger;
       }
       this.password=this.agentDetail.password;
-      //this.description=this.agentDetail.description;
       document.getElementById("description").innerHTML=this.agentDetail.description;
       if(this.agentDetail.image_url!=undefined)
       {
@@ -231,7 +235,6 @@ getAllWebsite():void{
     
   if(this.userId!="")
   {
-    //debugger;
     this.loader.present();
 this.userServiceObj.allUserWebsites(this.userId.toString())
   .subscribe((result) => this.getAllWebsiteResp(result));
@@ -243,12 +246,10 @@ getAllWebsiteResp(result:any):void{
   if(result.status==true)
   {
     this.allWebsiteList=result.result;
-    //debugger;
   }
   
 }
 getAllRoles(){
- // debugger;
   let member_id="";
   if(this.parentId!="")
   {
@@ -266,7 +267,6 @@ getAllRoles(){
 }
 getAllRolesResp(result: any)
 {
-//  debugger;
   if(result.status==true)
   {
 this.allRoles=result.results;
@@ -278,8 +278,6 @@ this.allRoles=[];
 
 }
 loadImage(baseUrl:string,imageUrl:string) {
-  //debugger;
-  //this.hideAgentCropper=true;
   const self = this;
   var image:any = new Image();
   const xhr = new XMLHttpRequest()
@@ -293,41 +291,14 @@ loadImage(baseUrl:string,imageUrl:string) {
       reader.onloadend = function (loadEvent:any) {
         image.src = loadEvent.target.result;
         image.onload = function () {
-          //alert (this.width);
-          //debugger;
           self.cropperSettings.croppedWidth = this.width;
           self.cropperSettings.croppedHeight = this.height;
           this.agentImage=image.src;
-          self.createPersonalImageThumbnail(image.src);
-          //self.agentCropper.setImage(image);  
+          self.createPersonalImageThumbnail(image.src); 
       };
-        //self.agentCropper.setImage(image);
-
     };
   });
 }
-/*showHideAgentCropper(){
-  this.crop_agent_image=false;
-  const self = this;
-if(this.edit_agent_image)
-{
-this.hideAgentCropper=true;
-if(this.agentImage!="")
-{
- // this.companyCropperLoaded=true;
-  var image:any = new Image();
-  image.src = this.agentImage;
-          image.onload = function () {
-            self.agentCropper.setImage(image); 
-          }
-}
-
-}
-else
-{
-this.hideAgentCropper=false;
-}
-}*/
 updateAgent()
   {
     if(this.agent_id!="")
@@ -337,6 +308,7 @@ updateAgent()
         agent_image:"",
         last_name: "",
         mls_id:"",
+        service_id:"",
         phone_mobile:"",
         access_level:[],
         website_id:[],
@@ -346,16 +318,14 @@ updateAgent()
         country_code:"",
         email: ""
       };
+  dataObj.service_id=this.service_id;
   dataObj.agent_image=this.agentImage;
-  //debugger;
-  
   if(this.agentDetail.email!=this.email)
   {
     dataObj.email = this.email;
   }
   if(this.agentDetail.password!=this.password)
   {
-   // debugger;
         dataObj.password = this.password;
   } 
   if(this.agentDetail.first_name!=this.firstName)
@@ -368,7 +338,6 @@ updateAgent()
   }
   if(this.agentDetail.phone_mobile!=this.phone_mobile.toString().replace(/\D/g, ''))
   {
-    //debugger;
         dataObj.phone_mobile = this.phone_mobile;
   }
   if(this.agentDetail.mls_id!=this.mls_id)
@@ -383,7 +352,6 @@ updateAgent()
   dataObj.website_id=this.selectedWebsite;
   dataObj.country_abbv=this.selectedCountryAbbv;
   dataObj.country_code=this.selectedCountryCode;
-  debugger;
     this.userServiceObj.updateAgent(this.agent_id,dataObj)
     .subscribe((result) => this.updateAgentResp(result));
     }
@@ -392,28 +360,19 @@ updateAgent()
   {
     this.agentUpdateMsg="Agent has been updated successfully.";
     CKEDITOR.instances['description'].destroy(true);
-//debugger;
     this.ngZone.run(() => {
       this.navCtrl.setRoot(ManageAgentsPage,{notificationMsg:this.agentUpdateMsg.toUpperCase()});
     });
   }
   editImage(imageType:string){
     var that=this;
-   
-    //debugger;
     let selectedImageOption={
       mode:"edit",
       croppedWidth:this.cropperSettings.croppedWidth,
       croppedHeight:this.cropperSettings.croppedHeight,
-      //websiteWidth:this.personalWidth,
-      //websiteHeight:this.personalHeight,
-      //datawebsiteImage:this.dataPersonalImage,
       websiteImage:this.agentImage,
       imageType:imageType
     };
-    //debugger;
-    //document.remo
-    //document.getElementById("canvas").remove();
    var modalColor = this.modalCtrl.create(PicturePopupPage,{selectedImageOption:selectedImageOption});
     modalColor.onDidDismiss(data => {
       if(data)
@@ -426,7 +385,6 @@ updateAgent()
   }
   setWebsiteImage(imageObject:any)
   {
-//debugger;
     this.loadEditedImage(imageObject,imageObject.imageType);
   }
   loadEditedImage(imageObject:any,imageType:any)
@@ -457,13 +415,10 @@ updateAgent()
     myReader.onloadend = function (loadEvent:any) {
         image.src = loadEvent.target.result;
         image.onload = function () {
-          //alert (this.width);
-          //debugger;
           that.cropperSettings.croppedWidth = this.width;
           that.cropperSettings.croppedHeight = this.height;
           that.agentImage=this.src;
           that.createPersonalImageThumbnail(that.agentImage);
-          //that.agentCropper.setImage(image);  
       };
 
     };
@@ -493,7 +448,6 @@ else
 
 createPersonalImageThumbnail(bigMatch:any) {
   let that=this;
-  //debugger;
     this.generatePersonalImageFromImage(bigMatch, 500, 500, 0.5, data => {
       
   that.dataAgentImage.image=data;
@@ -502,16 +456,12 @@ createPersonalImageThumbnail(bigMatch:any) {
   generatePersonalImageFromImage(img, MAX_WIDTH: number = 700, MAX_HEIGHT: number = 700, quality: number = 1, callback) {
     var canvas: any = document.createElement("canvas");
     var image:any = new Image();
-    //image.width=this.companyCropperSettings.croppedWidth;
-    //image.height=this.companyCropperSettings.croppedHeight;
     var that=this;
- //debugger;
     image.src = img;
     image.onload = function () {
      
       var width=that.cropperSettings.croppedWidth;
       var height=that.cropperSettings.croppedHeight;
-     //debugger;
       if (width > height) {
         if (width > MAX_WIDTH) {
           height *= MAX_WIDTH / width;
@@ -523,12 +473,10 @@ createPersonalImageThumbnail(bigMatch:any) {
           height = MAX_HEIGHT;
         }
       }
-      //debugger;
       canvas.width = width;
       canvas.height = height;
       that.cropperWidth = width.toString();
       that.cropperHeight = height.toString();
-      //debugger;
       var ctx = canvas.getContext("2d");
  
       ctx.drawImage(image, 0, 0, width, height);
@@ -578,7 +526,6 @@ createPersonalImageThumbnail(bigMatch:any) {
         this.agentImage="data:image/jpeg;base64," +data;
         let image : any= new Image();
          image.src = this.agentImage;
-       // this.agentImageCropper.setImage(image);
         if(this.isApp)
         {
        this.crop

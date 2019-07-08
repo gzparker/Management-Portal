@@ -62,7 +62,6 @@ export class CreditCardDetailPage {
       parent_id.then((data) => {
         if(data!=null)
         {
-          //debugger;    
       this.parentId=data;
       this.isOwner=false;
         }
@@ -124,7 +123,6 @@ export class CreditCardDetailPage {
     if(result.status==true)
       {
       this.cardDetail=result.card;
-      //debugger;
       }
   }
   editCreditCardDetail()

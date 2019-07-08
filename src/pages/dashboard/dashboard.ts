@@ -54,22 +54,16 @@ import { UserProvider } from '../../providers/user/user';
   templateUrl: 'dashboard.html',
 })
 export class DashboardPage {
-  //@ViewChild("idxpaymentTabs") idxpaymentTabs: Tabs;
-  //public allSubmembers:any[]=[];
   @ViewChild('barCanvas') barCanvas;
- // @ViewChild('doughnutCanvas') doughnutCanvas;
-  //@ViewChild('lineCanvas') lineCanvas;
-
   barChart: any;
-  //doughnutChart: any;
-  //lineChart: any;
-
-
 public totalSubMembers:string="";
 public notificationMsg:string="";
 public userId:string="";
 public oldPageNumber:string="";
+public memberCredentials:any;
+
 private subscription: ISubscription;
+
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, 
@@ -77,12 +71,6 @@ private subscription: ISubscription;
       if(this.navParams.get('notificationMsg')!=undefined&&this.navParams.get('notificationMsg')!='')
       {
         this.notificationMsg=this.navParams.get('notificationMsg');
-        /*let alert = this.alertCtrl.create({
-          title: 'Notification',
-          subTitle: this.notificationMsg,
-          buttons: ['Ok']
-        });
-        alert.present();*/
         let toast = this.toastCtrl.create({
           message: this.navParams.get('notificationMsg'),
           duration: 3000,
@@ -91,23 +79,34 @@ private subscription: ISubscription;
         });
         
         toast.onDidDismiss(() => {
-          //console.log('Dismissed toast');
         });
         
         toast.present();
       }
       if(this.navParams.get('selectedPage')!=undefined&&this.navParams.get('selectedPage')!='')
       {
-      //debugger;
         this.openPage(this.navParams.get('selectedPage'));
       }
   }
 
   ionViewDidLoad() {
+    let parent_id = this.storage.get('parent_id');
+    parent_id.then((data) => {
+     let loggedInUserInfo = this.storage.get('loggedInUserInfo');
+     loggedInUserInfo.then((data) => {
+this.memberCredentials=data.memberCredentials;
+if(this.memberCredentials!=null){
+}
+        
+       
+     });
+      
     
+    });
     
   }
   ionViewWillUnload(){
+    
   }
   ionViewWillEnter(){
     let member_id = this.storage.get('userId');
@@ -118,12 +117,12 @@ private subscription: ISubscription;
     let parent_id = this.storage.get('parent_id');
     parent_id.then((data) => {
      // debugger;
-      if(data==null)
-      {
-        this.getUserDetailedInfo();
+     let loggedInUserInfo = this.storage.get('loggedInUserInfo');
+     loggedInUserInfo.then((data) => {
+     this.memberCredentials=data.memberCredentials;
+    //this.getUserDetailedInfo();
         this.loadDashboardCharts();
-      }
-    
+     });
     });
     this.sharedServiceObj.updateColorThemeMethod(null);
   }
@@ -165,38 +164,10 @@ loadDashboardCharts()
 }
 loadDashboardChartsResp(result:any){
 //debugger;
-//debugger;
 let leads_by_months:any[]=result.leads_by_month_chart;
 let leads_chart_values:any[]=[];
 let leadCountExists:boolean=false;
-/*for(let i=0;i<=11;i++)
-{
-  leadCountExists=false;
-  if(i<leads_by_months.length)
-  {
-  for(let j=1;j<=12;j++)
-  {
-    if(leads_by_months[i].mth==j.toString())
-    {
-      leadCountExists=true;
-//leads_chart_values.push(leads_by_months[i].totalLeads);
-    }
 
-  }
-  if(leadCountExists==true)
-  {
-    leads_chart_values.push(leads_by_months[i].totalLeads);
-  }
-  else
-  {
-    leads_chart_values.push("0");
-  }
-}
-else
-{
-  leads_chart_values.push("0");
-}
-}*/
 if(leads_by_months!=null&&leads_by_months.length>0)
 {
   for(let i=1;i<=12;i++)
@@ -269,94 +240,86 @@ this.barChart = new Chart(this.barCanvas.nativeElement, {
 
 });
 
-/*this.doughnutChart = new Chart(this.doughnutCanvas.nativeElement, {
-
-  type: 'doughnut',
-  data: {
-      labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-      datasets: [{
-          label: '# of Votes',
-          data: [12, 19, 3, 5, 2, 3],
-          backgroundColor: [
-              'rgba(255, 99, 132, 0.2)',
-              'rgba(54, 162, 235, 0.2)',
-              'rgba(255, 206, 86, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-              'rgba(153, 102, 255, 0.2)',
-              'rgba(255, 159, 64, 0.2)'
-          ],
-          hoverBackgroundColor: [
-              "#FF6384",
-              "#36A2EB",
-              "#FFCE56",
-              "#FF6384",
-              "#36A2EB",
-              "#FFCE56"
-          ]
-      }]
-  }
-
-});
-
-this.lineChart = new Chart(this.lineCanvas.nativeElement, {
-
-  type: 'line',
-  data: {
-      labels: ["January", "February", "March", "April", "May", "June", "July"],
-      datasets: [
-          {
-              label: "My First dataset",
-              fill: false,
-              lineTension: 0.1,
-              backgroundColor: "rgba(75,192,192,0.4)",
-              borderColor: "rgba(75,192,192,1)",
-              borderCapStyle: 'butt',
-              borderDash: [],
-              borderDashOffset: 0.0,
-              borderJoinStyle: 'miter',
-              pointBorderColor: "rgba(75,192,192,1)",
-              pointBackgroundColor: "#fff",
-              pointBorderWidth: 1,
-              pointHoverRadius: 5,
-              pointHoverBackgroundColor: "rgba(75,192,192,1)",
-              pointHoverBorderColor: "rgba(220,220,220,1)",
-              pointHoverBorderWidth: 2,
-              pointRadius: 1,
-              pointHitRadius: 10,
-              data: [65, 59, 80, 81, 56, 55, 40],
-              spanGaps: false,
-          }
-      ]
-  }
-
-});*/
-//debugger;
 }
   getUserDetailedInfo(): void {
-   //debugger;
-      this.userServiceObj.getMemberInfo(this.userId)
-        .subscribe((result) => this.userDetailedInfoResp(result));
-    
+    //debugger;
+    let subscribed_services = this.storage.get('subscribed_services');
+    subscribed_services.then((subscribed_services_data) => {
+      //debugger;
+      if (subscribed_services_data != undefined) {
+        if (subscribed_services_data.subscribed_services!=undefined){
+        if (subscribed_services_data.subscribed_services.length > 0) {
 
+          //debugger;
+          if (subscribed_services_data.subscribed_services[0].service_status == null) {
+         
+            this.ngZone.run(() => {
+              this.sharedServiceObj.setPaidStatus(false);
+              this.storage.set('paid_status', '0');
+              //debugger;
+              this.navCtrl.push(SubscriptionPage, { full_name: this.memberCredentials.first_name + " " + this.memberCredentials.last_name });
+            });
+          }
+          else
+          {
+            this.sharedServiceObj.setPaidStatus(true);
+            //debugger;
+            this.storage.set('paid_status', '1');
+            let userGlobalSettingsResp = this.storage.get('globalSettings');
+            userGlobalSettingsResp.then((data) => {
+        if(data!=null)
+        {
+      if(data.photo_company==null&&data.photo_personal==null&&
+        data.timezone==null)
+      {
+       // debugger;
+        this.redirectToGlobalPreferences(true);
+      }
+      else
+      {
+        //debugger;
+        this.redirectToGlobalPreferences(false);
+      }
+    }
+    });
+          }
+        }
+      }
+      else
+      {
+        this.ngZone.run(() => {
+          this.sharedServiceObj.setPaidStatus(false);
+          this.storage.set('paid_status', '0');
+          //debugger;
+          this.navCtrl.push(SubscriptionPage, { full_name: this.memberCredentials.first_name + " " + this.memberCredentials.last_name });
+        });
+      }
+    }
+    });
+    
+      //this.userServiceObj.getMemberInfo(this.userId)
+        //.subscribe((result) => this.userDetailedInfoResp(result));
   }
   userDetailedInfoResp(status: any) {
     if (status.status == true) {
-     // debugger;
       if (status.result != undefined) {
         if (status.result.subscribed_services!=undefined){
         if (status.result.subscribed_services.length > 0) {
 
-          //debugger
+          
           if (status.result.subscribed_services[0].service_status == null) {
          
             this.ngZone.run(() => {
               this.sharedServiceObj.setPaidStatus(false);
+              this.storage.set('paid_status', '0');
+              //debugger;
               this.navCtrl.push(SubscriptionPage, { full_name: status.result.first_name + " " + status.result.last_name });
             });
           }
           else
           {
             this.sharedServiceObj.setPaidStatus(true);
+            this.storage.set('paid_status', '1');
             let userGlobalSettingsResp = this.storage.get('globalSettings');
             userGlobalSettingsResp.then((data) => {
         if(data!=null)
@@ -379,10 +342,11 @@ this.lineChart = new Chart(this.lineCanvas.nativeElement, {
       {
         this.ngZone.run(() => {
           this.sharedServiceObj.setPaidStatus(false);
+          this.storage.set('paid_status', '0');
+          //debugger;
           this.navCtrl.push(SubscriptionPage, { full_name: status.result.first_name + " " + status.result.last_name });
         });
       }
-      
     }
     }
     else
@@ -392,6 +356,7 @@ this.lineChart = new Chart(this.lineCanvas.nativeElement, {
   }
 redirectToGlobalPreferences(status:boolean)
 {
+  debugger;
 if(status==true)
 {
   let showGlobalPopUp = this.storage.get('showGlobalPopUp');

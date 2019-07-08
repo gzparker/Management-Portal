@@ -26,11 +26,11 @@
             <ion-input type="text" [(ngModel)]="identity_name" 
             name="identity_name" id="identity_name" required placeholder="Identity Name"></ion-input>
         </ion-item>
-        
         <ion-item>
             <ion-label stacked>Website Domain<span [ngClass]="{'error': website_domain==''}" *ngIf="website_domain==''">*</span></ion-label>
             <ion-input type="text" [(ngModel)]="website_domain" 
-            name="website_domain" id="website_domain" required [pattern]="'^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}'"></ion-input>
+            name="website_domain" id="website_domain" required [pattern]="'(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?'"></ion-input>
+            
         </ion-item>
       <div class="websiteInfoSettings blk1">          
           <div class="targetCityBlock">
@@ -66,16 +66,12 @@
           <ion-row>
             <ion-col col-4>
               <ion-item class="userInfoBlock">
-              <!-- <ion-icon name="md-briefcase" item-start></ion-icon> -->
-              <!--<ion-label stacked><span [ngClass]="{'error': agent_id==''}" *ngIf="agent_id==''">*</span></ion-label>-->
               <ion-label stacked>Agent ID:</ion-label>
               <ion-input type="text" [(ngModel)]="agent_id" name="agent_id"></ion-input>
               </ion-item>              
             </ion-col>
             <ion-col col-4>
               <ion-item class="userInfoBlock">
-              <!-- <ion-icon name="md-briefcase" item-start></ion-icon> -->
-              <!--<ion-label stacked><span [ngClass]="{'error': broker_id==''}" *ngIf="broker_id==''">*</span></ion-label>-->
               <ion-label stacked>Broker ID</ion-label>
               <ion-input type="text" [(ngModel)]="broker_id" name="broker_id"></ion-input>
               </ion-item>              
@@ -117,19 +113,12 @@
           <ion-label>Install SSL</ion-label>
           <ion-toggle [(ngModel)]="isSsl" name="isSsl"></ion-toggle>
         </ion-item>
-        <!--<ion-item>
-          <ion-label>Is Active<span [ngClass]="{'error': isActive==false}" *ngIf="isActive==false">*</span></ion-label>
-          <ion-checkbox color="royal" item-right checked="false" [(ngModel)]="isActive" name="isActive" id="isActive" 
-          required >Is Active</ion-checkbox>
-        </ion-item>-->
-        
       </ion-list>
 
       <div class="formUI formShadow mb16">
 
         <ion-item class="filterColorOptions">
-          <ion-label>Homepage Description</ion-label>          
-          <!-- <ion-toggle [(ngModel)]="HomepageDescriptionSettings" name="HomepageDescriptionSettings"></ion-toggle> -->
+          <ion-label>Homepage Description</ion-label>
         </ion-item>
         
         <div class="HomepageDescriptionSettings">
@@ -138,15 +127,6 @@
               
               <ion-label stacked>Homepage Description Text</ion-label>
               <div id="homepage_description" contenteditable="true" class="homeDescTxt"></div>
-              <!--<ckeditor
-              [config]="CkeditorConfig"
-              [readonly]="false" [(ngModel)]="homepage_description"
-              (change)="homepageDescChanged($event)"
-              (blur)="homepageDescBlured($event)"
-              (focus)="homepageDescFocused($event)"
-              (ready)="homepageDescCreated($event)"
-              debounce="500" name="editorHomePageDescription">
-              </ckeditor>-->
           </div>
           
           <ion-item class="mb16">
@@ -163,13 +143,12 @@
       
         <ion-item class="filterColorOptions">
           <ion-label>Website Meta-Tags</ion-label>
-          <!-- <ion-toggle checked="customColorOptionModal" [(ngModel)]="customColorOptionModal" name="customColorOption"></ion-toggle> -->
+         
           <ion-toggle [(ngModel)]="metaDescriptionSettings" name="metaDescriptionSettings"></ion-toggle>
         </ion-item>
         
         <div class="metaDescriptionSettings" *ngIf="metaDescriptionSettings">        
         <ion-item>
-            <!-- <ion-label stacked class="labelLarge">Homepage Meta Title</ion-label> -->
             <ion-label stacked>Meta-Tag Title</ion-label>
             <ion-textarea type="text" class="textAreaSingle" [(ngModel)]="homepage_meta_title" 
             name="homepage_meta_title" id="homepage_meta_title" placeholder="The title should state the main purpose of your website, your name, and your #1 target area."></ion-textarea>
@@ -178,22 +157,45 @@
         <div class="hmd itemPadding bt16">
             <ion-label stacked>Meta-Tag Description</ion-label>
             <textarea type="text" class="textAreaMetaDesc" id="homepageMeta_description" name="homepageMeta_description" [(ngModel)]="homepageMeta_description" placeholder="This is what a search engine will display on it's search results describing your website. "></textarea>
-            <!--<ckeditor
-            [config]="CkeditorConfig"
-            [readonly]="false" [(ngModel)]="homepageMeta_description"
-            (change)="homepageMetaDescChanged($event)"
-            (blur)="homepageMetaDescBlured($event)"
-            (focus)="homepageMetaDescFocused($event)"
-            (ready)="homepageMetaDescCreated($event)"
-            debounce="500" name="editorHomePageDescription">
-            </ckeditor>-->
+          
         </div>
         </div>
       </div>
-      
-      <div class="dashboardBtn">
-          <button ion-button color="primary" class="colorEnabled button_color" block (click)="createWebsite();" [disabled]="!websiteForm.valid||target_place_id==''">Save Website</button>
-      </div>
+      <div class="formUI formShadow mb16" *ngIf="websiteCount=='1'">
+        <h3 class="centerStage contentTitle animated bounceInRight">Choose Start-Up Cost</h3>
+        <ion-list radio-group [(ngModel)]="selected_pricingPlan_Modal" name="selected_pricingPlan_Modal">
+   
+            <ion-item *ngFor="let startUpPlan of startUpPlansList">
+              <ion-label>{{startUpPlan.plan_title}}-{{startUpPlan.plan_cost}}$</ion-label>
+              <ion-radio value={{startUpPlan.id}}></ion-radio>
+            </ion-item>
+         
+        </ion-list>
+    </div>
+    <!--<ion-list class="noShadow cardDetails" *ngIf="websiteCount=='1'">-->
+        <ion-item class="OptMLS noShadow" *ngIf="websiteCount=='1'">
+            <ion-label stacked>Select Credit Card</ion-label>
+            <ion-select placeholder="-----" [(ngModel)]="selected_creditCard_Modal"  
+            name="selected_creditCard_Modal" required>
+              <ion-option *ngFor="let creditCard of allCreditCards" 
+              value= {{creditCard.unique_id}}>{{creditCard.brand}} - (xxx-{{creditCard.last4}})
+               </ion-option>
+            </ion-select>
+          </ion-item>
+        <!--<ion-list-header class="centerStage animated lightSpeedIn">Choose Credit Card</ion-list-header>
 
+      <ion-list class="centerStage noShadow" radio-group [(ngModel)]="selected_creditCard_Modal" name="selected_creditCard_Modal">
+          <ion-item *ngFor="let creditCard of allCreditCards">
+              <ion-label>Brand: {{creditCard.brand}},Card Number: xxx-{{creditCard.last4}}</ion-label>
+              <ion-radio value={{creditCard.unique_id}}></ion-radio>
+            </ion-item>
+        </ion-list>-->
+    <!--</ion-list>-->
+    <div class="dashboardBtn" *ngIf="websiteCount=='1'">
+      <button ion-button color="primary" class="colorEnabled button_color" block (click)="createWebsite();" [disabled]="!websiteForm.valid||target_place_id==''||selected_pricingPlan_Modal==''">Save Website</button>
+  </div>
+  <div class="dashboardBtn" *ngIf="websiteCount==''">
+    <button ion-button color="primary" class="colorEnabled button_color" block (click)="createWebsite();" [disabled]="!websiteForm.valid||target_place_id==''">Save Website</button>
+</div>
     </form>
 </ion-content>

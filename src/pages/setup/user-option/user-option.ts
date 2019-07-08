@@ -35,6 +35,5 @@ export class UserOptionPage {
   }
   openPage(pageNumber:string) {
     this.navCtrl.push(ManageAgentsPage);
-    //this.navCtrl.setRoot(DashboardTabsPage,{selectedPage:pageNumber.toString()});
   }
 }

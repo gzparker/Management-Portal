@@ -59,13 +59,10 @@ export class WebsitesWebsiteLinksPage {
   }
   openInAppBrowser(redirectUrl:string)
   {
-    //debugger;
     window.open(redirectUrl, '_black');
-    
   }
   copied($event:any)
   {
-    //debugger;
     let toast = this.toastCtrl.create({
       message: "copied",
       duration: 3000,
@@ -80,7 +77,6 @@ export class WebsitesWebsiteLinksPage {
   }
   copyLink(redirectUrl:string)
   {
-    //debugger;
   }
 loadAllWebsiteLinks()
 {
@@ -90,20 +86,17 @@ loadAllWebsiteLinks()
       duration: 700
     });
     loader.present();
-    //debugger;
 this.userServiceObj.loadAllWebsiteLinks(this.userId.toString(),this.websiteId)
   .subscribe((result) => this.loadAllWebsiteLinksResp(result));
   }
 }
 loadAllWebsiteLinksResp(result:any):void{
- //debugger;
   if(result.status==true)
   {
   this.widgets=result.widgets;
   this.hotsheet_links=result.hotsheet_links;
   this.website_links=result.website_links;
   }
- // debugger;
 }
 segmentChanged(event:any)
   {

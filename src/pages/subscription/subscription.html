@@ -65,7 +65,7 @@
           <ion-checkbox color="royal" checked="false" item-right (click)="setSelectedPackage(package)"></ion-checkbox>
       </ion-item>-->
       <ion-item>
-      <ion-select [(ngModel)]="selected_packageIds" name="selected_packageIds" multiple="true" (ngModelChange)="setSelectedPackage()">
+      <ion-select [(ngModel)]="selected_packageIds" name="selected_packageIds" placeholder="-----" multiple="true" (ngModelChange)="setSelectedPackage()">
         <ion-option *ngFor="let package of intervalBasedPackages" value= {{package.id}}>
           <span *ngIf="pay_yearly==true">{{package.name}}(${{package.amount/12 | number:'1.1-3'}}/month)</span>
           <span *ngIf="pay_yearly==false">{{package.name}}(${{package.amount}})</span>

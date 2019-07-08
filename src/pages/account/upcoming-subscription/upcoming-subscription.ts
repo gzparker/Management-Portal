@@ -47,7 +47,6 @@ export class UpcomingSubscriptionPage {
           cssClass:'successToast'
         });
         toast.onDidDismiss(() => {
-          //console.log('Dismissed toast');
         });
         toast.present();
       }

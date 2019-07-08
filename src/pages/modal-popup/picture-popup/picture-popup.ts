@@ -21,10 +21,10 @@ import { SubscriptionProvider } from '../../../providers/subscription/subscripti
 
 @Component({
   selector: 'page-picture-popup',
-  templateUrl: 'picture-popup.html',
+  templateUrl: 'picture-popup.html'
 })
 export class PicturePopupPage {
-  @ViewChild('websiteCropper', undefined)
+  @ViewChild('websiteCropper')
   websiteCropper:ImageCropperComponent;
   public edit_website_logo:boolean=false;
   public crop_website_image:boolean=false;
@@ -79,7 +79,7 @@ export class PicturePopupPage {
          this.cropperSettings.croppedWidth=this.selectedImageOption.croppedWidth;
          this.cropperSettings.width=this.selectedImageOption.croppedWidth;
          this.cropperSettings.height=this.selectedImageOption.croppedHeight;
-         //debugger;
+         debugger;
           //this.websiteWidthOld=this.selectedImageOption.websiteWidth;
           //this.websiteHeightOld=this.selectedImageOption.websiteHeight;
           //this.datawebsiteImageOld=this.selectedImageOption.datawebsiteImage;
@@ -102,21 +102,24 @@ export class PicturePopupPage {
     ionViewDidEnter()
     {
       this.sharedServiceObj.updateColorThemeMethod(null);
-    }
-  ionViewDidLoad() {
-    //console.log('ionViewDidLoad PicturePopupPage');
-    this.sharedServiceObj.updateColorThemeMethod(null);
-    var image:any = new Image();
+      var image:any = new Image();
           var that=this;
           image.src = this.websiteImage;
+          debugger;
           image.onload = function () {
-  
+  debugger;
             //that.cropperSettings.croppedWidth = this.width;
             //that.cropperSettings.croppedHeight = this.height;
             //debugger;
             //that.createPersonalImageThumbnail(image.src);
             that.websiteCropper.setImage(image);  
         };
+    }
+  ionViewDidLoad() {
+    debugger;
+    //console.log('ionViewDidLoad PicturePopupPage');
+    this.sharedServiceObj.updateColorThemeMethod(null);
+    
   }
   ionViewDid() {
   }

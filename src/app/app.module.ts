@@ -18,7 +18,7 @@ import { ClipboardModule } from 'ngx-clipboard';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 import { TimezonePickerModule } from 'ng2-timezone-selector';
-import { ImageCropperComponent, CropperSettings } from "ngx-img-cropper";
+import {ImageCropperModule} from 'ngx-img-cropper/index';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -26,7 +26,6 @@ import { HomePage } from '../pages/home/home';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { Crop } from '@ionic-native/crop';
 import { Camera } from '@ionic-native/camera';
-//import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { AgmCoreModule } from '@agm/core';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
@@ -34,7 +33,6 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { BrMaskerModule } from 'brmasker-ionic-3';
 
-//import { ListPage } from '../pages/list/list';
 import { LoginPage } from '../pages/login/login';
 import { ContactusPage } from '../pages/contactus/contactus';
 import { DashboardTabsPage } from '../pages/tabs/dashboard-tabs/dashboard-tabs';
@@ -146,8 +144,11 @@ var firebaseConfig = {
     NewMessagePopupPage,GroupChatDetailPage,GroupMembersPage,ChatFriendsPage,ListingDetailPopupPage,
     HotsheetDetailPopupPage,EmailContactModalPage,ColorSelectionPopupPage,PicturePopupPage,NotificationSettingsPage
   ],
+  exports:[
+    ImageCropperModule
+    ],
   imports: [
-    BrowserModule, HttpModule,CKEditorModule,
+    BrowserModule, HttpModule,CKEditorModule,ImageCropperModule,
     IonicModule.forRoot(MyApp), HttpClientModule,MultiselectDropdownModule,AccordionModule,
     IonicStorageModule.forRoot({
       name: 'managementportal',
@@ -186,7 +187,6 @@ var firebaseConfig = {
 		Crop,
     Camera,
     DatePipe,
-    //InAppBrowser,
     SubscriptionProvider,
     ListingProvider
   ],

@@ -62,7 +62,6 @@ export class RegisterPage {
       else{
         this.registeration_platform='app';
       }
-      //debugger;
       this.loadedWebsite=document.URL.toString();
     if(this.loadedWebsite.indexOf("localhost")>0)
     {
@@ -95,8 +94,6 @@ export class RegisterPage {
   }
   
   userSignUp(): void {
-    //debugger;
-//this.loader.present();
     let dataObj = {
       first_name: "",
       last_name: "",
@@ -112,10 +109,7 @@ export class RegisterPage {
       registeration_platform:"",
       verified: 0
     };
-    //if(this.domainAccess)
-    //{
     if (this.fbSignUp) {
-      //debugger;
       dataObj.email = this.emailFb;
       dataObj.password = this.fbPassword;
       dataObj.fb_token = this.fb_token_id;
@@ -126,10 +120,8 @@ export class RegisterPage {
       dataObj.registeration_platform=this.registeration_platform;
       dataObj.phone_number = Math.floor(Math.random() * (90000000 - 1 + 1)) + 1;
       dataObj.verified = 0;
-      //debugger;
     }
     else {
-      // debugger;
       dataObj.email = this.email;
       dataObj.password = this.password;
       dataObj.fb_token = "";
@@ -141,7 +133,6 @@ export class RegisterPage {
       dataObj.registeration_platform=this.registeration_platform;
       dataObj.verified = 0;
     }
-    
     dataObj.userType = this.userType;
     let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
         generalWebsiteSettings.then((data) => {
@@ -151,41 +142,25 @@ export class RegisterPage {
   }
 
   userSignUpResponse(result: any): void {
-    //this.loader.dismiss();
     if (result.status == true) {
-      //debugger;
       this.userCreated = true;
       this.userTypeSelected = true;
       this.userSignUpMsg = "User has been successfully registered.";
-
-      //this.userType="1";
       if (!this.fbSignUp) {
-
         this.master_id = result.memberCredentials.master_id;
         this.selectedCountryCode = result.memberCredentials.country_code;
         this.selectedCountryAbbv = result.memberCredentials.country_abbv;
         this.phone_number_verify = result.memberCredentials.phone_mobile;
-        //this.openUserVerificationModal(this.master_id);
         this.navCtrl.push(UserVerificationPage, {
           master_id: this.master_id,
           selected_country_code: this.selectedCountryCode, selected_country_abbv: this.selectedCountryAbbv,
           selected_phone_number: this.phone_number_verify
         });
       }
-
-
     }
     else {
-      //  debugger;
-      //this.modalType=3;
       this.userCreated = true;
       this.userSignUpMsg = result.message.toUpperCase();
-      /*let alert = this.alertCtrl.create({
-        title: 'Error',
-        subTitle: this.userSignUpMsg,
-        buttons: ['Ok']
-      });
-      alert.present();*/
       let toast = this.toastCtrl.create({
         message: this.userSignUpMsg,
         duration: 3000,
@@ -194,7 +169,6 @@ export class RegisterPage {
       });
       
       toast.onDidDismiss(() => {
-        //console.log('Dismissed toast');
       });
       toast.present();
     }
@@ -224,7 +198,6 @@ this.navCtrl.setRoot(LoginPage);
     for (let i = 0; i < textBarElements.length; i++) {
     
      textBarElements[i].setAttribute("style", "color:"+this.websiteBackgroundInfo.text_color+" !important;");
-     //debugger;
     }
     //////////////////////////////Button Color////////////////////////////////    
     let buttonColorElement=document.getElementsByClassName("button_color");
@@ -276,9 +249,7 @@ this.navCtrl.setRoot(LoginPage);
       buttonContactEmailElement[i].setAttribute("style", "background:"+this.websiteBackgroundInfo.button_color+" !important;");
     }
     let buttonContactInviteElement=document.getElementsByClassName("contactInvite");
-    
     for (let i = 0; i < buttonContactInviteElement.length; i++) {
-    
       buttonContactInviteElement[i].setAttribute("style", "background:"+this.websiteBackgroundInfo.button_color+" !important;");
     }
 } 
@@ -332,8 +303,6 @@ this.navCtrl.setRoot(LoginPage);
             {
               that.headerColor=data.color_tertiary;
           }
-         
-         // debugger;
         }
         if(data.sidebar_menu_color)
         {
@@ -349,8 +318,6 @@ this.navCtrl.setRoot(LoginPage);
           {
             that.sideBarMenuColor=data.color_tertiary;
         }
-        
-       // debugger;
       }
       if(data.button_color)
       {
@@ -366,8 +333,6 @@ this.navCtrl.setRoot(LoginPage);
         {
           that.buttonColor=data.color_tertiary;
       }
-      
-     // debugger;
     }
     if(data.text_color)
     {
@@ -386,7 +351,6 @@ this.navCtrl.setRoot(LoginPage);
     
   
   }
-  //debugger;
       }
       });
   }
@@ -395,7 +359,6 @@ this.navCtrl.setRoot(LoginPage);
     this.selectedCountryAbbv = "US";
     let countryGeoInfo = this.storage.get("userCountryInfo");
     countryGeoInfo.then((data) => {
-     // debugger;
       if (data == null) {
 
         this.selectedCountryAbbv = "US";
@@ -422,7 +385,6 @@ this.navCtrl.setRoot(LoginPage);
     selectedCountryCodeData = this.allCountryCodes.filter(item => item.country_abbv == $event);
     this.selectedCountryAbbv = selectedCountryCodeData[0].country_abbv;
     this.selectedCountryCode = selectedCountryCodeData[0].country_code;
-    // debugger;
   }
   onFacebookLoginClick(): void {
     this.userServiceObj.onFacebookLoginClick();
@@ -444,7 +406,6 @@ this.navCtrl.setRoot(LoginPage);
       function (googleUser) {
 
         const profile = googleUser.getBasicProfile();
-        //debugger;
         that.google_token = googleUser.getAuthResponse().id_token;
         that.google_id = profile.getId();
         that.google_name = profile.getName();
@@ -457,26 +418,19 @@ this.navCtrl.setRoot(LoginPage);
           google_image : that.google_image,
           google_email : that.google_email
         };
-        //debugger;
         that.storage.set('googleAuth', dataObj);
-        //that.localStorageService.set('googleAuth', dataObj);
-        //debugger;
         that.userServiceObj.googleSignUp();
       }, function (error) {
         console.log(JSON.stringify(error, undefined, 2));
       });
   }
   ionViewDidLoad() {
-    //debugger;
     let that=this;
     this.btnGoogleElement = this.btnGoogle.nativeElement;
-    //debugger;
     this.googleInit();
     this.getAllCountryCodes();
     let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
     generalWebsiteSettings.then((data) => {
-      //debugger;
-      
       that.websiteBackgroundInfo=data;
       if(that.websiteBackgroundInfo!=undefined)
   {

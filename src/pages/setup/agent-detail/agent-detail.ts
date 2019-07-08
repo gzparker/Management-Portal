@@ -91,10 +91,7 @@ export class AgentDetailPage {
       {
         if(data!=false)
         {
-        //debugger;
         let savedAccessLevels:any[]=data;
-    //debugger;
-     
       let editAgentAccesLevels=savedAccessLevels.filter((element) => {
         return (element.key=="edit-agent");
     });
@@ -122,7 +119,6 @@ loadAgentDetails()
 {
   if(this.userId.toString())
   {
-   // debugger;
     this.userServiceObj.agentDetail(this.agent_id.toString())
     .subscribe((result) => this.loadAgentDetailsResp(result));
   }
@@ -133,7 +129,6 @@ loadAgentDetailsResp(result:any)
   this.loader.dismiss();
   if(result.status==true)
   {
-    //debugger;
     if(result.result)
     {
       this.agentDetail=result.result;

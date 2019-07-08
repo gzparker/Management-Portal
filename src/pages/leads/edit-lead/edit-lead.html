@@ -32,7 +32,7 @@
             [height]="leadHeight"/>
           </div>
           
-          <input id="custom-input" class="btnUpload" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="leadFileChangeListener($event)">
+          <input id="custom-input" class="btnUpload colorEnabled button_color" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="leadFileChangeListener($event)">
           <button ion-button (click)="editImage('leadImage');" *ngIf="isLeadImageExist">
             <ion-icon name="md-create"></ion-icon>
           </button>

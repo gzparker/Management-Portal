@@ -40,8 +40,6 @@ export class CreateLeadPage {
   addressHomeElement: HTMLInputElement = null;
   @ViewChild('searchWorkBar', { read: ElementRef }) searchWorkBar: ElementRef;
   addressWorkElement: HTMLInputElement = null;
-  /*@ViewChild('leadImageCropper', undefined)
-  leadImageCropper:ImageCropperComponent;*/
   public isApp=false;
   public isWebBrowser=false;
   public userLoggedId:boolean=false;
@@ -329,54 +327,19 @@ let that=this;
 
 that.userServiceObj.setFireBaseInfo(email,password,webUserId,first_name,last_name,
   image_url,parent_id,is_submember,is_lead,website_id,this.service_id);
-
-//debugger;
-   /*firebase.auth().createUserWithEmailAndPassword(email,password)
-                 .then(function (currentUser) {
-                  // debugger;
-                  firebase.auth().signInWithEmailAndPassword(email, password)
-                  .then(function(currentUser) {
-                   // debugger;
-                    that.userServiceObj.saveFireBaseUserInfo(email,password,webUserId,first_name,last_name,
-                    image_url,parent_id,is_submember,is_lead,website_id,currentUser);
-                  }).catch(function(error) {
- 
-                   //debugger;
-                  });
-                   //debugger;
-               // that.ngZone.run(() => {
-                  // debugger;
-        // that.navCtrl.setRoot(AllLeadsPage,{notificationMsg:this.leadCreateMsg.toUpperCase(),leadInfo:leadInfo,currentUser:currentUser});
-        //});
-                  //that.userServiceObj.saveFireBaseUserInfo(email,password,webUserId,first_name,last_name,
-                    //image_url,parent_id,is_submember,is_lead,website_id,currentUser);
-                 }).catch(function(error) {
- 
-     
-     });*/
      this.ngZone.run(() => {
-      // debugger;
        this.navCtrl.push(AllLeadsPage,{notificationMsg:this.leadCreateMsg.toUpperCase()});
-      // this.navCtrl.push(LeadDetailPage,{notificationMsg:this.leadCreateMsg.toUpperCase(),leadId:leadInfo.lead_id});
        });
   }
   editImage(imageType:string){
     var that=this;
-   
-    //debugger;
     let selectedImageOption={
       mode:"edit",
       croppedWidth:this.leadCropperSettings.croppedWidth,
       croppedHeight:this.leadCropperSettings.croppedHeight,
-      //websiteWidth:this.personalWidth,
-      //websiteHeight:this.personalHeight,
-      //datawebsiteImage:this.dataPersonalImage,
       websiteImage:this.leadImage,
       imageType:imageType
     };
-    //debugger;
-    //document.remo
-    //document.getElementById("canvas").remove();
    var modalColor = this.modalCtrl.create(PicturePopupPage,{selectedImageOption:selectedImageOption});
     modalColor.onDidDismiss(data => {
       if(data)
@@ -389,7 +352,6 @@ that.userServiceObj.setFireBaseInfo(email,password,webUserId,first_name,last_nam
   }
   setWebsiteImage(imageObject:any)
   {
-//debugger;
     this.loadEditedImage(imageObject,imageObject.imageType);
   }
   loadEditedImage(imageObject:any,imageType:any)
@@ -420,40 +382,16 @@ that.userServiceObj.setFireBaseInfo(email,password,webUserId,first_name,last_nam
     var that = this;
     myReader.onloadend = function (loadEvent:any) {
         image.src = loadEvent.target.result;
-        //that.headerImageCropper.setImage(image);
         image.onload = function () {
           that.leadCropperSettings.croppedWidth=this.width;
           that.leadCropperSettings.croppedHeight=this.height;
           that.leadImage=this.src;
           that.createLeadImageThumbnail(that.leadImage);
-          //that.leadImageCropper.setImage(image);
         }
     };
 
     myReader.readAsDataURL(file);
 }
-/*showHideLeadCropper(){
-  this.crop_lead_image=false;
-  const self = this;
-if(this.edit_lead_image)
-{
-this.hideLeadCropper=true;
-if(this.leadImage!="")
-{
- // this.companyCropperLoaded=true;
-  var image:any = new Image();
-  image.src = this.leadImage;
-          image.onload = function () {
-            self.leadImageCropper.setImage(image); 
-          }
-}
-
-}
-else
-{
-this.hideLeadCropper=false;
-}
-}*/
 leadImageCropped(image:any)
   {
     if(this.crop_lead_image)
@@ -519,7 +457,6 @@ leadImageCropped(image:any)
 
   createLeadImageThumbnail(bigMatch:any) {
     let that=this;
-    //debugger;
       this.generateLeadImageFromImage(bigMatch, 500, 500, 0.5, data => {
         
     that.dataLeadImage.image=data;
@@ -528,16 +465,12 @@ leadImageCropped(image:any)
     generateLeadImageFromImage(img, MAX_WIDTH: number = 700, MAX_HEIGHT: number = 700, quality: number = 1, callback) {
       var canvas: any = document.createElement("canvas");
       var image:any = new Image();
-      //image.width=this.companyCropperSettings.croppedWidth;
-      //image.height=this.companyCropperSettings.croppedHeight;
       var that=this;
-   //debugger;
       image.src = img;
       image.onload = function () {
        
         var width=that.leadCropperSettings.croppedWidth;
         var height=that.leadCropperSettings.croppedHeight;
-       //debugger;
         if (width > height) {
           if (width > MAX_WIDTH) {
             height *= MAX_WIDTH / width;

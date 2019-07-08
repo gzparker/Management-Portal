@@ -25,7 +25,7 @@ export class ColorSelectionPopupPage {
   {id:"tertiary_color",name:"3rd Color"}];
   public selectedColorOption:string="";
   public option:string="";
-  public customColor:string="";
+  public customColor:string="#00d2ff";
   public oldSelectedColorOption:string="";
   public oldOption:string="";
   public oldCustomColor:string="";
@@ -43,34 +43,17 @@ export class ColorSelectionPopupPage {
     {
       this.selectedColorObj=this.navParams.get('selectedColor');
       this.selectedColorOption=this.selectedColorObj.selectedColorOption;
-      this.oldSelectedColorOption=this.selectedColorOption
-      /*if(this.selectedColorObj.selectedColor==undefined||this.selectedColorObj.selectedColor==null)
-      {
-        this.customColor="#000000";
-        this.oldCustomColor="";
-        //debugger;
-      }
-      if(this.selectedColorObj.selectedColor=="")
-      {
-        this.customColor="#000000";
-        this.oldCustomColor="";
-        //debugger;
-      }
-      else
+      this.oldSelectedColorOption=this.selectedColorOption;
+      if(this.selectedColorObj.selectedColor!=null&&this.selectedColorObj.selectedColor!=undefined&&this.selectedColorObj.selectedColor!="")
       {
         this.customColor=this.selectedColorObj.selectedColor;
         this.oldCustomColor=this.selectedColorObj.selectedColor;
-      }*/
-      this.customColor=this.selectedColorObj.selectedColor;
-        this.oldCustomColor=this.selectedColorObj.selectedColor;
-      //debugger;
+      }
       this.colorBase=this.selectedColorObj.colorBase;
       this.secondColor=this.selectedColorObj.secondColor;
       this.thirdColor=this.selectedColorObj.thirdColor;
       this.option=this.selectedColorObj.option;
       this.oldOption=this.selectedColorObj.option;
-    // debugger;
-    //this.option = this.navParams.get('option');
     }
   }
   ionViewDidEnter()
@@ -92,24 +75,16 @@ this.showCustomColor=true;
   }
   closePopUp()
   {
-    
-    /*else
-    {
-      this.selectColor.
-    }*/
-   // debugger;
     let selectedColor={
       option:this.oldOption,
       selectedColorOption:this.oldSelectedColorOption,
       selectedColor:this.oldCustomColor,
       isCustomColor:false
     }
-    //let selectedColor=this.selectedColorMethod();
     this.viewCtrl.dismiss(selectedColor);
   }
   saveColor()
   {
-    //debugger;
     let selectedColor=this.selectedColorMethod();
     this.viewCtrl.dismiss(selectedColor);
   }
@@ -135,6 +110,5 @@ this.showCustomColor=true;
   setCustomColor(colorValue:any)
   {
 this.customColor=colorValue;
-//debugger;
   }
 }

@@ -85,12 +85,10 @@ this.loggedInUserInfo=data;
     let firebaseUserId = this.storage.get('firebaseUserId');
     firebaseUserId.then((data) => {
     var fredRef=firebase.database().ref('users').on('child_added', function(snapshot) {
-      //debugger;
       if(snapshot.val().first_name!=undefined&&snapshot.val().last_name!=undefined)
       {
         if(data!=snapshot.val().fbId)
         {
-          //debugger;
           that.allAvailableContacts.push(snapshot.val());
         }
       }
@@ -101,11 +99,8 @@ this.loggedInUserInfo=data;
   }
   filterContacts()
   {
-    //this.allAvailableSearchedContacts=[];
     if(this.searchKeyword!="")
     {
-      //crtuk
-     //debugger;
       this.allAvailableSearchedContacts = this.allAvailableContacts.filter(
         contact => (contact.first_name.toLowerCase()+" "+contact.last_name.toLowerCase()).indexOf(this.searchKeyword.toLowerCase()) > -1);
     }
@@ -127,14 +122,9 @@ this.sharedServiceObj.sendMessage(type,this.description,this.redirectUserId,this
 }
 msgSentResp(resp:any)
 {
-  //debugger;
 if(resp=="1")
 {
   this.ngZone.run(() => {
-
-    //this.closePopUp();
-    //this.navCtrl.setRoot(DashboardTabsPage,{selectedPage:"27"});
-   // this.navCtrl.setRoot(ChatPage);
    this.closePopUp();
   });
 }

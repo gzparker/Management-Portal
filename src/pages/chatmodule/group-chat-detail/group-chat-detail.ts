@@ -30,8 +30,6 @@ declare var firebase:any;
   templateUrl: 'group-chat-detail.html',
 })
 export class GroupChatDetailPage {
-  /*@ViewChild('chatImageCropper', undefined)
-  chatImageCropper:ImageCropperComponent;*/
   @ViewChild('chatImageInput', { read: ElementRef }) chatImageInput: ElementRef;
   @ViewChild(Content) content: Content;
   public groupId:string="";
@@ -241,20 +239,46 @@ that.sharedServiceObj.setUserNotTyping(groupId);
       
      that.userRef=firebase.database().ref('users');
      that.userRef.on('value', function(snapshot) {
-          that.users=[];
+          //that.users=[];
         snapshot.forEach(element=>{
-          that.users.push(element.val());
+          if(element.key!=undefined)
+      {
+          //that.users.push(element.val());
+          if(that.users.length<=0){
+            //debugger;
+            that.users.push(element.val());
+          }
+        else{
+          var foundUser = that.users.filter(userElement => JSON.stringify(userElement) === JSON.stringify(element.val()));
+          //debugger;
+          if(foundUser.length<=0){
+            //debugger;
+            that.users.push(element.val());
+          }
+        }
+      }
         });
             
        
       });
       that.chatRef=firebase.database().ref('chats');
       that.chatRef.orderByChild("groupId").equalTo(that.groupId).on("value", function(snapshot) {
-        that.chatDetailArray=[];
+        //that.chatDetailArray=[];
        let i=0;
      //debugger;
         snapshot.forEach(element => {
-          that.chatDetailArray.push(element);
+          if(element.key!=undefined)
+      {
+          //that.chatDetailArray.push(element);
+          if(that.chatDetailArray.length<=0){
+            that.chatDetailArray.push(element);
+          }
+        else{
+          var foundChat = that.chatDetailArray.filter(chatElement => JSON.stringify(chatElement) === JSON.stringify(element));
+          if(foundChat.length<=0){
+            that.chatDetailArray.push(element);
+          }
+        }
     i=i+1;
     if(i==snapshot.numChildren()){
       that.sharedServiceObj.markMessageAsRead(that.firebaseUserId,that.chatDetailArray)
@@ -265,7 +289,7 @@ that.sharedServiceObj.setUserNotTyping(groupId);
     //{
       //
     //}
-          
+  } 
         });
         
       });
@@ -462,7 +486,7 @@ if(snapshot.exists())
         confirm.present();  
           
     }
-    deleteSingleChat(groupId,chatId) {
+    deleteSingleChat(chat,groupId,chatId) {
 
       var that=this;
       let confirm = this.alertCtrl.create({
@@ -482,6 +506,10 @@ if(snapshot.exists())
             
             if(snapshot.exists())
             {
+              let selectedIndex = that.chatDetailArray.indexOf(chat);
+            if (selectedIndex >= 0) {
+            that.chatDetailArray.splice(selectedIndex, 1);
+            }
                                       var deleteChating=snapshot.val();
                                       
                                       var deletedChatingArray=[];
@@ -549,40 +577,16 @@ if(groupObj.exists()){
       var that = this;
       myReader.onloadend = function (loadEvent:any) {
           image.src = loadEvent.target.result;
-          //that.chatImageCropper.setImage(image);
           image.onload = function () {
             that.chatCropperSettings.croppedWidth=this.width;
             that.chatCropperSettings.croppedHeight=this.height;
             that.chatImage=this.src;
             that.createChatImageThumbnail(that.chatImage);
-            //that.chatImageCropper.setImage(image);
           }
       };
   
       myReader.readAsDataURL(file);
   }
-  /*showHideChatCropper(){
-    this.crop_chat_image=false;
-    const self = this;
-if(this.edit_chat_image)
-{
-  this.hideChatCropper=true;
-  if(this.chatImage!="")
-  {
-   // this.companyCropperLoaded=true;
-    var image:any = new Image();
-    image.src = this.chatImage;
-            image.onload = function () {
-              self.chatImageCropper.setImage(image); 
-            }
- }
-  
-}
-else
-{
-  this.hideChatCropper=false;
-}
-  }*/
   chatImageCropped(image:any)
     {
       if(this.crop_chat_image)
@@ -606,7 +610,6 @@ else
     }
     createChatImageThumbnail(bigMatch:any) {
       let that=this;
-      //debugger;
         this.generateChatImageFromImage(bigMatch, 500, 500, 0.5, data => {
           
       that.dataChatImage.image=data;
@@ -615,16 +618,12 @@ else
       generateChatImageFromImage(img, MAX_WIDTH: number = 700, MAX_HEIGHT: number = 700, quality: number = 1, callback) {
         var canvas: any = document.createElement("canvas");
         var image:any = new Image();
-        //image.width=this.companyCropperSettings.croppedWidth;
-        //image.height=this.companyCropperSettings.croppedHeight;
         var that=this;
-     //debugger;
         image.src = img;
         image.onload = function () {
          
           var width=that.chatCropperSettings.croppedWidth;
           var height=that.chatCropperSettings.croppedHeight;
-         //debugger;
           if (width > height) {
             if (width > MAX_WIDTH) {
               height *= MAX_WIDTH / width;
@@ -636,12 +635,10 @@ else
               height = MAX_HEIGHT;
             }
           }
-          //debugger;
           canvas.width = width;
           canvas.height = height;
           that.chatWidth = width;
           that.chatHeight = height;
-          //debugger;
           var ctx = canvas.getContext("2d");
      
           ctx.drawImage(image, 0, 0, width, height);

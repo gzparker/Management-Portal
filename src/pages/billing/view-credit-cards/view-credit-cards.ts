@@ -53,17 +53,9 @@ export class ViewCreditCardsPage {
         });
         
         toast.onDidDismiss(() => {
-          //console.log('Dismissed toast');
         });
         
         toast.present();
-        /*this.notificationMsg=this.navParams.get('notificationMsg');
-        let alert = this.alertCtrl.create({
-          title: 'Notification',
-          subTitle: this.notificationMsg,
-          buttons: ['Ok']
-        });
-        alert.present();*/
       }
   }
 
@@ -205,27 +197,17 @@ export class ViewCreditCardsPage {
   }
   loadAllCreditCardsResp(result:any)
   {
-    //debugger;
     if(result.status==true)
     {
-      //debugger;
       this.defaultCreditCard=result.default_card;
       this.allCreditCards=result.all_cards;
       this.totalCreditCards=result.all_cards.length;
-      //debugger;
     }
     else
     {
-    //debugger;
       this.allCreditCards=[];
       this.totalCreditCards=0;
       this.creditCardsFoundMessage="No billing info found.";
-      /*let alert = this.alertCtrl.create({
-        title: 'Error',
-        subTitle: this.creditCardsFoundMessage,
-        buttons: ['Ok']
-      });
-      alert.present();*/
       let toast = this.toastCtrl.create({
         message: this.creditCardsFoundMessage,
         duration: 3000,
@@ -234,7 +216,6 @@ export class ViewCreditCardsPage {
       });
       
       toast.onDidDismiss(() => {
-        //console.log('Dismissed toast');
       });
       
       toast.present();
@@ -264,12 +245,6 @@ export class ViewCreditCardsPage {
             {
               this.creditCardsFoundMessage="All credit cards have been deleted.Please add new credit card.";
               this.notificationMsg="";
-              /*let alert = this.alertCtrl.create({
-                title: 'Error',
-                subTitle: this.creditCardsFoundMessage,
-                buttons: ['Ok']
-              });
-              alert.present();*/
               let toast = this.toastCtrl.create({
                 message: this.creditCardsFoundMessage,
                 duration: 3000,
@@ -278,7 +253,6 @@ export class ViewCreditCardsPage {
               });
               
               toast.onDidDismiss(() => {
-                //console.log('Dismissed toast');
               });
               
               toast.present();

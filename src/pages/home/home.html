@@ -6,72 +6,7 @@
     <ion-title>Welcome please login</ion-title>
   </ion-navbar>  
 </ion-header>
-
-
-<!-- //note: Add this class "ui-intagent" if url is Intagent, else remove class like "Line 13". Check Line 12 as reference-->
-<!-- <ion-content padding class="ui-intagent"> -->
 <ion-content padding [ngClass]="{'ui-intagent': serviceType=='intagent', 'ui-idx':serviceType=='idx' }">
-
-  <ion-slides pager *ngIf="isApp">
-    <ion-slide *ngFor="let slide of slides">
-      <img [src]="slide.image" class="slide-image-new"/>
-      <h2 class="slide-title colorEnabled text_color" [innerHTML]="slide.title"></h2>
-      <p [innerHTML]="slide.description"></p>
-    </ion-slide>
-    <ion-slide class="animated fadeInDown">
-      
-      <!-- Logo for IDX -->
-      <img *ngIf="serviceType=='intagent'" src="assets/imgs/idx-main-logo-white.png" 
-      (error)="imgHome.src = this.sharedServiceObj.noImageUrl" 
-      [ngClass]="{'slide-image': serviceType=='intagent', 'logo-intagent':serviceType=='intagent' }" #imgHome/>
-      <img *ngIf="serviceType=='idx'" src="assets/imgs/idx-main-logo-white.png" 
-      (error)="imgHome.src = this.sharedServiceObj.noImageUrl" 
-      [ngClass]="{'slide-image': serviceType=='idx', 'logo-idx':serviceType=='idx' }" #imgHome/>  
-      <!-- Logo for Intagent -->
-      <!-- <img src="assets/imgs/logo_intagent.png" class="slide-image-new logo-intagent"/> -->
-      
-      
-      <h2 class="slide-title">IDX COMPANY&reg; App</h2>
-      <p>IDX is an industry standard that enables a real estate professional to display all of an MLS's property 
-        listings on their website, provided they in turn permit other MLS members to display their listings.</p>
-    </ion-slide>
-    <ion-slide>
-      <img *ngIf="serviceType=='intagent'" src="assets/imgs/logo_intagent.png" 
-        (error)="imgHome.src = this.sharedServiceObj.noImageUrl" 
-        [ngClass]="{'slide-image': serviceType=='intagent', 'logo-intagent':serviceType=='intagent' }" #imgHome/>
-        <img *ngIf="serviceType=='idx'" src="assets/imgs/idx-main-logo-white.png" 
-        (error)="imgHome.src = this.sharedServiceObj.noImageUrl" 
-        [ngClass]="{'slide-image': serviceType=='idx', 'logo-idx':serviceType=='idx' }" #imgHome/> 
-      <h2 class="slide-title">What is IDX?</h2>
-      <p>The simple definition: For real estate agents and brokers in the US, IDX is the system that allows 
-        REALTORS® to show MLS property listings on their websites. IDX stands for "Internet Data Exchange", which sounds technical, but really it's quite simple from the agent's perspective.</p>
-    </ion-slide>
-    <ion-slide>
-      <img *ngIf="serviceType=='intagent'" src="assets/imgs/logo_intagent.png" 
-        (error)="imgHome.src = this.sharedServiceObj.noImageUrl" 
-        [ngClass]="{'slide-image': serviceType=='intagent', 'logo-intagent':serviceType=='intagent' }" #imgHome/>
-        <img *ngIf="serviceType=='idx'" src="assets/imgs/idx-main-logo-white.png" 
-        (error)="imgHome.src = this.sharedServiceObj.noImageUrl" 
-        [ngClass]="{'slide-image': serviceType=='idx', 'logo-idx':serviceType=='idx' }" #imgHome/>  
-      <h2 class="slide-title">Why use IDX?</h2>
-      <p>These are the benefits of IDX Integration on website, Catch Audience's Attention, Capture Leads, 
-        Search Engine Friendly, interact with your client directly.</p>
-    </ion-slide>
-  </ion-slides>
-  <ion-slides pager *ngIf="!isApp&&websiteBackgroundInfo==undefined">
-    <ion-slide class="animated fadeInDown">
-      
-      <img *ngIf="serviceType=='intagent'" src="assets/imgs/logo_intagent.png" 
-        (error)="imgHome.src = this.sharedServiceObj.noImageUrl" 
-        [ngClass]="{'slide-image': serviceType=='intagent', 'logo-intagent':serviceType=='intagent' }" #imgHome/>
-        <img *ngIf="serviceType=='idx'" src="assets/imgs/idx-main-logo-white.png" 
-        (error)="imgHome.src = this.sharedServiceObj.noImageUrl" 
-        [ngClass]="{'slide-image': serviceType=='idx', 'logo-idx':serviceType=='idx' }" #imgHome/>  
-      <h2 class="slide-title">IDX COMPANY&reg; App</h2>
-        <p>IDX is an industry standard that enables a real estate professional to display all of an MLS's property 
-          listings on their website, provided they in turn permit other MLS members to display their listings.</p>
-    </ion-slide>
-  </ion-slides>
   <ion-slides pager *ngIf="!isApp&&websiteBackgroundInfo!=undefined">
       <ion-slide class="animated fadeInDown">
           <img *ngIf="serviceType=='intagent'" src={{websiteBackgroundInfo.brand_image_url}} 
@@ -84,7 +19,7 @@
         <p>{{websiteBackgroundInfo.description}}</p>
       </ion-slide>
       <span>{{applyColors()}}</span>
-    </ion-slides>
+  </ion-slides>
   <div class="formBlock animated fadeInUp">
     <div class="colBlock">
     <button ion-button color="primary" block (click)="openPage('2');">Sign In</button></div>

@@ -44,12 +44,6 @@ export class ViewRolesPage {
       if(this.navParams.get('notificationMsg')!=undefined)
       {
         this.notificationMsg=this.navParams.get('notificationMsg');
-        /*let alert = this.alertCtrl.create({
-          title: 'Notification',
-          subTitle: this.notificationMsg,
-          buttons: ['Ok']
-        });
-        alert.present();*/
         let toast = this.toastCtrl.create({
           message: this.notificationMsg,
           duration: 3000,
@@ -58,7 +52,6 @@ export class ViewRolesPage {
         });
         
         toast.onDidDismiss(() => {
-          //console.log('Dismissed toast');
         });
         toast.present();
       }
@@ -67,7 +60,6 @@ export class ViewRolesPage {
         content: "Please wait...",
         duration: 5000
       });
-      //debugger;
   }
 
   ionViewDidLoad() {
@@ -86,7 +78,6 @@ export class ViewRolesPage {
         {
           this.getAllRoles(null);
         }
-      //debugger;
       });
       
     });
@@ -101,7 +92,6 @@ createRole()
   this.navCtrl.push(CreateRolePage);
 }
 getAllRoles(refresher:any){
-  //debugger;
   let member_id="";
   if(this.parentId!="")
   {
@@ -131,20 +121,12 @@ getAllRolesResp(result: any)
 this.loader.dismiss();
 if(result.status==true)
 {
- //debugger;
   this.allRoles=result.results;
-  //debugger;
 }
 else
 {
   this.allRoles=[];
   this.allRolesFound="No roles found.";
-  /*let alert = this.alertCtrl.create({
-    title: 'Error',
-    subTitle: this.allRolesFound,
-    buttons: ['Ok']
-  });
-  alert.present();*/
   let toast = this.toastCtrl.create({
     message: this.allRolesFound,
     duration: 3000,
@@ -153,7 +135,6 @@ else
   });
   
   toast.onDidDismiss(() => {
-    //console.log('Dismissed toast');
   });
   toast.present();
 }
@@ -168,7 +149,6 @@ deleteRole(role:any)
       {
         text: 'Cancel',
         handler: () => {
-         // console.log('Disagree clicked');
         }
       },
       {
@@ -183,12 +163,6 @@ deleteRole(role:any)
           {
             this.allRolesFound="All roles have been deleted.Please add new role.";
             this.notificationMsg="";
-            /*let alert = this.alertCtrl.create({
-              title: 'Error',
-              subTitle: this.allRolesFound,
-              buttons: ['Ok']
-            });
-            alert.present();*/
             let toast = this.toastCtrl.create({
               message: this.allRolesFound,
               duration: 3000,
@@ -197,7 +171,6 @@ deleteRole(role:any)
             });
             
             toast.onDidDismiss(() => {
-              //console.log('Dismissed toast');
             });
             toast.present();
           }
@@ -210,11 +183,8 @@ deleteRole(role:any)
   confirm.present();
 }
 deleteRoleResp(result:any):void{
-  //debugger;
   if(result.status==true)
   {
-   // debugger;
- // this.viewAllHotSheets();
   }
   
   }

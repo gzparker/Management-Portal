@@ -27,8 +27,6 @@ declare var CKEDITOR: any;
   templateUrl: 'create-agent.html'
 })
 export class CreateAgentPage {
-  /*@ViewChild('agentCropper', undefined)
-  agentCropper:ImageCropperComponent;*/
   public hideAgentCropper:boolean=true;
   cropperSettings: CropperSettings;
   public isApp=false;
@@ -42,12 +40,14 @@ export class CreateAgentPage {
   public email:string="";
   public password:string="";
   public mls_id:string="";
+  public service_id:string="";
   public access_level:any[]=[];
   public phone_mobile:string='';
   public selectedCountryCode: string = "";
   public selectedCountryAbbv: string = "";
   public allCountryCodes: any[] = [];
   public allRoles:any[]=[];
+  public allMls:any[]=[];
   public allWebsiteList:any[]=[];
   public selectedWebsite:any[]=[];
   public agentCreateMsg:string="";
@@ -74,13 +74,6 @@ export class CreateAgentPage {
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform, 
     public ngZone: NgZone,public menuCtrl: MenuController,public loadingCtrl: LoadingController,
     private crop: Crop,private camera: Camera,private imagePicker: ImagePicker,private toastCtrl: ToastController) {
-      /*if(this.platform.is('core') || this.platform.is('mobileweb') || this.platform.is('cordova') || this.platform.is('mobile')) {
-        this.isApp=false;
-      }
-      else
-      {
-        this.isApp=true;
-      }*/
       this.isApp = (!document.URL.startsWith("http"));
       this.hideAgentCropper=false;
       this.cropperSettings = new CropperSettings();
@@ -105,6 +98,10 @@ export class CreateAgentPage {
   }
   
   ionViewDidLoad() {
+    let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
+    generalWebsiteSettings.then((data) => {
+      this.service_id=data.service_id;
+    });
     this.sharedServiceObj.updateColorThemeMethod(null);
     CKEDITOR.disableAutoInline = true;
     CKEDITOR.inline('description', {removeButtons:'Underline,Subscript,Superscript,SpecialChar'
@@ -121,6 +118,7 @@ export class CreateAgentPage {
       this.userId=data;
       let parent_id = this.storage.get('parent_id');
       parent_id.then((data) => {
+        this.loadAllAvailableMLS();
         this.getAllWebsite();
         if(data!=null)
         {
@@ -147,6 +145,22 @@ export class CreateAgentPage {
   ionViewDidEnter()
   {
     this.sharedServiceObj.updateColorThemeMethod(null);
+  }
+  loadAllAvailableMLS()
+  {
+    this.subscriptionObj.loadAllAvailableMLS()
+    .subscribe((result) => this.allAvailableMLSResp(result)); 
+  }
+  allAvailableMLSResp(resp: any)
+  {
+if(resp.status==true)
+{
+  this.allMls=resp.available_mls;
+}
+else
+{
+  this.allMls=[];
+}
   }
   onAgentBreifDescBlured(quill) {
     //console.log('editor blur!', quill);
@@ -192,7 +206,7 @@ this.description=html;
     {
     //debugger;  
   this.userServiceObj.createAgent(this.userId,this.firstName,this.lastName,this.email,this.selectedCountryCode,this.phone_mobile.toString(),this.access_level,
-    this.password,this.agentImage,document.getElementById("description").innerHTML,this.mls_id,this.selectedCountryAbbv,this.selectedWebsite)
+    this.password,this.agentImage,document.getElementById("description").innerHTML,this.mls_id,this.selectedCountryAbbv,this.selectedWebsite,this.service_id)
     .subscribe((result) => this.createAgentResp(result));
  
     }
@@ -212,12 +226,6 @@ this.description=html;
     {
       this.ngZone.run(() => {
       this.agentCreateMsg=result.message;
-      /*let alert = this.alertCtrl.create({
-        title: 'Error',
-        subTitle: this.agentCreateMsg,
-        buttons: ['Ok']
-      });
-      alert.present();*/
       let toast = this.toastCtrl.create({
         message: this.agentCreateMsg,
         duration: 3000,
@@ -226,7 +234,6 @@ this.description=html;
       });
       
       toast.onDidDismiss(() => {
-        //console.log('Dismissed toast');
       });
       toast.present();
     });
@@ -441,33 +448,10 @@ this.allRoles=[];
         console.log(error);
       });
     }
-   /*showHideAgentCropper(){
-      this.crop_agent_image=false;
-      const self = this;
-  if(this.edit_agent_image)
-  {
-    this.hideAgentCropper=true;
-    if(this.agentImage!="")
-    {
-     // this.companyCropperLoaded=true;
-      var image:any = new Image();
-      image.src = this.agentImage;
-              image.onload = function () {
-                self.agentCropper.setImage(image); 
-              }
-   }
-    
-  }
-  else
-  {
-    this.hideAgentCropper=false;
-  }
-    }*/
 /////////////////////Generate Thumbnail//////////////////////
 
 createPersonalImageThumbnail(bigMatch:any) {
   let that=this;
-  //debugger;
     this.generatePersonalImageFromImage(bigMatch, 500, 500, 0.5, data => {
       
   that.dataAgentImage.image=data;
@@ -476,16 +460,12 @@ createPersonalImageThumbnail(bigMatch:any) {
   generatePersonalImageFromImage(img, MAX_WIDTH: number = 700, MAX_HEIGHT: number = 700, quality: number = 1, callback) {
     var canvas: any = document.createElement("canvas");
     var image:any = new Image();
-    //image.width=this.companyCropperSettings.croppedWidth;
-    //image.height=this.companyCropperSettings.croppedHeight;
     var that=this;
- //debugger;
     image.src = img;
     image.onload = function () {
      
       var width=that.cropperSettings.croppedWidth;
       var height=that.cropperSettings.croppedHeight;
-     //debugger;
       if (width > height) {
         if (width > MAX_WIDTH) {
           height *= MAX_WIDTH / width;
@@ -497,12 +477,10 @@ createPersonalImageThumbnail(bigMatch:any) {
           height = MAX_HEIGHT;
         }
       }
-      //debugger;
       canvas.width = width;
       canvas.height = height;
       that.cropperWidth = width.toString();
       that.cropperHeight = height.toString();
-      //debugger;
       var ctx = canvas.getContext("2d");
  
       ctx.drawImage(image, 0, 0, width, height);

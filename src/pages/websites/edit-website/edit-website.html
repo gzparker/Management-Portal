@@ -178,7 +178,7 @@
                 </div>
 
                 <!-- Image Upload Button -->              
-                <input id="custom-input" class="btnUpload" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="websiteLogoFileChangeListener($event)">
+                <input id="custom-input" class="btnUpload colorEnabled button_color" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="websiteLogoFileChangeListener($event)">
                 <button ion-button (click)="editImage('logo');" *ngIf="isLogoImgExist">
                   <ion-icon name="md-create"></ion-icon>
                 </button>
@@ -214,22 +214,11 @@
               </div>
               
               <!-- Image Upload Button -->
-              <input id="custom-input" class="btnUpload" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="websiteFavIconFileChangeListener($event)">
+              <input id="custom-input" class="btnUpload colorEnabled button_color" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="websiteFavIconFileChangeListener($event)">
               <button ion-button (click)="editImage('favIcon');" *ngIf="isFavImgExist">
                 <ion-icon name="md-create"></ion-icon>
               </button>  
             </div>
-
-              <!--<div class="ImageCropperOption last">
-                <ion-item *ngIf="dataWebsiteIcon.image">
-                  <ion-label>Edit Favicon</ion-label>
-                  <ion-toggle [(ngModel)]="edit_favivon_image" 
-                  name="edit_favivon_image" (click)="showHideFavIconCropper()"></ion-toggle>
-                </ion-item>
-                <img-cropper #favIconLogoCropper [image]="dataWebsiteIcon" [settings]="favIconCropperSettings" 
-                (onCrop)="websiteFavIconImageCropped($event)" *ngIf="hideFavIconCropper"></img-cropper>
-              </div>-->
-
             </div>
             
         </ion-list>
@@ -288,15 +277,6 @@
         <div class="hmd itemPadding bt16">
             <ion-label stacked>Meta-Tag Description</ion-label>
             <textarea type="text" class="textAreaMetaDesc" id="homepageMeta_description" name="homepageMeta_description" [(ngModel)]="homepageMeta_description" placeholder="This is what a search engine will display on it's search results describing your website. "></textarea>
-            <!--<ckeditor
-            [config]="CkeditorConfig"
-            [readonly]="false" [(ngModel)]="homepageMeta_description"
-            (change)="homepageMetaDescChanged($event)"
-            (blur)="homepageMetaDescBlured($event)"
-            (focus)="homepageMetaDescFocused($event)"
-            (ready)="homepageMetaDescCreated($event)"
-            debounce="500" name="editorHomePageDescription">
-            </ckeditor>-->
         </div>
         </div>
       </div>
@@ -363,16 +343,6 @@
                     <span  class="colorPreviewEmpty" *ngIf="headerColor!=undefined||headerColor!=''" [ngStyle]="{'background-color':headerColor }"></span>
                   </ion-label>
               </ion-item>
-               
-              <!--<ion-item>
-                <ion-label>Text Color</ion-label>
-                <ion-select [(ngModel)]="textColor" name="textColor" id="textColor">
-                  <ion-option *ngFor="let colorOption of colorOptions" value= {{colorOption.id}}>
-                    {{colorOption.name}}
-                    </ion-option>
-                 </ion-select>
-                
-              </ion-item>-->
               <ion-item (click)="showColorPopUp('content_title_color')">
                 <ion-label>Content Title Color <span class="colorPreview" *ngIf="contentTitleColor==undefined||contentTitleColor==''"></span>
                   <span  class="colorPreviewEmpty" *ngIf="contentTitleColor!=undefined||contentTitleColor!=''" [ngStyle]="{'background-color':contentTitleColor }"></span></ion-label>
@@ -401,46 +371,7 @@
               <ion-item (click)="showColorPopUp('modal_background_color')">
                 <ion-label>Modal Background Color <span class="colorPreview" *ngIf="modalBackgroundColor==undefined||modalBackgroundColor==''"></span>
                   <span  class="colorPreviewEmpty" *ngIf="modalBackgroundColor!=undefined||modalBackgroundColor!=''" [ngStyle]="{'background-color':modalBackgroundColor }"></span></ion-label>
-              </ion-item>
-
-          <!--<ion-item (click)="showColorPopUp('header_color')">
-            <ion-label>Header Color</ion-label>
-            
-          </ion-item>
-          <ion-item (click)="showColorPopUp('side_bar_menu_color')">
-            <ion-label>Side-Bar Menu Color</ion-label>
-           
-          </ion-item>-->
-          <!--<ion-item>
-            <ion-label>Text Color</ion-label>
-            <ion-select [(ngModel)]="textColor" name="textColor" id="textColor">
-              <ion-option *ngFor="let colorOption of colorOptions" value= {{colorOption.id}}>
-                {{colorOption.name}}
-                </ion-option>
-             </ion-select>
-            
-          </ion-item>-->
-          <!--<ion-item (click)="showColorPopUp('content_background_color')">
-            <ion-label>Content Background Color</ion-label>
-            
-          </ion-item>
-          <ion-item (click)="showColorPopUp('content_title_color')">
-            <ion-label>Content Title Color</ion-label>
-            
-          </ion-item>
-          <ion-item (click)="showColorPopUp('button_color')">
-            <ion-label>Button Color</ion-label>
-            
-          </ion-item>
-          <ion-item (click)="showColorPopUp('pagination_color')">
-            <ion-label>Pagination Color</ion-label>
-            
-          </ion-item>
-         
-          <ion-item (click)="showColorPopUp('modal_background_color')">
-            <ion-label>Modal Background Color</ion-label>
-            
-          </ion-item>-->
+                </ion-item>
         </ion-list>
         </ion-list>
         </div>

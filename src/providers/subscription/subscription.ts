@@ -79,7 +79,7 @@ this.headerOptions= new RequestOptions({ headers: this.headers });
     return promoCodeDetailResp;
   }
   saveUserSubscription(subscriptionData: any,service_id:string) {
-    //debugger;
+    debugger;
     let url = "";
     let data = new URLSearchParams();
     url = this.sharedServiceObj.registerationApiBaseUrl + 'subscriptions/addCreditCardAndCreateSubscription';
@@ -226,7 +226,7 @@ getServiceStartUpPlanList(service_id:string) {
   return subscriptionList;
 }
   private extractData(res: Response) {
-  debugger;
+  //debugger;
     return res.json();
   }
   private handleErrorObservable(error: Response | any) {

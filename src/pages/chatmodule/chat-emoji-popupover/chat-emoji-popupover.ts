@@ -38,7 +38,6 @@ export class ChatEmojiPopupoverPage {
   }
   closePopUp()
   {
-    //debugger;
     this.viewCtrl.dismiss();
   }
 }

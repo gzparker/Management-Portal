@@ -72,20 +72,17 @@ let selectedIndex = this.access_level.indexOf(roleId);
 
       this.access_level.push(roleId);
     }
-//debugger;
 }
   getAllAccessLevels()
   {
     let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
     generalWebsiteSettings.then((data) => {
-      //debugger;
     this.userServiceObj.loadAllAccessLevels(data.service_id)
     .subscribe((result) => this.getAllAccessLevelsResp(result));
     });
   }
   getAllAccessLevelsResp(result: any)
   {
-    //debugger;
     if(result.status==true)
     {
 this.all_access_levels=result.results;
@@ -94,13 +91,7 @@ this.all_access_levels=result.results;
     {
       this.all_access_levels=[];
     }
-    //debugger;
   }
-  /*selectAllAccessLevels(option:any)
-  {
-debugger;
-this.access_level=this.all_access_levels;
-  }*/
   createRole()
   {
     let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
@@ -131,15 +122,8 @@ this.access_level=this.all_access_levels;
       });
       
       toast.onDidDismiss(() => {
-        //console.log('Dismissed toast');
       });
       toast.present();
-      /*let alert = this.alertCtrl.create({
-        title: 'Error',
-        subTitle: this.roleCreateMsg,
-        buttons: ['Ok']
-      });
-      alert.present();*/
     });
     }
   }

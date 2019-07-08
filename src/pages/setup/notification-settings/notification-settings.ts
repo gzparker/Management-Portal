@@ -57,7 +57,6 @@ export class NotificationSettingsPage {
     member_id.then((data) => {
       this.userId=data;
       this.loadNotificationSettings();
-     // this.sharedServiceObj.updateColorThemeMethod(null);
     });
   }
   ionViewDidEnter()
@@ -71,11 +70,9 @@ export class NotificationSettingsPage {
   }
   loadNotificationSettingsResp(result:any)
   {
-    //debugger;
     if(result.status!=false)
     {
       let notificationSettingsData=result.results[0];
-      debugger;
       if(notificationSettingsData.receive_account_support!=null)
       {
         this.receive_account_support=notificationSettingsData.receive_account_support.split(',');
@@ -121,7 +118,6 @@ export class NotificationSettingsPage {
   {
     if(result.status!=false)
     {
-     // debugger;
      this.ngZone.run(() => {
       
        this.navCtrl.setRoot(DashboardTabsPage,{notificationMsg:"Notification Settings have been updated successfully.".toUpperCase()});

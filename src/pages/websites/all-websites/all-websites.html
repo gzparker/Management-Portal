@@ -15,7 +15,7 @@
         <ion-icon name="md-add"></ion-icon>
       </button>
     </ion-buttons>-->
-    <ion-buttons end>
+    <ion-buttons end *ngIf="showCreateButton==true">
       <button ion-button icon-left (click)="createWebsite();">
         <ion-icon name="md-add"></ion-icon>
       </button>

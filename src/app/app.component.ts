@@ -63,7 +63,6 @@ export class MyApp {
     private storage: Storage,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider,
     private geolocation: Geolocation, private nativeGeocoder: NativeGeocoder,private afs: AngularFirestore) {
-      //debugger;
     this.initializeApp();
     sharedServiceObj.isLoggedInEmitter.subscribe(item => this.setLoginStatus(item));
     sharedServiceObj.isPaidEmitter.subscribe(item => this.setPaidStatus(item));
@@ -256,7 +255,6 @@ dummyWebsiteUrl=this.loadedWebsite.substr(0,this.loadedWebsite.length-1)
     var that=this;
 if(result)
 {
-  //debugger;
   this.storage.set("generalWebsiteSettings",result);
   }
 }
@@ -270,7 +268,6 @@ messaging.requestPermission()
 })
 .then(function(token) {
   this.storage.set("firebase_token",token);
-  //debugger;
 })
 .catch(function(err) {
   console.log('Unable to get permission to notify.', err);
@@ -278,7 +275,6 @@ messaging.requestPermission()
 messaging.getToken().then((currentToken)=> {
   if (currentToken) {
     this.storage.set("firebase_token",currentToken);
-    //debugger;
   } else {
  
     console.log('No Instance ID token available. Request permission to generate one.');
@@ -290,7 +286,6 @@ messaging.getToken().then((currentToken)=> {
     //}
   //});
 messaging.onMessage(function(payload){
-  //debugger;
     console.log('onMessage',payload);
 })
   }
@@ -351,7 +346,6 @@ this.geolocation.getCurrentPosition().then((resp) => {
     {
       firebase.database().ref('chats').on("value", function(snapshot) {
         let j=0;
-       // debugger;
         //that.chatRef.orderByChild("groupId").equalTo(groupData.val().groupId).on("value", function(snapshot) {
        if(snapshot.exists()){
          if(element.key!=undefined)
@@ -523,23 +517,12 @@ this.showSideMenue=false;
   loadAvailableCountries() {
     this.storage.get('availableCountryList').then((data) => {
       if(data!=null) {
-        //debugger;
         this.storage.set("availableCountryList", data);
       } else {
-        //this.storage.set("availableCountryList", data);
-        //debugger;
         this.userServiceObj.loadCountryCodes()
         .subscribe((result) => this.getAllCountryCodesResp(result));
       }
     });
-    /*if (this.allCountryCodes == undefined) {
-      this.userServiceObj.loadCountryCodes()
-        .subscribe((result) => this.getAllCountryCodesResp(result));
-    }
-    else if (this.allCountryCodes.length <= 0) {
-      this.userServiceObj.loadCountryCodes()
-        .subscribe((result) => this.getAllCountryCodesResp(result));
-    }*/
   }
   getAllCountryCodesResp(result: any): void {
     let countryCodesDummy = [];
@@ -750,6 +733,17 @@ else if(option=='6')
     this.storage.remove("allowed_access_options");
     this.storage.remove('is_submember');
     this.storage.remove('allUnreadMessage');
+    this.storage.remove('paid_status');
+    this.storage.remove('subscribed_services');
+    this.storage.remove('loggedId');
+    this.storage.remove('searchFilterObj');
+    this.storage.remove('country_abbv');
+    this.storage.remove('country_code');
+    this.storage.remove('subMemberId');
+    this.storage.remove('image_url');
+    this.storage.remove('globalSettings');
+    this.storage.remove('showGlobalPopUp');
+    //debugger;
     let firebaseUserId = this.storage.get('firebaseUserId');
     firebaseUserId.then((data) => {
     var fredRef=firebase.database().ref('users/'+data);

@@ -234,36 +234,17 @@ export class AllWebsitesPage {
     } 
   }
   viewAllWebsiteResp(result:any):void{
-    //alert(result.status);
+    //debugger;
   this.showCreateButton=true;
     if(result.status==true)
     {
-     //debugger;
       this.allWebsiteList=result.result;   
     }
     else
     {
       this.allWebsiteList=[];
       this.websiteFoundMessage="No website found.";
-      /*let alert = this.alertCtrl.create({
-        title: 'Error',
-        subTitle: this.websiteFoundMessage,
-        buttons: ['Ok']
-      });
-      alert.present();*/
-      /*let toast = this.toastCtrl.create({
-        message: this.websiteFoundMessage,
-        duration: 3000,
-        position: 'top',
-        cssClass:'errorToast'
-      });
-      
-      toast.onDidDismiss(() => {
-      
-      });
-      toast.present();*/
     }
-    //debugger;
   }
   
   deleteWebsite(website:any):void{
@@ -329,39 +310,32 @@ export class AllWebsitesPage {
     this.navCtrl.push(EditLeadRoutingPage,{websiteId:websiteId});
   }
   createWebsite(){
+    if(this.allWebsiteList.length>0){
+      this.ngZone.run(() => {
+        this.navCtrl.push(CreateWebsitePage,{websiteCount:"1"});});
+    } else{
+      this.ngZone.run(() => {
+        this.navCtrl.push(CreateWebsitePage);
+      });
+    }
    // debugger;
     //this.navCtrl.push(CreateWebsitePage);
-    this.userServiceObj.checkWebsiteCount(this.userId.toString())
-    .subscribe((result) => this.checkWebsiteCountResp(result));
+    //this.userServiceObj.checkWebsiteCount(this.userId.toString())
+    //.subscribe((result) => this.checkWebsiteCountResp(result));
   }
   checkWebsiteCountResp(result:any)
   {
 //debugger;
 if(result.status==true)
 {
+  this.ngZone.run(() => {
   this.navCtrl.push(CreateWebsitePage);
+});
 }
 else
 {
-  let confirm = this.alertCtrl.create({
-    title: 'Website Create?',
-    message: result.message,
-    buttons: [
-      {
-        text: 'Cancel',
-        handler: () => {
-         // console.log('Disagree clicked');
-        }
-      },
-      {
-        text: 'Ok',
-        handler: () => {
-          this.navCtrl.push(CreateWebsitePage);
-        }
-      }
-    ]
-  });
-  confirm.present(); 
+  this.ngZone.run(() => {
+  this.navCtrl.push(CreateWebsitePage,{websiteCount:"1"});});
 }
   }
   viewPaperWorkStatus(website_id:string)

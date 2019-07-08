@@ -70,12 +70,10 @@ public loader:any;
     
   }
   leadRoutingResp(result:any):void{
-  //debugger;
     if(result.status==true)
     {
       this.loader.dismiss();
       this.leadRoutingDetail=result.result;
-    //debugger;
       if(this.leadRoutingDetail!=undefined)
       {
         if(this.leadRoutingDetail.send_to_email==null||this.leadRoutingDetail.send_to_email=="0")
@@ -137,7 +135,6 @@ public loader:any;
     else
     {
       this.loader.dismiss();
-      //debugger;
       this.leadRoutingDetail=null;
       this.leadRoutingFoundMessage="No Info found.";
     }
@@ -145,17 +142,12 @@ public loader:any;
   }
   updateLeadRouting()
   {
-    //this.loader.present();
   let send_to_email_dummy="0";
   let send_to_zillow_crm_dummy="0";
   let send_to_intagent_crm_dummy="0";
   let send_to_zapier_dummy="0";
   let send_to_roundrobin_dummy="0";
   let agent_microsites_dummy="0";
-  /*if(this.send_to_email)
-  {
-    send_to_email_dummy="1";
-  }*/ 
   if(this.send_to_zillow_crm)
   {
     send_to_zillow_crm_dummy="1";
@@ -176,8 +168,6 @@ public loader:any;
   {
     agent_microsites_dummy="1";
   }
-    //  debugger;
-   
   this.userServiceObj.updateLeadRouting(this.websiteId,this.send_to_email_addresses,send_to_zillow_crm_dummy,
   send_to_intagent_crm_dummy,send_to_zapier_dummy,agent_microsites_dummy,send_to_roundrobin_dummy)
     .subscribe((result) => this.updateLeadRoutingResp(result));
@@ -185,10 +175,8 @@ public loader:any;
   }
   updateLeadRoutingResp(result:any)
   {
- //   debugger;
     if(result.status==true)
     {
-      //this.loader.dismiss();
       this.leadRoutingUpdateMsg="Lead Routing has been updated successfully.";
 
       this.ngZone.run(() => {

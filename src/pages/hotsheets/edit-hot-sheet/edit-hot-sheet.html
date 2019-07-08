@@ -409,10 +409,14 @@
 
             <ion-item>
                 <ion-label fixed>Property Size</ion-label>        
-                <ion-input type="text" [(ngModel)]="unit_size_min"
-                name="unit_size_min" id="unit_size_min" placeholder="min" (blur)="updateSearchObject()"></ion-input>      
-                <ion-input type="text" [(ngModel)]="unit_size_max" 
-                name="unit_size_max" id="unit_size_max" placeholder="max" (blur)="updateSearchObject()"></ion-input>         
+                <ion-input type="tel" [(ngModel)]="unit_size_min"
+                name="unit_size_min" id="unit_size_min" placeholder="min" pattern="^[0-9]*$" 
+                inputmode="numeric" (blur)="updateSearchObject()" 
+                (ionChange)="validatePropertySize()"></ion-input>      
+                <ion-input type="tel" [(ngModel)]="unit_size_max" 
+                name="unit_size_max" id="unit_size_max" placeholder="max" pattern="^[0-9]*$" 
+                inputmode="numeric" (blur)="updateSearchObject()"
+                 (ionChange)="validatePropertySize()"></ion-input>         
             </ion-item>
             <ion-item>
               <ion-label>Lot Size</ion-label>
@@ -457,10 +461,12 @@
               <ion-label fixed>Year Built</ion-label>
               
                <ion-input type="text" [(ngModel)]="year_built_min"
-               name="year_built_min" id="year_built_min" placeholder="min" (blur)="updateSearchObject()"></ion-input>
+               name="year_built_min" id="year_built_min" placeholder="min" minlength="4" maxlength="4" pattern="^[0-9]*$" 
+               inputmode="numeric" (blur)="updateSearchObject()" (ionChange)="validateYear()"></ion-input>
            
                <ion-input type="text" [(ngModel)]="year_built_max" 
-               name="year_built_max" id="year_built_max" placeholder="max" (blur)="updateSearchObject()"></ion-input>
+               name="year_built_max" id="year_built_max" placeholder="max" minlength="4" maxlength="4" pattern="^[0-9]*$" 
+               inputmode="numeric" (blur)="updateSearchObject()" (ionChange)="validateYear()"></ion-input>
 
             </ion-item>
 
@@ -609,10 +615,9 @@
             </ion-item>-->
       </div>
     </ion-list>
-  
       <div class="dashboardBtn">
         <button ion-button color="primary" class="colorEnabled button_color" block (click)="updateHotSheet();" 
-        [disabled]="!hotSheetForm.valid||polygon_search==''">Update HotSheet</button>
+        [disabled]="!hotSheetForm.valid||polygon_search==''||!validYear||!validPrice">Update HotSheet</button>
       </div>
 
   </form>

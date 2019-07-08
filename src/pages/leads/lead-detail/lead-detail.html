@@ -7,13 +7,9 @@
 <ion-header no-border class="dashboardUI">
     
     <ion-navbar>
-      <!-- <button ion-button menuToggle start>
-        <ion-icon name="menu"></ion-icon>
-      </button> -->
-      <!-- <ion-title>Contact Profile</ion-title> -->
       <ion-title *ngIf="leadDetail!=undefined"><span *ngIf="firebaseLeadDetail!=undefined" [ngClass]="{
         'userStatus userstatus-online':firebaseLeadDetail.isOnline === '1',
-        'userStatus userstatus-offline':firebaseLeadDetail.isOnline === '0'}"></span><!-- <span class="userStatus userstatus-offline"></span> --> {{leadDetail.first_name}} {{leadDetail.last_name}}</ion-title>
+        'userStatus userstatus-offline':firebaseLeadDetail.isOnline === '0'}"></span>{{leadDetail.first_name}} {{leadDetail.last_name}}</ion-title>
       <ion-buttons end>
         <button ion-button (click)="editLead();" *ngIf="isEditLeadAccess==true">
           <ion-icon name="md-create"></ion-icon>
@@ -22,8 +18,8 @@
     </ion-navbar>
 </ion-header>
 
-<ion-content padding class="generalInfoUI colorEnabled background_color" ion-fixed>
-
+<!--<ion-content padding class="generalInfoUI colorEnabled background_color" ion-fixed>-->
+  <ion-content padding class="dashboardUI">
   <ion-list class="animated fadeIn leadsProfileWrapper">
     <ion-item class="leadsProfile">        
       <ion-avatar class="imgFull" *ngIf="leadDetail!=undefined">
@@ -39,8 +35,9 @@
     </ion-item>
   </ion-list>
   
-  <div class="animated fadeIn leadsShortcutButtons" *ngIf="leadDetail!=undefined">    
-    <a class="contactPhone colorEnabled button_color" href="tel:{{leadDetail.phone_mobile}}"><ion-icon name="md-call"></ion-icon></a>
+  <div class="animated fadeIn leadsShortcutButtons" *ngIf="leadDetail!=undefined">
+      <!--<div class="contactPhone colorEnabled button_color" (click)="chatContact(leadDetail);"><ion-icon name="md-call"></ion-icon></div>-->    
+    <a class="contactPhone colorEnabled button_color" href="tel:{{leadDetail.phone_mobile}}"><ion-icon name="chatboxes"></ion-icon></a>
     <div class="contactChat colorEnabled button_color" (click)="chatContact(leadDetail);"><ion-icon name="chatboxes"></ion-icon></div>
     <div class="contactEmail colorEnabled button_color" (click)="emailContact(leadDetail);"><ion-icon name="ios-mail"></ion-icon></div>
     <div class="contactInvite colorEnabled button_color" *ngIf="leadDetail.app_installed!=undefined&&leadDetail.app_installed=='0'" 

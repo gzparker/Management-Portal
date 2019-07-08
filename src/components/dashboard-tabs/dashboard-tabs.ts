@@ -36,15 +36,11 @@ export class DashboardTabsComponent {
   }
 
   ionViewDidLoad() {
-    //this.setRootPages('1');
-    //console.log('ionViewDidLoad DashboardTabsPage');
   }
 setRootPages(option:any)
 {
-  //this.tab1Root= { title: 'Dashboard', component: DashboardPage,params: { notificationMsg: this.notificationMsg}}
  if(option=='1')
  {
-   //debugger;
   this.navCtrl.setRoot(DashboardPage,{ notificationMsg: this.notificationMsg});
  } 
  if(option=='2')

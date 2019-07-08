@@ -38,7 +38,6 @@ export class EditCreditCardPage {
   public yearValues:any[]=[];
   public monthValues:any[]=[];
   public loader:any;
-  //public calendarMinDate=new Date().toISOString();
   public calendarMinDate:any;
   public calendarMaxDate:any;
   
@@ -54,7 +53,6 @@ export class EditCreditCardPage {
       this.calendarMaxDate=new Date();
       this.calendarMaxDate.setFullYear(this.calendarMaxDate.getFullYear() + 50);
       this.calendarMaxDate=this.calendarMaxDate.toISOString();
-      //debugger;
       if(this.navParams.get('unique_id')!=undefined)
       {
         this.uniquer_id=this.navParams.get('unique_id');
@@ -110,7 +108,6 @@ this.full_name=this.cardDetail.name;
 this.zipCode=this.cardDetail.address_zip;
 this.cc_number="xxx-"+this.cardDetail.last4;
 this.cvc=this.cardDetail.cvc;
-//debugger;
 if(this.cardDetail.id!==result.customer.default_source)
 {
 this.primary_source=false;
@@ -119,16 +116,12 @@ else
 {
   this.primary_source=true;
 }
-//debugger;
 this.expiryDate=this.cardDetail.exp_year+"-"+(parseInt(this.cardDetail.exp_month)).toString();
-//debugger;
 this.expiryDate=new Date(this.expiryDate).toISOString();
-//debugger;
 }
   }
   updateCreditCard()
   {
-    //debugger;
     if(parseInt(((new Date().getMonth()+1).toString()))>parseInt(this.expiryDate.split("-")[1])){
       let toast = this.toastCtrl.create({
         message: "Stripe card date is not valid.",
@@ -138,7 +131,6 @@ this.expiryDate=new Date(this.expiryDate).toISOString();
       });
       
       toast.onDidDismiss(() => {
-        //console.log('Dismissed toast');
       });
       
       toast.present();
@@ -151,7 +143,6 @@ this.expiryDate=new Date(this.expiryDate).toISOString();
       });
       
       toast.onDidDismiss(() => {
-        //console.log('Dismissed toast');
       });
       
       toast.present();
@@ -176,8 +167,6 @@ this.expiryDate=new Date(this.expiryDate).toISOString();
   }
  updateCreditCardResp(result:any)
  {
-   //debugger;
-  //this.loader.dismiss();
 if(result.status==true)
 {
   this.navCtrl.push(ViewCreditCardsPage,{notificationMsg:result.message.toUpperCase()})

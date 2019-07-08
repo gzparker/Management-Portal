@@ -89,7 +89,6 @@ export class SubscriptionPage {
       this.full_name = this.navParams.get('full_name');
       let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
     generalWebsiteSettings.then((data) => {
-      //debugger;
       this.service_id=data.service_id;
       if(data.startup_cost_req=="1")
       {
@@ -98,10 +97,7 @@ export class SubscriptionPage {
       this.listAllPackages();
       this.loadAllAvailableMLS();
     });
-      
-      //debugger;
     });
-    ///debugger;
   }
   ionViewDidEnter()
   {
@@ -121,6 +117,7 @@ export class SubscriptionPage {
     }
     //debugger;
     this.expiryDate=new Date(new Date().getFullYear().toString()+"-"+((new Date().getMonth()+1).toString())).toISOString();
+    //debugger;
   }
   listAllStartUpPlans(){
     //debugger;
@@ -130,7 +127,6 @@ export class SubscriptionPage {
   listAllStartUpPlansResp(resp: any){
     if (resp.status == true) {
       this.startUpPlansList=resp.result;
-     // debugger;
     }
   }
   listAllPackages() {
@@ -149,8 +145,6 @@ export class SubscriptionPage {
         element.product_plans.forEach(element => {
           this.allAvailablePackages.push(element);
         });
-        
-        
       });
       //debugger;
         //this.allAvailablePackages = resp.plans;
@@ -209,6 +203,7 @@ else
     //debugger;
   }
   saveSubscribeUser() {
+    //debugger;
 if(this.selectedPackagesList.length>0)
 {
   let requiredPlan="";
@@ -239,6 +234,7 @@ for(let i=0;i<this.selectedPackagesList.length;i++)
 }
 if(requiredPlan=="1")
 {
+  //debugger;
   dataObj.full_name = this.full_name;
   dataObj.cc_number = this.cc_number;
   dataObj.exp_month = this.expiryDate.split("-")[1];
@@ -255,7 +251,7 @@ if(requiredPlan=="1")
   member_id.then((memberResp) => {
   
     dataObj.member_id = memberResp;
-
+//debugger;
    this.subscriptionObj.saveUserSubscription(dataObj,this.service_id).
      subscribe((result) => this.saveSubscribeUserResp(result));
     });
@@ -295,16 +291,16 @@ else
   }
   
   saveSubscribeUserResp(data: any) {
-    debugger;
+    //debugger;
     if (data.status == true) {
-      debugger;
+      //debugger;
       this.sharedServiceObj.setPaidStatus(true);
+      this.storage.set('paid_status', '1');
       this.ngZone.run(() => {
         let confirm = this.alertCtrl.create({
           title: 'Sign Up',
           message: 'Thank you for signing up with us!',
           buttons: [
-           
             {
               text: 'Continue',
               handler: () => {
@@ -313,12 +309,13 @@ else
                 }
               ]
               });
-              confirm.present();  
+              confirm.present();
         //this.navCtrl.setRoot(DashboardTabsPage,{notificationMsg:data.message.toUpperCase()});
       });
     }
     else {
       this.sharedServiceObj.setPaidStatus(false);
+      this.storage.set('paid_status', '0');
       this.subscriptionMsg=data.message.toUpperCase();
       /*let alert = this.alertCtrl.create({
         title: 'Error',
@@ -393,7 +390,6 @@ else{
         position: 'top',
         cssClass:'errorToast'
       });
-      
       toast.onDidDismiss(() => {
         //console.log('Dismissed toast');
       });
@@ -439,7 +435,7 @@ this.selectedStartupPromoCode=resp;
         packageList => packageList.id === element);
         this.selectedPackagesList.push(foundPackage);
     });
-    
+    debugger;
     /*let selectedIndex = this.selectedPackagesList.indexOf(packageItem);
     if (selectedIndex >= 0) {
       this.selectedPackagesList.splice(selectedIndex, 1);
@@ -466,23 +462,7 @@ if(that.selectedPackagesList!=undefined)
   for(let i=0;i<that.selectedPackagesList.length;i++)
   {
     packageCounter=packageCounter+1;
-    /*if(this.selectedPromoCode!=undefined&&this.selectedPromoCode.coupon==this.promo_code)
-    {
-      if(this.selectedPackagesList[i][0].required=="true"&&this.selectedPromoCode.coupon==this.promo_code)
-      {
-        debugger;
-        this.selectedCoupon=this.selectedPromoCode.coupon;
-        this.totalAmount=this.totalAmount+parseFloat(this.selectedPromoCode.subtract_amount);
-      }
-      else
-      {
-        this.totalAmount=this.totalAmount+parseFloat(this.selectedPackagesList[i][0].amount);
-      }
-    }
-    else
-    {
-      this.totalAmount=this.totalAmount+parseFloat(this.selectedPackagesList[i][0].amount);
-    }*/
+    
     that.subscriptionTotalAmount=that.subscriptionTotalAmount+parseFloat(that.selectedPackagesList[i][0].amount);
     that.totalAmount=that.totalAmount+parseFloat(that.selectedPackagesList[i][0].amount);
     if(that.selectedPackagesList.length==packageCounter)
@@ -492,9 +472,20 @@ if(that.selectedPackagesList!=undefined)
       {
         if(that.selectedPromoCode!=undefined&&that.selectedPromoCode.coupon==that.promo_code)
     {
-      that.totalAmount=that.totalAmount-parseFloat(that.selectedPromoCode.subtract_amount);
-      that.subscriptionTotalAmount=that.subscriptionTotalAmount-parseFloat(that.selectedPromoCode.subtract_amount);
-      that.coupon_used=true;
+if(that.totalAmount>parseFloat(that.selectedPromoCode.subtract_amount)){
+  that.totalAmount=that.totalAmount-parseFloat(that.selectedPromoCode.subtract_amount);
+  that.subscriptionTotalAmount=that.subscriptionTotalAmount-parseFloat(that.selectedPromoCode.subtract_amount);
+  that.coupon_used=true;
+}
+else{
+  let alert = this.alertCtrl.create({
+    title: 'PromoCode',
+    subTitle: "PromoCode token discount amount cannot be greater then total selected package amount.",
+    buttons: ['Ok']
+  });
+  alert.present();
+}      
+
     }
       }
     }
@@ -510,10 +501,19 @@ if(that.selected_pricingPlan_Modal!=undefined&&that.selected_pricingPlan_Modal!=
       {
   if(that.selectedStartupPromoCode!=undefined)
   {
+    if(that.totalAmount>parseFloat(that.selectedStartupPromoCode.result.discount_amount)){
     that.startUpTotalAmount=that.startUpTotalAmount-that.selectedStartupPromoCode.result.discount_amount;
     that.totalAmount=that.totalAmount-that.selectedStartupPromoCode.result.discount_amount;
     that.selectedPromoId=that.selectedStartupPromoCode.result.id
     that.startup_coupon_used=true;
+    }else{
+      let alert = this.alertCtrl.create({
+        title: 'Start-Up PromoCode',
+        subTitle: "Start-Up PromoCode token discount amount cannot be greater then total selected package amount.",
+        buttons: ['Ok']
+      });
+      alert.present();
+    }
     //debugger;
   }
 }

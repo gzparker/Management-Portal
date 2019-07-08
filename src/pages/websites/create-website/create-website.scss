@@ -32,7 +32,17 @@ page-create-website {
     z-index: -1;
     }
   }
-
+  .contentTitle {
+    font-family: $font-one;
+    font-weight: 300;
+    font-size: 18px;
+    padding: 12px 15px;
+    margin: 0;
+    color: #000000 !important;
+    letter-spacing: 1px;
+    text-align: center;
+    background: $title-bg;
+    }
   ion-list.sectionBlock {
   background: #FFF;
     ion-item.sectionTitle {

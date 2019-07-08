@@ -199,18 +199,61 @@ loadAllGroupMembers()
 loadAllChatGroups()
 {
   var that=this;
-  //that.chatGroups=[];
-  //that.chatGroupsOld=[];
+  that.chatGroups=[];
+  that.chatGroupsOld=[];
   var fredRef=firebase.database().ref('groups').on('value', function(snapshot) {
     //var fredRef=that.groupRef.on('value', function(snapshot) {
     if(snapshot.exists())
     {
       that.chatGroups=[];
-  that.chatGroupsOld=[];
+      that.chatGroupsOld=[];
       snapshot.forEach(element => {
         //debugger;
         if(element.key!=undefined)
         {
+          /*if(that.chatGroups.length<=0){
+            debugger;
+            that.chatGroups.push(element);
+          }
+        else{
+          debugger;
+          var foundChatGroups = that.chatGroups.filter(chatGroupElement => chatGroupElement.key === element.key);
+          if(foundChatGroups.length<=0){
+            that.chatGroups.push(element);
+          }
+          else{
+
+          }
+        }
+        if(that.chatGroupsOld.length<=0){
+          debugger;
+          that.chatGroupsOld.push(element);
+        }
+      else{
+        debugger;
+        var foundChatGroupsOld = that.chatGroupsOld.filter(chatGroupOldElement => chatGroupOldElement.key === element.key);
+        if(foundChatGroupsOld.length<=0){
+          that.chatGroupsOld.push(element);
+        }
+      }*/
+      /*if(element.val().isGroup=='1'){
+if(element.val().groupImage==undefined||element.val().groupImage==null||element.val().groupImage==''){
+  element.val().groupImage=this.sharedServiceObj.groupNoImage;
+}else{
+  if(!that.imageExists(element.val().groupImage)){
+    element.val().groupImage=this.sharedServiceObj.groupNoImage;
+  }
+}
+      }
+      if(element.val().isGroup=='0'){
+        if(element.val().groupImage==undefined||element.val().groupImage==null||element.val().groupImage==''){
+          element.val().groupImage=this.sharedServiceObj.profileNoImage;
+        }else{
+          if(!that.imageExists(element.val().groupImage)){
+            element.val().groupImage=this.sharedServiceObj.profileNoImage;
+          }
+        }
+      }*/
           that.chatGroups.push(element);
           that.chatGroupsOld.push(element);
         }
@@ -229,6 +272,16 @@ var chatsObjRef=firebase.database().ref('chats').on('value', function(chatsObjRe
    that.countUnreadMessages();
  }
 });
+
+}
+imageExists(image_url){
+
+  var http = new XMLHttpRequest();
+
+  http.open('HEAD', image_url, false);
+  http.send();
+
+  return http.status != 404;
 
 }
 countUnreadMessages()
@@ -315,7 +368,7 @@ if(i==snapshot.numChildren())
       
 
 }
-deleteGroupChat(groupId,id) {
+deleteGroupChat(group,groupId,id) {
  var that=this;
  let confirm = this.alertCtrl.create({
   title: 'Delete Chat?',
@@ -335,7 +388,10 @@ deleteGroupChat(groupId,id) {
 
   if(deleteGroupRefVal.exists())
  {
-
+  let selectedIndex = that.chatGroups.indexOf(group);
+  if (selectedIndex >= 0) {
+  that.chatGroups.splice(selectedIndex, 1);
+  }
   var deletedGroup=deleteGroupRefVal.val();
                             
   var deletedGroupArray=[];

@@ -70,18 +70,15 @@ this.loggedInUserInfo=data;
   }
   loadAllContacts()
   {
-    //debugger;
     let that=this;
     that.allAvailableContacts=[];
     let firebaseUserId = this.storage.get('firebaseUserId');
     firebaseUserId.then((data) => {
     var fredRef=firebase.database().ref('users').on('child_added', function(snapshot) {
-      //debugger;
       if(data!=snapshot.val().fbId)
       {
         if(that.groupMembersData.length>0)
         {
-          //debugger;
           if(snapshot.val().fbId!=undefined&&snapshot.val().fbId!=null)
           {
 
@@ -100,7 +97,6 @@ this.loggedInUserInfo=data;
       }
   });
     });
-   // debugger;
   }
   updateGroup()
   {
@@ -113,7 +109,6 @@ this.loggedInUserInfo=data;
     var groupMembers=firebase.database().ref('groupMembers');
     that.groupMembersItem.forEach(function(memberData) {
       var name="";
-      //debugger;
       var fbId="";
       var image_url="";
 if(memberData.first_name!=undefined)
@@ -131,7 +126,7 @@ fbId=memberData.fbId;
 if(memberData.image_url)
 {
 image_url=memberData.image_url;
-}                                   //debugger;
+}
 groupMembers.push({
 memberName:name,
 userId:fbId,
@@ -143,11 +138,9 @@ provider: 'Firebase'
 
 i=i+1;
 i=i;
-//debugger;
 
     });
     this.ngZone.run(() => {
-      //debugger;
       this.navCtrl.push(ChatPage, { notificationMsg: "Group updated successfully."});
     });
   }

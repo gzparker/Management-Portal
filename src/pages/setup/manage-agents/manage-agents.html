@@ -9,7 +9,7 @@
   <ion-navbar>
   
     <ion-buttons end *ngIf="max_agents_added==false">
-      <button ion-button (click)="createAgent();" *ngIf="isCreateAgentAccess==true">
+      <button ion-button (click)="createAgent();" *ngIf="isCreateAgentAccess==true&&showCreateButton==true">
         <ion-icon name="person-add"></ion-icon>
       </button>
     </ion-buttons>

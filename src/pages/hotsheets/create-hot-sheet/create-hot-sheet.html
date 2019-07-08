@@ -99,15 +99,6 @@
           <div id="brief_description" contenteditable="true" class="expandText">
               Overview
             </div>
-          <!--<ckeditor
-          [config]="CkeditorConfig"
-          [readonly]="false" [(ngModel)]="brief_description"
-          (change)="onHotSheetBreifDescChanged($event)"
-          (blur)="onHotSheetBreifDescBlured($event)"
-          (focus)="onHotSheetBreifDescFocused($event)"
-          (ready)="onHotSheetBreifDescCreated($event)"
-          debounce="500" name="editorMainDescription">
-          </ckeditor>-->
         </div>
 
         <div class="mainDescription">
@@ -115,16 +106,6 @@
             <div id="main_description" contenteditable="true" class="expandText">
                 Main Description
               </div>
-          <!--<ion-label>Main Description</ion-label>
-          <ckeditor [(ngModel)]="main_description"
-          [config]="CkeditorConfig"
-          [readonly]="false"
-          (change)="onHotSheetDescChanged($event)"
-          (blur)="onHotSheetDescBlured($event)"
-          (focus)="onHotSheetDescFocused($event)"
-          (ready)="onHotSheetDescCreated($event)"
-          debounce="500" name="editorMainDescription">
-          </ckeditor>-->
         </div>
 
         <ion-item class="noPadding">
@@ -292,11 +273,13 @@
             </ion-item>
             <ion-item>
               <ion-label>Property Size</ion-label>        
-              <ion-input type="text" [(ngModel)]="unit_size_min"
-              name="unit_size_min" id="unit_size_min" placeholder="min" (blur)="updateSearchObject()"></ion-input>
+              <ion-input type="tel" [(ngModel)]="unit_size_min"
+              name="unit_size_min" id="unit_size_min" placeholder="min" pattern="^[0-9]*$" 
+              inputmode="numeric" (blur)="updateSearchObject()" (ionChange)="validatePropertySize()"></ion-input>
               
-              <ion-input type="text" [(ngModel)]="unit_size_max" 
-              name="unit_size_max" id="unit_size_max" placeholder="max" (blur)="updateSearchObject()"></ion-input>
+              <ion-input type="tel" [(ngModel)]="unit_size_max" 
+              name="unit_size_max" id="unit_size_max" placeholder="max" pattern="^[0-9]*$" 
+              inputmode="numeric" (blur)="updateSearchObject()" (ionChange)="validatePropertySize()"></ion-input>
             </ion-item>
 
             <!--<ion-item *ngIf="msl_id!=undefined">
@@ -402,11 +385,13 @@
             <ion-item>
               <ion-label fixed>Year Built</ion-label>
               
-               <ion-input type="text" [(ngModel)]="year_built_min"
-               name="year_built_min" id="year_built_min" placeholder="min" (blur)="updateSearchObject()"></ion-input>
+               <ion-input type="tel" [(ngModel)]="year_built_min"
+               name="year_built_min" id="year_built_min" placeholder="min" minlength="4" maxlength="4" pattern="^[0-9]*$" 
+               inputmode="numeric" (blur)="updateSearchObject()" (ionChange)="validateYear()"></ion-input>
            
-               <ion-input type="text" [(ngModel)]="year_built_max" 
-               name="year_built_max" id="year_built_max" placeholder="max" (blur)="updateSearchObject()"></ion-input>
+               <ion-input type="tel" [(ngModel)]="year_built_max" 
+               name="year_built_max" id="year_built_max" placeholder="max" minlength="4" maxlength="4" pattern="^[0-9]*$" 
+               inputmode="numeric" (blur)="updateSearchObject()" (ionChange)="validateYear()"></ion-input>
               
             </ion-item>
 
@@ -554,7 +539,7 @@
 
     <div class="dashboardBtn">
       <button ion-button color="primary" class="colorEnabled button_color" block (click)="createHotSheet();" 
-      [disabled]="!hotSheetForm.valid||polygon_search==''">Create HotSheet</button>
+      [disabled]="!hotSheetForm.valid||polygon_search==''||!validYear||!validPrice">Create HotSheet</button>
     </div>
 
   </form>

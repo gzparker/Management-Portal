@@ -1,6 +1,7 @@
 import { Component, ViewChild, NgZone,ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, Platform,
-  MenuController,LoadingController } from 'ionic-angular';
+  MenuController,LoadingController,ToastController } from 'ionic-angular';
+  import { DatePipe } from '@angular/common'
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Observable } from 'rxjs/Observable';
 import { Storage } from '@ionic/storage';
@@ -29,6 +30,9 @@ declare var firebase:any;
 export class CreateWebsitePage {
   @ViewChild('searchTargetCityBar', { read: ElementRef }) searchTargetCityBar: ElementRef
   searchTargetCityElement: HTMLInputElement = null;
+  public yearValues:any[]=[];
+  public monthValues:any[]=[];
+  public expiryDate: string="";
   public website_domain:string="";
   public identity_name:string="";
   public websiteCreateMsg:string="";
@@ -46,6 +50,12 @@ export class CreateWebsitePage {
   public homepage_meta_title:string="";
   public allMls:any[]=[];
   public mls_server_id:any[]=[];
+  public startUpPlansList:any[]=[];
+  public allCreditCards:any[]=[];
+  public startUpTotalAmount:number=0;
+  public selected_pricingPlan_Modal:string='';
+  public selected_creditCard_Modal:string='';
+
   public office_id:string="";
   public broker_id:string="";
   public agent_id:string="";
@@ -72,6 +82,15 @@ export class CreateWebsitePage {
   public mapSidebarColor:string="";
   public mapSidebarColorOption:string="";
   public isCustomColor:string="0";
+  public full_name:string="";
+  public cc_number:string="";
+  public cvc:string="";
+  public exp_month:string="";
+  public exp_year:string="";
+  public customer_id:string="";
+  public source:string="";
+
+
   public login_register_popup_time:string="8000";
   public isSsl:boolean=false;
   public show_open_houses:boolean=false;
@@ -81,6 +100,7 @@ export class CreateWebsitePage {
   public feature_office_listings:boolean=false;
   public customColorOption:boolean=false;
   public customColorOptionModal:boolean=false;
+  public websiteCount:string="";
   public geoLocationOptions = {
     types: ['(cities)'],
     componentRestrictions: {country: "us"}
@@ -97,10 +117,24 @@ export class CreateWebsitePage {
     public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,
     public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform, 
-    public ngZone: NgZone,public menuCtrl: MenuController,public loadingCtrl: LoadingController) {
+    public ngZone: NgZone,public menuCtrl: MenuController,public loadingCtrl: LoadingController,
+    private toastCtrl: ToastController,public datepipe: DatePipe) {
+      this.setYearMonthValues();
       let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
     generalWebsiteSettings.then((data) => {
       this.service_id=data.service_id;
+      if(this.navParams.get('websiteCount')!=undefined)
+      {
+        //debugger;
+       this.websiteCount = this.navParams.get('websiteCount');
+       //debugger;
+       if(this.websiteCount=='1'){
+        this.listAllStartUpPlans();
+        
+       }
+       
+       //debugger;
+      }
     });
   }
 
@@ -119,13 +153,33 @@ export class CreateWebsitePage {
     //debugger;
     member_id.then((data) => {
       this.userId=data;
+      if(this.websiteCount=='1'){
+      this.loadAllCreditCards();
+      }
     });
+     
     this.initCityAutocomplete();
     this.loadAllAvailableMLS();
+    
   }
   ionViewDidEnter()
   {
     this.sharedServiceObj.updateColorThemeMethod(null);
+  }
+  setYearMonthValues()
+  {
+    //debugger;
+    let currentYear=parseInt(new Date().getFullYear().toString());
+    for(let i=currentYear;i<=currentYear+50;i++)
+    {
+      this.yearValues.push(i);
+    }
+    for(let i=1;i<=12;i++)
+    {
+      this.monthValues.push(i);
+    }
+    //debugger;
+    this.expiryDate=new Date(new Date().getFullYear().toString()+"-"+((new Date().getMonth()+1).toString())).toISOString();
   }
   initCityAutocomplete(): void {
    
@@ -164,6 +218,46 @@ export class CreateWebsitePage {
      });
     //debugger;
      }
+     loadAllCreditCards()
+     {
+       //debugger;
+       if(this.userId.toString())
+       {
+         this.userServiceObj.allListCreditCards(this.userId.toString(),this.service_id)
+       .subscribe((result) => this.loadAllCreditCardsResp(result));
+       }
+     }
+     loadAllCreditCardsResp(result:any)
+     {
+       if(result.status==true)
+       {
+         //debugger;
+         this.allCreditCards=result.all_cards;
+       }
+       else
+       {
+         this.allCreditCards=[];
+       }
+     }
+     setExpDateFormate(exp_month:string,exp_year:string)
+     {
+       
+       let formatedDate=new Date(exp_year+"/"+exp_month);
+       //debugger;
+       return this.datepipe.transform(formatedDate, 'MM/yy');
+       //return formatedDate;
+     }
+  listAllStartUpPlans(){
+      //debugger;
+      this.subscriptionObj.getServiceStartUpPlanList(this.service_id)
+        .subscribe((result) => this.listAllStartUpPlansResp(result)); 
+    }
+  listAllStartUpPlansResp(resp: any){
+    //debugger;
+      if (resp.status == true) {
+        this.startUpPlansList=resp.result;
+      }
+    }
   loadAllAvailableMLS()
   {
     this.subscriptionObj.loadAllAvailableMLS()
@@ -183,7 +277,6 @@ else
   homepageDescBlured(quill) {
     //console.log('editor blur!', quill);
   }
- 
   homepageDescFocused(quill) {
     //console.log('editor focus!', quill);
   }
@@ -224,6 +317,8 @@ this.homepageMeta_description=html;
     let feature_broker_listings_dummy="0";
     let feature_office_listings_dummy="0";
     let isSsl_dummy="0";
+    this.exp_month = this.expiryDate.split("-")[1];
+    this.exp_year = this.expiryDate.split("-")[0];
     if(this.show_open_houses)
        {
          show_open_houses_dummy="1";
@@ -248,7 +343,6 @@ this.homepageMeta_description=html;
        {
         isSsl_dummy="1";
        }
-    //this.domainAccess=this.localStorageService.get('domainAccess');
     let isActiveFinal="1";
     let intagentWebsiteFinal:number=1;
      //if(this.domainAccess)
@@ -272,12 +366,22 @@ intagentWebsiteFinal=0;
        if(this.website_domain.indexOf("http://www")<0 && this.website_domain.indexOf("https://www")<0)
        {
          //debugger;
-         this.website_domain="http://www."+this.website_domain;
+         this.website_domain="https://www."+this.website_domain;
        }
        else
        {
          this.website_domain=this.website_domain;
        }
+       //debugger;
+  if(this.websiteCount=='1')
+  {
+    var foundStartUpPlan = this.startUpPlansList.filter(startUpPlan => startUpPlan.id === this.selected_pricingPlan_Modal);
+    this.startUpTotalAmount=foundStartUpPlan[0].plan_cost;
+    var foundCreditCard =  this.allCreditCards.filter(creditCardPlan => creditCardPlan.unique_id === this.selected_creditCard_Modal);
+    this.customer_id=foundCreditCard[0].customer_id;
+this.source=foundCreditCard[0].source;
+    //debugger;
+  }
   this.userServiceObj.createWebsite(this.userId,isActiveFinal,this.website_domain,this.identity_name,
     intagentWebsiteFinal,this.website_a_record_location,this.identity_phone_number,document.getElementById("homepage_description").innerHTML,
     this.homepageMeta_description,this.homepage_search_text,this.homepage_meta_title,this.mls_server_id,
@@ -287,19 +391,36 @@ intagentWebsiteFinal=0;
     this.buttonColorOption,this.textColorOption,this.backgroundColorOption,this.customColorOptionModal,this.contentTitleColor,
     this.contentTitleColorOption,this.paginationColor,this.paginationColorOption,this.modalBackgroundColor,this.modalBackgroundColorOption,
     this.mapSidebarColor,this.mapSidebarColorOption,show_new_listing_dummy,show_open_houses_dummy,feature_agent_listings_dummy,
-    feature_broker_listings_dummy,feature_office_listings_dummy,isSsl_dummy,this.login_register_popup_time,this.target_city,this.target_place_id)
+    feature_broker_listings_dummy,feature_office_listings_dummy,isSsl_dummy,this.login_register_popup_time,this.target_city,
+    this.target_place_id,this.customer_id,this.source,this.websiteCount,
+    this.startUpTotalAmount.toString(),this.service_id)
     .subscribe((result) => this.createWebsiteResp(result));
-    // }
       }
   }
   createWebsiteResp(result:any):void{
- //debugger;
-  this.websiteCreateMsg="Website has been created successfully.";
+    if(result.status==true){
+      this.websiteCreateMsg="Website has been created successfully.";
   
-  this.ngZone.run(() => {
-    CKEDITOR.instances['homepage_description'].destroy(true);
-  this.navCtrl.setRoot(EditLeadRoutingPage,{websiteId:result.website_id});
-  });
+      this.ngZone.run(() => {
+        CKEDITOR.instances['homepage_description'].destroy(true);
+      this.navCtrl.setRoot(EditLeadRoutingPage,{websiteId:result.website_id});
+      });
+    }else{
+      //debugger;
+      let toast = this.toastCtrl.create({
+        message: result.message,
+        duration: 3000,
+        position: 'top',
+        cssClass:'errorToast'
+      });
+      
+      toast.onDidDismiss(() => {
+        //console.log('Dismissed toast');
+      });
+      toast.present();
+    }
+ //debugger;
+  
   }
   ////////////////////////////////////////////////////////////////////////
   toggleCustomColor(){

@@ -54,7 +54,7 @@
 
     <ion-item *ngFor="let access_option of all_access_levels" >
        
-        <ion-label (tap)="setSelectedAccessLevels(access_option.id);" tappable>{{access_option.name}}
+        <ion-label (tap)="setSelectedAccessLevels(access_option.id);">{{access_option.name}}
         </ion-label>
         <ion-checkbox red item-right name="chkOption_{{access_option.id}}" id="chkOption_{{access_option.id}}" (ionChange)="setSelectedAccessLevels(access_option.id);"  checked="{{checkAccessLevelExistis(access_option.id)}}">
         </ion-checkbox>

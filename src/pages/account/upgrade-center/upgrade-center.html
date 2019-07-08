@@ -22,13 +22,13 @@
 <!--<form class="centerStage" role="form" data-toggle="validator" #subscribeForm="ngForm">-->
   <ion-list class="customWrapper centerStage animated lightSpeedIn" *ngIf="!userSubscribed">
 
-    <div class="formShadow" *ngIf="intervalBasedSubscribedPackages.length>0">
+    
       <ion-item>
           <ion-label *ngIf="pay_yearly==false">Pay Monthly</ion-label>
           <ion-label *ngIf="pay_yearly==true">Pay Yearly</ion-label>
           <ion-toggle [(ngModel)]="pay_yearly" name="pay_yearly" (ngModelChange)="listIntervalBasedPackages()"></ion-toggle>
       </ion-item>
-      
+      <div class="formShadow" *ngIf="intervalBasedSubscribedPackages.length>0">
       <h3 class="centerStage contentTitle animated bounceInRight">Subscribed Packages</h3>
       <ion-list>
         <ion-item class="OptPackage" *ngFor="let package of intervalBasedSubscribedPackages">

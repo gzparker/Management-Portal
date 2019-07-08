@@ -66,10 +66,6 @@ export class EditRolePage {
     this.sharedServiceObj.updateColorThemeMethod(null);
   }
   ngAfterContentInit(){
-    //debugger;
-   
-     
-    //debugger;
   }
   getAllAccessLevels()
   {
@@ -89,8 +85,6 @@ this.all_access_levels=result.results;
     {
       this.all_access_levels=[];
     }
-
-    //debugger;
   }
 setSelectedAccessLevels(roleId:string)
 {
@@ -107,14 +101,10 @@ let selectedIndex = this.access_level.indexOf(roleId);
 
       this.access_level.push(roleId);
     }
-//debugger;
 }
 checkAccessLevelExistis(access_option)
 {
-  //debugger;
   let selectedIndex = this.access_level.indexOf(access_option);
-      
-    //debugger;
     if (selectedIndex >= 0) {
  return true;
    }
@@ -122,7 +112,6 @@ checkAccessLevelExistis(access_option)
    {
      return false;
    }
-    //return true;
 }
   loadRoleDetail()
   {
@@ -136,20 +125,16 @@ checkAccessLevelExistis(access_option)
       if(result.result)
       {
         this.roleDetail=result.result;
-        //debugger;
         this.role_name=this.roleDetail.name;
         if(this.roleDetail.allowed_options!=null)
       {
         this.access_level=this.roleDetail.allowed_options.split(",");
-        //debugger;
       }
       }
     }
-    //debugger;
   }
   updateRole()
   {
-   // debugger;
 this.userServiceObj.updateRole(this.access_level,this.role_id,this.role_name)
 .subscribe((result) => this.updateRoleResp(result));
   }
@@ -179,7 +164,6 @@ else
   });
   
   toast.onDidDismiss(() => {
-    //console.log('Dismissed toast');
   });
   toast.present();
 }
