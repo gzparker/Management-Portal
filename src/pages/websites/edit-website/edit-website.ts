@@ -1,6 +1,6 @@
 import { Component, ViewChild, NgZone,ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, Platform,
-  MenuController,LoadingController } from 'ionic-angular';
+  MenuController,LoadingController,ActionSheetController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Observable } from 'rxjs/Observable';
@@ -144,7 +144,7 @@ export class EditWebsitePage {
   ]};
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
-    public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,
+    public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,public actionsheetCtrl: ActionSheetController,
     public sharedServiceObj: SharedProvider, private storage: Storage,public brMaskerIonic3: BrMaskerIonic3,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform, 
     public ngZone: NgZone,public menuCtrl: MenuController,public loadingCtrl: LoadingController,
@@ -341,45 +341,87 @@ else
     }
  
    }
-   takePicture(){
-      let options =
-      {
-        quality: 100,
-        correctOrientation: true,
-        encodingType: this.camera.EncodingType.JPEG,
-        mediaType: this.camera.MediaType.PICTURE,
-        targetHeight:100,targetWidth:100,allowEdit:true
-      };
-      this.camera.getPicture(options)
-      .then((data) => {
-        var image:any = new Image();
-        this.identity_logo="data:image/jpeg;base64," +data;
-        var that = this;
-        alert(this.identity_logo);
-        image.src = this.identity_logo;
-          image.onload = function () {
-           alert(this.width);
-            that.logoCropperSettings.croppedWidth = this.width;
-            that.logoCropperSettings.croppedHeight = this.height;
-            
-            that.createLogoThumbnail(this.identity_logo);
-        };
-        //this.logoCropperSettings.croppedWidth = this.identity_logo.width;
-          //this.logoCropperSettings.croppedHeight = this.identity_logo.height;
-      
-        /*if(this.isApp)
+   openIdentityLogoPicture(){
+    let actionSheet = this.actionsheetCtrl.create({
+      title: 'Option',
+      cssClass: 'action-sheets-basic-page',
+      buttons: [
         {
-       this.crop
-       .crop(this.identity_logo, {quality: 75,targetHeight:100,targetWidth:100})
-      .then((newImage) => {
-          this.identity_logo=newImage;
-        }, error => {
-          alert(error)});
-        }*/
-      }, function(error) {
-        console.log(error);
-      });
+          text: 'Take photo',
+          icon: 'ios-camera-outline',
+          handler: () => {
+            this.takeIdentityLogoPicture();
+          }
+        },
+        {
+          text: 'Choose photo from Gallery',
+          icon: 'ios-images-outline',
+          handler: () => {
+            this.selectIdentityLogoPicture();
+          }
+        }
+  ]
+  });
+  actionSheet.present();
+  }
+   takeIdentityLogoPicture(){
+    let that=this;
+       let options =
+       {
+         allowEdit: true,
+       destinationType: that.camera.DestinationType.DATA_URL,
+       encodingType: that.camera.EncodingType.JPEG,
+       mediaType: that.camera.MediaType.PICTURE,
+       sourceType: that.camera.PictureSourceType.CAMERA
+       };
+       this.camera.getPicture(options)
+       .then((data) => {
+         that.identity_logo="data:image/jpeg;base64," +data;
+         if(that.isApp)
+         {
+        that.crop
+        .crop(that.identity_logo, {quality: 75,targetHeight:100,targetWidth:100})
+       .then((newImage) => {
+        that.identity_logo=newImage;
+         }, error => {
+         });
+         }
+       }, function(error) {
+  
+         console.log(error);
+       });
     }
+    selectIdentityLogoPicture(){
+      let that=this;
+         let options =
+         {
+           allowEdit: true,
+         destinationType: that.camera.DestinationType.DATA_URL,
+         encodingType: that.camera.EncodingType.JPEG,
+         mediaType: that.camera.MediaType.PICTURE,
+         sourceType: that.camera.PictureSourceType.SAVEDPHOTOALBUM
+         };
+         this.camera.getPicture(options)
+         .then((data) => {
+           that.identity_logo="data:image/jpeg;base64," +data;
+           //let image : any= new Image();
+            //image.src = this.personalImage;
+           //this.personalImageCropper.setImage(image);
+           if(that.isApp)
+           {
+          that.crop
+          .crop(that.identity_logo, {quality: 75,targetHeight:100,targetWidth:100})
+         .then((newImage) => {
+          that.identity_logo=newImage;
+           }, error => {
+             //alert(error)
+           });
+           }
+         }, function(error) {
+    
+           console.log(error);
+         });
+      }
     websiteFavIconFileChangeListener($event) {
      // debugger;
       this.crop_favivon_image=true;
@@ -426,33 +468,84 @@ else
         this.crop_favivon_image=true;
       }
      }
+     openFavIconPicture(){
+      let actionSheet = this.actionsheetCtrl.create({
+        title: 'Option',
+        cssClass: 'action-sheets-basic-page',
+        buttons: [
+          {
+            text: 'Take photo',
+            icon: 'ios-camera-outline',
+            handler: () => {
+              this.takeFavIconPicture();
+            }
+          },
+          {
+            text: 'Choose photo from Gallery',
+            icon: 'ios-images-outline',
+            handler: () => {
+              this.selectFavIconPicture();
+            }
+          }
+    ]
+    });
+    actionSheet.present();
+    }
     takeFavIconPicture(){
-      let options =
-      {
-        quality: 100,
-        correctOrientation: true,
-        encodingType: this.camera.EncodingType.JPEG,
-        mediaType: this.camera.MediaType.PICTURE,
-        targetHeight:100,targetWidth:100,allowEdit:true
-      };
-      this.camera.getPicture(options)
-      .then((data) => {
-        this.identity_icon="data:image/jpeg;base64," +data;
-        this.createFavIconThumbnail(this.identity_icon);
-        /*if(this.isApp)
-        {
-       this.crop
-       .crop(this.identity_icon, {quality: 75,targetHeight:100,targetWidth:100})
-      .then((newImage) => {
-          this.identity_icon=newImage;
-        }, error => {
-         
-          alert(error)});
-        }*/
-      }, function(error) {
-
-        console.log(error);
-      });
+      let that=this;
+       let options =
+       {
+         allowEdit: true,
+       destinationType: that.camera.DestinationType.DATA_URL,
+       encodingType: that.camera.EncodingType.JPEG,
+       mediaType: that.camera.MediaType.PICTURE,
+       sourceType: that.camera.PictureSourceType.CAMERA
+       };
+       this.camera.getPicture(options)
+       .then((data) => {
+         that.identity_icon="data:image/jpeg;base64," +data;
+         if(that.isApp)
+         {
+        that.crop
+        .crop(that.identity_icon, {quality: 75,targetHeight:100,targetWidth:100})
+       .then((newImage) => {
+        that.identity_icon=newImage;
+         }, error => {
+           //alert(error)
+         });
+         }
+       }, function(error) {
+  
+         console.log(error);
+       });
+    }
+    selectFavIconPicture(){
+      let that=this;
+       let options =
+       {
+         allowEdit: true,
+       destinationType: that.camera.DestinationType.DATA_URL,
+       encodingType: that.camera.EncodingType.JPEG,
+       mediaType: that.camera.MediaType.PICTURE,
+       sourceType: that.camera.PictureSourceType.CAMERA
+       };
+       this.camera.getPicture(options)
+       .then((data) => {
+         that.identity_icon="data:image/jpeg;base64," +data;
+         if(that.isApp)
+         {
+        that.crop
+        .crop(that.identity_icon, {quality: 75,targetHeight:100,targetWidth:100})
+       .then((newImage) => {
+        that.identity_icon=newImage;
+         }, error => {
+           //alert(error)
+         });
+         }
+       }, function(error) {
+  
+         console.log(error);
+       });
     }
   editWebsite():void{
     if(this.userId!=""){
@@ -621,9 +714,6 @@ this.custom_css=result.result.custom_css;
     }
   }
   loadLogo(baseUrl:string,imageUrl:string) {
-  //alert('here');
-   //alert(imageUrl);
-    //this.hideLogoCropper=true;
     const self = this;
     var image:any = new Image();
     const xhr = new XMLHttpRequest()
@@ -632,19 +722,16 @@ this.custom_css=result.result.custom_css;
     xhr.send();
     xhr.addEventListener("load", function() {
         var reader = new FileReader();
-        reader.readAsDataURL(xhr.response); 
-      // alert('1');
+        reader.readAsDataURL(xhr.response);
         reader.onloadend = function (loadEvent:any) {
           image.src = loadEvent.target.result;
-//alert('2');
-//alert(loadEvent.target.result);
           image.onload = function () {
-         //alert('yes');
-            self.logoCropperSettings.croppedWidth = this.width;
-            self.logoCropperSettings.croppedHeight = this.height;
             self.identity_logo=image.src;
-            //self.companyLogoCropper.setImage(image);
-            self.createLogoThumbnail(image.src);
+            if(!self.isApp){
+              self.logoCropperSettings.croppedWidth = this.width;
+              self.logoCropperSettings.croppedHeight = this.height;
+              self.createLogoThumbnail(image.src);
+            }
         };
       };
     });
@@ -666,12 +753,12 @@ this.custom_css=result.result.custom_css;
           image.src = loadEvent.target.result;
          
           image.onload = function () {
-          // debugger;
+            self.identity_icon=image.src;
+            if(!self.isApp){
             self.favIconCropperSettings.croppedWidth = this.width;
             self.favIconCropperSettings.croppedHeight = this.height;
-            self.identity_icon=image.src;
-            //self.favIconLogoCropper.setImage(image);
             self.createFavIconThumbnail(image.src);
+            }
         };
       };
     });

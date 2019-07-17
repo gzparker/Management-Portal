@@ -14,19 +14,7 @@
     <ion-buttons end>
       <button ion-button (click)="updateGlobalSettings();" [disabled]="!globalSettingsForm.valid">
         <ion-icon name="ios-bookmark"></ion-icon>
-      </button><!--<input [value]="color"
-       [style.background]="color"
-       [cpPosition]="'bottom'"
-       [(colorPicker)]="color"/>-->
-       <!--<span [style.background]="colorBase"
-      [cpPosition]="'bottom'"
-      [cpPositionOffset]="'50%'"
-      [cpPositionRelativeToArrow]="true" (colorPickerChange)="colorBase=$event"
-      [(colorPicker)]="colorBase" [cpOutputFormat]="'rgb'">Change Color</span>-->
-        <!--<button ion-button color="secondary" outline [colorPicker]="colorBase" 
-        (colorPickerChange)="colorBase=$event"
-        [ngStyle]="{'background-color': colorBase}" [cpPosition]="'bottom'" 
-           [cpOutputFormat]="'rgb'" full small>Change Color</button>-->
+      </button>
     </ion-buttons>
   </ion-navbar>
 
@@ -47,19 +35,13 @@
       
       <ion-list *ngIf="isApp">
 
-          <ion-item class="customList nobrTop">
-            <button ion-button color="primary" block (click)="takeCompanyLogoPicture();" >Select Identity Photo</button>
-          </ion-item>
-          <ion-item *ngIf="companyLogoImage!=''">
+        <ion-item class="customList nobrTop">
+          <button ion-button color="primary" block (click)="openCompanyImageBox();" >Take Identity Photo</button>
+        </ion-item>
+        <ion-item *ngIf="companyLogoImage!=''">
             <img [src]="companyLogoImage" />
-          </ion-item>
-          <!--<ion-item>
-            <button ion-button color="primary" block (click)="takePersonalPicture();" >Select Personal Image</button>
-          </ion-item>
-          <ion-item *ngIf="personalImage!=''">
-            <img [src]="personalImage" />
-          </ion-item>-->
-          </ion-list>
+        </ion-item>
+      </ion-list>
       
           <ion-list *ngIf="!isApp" class="customList uploadPhoto">
               
@@ -80,26 +62,7 @@
                 <ion-icon name="md-create"></ion-icon>
               </button>
             </div>
-            
-
-          <!--<ion-list-header>
-            <h2>Select Personal Logo</h2>
-          </ion-list-header>
-          <ion-item *ngIf="dataPersonalImage.image">
-            <ion-label>Edit Image</ion-label>
-            <ion-toggle [(ngModel)]="edit_personal_image" name="edit_personal_image" (click)="showHidePersonalCropper()"></ion-toggle>
-          </ion-item>
-          <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="personalFileChangeListener($event)">
-       
-          <img-cropper #personalCropper [image]="dataPersonalImage" [settings]="personalCropperSettings"
-           (onCrop)="personalImageCropped($event)" *ngIf="hidePersonalCropper"></img-cropper>
-          <br>
-          <span *ngIf="dataPersonalImage.image" >
-              <img [src]="dataPersonalImage.image" [width]="personalWidth"
-               [height]="personalHeight">
-              
-          </span>-->
-      
+        
         </ion-list>
 
         <div class="customList b18 timezoneBlock" *ngIf="globalSettings&&user.timezone!=null">
@@ -115,15 +78,6 @@
         </div>
     </div>
     
-
-    <!--<ion-input type="text" required [(ngModel)]="timezone" name="timezone" id="timezone"></ion-input>-->
-    <!--<ion-select [(ngModel)]="access_level" 
-    name="access_level" required>
-    <ion-option value="admin">Admin</ion-option>
-    <ion-option value="agent">Agent</ion-option>
-    </ion-select>-->
-
-  
   <div class="formUI" style="margin-top: 16px;" *ngIf="selectedRoute==''">
 
     <ion-item class="filterColorOptions">
@@ -154,11 +108,7 @@
           (colorPickerChange)="secondColor=$event"
           [ngStyle]="{'background-color': secondColor}" [cpPosition]="'bottom'" [cpCancelButton]="true" 
             [cpCancelButtonClass]="'btn btn-primary btn-xs'" [cpOutputFormat]="'rgb'" full small>Change Color</button>
-          <!--<ion-input [colorPicker]="secondColor" 
-          (colorPickerChange)="secondColor=$event"
-            [style.background]="secondColor" [cpPosition]="'bottom'" [cpCancelButton]="true" 
-            [cpCancelButtonClass]="'btn btn-primary btn-xs'"
-            [value]="secondColor" [cpOutputFormat]="'rgba'"></ion-input>-->
+  
       </div>
       </ion-col>
       <ion-col col-4>
@@ -168,10 +118,7 @@
             (colorPickerChange)="thirdColor=$event"
             [ngStyle]="{'background-color': thirdColor}" [cpPosition]="'bottom'" [cpCancelButton]="true" [cpCancelButtonClass]="'btn btn-primary btn-xs'"
                [cpOutputFormat]="'rgb'" full small>Change Color</button>
-            <!--<ion-input [colorPicker]="thirdColor" 
-            (colorPickerChange)="thirdColor=$event"
-            [style.background]="thirdColor" [cpPosition]="'bottom'" [cpCancelButton]="true" [cpCancelButtonClass]="'btn btn-primary btn-xs'"
-              [value]="thirdColor" [cpOutputFormat]="'rgba'"></ion-input>-->
+  
       </div>
       </ion-col>
     </ion-row>
@@ -224,35 +171,41 @@
           <ion-item *ngIf="dwellerImage!=''">
             <img [src]="dwellerImage" />
           </ion-item>
-          <!--<ion-item>
-            <button ion-button color="primary" block (click)="takePersonalPicture();" >Select Personal Image</button>
-          </ion-item>
-          <ion-item *ngIf="personalImage!=''">
-            <img [src]="personalImage" />
-          </ion-item>-->
+
           </ion-list>
       
           <ion-list *ngIf="!isApp" class="customList topDweller uploadPhoto">
               
             <ion-list-header><h2>Top Dweller Image</h2></ion-list-header>
 
-            <!-- Main Image Uploader -->
             <div class="AccountImageUploader">
 
-              <!-- Image Cropper Result -->
               <div class="imgCropperPreviewResult" *ngIf="dataDwellerImage.image">
               <img [src]="dataDwellerImage.image" [width]="dwellerWidth"
                [height]="dwellerHeight">                   
               </div>
-
-              <!-- Image Upload Button -->
               <input id="custom-input" class="btnUpload colorEnabled button_color" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="dwellerFileChangeListener($event)">
               <button ion-button (click)="editImage('dwellerImage');" *ngIf="isDwellerImageExist">
                 <ion-icon name="md-create"></ion-icon>
               </button>
             </div>
         </ion-list>
-
+        <ion-list *ngIf="isApp" class="customList topDweller uploadPhoto">
+              
+            <ion-list-header><h2>Top Dweller Image</h2></ion-list-header>
+            <ion-item class="customList nobrTop">
+              <button ion-button color="primary" block (click)="openDwellerPicture();" >Take Top Dweller Image</button>
+            </ion-item>
+            <!--<ion-item class="customList nobrTop">
+                <button ion-button color="primary" block (click)="takeDwellerPicture();" >Take Top Dweller Image</button>
+              </ion-item>
+              <ion-item class="customList nobrTop">
+                <button ion-button color="primary" block (click)="selectDwellerPicture();" >Select Top Dweller Image</button>
+              </ion-item>-->
+              <ion-item *ngIf="dwellerImage!=''">
+                <img [src]="dwellerImage" />
+              </ion-item>
+        </ion-list>
         <ion-label class="colorSchemeLabel label label-md" style="margin-top:22px !important;">Top Dweller Colors</ion-label>
         <ion-list class="customColorOption topDwellerColors">
         <ion-item (click)="showColorPopUp('side_bar_color_dweller')">

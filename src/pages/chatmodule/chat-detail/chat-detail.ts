@@ -169,6 +169,7 @@ this.chatRef.off("value");
     refresher.complete();
   }
     var chatDetailArrayExist=[];
+    this.ngZone.run(() => {
     that.groupRef=firebase.database().ref('groups');
     that.groupRef.orderByChild("groupId").equalTo(that.groupId).on("value", function(snapshot) {
       snapshot.forEach(element=>{
@@ -214,15 +215,12 @@ if(i==snapshot.numChildren()){
     snapshot.forEach(element => {
       if(element.key!=undefined)
       {
-        //debugger;
         if(that.chatDetailArray.length<=0){
           that.chatDetailArray.push(element);
         }
       else{
-        //debugger;
         var foundChat = that.chatDetailArray.filter(chatElement => chatElement.key === element.key);
         if(foundChat.length<=0){
-          //debugger;
           that.chatDetailArray.push(element);
         }
       }
@@ -235,6 +233,7 @@ if(i==snapshot.numChildren()){
     
   });
   });
+    });
    }
    openImageOptions() {
      let buttonsArray=[];
@@ -269,8 +268,6 @@ if(i==snapshot.numChildren()){
         {
           text: 'Upload Image',
           handler: () => {
-            //this.hideChatImageSelect=true;
-            //this.scrollChatToBottom();
             this.uploadImage();
           }
         },
@@ -291,7 +288,6 @@ if(i==snapshot.numChildren()){
   }
   uploadImage()
   {
-    //debugger;
 this.chatImageInput.nativeElement.click();
   }
    openEmoji()
@@ -309,7 +305,6 @@ this.chatImageInput.nativeElement.click();
       }
     };
     popOverPage.onDidDismiss(data => {
-       //debugger;
       if(data!=undefined)
       {
         if(data.selectedEmoji!=undefined||data.selectedEmoji!=null)
@@ -332,7 +327,6 @@ this.chatImageInput.nativeElement.click();
    }
    takeUserPhoto(option:string)
 {
-//debugger;
 }
 
    scrollChatToBottom()
@@ -343,24 +337,19 @@ this.chatImageInput.nativeElement.click();
        
       if(this.content._scroll)
       {
-       // debugger;
         that.content.scrollToBottom();
        }
       
      }
    }
    setUserTyping(groupId:any,description:any){
-  //debugger;
   let that=this;
   that.sharedServiceObj.setUserTyping(groupId,that.firebaseUserId,document.getElementById("chatDescription").innerText);
 
   }
    setUserNotTyping(groupId:any){
     let that=this;
-    //debugger;
     that.sharedServiceObj.setUserNotTyping(groupId);
-    //document.getElementById("chatDescription").focus();
-    //that.description=description.innerHTML;
   }
   sendMessage(type:string)
   {
@@ -415,7 +404,6 @@ let confirm = this.alertCtrl.create({
             that.chatDetailArray.splice(selectedIndex, 1);
             }
                                 var deleteChating=snapshot.val();
-                                
                                 var deletedChatingArray=[];
                                 var messageToUpdate="";
                                 deletedChatingArray=deleteChating.deletedFor;
@@ -433,7 +421,6 @@ let confirm = this.alertCtrl.create({
   messageExist="1";
   messageToUpdate=chatDetail.val().message;
   }
-  
                                       });
   var groupDummyRef=firebase.database().ref('groups');
   groupDummyRef.orderByChild("groupId").equalTo(groupId).once("value", function(groupObj) {
@@ -462,9 +449,6 @@ let confirm = this.alertCtrl.create({
                                     });
                                   }
                                   });
-                                    
-
-  
      }
   }
 ]
@@ -489,7 +473,6 @@ confirm.present();
             that.createChatImageThumbnail(that.chatImage);
           }
       };
-  
       myReader.readAsDataURL(file);
   }
   chatImageCropped(image:any)
@@ -511,7 +494,6 @@ confirm.present();
      {
        this.crop_chat_image=true;
      } 
-     
     }
     createChatImageThumbnail(bigMatch:any) {
       let that=this;

@@ -1,6 +1,6 @@
 import { Component, ViewChild, NgZone,ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, Platform,
-  MenuController,LoadingController,ToastController } from 'ionic-angular';
+  MenuController,LoadingController,ToastController,ActionSheetController } from 'ionic-angular';
   import { DatePipe } from '@angular/common'
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Observable } from 'rxjs/Observable';
@@ -115,7 +115,7 @@ export class CreateWebsitePage {
   ]};
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,
-    public sharedServiceObj: SharedProvider, private storage: Storage,
+    public sharedServiceObj: SharedProvider, private storage: Storage,public actionsheetCtrl: ActionSheetController,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform, 
     public ngZone: NgZone,public menuCtrl: MenuController,public loadingCtrl: LoadingController,
     private toastCtrl: ToastController,public datepipe: DatePipe) {

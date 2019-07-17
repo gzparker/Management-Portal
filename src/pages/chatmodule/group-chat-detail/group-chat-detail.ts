@@ -38,6 +38,7 @@ export class GroupChatDetailPage {
   public returnedGroup:any;
   public users:any[]=[];
   public chatDetailArray:any[]=[];
+  public groupMembersData:any[]=[];
   public isApp=false;
   public description:string="";
   public userId:string="";
@@ -45,10 +46,12 @@ export class GroupChatDetailPage {
   public loggedInUserInfo:any;
 public messageSent:string="0";
 public chatImage:string="";
+public isOwner:boolean=false;
 public hideChatImageSelect:boolean=false;
 public hideChatCropper:boolean=true;
 public edit_chat_image:boolean=false;
 public crop_chat_image:boolean=false;
+public groupBanned=false;
 
 public chatCropperSettings;
 public dataChatImage:any;
@@ -94,7 +97,8 @@ public chatWidth:string="";
 
   ionViewDidLoad() {
     var that=this;
-    this.sharedServiceObj.updateColorThemeMethod(null);
+    that.sharedServiceObj.updateColorThemeMethod(null);
+    
     let member_id = this.storage.get('userId');
     member_id.then((data) => {
       this.userId=data;
@@ -104,7 +108,12 @@ public chatWidth:string="";
       let loggedInUserInfo = this.storage.get('loggedInUserInfo');
       loggedInUserInfo.then((data) => {
       this.loggedInUserInfo=data;
-    this.groupMessageDetail(null);
+      if(this.groupBanned==false)
+      {
+        debugger;
+        that.groupMemberRef=firebase.database().ref('groupMembers');
+        this.groupMessageDetail(null);
+      }
     });
     });
     });
@@ -123,6 +132,10 @@ public chatWidth:string="";
     {
       this.groupRef.off("value");
     }
+    if(this.groupMemberRef!=undefined)
+    {
+      this.groupMemberRef.off("value");
+    }
 if(this.userRef!=undefined)
 {
   this.userRef.off("value");
@@ -137,6 +150,10 @@ this.chatRef.off("value");
     if(this.groupRef!=undefined)
     {
       this.groupRef.off("value");
+    }
+    if(this.groupMemberRef!=undefined)
+    {
+      this.groupMemberRef.off("value");
     }
 if(this.userRef!=undefined)
 {
@@ -232,49 +249,76 @@ that.sharedServiceObj.setUserNotTyping(groupId);
         var chatDetailArrayExist=[];
         that.groupRef=firebase.database().ref('groups');
         that.groupRef.orderByChild("groupId").equalTo(that.groupId).on("value", function(snapshot) {
+          if(snapshot.numChildren()>0){
+
           snapshot.forEach(element=>{
         that.returnedGroup=element;
-      // debugger;
           });
-      
+         // debugger;
+          that.groupMemberRef.orderByChild("groupId").equalTo(that.returnedGroup.val().groupId).on("value", function(snapshot) {
+            //debugger;
+            let i=0;
+            let groupMemberExists=0;
+        snapshot.forEach(element => {
+          //debugger;
+          i=i+1;
+          if(element.val().userId==that.firebaseUserId)
+          {
+            //debugger;
+            groupMemberExists=1;
+          }
+          //that.groupMembersData.push(element.val());
+          //debugger;
+          if(i==snapshot.numChildren()){
+           //debugger;
+            if(groupMemberExists==0)
+            {
+              //debugger;
+              that.groupBanned=true;
+            }
+            else{
+              //debugger;
+              that.groupBanned=false;
+            }
+            /*var foundUser = that.groupMembersData.filter(groupElement => JSON.stringify(userElement) === JSON.stringify(element.val()));
+            if(foundUser.length<=0){
+              that.users.push(element.val());
+            }*/
+          }
+        });
+          });
      that.userRef=firebase.database().ref('users');
      that.userRef.on('value', function(snapshot) {
-          //that.users=[];
+      if(that.groupBanned==false){
         snapshot.forEach(element=>{
           if(element.key!=undefined)
       {
-          //that.users.push(element.val());
           if(that.users.length<=0){
-            //debugger;
             that.users.push(element.val());
           }
         else{
           var foundUser = that.users.filter(userElement => JSON.stringify(userElement) === JSON.stringify(element.val()));
-          //debugger;
           if(foundUser.length<=0){
-            //debugger;
             that.users.push(element.val());
           }
         }
       }
         });
-            
+      }   
        
       });
       that.chatRef=firebase.database().ref('chats');
       that.chatRef.orderByChild("groupId").equalTo(that.groupId).on("value", function(snapshot) {
-        //that.chatDetailArray=[];
+        if(that.groupBanned==false){
        let i=0;
-     //debugger;
         snapshot.forEach(element => {
           if(element.key!=undefined)
       {
-          //that.chatDetailArray.push(element);
           if(that.chatDetailArray.length<=0){
             that.chatDetailArray.push(element);
           }
         else{
-          var foundChat = that.chatDetailArray.filter(chatElement => JSON.stringify(chatElement) === JSON.stringify(element));
+          var foundChat = that.chatDetailArray.filter(chatElement => chatElement.key === element.key);
           if(foundChat.length<=0){
             that.chatDetailArray.push(element);
           }
@@ -282,17 +326,31 @@ that.sharedServiceObj.setUserNotTyping(groupId);
     i=i+1;
     if(i==snapshot.numChildren()){
       that.sharedServiceObj.markMessageAsRead(that.firebaseUserId,that.chatDetailArray)
-        //    debugger;
-    //that.scrollToBottom();
     }
-    //if(snapshot.length-1==i)
-    //{
-      //
-    //}
   } 
         });
-        
+      }
       });
+
+    }else{
+      if(that.isOwner==false)
+      {
+        let alert = that.alertCtrl.create({
+          title: 'Group Delete',
+          subTitle: "Group Owner has deleted this group",
+          buttons: [{
+            text: 'Ok',
+            handler: () => {
+              that.ngZone.run(() => {
+                that.navCtrl.push(ChatPage);
+              });
+            }
+          }]
+        });
+        alert.present();
+      }
+        
+    }
       });
       
  }
@@ -453,6 +511,7 @@ confirm.present();
     }
   deleteGroup(groupId) {
   var that=this;
+  that.isOwner=true;
   let confirm = this.alertCtrl.create({
     title: 'Delete Group?',
     message: 'Are you sure you want to delete this Group?',

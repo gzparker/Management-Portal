@@ -70,44 +70,6 @@
             <div class="searchbarLabel">Work Address</div>
             <ion-searchbar #searchWorkBar placeholder="Search Work Address"></ion-searchbar>
         </ion-item>
-        <!-- <ion-item>
-            <ion-label stacked>Home Address Street</ion-label>
-            <ion-input type="text" [(ngModel)]="home_address_street" name="home_address_street" id="home_address_street"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label stacked>Home Address City</ion-label>
-            <ion-input type="text" [(ngModel)]="home_address_city" name="home_address_city" id="home_address_city"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label stacked>Home Address State/Province</ion-label>
-            <ion-input type="text" [(ngModel)]="home_address_state_or_province" 
-            name="home_address_state_or_province" id="home_address_state_or_province"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label stacked>Home Address ZipCode</ion-label>
-            <ion-input type="text" [(ngModel)]="home_address_zipcode" 
-            name="home_address_zipcode" id="home_address_zipcode"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label stacked>Work Address Street</ion-label>
-            <ion-input type="text" [(ngModel)]="work_address_street" 
-            name="work_address_street" id="work_address_street"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label stacked>Work Address City</ion-label>
-            <ion-input type="text" [(ngModel)]="work_address_city" 
-            name="work_address_city" id="work_address_city"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label stacked>Work Address State/Province</ion-label>
-            <ion-input type="text" [(ngModel)]="work_address_state_or_province" 
-            name="work_address_state_or_province" id="work_address_state_or_province"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label stacked>Work ZipCode</ion-label>
-            <ion-input type="text" [(ngModel)]="work_zipcode" 
-            name="work_zipcode" id="work_zipcode"></ion-input>
-        </ion-item>-->
         <ion-item>
             <ion-label stacked>Assigned Agent/Broker</ion-label>
             <ion-select placeholder="-----" [(ngModel)]="assigned_agent_id"  
@@ -139,17 +101,7 @@
             <ion-textarea type="text" [(ngModel)]="internal_notes" name="internal_notes"></ion-textarea>
           </ion-item>
           <ion-list class="additionalOption uploadPhoto" *ngIf="!isApp">
-        
             <ion-label stacked>Main Image</ion-label>
-    
-            <!-- Edit Image Toggle Button -->
-            <!--<ion-item class="toggleImageEdit" *ngIf="dataLeadImage.image">
-              <ion-label>Edit Image</ion-label>
-              <ion-toggle [(ngModel)]="edit_lead_image" 
-              name="edit_lead_image" (click)="showHideLeadCropper()"></ion-toggle>
-            </ion-item>-->
-              <!--<img-cropper #leadImageCropper [image]="dataLeadImage" [settings]="leadCropperSettings" 
-              (onCrop)="leadImageCropped($event)" *ngIf="hideLeadCropper"></img-cropper>-->
               <span *ngIf="dataLeadImage.image" >
               <img [src]="dataLeadImage.image" [width]="leadWidth"
               [height]="leadHeight">
@@ -159,6 +111,14 @@
               <button ion-button (click)="editImage('leadImage');" *ngIf="isLeadImageExist">
                 <ion-icon name="md-create"></ion-icon>
               </button>
+        </ion-list>
+        <ion-list class="additionalOption uploadPhoto" *ngIf="isApp">
+          <ion-item class="customList nobrTop">
+            <button ion-button color="primary" block (click)="openLeadPicture();" >Take Main Image</button>
+          </ion-item>
+          <ion-item *ngIf="leadImage!=''">
+              <img [src]="leadImage" />
+          </ion-item>
         </ion-list>
         </ion-list>
         <div class="dashboardBtn">

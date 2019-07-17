@@ -1,6 +1,6 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, Platform, 
-  MenuController,LoadingController } from 'ionic-angular';
+  MenuController,LoadingController,ActionSheetController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 import { Crop } from '@ionic-native/crop';
@@ -73,7 +73,7 @@ export class EditAgentPage {
   public agent_id:string="";
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,
-    public sharedServiceObj: SharedProvider, private storage: Storage,
+    public sharedServiceObj: SharedProvider, private storage: Storage,public actionsheetCtrl: ActionSheetController,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform, 
     public ngZone: NgZone,public menuCtrl: MenuController,public loadingCtrl: LoadingController,
     private crop: Crop,private camera: Camera,private imagePicker: ImagePicker) {
@@ -291,10 +291,13 @@ loadImage(baseUrl:string,imageUrl:string) {
       reader.onloadend = function (loadEvent:any) {
         image.src = loadEvent.target.result;
         image.onload = function () {
-          self.cropperSettings.croppedWidth = this.width;
-          self.cropperSettings.croppedHeight = this.height;
           this.agentImage=image.src;
-          self.createPersonalImageThumbnail(image.src); 
+          if(!self.isApp){
+            self.cropperSettings.croppedWidth = this.width;
+            self.cropperSettings.croppedHeight = this.height;
+            self.createPersonalImageThumbnail(image.src);
+          }
+           
       };
     };
   });
@@ -515,30 +518,83 @@ createPersonalImageThumbnail(bigMatch:any) {
   }
   
  ////////////////////////////////////////////////////////////////////////  
-   takePicture(){
-      let options =
+ openAgentPicture(){
+  let actionSheet = this.actionsheetCtrl.create({
+    title: 'Option',
+    cssClass: 'action-sheets-basic-page',
+    buttons: [
       {
-        quality: 100,
-        correctOrientation: true
-      };
-      this.camera.getPicture(options)
-      .then((data) => {
-        this.agentImage="data:image/jpeg;base64," +data;
-        let image : any= new Image();
-         image.src = this.agentImage;
-        if(this.isApp)
-        {
-       this.crop
-       .crop(this.agentImage, {quality: 75,targetHeight:100,targetWidth:100})
-      .then((newImage) => {
-          this.agentImage=newImage;
-        }, error => {
-         
-          alert(error)});
+        text: 'Take photo',
+        icon: 'ios-camera-outline',
+        handler: () => {
+          this.takeAgentPicture();
         }
-      }, function(error) {
-
-        console.log(error);
+      },
+      {
+        text: 'Choose photo from Gallery',
+        icon: 'ios-images-outline',
+        handler: () => {
+          this.selectAgentPicture();
+        }
+      }
+]
+});
+actionSheet.present();
+}
+ takeAgentPicture(){
+   let that=this;
+    let options =
+    {
+      allowEdit: true,
+    destinationType: that.camera.DestinationType.DATA_URL,
+    encodingType: that.camera.EncodingType.JPEG,
+    mediaType: that.camera.MediaType.PICTURE,
+    sourceType: that.camera.PictureSourceType.CAMERA
+    };
+    this.camera.getPicture(options)
+    .then((data) => {
+      this.agentImage="data:image/jpeg;base64," +data;
+      if(this.isApp)
+      {
+     this.crop
+     .crop(this.agentImage, {quality: 75,targetHeight:100,targetWidth:100})
+    .then((newImage) => {
+        this.agentImage=newImage;
+      }, error => {
+        //alert(error)
       });
-    }
+      }
+    }, function(error) {
+
+      console.log(error);
+    });
+  }
+  selectAgentPicture(){
+    let that=this;
+     let options =
+     {
+       allowEdit: true,
+     destinationType: that.camera.DestinationType.DATA_URL,
+     encodingType: that.camera.EncodingType.JPEG,
+     mediaType: that.camera.MediaType.PICTURE,
+     sourceType: that.camera.PictureSourceType.SAVEDPHOTOALBUM
+     };
+     this.camera.getPicture(options)
+     .then((data) => {
+       this.agentImage="data:image/jpeg;base64," +data;
+       if(this.isApp)
+       {
+      this.crop
+      .crop(this.agentImage, {quality: 75,targetHeight:100,targetWidth:100})
+     .then((newImage) => {
+         this.agentImage=newImage;
+       }, error => {
+         //alert(error)
+       });
+       }
+     }, function(error) {
+
+       console.log(error);
+     });
+   }
 }

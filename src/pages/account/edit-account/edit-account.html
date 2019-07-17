@@ -23,60 +23,12 @@
   
 </ion-header>
 
-
-<!-- Background color options -->
-<!-- add class ("colorEnabled") to enable color overrides -->
-<!-- add class ("custom-color-1, custom-color-2, or custom-color-3") to apply color overrides -->
-<!-- ex. <ion-content class="generalInfoUI colorEnabled custom-color-1"> -->
-
 <ion-content padding class="generalInfoUI">
 <div class="dashboardBG colorEnabled background_color" ion-fixed></div>
   <form role="form" data-toggle="validator" #accountForm="ngForm">
     
-    <!-- <ion-list class="animated fadeIn leadsProfileWrapper">
-      <ion-item class="leadsProfile" sticky>        
-        <ion-avatar class="imgFull">
-        
-          <img src="../assets/imgs/profile-photo.jpg">
-          <img src="{{leadDetail.image_url}}" (error)="imgLead.src = this.sharedServiceObj.profileNoImage" #imgLead/>
-  
-          </ion-avatar>        
-        </ion-item>
-    </ion-list> -->
-
-    <!-- <ion-list class="animated fadeIn leadsProfileWrapper">
-      <ion-item class="leadsProfile">
-        <ion-avatar class="imgFull">
-        
-        <img src="../assets/imgs/profile-photo.jpg">
-        <img src="{{leadDetail.image_url}}" (error)="imgLead.src = this.sharedServiceObj.profileNoImage" #imgLead/>
-
-        </ion-avatar>        
-      </ion-item>
-    </ion-list> -->
-
-    <!--<ion-list class="animated fadeIn leadsProfileWrapper" *ngIf="accountInfo!=null">
-      <ion-item class="leadsProfile">
-  
-        <ion-avatar class="imgFull" *ngIf="globalSettings!=null&&!loadNewPersonalImage">
-          <img src={{this.sharedServiceObj.imgBucketUrl}}{{globalSettings.photo_personal}} (error)="imgAccount.src = this.sharedServiceObj.profileNoImage" #imgAccount/>          
-        </ion-avatar>
-        <ion-avatar class="imgFull" *ngIf="loadNewPersonalImage">
-          <img [src]="dataPersonalImage.image" [width]="personalWidth"
-          [height]="personalHeight">        
-        </ion-avatar>
-        <button ion-button (click)="editImage(globalSettings.photo_personal,'personal');">
-          <ion-icon name="md-create"></ion-icon>
-        </button>
-      </ion-item>
-    </ion-list>-->
-
     <ion-list class="animated fadeIn leadsProfileWrapper uploadPhoto">
-      <div class="AccountImageUploader">
-
-          <!--<img-cropper #personalCropper [image]="dataPersonalImage" [settings]="cropperSettings"
-          (onCrop)="personalImageCropped($event)" *ngIf="hideImageCropper"></img-cropper>-->
-          
+      <div class="AccountImageUploader" *ngIf="!isApp">
           <div class="imgCropperPreviewResult" *ngIf="dataPersonalImage.image" >
           <img [src]="dataPersonalImage.image" [width]="personalWidth"
           [height]="personalHeight">
@@ -87,26 +39,16 @@
           <button ion-button (click)="editImage('personal');" *ngIf="isImageExist">
             <ion-icon name="md-create"></ion-icon>
           </button>
-          <!--<input id="custom-input" class="btnUpload colorEnabled button_color" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple (change)="personalFileChangeListener($event)">-->
-
+      </div>
+      <div class="AccountImageUploader" *ngIf="isApp">
+          <div class="imgCropperPreviewResult" *ngIf="personalImage!=''">
+          <img [src]="personalImage">
+          </div>
+          <ion-item class="customList nobrTop">
+            <button ion-button color="primary" block (click)="openPersonalPicture();" >Take Personal Image</button>
+        </ion-item>
       </div>
     </ion-list>
-
-    <!-- <ion-list class="animated fadeIn leadsProfileWrapper uploadPhoto">        
-        
-        <ion-item *ngIf="dataPersonalImage.image">
-          <ion-label>Edit Image</ion-label>
-          <ion-toggle [(ngModel)]="edit_personal_logo" 
-          name="edit_personal_logo" (click)="showHidePersonLogoCropper()"></ion-toggle>
-        </ion-item>
-        
-    </ion-list> -->
-
-
-    
-
-
-
     <ion-list class="animated fadeIn leadsInfo">
       
       <ion-item class="userInfoBlock ReqField">

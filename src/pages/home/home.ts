@@ -46,6 +46,9 @@ public serviceType:string="";
     {
       this.serviceType="idx";
     }
+    else{
+      this.serviceType="idx";
+    }
       this.isApp = (!document.URL.startsWith("http"));
   }
   ionViewDidLoad()

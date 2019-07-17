@@ -1,6 +1,6 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, Platform, 
-  MenuController,LoadingController,ToastController } from 'ionic-angular';
+  MenuController,LoadingController,ToastController,ActionSheetController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 import { Crop } from '@ionic-native/crop';
@@ -70,7 +70,7 @@ export class CreateAgentPage {
   public parentId:string="";
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,
-    public sharedServiceObj: SharedProvider, private storage: Storage,
+    public sharedServiceObj: SharedProvider, private storage: Storage,public actionsheetCtrl: ActionSheetController,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform, 
     public ngZone: NgZone,public menuCtrl: MenuController,public loadingCtrl: LoadingController,
     private crop: Crop,private camera: Camera,private imagePicker: ImagePicker,private toastCtrl: ToastController) {
@@ -420,19 +420,42 @@ this.allRoles=[];
       this.crop_agent_image=true;
     }
    }
-   
-   takePicture(){
+   openAgentPicture(){
+    let actionSheet = this.actionsheetCtrl.create({
+      title: 'Option',
+      cssClass: 'action-sheets-basic-page',
+      buttons: [
+        {
+          text: 'Take photo',
+          icon: 'ios-camera-outline',
+          handler: () => {
+            this.takeAgentPicture();
+          }
+        },
+        {
+          text: 'Choose photo from Gallery',
+          icon: 'ios-images-outline',
+          handler: () => {
+            this.selectAgentPicture();
+          }
+        }
+  ]
+  });
+  actionSheet.present();
+  }
+   takeAgentPicture(){
+     let that=this;
       let options =
       {
-        quality: 100,
-        correctOrientation: true
+        allowEdit: true,
+      destinationType: that.camera.DestinationType.DATA_URL,
+      encodingType: that.camera.EncodingType.JPEG,
+      mediaType: that.camera.MediaType.PICTURE,
+      sourceType: that.camera.PictureSourceType.CAMERA
       };
       this.camera.getPicture(options)
       .then((data) => {
         this.agentImage="data:image/jpeg;base64," +data;
-        let image : any= new Image();
-         image.src = this.agentImage;
-       // this.agentImageCropper.setImage(image);
         if(this.isApp)
         {
        this.crop
@@ -440,14 +463,42 @@ this.allRoles=[];
       .then((newImage) => {
           this.agentImage=newImage;
         }, error => {
-         
-          alert(error)});
+          //alert(error)
+        });
         }
       }, function(error) {
 
         console.log(error);
       });
     }
+    selectAgentPicture(){
+      let that=this;
+       let options =
+       {
+         allowEdit: true,
+       destinationType: that.camera.DestinationType.DATA_URL,
+       encodingType: that.camera.EncodingType.JPEG,
+       mediaType: that.camera.MediaType.PICTURE,
+       sourceType: that.camera.PictureSourceType.SAVEDPHOTOALBUM
+       };
+       this.camera.getPicture(options)
+       .then((data) => {
+         this.agentImage="data:image/jpeg;base64," +data;
+         if(this.isApp)
+         {
+        this.crop
+        .crop(this.agentImage, {quality: 75,targetHeight:100,targetWidth:100})
+       .then((newImage) => {
+           this.agentImage=newImage;
+         }, error => {
+           //alert(error)
+         });
+         }
+       }, function(error) {
+ 
+         console.log(error);
+       });
+     }
 /////////////////////Generate Thumbnail//////////////////////
 
 createPersonalImageThumbnail(bigMatch:any) {

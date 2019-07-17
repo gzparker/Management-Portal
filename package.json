@@ -55,7 +55,6 @@
     "cordova-plugin-splashscreen": "^4.1.0",
     "cordova-plugin-telerik-imagepicker": "^2.1.8",
     "cordova-plugin-whitelist": "^1.3.3",
-    "cordova-sqlite-storage": "^2.2.0",
     "firebase": "^4.12.1",
     "ionic-angular": "3.9.2",
     "ionic-image-loader": "^5.0.0",
@@ -85,7 +84,6 @@
   "cordova": {
     "plugins": {
       "cordova-plugin-advanced-http": {},
-      "cordova-sqlite-storage": {},
       "ionic-plugin-keyboard": {},
       "cordova-plugin-whitelist": {},
       "cordova-plugin-device": {},
@@ -100,7 +98,8 @@
         "APP_ID": "701598080041539",
         "APP_NAME": "TheIDXCompany"
       },
-      "cordova-plugin-geolocation": {}
+      "cordova-plugin-geolocation": {},
+      "cordova-sqlite-storage": {}
     },
     "platforms": [
       "android",

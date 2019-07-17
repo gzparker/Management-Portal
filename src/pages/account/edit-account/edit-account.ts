@@ -1,5 +1,6 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, Platform, MenuController,LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController,ActionSheetController,
+   Platform, MenuController,LoadingController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 import { Crop } from '@ionic-native/crop';
@@ -31,52 +32,19 @@ declare var CKEDITOR: any;
 export class EditAccountPage {
   @ViewChild('personalCropper', undefined)
   personalCropper:ImageCropperComponent;
-  public hideImageCropper:boolean=true;
-  public isImageExist:boolean=false;
-  public edit_personal_logo:boolean=false;
-  public crop_personal_image:boolean=false;
-  public isApp=false;
-  public cropperSettings;
-  public croppedWidth:Number;
-  public croppedHeight:Number;
-  public userId:string="";
-  public accountInfo:any=null;
-  public globalSettings:any=null;
-  public email: string = "";
- 
-  public passwordUpdated: string = "";
+  public hideImageCropper:boolean=true;public isImageExist:boolean=false;public edit_personal_logo:boolean=false;
+  public crop_personal_image:boolean=false;public isApp=false;public cropperSettings;public croppedWidth:Number;
+  public croppedHeight:Number;public userId:string="";public accountInfo:any=null;public globalSettings:any=null;
+  public email: string = "";public passwordUpdated: string = "";public first_name: string = "";
   
-  public first_name: string = "";
-  
-  public last_name: string = "";
-  public agent_title:string="";
-  public company:string="";
-  
-  public phone_number: number;
-  public selectedCountryCode: string = "";
-  public selectedCountryAbbv: string = "";
-  public user_description:string="";
-  public allCountryCodes: any[] = [];
-  public accountInfoUpdateMsg: string = "";
-  public updatedValue:boolean=false;
-  public personalWidth:string="";
-  public personalHeight:string="";
-  public office_id:string="";
-  public broker_id:string="";
-  public agent_id:string="";
-  public isGlobalPreference:boolean=false;
-  public isOwner:boolean=false;
-  public parentId:string="";
-  public allMls:any[]=[];
-  public mls_server_id:any[]=[];
-  public loader:any;
-
-  public dataPersonalImage:any;
-  public personalImage:string="";
-  public service_id:string="";
-  public imgBaseUrl=this.sharedServiceObj.imgBucketUrl;
-  public noImgUrl=this.sharedServiceObj.noImageUrl;
-  public loadNewPersonalImage:boolean=false;
+  public last_name: string = "";public agent_title:string="";public company:string="";public phone_number: number;
+  public selectedCountryCode: string = "";public selectedCountryAbbv: string = "";public user_description:string="";
+  public allCountryCodes: any[] = [];public accountInfoUpdateMsg: string = "";public updatedValue:boolean=false;
+  public personalWidth:string="";public personalHeight:string="";public office_id:string="";public broker_id:string="";
+  public agent_id:string="";public isGlobalPreference:boolean=false;public isOwner:boolean=false;public parentId:string="";
+  public allMls:any[]=[];public mls_server_id:any[]=[];public loader:any;public dataPersonalImage:any;
+  public personalImage:string="";public service_id:string="";public imgBaseUrl=this.sharedServiceObj.imgBucketUrl;
+  public noImgUrl=this.sharedServiceObj.noImageUrl;public loadNewPersonalImage:boolean=false;
   public CkeditorConfig = {removeButtons:'Underline,Subscript,Superscript,SpecialChar'
   ,toolbar: [
     { name: 'document', groups: [], items: ['Source'] },
@@ -87,7 +55,7 @@ export class EditAccountPage {
   ]};
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
-    public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform,
+    public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform,public actionsheetCtrl: ActionSheetController,
     public loadingCtrl: LoadingController,private crop: Crop,private camera: Camera,public brMaskerIonic3: BrMaskerIonic3,
     private imagePicker: ImagePicker,private toastCtrl: ToastController, public subscriptionObj: SubscriptionProvider) {
       this.hideImageCropper=false;
@@ -404,15 +372,12 @@ this.loadNewPersonalImage=true;
          //self.isImageExist=true;
           image.src = loadEvent.target.result;
           image.onload = function () {
-            //alert (this.width);
-            //debugger;
-            self.cropperSettings.croppedWidth = this.width;
-            self.cropperSettings.croppedHeight = this.height;
             self.personalImage=image.src;
-            //debugger;
-            //self.personalCropper.setImage(image);
-           
-            self.createPersonalImageThumbnail(image.src);
+            if(!self.isApp){
+              self.cropperSettings.croppedWidth = this.width;
+              self.cropperSettings.croppedHeight = this.height;
+              self.createPersonalImageThumbnail(image.src);
+            }
         };
           // 
   
@@ -440,32 +405,84 @@ this.loadNewPersonalImage=true;
     }
     
   }
+  openPersonalPicture(){
+    let actionSheet = this.actionsheetCtrl.create({
+      title: 'Option',
+      cssClass: 'action-sheets-basic-page',
+      buttons: [
+        {
+          text: 'Take photo',
+          icon: 'ios-camera-outline',
+          handler: () => {
+            this.takePersonalPicture();
+          }
+        },
+        {
+          text: 'Choose photo from Gallery',
+          icon: 'ios-images-outline',
+          handler: () => {
+            this.selectPersonalPicture();
+          }
+        }
+  ]
+  });
+  actionSheet.present();
+  }
    takePersonalPicture(){
+     let that=this;
       let options =
       {
-        quality: 100,
-        correctOrientation: true
+      allowEdit: true,
+      destinationType: that.camera.DestinationType.DATA_URL,
+      encodingType: that.camera.EncodingType.JPEG,
+      mediaType: that.camera.MediaType.PICTURE,
+      sourceType: that.camera.PictureSourceType.CAMERA
       };
       this.camera.getPicture(options)
       .then((data) => {
-        this.personalImage="data:image/jpeg;base64," +data;
-        let image : any= new Image();
-         image.src = this.personalImage;
-        //this.personalImageCropper.setImage(image);
-        if(this.isApp)
+        that.personalImage="data:image/jpeg;base64," +data;
+        if(that.isApp)
         {
-       this.crop
-       .crop(this.personalImage, {quality: 75,targetHeight:100,targetWidth:100})
+       that.crop
+       .crop(that.personalImage, {quality: 75,targetHeight:100,targetWidth:100})
       .then((newImage) => {
-          this.personalImage=newImage;
+          that.personalImage=newImage;
         }, error => {
-          alert(error)});
+
+        });
         }
       }, function(error) {
  
         console.log(error);
       });
     }
+    selectPersonalPicture(){
+      let that=this;
+       let options =
+       {
+         allowEdit: true,
+       destinationType: that.camera.DestinationType.DATA_URL,
+       encodingType: that.camera.EncodingType.JPEG,
+       mediaType: that.camera.MediaType.PICTURE,
+       sourceType: that.camera.PictureSourceType.SAVEDPHOTOALBUM
+       };
+       this.camera.getPicture(options)
+       .then((data) => {
+         that.personalImage="data:image/jpeg;base64," +data;
+         if(that.isApp)
+         {
+        that.crop
+        .crop(that.personalImage, {quality: 75,targetHeight:100,targetWidth:100})
+       .then((newImage) => {
+           that.personalImage=newImage;
+         }, error => {
+         });
+         }
+       }, function(error) {
+  
+         console.log(error);
+       });
+     }
   getAllCountryCodes(): void {
 
 

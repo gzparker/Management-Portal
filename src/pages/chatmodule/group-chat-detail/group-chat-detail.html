@@ -30,13 +30,6 @@
         </button>
       </ion-buttons>
 
-      <!-- <button ion-button end class="button button-clear" (click)="manageGroups(returnedGroup.val().groupId);" 
-      *ngIf="returnedGroup!=undefined&&firebaseUserId==returnedGroup.val().fromFbUserId">Manage Groups</button>
-      <button ion-button end class="button button-clear" (click)="deleteGroup(returnedGroup.val().groupId)" 
-      *ngIf="returnedGroup!=undefined&&firebaseUserId==returnedGroup.val().fromFbUserId">Delete Group</button>
-      <button ion-button end class="button button-clear" *ngIf="returnedGroup!=undefined&&firebaseUserId!=returnedGroup.val().fromFbUserId"
-       (click)="leaveGroup(returnedGroup.val().groupId)"> Leave Group</button> -->
-
   </ion-navbar>
 
 </ion-header>
@@ -45,69 +38,11 @@
 
   <div class="chatWindowTop"></div>
   
-  <ion-refresher (ionRefresh)="groupMessageDetail($event)">
+  <ion-refresher (ionRefresh)="groupMessageDetail($event)" *ngIf="groupBanned==false">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <!-- <ion-segment class="chatHeader">
-    <ion-segment-button value="manage group" (click)="manageGroups(returnedGroup.val().groupId);" *ngIf="returnedGroup!=undefined&&firebaseUserId==returnedGroup.val().fromFbUserId"><ion-icon name="bookmark"></ion-icon>Manage Groups</ion-segment-button>
-    <ion-segment-button value="new group" (click)="deleteGroup(returnedGroup.val().groupId)" *ngIf="returnedGroup!=undefined&&firebaseUserId==returnedGroup.val().fromFbUserId"><ion-icon name="bookmark"></ion-icon>Delete Group</ion-segment-button>
-    <ion-segment-button value="new group" *ngIf="returnedGroup!=undefined&&firebaseUserId!=returnedGroup.val().fromFbUserId" (click)="leaveGroup(returnedGroup.val().groupId)"><ion-icon name="bookmark"></ion-icon>Leave Group</ion-segment-button>
-  </ion-segment> -->
-
-    <!--<ion-list *ngIf="isApp&&chatDetailArray.length>0">
-        <div *ngFor="let chat of chatDetailArray">
-        <ion-item *ngIf="chat.val().deletedFor.indexOf(firebaseUserId) < 0">
-       
-                <div *ngIf="firebaseUserId==chat.val().fromFbUserId">
-                  <ion-item class="item item-avatar alternate-chat-right item-text-wrap">   
-                  <div  *ngFor="let user of users">     
-                  <div *ngIf="user.fbId==chat.val().fromFbUserId">              
-                
-                  <div class="chat-profile">
-                      <img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" 
-                      (error)="imgUser.src = this.sharedServiceObj.noImageUrl" #imgUser/>
-                
-                </div>
-        
-                </div>
-                  </div>
-                  <span class="chat-info" [innerHTML]="chat.val().message"></span>
-                
-                  <p *ngIf="messageSent==1 && chat.val()==chatDetailArray[chatDetailArray.length-1].val()" class="description item-text-wrap">Sent</p>
-                
-                  <span class="chat-info chat-img" *ngIf="chat.val().imageData">
-                    <img src="{{chat.val().imageData}}" (click)="showBigImage(chat.val().imageData)" />
-                  </span>
-                  <button ion-button color="danger" item-right class="roundedOption btn-del" (click)="deleteSingleChat(chat.val().groupId,chat.key);">Delete Chat</button>
-                  </ion-item>
-                </div>
-        
-        
-                <div *ngIf="firebaseUserId!=chat.val().fromFbUserId">
-                <ion-item class="item item-avatar alternate-chat-left item-text-wrap">       
-                <div  *ngFor="let user of users">     
-                  <div *ngIf="user.fbId==chat.val().fromFbUserId">              
-                     
-                  <div class="chat-profile">
-                      <img src="{{this.sharedServiceObj.imgBucketUrl}}{{user.image_url}}" class="custom-avatar" 
-                      (error)="imgUser1.src = this.sharedServiceObj.noImageUrl" #imgUser1/>
-                 
-                  </div> 
-                      </div>
-                  </div>
-                  <span class="chat-info" [innerHTML]="chat.val().message"></span>
-        
-                  <span class="chat-info chat-img" *ngIf="chat.val().imageData"><img src="{{chat.val().imageData}}" (click)="showBigImage(chat.val().imageData)" /></span>
-                  <button ion-button color="danger" item-right class="roundedOption btn-del" (click)="deleteSingleChat(chat.val().groupId,chat.key);"><ion-icon name="md-close"></ion-icon>Delete Chat</button>
-                  </ion-item>
-                </div>
-            
-          </ion-item>
-        </div>
-    </ion-list>-->
-
-    <ion-list class="centerStage chatBoxList" *ngIf="chatDetailArray.length>0">
+    <ion-list class="centerStage chatBoxList" *ngIf="chatDetailArray.length>0&&groupBanned==false">
       <div *ngFor="let chat of chatDetailArray">
         <ion-item-sliding *ngIf="chat.val().deletedFor.indexOf(firebaseUserId) < 0">
           <ion-item>
@@ -122,18 +57,12 @@
                   </div>
                 </div>
                   <span class="chat-info" [innerHTML]="chat.val().message"></span>
-                
                   <p *ngIf="messageSent==1 && chat.val()==chatDetailArray[chatDetailArray.length-1].val()" class="description item-text-wrap">Sent</p>
-                
                   <span class="chat-info chat-img" *ngIf="chat.val().imageData">
                     <img src="{{chat.val().imageData}}" (click)="showBigImage(chat.val().imageData)" />
-                  </span>
-                  
-                  </ion-item>
-                  
+                  </span>  
+                  </ion-item> 
                 </div>
-        
-        
                 <div *ngIf="firebaseUserId!=chat.val().fromFbUserId">
                 <ion-item class="item item-avatar alternate-chat-left item-text-wrap">       
                   <div  *ngFor="let user of users">     
@@ -147,15 +76,8 @@
                   <span class="chat-info" [innerHTML]="chat.val().message"></span>        
                   <span class="chat-info chat-img" *ngIf="chat.val().imageData"><img src="{{chat.val().imageData}}" (click)="showBigImage(chat.val().imageData)" /></span>                
                 </ion-item>
-          
             </div>
-          </ion-item>              
-            
-            <!--<ion-item class="desktopOption" side="right" *ngIf="!isApp">
-            <div class="optionIcon" *ngIf="!isApp"></div>
-                <button ion-button color="danger" item-right class="btn-del" (click)="deleteSingleChat(chat.val().groupId,chat.key);"><ion-icon name="md-close"></ion-icon>Delete</button>
-            </ion-item>-->
-
+          </ion-item>
             <ion-item-options side="right">   
                 <button ion-button color="danger" item-right class="btn-del" (click)="deleteSingleChat(chat,chat.val().groupId,chat.key);"><ion-icon name="md-close"></ion-icon>Delete</button>
             </ion-item-options>
@@ -163,7 +85,9 @@
         </ion-item-sliding>
       </div>
     </ion-list>
-    
+    <ion-list class="centerStage chatBoxList" *ngIf="groupBanned==true">
+Administrator of this group has removed you from this group.
+    </ion-list>
     <div *ngIf="chatImage!=''&&isApp">
         <ion-list show-delete="true" can-swipe="true">
          <img src="{{chatImage}}" />
@@ -171,11 +95,6 @@
           </ion-list>
           </div>
           <ion-list class="chat-img-upload-tool" *ngIf="!isApp">
-            
-               
-              <!--<img-cropper class="imgCropper" #chatImageCropper [image]="dataChatImage" [settings]="chatCropperSettings"
-                 (onCrop)="chatImageCropped($event)" *ngIf="hideChatCropper"></img-cropper>-->
-              
               <span class="cropPreview" *ngIf="dataChatImage.image" >
                 <span class="cropPreviewLabel">Chat Image Preview</span>
                 <img [src]="dataChatImage.image" [width]="chatWidth"
@@ -184,17 +103,14 @@
             </ion-list>
 </ion-content>
 
-<ion-footer keyboard-attach class="bar bar-stable bar-footer chatbar">    
+<ion-footer keyboard-attach class="bar bar-stable bar-footer chatbar" *ngIf="groupBanned==false">    
   
   <div *ngIf="returnedGroup">
   <ion-list *ngIf="returnedGroup.val().userTyping">
     <div class="animated infinite jello useristypingtext" *ngIf="returnedGroup.val().userTyping==1&&returnedGroup.val().typerId!=firebaseUserId">...</div>
   </ion-list>
-  </div>
-
-  
-  <form role="form" data-toggle="validator" #replyMessageForm="ngForm">
-    
+  </div> 
+  <form role="form" data-toggle="validator" #replyMessageForm="ngForm"> 
     <div class="chatBoxSection">
       <div class="chatbox-options-upload"><button class="button button-clear btn-add" (click)="openImageOptions();">Upload</button></div>
       <div class="chatbox-container" data-tap-disabled="true">
@@ -202,7 +118,6 @@
       placeholder="Type something..." data-text="Type something..." (input)="setUserTyping(returnedGroup.key)" 
       (blur)="setUserNotTyping(returnedGroup.key)" [innerHTML]="description" ></div>    
     </div>
-
     <div class="chatbox-options">
       <button class="button button-clear btn-chat" (click)="setUserNotTyping(returnedGroup.key);saveGroupMessage()">Send</button>
       <button class="button button-clear btn-gallery" (click)="takeListingPhoto('gallery');" *ngIf="isApp">Select Image</button>
@@ -211,9 +126,7 @@
       <input id="custom-input" type="file" accept=".png, .jpg, .jpeg" capture="camera" multiple 
   (change)="chatFileChangeListener($event)" #chatImageInput style="display:none">
     </div>
-
     </div>
-
   </form>
   
 </ion-footer>

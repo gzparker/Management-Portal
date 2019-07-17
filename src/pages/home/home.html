@@ -6,7 +6,7 @@
     <ion-title>Welcome please login</ion-title>
   </ion-navbar>  
 </ion-header>
-<ion-content padding [ngClass]="{'ui-intagent': serviceType=='intagent', 'ui-idx':serviceType=='idx' }">
+<!--<ion-content padding [ngClass]="{'ui-intagent': serviceType=='intagent', 'ui-idx':serviceType=='idx' }">
   <ion-slides pager *ngIf="!isApp&&websiteBackgroundInfo!=undefined">
       <ion-slide class="animated fadeInDown">
           <img *ngIf="serviceType=='intagent'" src={{websiteBackgroundInfo.brand_image_url}} 
@@ -27,4 +27,25 @@
     <button ion-button color="primary" block (click)="openPage('3');">Sign Up</button></div>
   </div>
 
+</ion-content>-->
+<ion-content padding [ngClass]="{'ui-intagent': serviceType=='intagent', 'ui-idx':serviceType=='idx' }">
+    <ion-slides pager *ngIf="websiteBackgroundInfo!=undefined">
+        <ion-slide class="animated fadeInDown">
+            <img *ngIf="serviceType=='intagent'" src={{websiteBackgroundInfo.brand_image_url}} 
+          (error)="imgHome.src = this.sharedServiceObj.noImageUrl" 
+          [ngClass]="{'slide-image': serviceType=='intagent', 'logo-intagent':serviceType=='intagent' }" #imgHome/>
+          <img *ngIf="serviceType=='idx'" src={{websiteBackgroundInfo.brand_image_url}} 
+          (error)="imgHome.src = this.sharedServiceObj.noImageUrl" 
+          [ngClass]="{'slide-image': serviceType=='idx', 'logo-idx':serviceType=='idx' }" #imgHome/>
+          <h2 class="slide-title">{{websiteBackgroundInfo.service_name}}</h2>
+          <p>{{websiteBackgroundInfo.description}}</p>
+        </ion-slide>
+        <span>{{applyColors()}}</span>
+    </ion-slides>
+  <div class="formBlock animated fadeInUp">
+    <div class="colBlock">
+    <button ion-button color="primary" block (click)="openPage('2');">Sign In</button></div>
+    <div class="colBlock">
+    <button ion-button color="primary" block (click)="openPage('3');">Sign Up</button></div>
+  </div>
 </ion-content>

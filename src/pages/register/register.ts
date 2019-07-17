@@ -75,6 +75,9 @@ export class RegisterPage {
     {
       this.serviceType="idx";
     }
+    else{
+      this.serviceType="idx";
+    }
       this.loader = this.loadingCtrl.create({
         content: "Please wait...",
         duration: 5000

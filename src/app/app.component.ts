@@ -1,4 +1,4 @@
-import { Component, ViewChild,AfterViewInit } from '@angular/core';
+import { Component, ViewChild, NgZone,AfterViewInit } from '@angular/core';
 import { Nav, Platform, MenuController, NavController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -60,7 +60,7 @@ export class MyApp {
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
     public menuController: MenuController,
-    private storage: Storage,
+    private storage: Storage, public ngZone: NgZone,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider,
     private geolocation: Geolocation, private nativeGeocoder: NativeGeocoder,private afs: AngularFirestore) {
     this.initializeApp();
@@ -93,9 +93,9 @@ export class MyApp {
       this.setUserCurrentGeoLocation();
       var that=this;
      
-    firebase.database().ref('chats').on("child_added", function(snapshot) {
+    //firebase.database().ref('chats').on("child_added", function(snapshot) {
       that.loadAllMsgCounter();
-    });
+    //});
   
     });
   }
@@ -224,31 +224,39 @@ else if(this.sideBarOption=="3")
 }
 }
   loadGeneralWebsiteSettings()
-  {    
-    let dummyWebsiteUrl="";
-    if(this.loadedWebsite[this.loadedWebsite.length-1]=="/")
-    {
-dummyWebsiteUrl=this.loadedWebsite.substr(0,this.loadedWebsite.length-1)
-    }
-    else
-    {
-      dummyWebsiteUrl=this.loadedWebsite;
-    }
-    if(dummyWebsiteUrl=="https://configuration.menu"||dummyWebsiteUrl=="http://configuration.menu")
-    {
-      this.sharedServiceObj.getServiceDefaultInfoByUrl("https://idx.configuration.menu")
-      .subscribe((result) => this.loadGeneralWebsiteSettingsResp(result));
-    }
-    else if(this.loadedWebsite.indexOf("localhost")>0)
-    {
-      this.sharedServiceObj.getServiceDefaultInfoByUrl("https://idx.configuration.menu")
-      .subscribe((result) => this.loadGeneralWebsiteSettingsResp(result));
-    }
-    else
-    {
-     this.sharedServiceObj.getServiceDefaultInfoByUrl(dummyWebsiteUrl.toString())
-     .subscribe((result) => this.loadGeneralWebsiteSettingsResp(result));
-    }
+  {
+    if(!this.isApp){
+      //alert('its not app');
+      let dummyWebsiteUrl="";
+      if(this.loadedWebsite[this.loadedWebsite.length-1]=="/")
+      {
+  dummyWebsiteUrl=this.loadedWebsite.substr(0,this.loadedWebsite.length-1)
+      }
+      else
+      {
+        dummyWebsiteUrl=this.loadedWebsite;
+      }
+      if(dummyWebsiteUrl=="https://configuration.menu"||dummyWebsiteUrl=="http://configuration.menu")
+      {
+        this.sharedServiceObj.getServiceDefaultInfoByUrl("https://idx.configuration.menu")
+        .subscribe((result) => this.loadGeneralWebsiteSettingsResp(result));
+      }
+      else if(this.loadedWebsite.indexOf("localhost")>0)
+      {
+        this.sharedServiceObj.getServiceDefaultInfoByUrl("https://idx.configuration.menu")
+        .subscribe((result) => this.loadGeneralWebsiteSettingsResp(result));
+      }
+      else
+      {
+       this.sharedServiceObj.getServiceDefaultInfoByUrl(dummyWebsiteUrl.toString())
+       .subscribe((result) => this.loadGeneralWebsiteSettingsResp(result));
+      }
+    }    
+   else{
+     //alert('its an app');
+    this.sharedServiceObj.getServiceDefaultInfoByUrl("https://idx.configuration.menu")
+    .subscribe((result) => this.loadGeneralWebsiteSettingsResp(result));
+   } 
   }
   loadGeneralWebsiteSettingsResp(result:any)
   {
@@ -346,6 +354,7 @@ this.geolocation.getCurrentPosition().then((resp) => {
     {
       firebase.database().ref('chats').on("value", function(snapshot) {
         let j=0;
+        //debugger;
         //that.chatRef.orderByChild("groupId").equalTo(groupData.val().groupId).on("value", function(snapshot) {
        if(snapshot.exists()){
          if(element.key!=undefined)
@@ -356,6 +365,7 @@ this.geolocation.getCurrentPosition().then((resp) => {
           that.chatData.push(element);
           if(j==snapshot.numChildren())
           {
+            //debugger;
             that.allUnreadMsg=0;
             that.countUnreadMessages();
           }
@@ -383,6 +393,7 @@ if(groupData.val().deletedFor.indexOf(that.firebaseUserId)<0)
  {
   if(groupData.val().fromFbUserId==that.firebaseUserId||groupData.val().toFbUserId==that.firebaseUserId)
   {
+    //debugger;
     that.totalUnreadMessages(groupData,i);
   }
  }
@@ -391,8 +402,8 @@ if(groupData.val().deletedFor.indexOf(that.firebaseUserId)<0)
     var fredRef=firebase.database().ref('groupMembers').on('child_added', function(snapshot) {
   if(snapshot.val().userId==that.firebaseUserId&&snapshot.val().groupId==groupData.val().groupId)
   {
+    //debugger;
     that.totalUnreadMessages(groupData,i);
-   
   }
 });
  }
@@ -414,19 +425,25 @@ totalUnreadMessages(groupData:any,arrIndex:any)
 {
   if(chatDataItem.val().readBy.indexOf(that.firebaseUserId)<0)
 {
+  //debugger;
   unreadCounter=unreadCounter+1;
 }
 }
 if(i==that.chatData.length)
 {
+  that.ngZone.run(() => {
   if(unreadCounter>0)
   {
+    //debugger;
   that.allUnreadMsg=that.allUnreadMsg+unreadCounter;
+  that.sharedServiceObj.setUnreadMsgs(that.allUnreadMsg.toString());
   }
   else
   {
+    that.sharedServiceObj.setUnreadMsgs(that.allUnreadMsg.toString());
   }
-  that.sharedServiceObj.setUnreadMsgs(that.allUnreadMsg.toString());
+  
+});
 }
   });
 }    

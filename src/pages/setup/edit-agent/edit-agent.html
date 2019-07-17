@@ -104,7 +104,7 @@
 
     <ion-list *ngIf="isApp" class="customList uploadPhoto">      
         <ion-item>
-          <button ion-button color="primary" block (click)="takePicture();" >Select Image</button>
+          <button ion-button color="primary" block (click)="openAgentPicture();" >Select Image</button>
         </ion-item>
         <ion-item *ngIf="agentImage!=''">
           <img [src]="agentImage" />

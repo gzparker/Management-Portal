@@ -1,5 +1,6 @@
 import { Component, ViewChild, NgZone, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, Platform, MenuController,LoadingController,ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, Platform, MenuController,
+  LoadingController,ToastController,ActionSheetController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 import { IMultiSelectOption,IMultiSelectSettings } from 'angular-2-dropdown-multiselect';
@@ -112,7 +113,7 @@ public isApp=false;public isWebBrowser=false;public msl_id:string="";public name
   constructor(private geolocation: Geolocation,public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform
-    ,public listinServiceObj:ListingProvider,
+    ,public listinServiceObj:ListingProvider,public actionsheetCtrl: ActionSheetController,
     private crop: Crop,private camera: Camera,private imagePicker: ImagePicker,
     public loadingCtrl: LoadingController,private toastCtrl: ToastController) {
       this.isApp = (!document.URL.startsWith("http"));
@@ -1155,6 +1156,7 @@ this.lot_size_modal=lastSearchedObj.lot_size;
     }
     addMoreGalleryImage(option:string)
   {
+if(!this.isApp){
     if(option=="community")
     {
       let commObj={imageData:"",imageDataDummy:"",imageWidth:"",imageHeight:""};
@@ -1177,9 +1179,25 @@ this.lot_size_modal=lastSearchedObj.lot_size;
   this.hideSlideShowCropper=false;
   this.dataSlideShowImage={};
     }
-
+  }else{
+    if(option=="community")
+    {
+      let commObj={imageData:""};
+      commObj.imageData=this.communityImage;
+      this.dataCommunityImageArray.push(commObj);
+  this.dataCommunityImage={};
+    }
+    if(option=="slideShow")
+    {
+      let commObj={imageData:""};
+      commObj.imageData=this.slideShowImage;
+      this.dataSlideShowImageArray.push(commObj);
+      this.dataSlideShowImage={};
+    }
+  }
   }
     createHotSheet():void{
+if(!this.isApp){
       if(this.dataCommunityImage.image!=undefined&&this.dataCommunityImage.image!='')
       {
         let commObj={imageData:"",imageDataDummy:"",imageWidth:"",imageHeight:""};
@@ -1202,6 +1220,22 @@ this.lot_size_modal=lastSearchedObj.lot_size;
         this.hideSlideShowCropper=false;
         this.dataSlideShowImage={};
       }
+    }else if(this.isApp){
+      if(this.communityImage!=undefined&&this.communityImage!='')
+      {
+        let commObj={imageData:""};
+      commObj.imageData=this.communityImage;
+      this.dataCommunityImageArray.push(commObj);
+      this.dataCommunityImage={};
+      }
+      if(this.slideShowImage!=undefined&&this.slideShowImage!='')
+      {
+        let commObj={imageData:""};
+      commObj.imageData=this.slideShowImage;
+      this.dataSlideShowImageArray.push(commObj);
+      this.dataSlideShowImage={};
+      }
+    }
     if(this.userId!="")
       {
         this.userServiceObj.checkHotSheetSlug(this.slug,this.userId.toString()).subscribe((result) => this.createHotSheetFinal(result));
@@ -1259,9 +1293,6 @@ this.lot_size_modal=lastSearchedObj.lot_size;
         mode:"edit",
         croppedWidth:this.headerCropperSettings.croppedWidth,
         croppedHeight:this.headerCropperSettings.croppedHeight,
-        //websiteWidth:this.personalWidth,
-        //websiteHeight:this.personalHeight,
-        //datawebsiteImage:this.dataPersonalImage,
         websiteImage:this.headerImage,
         imageType:imageType
       };
@@ -1408,7 +1439,7 @@ else
   
       myReader.readAsDataURL(file);
   }
-     communtiyImageCropped(image:any)
+    communtiyImageCropped(image:any)
     {
       if(this.crop_community_image)
       {
@@ -1450,7 +1481,7 @@ else
   
       myReader.readAsDataURL(file);
   }
-     slideShowImageCropped(image:any)
+    slideShowImageCropped(image:any)
     {
       if(this.crop_slideshow_image)
       {
@@ -1487,68 +1518,241 @@ else
       }
     }
   }
+  openHeaderPicture(){
+    let actionSheet = this.actionsheetCtrl.create({
+      title: 'Option',
+      cssClass: 'action-sheets-basic-page',
+      buttons: [
+        {
+          text: 'Take photo',
+          icon: 'ios-camera-outline',
+          handler: () => {
+            this.takeHeaderPicture();
+          }
+        },
+        {
+          text: 'Choose photo from Gallery',
+          icon: 'ios-images-outline',
+          handler: () => {
+            this.selectHeaderPicture();
+          }
+        }
+  ]
+  });
+  actionSheet.present();
+  }
     takeHeaderPicture(){
+//debugger;
       var that=this;
       let options =
       {
-        quality: 100,
-        correctOrientation: true
+      allowEdit: true,
+      destinationType: that.camera.DestinationType.DATA_URL,
+      encodingType: that.camera.EncodingType.JPEG,
+      mediaType: that.camera.MediaType.PICTURE,
+      sourceType: that.camera.PictureSourceType.CAMERA
       };
       that.camera.getPicture(options)
       .then((data) => {
         that.headerImage="data:image/jpeg;base64," +data;
-        let image : any= new Image();
-         image.src = that.headerImage;
-       
+
         if(that.isApp)
         {
           that.crop
        .crop(that.headerImage, {quality: 75,targetHeight:100,targetWidth:100})
       .then((newImage) => {
-     
-         // alert(newImage);
+
           that.headerImage=newImage;
         }, error => {
-         
-          alert(error)});
+
+        });
+        }
+      }, function(error) {
+
+        console.log(error);
+      });
+
+    }
+    selectHeaderPicture()
+    {
+      var that=this;
+      let options =
+      {
+      allowEdit: true,
+      destinationType: that.camera.DestinationType.DATA_URL,
+      encodingType: that.camera.EncodingType.JPEG,
+      mediaType: that.camera.MediaType.PICTURE,
+      sourceType: that.camera.PictureSourceType.SAVEDPHOTOALBUM
+      };
+      that.camera.getPicture(options)
+      .then((data) => {
+        that.headerImage="data:image/jpeg;base64," +data;
+        if(that.isApp)
+        {
+          that.crop
+       .crop(that.headerImage, {quality: 75,targetHeight:100,targetWidth:100})
+      .then((newImage) => {
+          that.headerImage=newImage;
+        }, error => {
+        });
         }
       }, function(error) {
 
         console.log(error);
       });
     }
-    selectHeaderPicture()
-    {
-      let options= {
-        maximumImagesCount: 1
-      }
-    
-      this.imagePicker.getPictures(options)
-      .then((results) => {
-      }, (err) => { console.log(err) });
+    openCommunityPicture(){
+      let actionSheet = this.actionsheetCtrl.create({
+        title: 'Option',
+        cssClass: 'action-sheets-basic-page',
+        buttons: [
+          {
+            text: 'Take photo',
+            icon: 'ios-camera-outline',
+            handler: () => {
+              this.takeCommunityPicture();
+            }
+          },
+          {
+            text: 'Choose photo from Gallery',
+            icon: 'ios-images-outline',
+            handler: () => {
+              this.selectCommunityPicture();
+            }
+          }
+    ]
+    });
+    actionSheet.present();
     }
     takeCommunityPicture(){
       var that=this;
       let options =
       {
-        quality: 100,
-        correctOrientation: true
+      allowEdit: true,
+      destinationType: that.camera.DestinationType.DATA_URL,
+      encodingType: that.camera.EncodingType.JPEG,
+      mediaType: that.camera.MediaType.PICTURE,
+      sourceType: that.camera.PictureSourceType.CAMERA
       };
       that.camera.getPicture(options)
       .then((data) => {
         that.communityImage="data:image/jpeg;base64," +data;
-        let image : any= new Image();
-         image.src = that.communityImage;
-      
         if(that.isApp)
         {
           that.crop
           .crop(that.communityImage, {quality: 75,targetHeight:100,targetWidth:100})
           .then((newImage) => {
-            //alert(newImage);
             that.communityImage=newImage;
             
-          }, error => {alert(error)});
+          }, error => {
+          });
+        }
+        
+      }, function(error) {
+        console.log(error);
+      });
+    }
+    selectCommunityPicture(){
+      var that=this;
+      let options =
+      {
+      allowEdit: true,
+      destinationType: that.camera.DestinationType.DATA_URL,
+      encodingType: that.camera.EncodingType.JPEG,
+      mediaType: that.camera.MediaType.PICTURE,
+      sourceType: that.camera.PictureSourceType.SAVEDPHOTOALBUM
+      };
+      that.camera.getPicture(options)
+      .then((data) => {
+        that.communityImage="data:image/jpeg;base64," +data;
+        if(that.isApp)
+        {
+          that.crop
+          .crop(that.communityImage, {quality: 75,targetHeight:100,targetWidth:100})
+          .then((newImage) => {
+            that.communityImage=newImage;
+            
+          }, error => {
+          });
+        }
+        
+      }, function(error) {
+        console.log(error);
+      });
+    }
+    openSlideShowPicture(){
+      let actionSheet = this.actionsheetCtrl.create({
+        title: 'Option',
+        cssClass: 'action-sheets-basic-page',
+        buttons: [
+          {
+            text: 'Take photo',
+            icon: 'ios-camera-outline',
+            handler: () => {
+              this.takeSlideShowPicture();
+            }
+          },
+          {
+            text: 'Choose photo from Gallery',
+            icon: 'ios-images-outline',
+            handler: () => {
+              this.selectSlideShowPicture();
+            }
+          }
+    ]
+    });
+    actionSheet.present();
+    }
+    takeSlideShowPicture(){
+      var that=this;
+      let options =
+      {
+      allowEdit: true,
+      destinationType: that.camera.DestinationType.DATA_URL,
+      encodingType: that.camera.EncodingType.JPEG,
+      mediaType: that.camera.MediaType.PICTURE,
+      sourceType: that.camera.PictureSourceType.CAMERA
+      };
+      that.camera.getPicture(options)
+      .then((data) => {
+        that.slideShowImage="data:image/jpeg;base64," +data;
+        if(that.isApp)
+        {
+          that.crop
+          .crop(that.slideShowImage, {quality: 75,targetHeight:100,targetWidth:100})
+          .then((newImage) => {
+            that.slideShowImage=newImage;
+            
+          }, error => {
+          });
+        }
+        
+      }, function(error) {
+        console.log(error);
+      });
+    }
+    selectSlideShowPicture(){
+      var that=this;
+      let options =
+      {
+      allowEdit: true,
+      destinationType: that.camera.DestinationType.DATA_URL,
+      encodingType: that.camera.EncodingType.JPEG,
+      mediaType: that.camera.MediaType.PICTURE,
+      sourceType: that.camera.PictureSourceType.SAVEDPHOTOALBUM
+      };
+      that.camera.getPicture(options)
+      .then((data) => {
+        that.slideShowImage="data:image/jpeg;base64," +data;
+        if(that.isApp)
+        {
+          that.crop
+          .crop(that.slideShowImage, {quality: 75,targetHeight:100,targetWidth:100})
+          .then((newImage) => {
+            that.slideShowImage=newImage;
+            
+          }, error => {
+          });
         }
         
       }, function(error) {

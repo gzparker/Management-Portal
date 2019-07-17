@@ -1,5 +1,5 @@
 import { Component, ViewChild, NgZone,ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, Platform,
+import { IonicPage, NavController, NavParams, ModalController,ActionSheetController, Platform,
   MenuController,LoadingController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
@@ -102,7 +102,7 @@ public geoLocationOptions = {
   componentRestrictions: {country: "us"}
  };
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
-    public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,
+    public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,public actionsheetCtrl: ActionSheetController,
     public sharedServiceObj: SharedProvider, private storage: Storage,public brMaskerIonic3: BrMaskerIonic3,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform, 
     public ngZone: NgZone,public menuCtrl: MenuController,public loadingCtrl: LoadingController,private crop: Crop,
@@ -465,16 +465,95 @@ fredRef.update({email:leadInfo.email,first_name:leadInfo.first_name,image_url:le
           image.onload = function () {
             //alert (this.width);
             //debugger;
-            self.leadCropperSettings.croppedWidth = this.width;
-            self.leadCropperSettings.croppedHeight = this.height;
             self.leadImage=image.src;
-            //debugger;
-            //self.personalCropper.setImage(image);
-            self.createLeadImageThumbnail(image.src);
+            if(!self.isApp){
+              self.leadCropperSettings.croppedWidth = this.width;
+              self.leadCropperSettings.croppedHeight = this.height;
+              self.createLeadImageThumbnail(image.src);
+            }
         };
           // 
   
       };
+    });
+  }
+  openLeadPicture(){
+    let actionSheet = this.actionsheetCtrl.create({
+      title: 'Option',
+      cssClass: 'action-sheets-basic-page',
+      buttons: [
+        {
+          text: 'Take photo',
+          icon: 'ios-camera-outline',
+          handler: () => {
+            this.takeLeadPicture();
+          }
+        },
+        {
+          text: 'Choose photo from Gallery',
+          icon: 'ios-images-outline',
+          handler: () => {
+            this.selectLeadPicture();
+          }
+        }
+  ]
+  });
+  actionSheet.present();
+  }
+  takeLeadPicture(){
+    let that=this;
+    let options =
+    {
+      allowEdit: true,
+      destinationType: that.camera.DestinationType.DATA_URL,
+      encodingType: that.camera.EncodingType.JPEG,
+      mediaType: that.camera.MediaType.PICTURE,
+      sourceType: that.camera.PictureSourceType.CAMERA
+    };
+    this.camera.getPicture(options)
+    .then((data) => {
+      this.leadImage="data:image/jpeg;base64," +data;
+      if(this.isApp)
+      {
+     this.crop
+     .crop(this.leadImage, {quality: 75,targetHeight:100,targetWidth:100})
+    .then((newImage) => {
+        this.leadImage=newImage;
+      }, error => {
+      });
+      }
+    }, function(error) {
+
+      console.log(error);
+    });
+  }
+  selectLeadPicture()
+  {
+    let that=this;
+    let options =
+    {
+      allowEdit: true,
+      destinationType: that.camera.DestinationType.DATA_URL,
+      encodingType: that.camera.EncodingType.JPEG,
+      mediaType: that.camera.MediaType.PICTURE,
+      sourceType: that.camera.PictureSourceType.SAVEDPHOTOALBUM
+    };
+    this.camera.getPicture(options)
+    .then((data) => {
+      this.leadImage="data:image/jpeg;base64," +data;
+
+      if(this.isApp)
+      {
+     this.crop
+     .crop(this.leadImage, {quality: 75,targetHeight:100,targetWidth:100})
+    .then((newImage) => {
+        this.leadImage=newImage;
+      }, error => {
+      });
+      }
+    }, function(error) {
+
+      console.log(error);
     });
   }
   editImage(imageType:string){
@@ -567,32 +646,6 @@ leadImageCropped(image:any)
     }
     
   }
-  takeHeaderPicture(){
-      let options =
-      {
-        quality: 100,
-        correctOrientation: true
-      };
-      this.camera.getPicture(options)
-      .then((data) => {
-        this.leadImage="data:image/jpeg;base64," +data;
-        let image : any= new Image();
-         image.src = this.leadImage;
-        //this.personalImageCropper.setImage(image);
-        if(this.isApp)
-        {
-       this.crop
-       .crop(this.leadImage, {quality: 75,targetHeight:100,targetWidth:100})
-      .then((newImage) => {
-          this.leadImage=newImage;
-        }, error => {
-          alert(error)});
-        }
-      }, function(error) {
- 
-        console.log(error);
-      });
-    }
     /*showHideLeadCropper(){
     const self = this;
     this.crop_lead_image=false;

@@ -1,6 +1,6 @@
 import { Component, ViewChild, NgZone, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, Platform, 
-  MenuController,LoadingController,ToastController } from 'ionic-angular';
+  MenuController,LoadingController,ToastController,ActionSheetController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { Storage } from '@ionic/storage';
 import { IMultiSelectOption,IMultiSelectSettings } from 'angular-2-dropdown-multiselect';
@@ -117,7 +117,7 @@ public isApp=false;public isWebBrowser=false;public msl_id:string="";public mls_
   constructor(private geolocation: Geolocation,public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform
-    ,public listinServiceObj:ListingProvider,
+    ,public listinServiceObj:ListingProvider,public actionsheetCtrl: ActionSheetController,
     private crop: Crop,private camera: Camera,private imagePicker: ImagePicker
     ,public loadingCtrl: LoadingController,private toastCtrl: ToastController) {
       /*if(this.platform.is('core') || this.platform.is('mobileweb') || this.platform.is('cordova') || this.platform.is('mobile')) {
@@ -1442,8 +1442,6 @@ else
       loadCommunityImage(baseUrl:string,imageUrl:string) {
       //  debugger;
         const self = this;
-      //this.hideCommunityCropper=true;
-        
         var image:any = new Image();
         const xhr = new XMLHttpRequest()
         xhr.open("GET", baseUrl+imageUrl);
@@ -1459,11 +1457,15 @@ else
               
               image.onload = function () {
                 //debugger;
-                self.communityCropperSettings.croppedWidth=this.width;
-                self.communityCropperSettings.croppedHeight=this.height;
                 self.communityImage=image.src;
-                //debugger;
-                self.createCommunityImageThumbnail(image.src,"1");
+                if(!self.isApp){
+                  self.communityCropperSettings.croppedWidth=this.width;
+                  self.communityCropperSettings.croppedHeight=this.height;
+                  self.createCommunityImageThumbnail(image.src,"1");
+                }else{
+                  self.addMoreGalleryImage('community');
+                }
+                
                 
                 //self.communityImageCropper.setImage(image);
               }
@@ -1489,20 +1491,21 @@ else
                 image.src = loadEvent.target.result;
                 
                 image.onload = function () {
-                  //debugger;
+                  self.slideShowImage=image.src;
+                  if(!self.isApp){
                   self.slideShowCropperSettings.croppedWidth=this.width;
                   self.slideShowCropperSettings.croppedHeight=this.height;
-                  self.slideShowImage=image.src;
-                  //debugger;
                   self.createSlideShowImageThumbnail(image.src,"1");
-                  
-                  //self.communityImageCropper.setImage(image);
+                  }else{
+                    self.addMoreGalleryImage('slideShow');
+                  }
                 }
             };
           });
         }
       addMoreGalleryImage(option:string)
   {
+    if(!this.isApp){
     if(option=="community")
     {
     let commObj={imageData:"",imageDataDummy:"",imageWidth:"",imageHeight:""};
@@ -1511,8 +1514,6 @@ else
         commObj.imageWidth=this.communityWidth;
         commObj.imageHeight=this.communityHeight;
         this.dataCommunityImageArray.push(commObj);
-//debugger;
-    //this.communityImageArray.push(this.communityImage);
     this.hideCommunityCropper=false;
     this.dataCommunityImage={};
     }
@@ -1524,12 +1525,25 @@ else
       commObj.imageWidth=this.slideShowWidth;
       commObj.imageHeight=this.slideShowHeight;
       this.dataSlideShowImageArray.push(commObj);
-
-  //this.communityImageArray.push(this.communityImage);
   this.hideSlideShowCropper=false;
   this.dataSlideShowImage={};
     }
-    //debugger;
+  }else{
+    if(option=="community")
+    {
+      let commObj={imageData:""};
+      commObj.imageData=this.communityImage;
+      this.dataCommunityImageArray.push(commObj);
+  this.dataCommunityImage={};
+    }
+    if(option=="slideShow")
+    {
+      let commObj={imageData:""};
+      commObj.imageData=this.slideShowImage;
+      this.dataSlideShowImageArray.push(commObj);
+      this.dataSlideShowImage={};
+    }
+  }
   }
   deleteGalleryImage(imageObj,option:string)
   {
@@ -1548,6 +1562,247 @@ else
       }
     }
   }
+  openHeaderPicture(){
+    let actionSheet = this.actionsheetCtrl.create({
+      title: 'Option',
+      cssClass: 'action-sheets-basic-page',
+      buttons: [
+        {
+          text: 'Take photo',
+          icon: 'ios-camera-outline',
+          handler: () => {
+            this.takeHeaderPicture();
+          }
+        },
+        {
+          text: 'Choose photo from Gallery',
+          icon: 'ios-images-outline',
+          handler: () => {
+            this.selectHeaderPicture();
+          }
+        }
+  ]
+  });
+  actionSheet.present();
+  }
+    takeHeaderPicture(){
+//debugger;
+      var that=this;
+      let options =
+      {
+      allowEdit: true,
+      destinationType: that.camera.DestinationType.DATA_URL,
+      encodingType: that.camera.EncodingType.JPEG,
+      mediaType: that.camera.MediaType.PICTURE,
+      sourceType: that.camera.PictureSourceType.CAMERA
+      };
+      that.camera.getPicture(options)
+      .then((data) => {
+        that.headerImage="data:image/jpeg;base64," +data;
+
+        if(that.isApp)
+        {
+          that.crop
+       .crop(that.headerImage, {quality: 75,targetHeight:100,targetWidth:100})
+      .then((newImage) => {
+
+          that.headerImage=newImage;
+        }, error => {
+
+        });
+        }
+      }, function(error) {
+
+        console.log(error);
+      });
+
+    }
+    selectHeaderPicture()
+    {
+      var that=this;
+      let options =
+      {
+      allowEdit: true,
+      destinationType: that.camera.DestinationType.DATA_URL,
+      encodingType: that.camera.EncodingType.JPEG,
+      mediaType: that.camera.MediaType.PICTURE,
+      sourceType: that.camera.PictureSourceType.SAVEDPHOTOALBUM
+      };
+      that.camera.getPicture(options)
+      .then((data) => {
+        that.headerImage="data:image/jpeg;base64," +data;
+        if(that.isApp)
+        {
+          that.crop
+       .crop(that.headerImage, {quality: 75,targetHeight:100,targetWidth:100})
+      .then((newImage) => {
+          that.headerImage=newImage;
+        }, error => {
+        });
+        }
+      }, function(error) {
+
+        console.log(error);
+      });
+    }
+    openCommunityPicture(){
+      let actionSheet = this.actionsheetCtrl.create({
+        title: 'Option',
+        cssClass: 'action-sheets-basic-page',
+        buttons: [
+          {
+            text: 'Take photo',
+            icon: 'ios-camera-outline',
+            handler: () => {
+              this.takeCommunityPicture();
+            }
+          },
+          {
+            text: 'Choose photo from Gallery',
+            icon: 'ios-images-outline',
+            handler: () => {
+              this.selectCommunityPicture();
+            }
+          }
+    ]
+    });
+    actionSheet.present();
+    }
+    takeCommunityPicture(){
+      var that=this;
+      let options =
+      {
+      allowEdit: true,
+      destinationType: that.camera.DestinationType.DATA_URL,
+      encodingType: that.camera.EncodingType.JPEG,
+      mediaType: that.camera.MediaType.PICTURE,
+      sourceType: that.camera.PictureSourceType.CAMERA
+      };
+      that.camera.getPicture(options)
+      .then((data) => {
+        that.communityImage="data:image/jpeg;base64," +data;
+        if(that.isApp)
+        {
+          that.crop
+          .crop(that.communityImage, {quality: 75,targetHeight:100,targetWidth:100})
+          .then((newImage) => {
+            that.communityImage=newImage;
+            
+          }, error => {
+          });
+        }
+        
+      }, function(error) {
+        console.log(error);
+      });
+    }
+    selectCommunityPicture(){
+      var that=this;
+      let options =
+      {
+      allowEdit: true,
+      destinationType: that.camera.DestinationType.DATA_URL,
+      encodingType: that.camera.EncodingType.JPEG,
+      mediaType: that.camera.MediaType.PICTURE,
+      sourceType: that.camera.PictureSourceType.SAVEDPHOTOALBUM
+      };
+      that.camera.getPicture(options)
+      .then((data) => {
+        that.communityImage="data:image/jpeg;base64," +data;
+        if(that.isApp)
+        {
+          that.crop
+          .crop(that.communityImage, {quality: 75,targetHeight:100,targetWidth:100})
+          .then((newImage) => {
+            that.communityImage=newImage;
+            
+          }, error => {
+          });
+        }
+        
+      }, function(error) {
+        console.log(error);
+      });
+    }
+    openSlideShowPicture(){
+      let actionSheet = this.actionsheetCtrl.create({
+        title: 'Option',
+        cssClass: 'action-sheets-basic-page',
+        buttons: [
+          {
+            text: 'Take photo',
+            icon: 'ios-camera-outline',
+            handler: () => {
+              this.takeSlideShowPicture();
+            }
+          },
+          {
+            text: 'Choose photo from Gallery',
+            icon: 'ios-images-outline',
+            handler: () => {
+              this.selectSlideShowPicture();
+            }
+          }
+    ]
+    });
+    actionSheet.present();
+    }
+    takeSlideShowPicture(){
+      var that=this;
+      let options =
+      {
+      allowEdit: true,
+      destinationType: that.camera.DestinationType.DATA_URL,
+      encodingType: that.camera.EncodingType.JPEG,
+      mediaType: that.camera.MediaType.PICTURE,
+      sourceType: that.camera.PictureSourceType.CAMERA
+      };
+      that.camera.getPicture(options)
+      .then((data) => {
+        that.slideShowImage="data:image/jpeg;base64," +data;
+        if(that.isApp)
+        {
+          that.crop
+          .crop(that.slideShowImage, {quality: 75,targetHeight:100,targetWidth:100})
+          .then((newImage) => {
+            that.slideShowImage=newImage;
+            
+          }, error => {
+          });
+        }
+        
+      }, function(error) {
+        console.log(error);
+      });
+    }
+    selectSlideShowPicture(){
+      var that=this;
+      let options =
+      {
+      allowEdit: true,
+      destinationType: that.camera.DestinationType.DATA_URL,
+      encodingType: that.camera.EncodingType.JPEG,
+      mediaType: that.camera.MediaType.PICTURE,
+      sourceType: that.camera.PictureSourceType.SAVEDPHOTOALBUM
+      };
+      that.camera.getPicture(options)
+      .then((data) => {
+        that.slideShowImage="data:image/jpeg;base64," +data;
+        if(that.isApp)
+        {
+          that.crop
+          .crop(that.slideShowImage, {quality: 75,targetHeight:100,targetWidth:100})
+          .then((newImage) => {
+            that.slideShowImage=newImage;
+            
+          }, error => {
+          });
+        }
+        
+      }, function(error) {
+        console.log(error);
+      });
+    }
       loadHeaderImage(baseUrl:string,imageUrl:string) {
        // debugger;
         const self = this;
@@ -1565,11 +1820,13 @@ else
               //debugger;
               image.src = loadEvent.target.result;
               image.onload = function () {
-               
+
+                self.headerImage=image.src;
+                if(!self.isApp){
                 self.headerCropperSettings.croppedWidth=this.width;
                 self.headerCropperSettings.croppedHeight=this.height;
-                self.headerImage=image.src;
                 self.createHeaderImageThumbnail(image.src);
+              }
                 //self.headerImageCropper.setImage(image);
               }
               //self.headerImageCropper.setImage(image);
@@ -1577,50 +1834,7 @@ else
           };
         });
       }
-     /* showHideHeaderCropper(){
-        this.crop_header_image=false;
-        const self = this;
-    if(this.edit_header_image)
-    {
-      this.hideHeaderCropper=true;
-      if(this.headerImage!="")
-      {
-       // this.companyCropperLoaded=true;
-        var image:any = new Image();
-        image.src = this.headerImage;
-                image.onload = function () {
-                  self.headerImageCropper.setImage(image); 
-                }
-     }
-      
-    }
-    else
-    {
-      this.hideHeaderCropper=false;
-    }
-      }
-      showHideCommunityCropper(){
-        this.crop_community_image=false;
-        const self = this;
-    if(this.edit_community_image)
-    {
-      this.hideCommunityCropper=true;
-      if(this.communityImage!="")
-      {
-       // this.companyCropperLoaded=true;
-        var image:any = new Image();
-        image.src = this.communityImage;
-                image.onload = function () {
-                  self.communityImageCropper.setImage(image); 
-                }
-     }
-      
-    }
-    else
-    {
-      this.hideCommunityCropper=false;
-    }
-      }*/
+    
       updateHotSheet():void{
         //this.domainAccess=this.localStorageService.get('domainAccess');
         if(this.dataCommunityImage.image!=undefined&&this.dataCommunityImage.image!='')
@@ -1907,73 +2121,7 @@ else
     this.crop_slideshow_image=true;
   }
       }
-       takeHeaderPicture(){
-       //debugger;
-         let options =
-         {
-           quality: 100,
-           correctOrientation: true
-         };
-         this.camera.getPicture(options)
-         .then((data) => {
-           this.headerImage="data:image/jpeg;base64," +data;
-           let image : any= new Image();
-            image.src = this.headerImage;
-           
-           if(this.isApp)
-           {
-          this.crop
-          .crop(this.headerImage, {quality: 75,targetHeight:100,targetWidth:100})
-         .then((newImage) => {
-        
-             alert(newImage);
-             this.headerImage=newImage;
-           }, error => {
-            
-             alert(error)});
-           }
-         }, function(error) {
-   
-           console.log(error);
-         });
-       }
-       selectHeaderPicture()
-       {
-         let options= {
-           maximumImagesCount: 1
-         }
-       
-         this.imagePicker.getPictures(options)
-         .then((results) => {
-         // debugger;
-         }, (err) => { console.log(err) });
-       }
-       takeCommunityPicture(){
-         let options =
-         {
-           quality: 100,
-           correctOrientation: true
-         };
-         this.camera.getPicture(options)
-         .then((data) => {
-           this.communityImage="data:image/jpeg;base64," +data;
-           let image : any= new Image();
-            image.src = this.communityImage;
-           if(this.isApp)
-           {
-             this.crop
-             .crop(this.communityImage, {quality: 75,targetHeight:100,targetWidth:100})
-             .then((newImage) => {
-               alert(newImage);
-               this.communityImage=newImage;
-               
-             }, error => {alert(error)});
-           }
-           
-         }, function(error) {
-           console.log(error);
-         });
-       }
+ 
        /////////////////////Generate Thumbnail//////////////////////
 
   createCommunityImageThumbnail(bigMatch:any,editMode:string) {

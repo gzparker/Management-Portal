@@ -1,6 +1,6 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, Platform, 
-  MenuController,LoadingController } from 'ionic-angular';
+  MenuController,LoadingController,ActionSheetController } from 'ionic-angular';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import jstz from 'jstz';
 import { Storage } from '@ionic/storage';
@@ -123,7 +123,7 @@ export class GlobalPreferencesPage {
   public userId:string="";
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,
-    public sharedServiceObj: SharedProvider, private storage: Storage,
+    public sharedServiceObj: SharedProvider, private storage: Storage,public actionsheetCtrl: ActionSheetController,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform, 
     public ngZone: NgZone,public menuCtrl: MenuController,public loadingCtrl: LoadingController,
     private crop: Crop,private camera: Camera,private imagePicker: ImagePicker) {
@@ -825,11 +825,12 @@ this.sharedServiceObj.updateColorThemeMethod(options);
               //debugger;
               image.src = loadEvent.target.result;
               image.onload = function () {
-                self.dwellerCropperSettings.croppedWidth = this.width;
-                self.dwellerCropperSettings.croppedHeight = this.height;
                 self.dwellerImage=image.src;
-                //self.companyCropper.setImage(image); 
-                self.createDwellerThumbnail(image.src);
+                if(!self.isApp){
+                  self.dwellerCropperSettings.croppedWidth = this.width;
+                  self.dwellerCropperSettings.croppedHeight = this.height;
+                  self.createDwellerThumbnail(image.src);
+                }
             };
               
       
@@ -851,14 +852,14 @@ this.sharedServiceObj.updateColorThemeMethod(options);
         reader.readAsDataURL(xhr.response); 
        
         reader.onloadend = function (loadEvent:any) {
-          //debugger;
           image.src = loadEvent.target.result;
           image.onload = function () {
-            self.companyCropperSettings.croppedWidth = this.width;
-            self.companyCropperSettings.croppedHeight = this.height;
             self.companyLogoImage=image.src;
-            //self.companyCropper.setImage(image); 
-            self.createCompanyThumbnail(image.src);
+            if(!self.isApp){
+              self.companyCropperSettings.croppedWidth = this.width;
+              self.companyCropperSettings.croppedHeight = this.height;
+              self.createCompanyThumbnail(image.src);
+            }
         };
           
   
@@ -880,58 +881,16 @@ this.sharedServiceObj.updateColorThemeMethod(options);
         reader.onloadend = function (loadEvent:any) {
           image.src = loadEvent.target.result;
           image.onload = function () {
-            self.personalCropperSettings.croppedWidth = this.width;
-            self.personalCropperSettings.croppedHeight = this.height;
             self.personalImage=image.src;
-           self.createPersonalThumbnail(image.src);
+            if(!self.isApp){
+              self.personalCropperSettings.croppedWidth = this.width;
+              self.personalCropperSettings.croppedHeight = this.height;
+             self.createPersonalThumbnail(image.src);
+            }
         };
       };
     });
   }
-  /*showHideCompanyCropper(){
-    this.crop_company_image=false;
-    const self = this;
-if(this.edit_company_image)
-{
-  this.hideCompanyCropper=true;
-  if(this.companyLogoImage!="")
-  {
-   // this.companyCropperLoaded=true;
-    var image:any = new Image();
-    image.src = this.companyLogoImage;
-            image.onload = function () {
-              self.companyCropper.setImage(image); 
-            }
- }
-  
-}
-else
-{
-  this.hideCompanyCropper=false;
-}
-  }*/
-  /*showHidePersonalCropper(){
-    this.crop_personal_image=false;
-    const self = this;
-if(this.edit_personal_image)
-{
-  this.hidePersonalCropper=true;
-  if(this.personalImage!="")
-  {
-   // this.companyCropperLoaded=true;
-    var image:any = new Image();
-    image.src = this.personalImage;
-            image.onload = function () {
-              self.personalCropper.setImage(image); 
-            }
- }
-  
-}
-else
-{
-  this.hidePersonalCropper=false;
-}
-  }*/
   editImage(imageType:string){
     var that=this;
     let selectedImageOption={
@@ -1055,38 +1014,84 @@ else
   } 
   
  }
-
+openDwellerPicture(){
+  let actionSheet = this.actionsheetCtrl.create({
+    title: 'Option',
+    cssClass: 'action-sheets-basic-page',
+    buttons: [
+      {
+        text: 'Take photo',
+        icon: 'ios-camera-outline',
+        handler: () => {
+          this.takeDwellerPicture();
+        }
+      },
+      {
+        text: 'Choose photo from Gallery',
+        icon: 'ios-images-outline',
+        handler: () => {
+          this.selectDwellerPicture();
+        }
+      }
+]
+});
+actionSheet.present();
+}
  takeDwellerPicture(){
-  //debugger;
+   //debugger;
+  let that=this;
     let options =
     {
-      quality: 100,
-      correctOrientation: true
+      allowEdit: true,
+      destinationType: that.camera.DestinationType.DATA_URL,
+      encodingType: that.camera.EncodingType.JPEG,
+      mediaType: that.camera.MediaType.PICTURE,
+      sourceType: that.camera.PictureSourceType.CAMERA
     };
     this.camera.getPicture(options)
     .then((data) => {
       this.dwellerImage="data:image/jpeg;base64," +data;
-      let image : any= new Image();
-       image.src = this.dwellerImage;
-       //this.companyLogoImage=image;
-      //this.companyLogoCropper.setImage(image);
       if(this.isApp)
       {
      this.crop
      .crop(this.dwellerImage, {quality: 75,targetHeight:100,targetWidth:100})
     .then((newImage) => {
-   
-        //alert(newImage);
         this.dwellerImage=newImage;
       }, error => {
-       
-        alert(error)});
+      });
       }
     }, function(error) {
 
       console.log(error);
     });
   }
+  selectDwellerPicture(){
+    //debugger;
+    let that=this;
+      let options =
+      {
+        allowEdit: true,
+        destinationType: that.camera.DestinationType.DATA_URL,
+        encodingType: that.camera.EncodingType.JPEG,
+        mediaType: that.camera.MediaType.PICTURE,
+        sourceType: that.camera.PictureSourceType.SAVEDPHOTOALBUM
+      };
+      this.camera.getPicture(options)
+      .then((data) => {
+        this.dwellerImage="data:image/jpeg;base64," +data;
+        if(this.isApp)
+        {
+       this.crop
+       .crop(this.dwellerImage, {quality: 75,targetHeight:100,targetWidth:100})
+      .then((newImage) => {
+          this.dwellerImage=newImage;
+        }, error => {
+        });
+        }
+      }, function(error) {
+        console.log(error);
+      });
+    }
   createDwellerThumbnail(bigMatch:any) {
     let that=this;
     //debugger;
@@ -1208,38 +1213,85 @@ else
    } 
    
   }
-
+openCompanyImageBox(){
+  let actionSheet = this.actionsheetCtrl.create({
+    title: 'Option',
+    cssClass: 'action-sheets-basic-page',
+    buttons: [
+      {
+        text: 'Take photo',
+        icon: 'ios-camera-outline',
+        handler: () => {
+          this.takeCompanyLogoPicture();
+        }
+      },
+      {
+        text: 'Choose photo from Gallery',
+        icon: 'ios-images-outline',
+        handler: () => {
+          this.selectCompanyLogoPicture();
+        }
+      }
+]
+});
+actionSheet.present();
+}
   takeCompanyLogoPicture(){
-   //debugger;
+    //debugger;
+   let that=this;
      let options =
      {
-       quality: 100,
-       correctOrientation: true
+      allowEdit: true,
+      destinationType: that.camera.DestinationType.DATA_URL,
+      encodingType: that.camera.EncodingType.JPEG,
+      mediaType: that.camera.MediaType.PICTURE,
+      sourceType: that.camera.PictureSourceType.CAMERA
      };
-     this.camera.getPicture(options)
+     that.camera.getPicture(options)
      .then((data) => {
-       this.companyLogoImage="data:image/jpeg;base64," +data;
-       let image : any= new Image();
-        image.src = this.companyLogoImage;
-        //this.companyLogoImage=image;
-       //this.companyLogoCropper.setImage(image);
-       if(this.isApp)
+       that.companyLogoImage="data:image/jpeg;base64," +data;
+      
+       if(that.isApp)
        {
-      this.crop
-      .crop(this.companyLogoImage, {quality: 75,targetHeight:100,targetWidth:100})
+        that.crop
+      .crop(that.companyLogoImage, {quality: 75,targetHeight:100,targetWidth:100})
      .then((newImage) => {
-    
-         alert(newImage);
-         this.companyLogoImage=newImage;
+         that.companyLogoImage=newImage;
        }, error => {
-        
-         alert(error)});
+        });
        }
      }, function(error) {
-      alert(error)
        console.log(error);
      });
    }
+   selectCompanyLogoPicture(){
+     //debugger;
+    let that=this;
+      let options =
+      {
+       allowEdit: true,
+       destinationType: that.camera.DestinationType.DATA_URL,
+       encodingType: that.camera.EncodingType.JPEG,
+       mediaType: that.camera.MediaType.PICTURE,
+       sourceType: that.camera.PictureSourceType.SAVEDPHOTOALBUM
+      };
+      that.camera.getPicture(options)
+      .then((data) => {
+        that.companyLogoImage="data:image/jpeg;base64," +data;
+       
+        if(that.isApp)
+        {
+         that.crop
+       .crop(that.companyLogoImage, {quality: 75,targetHeight:100,targetWidth:100})
+      .then((newImage) => {
+          that.companyLogoImage=newImage;
+        }, error => {
+         });
+        }
+      }, function(error) {
+        console.log(error);
+      });
+    }
   
    personalFileChangeListener($event) {
      this.crop_personal_image=true;
@@ -1284,32 +1336,60 @@ else
    }
   
   }
-   takePersonalPicture(){
+    takePersonalPicture(){
+      let that=this;
       let options =
       {
-        quality: 100,
-        correctOrientation: true
+       allowEdit: true,
+       destinationType: that.camera.DestinationType.DATA_URL,
+       encodingType: that.camera.EncodingType.JPEG,
+       mediaType: that.camera.MediaType.PICTURE,
+       sourceType: that.camera.PictureSourceType.CAMERA
       };
-      this.camera.getPicture(options)
+      that.camera.getPicture(options)
       .then((data) => {
-        this.personalImage="data:image/jpeg;base64," +data;
-        let image : any= new Image();
-         image.src = this.personalImage;
-        //this.personalImageCropper.setImage(image);
-        if(this.isApp)
+        that.personalImage="data:image/jpeg;base64," +data;
+       
+        if(that.isApp)
         {
-       this.crop
-       .crop(this.personalImage, {quality: 75,targetHeight:100,targetWidth:100})
+         that.crop
+       .crop(that.personalImage, {quality: 75,targetHeight:100,targetWidth:100})
       .then((newImage) => {
-          this.personalImage=newImage;
+        that.personalImage=newImage;
         }, error => {
-          alert(error)});
+         });
         }
       }, function(error) {
- 
         console.log(error);
       });
-    }
+      }
+      selectPersonalPicture(){
+        let that=this;
+        let options =
+        {
+         allowEdit: true,
+         destinationType: that.camera.DestinationType.DATA_URL,
+         encodingType: that.camera.EncodingType.JPEG,
+         mediaType: that.camera.MediaType.PICTURE,
+         sourceType: that.camera.PictureSourceType.SAVEDPHOTOALBUM
+        };
+        that.camera.getPicture(options)
+        .then((data) => {
+          that.personalImage="data:image/jpeg;base64," +data;
+         
+          if(that.isApp)
+          {
+           that.crop
+         .crop(that.personalImage, {quality: 75,targetHeight:100,targetWidth:100})
+        .then((newImage) => {
+          that.personalImage=newImage;
+          }, error => {
+           });
+          }
+        }, function(error) {
+          console.log(error);
+        });
+        }
     /////////////////////Generate Thumbnail//////////////////////
     setPersonalImage(image:any)
     {
