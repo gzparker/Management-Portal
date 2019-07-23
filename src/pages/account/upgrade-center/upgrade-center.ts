@@ -49,6 +49,7 @@ export class UpgradeCenterPage {
   public subscription_id:string="";
   public isUpgradeDowngradeAccess:boolean=false;
   public loader:any;
+  public totalSubscribedPackages:number=0;
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController,public subscribtionObj:SubscriptionProvider, 
@@ -121,10 +122,11 @@ export class UpgradeCenterPage {
   }
   listIntervalBasedPackages()
   {
-    this.selectedPackagesList=[];
-    this.totalAmount=0;
+    let that=this;
+    that.selectedPackagesList=[];
+    that.totalAmount=0;
     let pay_yearly_dummy="";
-  if(this.pay_yearly)
+  if(that.pay_yearly)
   {
     pay_yearly_dummy="year";
   }
@@ -132,19 +134,21 @@ export class UpgradeCenterPage {
   {
     pay_yearly_dummy="month";
   }
-  this.intervalBasedAvailablePackages=this.allAvailablePackages.filter(
+  that.intervalBasedAvailablePackages=that.allAvailablePackages.filter(
     packageList => packageList.plan_price_interval === pay_yearly_dummy);
-  this.intervalBasedSubscribedPackages=this.allSubscribedPackages.filter(
+    that.intervalBasedSubscribedPackages=that.allSubscribedPackages.filter(
     packageList => packageList.plan_interval === pay_yearly_dummy);
+    that.totalSubscribedPackages=that.intervalBasedAvailablePackages.length;
     this.calculateTotalSubscribedPrice();
   }
   setSelectedPackage(packageItem:any,option:string) {
+    let that=this;
     if(option=='2')
     {
-      let packageExists=this.intervalBasedSubscribedPackages.filter(packageList => packageList.plan_id === packageItem.plan_id);
+      let packageExists=that.intervalBasedSubscribedPackages.filter(packageList => packageList.plan_id === packageItem.plan_id);
       if(packageExists.length>0)
       {
-        let alert = this.alertCtrl.create({
+        let alert = that.alertCtrl.create({
           title: 'Plan Exists',
           subTitle: "Sorry this plan already exists.",
           buttons: [{
@@ -158,22 +162,67 @@ export class UpgradeCenterPage {
       }
       else
       {
-        let selectedIndex = this.selectedPackagesList.indexOf(packageItem);
+        let selectedIndex = that.selectedPackagesList.indexOf(packageItem);
         if (selectedIndex >= 0) {
           this.selectedPackagesList.splice(selectedIndex, 1);
         }
         else {
-          this.selectedPackagesList.push(packageItem);
+          debugger;
+          if(that.selectedPackagesList.length==that.totalSubscribedPackages-1)
+          {
+            that.ngZone.run(() => {
+              let toast = that.toastCtrl.create({
+                message: "You cannot downgrade from all subscribed packages.",
+                duration: 3000,
+                position: 'top',
+                cssClass:'errorToast'
+              });
+            
+              toast.onDidDismiss(() => {
+                //console.log('Dismissed toast');
+              });
+            
+              toast.present();
+              
+              //this.navCtrl.push(AccountOptionPage,{notificationMsg:"New plan has been subscribed."});
+            });
+          }
+          else{
+            that.selectedPackagesList.push(packageItem);
+          }
+          
         }
-        this.calculateTotalPrice();
+        that.calculateTotalPrice();
       }
     }
     else if(option=='1'){
-      let selectedIndex = this.selectedSubscribedPackagesList.indexOf(packageItem);
+      let selectedIndex = that.selectedSubscribedPackagesList.indexOf(packageItem);
       if (selectedIndex >= 0) {
-        this.selectedSubscribedPackagesList.splice(selectedIndex, 1);
+        that.selectedSubscribedPackagesList.splice(selectedIndex, 1);
       }else {
-        this.selectedSubscribedPackagesList.push(packageItem);
+        debugger;
+        if(that.selectedSubscribedPackagesList.length==that.totalSubscribedPackages-1)
+          {
+            that.ngZone.run(() => {
+              let toast = that.toastCtrl.create({
+                message: "You cannot downgrade from all subscribed packages.",
+                duration: 3000,
+                position: 'top',
+                cssClass:'errorToast'
+              });
+            
+              toast.onDidDismiss(() => {
+                //console.log('Dismissed toast');
+              });
+            
+              toast.present();
+              
+              //this.navCtrl.push(AccountOptionPage,{notificationMsg:"New plan has been subscribed."});
+            });
+          }
+          else{
+            that.selectedSubscribedPackagesList.push(packageItem);
+          }
       }
     }
 
@@ -272,6 +321,11 @@ if(resp.status==true)
     this.subscription_id=resp.results.subscription_id;
     //this.allAvailablePackages=resp.results.available_products;
     this.allSubscribedPackages=resp.results.customer_subscription.customer_subscribed_products;
+    if(this.allSubscribedPackages[0].plan_interval=="month"){
+      this.pay_yearly=false;
+    }else{
+      this.pay_yearly=true;
+    }
     //debugger;
     resp.results.available_products.forEach(element => {
       element.product_plans.forEach(element => {

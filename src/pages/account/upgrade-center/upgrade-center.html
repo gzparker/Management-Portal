@@ -23,21 +23,19 @@
   <ion-list class="customWrapper centerStage animated lightSpeedIn" *ngIf="!userSubscribed">
 
     
-      <ion-item>
+      <!--<ion-item>
           <ion-label *ngIf="pay_yearly==false">Pay Monthly</ion-label>
           <ion-label *ngIf="pay_yearly==true">Pay Yearly</ion-label>
           <ion-toggle [(ngModel)]="pay_yearly" name="pay_yearly" (ngModelChange)="listIntervalBasedPackages()"></ion-toggle>
-      </ion-item>
+      </ion-item>-->
       <div class="formShadow" *ngIf="intervalBasedSubscribedPackages.length>0">
       <h3 class="centerStage contentTitle animated bounceInRight">Subscribed Packages</h3>
       <ion-list>
         <ion-item class="OptPackage" *ngFor="let package of intervalBasedSubscribedPackages">
           <ion-label>{{package.plan_nickname}}</ion-label>
-          <ion-label *ngIf="pay_yearly==true">${{package.plan_amount/12 | number:'1.1-3'}}/month</ion-label>
+          <ion-label *ngIf="pay_yearly==true">${{package.plan_amount | number:'1.1-3'}}</ion-label>
           <ion-label *ngIf="pay_yearly==false">${{package.plan_amount | number:'1.1-3'}}</ion-label>
-          <ion-label *ngIf="package.required=='true'">*Required</ion-label>
-          <ion-label *ngIf="package.required!='true'">Add-On Feature</ion-label>
-          <ion-checkbox color="royal" checked="false" *ngIf="package.required!='true'" id="{{package.plan_id}}" item-right 
+            <ion-checkbox color="royal" checked="false" id="{{package.plan_id}}" item-right 
             (ionChange)="setSelectedPackage(package,'1')"></ion-checkbox>
         </ion-item>
         <ion-item class="TotalPrice">
@@ -58,10 +56,10 @@
         </ion-item>
         <ion-item class="OptPackage" *ngFor="let package of intervalBasedAvailablePackages">
             <ion-label>{{package.plan_name}}</ion-label>
-            <ion-label *ngIf="pay_yearly==true">${{package.plan_price/12 | number:'1.1-3'}}/month</ion-label>
+            <ion-label *ngIf="pay_yearly==true">${{package.plan_price | number:'1.1-3'}}</ion-label>
             <ion-label *ngIf="pay_yearly==false">${{package.plan_price | number:'1.1-3'}}</ion-label>
-            <ion-label *ngIf="package.required=='true'">*Required</ion-label>
-            <ion-label *ngIf="package.required!='true'">Add-On Feature</ion-label>
+            <!--<ion-label *ngIf="package.required=='true'">*Required</ion-label>
+            <ion-label *ngIf="package.required!='true'">Add-On Feature</ion-label>-->
             <ion-checkbox color="royal" checked="false" id="{{package.plan_id}}" item-right 
             (ionChange)="setSelectedPackage(package,'2')"></ion-checkbox>
         </ion-item>
@@ -76,142 +74,5 @@
       <button ion-button color="primary" block (click)="upgradeDowngradeList('2','upgrade');">Upgrade</button>
     </div>
     </div>
-
-    
     </ion-list>
-
-  <!--</form>-->
-    <!--<div class="centerStage animated bounceInUp formShadow">
-    <ion-item>
-        <ion-label stacked>Interval</ion-label>
-        <ion-select [(ngModel)]="interval" 
-    name="interval" (ngModelChange)="filterPlansList()">
-    <ion-option value="month">MONTH</ion-option>
-    <ion-option value="year">YEAR</ion-option>
-     </ion-select>
-    </ion-item>
-    <ion-item>
-    <ion-label stacked>Select Plan To Upgrade</ion-label>
-      <ion-select [(ngModel)]="interval" 
-  name="interval" (ngModelChange)="filterPlansList()">
-  <ion-option value="month">MONTH</ion-option>
-  <ion-option value="year">YEAR</ion-option>
-   </ion-select>
-   <ion-select [(ngModel)]="selectedCurrentPlans" (ngModelChange)="onPlanSelection($event)" 
-   name="selectedCurrentPlans">
-    <ion-option *ngFor="let plan of upgradeFilteredPlans" value= {{plan.id}}>
-       {{plan.name}}
-     </ion-option>
-   </ion-select>
-  </ion-item>
-  </div>-->
-
-  <!-- <ion-list *ngIf="current_upgrade!=undefined">
-    <ion-item>
-      <ion-label stacked>Current Plan Level:</ion-label>
-    </ion-item>
-    <ion-card>
-      <ion-item>
-      <h2>Name: {{current_upgrade.name}}</h2>
-      <p>Interval: {{current_upgrade.interval}}</p>
-      <p>Amount: ${{current_upgrade.amount}}</p>
-    </ion-item>
-    </ion-card>
-  </ion-list> -->
-
-  <!--<h1 class="centerStage contentTitle animated fadeInLeft">Account Details</h1>
-
-  <ion-list class="centerStage animated bounceInUp">
-    <ion-item *ngIf="current_upgrade!=null">
-      <ion-icon name="ios-home-outline" item-start></ion-icon>
-        <h2>Name</h2>
-        <p>{{current_upgrade.name}}</p>
-    </ion-item>
-
-    <ion-item *ngIf="current_upgrade!=null">
-      <ion-icon name="ios-calendar-outline" item-start></ion-icon>
-        <h2>Interval</h2>
-        <p>{{current_upgrade.interval}}</p>
-    </ion-item>
-
-    <ion-item *ngIf="current_upgrade!=null">
-      <ion-icon name="logo-usd" item-start></ion-icon>
-        <h2>Amount</h2>
-        <p>${{current_upgrade.amount}}</p>
-    </ion-item>
-  </ion-list>-->
-
-  <!-- <ion-list *ngIf="current_upgrade!=undefined">
-    <ion-item>
-      <ion-label stacked>Current Plan Level:</ion-label>
-    </ion-item>
-    <ion-card>
-      <ion-item>
-      <h2>Name: {{current_upgrade.name}}</h2>
-      <p>Interval: {{current_upgrade.interval}}</p>
-      <p>Amount: ${{current_upgrade.amount}}</p>
-    </ion-item>
-    </ion-card>
-  </ion-list> -->
-
-
-  <!-- <div class="formShadow">
-  <ion-list *ngIf="current_upgrade!=undefined">
-  <ion-item>
-    <ion-label stacked>Current Plan Level:</ion-label>
-  </ion-item>
-  <ion-card>
-    <ion-item>
-    <h2>Name: {{current_upgrade.name}}</h2>
-    <p>Interval: {{current_upgrade.interval}}</p>
-    <p>Amount: ${{current_upgrade.amount}}</p>
-  </ion-item>
-  </ion-card>
-</ion-list>
-</div> -->
-    <!--<ion-item>
-      <ion-label stacked>Interval</ion-label>
-      <ion-select [(ngModel)]="interval" 
-  name="interval" (ngModelChange)="filterPlansList()">
-  <ion-option value="month">MONTH</ion-option>
-  <ion-option value="year">YEAR</ion-option>
-   </ion-select>
-  </ion-item>-->
-  <!--<ion-segment [(ngModel)]="upgradeCenterSegment" color="primary" (ionChange)="segmentChanged($event)">
-    <ion-segment-button value="1">
-      Plans
-    </ion-segment-button>
-    <ion-segment-button value="2">
-      Current Upgrade
-    </ion-segment-button>
-  </ion-segment>
-  <ion-list *ngIf="selectedSegment=='1'">
-  <ion-item *ngFor="let plan of upgradeFilteredPlans">
-   
-      <ion-item>
-      <h2>Name:{{plan.name}}</h2>
-      <p>Amount Due:{{plan.amount}}</p>
-      <p>Interval:{{plan.interval}}</p>
-      <p>Description:{{plan.description}}</p>
-    
-    </ion-item>
-    <button ion-button item-right color="secondary" (click)="upgradeDowngradePlan(plan.id)" *ngIf="isUpgradeDowngradeAccess==true">
-        <ion-icon name="settings"></ion-icon>
-      </button>
-   
-    </ion-item>
-  </ion-list>
-  <ion-list *ngIf="selectedSegment=='2'">
-      <ion-item *ngFor="let current_plan of currentFilteredPlans">
-        <ion-item>
-        <h2>Name:{{current_plan.name}}</h2>
-      <p>Amount Due:{{current_plan.amount}}</p>
-      <p>Interval:{{current_plan.interval}}</p>
-      <p>Description:{{current_plan.description}}</p>
-    </ion-item>
-      <button ion-button item-right color="secondary" (click)="upgradeDowngradePlan(current_plan.id)" *ngIf="isUpgradeDowngradeAccess==true">
-          <ion-icon name="settings"></ion-icon>
-        </button>
-        </ion-item>    
-  </ion-list>-->
 </ion-content>

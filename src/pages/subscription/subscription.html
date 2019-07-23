@@ -52,8 +52,8 @@
  
       <h3 class="centerStage contentTitle animated bounceInRight">Choose Subscription Packages</h3>
       <ion-item>
-          <ion-label *ngIf="pay_yearly==true">Pay Monthly</ion-label>
-          <ion-label *ngIf="pay_yearly==false">Pay Yearly</ion-label>
+          <ion-label *ngIf="pay_yearly==true">Pay Yearly</ion-label>
+          <ion-label *ngIf="pay_yearly==false">Pay Monthly</ion-label>
           <ion-toggle [(ngModel)]="pay_yearly" name="pay_yearly" (ngModelChange)="listIntervalBasedPackages()"></ion-toggle>
       </ion-item>
       <!--<ion-item class="OptPackage" *ngFor="let package of intervalBasedPackages">
@@ -67,22 +67,11 @@
       <ion-item>
       <ion-select [(ngModel)]="selected_packageIds" name="selected_packageIds" placeholder="-----" multiple="true" (ngModelChange)="setSelectedPackage()">
         <ion-option *ngFor="let package of intervalBasedPackages" value= {{package.id}}>
-          <span *ngIf="pay_yearly==true">{{package.name}}(${{package.amount/12 | number:'1.1-3'}}/month)</span>
+          <span *ngIf="pay_yearly==true">{{package.name}}(${{package.amount | number:'1.1-3'}})</span>
           <span *ngIf="pay_yearly==false">{{package.name}}(${{package.amount}})</span>
-          <span *ngIf="package.required=='true'">*Required</span>
-          <span *ngIf="package.required!='true'">Optional</span>
         </ion-option>
       </ion-select>
       </ion-item>
-      <!--<ion-item >
-        <ion-select [(ngModel)]="selected_package" (ngModelChange)="setSelectedPackage()" name="selected_package">
-        <ion-option *ngFor="let package of intervalBasedPackages" value= {{package.id}}>
-        <span *ngIf="pay_yearly==false">{{package.name}}(${{package.amount/12}}/month)</span>
-        <span *ngIf="pay_yearly==true">{{package.name}}(${{package.amount}})</span>
-        </ion-option>
-        </ion-select>
-      </ion-item>-->
-      
   </ion-list>
   <ion-list class="noShadow cardDetails">
       <h3 class="centerStage contentTitle animated bounceInRight">Promo Code</h3>
@@ -95,8 +84,8 @@
         </ion-item>
   
         <ion-item class="TotalPrice">
-          <ion-label *ngIf="pay_yearly==true">Total Price: <strong>${{totalAmount}}/year</strong></ion-label>
-          <ion-label *ngIf="pay_yearly==false">Total Price: <strong>${{totalAmount}}/month</strong></ion-label>
+          <ion-label *ngIf="pay_yearly==true">Total Price: <strong>${{totalAmount | number:'1.1-3'}}/year</strong></ion-label>
+          <ion-label *ngIf="pay_yearly==false">Total Price: <strong>${{totalAmount | number:'1.1-3'}}/month</strong></ion-label>
         </ion-item>
   </ion-list>
     <ion-list class="noShadow cardDetails">

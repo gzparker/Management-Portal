@@ -126,6 +126,7 @@ export class SubscriptionPage {
   }
   listAllStartUpPlansResp(resp: any){
     if (resp.status == true) {
+      //debugger;
       this.startUpPlansList=resp.result;
     }
   }
@@ -170,6 +171,8 @@ export class SubscriptionPage {
   
   this.intervalBasedPackages=this.allAvailablePackages.filter(
     packageList => packageList.interval === pay_yearly_dummy);
+    this.intervalBasedPackages=this.intervalBasedPackages.reverse();
+    //debugger;
     //debugger;
   }
   loadAllAvailableMLS()
@@ -203,10 +206,9 @@ else
     //debugger;
   }
   saveSubscribeUser() {
-    //debugger;
 if(this.selectedPackagesList.length>0)
 {
-  let requiredPlan="";
+  //let requiredPlan="";
   let dataObj = {
     member_id: "",
     full_name: "",
@@ -220,21 +222,16 @@ if(this.selectedPackagesList.length>0)
     startupCost:"",
     startupPromoCodeId:""
   };
-  //debugger;
- // this.selectedPackagesList.forEach(element => {
-   // dataObj.service_plans_array.push(element.id);
-//});
-for(let i=0;i<this.selectedPackagesList.length;i++)
+  for(let i=0;i<this.selectedPackagesList.length;i++)
 {
   dataObj.service_plans_array.push(this.selectedPackagesList[i][0].id);
-  if(this.selectedPackagesList[i][0].required=="true")
+  /*if(this.selectedPackagesList[i][0].required=="true")
   {
     requiredPlan="1";
-  }
+  }*/
 }
-if(requiredPlan=="1")
-{
-  //debugger;
+/*if(requiredPlan=="1")
+{*/
   dataObj.full_name = this.full_name;
   dataObj.cc_number = this.cc_number;
   dataObj.exp_month = this.expiryDate.split("-")[1];
@@ -244,18 +241,17 @@ if(requiredPlan=="1")
   dataObj.startupPromoCodeId=this.selectedPromoId;
  
   dataObj.mls_service_id=this.mls_server_id;
-  //debugger;
   dataObj.stripe_coupon_code=this.selectedCoupon;
-
+//debugger;
   let member_id = this.storage.get('userId');
   member_id.then((memberResp) => {
   
     dataObj.member_id = memberResp;
-//debugger;
+    //debugger;
    this.subscriptionObj.saveUserSubscription(dataObj,this.service_id).
      subscribe((result) => this.saveSubscribeUserResp(result));
     });
-}
+/*}
 else
 {
   let alert = this.alertCtrl.create({
@@ -264,18 +260,13 @@ else
     buttons: ['Ok']
   });
   alert.present();
-}  
+}*/  
   
 }
 else
 {
   this.subscriptionMsg="Please select package list.";
-  /*let alert = this.alertCtrl.create({
-    title: 'Error',
-    subTitle: this.subscriptionMsg,
-    buttons: ['Ok']
-  });
-  alert.present();*/
+  
   let toast = this.toastCtrl.create({
     message: this.subscriptionMsg,
     duration: 3000,
@@ -284,7 +275,6 @@ else
   });
   
   toast.onDidDismiss(() => {
-    //console.log('Dismissed toast');
   });
   toast.present();
 }
@@ -435,7 +425,7 @@ this.selectedStartupPromoCode=resp;
         packageList => packageList.id === element);
         this.selectedPackagesList.push(foundPackage);
     });
-    debugger;
+    //debugger;
     /*let selectedIndex = this.selectedPackagesList.indexOf(packageItem);
     if (selectedIndex >= 0) {
       this.selectedPackagesList.splice(selectedIndex, 1);
@@ -518,5 +508,8 @@ if(that.selected_pricingPlan_Modal!=undefined&&that.selected_pricingPlan_Modal!=
   }
 }
 }
+  }
+  roundFloatNumbers(numberToBeFixed:any){
+    return numberToBeFixed.toFixed(2)
   }
 }
