@@ -138,7 +138,11 @@ export class UpgradeCenterPage {
     packageList => packageList.plan_price_interval === pay_yearly_dummy);
     that.intervalBasedSubscribedPackages=that.allSubscribedPackages.filter(
     packageList => packageList.plan_interval === pay_yearly_dummy);
+    that.storage.remove('subscribedPlans');
+    //debugger;
+    that.storage.set('subscribedPlans',that.intervalBasedSubscribedPackages);
     that.totalSubscribedPackages=that.intervalBasedAvailablePackages.length;
+    //debugger;
     this.calculateTotalSubscribedPrice();
   }
   setSelectedPackage(packageItem:any,option:string) {
@@ -167,7 +171,7 @@ export class UpgradeCenterPage {
           this.selectedPackagesList.splice(selectedIndex, 1);
         }
         else {
-          debugger;
+          //debugger;
           if(that.selectedPackagesList.length==that.totalSubscribedPackages-1)
           {
             that.ngZone.run(() => {
@@ -200,7 +204,7 @@ export class UpgradeCenterPage {
       if (selectedIndex >= 0) {
         that.selectedSubscribedPackagesList.splice(selectedIndex, 1);
       }else {
-        debugger;
+        //debugger;
         if(that.selectedSubscribedPackagesList.length==that.totalSubscribedPackages-1)
           {
             that.ngZone.run(() => {
@@ -256,7 +260,6 @@ export class UpgradeCenterPage {
     generalWebsiteSettings.then((data) => {
     if(option=="1")
     {
-     // debugger;
       that.subscribtionObj.upgradeDowngradePlan(that.userId.toString(),data.service_id,"","")
       .subscribe((result) => that.upgradeDowngradePlanResp(result,option,action,showMsg,successMsg));
     }
@@ -264,7 +267,7 @@ export class UpgradeCenterPage {
     {
 if(action=='upgrade')
 {
-  //debugger;
+  if(that.selectedPackagesList.length>0){
   that.finalUpgradedSelectedPlans=[];
   that.selectedPackagesList.forEach(element=>{
     let planObj={plan_id:"",subscription_item_id:"",interval:""};
@@ -272,30 +275,53 @@ planObj.interval=element.plan_price_interval;
 planObj.plan_id=element.plan_id;
 planObj.subscription_item_id="";
 that.finalUpgradedSelectedPlans.push(planObj);
-//debugger;
 });
-//debugger;
 that.selectedPackagesList=[];
-//debugger;
 that.subscribtionObj.upgradeDowngradePlan(that.userId.toString(),data.service_id,that.finalUpgradedSelectedPlans,action)
   .subscribe((result) => that.upgradeDowngradePlanResp(result,option,action,showMsg,successMsg));
 }
+else
+{
+  let toast = this.toastCtrl.create({
+    message: "Please select package to upgrade.",
+    duration: 3000,
+    position: 'top',
+    cssClass:'errorToast'
+  });
+  
+  toast.onDidDismiss(() => {
+  });
+  toast.present();
+}
+}
 else if(action=='downgrade')
 {
+if(that.selectedSubscribedPackagesList.length>0){
   that.finaldownGradedSelectedPlans=[];
-  //debugger;
   that.selectedSubscribedPackagesList.forEach(element=>{
-    //debugger;
     let planObj={plan_id:"",subscription_item_id:"",interval:""};
 planObj.interval=element.plan_price_interval;
 planObj.plan_id=element.plan_id;
 planObj.subscription_item_id=element.subscription_item_id;
 that.finaldownGradedSelectedPlans.push(planObj);
 });
-//debugger;
 that.selectedSubscribedPackagesList=[];
 that.subscribtionObj.upgradeDowngradePlan(that.userId.toString(),data.service_id,that.finaldownGradedSelectedPlans,action)
   .subscribe((result) => that.upgradeDowngradePlanResp(result,option,action,showMsg,successMsg));
+}
+else
+{
+  let toast = this.toastCtrl.create({
+    message: "Please select package to downgrade.",
+    duration: 3000,
+    position: 'top',
+    cssClass:'errorToast'
+  });
+  
+  toast.onDidDismiss(() => {
+  });
+  toast.present();
+}
 }
     }
     });  
@@ -321,6 +347,7 @@ if(resp.status==true)
     this.subscription_id=resp.results.subscription_id;
     //this.allAvailablePackages=resp.results.available_products;
     this.allSubscribedPackages=resp.results.customer_subscription.customer_subscribed_products;
+
     if(this.allSubscribedPackages[0].plan_interval=="month"){
       this.pay_yearly=false;
     }else{

@@ -32,6 +32,7 @@ export class AllWebsitesPage {
   public userId:string="";
   public websiteFoundMessage="";
   public showCreateButton:boolean=false;
+  public service_id:string="";
   public isApp=false;
   public parentId:string="";
   public isOwner:boolean=false;
@@ -43,53 +44,39 @@ export class AllWebsitesPage {
   public isViewWebsiteAccess:boolean=false;
   public imgBaseUrl=this.sharedServiceObj.imgBucketUrl;
   public noImgUrl=this.sharedServiceObj.noImageUrl;
+  public subscribedPackages:any;
+  public totalIdxPluginAllowed:number=0;
+  public totalAgentsAllowed:number=0;
+  public totalMobileAppAllowed:number=0;
+  public totalWebsiteAllowed:number=0;
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public subscriptionObj: SubscriptionProvider,
     public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform, 
     public ngZone: NgZone,public menuCtrl: MenuController,public loadingCtrl: LoadingController,private toastCtrl: ToastController) {
-      /*if(this.platform.is('core') || this.platform.is('mobileweb')) {
-        this.isApp=false;
-      }
-      else
-      {
-        this.isApp=true;
-      }*/
       this.isApp = (!document.URL.startsWith("http"));
       if(this.navParams.get('notificationMsg')!=undefined)
       {
         this.notificationMsg=this.navParams.get('notificationMsg');
-        /*let alert = this.alertCtrl.create({
-          title: 'Notification',
-          subTitle: this.notificationMsg,
-          buttons: ['Ok']
-        });
-        alert.present();*/
-        /*let toast = this.toastCtrl.create({
-          message: this.notificationMsg,
-          duration: 3000,
-          position: 'top',
-          cssClass:'successToast'
-        });
-        
-        toast.onDidDismiss(() => {
-          
-        });
-        toast.present();*/
       }
-      //debugger;
+      let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
+    generalWebsiteSettings.then((data) => {
+      this.service_id=data.service_id;
+    });
   }
 
   ionViewDidLoad() {
     this.sharedServiceObj.updateColorThemeMethod(null);
-    //alert('welcome');
+    
+      
     let member_id = this.storage.get('userId');
     member_id.then((data) => {
-      //alert('welcome too');
+
       this.userId=data;
-      //debugger;
+      this.setSubscriptionPackageRestrictions();
       this.viewAllWebsite(null);
       this.setAccessLevels();
+
     });
   }
   ionViewDidEnter()
@@ -115,6 +102,33 @@ export class AllWebsitesPage {
       
       });
   }
+  setSubscriptionPackageRestrictions(){
+    let that=this;
+    let subscribedPlans=that.storage.get('subscribedPlans');
+    subscribedPlans.then((subscribedPlanData) => {
+      that.subscribedPackages=subscribedPlanData;
+      that.subscribedPackages.forEach(element => {
+      if(element.meta_data!=undefined){
+        that.totalAgentsAllowed=that.totalAgentsAllowed+Number(element.meta_data.member);
+        if(element.meta_data.type=="essential"){
+          that.totalWebsiteAllowed=that.totalWebsiteAllowed+1;
+          that.totalMobileAppAllowed=that.totalMobileAppAllowed+1;
+if(that.service_id=="2"){
+  that.totalIdxPluginAllowed=that.totalIdxPluginAllowed+1;
+}
+        }
+        else{
+          that.totalWebsiteAllowed=that.totalWebsiteAllowed+Number(element.meta_data.website);
+          that.totalMobileAppAllowed=that.totalMobileAppAllowed+Number(element.meta_data.mobileApp);
+if(that.service_id=="2"){
+  that.totalIdxPluginAllowed=that.totalIdxPluginAllowed+Number(element.meta_data.idxplugin);
+}
+        }
+      }
+    });
+      
+    });
+  }
   allowMenuOptions()
   {
     if(this.isOwner==false)
@@ -131,7 +145,6 @@ export class AllWebsitesPage {
         if(data!=false)
         {
         let savedAccessLevels:any[]=data;
-    //debugger;
       let createWebsiteAccesLevels=savedAccessLevels.filter((element) => {
         return (element.key=="create-website");
     });
@@ -310,6 +323,9 @@ export class AllWebsitesPage {
     this.navCtrl.push(EditLeadRoutingPage,{websiteId:websiteId});
   }
   createWebsite(){
+    //debugger;
+if(this.totalWebsiteAllowed>this.allWebsiteList.length)
+{
     if(this.allWebsiteList.length>0){
       this.ngZone.run(() => {
         this.navCtrl.push(CreateWebsitePage,{websiteCount:"1"});});
@@ -318,10 +334,19 @@ export class AllWebsitesPage {
         this.navCtrl.push(CreateWebsitePage);
       });
     }
-   // debugger;
-    //this.navCtrl.push(CreateWebsitePage);
-    //this.userServiceObj.checkWebsiteCount(this.userId.toString())
-    //.subscribe((result) => this.checkWebsiteCountResp(result));
+  }else{
+    let toast = this.toastCtrl.create({
+      message: "You are not allowed to add more websites. Please upgrade your package from upgrade center",
+      duration: 3000,
+      position: 'top',
+      cssClass:'errorToast'
+    });
+    
+    toast.onDidDismiss(() => {
+      //console.log('Dismissed toast');
+    });
+    toast.present();
+  }
   }
   checkWebsiteCountResp(result:any)
   {

@@ -89,6 +89,7 @@ export class MyApp {
       this.splashScreen.hide();
       this.clearAllStorageElement();
       this.loadGeneralWebsiteSettings();
+
       this.loadAvailableCountries();
       this.setUserCurrentGeoLocation();
       var that=this;
@@ -266,6 +267,9 @@ if(result)
   this.storage.set("generalWebsiteSettings",result);
   }
 }
+loadSubscribedPackages(){
+
+}
   setDeviceToken(){
     const messaging = firebase.messaging();
     messaging.usePublicVapidKey(this.sharedServiceObj.idxFirebasePublicKey);
@@ -303,6 +307,7 @@ messaging.onMessage(function(payload){
     //this.storage.remove("availableCountryList");
   }
   setUserCurrentGeoLocation() {
+    let that=this;
     if(!this.isApp)
     {
       if (window.navigator.geolocation) {
@@ -319,7 +324,7 @@ messaging.onMessage(function(payload){
 else
 {
 
-this.geolocation.getCurrentPosition().then((resp) => {
+this.geolocation.getCurrentPosition(that.sharedServiceObj.geooptions).then((resp) => {
 
       this.storage.set("userCurrentLatitude", resp.coords.latitude);
       this.storage.set("userCurrentLongitude", resp.coords.longitude);
@@ -760,6 +765,7 @@ else if(option=='6')
     this.storage.remove('image_url');
     this.storage.remove('globalSettings');
     this.storage.remove('showGlobalPopUp');
+    this.storage.remove('subscribedPlans');
     //debugger;
     let firebaseUserId = this.storage.get('firebaseUserId');
     firebaseUserId.then((data) => {

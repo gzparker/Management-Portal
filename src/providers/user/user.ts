@@ -1010,7 +1010,8 @@ createWebsite(user_id:string,isActive:string,website_domain:string,identity_name
   show_new_listings:string,show_open_houses:string,feature_agent_listings:string,
   feature_broker_listings:string,
   feature_office_listings:string,isSsl:string,login_register_popup_time:string,target_city:string,
-  target_place_id:string,customer_id:string,source:string,websiteCount:string,startupCost:string,service_id:string){
+  target_place_id:string,customer_id:string,source:string,websiteCount:string,startupCost:string,service_id:string,
+  isWordPress_dummy:string,wordpress_website_url:string){
 //debugger;
     let data = new URLSearchParams();
     data.append('website_domain',website_domain);
@@ -1060,6 +1061,8 @@ data.append('feature_agent_listings',feature_agent_listings);
 data.append('feature_broker_listings',feature_broker_listings);
 data.append('feature_office_listings',feature_office_listings);
 data.append('isSsl',isSsl);
+data.append('is_wordpress_website',isWordPress_dummy);
+data.append('wordpress_website_url',wordpress_website_url);
 data.append('login_register_popup_time',login_register_popup_time);
 data.append('target_city',target_city);
 data.append('target_place_id',target_place_id);
@@ -1102,7 +1105,8 @@ updateWebsite(user_id:string,isActive:string,website_domain:string,website_id:st
   modalBackgroundColor:string,modalBackgroundColorOption:string,
   mapSidebarColor:string,mapSidebarColorOption:string,navigationColor:string,navigationColorOption:string,
   isSsl:string,login_register_popup_time:string,target_city:string,
-  target_place_id:string){
+  target_place_id:string,
+  isWordPress_dummy:string,wordpress_website_url:string){
 
 let data = new URLSearchParams();
  data.append('website_domain',website_domain);
@@ -1149,19 +1153,21 @@ data.append('text_color_option',textColorOption);
 data.append('content_background_option',backgroundColorOption);
 data.append('isCustomColor',customColorOption.toString());
 data.append('content_title_color',contentTitleColor);
-    data.append('content_title_color_option',contentTitleColorOption);
-    data.append('pagination_color',paginationColor);
-    data.append('pagination_color_option',paginationColorOption);
-    data.append('modal_background_color',modalBackgroundColor);
-    data.append('modal_background_color_option',modalBackgroundColorOption);
-    data.append('map_sidebar_color',mapSidebarColor);
-    data.append('map_sidebar_color_option',mapSidebarColorOption);
-    data.append('navigation_color',navigationColor);
-    data.append('navigation_color_option',navigationColorOption);
-    data.append('isSsl',isSsl);
- data.append('login_register_popup_time',login_register_popup_time);
- data.append('target_city',target_city);
- data.append('target_place_id',target_place_id);
+data.append('content_title_color_option',contentTitleColorOption);
+data.append('pagination_color',paginationColor);
+data.append('pagination_color_option',paginationColorOption);
+data.append('modal_background_color',modalBackgroundColor);
+data.append('modal_background_color_option',modalBackgroundColorOption);
+data.append('map_sidebar_color',mapSidebarColor);
+data.append('map_sidebar_color_option',mapSidebarColorOption);
+data.append('navigation_color',navigationColor);
+data.append('navigation_color_option',navigationColorOption);
+data.append('isSsl',isSsl);
+data.append('is_wordpress_website',isWordPress_dummy);
+data.append('wordpress_website_url',wordpress_website_url);
+data.append('login_register_popup_time',login_register_popup_time);
+data.append('target_city',target_city);
+data.append('target_place_id',target_place_id);
 //debugger;
   let websiteListing=this.http
     .post(this.sharedServiceObj.registerationApiBaseUrl+'members/updateWebsite', data, this.headerOptions)

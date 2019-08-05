@@ -1022,6 +1022,7 @@ this.meta_description=html;
       this.editHotSheet();
     }
     loadLastSearchedValue():void{
+      let that=this;
       let lastSearchedObj=null;
       let lastSearchedString=null;
     //  debugger;
@@ -1264,7 +1265,7 @@ this.showCustom=true;
 else
 {
   //debugger;
-  this.geolocation.getCurrentPosition().then((position) => {
+  this.geolocation.getCurrentPosition(that.sharedServiceObj.geooptions).then((position) => {
     
     if(position.coords.latitude!=undefined&&position.coords.longitude!=undefined)
       {

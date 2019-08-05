@@ -38,6 +38,15 @@
           <ion-searchbar #searchTargetCityBar placeholder="Search Target City" [(ngModel)]="targetCityDummy" name="targetCityDummy" id="targetCityDummy"></ion-searchbar>
           </div>
       </div>
+      <ion-item>
+        <ion-label>Wordpress Website</ion-label>
+        <ion-toggle [(ngModel)]="isWordPress" name="isWordPress"></ion-toggle>
+      </ion-item>
+      <ion-item *ngIf="isWordPress">
+        <ion-label stacked>Wordpress Website URL</ion-label>
+        <ion-input type="text" [(ngModel)]="wordpress_website_url" 
+        name="wordpress_website_url" id="wordpress_website_url"></ion-input>
+    </ion-item>
         <ion-item>
             <ion-label stacked>IDX Installed Location</ion-label>
             <ion-input type="text" [(ngModel)]="website_a_record_location" 
@@ -182,15 +191,7 @@
                </ion-option>
             </ion-select>
           </ion-item>
-        <!--<ion-list-header class="centerStage animated lightSpeedIn">Choose Credit Card</ion-list-header>
-
-      <ion-list class="centerStage noShadow" radio-group [(ngModel)]="selected_creditCard_Modal" name="selected_creditCard_Modal">
-          <ion-item *ngFor="let creditCard of allCreditCards">
-              <ion-label>Brand: {{creditCard.brand}},Card Number: xxx-{{creditCard.last4}}</ion-label>
-              <ion-radio value={{creditCard.unique_id}}></ion-radio>
-            </ion-item>
-        </ion-list>-->
-    <!--</ion-list>-->
+       
     <div class="dashboardBtn" *ngIf="websiteCount=='1'">
       <button ion-button color="primary" class="colorEnabled button_color" block (click)="createWebsite();" [disabled]="!websiteForm.valid||target_place_id==''||selected_pricingPlan_Modal==''">Save Website</button>
   </div>

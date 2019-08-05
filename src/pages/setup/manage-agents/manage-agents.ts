@@ -29,6 +29,7 @@ export class ManageAgentsPage {
   public notificationMsg:string="";
   public userId:string="";
   public parentId:string="";
+  public service_id:string="";
   public isOwner:boolean=false;
   public isEditAgentAccess:boolean=false;
   public isDeleteAgentAccess:boolean=false;
@@ -38,6 +39,11 @@ export class ManageAgentsPage {
   public max_agents_added:boolean=false;
   public showCreateButton:boolean=false;
   public no_image_found:string="https://s3.us-west-2.amazonaws.com/central-system/img/default/profile_icon.png";
+  public subscribedPackages:any;
+  public totalIdxPluginAllowed:number=0;
+  public totalAgentsAllowed:number=0;
+  public totalMobileAppAllowed:number=0;
+  public totalWebsiteAllowed:number=0;
   public loader:any;
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
@@ -86,13 +92,29 @@ export class ManageAgentsPage {
   }
  createAgent()
  {
+  if(this.totalAgentsAllowed>this.allAgents.length)
+  {
    this.navCtrl.push(CreateAgentPage);
+  }else{
+    let toast = this.toastCtrl.create({
+      message: "You are not allowed to add more agents. Please upgrade your package from upgrade center",
+      duration: 3000,
+      position: 'top',
+      cssClass:'errorToast'
+    });
+    
+    toast.onDidDismiss(() => {
+      //console.log('Dismissed toast');
+    });
+    toast.present();
+  }
  }
  ionViewDidLoad() {
   this.sharedServiceObj.updateColorThemeMethod(null);
   let member_id = this.storage.get('userId');
   member_id.then((data) => {
     this.userId=data;
+    this.setSubscriptionPackageRestrictions();
     this.viewAllWebsite();
     this.loadAllAgents(null);
     this.setAccessLevels();
@@ -185,6 +207,33 @@ setAccessLevels()
     this.isDeleteAgentAccess=true;
     this.isEditAgentAccess=true;
   }
+  }
+  setSubscriptionPackageRestrictions(){
+    let that=this;
+    let subscribedPlans=that.storage.get('subscribedPlans');
+    subscribedPlans.then((subscribedPlanData) => {
+      that.subscribedPackages=subscribedPlanData;
+      that.subscribedPackages.forEach(element => {
+      if(element.meta_data!=undefined){
+        that.totalAgentsAllowed=that.totalAgentsAllowed+Number(element.meta_data.member);
+        if(element.meta_data.type=="essential"){
+          that.totalWebsiteAllowed=that.totalWebsiteAllowed+1;
+          that.totalMobileAppAllowed=that.totalMobileAppAllowed+1;
+if(that.service_id=="2"){
+  that.totalIdxPluginAllowed=that.totalIdxPluginAllowed+1;
+}
+        }
+        else{
+          that.totalWebsiteAllowed=that.totalWebsiteAllowed+Number(element.meta_data.website);
+          that.totalMobileAppAllowed=that.totalMobileAppAllowed+Number(element.meta_data.mobileApp);
+if(that.service_id=="2"){
+  that.totalIdxPluginAllowed=that.totalIdxPluginAllowed+Number(element.meta_data.idxplugin);
+}
+        }
+      }
+    });
+      
+    });
   }
 loadAllAgents(refresher:any)
 {

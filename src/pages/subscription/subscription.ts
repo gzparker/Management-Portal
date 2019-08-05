@@ -61,6 +61,7 @@ export class SubscriptionPage {
   public selectedPlanStringListString:string="";
   public selectedPromoCode:any;
   public selectedStartupPromoCode:any;
+  public userId:string="";
   public tos_url:string="http://www.idxcompany.com/terms-of-service/";
   public loader:any;
 
@@ -172,8 +173,6 @@ export class SubscriptionPage {
   this.intervalBasedPackages=this.allAvailablePackages.filter(
     packageList => packageList.interval === pay_yearly_dummy);
     this.intervalBasedPackages=this.intervalBasedPackages.reverse();
-    //debugger;
-    //debugger;
   }
   loadAllAvailableMLS()
   {
@@ -245,7 +244,7 @@ if(this.selectedPackagesList.length>0)
 //debugger;
   let member_id = this.storage.get('userId');
   member_id.then((memberResp) => {
-  
+  this.userId=memberResp;
     dataObj.member_id = memberResp;
     //debugger;
    this.subscriptionObj.saveUserSubscription(dataObj,this.service_id).
@@ -281,11 +280,10 @@ else
   }
   
   saveSubscribeUserResp(data: any) {
-    //debugger;
     if (data.status == true) {
-      //debugger;
       this.sharedServiceObj.setPaidStatus(true);
       this.storage.set('paid_status', '1');
+      this.setSubscribedPackages();
       this.ngZone.run(() => {
         let confirm = this.alertCtrl.create({
           title: 'Sign Up',
@@ -300,19 +298,13 @@ else
               ]
               });
               confirm.present();
-        //this.navCtrl.setRoot(DashboardTabsPage,{notificationMsg:data.message.toUpperCase()});
       });
     }
     else {
       this.sharedServiceObj.setPaidStatus(false);
       this.storage.set('paid_status', '0');
       this.subscriptionMsg=data.message.toUpperCase();
-      /*let alert = this.alertCtrl.create({
-        title: 'Error',
-        subTitle: this.subscriptionMsg,
-        buttons: ['Ok']
-      });
-      alert.present();*/
+
       let toast = this.toastCtrl.create({
         message: this.subscriptionMsg,
         duration: 3000,
@@ -326,6 +318,33 @@ else
       toast.present();
     }
   }
+  setSubscribedPackages(){
+    this.subscriptionObj.upgradeDowngradePlan(this.userId.toString(),this.service_id,"","")
+        .subscribe((result) => this.upgradeDowngradePlanResp(result,"1",'','0',''));
+  }
+  upgradeDowngradePlanResp(resp:any,option:string,action:string,showMsg:string,successMsg:string)
+  {
+  let allSubscribedPackages=[];
+  let intervalBasedSubscribedPackages=[];
+  if(resp.status==true)
+  {
+    //debugger;
+    allSubscribedPackages=resp.results.customer_subscription.customer_subscribed_products;
+    if(allSubscribedPackages[0].plan_interval=="month"){
+      intervalBasedSubscribedPackages=allSubscribedPackages.filter(
+        packageList => packageList.plan_interval === "month");
+        this.storage.remove('subscribedPlans');
+        //debugger;
+        this.storage.set('subscribedPlans',intervalBasedSubscribedPackages);
+    }else{
+      intervalBasedSubscribedPackages=allSubscribedPackages.filter(
+        packageList => packageList.plan_interval === "year");
+        this.storage.remove('subscribedPlans');
+        //debugger;
+        this.storage.set('subscribedPlans',intervalBasedSubscribedPackages);
+    }
+  }
+  }
   checkPromoCode()
   {
     this.selectedPromoCode=null;
@@ -334,7 +353,6 @@ else
     this.coupon_used=false;
     this.startup_coupon_used=false;
     this.selectedPromoId='';
-    //debugger;
     if(this.coupon_used==false||this.startup_coupon_used==false){
       if(this.selected_pricingPlan_Modal!=undefined&&this.selected_pricingPlan_Modal!=''){
 if(this.startup_coupon_used==false){
@@ -342,10 +360,6 @@ if(this.startup_coupon_used==false){
         subscribe((result) => this.checkPromoCodeResp(result,'2'));
 }
       }
-  /*if(this.selectedPackagesList!=undefined)
-{
-  if(this.selectedPackagesList.length>0)
-{*/
     if(this.promo_code!="")
     {
       if(this.coupon_used==false)
@@ -354,23 +368,11 @@ if(this.startup_coupon_used==false){
         subscribe((result) => this.checkPromoCodeResp(result,'1'));
       }
     }
-  /*\}
-  else{
-    this.packageSelectionMsg('1');
-  }
-}
-else{
-  this.packageSelectionMsg('1');
-}*/
-
 }
 else{
   this.packageSelectionMsg('2');
 }
   }
-  //updateStartUpCost(){
-    //debugger;
-  //}
   packageSelectionMsg(type:string){
     if(type=='1')
     {
@@ -425,15 +427,6 @@ this.selectedStartupPromoCode=resp;
         packageList => packageList.id === element);
         this.selectedPackagesList.push(foundPackage);
     });
-    //debugger;
-    /*let selectedIndex = this.selectedPackagesList.indexOf(packageItem);
-    if (selectedIndex >= 0) {
-      this.selectedPackagesList.splice(selectedIndex, 1);
-    }
-    else {
-      this.selectedPackagesList.push(packageItem);
-    }*/
-    //debugger;
     this.calculateTotalPrice();
   }
   calculateTotalPrice()

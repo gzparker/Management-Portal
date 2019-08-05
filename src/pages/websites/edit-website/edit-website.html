@@ -45,6 +45,15 @@
           <ion-searchbar #searchTargetCityBar placeholder="Search Target City" [(ngModel)]="targetCityDummy" name="targetCityDummy" id="targetCityDummy"></ion-searchbar>
           </div>
       </div>
+      <ion-item>
+        <ion-label>Wordpress Website</ion-label>
+        <ion-toggle [(ngModel)]="isWordPress" name="isWordPress"></ion-toggle>
+      </ion-item>
+      <ion-item *ngIf="isWordPress">
+        <ion-label stacked>Wordpress Website URL</ion-label>
+        <ion-input type="text" [(ngModel)]="wordpress_website_url" 
+        name="wordpress_website_url" id="wordpress_website_url"></ion-input>
+    </ion-item>
         <ion-item>
             <ion-label stacked>IDX Installed Location</ion-label>
             <ion-input type="text" [(ngModel)]="website_a_record_location" 

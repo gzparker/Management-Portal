@@ -178,6 +178,7 @@ public isApp=false;public isWebBrowser=false;public msl_id:string="";public name
 
   ionViewDidLoad() {
     //debugger;
+    let that=this;
     this.sharedServiceObj.updateColorThemeMethod(null);
     CKEDITOR.disableAutoInline = true;
     CKEDITOR.inline( 'brief_description', {removeButtons:'Underline,Subscript,Superscript,SpecialChar'
@@ -224,7 +225,7 @@ public isApp=false;public isWebBrowser=false;public msl_id:string="";public name
 else
 {
  
-  this.geolocation.getCurrentPosition().then((position) => {
+  this.geolocation.getCurrentPosition(that.sharedServiceObj.geooptions).then((position) => {
     if(position.coords.latitude!=undefined&&position.coords.longitude!=undefined)
       {
      //   debugger;

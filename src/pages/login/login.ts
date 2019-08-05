@@ -11,6 +11,7 @@ import { SubscriptionPage } from '../subscription/subscription';
 
 import { SharedProvider } from '../../providers/shared/shared';
 import { UserProvider } from '../../providers/user/user';
+import { SubscriptionProvider } from '../../providers/subscription/subscription';
 
 /**
  * Generated class for the LoginPage page.
@@ -27,7 +28,7 @@ declare const gapi: any;
 export class LoginPage {
   @ViewChild('btnGoogle', { read: ElementRef }) btnGoogle: ElementRef
   btnGoogleElement: HTMLInputElement = null;
-  public email: string = ""; public emailFb: string = ""; public password: string = ""; public fbPassword: string = "";
+  public email: string = ""; public emailFb: string = "";public userId:string="";public subMemberId:string=""; public password: string = ""; public fbPassword: string = "";
   public first_name: string = ""; public first_name_fb: string = ""; public last_name: string = "";
   public last_name_fb: string = ""; public phone_number: number; public phone_number_verify: number;
   public userLogginMsg: string = ""; public verificationMsg: string = ""; public userLoggedId: boolean = false;
@@ -52,7 +53,8 @@ export class LoginPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform
-    ,public loadingCtrl: LoadingController,public ngZone: NgZone,private toastCtrl: ToastController) {
+    ,public loadingCtrl: LoadingController,public ngZone: NgZone,private toastCtrl: ToastController,
+    public subscribtionObj:SubscriptionProvider) {
     userServiceObj.fbLoginDecision.subscribe(item => this.faceBookDecisionMethod(item));
     this.loadedWebsite=document.URL.toString();
     if(this.loadedWebsite.indexOf("localhost")>0)
@@ -224,10 +226,13 @@ let is_lead:string="0";
           {
             this.storage.set('userId', result.memberCredentials.parent_id);
             this.storage.set('subMemberId', result.memberCredentials.id);
+            this.subMemberId=result.memberCredentials.id;
+            this.userId=result.memberCredentials.parent_id;
           }
           else
           {
             this.storage.set('userId', result.memberCredentials.id);
+            this.userId=result.memberCredentials.id;
           }
           this.storage.set('parent_id', result.memberCredentials.parent_id);
           this.storage.set('image_url',result.memberCredentials.image_url);
@@ -235,10 +240,12 @@ let is_lead:string="0";
           this.storage.set('globalSettings',result.globalSettings);
           this.storage.set('subscribed_services',result.subscribed_services);
           this.userLoggedId = true;
+          this.setSubscribedPackages();
         if(result.memberCredentials.parent_id!=undefined)
         {
           this.storage.set('is_submember', "1");
           is_submember="1";
+
           this.setAllAccessOptions(result.userAssignedRoles);
           this.userServiceObj.setFireBaseInfo(result.memberCredentials.email,result.memberCredentials.password,
             result.memberCredentials.id,result.memberCredentials.first_name,result.memberCredentials.last_name,
@@ -296,7 +303,35 @@ let is_lead:string="0";
 userSignup()
 {
 this.navCtrl.setRoot(RegisterPage);
-}  
+}
+setSubscribedPackages(){
+  this.subscribtionObj.upgradeDowngradePlan(this.userId.toString(),this.service_id,"","")
+      .subscribe((result) => this.upgradeDowngradePlanResp(result,"1",'','0',''));
+}
+upgradeDowngradePlanResp(resp:any,option:string,action:string,showMsg:string,successMsg:string)
+{
+  //debugger;
+let allSubscribedPackages=[];
+let intervalBasedSubscribedPackages=[];
+if(resp.status==true)
+{
+  allSubscribedPackages=resp.results.customer_subscription.customer_subscribed_products;
+  if(allSubscribedPackages[0].plan_interval=="month"){
+    //this.pay_yearly=false;
+    intervalBasedSubscribedPackages=allSubscribedPackages.filter(
+      packageList => packageList.plan_interval === "month");
+      this.storage.remove('subscribedPlans');
+      this.storage.set('subscribedPlans',intervalBasedSubscribedPackages);
+      //debugger;
+  }else{
+    intervalBasedSubscribedPackages=allSubscribedPackages.filter(
+      packageList => packageList.plan_interval === "year");
+      this.storage.remove('subscribedPlans');
+      this.storage.set('subscribedPlans',intervalBasedSubscribedPackages);
+      //debugger;
+  }
+}
+}
 setAllAccessOptions(userAllowedRoles:any)
 {
 let finalAllowedRolesOptions:number[]=[];

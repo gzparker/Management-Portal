@@ -64,6 +64,9 @@ export class SharedProvider {
     { name: 'links', items: [] },
     { name: 'styles', items: ['Format', 'FontSize' ] }
   ]};
+  public geooptions = {
+    enableHighAccuracy: true, timeout: 5000, maximumAge: 0
+};
   // public FB:any;
 
   constructor(private http: Http,private storage: Storage, public alertCtrl: AlertController) {

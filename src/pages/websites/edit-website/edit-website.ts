@@ -50,6 +50,7 @@ export class EditWebsitePage {
   public favIconCropperSettings;
   public domainAccess:any;
   public website_domain:string="";
+  public wordpress_website_url:string="";
   public isApp=false;
   public websiteUpdateMsg:string="";
   public dataWebsiteLogo:any;
@@ -66,6 +67,7 @@ export class EditWebsitePage {
   public intagent_website:boolean=false;
   public custom_css:string="";
   public isSsl:boolean=false;
+  public isWordPress:boolean=false;
   public show_open_houses:boolean=false;
   public show_new_listings:boolean=false;
   public feature_agent_listings:boolean=false;
@@ -607,18 +609,18 @@ this.textColor=result.result.text_color_option;
 this.buttonColor=result.result.button_color;
 this.buttonColorOption=result.result.button_color_option;
 this.contentTitleColor=result.result.content_title_color;
-     this.contentTitleColorOption=result.result.content_title_color_option;
-     this.paginationColor=result.result.pagination_color;
-     this.paginationColorOption=result.result.pagination_color_option;
-     this.modalBackgroundColor=result.result.modal_background_color;
-     this.modalBackgroundColorOption=result.result.modal_background_color_option;
-     this.mapSidebarColor=result.result.map_sidebar_color;
-     this.mapSidebarColorOption=result.result.map_sidebar_color_option;
-     this.navigationColor=result.result.navigation_color;
-     this.navigationColorOption=result.result.navigation_color_option;
-     this.targetCityDummy=result.result.target_city;
-     this.target_city=result.result.target_city;
-     this.target_place_id=result.result.target_google_place_id;
+this.contentTitleColorOption=result.result.content_title_color_option;
+this.paginationColor=result.result.pagination_color;
+this.paginationColorOption=result.result.pagination_color_option;
+this.modalBackgroundColor=result.result.modal_background_color;
+this.modalBackgroundColorOption=result.result.modal_background_color_option;
+this.mapSidebarColor=result.result.map_sidebar_color;
+this.mapSidebarColorOption=result.result.map_sidebar_color_option;
+this.navigationColor=result.result.navigation_color;
+this.navigationColorOption=result.result.navigation_color_option;
+this.targetCityDummy=result.result.target_city;
+this.target_city=result.result.target_city;
+this.target_place_id=result.result.target_google_place_id;
 ///////////////////////////////////////////////////////////////
 //debugger;
 if(result.result.mls_server_id!=null)
@@ -644,6 +646,14 @@ else
 {
   this.website_domain=result.result.website;
 }
+if(result.result.wordpress_website_url.indexOf("http://www")<0 && result.result.wordpress_website_url.indexOf("https://www")<0)
+{
+  this.wordpress_website_url=result.result.wordpress_website_url;
+}
+else
+{
+  this.wordpress_website_url=result.result.wordpress_website_url;
+}
 if(result.result.show_open_houses==null||result.result.show_open_houses=="0")
 {
   this.show_open_houses=false;
@@ -659,6 +669,14 @@ if(result.result.is_ssl==null||result.result.is_ssl=="0")
 else
 {
   this.isSsl=true;
+}
+if(result.result.is_wordpress_website==null||result.result.is_wordpress_website=="0")
+{
+  this.isWordPress=false;
+}
+else
+{
+  this.isWordPress=true;
 }
 if(result.result.show_new_listings==null||result.result.show_new_listings=="0")
 {
@@ -1050,6 +1068,7 @@ else
     let feature_office_listings_dummy="0";
     let intagent_website_dummy="0";
     let isSsl_dummy="0";
+    let isWordPress_dummy="0";
   if(this.userId!="")
     {
      //if(this.domainAccess)
@@ -1090,6 +1109,11 @@ else
        {
         isSsl_dummy="1";
        }
+       if(this.isWordPress){
+        isWordPress_dummy="1";
+       }else{
+         this.wordpress_website_url="";
+       }
        if(this.website_domain.indexOf("http://www")<0 && this.website_domain.indexOf("https://www")<0)
 {
  // debugger;
@@ -1114,7 +1138,7 @@ else
     this.contentTitleColor,this.contentTitleColorOption,this.paginationColor,this.paginationColorOption,
     this.modalBackgroundColor,this.modalBackgroundColorOption,
     this.mapSidebarColor,this.mapSidebarColorOption,this.navigationColor,this.navigationColorOption,
-    isSsl_dummy,this.login_register_popup_time,this.target_city,this.target_place_id)
+    isSsl_dummy,this.login_register_popup_time,this.target_city,this.target_place_id,isWordPress_dummy,this.wordpress_website_url)
     .subscribe((result) => this.updateWebsiteResp(result));
      //}
       

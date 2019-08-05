@@ -34,6 +34,7 @@ export class CreateWebsitePage {
   public monthValues:any[]=[];
   public expiryDate: string="";
   public website_domain:string="";
+  public wordpress_website_url:string="";
   public identity_name:string="";
   public websiteCreateMsg:string="";
   public isActive:boolean=true;
@@ -92,6 +93,7 @@ export class CreateWebsitePage {
 
 
   public login_register_popup_time:string="8000";
+  public isWordPress:boolean=false;
   public isSsl:boolean=false;
   public show_open_houses:boolean=false;
   public show_new_listings:boolean=false;
@@ -125,15 +127,10 @@ export class CreateWebsitePage {
       this.service_id=data.service_id;
       if(this.navParams.get('websiteCount')!=undefined)
       {
-        //debugger;
        this.websiteCount = this.navParams.get('websiteCount');
-       //debugger;
        if(this.websiteCount=='1'){
         this.listAllStartUpPlans();
-        
        }
-       
-       //debugger;
       }
     });
   }
@@ -150,7 +147,6 @@ export class CreateWebsitePage {
       { name: 'styles', items: ['Format', 'FontSize' ] }
     ]});
     let member_id = this.storage.get('userId');
-    //debugger;
     member_id.then((data) => {
       this.userId=data;
       if(this.websiteCount=='1'){
@@ -168,7 +164,6 @@ export class CreateWebsitePage {
   }
   setYearMonthValues()
   {
-    //debugger;
     let currentYear=parseInt(new Date().getFullYear().toString());
     for(let i=currentYear;i<=currentYear+50;i++)
     {
@@ -178,14 +173,12 @@ export class CreateWebsitePage {
     {
       this.monthValues.push(i);
     }
-    //debugger;
     this.expiryDate=new Date(new Date().getFullYear().toString()+"-"+((new Date().getMonth()+1).toString())).toISOString();
   }
   initCityAutocomplete(): void {
    
     this.searchTargetCityElement = this.searchTargetCityBar.nativeElement.querySelector('.searchbar-input');
     this.createCityAutocomplete(this.searchTargetCityElement).subscribe((location) => {
-      
     });
   }
   createCityAutocomplete(addressEl: HTMLInputElement): Observable<any> {
@@ -216,11 +209,9 @@ export class CreateWebsitePage {
     this.target_city=element.long_name; 
       }
      });
-    //debugger;
      }
      loadAllCreditCards()
      {
-       //debugger;
        if(this.userId.toString())
        {
          this.userServiceObj.allListCreditCards(this.userId.toString(),this.service_id)
@@ -231,7 +222,6 @@ export class CreateWebsitePage {
      {
        if(result.status==true)
        {
-         //debugger;
          this.allCreditCards=result.all_cards;
        }
        else
@@ -243,17 +233,13 @@ export class CreateWebsitePage {
      {
        
        let formatedDate=new Date(exp_year+"/"+exp_month);
-       //debugger;
        return this.datepipe.transform(formatedDate, 'MM/yy');
-       //return formatedDate;
      }
   listAllStartUpPlans(){
-      //debugger;
       this.subscriptionObj.getServiceStartUpPlanList(this.service_id)
         .subscribe((result) => this.listAllStartUpPlansResp(result)); 
     }
   listAllStartUpPlansResp(resp: any){
-    //debugger;
       if (resp.status == true) {
         this.startUpPlansList=resp.result;
       }
@@ -275,7 +261,6 @@ else
 }
   }
   homepageDescBlured(quill) {
-    //console.log('editor blur!', quill);
   }
   homepageDescFocused(quill) {
     //console.log('editor focus!', quill);
@@ -317,6 +302,8 @@ this.homepageMeta_description=html;
     let feature_broker_listings_dummy="0";
     let feature_office_listings_dummy="0";
     let isSsl_dummy="0";
+    let isWordPress_dummy="0";
+    //this.isWordPress
     this.exp_month = this.expiryDate.split("-")[1];
     this.exp_year = this.expiryDate.split("-")[0];
     if(this.show_open_houses)
@@ -343,36 +330,21 @@ this.homepageMeta_description=html;
        {
         isSsl_dummy="1";
        }
+       if(this.isWordPress){
+        isWordPress_dummy="1";
+       }else{
+        this.wordpress_website_url="";
+      }
     let isActiveFinal="1";
     let intagentWebsiteFinal:number=1;
-     //if(this.domainAccess)
-     //{
-       /*if(this.isActive==true)
-       {
-         isActiveFinal="1";
-       }
-       else
-       {
-         isActiveFinal="0";
-       }
-       if(this.intagent_website==true)
-       {
-intagentWebsiteFinal=1
-       }
-       else
-       {
-intagentWebsiteFinal=0;
-       }*/
        if(this.website_domain.indexOf("http://www")<0 && this.website_domain.indexOf("https://www")<0)
        {
-         //debugger;
          this.website_domain="https://www."+this.website_domain;
        }
        else
        {
          this.website_domain=this.website_domain;
        }
-       //debugger;
   if(this.websiteCount=='1')
   {
     var foundStartUpPlan = this.startUpPlansList.filter(startUpPlan => startUpPlan.id === this.selected_pricingPlan_Modal);
@@ -380,7 +352,6 @@ intagentWebsiteFinal=0;
     var foundCreditCard =  this.allCreditCards.filter(creditCardPlan => creditCardPlan.unique_id === this.selected_creditCard_Modal);
     this.customer_id=foundCreditCard[0].customer_id;
 this.source=foundCreditCard[0].source;
-    //debugger;
   }
   this.userServiceObj.createWebsite(this.userId,isActiveFinal,this.website_domain,this.identity_name,
     intagentWebsiteFinal,this.website_a_record_location,this.identity_phone_number,document.getElementById("homepage_description").innerHTML,
@@ -393,7 +364,7 @@ this.source=foundCreditCard[0].source;
     this.mapSidebarColor,this.mapSidebarColorOption,show_new_listing_dummy,show_open_houses_dummy,feature_agent_listings_dummy,
     feature_broker_listings_dummy,feature_office_listings_dummy,isSsl_dummy,this.login_register_popup_time,this.target_city,
     this.target_place_id,this.customer_id,this.source,this.websiteCount,
-    this.startUpTotalAmount.toString(),this.service_id)
+    this.startUpTotalAmount.toString(),this.service_id,isWordPress_dummy,this.wordpress_website_url)
     .subscribe((result) => this.createWebsiteResp(result));
       }
   }
@@ -406,7 +377,6 @@ this.source=foundCreditCard[0].source;
       this.navCtrl.setRoot(EditLeadRoutingPage,{websiteId:result.website_id});
       });
     }else{
-      //debugger;
       let toast = this.toastCtrl.create({
         message: result.message,
         duration: 3000,
@@ -415,7 +385,6 @@ this.source=foundCreditCard[0].source;
       });
       
       toast.onDidDismiss(() => {
-        //console.log('Dismissed toast');
       });
       toast.present();
     }
@@ -424,17 +393,11 @@ this.source=foundCreditCard[0].source;
   }
   ////////////////////////////////////////////////////////////////////////
   toggleCustomColor(){
-    //this.customColorOption=!this.customColorOption;
-   // debugger;
     if(this.customColorOption==true)
     {
-      //this.customColorOption=false;
-      //this.isCustomColor="0";
     }
     else
     {
-      //this.customColorOption=true;
-      //this.isCustomColor="1";
     }
       }
       showColorPopUp(option:string){
@@ -494,22 +457,18 @@ this.source=foundCreditCard[0].source;
         }
         var modalColor = this.modalCtrl.create(ColorSelectionPopupPage,{selectedColor:selectedColor});
         modalColor.onDidDismiss(data => {
-         // console.log(data);
-          //debugger;
           that.setColorProperties(data);
      });
         modalColor.present();
       }
       setColorProperties(options:any)
       {
-    //debugger;
     if(options.option=='header_color')
     {
     this.headerColorOption=options.selectedColorOption;
     if(options.selectedColor!='')
     {
       this.headerColor=options.selectedColor;
-     // debugger;
     }
     else
     {
@@ -524,7 +483,6 @@ this.source=foundCreditCard[0].source;
     else if(this.headerColorOption=="tertiary_color")
     {
     this.headerColor=this.thirdColor;
-    //debugger;
     }
     else if(this.headerColorOption=="default")
     {
@@ -532,7 +490,6 @@ this.source=foundCreditCard[0].source;
     this.headerColor="";
     }
     }
-    //debugger;
     }
     else if(options.option=='side_bar_menu_color')
     {
