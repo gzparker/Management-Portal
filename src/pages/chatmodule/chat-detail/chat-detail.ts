@@ -194,7 +194,6 @@ this.chatRef.off("value");
         var foundUser = that.users.filter(userElement => JSON.stringify(userElement) === JSON.stringify(element.val()));
         //debugger;
         if(foundUser.length<=0){
-          //debugger;
           that.users.push(element.val());
         }
       }

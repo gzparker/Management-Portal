@@ -143,14 +143,12 @@ export class LoginPage {
     }
     let textBarElements=document.getElementsByClassName("text_color");
     for (let i = 0; i < textBarElements.length; i++) {
-    
      textBarElements[i].setAttribute("style", "color:"+this.websiteBackgroundInfo.text_color+" !important;");
     }
     //////////////////////////////Button Color////////////////////////////////    
     let buttonColorElement=document.getElementsByClassName("button_color");
     
     for (let i = 0; i < buttonColorElement.length; i++) {
-    
       buttonColorElement[i].setAttribute("style", "background:"+this.websiteBackgroundInfo.button_color+" !important;");
     }
     let buttonToggleElement=document.getElementsByClassName("btnToggle");

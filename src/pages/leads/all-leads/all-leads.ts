@@ -420,7 +420,6 @@ this.navCtrl.push(EditLeadPage,{leadId:leadId});
             if(this.allLeadsList.length<=0)
             {
               this.leadsFoundMessage="All leads have been deleted.Please add new lead.";
-              
               this.notificationMsg="";
               let toast = this.toastCtrl.create({
                 message: this.leadsFoundMessage,
@@ -439,10 +438,8 @@ this.navCtrl.push(EditLeadPage,{leadId:leadId});
         if(element.val().is_lead=="1")
         {
       var fredRef=firebase.database().ref('users/'+element.key);
- //debugger;
 fredRef.remove();
         }
-//debugger;
       });
     });
             this.userServiceObj.deleteLead(lead.lead_id,this.userId)

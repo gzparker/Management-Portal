@@ -244,11 +244,13 @@ else if(this.sideBarOption=="3")
       }
       else if(this.loadedWebsite.indexOf("localhost")>0)
       {
+        
         this.sharedServiceObj.getServiceDefaultInfoByUrl("https://idx.configuration.menu")
         .subscribe((result) => this.loadGeneralWebsiteSettingsResp(result));
       }
       else
       {
+        //alert(dummyWebsiteUrl.toString());
        this.sharedServiceObj.getServiceDefaultInfoByUrl(dummyWebsiteUrl.toString())
        .subscribe((result) => this.loadGeneralWebsiteSettingsResp(result));
       }
@@ -264,6 +266,7 @@ else if(this.sideBarOption=="3")
     var that=this;
 if(result)
 {
+  //alert(JSON.stringify(result));
   this.storage.set("generalWebsiteSettings",result);
   }
 }
@@ -330,7 +333,7 @@ this.geolocation.getCurrentPosition(that.sharedServiceObj.geooptions).then((resp
       this.storage.set("userCurrentLongitude", resp.coords.longitude);
       this.setUserCountry(resp.coords.latitude, resp.coords.longitude);
     }).catch((error) => {
-      alert("error"+error);
+      //alert("error"+error);
       console.log('Error getting location', error);
     });
 }
@@ -362,8 +365,10 @@ this.geolocation.getCurrentPosition(that.sharedServiceObj.geooptions).then((resp
         //debugger;
         //that.chatRef.orderByChild("groupId").equalTo(groupData.val().groupId).on("value", function(snapshot) {
        if(snapshot.exists()){
+         //debugger;
          if(element.key!=undefined)
          {
+           //debugger;
         that.chatData=[];
         snapshot.forEach(element => {
           j=j+1;
@@ -377,7 +382,8 @@ this.geolocation.getCurrentPosition(that.sharedServiceObj.geooptions).then((resp
       
         });
       }
-       }});
+       }
+      });
     }
   }
       });
@@ -398,7 +404,7 @@ if(groupData.val().deletedFor.indexOf(that.firebaseUserId)<0)
  {
   if(groupData.val().fromFbUserId==that.firebaseUserId||groupData.val().toFbUserId==that.firebaseUserId)
   {
-    //debugger;
+    debugger;
     that.totalUnreadMessages(groupData,i);
   }
  }
@@ -407,7 +413,7 @@ if(groupData.val().deletedFor.indexOf(that.firebaseUserId)<0)
     var fredRef=firebase.database().ref('groupMembers').on('child_added', function(snapshot) {
   if(snapshot.val().userId==that.firebaseUserId&&snapshot.val().groupId==groupData.val().groupId)
   {
-    //debugger;
+    debugger;
     that.totalUnreadMessages(groupData,i);
   }
 });
@@ -430,7 +436,7 @@ totalUnreadMessages(groupData:any,arrIndex:any)
 {
   if(chatDataItem.val().readBy.indexOf(that.firebaseUserId)<0)
 {
-  //debugger;
+  debugger;
   unreadCounter=unreadCounter+1;
 }
 }
@@ -439,12 +445,13 @@ if(i==that.chatData.length)
   that.ngZone.run(() => {
   if(unreadCounter>0)
   {
-    //debugger;
+    debugger;
   that.allUnreadMsg=that.allUnreadMsg+unreadCounter;
   that.sharedServiceObj.setUnreadMsgs(that.allUnreadMsg.toString());
   }
   else
   {
+    debugger;
     that.sharedServiceObj.setUnreadMsgs(that.allUnreadMsg.toString());
   }
   
@@ -769,6 +776,12 @@ else if(option=='6')
     //debugger;
     let firebaseUserId = this.storage.get('firebaseUserId');
     firebaseUserId.then((data) => {
+      //debugger;
+      var specificUserRef=firebase.database().ref('users');
+    specificUserRef.orderByChild("fbId").equalTo(data).once("value", function(snapshot) {
+      //debugger;
+      if(snapshot.exists()){
+        //debugger;
     var fredRef=firebase.database().ref('users/'+data);
 fredRef.update({isOnline:'0'}).then(function() {
 
@@ -776,7 +789,8 @@ fredRef.update({isOnline:'0'}).then(function() {
   }, function(error) {
 
   });
-
+      }
+    });
     });
 
     if (this.userServiceObj.facebookObject != undefined) {

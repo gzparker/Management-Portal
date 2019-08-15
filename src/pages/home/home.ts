@@ -56,23 +56,75 @@ public serviceType:string="";
   }
   ionViewDidEnter()
   {
-    this.loadGeneralWebsiteSettings();
+    this.loadGeneralWebsiteSettingsLocal();
   }
-  loadGeneralWebsiteSettings()
+  loadGeneralWebsiteSettingsLocal()
   {
     var that=this;
     let serviceInfo=this.storage.get("generalWebsiteSettings");
     serviceInfo.then((result)=>
 {
-  that.websiteBackgroundInfo=result;
-  if(that.websiteBackgroundInfo!=undefined)
-  {
-    that.applyColors();
+  if(result!=null){
+    that.websiteBackgroundInfo=result;
+    if(that.websiteBackgroundInfo!=undefined)
+    {
+      that.applyColors();
+    }
   }
-
-
+ else{
+  that.loadGeneralWebsiteSettingsLive();
+ } 
 });
+
   }
+  loadGeneralWebsiteSettingsLive()
+  {
+    if(!this.isApp){
+      //alert('its not app');
+      let dummyWebsiteUrl="";
+      if(this.loadedWebsite[this.loadedWebsite.length-1]=="/")
+      {
+  dummyWebsiteUrl=this.loadedWebsite.substr(0,this.loadedWebsite.length-1)
+      }
+      else
+      {
+        dummyWebsiteUrl=this.loadedWebsite;
+      }
+      if(dummyWebsiteUrl=="https://configuration.menu"||dummyWebsiteUrl=="http://configuration.menu")
+      {
+        this.sharedServiceObj.getServiceDefaultInfoByUrl("https://idx.configuration.menu")
+        .subscribe((result) => this.loadGeneralWebsiteSettingsResp(result));
+      }
+      else if(this.loadedWebsite.indexOf("localhost")>0)
+      {
+        
+        this.sharedServiceObj.getServiceDefaultInfoByUrl("https://idx.configuration.menu")
+        .subscribe((result) => this.loadGeneralWebsiteSettingsResp(result));
+      }
+      else
+      {
+        //alert(dummyWebsiteUrl.toString());
+       this.sharedServiceObj.getServiceDefaultInfoByUrl(dummyWebsiteUrl.toString())
+       .subscribe((result) => this.loadGeneralWebsiteSettingsResp(result));
+      }
+    }    
+   else{
+     //alert('its an app');
+    this.sharedServiceObj.getServiceDefaultInfoByUrl("https://idx.configuration.menu")
+    .subscribe((result) => this.loadGeneralWebsiteSettingsResp(result));
+   } 
+  }
+  loadGeneralWebsiteSettingsResp(result:any)
+  {
+    var that=this;
+if(result)
+{
+  //alert(JSON.stringify(result));
+  this.storage.set("generalWebsiteSettings",result);
+  that.websiteBackgroundInfo=result;
+  that.applyColors();
+  }
+}
 applyColors()
 {
   

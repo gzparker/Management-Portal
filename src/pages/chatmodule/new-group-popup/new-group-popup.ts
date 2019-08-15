@@ -73,7 +73,10 @@ this.loggedInUserInfo=data;
       {
         if(snapshot.val().fbId!=undefined&&snapshot.val().fbId!=null)
           {
-        that.allAvailableContacts.push(snapshot.val());
+            //debugger;
+            if(snapshot.val().is_lead!="1"){
+              that.allAvailableContacts.push(snapshot.val());
+            }
           }
       }
   });
