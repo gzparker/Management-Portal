@@ -328,8 +328,13 @@ else
   let intervalBasedSubscribedPackages=[];
   if(resp.status==true)
   {
-    //debugger;
+    if(resp.results.customer_subscription!=undefined)
+  {
+    debugger;
+if(resp.results.customer_subscription.customer_subscribed_products!=undefined){
+  debugger;
     allSubscribedPackages=resp.results.customer_subscription.customer_subscribed_products;
+
     if(allSubscribedPackages[0].plan_interval=="month"){
       intervalBasedSubscribedPackages=allSubscribedPackages.filter(
         packageList => packageList.plan_interval === "month");
@@ -343,6 +348,8 @@ else
         //debugger;
         this.storage.set('subscribedPlans',intervalBasedSubscribedPackages);
     }
+  }
+}
   }
   }
   checkPromoCode()

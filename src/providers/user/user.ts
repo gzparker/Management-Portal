@@ -601,7 +601,12 @@ is_online="1";
       data.append('phone_mobile', json_data.phone_number_verify);
       data.append('country_code', json_data.country_code);
       data.append('country_abbv', json_data.country_abbv);
+      data.append('force_type', "sms,email");
     }
+    else{
+      data.append('force_type', "email");
+    }
+    //debugger;
     let verificationInfogResp = this.http
       .post(this.sharedServiceObj.registerationApiBaseUrl + 'members/verifyInfo', data,
       this.headerOptions)
@@ -1655,9 +1660,15 @@ getUsersChartsData(member_id:string)
        .map(this.extractData)
        return userChartsResp;
 }
-private extractData(res: Response) {
+private extractData(res: any) {
   //debugger;
-    return res.json();
+    //return res.json();
+    try {
+      JSON.parse(res._body);
+      return res.json();
+  } catch (e) {
+      return false;
+  }
 }
   private handleErrorObservable(error: Response | any) {
     /// debugger;

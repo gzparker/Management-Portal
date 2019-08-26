@@ -404,7 +404,7 @@ if(groupData.val().deletedFor.indexOf(that.firebaseUserId)<0)
  {
   if(groupData.val().fromFbUserId==that.firebaseUserId||groupData.val().toFbUserId==that.firebaseUserId)
   {
-    debugger;
+    //debugger;
     that.totalUnreadMessages(groupData,i);
   }
  }
@@ -413,7 +413,7 @@ if(groupData.val().deletedFor.indexOf(that.firebaseUserId)<0)
     var fredRef=firebase.database().ref('groupMembers').on('child_added', function(snapshot) {
   if(snapshot.val().userId==that.firebaseUserId&&snapshot.val().groupId==groupData.val().groupId)
   {
-    debugger;
+    //debugger;
     that.totalUnreadMessages(groupData,i);
   }
 });
@@ -436,7 +436,7 @@ totalUnreadMessages(groupData:any,arrIndex:any)
 {
   if(chatDataItem.val().readBy.indexOf(that.firebaseUserId)<0)
 {
-  debugger;
+  //debugger;
   unreadCounter=unreadCounter+1;
 }
 }
@@ -445,13 +445,13 @@ if(i==that.chatData.length)
   that.ngZone.run(() => {
   if(unreadCounter>0)
   {
-    debugger;
+    //debugger;
   that.allUnreadMsg=that.allUnreadMsg+unreadCounter;
   that.sharedServiceObj.setUnreadMsgs(that.allUnreadMsg.toString());
   }
   else
   {
-    debugger;
+    //debugger;
     that.sharedServiceObj.setUnreadMsgs(that.allUnreadMsg.toString());
   }
   

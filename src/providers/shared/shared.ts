@@ -225,7 +225,7 @@ this.isPaidEmitter.emit(paidStatus);
   return str.replace(/^\s+|\s+$/gm,'');
 }
 sendNotification(toUserId:string,subject:string,message:string,service_id:string,notify_icon:string,
-  toType:string,notification_type:string){
+  toType:string,notification_type:string,force_type:string,email_type:string){
   //debugger;
       let data = new URLSearchParams();
 if(toType=='member')
@@ -240,8 +240,9 @@ if(toType=='member')
   data.append('notification_type',notification_type);
   data.append('title',subject);
   data.append('service_id',service_id);
-  data.append('force_type','email');
-  data.append('notify_icon',notify_icon)
+  data.append('force_type',force_type);
+  data.append('notify_icon',notify_icon);
+  data.append('email_type',email_type);
   //debugger;
     let contactEmail=this.http
       .post(this.registerationApiBaseUrl+'messaging/sendEmailMessage', data, this.headerOptions)
@@ -760,9 +761,15 @@ that.chatOldMsgSentEmiter.emit("1");
           fredRef.update({userTyping:"0",typingText:""});
           }
   // this could also be a private method of the component class
-  private extractData(res: Response) {
+  private extractData(res: any) {
   //debugger;
-    return res.json();
+    //return res.json();
+    try {
+      JSON.parse(res._body);
+      return res.json();
+  } catch (e) {
+      return false;
+  }
   }
   private handleErrorObservable(error: Response | any) {
  //debugger;

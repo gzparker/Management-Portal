@@ -299,7 +299,7 @@ this.leadImage,this.service_id)
       this.leadCreateMsg="Lead has been created successfully.";
       //debugger;
       this.sharedServiceObj.sendNotification(this.userId.toString(),"New Lead",this.leadCreateMsg,this.service_id,
-      this.websiteBackgroundInfo.brand_image_url,"member",'lead').
+      this.websiteBackgroundInfo.brand_image_url,"member",'lead',"email,push","new_lead").
       subscribe((result) => this.sendNotificationResp(result));
       //debugger;
       let leadInfo=result.leadInfo;

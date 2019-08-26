@@ -196,6 +196,8 @@ upgradeDowngradePlan(user_id:string,service_id:string,subscription_plan_ids:any,
 //debugger;
     let data = new URLSearchParams();
  data.append('member_id',user_id);
+ data.append('service_id',service_id);
+ data.append('action',action);
  if(subscription_plan_ids=="")
  {
   data.append('update_subscription_id_and_plan_id_json',subscription_plan_ids);
@@ -205,8 +207,7 @@ upgradeDowngradePlan(user_id:string,service_id:string,subscription_plan_ids:any,
   data.append('update_subscription_id_and_plan_id_json',JSON.stringify(subscription_plan_ids));
  }
  //debugger;
- data.append('service_id',service_id);
- data.append('action',action);
+ 
  //debugger;
   let upgradeResp=this.http
     .post(this.sharedServiceObj.registerationApiBaseUrl+'subscriptions/upgradeDowngradeMember', data, this.headerOptions)
@@ -225,9 +226,21 @@ getServiceStartUpPlanList(service_id:string) {
     .map(this.extractData)
   return subscriptionList;
 }
-  private extractData(res: Response) {
+  private extractData(res: any) {
   //debugger;
-    return res.json();
+  /*if(typeof res._body != 'string'==undefined){
+    debugger;
+    return false;
+  }else{*/
+    //debugger;
+    try {
+      JSON.parse(res._body);
+      return res.json();
+  } catch (e) {
+      return false;
+  }
+    //return res.json();
+ // }
   }
   private handleErrorObservable(error: Response | any) {
     //debugger;

@@ -170,7 +170,6 @@ export class RegisterPage {
         position: 'top',
         cssClass:'errorToast'
       });
-      
       toast.onDidDismiss(() => {
       });
       toast.present();

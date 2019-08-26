@@ -22,6 +22,7 @@ export class VerificationCodePage {
   public verificationMsg: string = "";
   public acctVerified: boolean = false;
   public service_id:string="";
+  public websiteBackgroundInfo:any;
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public viewCtrl: ViewController, public userServiceObj: UserProvider, private storage: Storage, 
     public sharedServiceObj: SharedProvider, public ngZone: NgZone) {
@@ -36,11 +37,24 @@ export class VerificationCodePage {
     if (result.status == true) {
   
           this.verificationMsg=result.message.toUpperCase();
-          this.userLogin(result.memberCredentials.email,result.memberCredentials.password)
+          //this.leadCreateMsg="Lead has been created successfully.";
+      //debugger;
+      this.sharedServiceObj.sendNotification(this.master_id.toString(),"Registeration Complete",this.verificationMsg,this.service_id,
+      this.websiteBackgroundInfo.brand_image_url,"member",'',"email,sms","successful_registration_email").
+      subscribe((result) => this.sendNotificationResp(result));
+          this.userLogin(result.memberCredentials.email,result.memberCredentials.password);
     }
     else {
       this.verificationMsg = result.message;
     }
+  }
+  sendNotificationResp(result:any)
+  {
+   //debugger;
+    if(result.status)
+{
+  //debugger;
+}
   }
   userLogin(email:string,password:string): void {
     this.userServiceObj.userLogin(email, password,this.service_id)
@@ -129,9 +143,11 @@ setAllAccessOptionsResp(result:any)
   }
 }
   ionViewDidLoad() {
+    let that=this;
     this.master_id = this.navParams.get('master_id');
     let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
     generalWebsiteSettings.then((data) => {
+      that.websiteBackgroundInfo=data;
       this.service_id=data.service_id;
     });
   }

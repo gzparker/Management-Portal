@@ -277,6 +277,7 @@ planObj.subscription_item_id="";
 that.finalUpgradedSelectedPlans.push(planObj);
 });
 that.selectedPackagesList=[];
+//debugger;
 that.subscribtionObj.upgradeDowngradePlan(that.userId.toString(),data.service_id,that.finalUpgradedSelectedPlans,action)
   .subscribe((result) => that.upgradeDowngradePlanResp(result,option,action,showMsg,successMsg));
 }
@@ -328,7 +329,7 @@ else
   }
   upgradeDowngradePlanResp(resp:any,option:string,action:string,showMsg:string,successMsg:string)
   {
-    //debugger;  
+    //debugger;
     let msgDowngrade="";
     if(action=="upgrade"){
       msgDowngrade="New plan has been subscribed.";
@@ -345,7 +346,12 @@ if(resp.status==true)
   {
     this.stripe_customer_id=resp.results.stripe_customer_id;
     this.subscription_id=resp.results.subscription_id;
-    //this.allAvailablePackages=resp.results.available_products;
+    //debugger;
+    if(resp.results.customer_subscription!=undefined)
+  {
+    //debugger;
+if(resp.results.customer_subscription.customer_subscribed_products!=undefined){
+  //debugger;
     this.allSubscribedPackages=resp.results.customer_subscription.customer_subscribed_products;
 
     if(this.allSubscribedPackages[0].plan_interval=="month"){
@@ -353,6 +359,8 @@ if(resp.status==true)
     }else{
       this.pay_yearly=true;
     }
+  }
+}
     //debugger;
     resp.results.available_products.forEach(element => {
       element.product_plans.forEach(element => {
@@ -390,6 +398,24 @@ if(resp.status==true)
  {
   this.upgradeDowngradeList("1","",'1',msgDowngrade);
  }
+}
+else{
+  this.ngZone.run(() => {
+    let toast = this.toastCtrl.create({
+      message: "There is some error due to card expiry.",
+      duration: 3000,
+      position: 'top',
+      cssClass:'errorToast'
+    });
+  
+    toast.onDidDismiss(() => {
+      //console.log('Dismissed toast');
+    });
+  
+    toast.present();
+    
+    //this.navCtrl.push(AccountOptionPage,{notificationMsg:"New plan has been subscribed."});
+  });
 }
 }
   loadCurrentUpgrades(currentUpgradePlan:any)

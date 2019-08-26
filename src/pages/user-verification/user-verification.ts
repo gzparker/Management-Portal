@@ -69,28 +69,23 @@ export class UserVerificationPage {
    //debugger;
    let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
    generalWebsiteSettings.then((data) => {
+     //debugger;
     this.userServiceObj.sendVerificationInfo(dataObj,data.service_id)
-      .subscribe((result) => this.verifyUserResp(result));
+    .subscribe((result) => this.verifyUserResp(result));
    });
   }
   verifyUserResp(result: any): void {
-    //debugger;
     if (result.status == true) {
       this.verificationMsg = result.message;
-      // this.verificationModal.close();
       this.acctVerified = false;
       this.verification_code = "";
-   
       this.ngZone.run(() => {
-     
       this.navCtrl.push(VerificationCodePage, { master_id: this.master_id });
       });
-      //this.closeModal();
     }
     else {
       this.verificationMsg = result.message;
     }
-    //debugger;
   }
   public openUserVerificationCodeModal() {
     var modalPage = this.modalCtrl.create(VerificationCodePage, { master_id: this.master_id });

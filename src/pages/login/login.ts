@@ -313,6 +313,12 @@ let allSubscribedPackages=[];
 let intervalBasedSubscribedPackages=[];
 if(resp.status==true)
 {
+  //debugger;
+  if(resp.results.customer_subscription!=undefined)
+  {
+    debugger;
+if(resp.results.customer_subscription.customer_subscribed_products!=undefined){
+  debugger;
   allSubscribedPackages=resp.results.customer_subscription.customer_subscribed_products;
   if(allSubscribedPackages[0].plan_interval=="month"){
     //this.pay_yearly=false;
@@ -328,6 +334,8 @@ if(resp.status==true)
       this.storage.set('subscribedPlans',intervalBasedSubscribedPackages);
       //debugger;
   }
+  }
+}
 }
 }
 setAllAccessOptions(userAllowedRoles:any)
