@@ -306,10 +306,7 @@ this.leadImage,this.service_id)
       this.createFirebaseLead(leadInfo.email,leadInfo.password,
         leadInfo.lead_id,leadInfo.first_name,leadInfo.last_name,
         leadInfo.image_url,"0","0","1",leadInfo.user_website_id,this.leadCreateMsg.toUpperCase(),leadInfo);
-  
-      
     }
-  
   }
   sendNotificationResp(result:any)
   {

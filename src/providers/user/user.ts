@@ -132,7 +132,7 @@ this.headerOptions= new RequestOptions({ headers: this.headers });
   
   }
   onFacebookLoginClick(): void {
-    //debugger;
+    debugger;
     //alert(JSON.stringify(this.fbLoginStatus)) ;
     if (this.fbLoginStatus != undefined) {
       this.statusChangeCallback(this.fbLoginStatus);
@@ -345,7 +345,7 @@ is_online="1";
        
   }
   statusChangeCallback(resp) {
-//debugger;
+debugger;
     if (resp != 0) {
       if (resp === 'connected') {
         //alert('5');

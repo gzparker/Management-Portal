@@ -406,7 +406,7 @@ this.navCtrl.setRoot(LoginPage);
     const that = this;
     this.auth2.attachClickHandler(element, {},
       function (googleUser) {
-
+debugger;
         const profile = googleUser.getBasicProfile();
         that.google_token = googleUser.getAuthResponse().id_token;
         that.google_id = profile.getId();

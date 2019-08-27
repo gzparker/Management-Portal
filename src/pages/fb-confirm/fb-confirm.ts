@@ -18,6 +18,7 @@ import { UserVerificationPage } from '../user-verification/user-verification';
   templateUrl: 'fb-confirm.html',
 })
 export class FbConfirmPage {
+  public isApp=false;
   public emailFb: string = "";
   public fbPassword: string = "";
   public first_name_fb: string = "";
@@ -32,10 +33,19 @@ export class FbConfirmPage {
   public userFbSignUpMsg: string = "";
   public allCountryCodes: any[] = [];
   public acct_type: string = "";
+  public registeration_platform: string="";
   constructor(public navCtrl: NavController, public ngZone: NgZone, public navParams: NavParams, public fb: Facebook,
     public userServiceObj: UserProvider, public sharedServiceObj: SharedProvider, private storage: Storage,
     public modalCtrl: ModalController, public alertCtrl: AlertController, public platform: Platform, 
     public viewCtrl: ViewController) {
+      this.isApp = (!document.URL.startsWith("http"));
+      if(!this.isApp)
+      {
+        this.registeration_platform='browser';
+      }
+      else{
+        this.registeration_platform='app';
+      }
       if(this.navParams.get('type')!=undefined){
         this.acct_type=this.navParams.get('type');
       }
@@ -125,6 +135,7 @@ export class FbConfirmPage {
       userType: "",
       fb_token: "",
       google_token: "",
+      registeration_platform:"",
       verified: 0
     };
     //if(this.domainAccess)
@@ -147,7 +158,8 @@ export class FbConfirmPage {
     dataObj.country_abbv = this.selectedCountryAbbv;
     dataObj.phone_number = Math.floor(Math.random() * (90000000 - 1 + 1)) + 1;
     dataObj.verified = 0;
-    debugger;
+    dataObj.registeration_platform=this.registeration_platform;
+    //debugger;
 
     //debugger;
     let generalWebsiteSettings = this.storage.get('generalWebsiteSettings');
