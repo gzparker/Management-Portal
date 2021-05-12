@@ -39,7 +39,7 @@
     "angular-2-dropdown-multiselect": "^1.6.3",
     "angularfire2": "^5.0.0-rc.6.0",
     "brmasker-ionic-3": "^1.0.9",
-    "chart.js": "^2.7.2",
+    "chart.js": "^2.9.4",
     "cordova-android": "6.4.0",
     "cordova-browser": "5.0.3",
     "cordova-plugin-advanced-http": "^1.9.1",
